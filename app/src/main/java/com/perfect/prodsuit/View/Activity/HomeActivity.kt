@@ -183,8 +183,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         setTechnologyPartner()
 
 
-
-
     }
 
     private fun getLocationTracker() {
@@ -595,8 +593,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                   attendancConfirmPopup(v)
 //               }
 
-                val i = Intent(this@HomeActivity, AttendanceMarkingActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@HomeActivity, AttendanceMarkingActivity::class.java)
+//                startActivity(i)
             }
 
             R.id.ll_leads -> {

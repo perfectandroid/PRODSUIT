@@ -63,11 +63,17 @@
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.MapRootDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.MapRootActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="com.perfect.prodsuit.View.Activity.LocationMarkingNewActivity"
             android:exported="false"
@@ -533,7 +539,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.perfect.prodsuit.fileprovider"
+            android:authorities="com.perfect.prodsuite.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
