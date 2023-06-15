@@ -521,7 +521,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="20dp"
-                                            android:text="Walking Customer"
+                                            android:text="Walk-in Customer"
                                             android:layout_weight="1"
                                             android:textStyle="bold"
                                             android:textColor="@color/color_common3"

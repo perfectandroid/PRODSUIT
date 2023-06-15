@@ -648,9 +648,9 @@
             android:id="@+id/recyHomegrid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/img_techpartner"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:layout_above="@+id/img_techpartner"
             android:visibility="visible" />
 
         <ImageView

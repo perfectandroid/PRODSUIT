@@ -1829,36 +1829,49 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                // Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
             if (grid_id.equals("8")){
-                setReminder()
+              //  setReminder()
               //  Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
+                val i = Intent(this@HomeActivity, LocationMarkingNewActivity::class.java)
+                startActivity(i)
             }
             if (grid_id.equals("9")){
 //                val i = Intent(this@HomeActivity, TicketReportActivity::class.java)
 //                startActivity(i)
-
+//
                 val i = Intent(this@HomeActivity, ReportMainActivity::class.java)
                 startActivity(i)
               //  Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
+
+
             }
             if (grid_id.equals("10")){
-                val i = Intent(this@HomeActivity, ProfileActivity::class.java)
-                startActivity(i)
+                setReminder()
+
                // Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
             if (grid_id.equals("11")){
 //                val i = Intent(this@HomeActivity, ExpenseActivity::class.java)
 //                startActivity(i)
 
-                val i = Intent(this@HomeActivity, ContactUsActivity::class.java)
+                val i = Intent(this@HomeActivity, ProfileActivity::class.java)
                 startActivity(i)
+
               //  Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
 
             if (grid_id.equals("12")){
+                val i = Intent(this@HomeActivity, ContactUsActivity::class.java)
+                startActivity(i)
+
+                //  Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
+            }
+            if (grid_id.equals("13")){
                 val i = Intent(this@HomeActivity, AboutUsActivity::class.java)
                 startActivity(i)
                 //  Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
+
+
         }
     }
 

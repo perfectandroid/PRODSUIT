@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.EmployeeModel
+import com.perfect.prodsuit.Model.EmployeeLocationListModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -20,20 +20,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object EmployeeRepository {
+object EmployeeLocationListRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val employeeSetterGetter = MutableLiveData<EmployeeModel>()
-    val TAG: String = "EmployeeRepository"
+    val employeeLocationSetterGetter = MutableLiveData<EmployeeLocationListModel>()
+    val TAG: String = "EmployeeLocationListRepository"
 
-    fun getServicesApiCall(context: Context,ID_Department: String): MutableLiveData<EmployeeModel> {
-        getEmployee(context,ID_Department)
-        return employeeSetterGetter
+    fun getServicesApiCall(context: Context,strDate : String,ID_Department : String,ID_Designation : String,ID_Employee : String): MutableLiveData<EmployeeLocationListModel> {
+        getEmployeeLocation(context,strDate,ID_Department,ID_Designation,ID_Employee)
+        return employeeLocationSetterGetter
     }
 
-    private fun getEmployee(context: Context,ID_Department: String) {
+    private fun getEmployeeLocation(context: Context,strDate : String,ID_Department : String,ID_Designation : String,ID_Employee : String) {
         try {
-            employeeSetterGetter.value= EmployeeModel("")
+            employeeLocationSetterGetter.value = EmployeeLocationListModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -60,29 +60,26 @@ object EmployeeRepository {
 
             try {
 
-//                "ReqMode":"23",
-//                "BankKey":"-500",
-//                "FK_Employee":123,
-//                "Token":sfdsgdgdg,
-//                "ID_Department":1
-
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("109"))
+
+//                {"BankKey":"-500","Token":"3FD0BD83-1BB2-48B2-B64B-71D2092B6795","FK_Company":"1","LocationEnteredDate":"2023-06-09",
+//                    "FK_Departement":"0","FK_Employee":"0","FK_Designation":"0"}
+
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_Department", ProdsuitApplication.encryptStart(ID_Department))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("LocationEnteredDate", ProdsuitApplication.encryptStart(strDate))
+                requestObject1.put("FK_Departement", ProdsuitApplication.encryptStart(ID_Department))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
+                requestObject1.put("FK_Designation", ProdsuitApplication.encryptStart(ID_Designation))
 
 
-                Log.e(TAG,"78"+requestObject1)
 
-
+                Log.e(TAG,"getDepartment  78   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -90,7 +87,7 @@ object EmployeeRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getEmployee(body)
+            val call = apiService.getEmployeeLocationList(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -98,30 +95,25 @@ object EmployeeRepository {
                 ) {
                     try {
                         progressDialog!!.dismiss()
-                        Log.e(TAG,"101    "+response.body())
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<EmployeeModel>()
-                        leads.add(EmployeeModel(response.body()))
+                        val leads = ArrayList<EmployeeLocationListModel>()
+                        leads.add(EmployeeLocationListModel(response.body()))
                         val msg = leads[0].message
-                        employeeSetterGetter.value = EmployeeModel(msg)
+                        employeeLocationSetterGetter.value = EmployeeLocationListModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
-                        Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
-                    Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                 }
             })
-
-
-
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
-            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
         }
     }
-
 }

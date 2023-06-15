@@ -104,6 +104,12 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://45.118.163.44:14002/ProdSuiteAPISpectrum/"
 //    val BANK_KEY = "-500"
 
+    ////     Live 13.06.2023
+//    val CERT_NAME = "perfectlive.pem"
+//    val BASE_URL = "https://45.118.163.44:14003/PSuitePerfectAPI/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14003/PSuitePerfectAPI/"
+//    val BANK_KEY = "-515"
+
     ////    DEVELOPMENT 30.11.2022
     val CERT_NAME = "development.pem"
     val BASE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
