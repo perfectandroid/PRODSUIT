@@ -352,6 +352,7 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
                 if (emiListSort.length() == 0){
                     ll_nodata!!.visibility  =View.VISIBLE
                     recyEmiList!!.visibility  =View.GONE
+                    tv_listCount!!.setText(""+emiListSort.length())
 
                     Log.e(TAG,"3541  ")
 

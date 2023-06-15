@@ -38,10 +38,7 @@ import com.perfect.prodsuit.View.Adapter.BranchAdapter
 import com.perfect.prodsuit.View.Adapter.EmployeeAllAdapter
 import com.perfect.prodsuit.View.Adapter.LeadDetailAdapter
 import com.perfect.prodsuit.View.Adapter.TodoListAdapter
-import com.perfect.prodsuit.Viewmodel.BranchViewModel
-import com.perfect.prodsuit.Viewmodel.EmpByBranchViewModel
-import com.perfect.prodsuit.Viewmodel.LeadDetailViewModel
-import com.perfect.prodsuit.Viewmodel.TodoListViewModel
+import com.perfect.prodsuit.Viewmodel.*
 import info.hoang8f.android.segmented.SegmentedGroup
 import org.json.JSONArray
 import org.json.JSONObject
@@ -86,10 +83,12 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     var criteria = ""
 
     private var messageType = "";
-    private var messageDesc = "";
+    private var messageBody = "";
+    private var messageSubject = "";
     private var cbWhat = "0";
     private var cbEmail = "0";
     private var cbMessage = "0";
+    private var mailid : String? = null
 
     var sharedPreferences: SharedPreferences? =null
     var fab_Reminder: FloatingActionButton? = null
@@ -111,7 +110,9 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     var branch = 0
 
     var empUseBranch = 0
+    var SendMailCount = 0
     lateinit var empByBranchViewModel: EmpByBranchViewModel
+    lateinit var sendemailViewModel: SendEmailViewModel
     lateinit var employeeAllArrayList : JSONArray
     lateinit var employeeAllSort : JSONArray
     private var dialogEmployeeAll : Dialog? = null
@@ -143,6 +144,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
         empByBranchViewModel = ViewModelProvider(this).get(EmpByBranchViewModel::class.java)
         leadDetailViewModel = ViewModelProvider(this).get(LeadDetailViewModel::class.java)
+        sendemailViewModel = ViewModelProvider(this).get(SendEmailViewModel::class.java)
 
         setRegViews()
         if (getIntent().hasExtra("SubMode")) {
@@ -248,7 +250,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                                             rv_todolist!!.adapter = adapter
                                             adapter.setClickListener(this@TodoListActivity)
                                         } else {
-                                            tv_listCount!!.setText("")
+                                            tv_listCount!!.setText("0")
                                             val builder = AlertDialog.Builder(
                                                 this@TodoListActivity,
                                                 R.style.MyDialogTheme
@@ -599,6 +601,8 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     override fun onClick(position: Int, data: String) {
         if (data.equals("todolist")){
             val jsonObject = todoArrayList.getJSONObject(position)
+            mailid = jsonObject.getString("Email")
+            Log.e(TAG,"mailid 111   "+mailid)
             val i = Intent(this@TodoListActivity, AccountDetailsActivity::class.java)
             i.putExtra("jsonObject",jsonObject.toString())
             i.putExtra("SubMode", submode)
@@ -661,6 +665,8 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
         if (data.equals("todoMessage")){
             val jsonObject = todoArrayList.getJSONObject(position)
             Log.e("TAG","313  ID_LeadGenerate   :  "+jsonObject.getString("ID_LeadGenerate"))
+            mailid = jsonObject.getString("Email")
+            Log.e(TAG,"mailid 111   "+mailid)
             messagePopup()
         }
 
@@ -702,26 +708,27 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     private fun messagePopup() {
         try {
 
-            messageType = ""
-            cbWhat = "0"
-            cbEmail = "0"
-            cbMessage = "0"
+//            messageType = ""
+//            cbWhat = "0"
+//            cbEmail = "0"
+//            cbMessage = "0"
 
             val dialog1 = Dialog(this)
             dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog1 .setCancelable(false)
-            dialog1 .setContentView(R.layout.send_message_popup)
+            dialog1 .setContentView(R.layout.mail_message_popup)
             dialog1.window!!.attributes.gravity = Gravity.CENTER;
 
-            val rbMessages = dialog1 .findViewById(R.id.rbMessages) as RadioButton
-            val rbReminder = dialog1 .findViewById(R.id.rbReminder) as RadioButton
-            val rbIntimation = dialog1 .findViewById(R.id.rbIntimation) as RadioButton
+//            val rbMessages = dialog1 .findViewById(R.id.rbMessages) as RadioButton
+//            val rbReminder = dialog1 .findViewById(R.id.rbReminder) as RadioButton
+//            val rbIntimation = dialog1 .findViewById(R.id.rbIntimation) as RadioButton
 
+            val edt_subject = dialog1 .findViewById(R.id.edt_subject) as EditText
             val edt_message = dialog1 .findViewById(R.id.edt_message) as EditText
 
-            val chk_whats = dialog1 .findViewById(R.id.chk_whats) as CheckBox
-            val chk_Email = dialog1 .findViewById(R.id.chk_Email) as CheckBox
-            val chk_Message = dialog1 .findViewById(R.id.chk_Message) as CheckBox
+//            val chk_whats = dialog1 .findViewById(R.id.chk_whats) as CheckBox
+//            val chk_Email = dialog1 .findViewById(R.id.chk_Email) as CheckBox
+//            val chk_Message = dialog1 .findViewById(R.id.chk_Message) as CheckBox
 
             val btnMssubmit = dialog1 .findViewById(R.id.btnMssubmit) as Button
             val btnMscancel = dialog1 .findViewById(R.id.btnMscancel) as Button
@@ -730,61 +737,64 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
             segmented2.setTintColor(resources.getColor(R.color.color_msg_tab));
             segmented2.setOnCheckedChangeListener(this@TodoListActivity);
 
-            rbMessages.isChecked  =true
-            rbReminder.isChecked  =false
-            rbIntimation.isChecked  =false
+//            rbMessages.isChecked  =true
+//            rbReminder.isChecked  =false
+//            rbIntimation.isChecked  =false
 
-            chk_whats.setOnClickListener {
-                if (chk_whats.isChecked){
-
-                    cbWhat = "1"
-                }else{
-                    cbWhat = "0"
-                }
-            }
-
-            chk_Email.setOnClickListener {
-                if (chk_Email.isChecked){
-                    cbEmail = "1"
-                }else{
-                    cbEmail = "0"
-                }
-            }
-
-            chk_Message.setOnClickListener {
-
-                if (chk_Message.isChecked){
-                    cbMessage = "1"
-                }else{
-                    cbMessage = "0"
-                }
-            }
+//            chk_whats.setOnClickListener {
+//                if (chk_whats.isChecked){
+//
+//                    cbWhat = "1"
+//                }else{
+//                    cbWhat = "0"
+//                }
+//            }
+//
+//            chk_Email.setOnClickListener {
+//                if (chk_Email.isChecked){
+//                    cbEmail = "1"
+//                }else{
+//                    cbEmail = "0"
+//                }
+//            }
+//
+//            chk_Message.setOnClickListener {
+//
+//                if (chk_Message.isChecked){
+//                    cbMessage = "1"
+//                }else{
+//                    cbMessage = "0"
+//                }
+//            }
 
             btnMscancel.setOnClickListener {
                 dialog1 .dismiss()
             }
 
             btnMssubmit.setOnClickListener {
-                messageDesc = edt_message.text.toString()
-                if (messageType.equals("")){
-
-                }
-                else if(messageDesc.equals("")){
-                    Config.snackBars(context,it,"Please enter message")
+                messageSubject = edt_subject.text.toString()
+                messageBody = edt_message.text.toString()
+//                if (messageType.equals("")){
+//
+//                }
+                if(messageSubject.equals("")){
+                    Config.snackBars(context,it,"Please enter Subject")
 //
                 }
-                else if (cbWhat.equals("0") && cbEmail.equals("0") && cbMessage.equals("0") ){
-                    Config.snackBars(context,it,"Please select sending options")
+                else if (messageBody.equals("")){
+                    Config.snackBars(context,it,"Please Enter Message")
 //
                 }
                 else{
                     Log.e(TAG,"  927  messageType  "+messageType)
-                    Log.e(TAG,"  927  messageDesc  "+messageDesc)
+                    Log.e(TAG,"  927  messageDesc  "+messageBody)
                     Log.e(TAG,"  927  HHHHH  "+cbWhat+"  :   "+cbEmail+"  :  "+cbMessage)
 
                     Config.Utils.hideSoftKeyBoard(context,it)
                     dialog1 .dismiss()
-                    Toast.makeText(context,""+messageDesc,Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context,""+messageDesc,Toast.LENGTH_SHORT).show()
+                    SendMailCount = 0
+                    getSendMail(messageSubject,messageBody,mailid!!)
                 }
             }
 
@@ -800,6 +810,100 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
 //            alertDialog.show()
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    private fun getSendMail(messageSubject : String,messageBody : String,mailid : String) {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                sendemailViewModel.sendemail(this,messageSubject,messageBody,mailid!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (SendMailCount == 0) {
+                                    SendMailCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   1224   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("MailResult")
+                                        try {
+
+                                            val suceessDialog = Dialog(this)
+                                            suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                            suceessDialog!!.setCancelable(false)
+                                            suceessDialog!!.setContentView(R.layout.pickup_deli_update_success)
+                                            suceessDialog!!.window!!.attributes.gravity =
+                                                Gravity.CENTER_VERTICAL;
+
+                                            val tv_succesmsg =
+                                                suceessDialog!!.findViewById(R.id.tv_succesmsg) as TextView
+
+                                            val tv_succesok =
+                                                suceessDialog!!.findViewById(R.id.tv_succesok) as TextView
+
+                                            tv_succesmsg!!.setText(jobjt.getString("Result"))
+
+                                            tv_succesok!!.setOnClickListener {
+                                                suceessDialog!!.dismiss()
+                                                val intent = Intent()
+                                                intent.putExtra("MESSAGE", android.R.id.message)
+                                                setResult(2, intent)
+//                                                onBackPressed()
+
+                                            }
+
+                                            suceessDialog!!.show()
+                                            suceessDialog!!.getWindow()!!.setLayout(
+                                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                                ViewGroup.LayoutParams.WRAP_CONTENT
+                                            )
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@TodoListActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 

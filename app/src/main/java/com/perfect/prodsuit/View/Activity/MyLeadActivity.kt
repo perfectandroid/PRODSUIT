@@ -236,7 +236,7 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                             adapter.setClickListener(this@MyLeadActivity)
 
                                         } else {
-                                            tv_listCount!!.setText("")
+                                            tv_listCount!!.setText("0")
                                             val builder = AlertDialog.Builder(
                                                 this@MyLeadActivity,
                                                 R.style.MyDialogTheme

@@ -157,8 +157,15 @@ object UpdateLeadManagementRepository {
                 requestObject1.put("LocationLandMark2", encode2)
 
 
+                Log.v(TAG,"requestObject1   1581   "+requestObject1)
+                Log.v("sfgsdfdsfdsfdsdd",""+requestObject1)
                 Log.e(TAG,"requestObject1   1581   "+requestObject1)
                 Log.e(TAG,"UserCode   1582   "+UserCodeSP.getString("UserCode", null))
+
+                Log.e(TAG,"encode1   11111   "+encode1)
+                Log.e(TAG,"encode2   0000   "+encode2)
+                Log.v("sfgsdfdsfdsfdsdd","1===="+encode1)
+                Log.v("sfgsdfdsfdsfdsdd","2===="+encode2)
 
 
             } catch (e: Exception) {
