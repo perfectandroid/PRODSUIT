@@ -131,6 +131,9 @@ interface ApiInterface {
     @POST("UserValidations/UpdateLeadGenerateAction")
     fun updateLeadGenerateAction(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/SendMail")
+    fun sendMailMessage(@Body body: RequestBody): Call<String>
+
 
     @POST("UserValidations/NotificationDetailsList")
     fun getNotification(@Body body: RequestBody): Call<String>

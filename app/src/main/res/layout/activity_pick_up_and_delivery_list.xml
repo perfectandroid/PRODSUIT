@@ -118,12 +118,41 @@
                         android:layout_height="match_parent">
 
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyPickUpDelivery"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible" />
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyPickUpDelivery"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible" />
                     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_nodata"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:src="@drawable/svg_nodata"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/myfont"
+                            android:gravity="center"
+                            android:layout_marginTop="-1dp"
+                            android:text="No Data Found"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:tint="@color/white" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

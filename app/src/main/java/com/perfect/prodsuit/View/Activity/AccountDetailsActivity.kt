@@ -46,6 +46,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.internal.it
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
@@ -92,6 +93,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     lateinit var locationViewModel: LocationViewModel
     lateinit var activitylistViewModel: ActivityListViewModel
     lateinit var followuptypeViewModel: FollowUpTypeViewModel
+    lateinit var sendemailViewModel: SendEmailViewModel
     var llMessages: LinearLayout? = null
     var llLocation: LinearLayout? = null
     var llImages: LinearLayout? = null
@@ -194,6 +196,13 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var messageDesc = "";
     private var Reciever_Id:String? = ""
     private var messageTitle = "";
+    private var edt_title : EditText? = null
+    private var edt_message_content : EditText? = null
+    private var edt_subject : EditText? = null
+    private var edt_message : EditText? = null
+    private var messageBody = ""
+    private var mailid : String? = null
+    private var messageSubject = ""
     private var cbWhat = "0";
     private var cbEmail = "0";
     private var cbMessage = "0";
@@ -226,6 +235,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     var leadDelete = 0
     var deleteLead = 0
     var sendmessage = 0
+    var SendMailCount = 0
 
     var AssignedToID : String?= ""
     var AssignedTo : String?= ""
@@ -270,6 +280,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         viewDocumentViewModel = ViewModelProvider(this).get(ViewDocumentViewModel::class.java)
         deleteLeadViewModel= ViewModelProvider(this).get(DeleteLeadViewModel::class.java)
         sendmessageViewModel= ViewModelProvider(this).get(SendMessageViewModel::class.java)
+        sendemailViewModel = ViewModelProvider(this).get(SendEmailViewModel::class.java)
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
@@ -1194,15 +1205,24 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             val dialog1 = Dialog(this)
             dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog1 .setCancelable(false)
-            dialog1 .setContentView(R.layout.send_message_popup_1)
             dialog1.window!!.attributes.gravity = Gravity.CENTER;
 
+            if (SubMode!!.equals("4")){
+                dialog1 .setContentView(R.layout.send_message_popup_1)
+
+                edt_title = (dialog1 .findViewById(R.id.edt_title) as EditText)
+                edt_message_content = dialog1 .findViewById(R.id.edt_message_content) as EditText
+
+            }else{
+                dialog1 .setContentView(R.layout.mail_message_popup)
+
+                 edt_subject = dialog1 .findViewById(R.id.edt_subject) as EditText
+                 edt_message = dialog1 .findViewById(R.id.edt_message) as EditText
+            }
 //            val rbMessages = dialog1 .findViewById(R.id.rbMessages) as RadioButton
 //            val rbReminder = dialog1 .findViewById(R.id.rbReminder) as RadioButton
 //            val rbIntimation = dialog1 .findViewById(R.id.rbIntimation) as RadioButton
 
-            val edt_title = dialog1 .findViewById(R.id.edt_title) as EditText
-            val edt_message_content = dialog1 .findViewById(R.id.edt_message_content) as EditText
 
 //            val chk_whats = dialog1 .findViewById(R.id.chk_whats) as CheckBox
 //            val chk_Email = dialog1 .findViewById(R.id.chk_Email) as CheckBox
@@ -1250,29 +1270,40 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             }
 
             btnMssubmit.setOnClickListener {
-                messageDesc = edt_message_content.text.toString()
-                messageTitle = edt_title.text.toString()
-//                if (messageType.equals("")){
-//
-//                }
-                if(messageTitle.equals("")){
-                    Config.snackBars(context,it,"Please Enter Tittle message")
-//
-                }
-                else if (messageDesc.equals("")){
-                    Config.snackBars(context,it,"Please enter message")
-//
-                }
-                else{
-                    Log.e(TAG,"  927  messageType  "+messageType)
-                    Log.e(TAG,"  927  messageDesc  "+messageDesc)
-                    Log.e(TAG,"  927  HHHHH  "+cbWhat+"  :   "+cbEmail+"  :  "+cbMessage)
 
-                    Config.Utils.hideSoftKeyBoard(context,it)
+                if (SubMode!!.equals("4")){
+                    sendMessagePopUp(it)
                     dialog1 .dismiss()
-//                    Toast.makeText(context,""+messageDesc,Toast.LENGTH_SHORT).show()
-                    getSendMessage(messageTitle,messageDesc,Reciever_Id!!)
+
+                }else{
+
+                    sendMailMessagePopUp(it)
+                    dialog1 .dismiss()
                 }
+
+//                messageDesc = edt_message_content!!.text.toString()
+//                messageTitle = edt_title!!.text.toString()
+////                if (messageType.equals("")){
+////
+////                }
+//                if(messageTitle.equals("")){
+//                    Config.snackBars(context,it,"Please Enter Tittle message")
+////
+//                }
+//                else if (messageDesc.equals("")){
+//                    Config.snackBars(context,it,"Please enter message")
+////
+//                }
+//                else{
+//                    Log.e(TAG,"  927  messageType  "+messageType)
+//                    Log.e(TAG,"  927  messageDesc  "+messageDesc)
+//                    Log.e(TAG,"  927  HHHHH  "+cbWhat+"  :   "+cbEmail+"  :  "+cbMessage)
+//
+//                    Config.Utils.hideSoftKeyBoard(context,it)
+//                    dialog1 .dismiss()
+////                    Toast.makeText(context,""+messageDesc,Toast.LENGTH_SHORT).show()
+//                    getSendMessage(messageTitle,messageDesc,Reciever_Id!!)
+//                }
 
             }
 
@@ -1288,6 +1319,154 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 //            alertDialog.show()
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    private fun sendMessagePopUp(v: View){
+        messageDesc = edt_message_content!!.text.toString()
+        messageTitle = edt_title!!.text.toString()
+//                if (messageType.equals("")){
+//
+//                }
+        if(messageTitle.equals("")){
+            Config.snackBars(context,v,"Please Enter Tittle message")
+//
+        }
+        else if (messageDesc.equals("")){
+            Config.snackBars(context, v,"Please enter message")
+//
+        }
+        else{
+            Log.e(TAG,"  927  messageType  "+messageTitle)
+            Log.e(TAG,"  927  messageDesc  "+messageDesc)
+//            Log.e(TAG,"  927  HHHHH  "+cbWhat+"  :   "+cbEmail+"  :  "+cbMessage)
+
+            Config.Utils.hideSoftKeyBoard(context,v)
+//                    Toast.makeText(context,""+messageDesc,Toast.LENGTH_SHORT).show()
+            sendmessage = 0
+            getSendMessage(messageTitle,messageDesc,Reciever_Id!!)
+        }
+
+    }
+
+    private fun sendMailMessagePopUp(v: View){
+        messageSubject = edt_subject!!.text.toString()
+        messageBody = edt_message!!.text.toString()
+//                if (messageType.equals("")){
+//
+//                }
+        if(messageSubject.equals("")){
+            Config.snackBars(context,v,"Please enter Subject")
+//
+        }
+        else if (messageBody.equals("")){
+            Config.snackBars(context,v,"Please Enter Message")
+//
+        }
+        else{
+            Log.e(TAG,"  927  messageType  "+messageType)
+            Log.e(TAG,"  927  messageDesc  "+messageBody)
+            Log.e(TAG,"  927  HHHHH  "+cbWhat+"  :   "+cbEmail+"  :  "+cbMessage)
+
+            Config.Utils.hideSoftKeyBoard(context,v)
+//                    Toast.makeText(context,""+messageDesc,Toast.LENGTH_SHORT).show()
+            SendMailCount = 0
+            getSendMail(messageSubject,messageBody,mailid!!)
+        }
+
+    }
+
+    private fun getSendMail(messageSubject : String,messageBody : String,mailid : String) {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                sendemailViewModel.sendemail(this,messageSubject,messageBody,mailid!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (SendMailCount == 0) {
+                                    SendMailCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   1224   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("MailResult")
+                                        try {
+
+                                            val suceessDialog = Dialog(this)
+                                            suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                            suceessDialog!!.setCancelable(false)
+                                            suceessDialog!!.setContentView(R.layout.pickup_deli_update_success)
+                                            suceessDialog!!.window!!.attributes.gravity =
+                                                Gravity.CENTER_VERTICAL;
+
+                                            val tv_succesmsg =
+                                                suceessDialog!!.findViewById(R.id.tv_succesmsg) as TextView
+
+                                            val tv_succesok =
+                                                suceessDialog!!.findViewById(R.id.tv_succesok) as TextView
+
+                                            tv_succesmsg!!.setText(jobjt.getString("Result"))
+
+                                            tv_succesok!!.setOnClickListener {
+                                                suceessDialog!!.dismiss()
+                                                val intent = Intent()
+                                                intent.putExtra("MESSAGE", android.R.id.message)
+                                                setResult(2, intent)
+//                                                onBackPressed()
+
+                                            }
+
+                                            suceessDialog!!.show()
+                                            suceessDialog!!.getWindow()!!.setLayout(
+                                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                                ViewGroup.LayoutParams.WRAP_CONTENT
+                                            )
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@AccountDetailsActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 
@@ -1881,6 +2060,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                             txtLeadNo!!.setText(""+jObjectLeadInfo.getString("LeadNo"))
                                             txtCategory!!.setText(""+jObjectLeadInfo.getString("Category"))
                                             txtProduct!!.setText(""+jObjectLeadInfo.getString("Product"))
+
+                                            mailid = jObjectLeadInfo.getString("Email")
+                                            Log.e(TAG,"mailid   77777   "+mailid)
 //                                            txtTargetDate!!.setText(""+jObjectLeadInfo.getString("NextActionDate"))
 //                                            txtAction!!.setText(""+jObjectLeadInfo.getString("NxtActnName"))
 //                                            LgCusMobile = jObjectLeadInfo.getString("LgCusMobile")
