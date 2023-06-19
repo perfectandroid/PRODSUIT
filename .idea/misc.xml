@@ -25,10 +25,13 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.6440281030444965" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_marking_new.xml" value="0.6709601873536299" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_map_root_detail.xml" value="0.6709601873536299" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_profile.xml" value="0.6545667447306791" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_tracker.xml" value="0.7388758782201406" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_location_marking.xml" value="1.1" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_maproot_detail.xml" value="0.9" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_tracker.xml" value="0.7388758782201406" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/map_dialog.xml" value="0.5" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/success_popup.xml" value="0.6545667447306791" />
       </map>
     </option>
   </component>
