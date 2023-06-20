@@ -4,6 +4,35 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/map_dialog.xml" value="0.36102564102564105" />
+        <entry key="..\:/GIT/JUNE/prodsuit_before git/app/src/main/res/layout/activity_dash_board.xml" value="0.36666666666666664" />
+        <entry key="..\:/GIT/JUNE/prodsuit_before git/app/src/main/res/layout/activity_emi_collection.xml" value="0.36666666666666664" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.20416666666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.13541666666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.13541666666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.12314814814814815" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.18" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.13541666666666666" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.17239583333333333" />
+        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/custom_marker_view.xml" value="0.20416666666666666" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/ic_svg_profile.xml" value="0.2765" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_dashed.xml" value="0.2765" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_battery.xml" value="0.2265" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_dashed.xml" value="0.2765" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_ic_direction.xml" value="0.307" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_round_trans.xml" value="0.2265" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_user.xml" value="0.2765" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_account_details.xml" value="0.7388758782201406" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_emi_collection.xml" value="0.7388758782201406" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.6440281030444965" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_marking_new.xml" value="0.6709601873536299" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_map_root_detail.xml" value="0.6709601873536299" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_profile.xml" value="0.6545667447306791" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_tracker.xml" value="0.7388758782201406" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_location_marking.xml" value="1.1" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_maproot_detail.xml" value="0.9" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_tracker.xml" value="0.7388758782201406" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/map_dialog.xml" value="0.5" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/success_popup.xml" value="0.6545667447306791" />
       </map>
     </option>
   </component>
