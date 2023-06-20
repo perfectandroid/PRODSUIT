@@ -1,17 +1,16 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -160,7 +159,7 @@ class MapRootActivity : AppCompatActivity() , OnMapReadyCallback {
         for (i in 0 until locationList.length()) {
             val json = locationList.getJSONObject(i)
             j = i+1
-            addMarkerWithIconAndTitle(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble()),""+j+". "+ json.getString("LocLocationName"), R.drawable.person_location)
+            addMarkerWithIconAndTitle(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble()),""+j+". "+ json.getString("LocLocationName"), R.drawable.person_location,i)
             if (i==0){
                 googleMap!!.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
                 googleMap!!.moveCamera(CameraUpdateFactory.newLatLng(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble())))
@@ -187,6 +186,16 @@ class MapRootActivity : AppCompatActivity() , OnMapReadyCallback {
 
         googleMap.addPolyline(polylineOptions)
 
+        googleMap!!.setOnMarkerClickListener(GoogleMap.OnMarkerClickListener { marker -> // on marker click we are getting the title of our marker
+            // which is clicked and displaying it in a toast message.
+            marker.hideInfoWindow()
+            var pos = marker.snippet!!.toInt()
+
+            //  Toast.makeText(this@LocationMarkingNewActivity, "Clicked location is $markerName", Toast.LENGTH_SHORT).show()
+            showDetailDialog(pos)
+            true
+        })
+
         // Adjust camera to fit the polyline
 //        val bounds = LatLngBounds.Builder().apply {
 //            for (coordinate in coordinatesList) {
@@ -199,11 +208,46 @@ class MapRootActivity : AppCompatActivity() , OnMapReadyCallback {
 
     }
 
+    private fun showDetailDialog(pos: Int) {
+        try {
+            val suceessDialog = Dialog(this)
+            suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            suceessDialog!!.setCancelable(true)
+            suceessDialog!!.setContentView(R.layout.map_dialog)
+            suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
 
-    private fun addMarkerWithIconAndTitle(position: LatLng, title: String, iconResId: Int) {
+            val jsonObject = locationList.getJSONObject(pos)
+
+            val txtEmployee = suceessDialog!!.findViewById(R.id.txtEmployee) as TextView
+            val txtDate = suceessDialog!!.findViewById(R.id.txtDate) as TextView
+            val txtTime = suceessDialog!!.findViewById(R.id.txtTime) as TextView
+            val txtAddress = suceessDialog!!.findViewById(R.id.txtAddress) as TextView
+          //  val txtBattery = suceessDialog!!.findViewById(R.id.txtBattery) as TextView
+
+            txtEmployee!!.setText(jsonObject.getString("EmployeeName"))
+            txtDate!!.setText(jsonObject.getString("EnteredDate"))
+            txtTime!!.setText(jsonObject.getString("EnteredTime"))
+            txtAddress!!.setText(jsonObject.getString("LocLocationName"))
+         //   txtAddress!!.setText(jsonObject.getString("ChargePercentage")+" %")
+
+            suceessDialog!!.show()
+            suceessDialog!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        }catch (e : Exception){
+
+        }
+
+
+    }
+
+
+    private fun addMarkerWithIconAndTitle(position: LatLng, title: String, iconResId: Int,pos : Int) {
         val options = MarkerOptions()
             .position(position)
             .title(title)
+            .snippet(""+pos)
 
         // Inflate the custom marker layout
         val markerView: View =

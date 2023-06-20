@@ -601,8 +601,8 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     override fun onClick(position: Int, data: String) {
         if (data.equals("todolist")){
             val jsonObject = todoArrayList.getJSONObject(position)
-            mailid = jsonObject.getString("Email")
-            Log.e(TAG,"mailid 111   "+mailid)
+//            mailid = jsonObject.getString("Email")
+//            Log.e(TAG,"mailid 111   "+mailid)
             val i = Intent(this@TodoListActivity, AccountDetailsActivity::class.java)
             i.putExtra("jsonObject",jsonObject.toString())
             i.putExtra("SubMode", submode)

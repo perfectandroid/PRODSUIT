@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Editable
@@ -15,15 +14,16 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
-import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.BitmapDescriptor
@@ -885,16 +885,38 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
         googleMap = map
         googleMap!!.uiSettings.isCompassEnabled = false
         googleMap!!.uiSettings.isMapToolbarEnabled = false
+        googleMap!!.setInfoWindowAdapter(null)
 
         Log.e(TAG,"jobjt  610   :  "+locationList)
         for (i in 0 until locationList.length()) {
             val json = locationList.getJSONObject(i)
-            addMarkerWithIconAndTitle(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble()), json.getString("EmployeeName"), R.drawable.person_location)
+            addMarkerWithIconAndTitle(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble()), json.getString("EmployeeName"), R.drawable.person_location,i)
             if (i==0){
                 googleMap!!.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
                 googleMap!!.moveCamera(CameraUpdateFactory.newLatLng(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble())))
             }
         }
+
+        googleMap!!.setOnMarkerClickListener(OnMarkerClickListener { marker -> // on marker click we are getting the title of our marker
+            // which is clicked and displaying it in a toast message.
+            marker.hideInfoWindow()
+            var pos = marker.snippet!!.toInt()
+            Log.e(TAG,"902   "
+            +"\n   "+marker.id
+            +"\n   "+marker.snippet
+            +"\n   "+marker.tag
+            +"\n   "+marker.alpha)
+
+            val jsonObject = locationList.getJSONObject(pos)
+            Log.e(TAG,"1062   Location List")
+            val i = Intent(this@LocationMarkingNewActivity, MapRootActivity::class.java)
+            i.putExtra("FK_Employee",jsonObject.getString("FK_Employee"))
+            i.putExtra("strDate",strDate)
+            startActivity(i)
+
+          //  Toast.makeText(this@LocationMarkingNewActivity, "Clicked location is $markerName", Toast.LENGTH_SHORT).show()
+            true
+        })
 
 
 //        // Add markers with icons and titles
@@ -907,14 +929,16 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
 //        googleMap!!.moveCamera(CameraUpdateFactory.newLatLng(LatLng(11.2590, 75.7863)))
     }
 
-    private fun addMarkerWithIconAndTitle(position: LatLng, title: String, iconResId: Int) {
+    private fun addMarkerWithIconAndTitle(position: LatLng, title: String, iconResId: Int,pos : Int) {
         val options = MarkerOptions()
             .position(position)
             .title(title)
+            .snippet(""+pos)
+
+
 
         // Inflate the custom marker layout
-        val markerView: View =
-            LayoutInflater.from(this).inflate(R.layout.custom_marker_layout, null)
+        val markerView: View = LayoutInflater.from(this).inflate(R.layout.custom_marker_layout, null)
 
         // Set the icon
         val markerIconImageView: ImageView = markerView.findViewById(R.id.marker_icon)
