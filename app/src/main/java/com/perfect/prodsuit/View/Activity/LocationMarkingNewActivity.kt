@@ -7,21 +7,23 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
-import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.BitmapDescriptor
@@ -56,8 +58,12 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
     var detailMode: String? = "0"
     private var tv_tab_StaffList: TextView? = null
     private var tv_tab_StaffDetails: TextView? = null
+    private var imgList: ImageView? = null
+    private var imgMap: ImageView? = null
     private var ll_details: LinearLayout? = null
     private var ll_list: LinearLayout? = null
+    private var ll_select_list: LinearLayout? = null
+    private var ll_select_map: LinearLayout? = null
     var recyStaffList: RecyclerView? = null
 
     private var imgv_filter: ImageView? = null
@@ -152,8 +158,12 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
         val imback = findViewById<ImageView>(R.id.imback)
         tv_tab_StaffList = findViewById<TextView>(R.id.tv_tab_StaffList)
         tv_tab_StaffDetails = findViewById<TextView>(R.id.tv_tab_StaffDetails)
+        imgList = findViewById<ImageView>(R.id.imgList)
+        imgMap = findViewById<ImageView>(R.id.imgMap)
         ll_details = findViewById<LinearLayout>(R.id.ll_details)
         ll_list = findViewById<LinearLayout>(R.id.ll_list)
+        ll_select_list = findViewById<LinearLayout>(R.id.ll_select_list)
+        ll_select_map = findViewById<LinearLayout>(R.id.ll_select_map)
         recyStaffList = findViewById<RecyclerView>(R.id.recyStaffList)
         imgv_filter = findViewById<ImageView>(R.id.imgv_filter)
 
@@ -165,6 +175,8 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
         tv_tab_StaffDetails!!.setOnClickListener(this)
         tv_tab_StaffList!!.setOnClickListener(this)
         imgv_filter!!.setOnClickListener(this)
+        ll_select_list!!.setOnClickListener(this)
+        ll_select_map!!.setOnClickListener(this)
 
         getCurrentdate("0")
 
@@ -182,6 +194,16 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
                 hideViews()
             }
             R.id.tv_tab_StaffDetails->{
+                listMode = "0"
+                detailMode="1"
+                hideViews()
+            }
+            R.id.ll_select_list->{
+                listMode = "1"
+                detailMode="0"
+                hideViews()
+            }
+            R.id.ll_select_map->{
                 listMode = "0"
                 detailMode="1"
                 hideViews()
@@ -228,19 +250,36 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
         ll_list!!.visibility = View.GONE
         ll_details!!.visibility = View.GONE
 
+        val colorSelect = ContextCompat.getColor(this, R.color.colorPrimary)
+        val colorUnSelect = ContextCompat.getColor(this, R.color.grey)
+
         if (listMode.equals("1")){
             ll_list!!.visibility = View.VISIBLE
-            tv_tab_StaffList!!.setBackgroundResource(R.drawable.shape_rectangle_bg)
+        //    tv_tab_StaffList!!.setBackgroundResource(R.drawable.shape_rectangle_bg)
             tv_tab_StaffDetails!!.setBackgroundResource(R.drawable.shape_rectangle_trans)
-            tv_tab_StaffList!!.setTextColor(Color.parseColor("#FFFFFF"))
-            tv_tab_StaffDetails!!.setTextColor(Color.parseColor("#FFFFFF"))
+//            tv_tab_StaffList!!.setTextColor(Color.parseColor("#FFFFFF"))
+//            tv_tab_StaffDetails!!.setTextColor(Color.parseColor("#FFFFFF"))
+
+            tv_tab_StaffList!!.setTextColor( getResources().getColor(R.color.colorPrimary))
+            tv_tab_StaffDetails!!.setTextColor(getResources().getColor(R.color.grey))
+            imgList!!.setColorFilter(colorSelect, PorterDuff.Mode.SRC_IN)
+            imgMap!!.setColorFilter(colorUnSelect, PorterDuff.Mode.SRC_IN)
+
+
         }
         if (detailMode.equals("1")){
             ll_details!!.visibility = View.VISIBLE
             tv_tab_StaffList!!.setBackgroundResource(R.drawable.shape_rectangle_trans)
-            tv_tab_StaffDetails!!.setBackgroundResource(R.drawable.shape_rectangle_bg)
-            tv_tab_StaffList!!.setTextColor(Color.parseColor("#FFFFFF"))
-            tv_tab_StaffDetails!!.setTextColor(Color.parseColor("#FFFFFF"))
+          //  tv_tab_StaffDetails!!.setBackgroundResource(R.drawable.shape_rectangle_bg)
+//            tv_tab_StaffList!!.setTextColor(Color.parseColor("#FFFFFF"))
+//            tv_tab_StaffDetails!!.setTextColor(Color.parseColor("#FFFFFF"))
+
+
+            tv_tab_StaffList!!.setTextColor( getResources().getColor(R.color.grey))
+            tv_tab_StaffDetails!!.setTextColor(getResources().getColor(R.color.colorPrimary))
+            imgList!!.setColorFilter(colorUnSelect, PorterDuff.Mode.SRC_IN)
+            imgMap!!.setColorFilter(colorSelect, PorterDuff.Mode.SRC_IN)
+
         }
     }
 
@@ -846,16 +885,38 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
         googleMap = map
         googleMap!!.uiSettings.isCompassEnabled = false
         googleMap!!.uiSettings.isMapToolbarEnabled = false
+        googleMap!!.setInfoWindowAdapter(null)
 
         Log.e(TAG,"jobjt  610   :  "+locationList)
         for (i in 0 until locationList.length()) {
             val json = locationList.getJSONObject(i)
-            addMarkerWithIconAndTitle(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble()), json.getString("EmployeeName"), R.drawable.person_location)
+            addMarkerWithIconAndTitle(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble()), json.getString("EmployeeName"), R.drawable.person_location,i)
             if (i==0){
                 googleMap!!.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
                 googleMap!!.moveCamera(CameraUpdateFactory.newLatLng(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble())))
             }
         }
+
+        googleMap!!.setOnMarkerClickListener(OnMarkerClickListener { marker -> // on marker click we are getting the title of our marker
+            // which is clicked and displaying it in a toast message.
+            marker.hideInfoWindow()
+            var pos = marker.snippet!!.toInt()
+            Log.e(TAG,"902   "
+            +"\n   "+marker.id
+            +"\n   "+marker.snippet
+            +"\n   "+marker.tag
+            +"\n   "+marker.alpha)
+
+            val jsonObject = locationList.getJSONObject(pos)
+            Log.e(TAG,"1062   Location List")
+            val i = Intent(this@LocationMarkingNewActivity, MapRootActivity::class.java)
+            i.putExtra("FK_Employee",jsonObject.getString("FK_Employee"))
+            i.putExtra("strDate",strDate)
+            startActivity(i)
+
+          //  Toast.makeText(this@LocationMarkingNewActivity, "Clicked location is $markerName", Toast.LENGTH_SHORT).show()
+            true
+        })
 
 
 //        // Add markers with icons and titles
@@ -868,14 +929,16 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
 //        googleMap!!.moveCamera(CameraUpdateFactory.newLatLng(LatLng(11.2590, 75.7863)))
     }
 
-    private fun addMarkerWithIconAndTitle(position: LatLng, title: String, iconResId: Int) {
+    private fun addMarkerWithIconAndTitle(position: LatLng, title: String, iconResId: Int,pos : Int) {
         val options = MarkerOptions()
             .position(position)
             .title(title)
+            .snippet(""+pos)
+
+
 
         // Inflate the custom marker layout
-        val markerView: View =
-            LayoutInflater.from(this).inflate(R.layout.custom_marker_layout, null)
+        val markerView: View = LayoutInflater.from(this).inflate(R.layout.custom_marker_layout, null)
 
         // Set the icon
         val markerIconImageView: ImageView = markerView.findViewById(R.id.marker_icon)
@@ -1063,6 +1126,15 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
             val jsonObject = locationList.getJSONObject(position)
             Log.e(TAG,"1062   Location List")
             val i = Intent(this@LocationMarkingNewActivity, MapRootActivity::class.java)
+            i.putExtra("FK_Employee",jsonObject.getString("FK_Employee"))
+            i.putExtra("strDate",strDate)
+            startActivity(i)
+        }
+
+        if (data.equals("LocDetails")){
+            val jsonObject = locationList.getJSONObject(position)
+            Log.e(TAG,"1062   Location List")
+            val i = Intent(this@LocationMarkingNewActivity, MapRootDetailActivity::class.java)
             i.putExtra("FK_Employee",jsonObject.getString("FK_Employee"))
             i.putExtra("strDate",strDate)
             startActivity(i)

@@ -37,12 +37,20 @@ class LocationMarkingAdapter (internal var context: Context, internal var jsonAr
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
-                holder.txtCustomer.text        = jsonObject!!.getString("EmployeeName")
-                holder.txtDesignation.text        = jsonObject!!.getString("DesName")
-                holder.txtAddress.text         = jsonObject!!.getString("LocLocationName")
+                holder.txtBattery.text        = jsonObject!!.getString("ChargePercentage")+" %"
+                holder.txtDate.text           = jsonObject!!.getString("EnteredDate")
+                holder.txtTime.text           = jsonObject!!.getString("EnteredTime")
+                holder.txtCustomer.text       = jsonObject!!.getString("EmployeeName")
+                holder.txtDesignation.text    = jsonObject!!.getString("DesName")
+                holder.txtAddress.text        = jsonObject!!.getString("LocLocationName")
 
-                holder.llLocationMarking!!.setOnClickListener(View.OnClickListener {
+                holder.im_mapview!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "LocList")
+
+                })
+
+                holder.im_detail!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "LocDetails")
 
                 })
             }
@@ -65,14 +73,24 @@ class LocationMarkingAdapter (internal var context: Context, internal var jsonAr
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
+        internal var txtBattery         : TextView
+        internal var txtDate            : TextView
+        internal var txtTime            : TextView
         internal var txtCustomer        : TextView
-        internal var txtDesignation        : TextView
-        internal var txtAddress        : TextView
-        internal var llLocationMarking    : LinearLayout
+        internal var txtDesignation     : TextView
+        internal var txtAddress         : TextView
+        internal var im_mapview         : ImageView
+        internal var im_detail          : ImageView
+        internal var llLocationMarking  : LinearLayout
         init {
-            txtCustomer               = v.findViewById<View>(R.id.txtCustomer) as TextView
-            txtDesignation               = v.findViewById<View>(R.id.txtDesignation) as TextView
-            txtAddress               = v.findViewById<View>(R.id.txtAddress) as TextView
+            txtBattery                  = v.findViewById<View>(R.id.txtBattery) as TextView
+            txtDate                     = v.findViewById<View>(R.id.txtDate) as TextView
+            txtTime                     = v.findViewById<View>(R.id.txtTime) as TextView
+            txtCustomer                 = v.findViewById<View>(R.id.txtCustomer) as TextView
+            txtDesignation              = v.findViewById<View>(R.id.txtDesignation) as TextView
+            txtAddress                  = v.findViewById<View>(R.id.txtAddress) as TextView
+            im_mapview                  = v.findViewById<View>(R.id.im_mapview) as ImageView
+            im_detail                   = v.findViewById<View>(R.id.im_detail) as ImageView
             llLocationMarking           = v.findViewById<View>(R.id.llLocationMarking) as LinearLayout
         }
     }

@@ -80,7 +80,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://103.50.212.195/PerfectWebERPAPI/"
 //    val BANK_KEY = "-101"
 
-    // Demo 17-03-2023
+    // Demo 16-06-2023
 //    val CERT_NAME = "supportdemo.pem"
 //    val BASE_URL = "https://45.118.163.44:14003/ProdSuiteAPIPerfectDemo/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14003/ProdSuiteAPIPerfectDemo/"
