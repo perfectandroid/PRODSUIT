@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
+import com.perfect.nbfcmscore.Helper.PicassoTrustAll
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -53,7 +54,11 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     private var tvdescriptn3: TextView? = null
     private var tv_address: TextView? = null
     private var tv_gender: TextView? = null
+    private var tv_name1: TextView? = null
     private var tv_email: TextView? = null
+    private var tv_address1: TextView? = null
+    private var tv_email1: TextView? = null
+    private var tv_mob2: TextView? = null
     private var tv_mob: TextView? = null
     private var chipNavigationBar: ChipNavigationBar? = null
     lateinit var context: Context
@@ -64,6 +69,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     private var ll_email: LinearLayout? = null
     private var ll_mob: LinearLayout? = null
 
+    private var img_techpartner: ImageView? = null
+//    private var img_logo: ImageView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,6 +82,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         context = this@ProfileActivity
         bottombarnav()
         getCalendarId(context)
+        setTechnologyPartner()
         getProfile()
 
         val LOGIN_DATETIMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF30, 0)
@@ -85,7 +93,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         imback = findViewById(R.id.imback)
         imback!!.setOnClickListener(this)
 
-        tv_name= findViewById(R.id.tv_nme)
+//        tv_name= findViewById(R.id.tv_nme)
         tv_Status= findViewById(R.id.tv_Status)
         tv_DateTime= findViewById(R.id.tv_DateTime)
         tv_dob = findViewById(R.id.tv_dob)
@@ -94,15 +102,40 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         tv_email = findViewById(R.id.tv_email)
         tv_mob = findViewById(R.id.tv_mob)
 
+        tv_address1 = findViewById(R.id.tv_address1)
+        tv_name1 = findViewById(R.id.tv_name1)
+        tv_email1 = findViewById(R.id.tv_email1)
+        tv_mob2 = findViewById(R.id.tv_mob2)
+        img_techpartner= findViewById(R.id.img_techpartner)
+
         ll_address = findViewById(R.id.ll_address)
         ll_dob = findViewById(R.id.ll_dob)
         ll_email = findViewById(R.id.ll_email)
-        ll_mob = findViewById(R.id.ll_mob)
+        ll_mob = findViewById(R.id.ll_mobb)
 
         crdv_1 = findViewById(R.id.crdv_1)
         crdv_2 = findViewById(R.id.crdv_2)
         crdv_3 = findViewById(R.id.crdv_3)
         crdv_4 = findViewById(R.id.crdv_4)
+
+
+    }
+
+    private fun setTechnologyPartner() {
+
+        try {
+            val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
+            val TechnologyPartnerImageSP = applicationContext.getSharedPreferences(Config.SHARED_PREF20, 0)
+            val AppIconImageCodeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF19, 0)
+            var IMAGEURL = IMAGE_URLSP.getString("IMAGE_URL","")
+
+            val TechnologyPartnerImage  = IMAGEURL + TechnologyPartnerImageSP.getString("TechnologyPartnerImage", "")
+            PicassoTrustAll.getInstance(this@ProfileActivity)!!.load(TechnologyPartnerImage).error(R.drawable.svg_trans).into(img_techpartner)
+
+        }catch (e : Exception){
+
+        }
+
 
 
     }
@@ -137,6 +170,8 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                 var dateTime = jobjt.getString("LoginDate")+" "+jobjt.getString("LoginTime")
                                 val LoginMode = jobjt.getString("LoginMode")
 
+                                Log.e("ss","eeee11111     "+LoginMode)
+
                                 if (LoginMode.equals("0")){
                                     tv_Status!!.setText(jobjt.getString("LoginStatus"))
                                     tv_Status!!.setTextColor(resources.getColor(R.color.greydark))
@@ -150,23 +185,26 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                     tv_Status!!.getCompoundDrawables()[0].setTint(resources.getColor(R.color.green))
                                 }
 
+                                Log.e("ss","rrrrrrrr     "+name)
+                                Log.e("ss","rrrrrrrr     "+LoginMode)
+
                                 tv_DateTime!!.setText(dateTime)
                                 if(name!=null||name!="")
                                 {
-                                    tv_name!!.visibility=View.VISIBLE
+                                    tv_name1!!.visibility=View.VISIBLE
                                     crdv_1!!.visibility=View.VISIBLE
-                                    tv_name!!.text=name
+                                    tv_name1!!.text=name
                                 }
                                 else
                                 {
-                                    tv_name!!.visibility=View.GONE
+                                    tv_name1!!.visibility=View.GONE
                                 }
 
                                  if(address!=null||address!="")
                                 {
-                                    ll_address!!.visibility=View.VISIBLE
+                                    tv_address1!!.visibility=View.VISIBLE
                                     crdv_1!!.visibility=View.VISIBLE
-                                    tv_address!!.text=address
+                                    tv_address1!!.text=address
 
                                 }
                                  else
@@ -178,7 +216,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                 {
                                     ll_mob!!.visibility=View.VISIBLE
                                     crdv_4!!.visibility=View.VISIBLE
-                                    tv_mob!!.text=mob
+                                    tv_mob2!!.text=mob
 
                                 }
                                 else
@@ -189,27 +227,27 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                 if(email!=null&&!email.isEmpty())
                                 {
                                     crdv_3!!.visibility=View.VISIBLE
-                                    ll_email!!.visibility=View.VISIBLE
-                                    tv_email!!.text=email
+                                    tv_email1!!.visibility=View.VISIBLE
+                                    tv_email1!!.text=email
 
                                 }
                                 else
                                 {
                                     crdv_3!!.visibility=View.GONE
-                                    ll_email!!.visibility=View.GONE
+                                    tv_email1!!.visibility=View.GONE
                                 }
-                              if(dob!=null||dob!="")
-                                {
-                                    crdv_2!!.visibility=View.VISIBLE
-                                    ll_dob!!.visibility=View.VISIBLE
-                                    tv_dob!!.text=dob
-
-                                }
-                              else
-                              {
-                                  crdv_2!!.visibility=View.GONE
-                                  ll_dob!!.visibility=View.GONE
-                              }
+//                              if(dob!=null||dob!="")
+//                                {
+//                                    crdv_2!!.visibility=View.VISIBLE
+//                                    ll_dob!!.visibility=View.VISIBLE
+//                                    tv_dob!!.text=dob
+//
+//                                }
+//                              else
+//                              {
+//                                  crdv_2!!.visibility=View.GONE
+//                                  ll_dob!!.visibility=View.GONE
+//                              }
 
 
 

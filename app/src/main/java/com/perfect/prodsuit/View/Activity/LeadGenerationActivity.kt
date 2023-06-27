@@ -1,12 +1,14 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -15,6 +17,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.InputType
@@ -135,6 +138,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     var recyLeadThrough: RecyclerView? = null
     var recySubMedia: RecyclerView? = null
     var recyLeadby: RecyclerView? = null
+    var recyContact: RecyclerView? = null
+    var listview: ListView? = null
     var recyMediaType: RecyclerView? = null
     private var imgvupload1: ImageView? = null
     private var imgvupload2: ImageView? = null
@@ -163,6 +168,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     var dialogLeadThrough: Dialog? = null
     var dialogSubMedia: Dialog? = null
     var dialogLeadBy: Dialog? = null
+    var dialogContact: Dialog? = null
     var dialogMediaType: Dialog? = null
     var dialogCustSearch: Dialog? = null
     lateinit var customersearchViewModel: CustomerSearchViewModel
@@ -325,7 +331,13 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
     var searchType = arrayOf<String>()
     var searchNameTitle = arrayOf<String>()
+    var dataContact = arrayOf<String>()
     var SubModeSearch: String? = ""
+    private var name : String? = null
+    private var phoneNo : String? = null
+    private var cursor : Cursor? = null
+    private var imvContactbook : ImageView? = null
+//    private var adapter :  ArrayAdapter? = null
 
     companion object {
         var LeadFromType: String? = ""   //  0-Text ,  1-Dropdown ,  2-None
@@ -498,7 +510,6 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         // getCalendarId(context)
         checkAttendance()
         clearData()
-        getLeadRequestLicences()
         switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 llNeedTransfer!!.visibility = View.VISIBLE
@@ -902,6 +913,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         tv_MediaTypeClick = findViewById<TextView>(R.id.tv_MediaTypeClick)
         tv_UploadImage = findViewById<TextView>(R.id.tv_UploadImage)
         tv_MoreCommInfoClick = findViewById<TextView>(R.id.tv_MoreCommInfoClick)
+        imvContactbook = findViewById<ImageView>(R.id.imvContactbook)
 
 
         recyRequest = findViewById<RecyclerView>(R.id.recyRequest)
@@ -912,6 +924,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
         imback!!.setOnClickListener(this)
         imLeadedit!!.setOnClickListener(this)
+        imvContactbook!!.setOnClickListener(this)
+        edtCustname!!.setOnClickListener(this)
         img_search!!.setOnClickListener(this)
         imCustclose!!.setOnClickListener(this)
         imDateclose!!.setOnClickListener(this)
@@ -1678,6 +1692,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //                Customer_Address = ""
 //                strCustomer = ""
             }
+            R.id.imvContactbook ->{
+                getContactRequest()
+            }
 
             R.id.imCustclose -> {
                 llCustomerDetail!!.visibility = View.GONE
@@ -1943,6 +1960,96 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             }
 
+        }
+    }
+
+
+
+    private fun getContactRequest() {
+        if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.READ_CONTACTS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CONTACTS), 1)
+        }
+
+        getContactList()
+    }
+
+
+    @SuppressLint("Range")
+    private fun getContactList() {
+
+        try {
+
+//
+             cursor = contentResolver.query(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null)
+            startManagingCursor(cursor)
+
+
+            val dataContact = arrayOf(
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER,
+                ContactsContract.CommonDataKinds.Phone._ID)
+            val to = intArrayOf(android.R.id.text1, android.R.id.text2)
+
+
+            dialogContact = Dialog(this)
+            dialogContact!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogContact!!.setContentView(R.layout.contact_pop_up)
+            dialogContact!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+            listview = dialogContact!!.findViewById(R.id.ListView) as ListView
+
+            val window: Window? = dialogContact!!.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent)
+            window!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+
+            Log.e("rreee","wwwwwww "+dataContact.size)
+            val adapter =
+                SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, cursor, dataContact, to)
+//              val adapter = ArrayAdapter(this@LeadGenerationActivity, android.R.layout.simple_list_item_1, dataContact)
+//            ListView!!.setAdapter(adapter as ListAdapter?)
+            listview!!.setAdapter(adapter)
+            listview
+            dialogContact!!.show()
+
+//            cursor!!.moveToPosition(0)
+//            cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+//            Log.e("ffgg","ffffeeeeeeeeeee "+adapter.cursor.count)
+//            Log.e("ffgg","ffffeeeeeeeeeee11222 "+cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)))
+
+
+            listview!!.setOnItemClickListener(object : AdapterView.OnItemClickListener {
+                override fun onItemClick(
+                    parent: AdapterView<*>?, view: View?,
+                    position: Int, id: Long
+                ) {
+//                    cursor!!.moveToPosition(position)
+//                    Customer_Mobile = cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+
+                    Log.e("eedd","hfhfhfhfgdgdyfghh    "+position)
+                    cursor!!.moveToPosition(position)
+                    Log.e("eedd","weqweefdfdsa")
+                    Log.e("ffgg","ffffeeeeeeeeeee11222 "+cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)))
+
+                    edt_customer!!.setText("")
+
+                    edtCustname!!.setText(cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)))
+                    edtCustphone!!.setText(cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)))
+                    Log.e("eedd","weqweefdfdsa")
+//                    Log.e("ffgg","ffffeeeeeeeeeee11222 "+cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)))
+                    dialogContact!!.dismiss()
+                }
+
+            })
+
+
+        }catch (e: Exception){
+            e.printStackTrace()
+            Log.e("eeee","rreeeerree "+e)
         }
     }
 

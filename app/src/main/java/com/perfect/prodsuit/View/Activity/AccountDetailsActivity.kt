@@ -287,8 +287,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         Log.e(TAG,"jsonObj  123456 "+jsonObj)
         SubMode  = intent.getStringExtra("SubMode")
         Log.e(TAG,"SubMode  12345678 "  +SubMode)
-        Reciever_Id  = intent.getStringExtra("Reciever")
-        Log.e(TAG,"Reciever_Id  11555555 "  +Reciever_Id)
+//        Reciever_Id  = intent.getStringExtra("Reciever")
+//        Log.e(TAG,"Reciever_Id  11555555 "  +Reciever_Id)
 
         ID_LeadGenerateProduct = jsonObj!!.getString("ID_LeadGenerateProduct")
         ID_LeadGenerate = jsonObj!!.getString("ID_LeadGenerate")
@@ -2062,7 +2062,9 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                             txtProduct!!.setText(""+jObjectLeadInfo.getString("Product"))
 
                                             mailid = jObjectLeadInfo.getString("Email")
+                                            Reciever_Id = jObjectLeadInfo.getString("ID_Users")
                                             Log.e(TAG,"mailid   77777   "+mailid)
+                                            Log.e(TAG,"Reciever_Id   77777   "+Reciever_Id)
 //                                            txtTargetDate!!.setText(""+jObjectLeadInfo.getString("NextActionDate"))
 //                                            txtAction!!.setText(""+jObjectLeadInfo.getString("NxtActnName"))
 //                                            LgCusMobile = jObjectLeadInfo.getString("LgCusMobile")
