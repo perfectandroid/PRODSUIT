@@ -3,8 +3,10 @@ package com.perfect.prodsuit.View.Activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.*
-import android.app.job.JobScheduler
-import android.content.*
+import android.content.ContentValues
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -52,6 +54,7 @@ import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
 import com.perfect.prodsuit.View.Adapter.HomeGridAdapter
 import com.perfect.prodsuit.View.Service.*
+import com.perfect.prodsuit.View.Service.LocationUpdateService
 import com.perfect.prodsuit.Viewmodel.*
 import com.perfect.prodsuit.interfaces.MyCallback
 import me.relex.circleindicator.CircleIndicator
@@ -159,8 +162,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     private var img_techpartner: ImageView? = null
     private var img_logo: ImageView? = null
+    var activity = "1"
 
-    var mJobScheduler: JobScheduler? = null
+//    var mJobScheduler: JobScheduler? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -177,6 +181,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         getCalendarId(context)
         checkAndRequestPermissions()
         getLocationTracker()
+//        getServiceNotification()
 //        getNotfCount()
         SubMode = "2"
         AddAttendanceApi(strLatitude,strLongitue,address)
@@ -301,6 +306,30 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
 
+
+
+    private fun getServiceNotification() {
+        try {
+            val Loginpref = applicationContext.getSharedPreferences(Config.SHARED_PREF, 0)
+            if (Loginpref.getString("loginsession", null) != null && !Loginpref.getString("loginsession", null
+                )!!.isEmpty() && Loginpref.getString("loginsession", null) == "Yes"){
+                Log.e(TAG,"55555555666669999   ")
+//
+//                    startService(Intent(this, NotificationService::class.java))
+//
+
+            }
+//            else{
+//                    Log.e(TAG,"6666666666666   ")
+//                    stopService(Intent(this, NotificationService::class.java))
+////
+//            }
+
+        }catch (e : Exception){
+
+        }
+
+    }
 
     private fun setTechnologyPartner() {
 
@@ -1965,6 +1994,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     override fun onServiceCallback(data: String) {
 
+        activity = ""
         Log.e(TAG,"1838     "+data)
     }
 

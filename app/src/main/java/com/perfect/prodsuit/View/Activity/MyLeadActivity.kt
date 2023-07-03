@@ -559,12 +559,12 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             Log.e(TAG,"5471  todolist")
             val jsonObject = upcmngtaskArrayList.getJSONObject(position)
             val i = Intent(this@MyLeadActivity, AccountDetailsActivity::class.java)
-            Reciever_Id = jsonObject.getString("ID_Users")
-            Log.e("TAG","Reciever_Id  11122 "+Reciever_Id)
+//            Reciever_Id = jsonObject.getString("ID_Users")
+//            Log.e("TAG","Reciever_Id  11122 "+Reciever_Id)
             i.putExtra("jsonObject",jsonObject.toString())
             i.putExtra("SubMode",SubMode)
-            i.putExtra("Reciever",Reciever_Id)
-            Log.e("TODO"," Reciever_Id 5555    "+Reciever_Id)
+//            i.putExtra("Reciever",Reciever_Id)
+//            Log.e("ded"," Reciever_Id 5555    "+Reciever_Id)
             startActivity(i)
         }
         if (data.equals("todocall")){

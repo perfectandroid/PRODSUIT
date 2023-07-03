@@ -20,7 +20,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp">
+                android:layout_height="150dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -31,8 +31,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"/>
-<!--                    android:background="@drawable/shape_gradients"-->
-<!--                    android:background="@color/colorPrimary"-->
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -111,133 +110,12 @@
 
                 </LinearLayout>
 
-                <androidx.cardview.widget.CardView
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:cardCornerRadius="5dp"
-                    android:background="@color/color_background"
-                    android:layout_marginTop="2dp"
-                    app:cardElevation="5dp"
-                    app:cardUseCompatPadding="true"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginBottom="30dp"
-                    android:layout_alignParentBottom="true">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingTop="30dp"
-                        android:paddingBottom="30dp"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_profile_bg"
-                                android:layout_marginTop="5dp"
-                                android:orientation="vertical">
-
-                                <de.hdodenhof.circleimageview.CircleImageView
-                                    android:id="@+id/profile_image"
-                                    android:layout_width="60dp"
-                                    android:layout_height="60dp"
-                                    android:layout_margin="5dp"
-                                    android:layout_centerInParent="true"
-                                    android:layout_gravity="center"
-                                    android:src="@drawable/profile"
-                                    app:civ_border_color="@color/white"
-                                    app:civ_border_width="2dp" />
-
-
-                            </LinearLayout>
-
-
-                        </LinearLayout>
-
-
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:id="@+id/tv_nme"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:visibility="visible"
-                                android:gravity="center_vertical"
-                                android:textStyle="bold"
-                                android:text=""
-                                android:textColor="@color/black"
-                                android:textSize="20dp"
-                                app:fontFamily="@font/myfont" />
-
-                            <TextView
-                                android:id="@+id/tv_Status"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:visibility="gone"
-                                android:gravity="center"
-                                android:text="On Duty"
-                                android:textColor="@color/green"
-                                android:drawableLeft="@drawable/dot_svg"
-                                android:drawablePadding="5dp"
-                                android:textSize="14dp"
-                                app:fontFamily="@font/myfont"
-                                android:background="@drawable/rounded_online" />
-
-                            <TextView
-                                android:id="@+id/tv_DateTime"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp"
-                                android:layout_marginBottom="10dp"
-                                android:visibility="visible"
-                                android:gravity="center_vertical"
-                                android:text=""
-                                android:textColor="@color/greydark"
-                                android:textSize="14dp"
-                                app:fontFamily="@font/myfont" />
-
-
-                        </LinearLayout>
-
-
-
-
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/rounded_shape_profle"
+                android:background="@color/white"
                 android:orientation="vertical">
 
 
@@ -281,11 +159,11 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:layout_margin="30dp"
-                                    android:visibility="visible"
+                                    android:layout_margin="45dp"
+                                    android:visibility="gone"
                                     android:gravity="center_vertical"
                                     android:textStyle="bold"
-                                    android:text="Personal Info"
+                                    android:text=""
                                     android:textColor="@color/greydark"
                                     android:textSize="20dp"
                                     app:fontFamily="@font/myfont" />
@@ -295,6 +173,53 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tv_name1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text=""
+                                        android:textColor="@color/black"
+                                        android:layout_marginTop="10dp"
+                                        android:layout_marginRight="20dp"
+                                        android:textSize="20dp"
+                                        app:fontFamily="@font/myfont"
+                                        android:textStyle="bold"
+                                        android:layout_marginLeft="150dp"/>
+
+                                    <TextView
+                                        android:id="@+id/tv_Status"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="20dp"
+                                        android:layout_marginRight="20dp"
+                                        android:visibility="gone"
+                                        android:gravity="center"
+                                        android:text="On Duty"
+                                        android:textColor="@color/green"
+                                        android:drawableLeft="@drawable/dot_svg"
+                                        android:drawablePadding="5dp"
+                                        android:textSize="14dp"
+                                        app:fontFamily="@font/myfont"
+                                        android:background="@drawable/rounded_online" />
+
+                                    <TextView
+                                        android:id="@+id/tv_DateTime"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text=""
+                                        android:layout_marginRight="20dp"
+                                        android:textSize="14dp"
+                                        app:fontFamily="@font/myfont"
+                                        android:textColor="@color/black"
+                                        android:layout_marginLeft="150dp"/>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="80dp"
+                                        android:orientation="vertical">
 
                                     <androidx.cardview.widget.CardView
                                         android:id="@+id/crdv_1"
@@ -306,14 +231,14 @@
                                         android:visibility="gone"
                                         android:layout_marginLeft="10dp"
                                         android:layout_marginRight="10dp"
-                                        android:layout_marginTop="1dp"
+                                        android:layout_marginTop="30dp"
                                         android:layout_marginBottom="0dp"
                                         app:cardMaxElevation="0dp">
                                         <LinearLayout
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:id="@+id/ll_address"
-                                            android:visibility="gone"
+                                            android:visibility="visible"
                                             android:orientation="horizontal">
 
                                             <LinearLayout
@@ -321,13 +246,14 @@
                                                 android:layout_height="match_parent"
                                                 android:layout_weight="3"
                                                 android:gravity="center"
+                                                android:visibility="visible"
                                                 android:orientation="vertical">
 
                                                 <ImageView
-                                                    android:layout_width="60dp"
-                                                    android:layout_height="60dp"
+                                                    android:layout_width="50dp"
+                                                    android:layout_height="50dp"
                                                     android:padding="10dp"
-                                                    android:src="@drawable/address_svg"/>
+                                                    android:src="@drawable/homeaddress"/>
 
                                             </LinearLayout>
 
@@ -335,9 +261,11 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_weight="1"
+                                                android:paddingStart="10dp"
                                                 android:orientation="vertical">
+
                                                 <TextView
-                                                    android:id="@+id/tv_address1"
+                                                    android:id="@+id/tv_address"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:fontFamily="@font/myfont"
@@ -348,7 +276,7 @@
                                                     android:textSize="14dp"/>
                                                 <!--                                            android:drawableLeft="@drawable/ic_location"-->
                                                 <TextView
-                                                    android:id="@+id/tv_address"
+                                                    android:id="@+id/tv_address1"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:fontFamily="@font/myfont"
@@ -390,13 +318,14 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:id="@+id/ll_dob"
-                                            android:visibility="gone"
+                                            android:visibility="visible"
                                             android:orientation="horizontal">
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
                                                 android:layout_weight="3"
+                                                android:visibility="gone"
                                                 android:gravity="center"
                                                 android:orientation="vertical">
 
@@ -414,6 +343,7 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_weight="1"
+                                                android:layout_marginStart="10dp"
                                                 android:orientation="vertical">
                                                 <TextView
                                                     android:id="@+id/tv_dob1"
@@ -460,7 +390,7 @@
                                         app:cardElevation="0dp"
                                         android:layout_marginLeft="10dp"
                                         android:layout_marginRight="10dp"
-                                        android:layout_marginTop="15dp"
+                                        android:layout_marginTop="25dp"
                                         android:layout_marginBottom="0dp"
                                         app:cardMaxElevation="0dp">
 
@@ -468,21 +398,22 @@
                                             android:id="@+id/ll_email"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:visibility="gone"
+                                            android:visibility="visible"
                                             android:orientation="horizontal">
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
                                                 android:layout_weight="3"
+                                                android:visibility="visible"
                                                 android:gravity="center"
                                                 android:orientation="vertical">
 
                                                 <ImageView
-                                                    android:layout_width="60dp"
-                                                    android:layout_height="60dp"
+                                                    android:layout_width="50dp"
+                                                    android:layout_height="50dp"
                                                     android:padding="10dp"
-                                                    android:src="@drawable/gmail_svg"/>
+                                                    android:src="@drawable/mailoutline"/>
 
                                             </LinearLayout>
 
@@ -491,11 +422,12 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_weight="1"
+                                                android:layout_marginStart="10dp"
                                                 android:orientation="vertical">
 
 
                                                 <TextView
-                                                    android:id="@+id/tv_email1"
+                                                    android:id="@+id/tv_email"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:paddingLeft="5dp"
@@ -510,7 +442,7 @@
                                                     android:textSize="14dp"/>
                                                 <!--                                            android:drawableLeft="@drawable/ic_email"-->
                                                 <TextView
-                                                    android:id="@+id/tv_email"
+                                                    android:id="@+id/tv_email1"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
 
@@ -623,11 +555,11 @@
                                         app:cardBackgroundColor="@color/white"
                                         app:cardCornerRadius="0dp"
                                         android:id="@+id/crdv_6"
-                                        android:visibility="invisible"
+                                        android:visibility="visible"
                                         app:cardElevation="0dp"
                                         android:layout_marginLeft="10dp"
                                         android:layout_marginRight="10dp"
-                                        android:layout_marginTop="15dp"
+                                        android:layout_marginTop="25dp"
                                         android:layout_marginBottom="0dp"
                                         app:cardMaxElevation="0dp">
 
@@ -643,13 +575,14 @@
                                                 android:layout_height="match_parent"
                                                 android:layout_weight="3"
                                                 android:gravity="center"
+                                                android:visibility="visible"
                                                 android:orientation="vertical">
 
                                                 <ImageView
-                                                    android:layout_width="60dp"
-                                                    android:layout_height="60dp"
+                                                    android:layout_width="50dp"
+                                                    android:layout_height="50dp"
                                                     android:padding="10dp"
-                                                    android:src="@drawable/call_svg_profile"/>
+                                                    android:src="@drawable/callingphone"/>
 
                                             </LinearLayout>
 
@@ -658,6 +591,7 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_weight="1"
+                                                android:layout_marginStart="10dp"
                                                 android:orientation="vertical">
                                                 <TextView
                                                     android:id="@+id/tv_mobb"
@@ -698,7 +632,7 @@
 
                                     </androidx.cardview.widget.CardView>
 
-
+                                    </LinearLayout>
                                 </LinearLayout>
 
 
@@ -715,14 +649,17 @@
             </LinearLayout>
 
 
-
-
-
-
-
-
-
         </LinearLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="150dp"
+            android:layout_height="125dp"
+            android:src="@drawable/profile"
+            app:civ_border_color="@color/white"
+            android:paddingLeft="10dp"
+            app:civ_border_width="3dp"
+            app:civ_circle_background_color="@color/white"
+            android:layout_marginTop="90dp"/>
 
         <com.ismaeldivita.chipnavigation.ChipNavigationBar
             android:id="@+id/chipNavigation"
@@ -733,5 +670,17 @@
             app:cnb_menuResource="@menu/navbottom_item"
             app:cnb_textAppearance="@style/CustomTextStyle"
             android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/img_techpartner"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/white" />
     </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -54,6 +54,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var context: Context
     lateinit var mpinActivityViewModel: MpinActivityViewModel
     lateinit var forgotMpinViewModel: ForgotMpinViewModel
+    private var activity: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +65,8 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         context = this@MpinActivity
         mpinActivityViewModel = ViewModelProvider(this).get(MpinActivityViewModel::class.java)
         forgotMpinViewModel = ViewModelProvider(this).get(ForgotMpinViewModel::class.java)
+
+        activity = intent.getStringExtra("activity")
     }
 
     private fun setRegViews() {

@@ -772,8 +772,8 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     override fun onClick(position: Int, data: String) {
         if (data.equals("todolist")){
             val jsonObject = overdueArrayList.getJSONObject(position)
-            mailid = jsonObject.getString("Email")
-            Log.e(TAG,"mailid 111   "+mailid)
+//            mailid = jsonObject.getString("Email")
+//            Log.e(TAG,"mailid 111   "+mailid)
             val i = Intent(this@OverDueActivity, AccountDetailsActivity::class.java)
             i.putExtra("jsonObject",jsonObject.toString())
             i.putExtra("SubMode", submode)

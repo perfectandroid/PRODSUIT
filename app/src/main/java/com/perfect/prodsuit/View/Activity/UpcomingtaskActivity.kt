@@ -617,6 +617,8 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         if (data.equals("todoMessage")){
             val jsonObject = upcmngtaskArrayList.getJSONObject(position)
             Log.e("TAG","313  ID_LeadGenerate   :  "+jsonObject.getString("ID_LeadGenerate"))
+            mailid = jsonObject.getString("Email")
+            Log.e(TAG,"mailid 111   "+mailid)
             messagePopup()
         }
 
