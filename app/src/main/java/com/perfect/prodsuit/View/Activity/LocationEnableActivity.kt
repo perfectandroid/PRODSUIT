@@ -71,7 +71,7 @@ class LocationEnableActivity : AppCompatActivity() {
             } else {
                 Log.e(TAG,"9400005    runTimePermission  ")
                 // requestPermissions()
-                finishAffinity()
+                onBackPressed()
             }
         }else{
 
