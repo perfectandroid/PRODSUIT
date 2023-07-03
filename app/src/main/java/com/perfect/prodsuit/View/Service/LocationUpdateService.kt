@@ -50,7 +50,7 @@ class LocationUpdateService : Service() {
     private lateinit var activity: HomeActivity
     override fun onCreate() {
         super.onCreate()
-        Log.e(TAG,"52011   onCreate")
+        Log.e(TAG,"122222001   onCreate")
    //     employeeLocationUpdateViewModel = ViewModelProvider(this).get(EmployeeLocationUpdateViewModel::class.java)
         context = this
         timer = Timer()
@@ -79,22 +79,23 @@ class LocationUpdateService : Service() {
                             geocoder = Geocoder(context, Locale.getDefault())
                             addresses = geocoder!!.getFromLocation(location.latitude, location.longitude, 1)
                             var address = addresses!!.get(0).getAddressLine(0)
-                            Log.e(TAG,"123451 Location           :    "+location.latitude+"  :  "+location.longitude)
-                            Log.e(TAG,"123452 City           :    "+address)
-                            Log.e(TAG,"123453 batteryPercentage  :   "+batteryPercentage)
+                            Log.e(TAG,"122222002 Location           :    "+location.latitude+"  :  "+location.longitude)
+                            Log.e(TAG,"122222003 City           :    "+address)
+                            Log.e(TAG,"122222004 batteryPercentage  :   "+batteryPercentage)
                             //   Toast.makeText(context,"Address  "+ address,Toast.LENGTH_SHORT).show()
                             updateLocation(location.latitude.toString(),location.longitude.toString(),address,batteryPercentage.toString(),context)
 
 
+
                         }catch (e : Exception){
-                            Log.e(TAG,"123456 Exception  :   "+e.toString())
+                            Log.e(TAG,"122222005 Exception  :   "+e.toString())
                         }
 
                     }
                 }
             }
         }else{
-            Log.e(TAG,"62222201   ")
+            Log.e(TAG,"122222006   ")
             stopLocationUpdates()
         }
 
@@ -103,7 +104,7 @@ class LocationUpdateService : Service() {
     private fun updateLocation(latitudes : String,longitude : String,address : String,batteryPercentage : String,context : Context) {
 
         try {
-            Log.e(TAG,"52012   updateLocation")
+            Log.e(TAG,"122222007   updateLocation")
             try {
                 val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
 
@@ -159,7 +160,7 @@ class LocationUpdateService : Service() {
                     requestObject1.put("LocationEnteredTime", ProdsuitApplication.encryptStart(curTime))
                     requestObject1.put("ChargePercentage", ProdsuitApplication.encryptStart(batteryPercentage))
 
-                    Log.e(TAG,"17200  requestObject1    "+requestObject1)
+                    Log.e(TAG,"122222008  requestObject1    "+requestObject1)
 
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -175,23 +176,32 @@ class LocationUpdateService : Service() {
                         Response<String>
                     ) {
                         try {
-                            Log.e(TAG,"17200 response  "+response.body())
+                         //   stopSelf()
+                             onCreate()
+//                            startTimer()
+//                            startLocationUpdates()
+                            Log.e(TAG,"122222009 response  "+response.body())
                         } catch (e: Exception) {
                             e.printStackTrace()
-                            Log.e(TAG,"17200  Exception "+e.toString())
+                          //  stopSelf()
+                            stopLocationUpdates()
+                            Log.e(TAG,"1222220010  Exception "+e.toString())
                         }
                     }
                     override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-
+                       // stopSelf()
+                        stopLocationUpdates()
                     }
                 })
             }catch (e : Exception){
                 e.printStackTrace()
-
+               // stopSelf()
+                stopLocationUpdates()
             }
         }catch (e: Exception){
-
-            Log.e(TAG,"12424    "+e.toString())
+         //   stopSelf()
+            stopLocationUpdates()
+            Log.e(TAG,"1222220011    "+e.toString())
         }
     }
 

@@ -3,12 +3,14 @@ package com.perfect.prodsuit.Receivers
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.location.LocationManager
 import android.telephony.TelephonyManager
 import android.util.Log
 import android.widget.Toast
 import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.View.Activity.AddRemarkActivity
 import com.perfect.prodsuit.View.Activity.FollowUpActivity
+
 
 class PhoneStatReceiver : BroadcastReceiver() {
 
@@ -25,6 +27,21 @@ class PhoneStatReceiver : BroadcastReceiver() {
 //
 //           Log.e("MyReceiver", "   25122233   "+message);
 
+           Log.e(TAG,"Starting  2512221222000  ")
+
+//           val isMyServiceRunning = Config.isServiceRunning(context!!, LocationService::class.java)
+//           if (!isMyServiceRunning){
+//
+//          //     Toast.makeText(context!!,"LocationService  Stopped ",Toast.LENGTH_SHORT).show()
+//               val gpsStatusReceiver = GpsStatusReceiver()
+//               val filter = IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION)
+//               context!!.registerReceiver(gpsStatusReceiver, filter)
+//
+//               val serviceIntent = Intent(context, LocationService::class.java)
+//               context!!.startService(serviceIntent)
+//           }else{
+//              // Toast.makeText(context!!,"LocationService Running  ",Toast.LENGTH_SHORT).show()
+//           }
 
 
 

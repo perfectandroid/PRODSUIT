@@ -3,10 +3,8 @@ package com.perfect.prodsuit.View.Activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.*
-import android.content.ContentValues
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
+import android.app.job.JobScheduler
+import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -48,11 +46,12 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.nbfcmscore.Helper.PicassoTrustAll
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.DBHelper
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
 import com.perfect.prodsuit.View.Adapter.HomeGridAdapter
-import com.perfect.prodsuit.View.Service.LocationUpdateService
+import com.perfect.prodsuit.View.Service.*
 import com.perfect.prodsuit.Viewmodel.*
 import com.perfect.prodsuit.interfaces.MyCallback
 import me.relex.circleindicator.CircleIndicator
@@ -161,6 +160,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private var img_techpartner: ImageView? = null
     private var img_logo: ImageView? = null
 
+    var mJobScheduler: JobScheduler? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -181,36 +182,125 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         AddAttendanceApi(strLatitude,strLongitue,address)
         checkAttendance()
         setTechnologyPartner()
-
-
+        
     }
 
     private fun getLocationTracker() {
         try {
+            val db = DBHelper(this, null)
+            db.getLocations()
+          //  db.delete()
+
+
+
+         //   setAlarm()
+//            val gpsStatusReceiver = LocationReceiver()
+//            val filter1 = IntentFilter("com.example.helloworld.custombroadcasts.CUSTOM_BROADCAST")
+//            registerReceiver(gpsStatusReceiver, filter1)
+
+//            val alarmReceiver = AlarmReceiver()
+//            val filter1 = IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION)
+//            registerReceiver(alarmReceiver, filter1)
+
+//            BatteryOptimizationHelper(context).requestBatteryOptimizationExemption()
+//            startService(Intent(this, LocationServiceCheck::class.java))
+           // startService(Intent(this, GPSService::class.java))
+        //    startService(Intent(this, LocationService::class.java))
+
+
+
+            //  Working New
             val UtilityListSP = context.getSharedPreferences(Config.SHARED_PREF57, 0)
             val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
             var bTracker = jsonObj!!.getString("LOCATION_TRACKING").toBoolean()
             Log.e(TAG,"191110   "+bTracker)
             if (bTracker){
                 Log.e(TAG,"191111   "+bTracker)
-                val isMyServiceRunning = Config.isServiceRunning(context, LocationUpdateService::class.java)
+
+                val isMyServiceRunning = Config.isServiceRunning(context, NotificationLocationService::class.java)
                 if (!isMyServiceRunning){
-                    val serviceIntent = Intent(this, LocationUpdateService::class.java)
-                    startService(serviceIntent)
+                    Log.e(TAG,"191111001   "+bTracker)
+                    startService(Intent(this, NotificationLocationService::class.java))
+
+                }else{
+                    Log.e(TAG,"2   "+bTracker)
                 }
+
+
             }else{
                 Log.e(TAG,"191112   "+bTracker)
-                val isMyServiceRunning = Config.isServiceRunning(context, LocationUpdateService::class.java)
+
+                val isMyServiceRunning = Config.isServiceRunning(context, NotificationLocationService::class.java)
                 if (isMyServiceRunning){
-                    Log.e(TAG,"1911123   "+bTracker)
-                    val serviceIntent = Intent(this, LocationUpdateService::class.java)
-                    stopService(serviceIntent)
+
+                    stopService(Intent(this, NotificationLocationService::class.java))
+
                 }
+
+
+
             }
+
+//
+//            // Working Code
+//            val UtilityListSP = context.getSharedPreferences(Config.SHARED_PREF57, 0)
+//            val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+//            var bTracker = jsonObj!!.getString("LOCATION_TRACKING").toBoolean()
+//            Log.e(TAG,"191110   "+bTracker)
+//            if (bTracker){
+//                Log.e(TAG,"191111   "+bTracker)
+////                val isMyServiceRunning = Config.isServiceRunning(context, LocationUpdateService::class.java)
+////                if (!isMyServiceRunning){
+////                    val serviceIntent = Intent(this, LocationUpdateService::class.java)
+////                    startService(serviceIntent)
+////                }
+//
+//                val isMyServiceRunning = Config.isServiceRunning(context, LocationService::class.java)
+//                if (!isMyServiceRunning){
+//                    Log.e(TAG,"191111001   "+bTracker)
+//                    val gpsStatusReceiver = GpsStatusReceiver()
+//                    val filter = IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION)
+//                    registerReceiver(gpsStatusReceiver, filter)
+//
+//                    val serviceIntent = Intent(this, LocationService::class.java)
+//                    startService(serviceIntent)
+//
+//                }else{
+//                    Log.e(TAG,"2   "+bTracker)
+//                }
+//
+//
+//            }else{
+//                Log.e(TAG,"191112   "+bTracker)
+////                val isMyServiceRunning = Config.isServiceRunning(context, LocationUpdateService::class.java)
+////                if (isMyServiceRunning){
+////                    Log.e(TAG,"1911123   "+bTracker)
+////                    val serviceIntent = Intent(this, LocationUpdateService::class.java)
+////                    stopService(serviceIntent)
+////                }
+//
+//                val isMyServiceRunning = Config.isServiceRunning(context, LocationService::class.java)
+//                if (isMyServiceRunning){
+//
+//                    val gpsStatusReceiver = GpsStatusReceiver()
+//                    unregisterReceiver(gpsStatusReceiver)
+//
+//                    Log.e(TAG,"1911123   "+bTracker)
+//                    val serviceIntent = Intent(this, LocationService::class.java)
+//                    stopService(serviceIntent)
+//                }
+//
+//
+//
+//            }
         }catch (e : Exception){
 
+            Log.e(TAG,"32222    "+e.toString())
         }
     }
+
+
+
 
     private fun setTechnologyPartner() {
 

@@ -91,18 +91,31 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun runTimePermission() {
-        if (checkPermissions()) {
-            if (isLocationEnabled()) {
-              getLastLocation()
-            } else {
-               // Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
-                confirmBottomSheet("1")
+        Log.e(TAG,"9400001    runTimePermission  ")
 
+        if (isLocationEnabled()){
+            if (checkPermissions()) {
+                Log.e(TAG,"9400002    runTimePermission  ")
+                if (isLocationEnabled()) {
+                    Log.e(TAG,"9400003    runTimePermission  ")
+                    getLastLocation()
+                } else {
+                    Log.e(TAG,"9400004    runTimePermission  ")
+                    // Toast.makeText(this, "Turn on location", Toast.LENGTH_LONG).show()
+                    confirmBottomSheet("1")
+
+                }
+            } else {
+                Log.e(TAG,"9400005    runTimePermission  ")
+                // requestPermissions()
+                checkPermissions()
             }
-        } else {
-           // requestPermissions()
-            checkPermissions()
+        }else{
+
+            confirmBottomSheet("1")
+
         }
+
     }
 
     private fun setRegviews() {
@@ -440,8 +453,11 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
         btnYes.setOnClickListener {
             dialog.dismiss()
             if (type.equals("1")){
+//                val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+//                startActivity(intent)
                 val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
-                startActivity(intent)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
             }
             else if (type.equals("2")){
                 updateCount = 0
@@ -572,6 +588,7 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
 
             btnOk.setOnClickListener {
                 dialog.dismiss()
+                onBackPressed()
 
             }
             dialog.setCancelable(false)

@@ -30,6 +30,7 @@ import javax.net.ssl.*
 
 object Config {
 
+
     const val SHARED_PREF = "loginsession"
     const val SHARED_PREF1 = "FK_Employee"
     const val SHARED_PREF2 = "UserName"
@@ -832,7 +833,7 @@ object Config {
                 obj.put("count","0")
                 array.put(obj)
             }
-            if(!bTracker){
+            if(bTracker){
                 obj = JSONObject()
                 obj.put("grid_id", "8")
                 obj.put("grid_name", "Employee Location")
