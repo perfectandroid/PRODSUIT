@@ -46,7 +46,7 @@ class NotificationLocationService : Service() {
         i = intent
 //        val input = "inputExtra"
 ////        Log.e("TAG","welcome 33  "+input)
-   //     sendNotification()
+        sendNotification()
         startTimer()
 
 //        try {

@@ -26,12 +26,12 @@ object EmployeeLocationListRepository {
     val employeeLocationSetterGetter = MutableLiveData<EmployeeLocationListModel>()
     val TAG: String = "EmployeeLocationListRepository"
 
-    fun getServicesApiCall(context: Context,strDate : String,ID_Department : String,ID_Designation : String,ID_Employee : String): MutableLiveData<EmployeeLocationListModel> {
-        getEmployeeLocation(context,strDate,ID_Department,ID_Designation,ID_Employee)
+    fun getServicesApiCall(context: Context,strDate : String,ID_Department : String,ID_Designation : String,ID_Employee : String,ID_Branch : String): MutableLiveData<EmployeeLocationListModel> {
+        getEmployeeLocation(context,strDate,ID_Department,ID_Designation,ID_Employee,ID_Branch)
         return employeeLocationSetterGetter
     }
 
-    private fun getEmployeeLocation(context: Context,strDate : String,ID_Department : String,ID_Designation : String,ID_Employee : String) {
+    private fun getEmployeeLocation(context: Context,strDate : String,ID_Department : String,ID_Designation : String,ID_Employee : String,ID_Branch : String) {
         try {
             employeeLocationSetterGetter.value = EmployeeLocationListModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -65,7 +65,7 @@ object EmployeeLocationListRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
-                val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
+//                val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
 
 //                {"BankKey":"-500","Token":"3FD0BD83-1BB2-48B2-B64B-71D2092B6795","FK_Company":"1","LocationEnteredDate":"2023-06-09",
@@ -78,7 +78,7 @@ object EmployeeLocationListRepository {
                 requestObject1.put("FK_Departement", ProdsuitApplication.encryptStart(ID_Department))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
                 requestObject1.put("FK_Designation", ProdsuitApplication.encryptStart(ID_Designation))
-                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
+                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(ID_Branch))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
 
                 Log.e(TAG,"getDepartment  7801   "+requestObject1)

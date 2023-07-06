@@ -3,6 +3,7 @@ package com.perfect.prodsuit.Helper
 import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.util.Log
@@ -14,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.snackbar.Snackbar
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Service.NotificationLocationService
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -111,6 +113,8 @@ object Config {
     const val SHARED_PREF61 = "EnteredDate"
     const val SHARED_PREF62 = "EnteredTime"
     const val SHARED_PREF63 = "Status"  // String False / True
+    const val SHARED_PREF64 = "isNotification"  //NotificationBack Preesed
+
 
     var width = 0
     var height = 0
@@ -119,6 +123,7 @@ object Config {
 
     const val SOME_TECHNICAL_ISSUES = "Some Technical Issues."
     const val PLEASE_TRY_AGAIN = "Some Technical Issues, Please try again in sometime"
+    const val notificationBack = false // String False / True
 
     fun getHostnameVerifier(): HostnameVerifier {
         return HostnameVerifier { hostname, session -> true }
@@ -422,6 +427,7 @@ object Config {
         height = context.resources.displayMetrics.heightPixels
         return height.toInt()
     }
+
     fun getWidth(context: Context) : Int {
         width = context.resources.displayMetrics.widthPixels
         return width.toInt()
@@ -440,7 +446,6 @@ object Config {
 
         return value
     }
-
 
     fun logOut(context : Context) {
 
@@ -735,6 +740,17 @@ object Config {
         StatusEditer.putString("Status", "")
         StatusEditer.commit()
 
+        val isNotificationSP = context.getSharedPreferences(Config.SHARED_PREF64, 0)
+        val isNotificationEditer = isNotificationSP.edit()
+        isNotificationEditer.putString("isNotification", "")
+        isNotificationEditer.commit()
+
+
+        val isMyServiceRunning = isServiceRunning(context, NotificationLocationService::class.java)
+        if (isMyServiceRunning){
+            context.stopService(Intent(context, NotificationLocationService::class.java))
+        }
+
     }
 
     fun getHomeGrid(context : Context): String {
@@ -935,8 +951,6 @@ object Config {
         return result
     }
 
-
-
     fun getMilliSeconds(context : Context): Int {
         var result =30000
         try {
@@ -971,4 +985,14 @@ object Config {
 
         return foregroundTaskInfo?.topActivity?.packageName == packageName
     }
+
+    fun setRedirection(context : Context,redirection: String) {
+
+        val isNotificationSP = context.getSharedPreferences(Config.SHARED_PREF64, 0)
+        val isNotificationEditer = isNotificationSP.edit()
+        isNotificationEditer.putString("isNotification", redirection)
+        isNotificationEditer.commit()
+
+    }
+
 }

@@ -60,12 +60,16 @@ class LocationReceiver: BroadcastReceiver() {
                         val latitude = location.latitude
                         val longitude = location.longitude
 
+                        val batteryStatus: Intent? = IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { ifilter ->
+                            context.registerReceiver(null, ifilter)
+                        }
+
                         Log.e(TAG, "latitude  19600000  " + latitude+"  :  "+longitude)
 
-                        val batteryLevel = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-                        val batteryScale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+                        val level: Int = batteryStatus?.getIntExtra(BatteryManager.EXTRA_LEVEL, -1) ?: -1
+                        val scale: Int = batteryStatus?.getIntExtra(BatteryManager.EXTRA_SCALE, -1) ?: -1
 
-                        val batteryPercentage = (batteryLevel / batteryScale.toFloat() * 100).toInt()
+                        val batteryPercentage = (level.toFloat() / scale.toFloat() * 100).toInt()
 
 
                         geocoder = Geocoder(context, Locale.getDefault())

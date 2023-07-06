@@ -71,11 +71,13 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
     private var txtReset: TextView? = null
     private var txtSearch: TextView? = null
 
+    private var tie_Branch: TextInputEditText? = null
     private var tie_Department: TextInputEditText? = null
     private var tie_Designation: TextInputEditText? = null
     private var tie_Employee: TextInputEditText? = null
     private var tie_Date: TextInputEditText? = null
 
+    private var til_Branch: TextInputLayout? = null
     private var til_Department: TextInputLayout? = null
     private var til_Designation: TextInputLayout? = null
     private var til_Employee: TextInputLayout? = null
@@ -86,18 +88,28 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
     private var ll_data: LinearLayout? = null
 
     var strDate: String? = ""
+    var branchCount = 0
     var department = 0
     var employee = 0
     var designation = 0
     var EmployeeLocation = 0
 
+    var ID_Branch : String?= "0"
     var ID_Department : String?= "0"
     var ID_Designation : String?= "0"
     var ID_Employee : String?= "0"
 
+    var temp_Branch : String?= ""
     var temp_Department : String?= ""
     var temp_Designation : String?= ""
     var temp_Employee : String?= ""
+    var temp_Date : String?= ""
+
+    lateinit var branchViewModel: BranchViewModel
+    lateinit var branchArrayList: JSONArray
+    lateinit var branchsort: JSONArray
+    private var dialogBranch: Dialog? = null
+    var recyBranch: RecyclerView? = null
 
     lateinit var departmentViewModel: DepartmentViewModel
     lateinit var departmentArrayList : JSONArray
@@ -125,6 +137,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_location_marking_new)
         context = this@LocationMarkingNewActivity
+        branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeDetailsViewModel = ViewModelProvider(this).get(EmployeeDetailsViewModel::class.java)
         designationViewModel = ViewModelProvider(this).get(DesignationViewModel::class.java)
@@ -211,6 +224,12 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
             R.id.imgv_filter->{
                 Config.disableClick(v)
                 filterBottomSheet()
+            }
+
+            R.id.tie_Branch->{
+                Config.disableClick(v)
+                branchCount = 0
+                getBranch()
             }
 
             R.id.tie_Department->{
@@ -300,20 +319,28 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
             txtReset = view.findViewById<TextView>(R.id.txtReset)
             txtSearch = view.findViewById<TextView>(R.id.txtSearch)
 
+            til_Branch = view.findViewById<TextInputLayout>(R.id.til_Branch)
             til_Department = view.findViewById<TextInputLayout>(R.id.til_Department)
             til_Designation = view.findViewById<TextInputLayout>(R.id.til_Designation)
             til_Employee = view.findViewById<TextInputLayout>(R.id.til_Employee)
             til_Date = view.findViewById<TextInputLayout>(R.id.til_Date)
 
+            tie_Branch = view.findViewById<TextInputEditText>(R.id.tie_Branch)
             tie_Department = view.findViewById<TextInputEditText>(R.id.tie_Department)
             tie_Designation = view.findViewById<TextInputEditText>(R.id.tie_Designation)
             tie_Employee = view.findViewById<TextInputEditText>(R.id.tie_Employee)
             tie_Date = view.findViewById<TextInputEditText>(R.id.tie_Date)
 
+            tie_Branch!!.setOnClickListener(this)
             tie_Department!!.setOnClickListener(this)
             tie_Designation!!.setOnClickListener(this)
             tie_Employee!!.setOnClickListener(this)
             tie_Date!!.setOnClickListener(this)
+
+
+            if (!temp_Branch.equals("")){
+                tie_Branch!!.setText(temp_Branch)
+            }
 
             if (!temp_Department.equals("")){
                 tie_Department!!.setText(temp_Department)
@@ -324,6 +351,11 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
             if (!temp_Employee.equals("")){
                 tie_Employee!!.setText(temp_Employee)
             }
+            if (!temp_Date.equals("")){
+                tie_Date!!.setText(temp_Date)
+            }
+
+
 
 //            onTextChangedValues()
 
@@ -368,6 +400,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
                // loadLoginEmpDetails("1")
                 ID_Department = "0"
                 temp_Department = ""
+                temp_Branch = ""
                 tie_Department!!.setText("")
                 ID_Designation = "0"
                 temp_Designation = ""
@@ -376,6 +409,8 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
                 temp_Employee = ""
                 tie_Employee!!.setText("")
                 getCurrentdate("1")
+                getCurrentBranch()
+
             }
             txtSearch!!.setOnClickListener {
 
@@ -403,6 +438,13 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
         }catch (e: Exception){
 
         }
+    }
+
+    private fun getCurrentBranch() {
+        val FK_BranchSP = applicationContext.getSharedPreferences(Config.SHARED_PREF37, 0)
+        val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
+        ID_Branch = FK_BranchSP.getString("FK_Branch", null)
+        tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
     }
 
     private fun openBottomDate() {
@@ -448,6 +490,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
 
                 tie_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
                 strDate = ""+strYear+"-"+strMonth+"-"+strDay
+                temp_Date = ""+strDay+"-"+strMonth+"-"+strYear
 
 
 
@@ -472,10 +515,24 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
             Log.e(TAG,"newDate  196  "+newDate)
             val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
             val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
+
+
+            val FK_BranchSP = applicationContext.getSharedPreferences(Config.SHARED_PREF37, 0)
+            val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
             if (mode.equals("1")){
                 tie_Date!!.setText(""+sdfDate1.format(newDate))
+                tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
             }
             strDate = sdfDate2.format(newDate)
+            ID_Branch = FK_BranchSP.getString("FK_Branch", null)
+            temp_Date = sdfDate1.format(newDate)
+
+
+
+
+
+
+
 
 
         }catch (e :Exception){
@@ -612,6 +669,142 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
             dialogDesignation!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    private fun getBranch() {
+        var branch = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                branchViewModel.getBranch(this, "0")!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        try {
+                            if (msg!!.length > 0) {
+
+                                if (branchCount == 0){
+                                    branchCount ++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   1062   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("BranchDetails")
+                                        branchArrayList = jobjt.getJSONArray("BranchDetailsList")
+                                        if (branchArrayList.length() > 0) {
+                                            branchPopup(branchArrayList)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@LocationMarkingNewActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + e.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun branchPopup(branchArrayList: JSONArray) {
+
+        try {
+
+            dialogBranch = Dialog(this)
+            dialogBranch!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogBranch!!.setContentView(R.layout.branch_popup)
+            dialogBranch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyBranch = dialogBranch!!.findViewById(R.id.recyBranch) as RecyclerView
+            val etsearch = dialogBranch!!.findViewById(R.id.etsearch) as EditText
+
+            branchsort = JSONArray()
+            for (k in 0 until branchArrayList.length()) {
+                val jsonObject = branchArrayList.getJSONObject(k)
+                branchsort.put(jsonObject)
+            }
+
+
+            val lLayout = GridLayoutManager(this@LocationMarkingNewActivity, 1)
+            recyBranch!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            //  val adapter = BranchAdapter(this@TicketReportActivity, branchArrayList)
+            val adapter = BranchAdapter(this@LocationMarkingNewActivity, branchsort)
+            recyBranch!!.adapter = adapter
+            adapter.setClickListener(this@LocationMarkingNewActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    branchsort = JSONArray()
+
+                    for (k in 0 until branchArrayList.length()) {
+                        val jsonObject = branchArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("BranchName").length) {
+                            if (jsonObject.getString("BranchName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                branchsort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "branchsort               7103    " + branchsort)
+                    val adapter = BranchAdapter(this@LocationMarkingNewActivity, branchsort)
+                    recyBranch!!.adapter = adapter
+                    adapter.setClickListener(this@LocationMarkingNewActivity)
+                }
+            })
+
+            dialogBranch!!.show()
+            dialogBranch!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG, "Exception  1132   " + e.toString())
         }
     }
 
@@ -1005,7 +1198,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                employeeLocationListViewModel.getEmployeeLocationList(this,strDate!!,ID_Department!!,ID_Designation!!,ID_Employee!!)!!.observe(
+                employeeLocationListViewModel.getEmployeeLocationList(this,strDate!!,ID_Department!!,ID_Designation!!,ID_Employee!!,ID_Branch!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -1080,6 +1273,18 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
     }
 
     override fun onClick(position: Int, data: String) {
+
+        if (data.equals("branch")) {
+            dialogBranch!!.dismiss()
+            //   val jsonObject = branchArrayList.getJSONObject(position)
+            val jsonObject = branchsort.getJSONObject(position)
+            Log.e(TAG, "ID_Branch   " + jsonObject.getString("ID_Branch"))
+            ID_Branch = jsonObject.getString("ID_Branch")
+            tie_Branch!!.setText(jsonObject.getString("BranchName"))
+
+            temp_Branch = jsonObject.getString("BranchName")
+        }
+
         if (data.equals("department")){
             dialogDepartment!!.dismiss()
 //            val jsonObject = departmentArrayList.getJSONObject(position)

@@ -3,13 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/actv_folwp.xml" value="0.193" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_attendance_marking.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.36102564102564105" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_enable.xml" value="0.26614583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_marking.xml" value="0.35104166666666664" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_marking_new.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_settings.xml" value="0.29375" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_notification.xml" value="0.19739583333333333" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_assign.xml" value="0.35104166666666664" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/company_test1.xml" value="0.2546875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirm_popup.xml" value="0.2703125" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/custom_notification_layout.xml" value="0.33" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/filter_location_bottom_sheet.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/map_dialog.xml" value="0.36102564102564105" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/notificationview.xml" value="0.23125" />
       </map>
     </option>
   </component>

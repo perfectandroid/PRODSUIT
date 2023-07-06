@@ -40,10 +40,15 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.*
+import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.nbfcmscore.Helper.PicassoTrustAll
 import com.perfect.prodsuit.Helper.Common
@@ -55,7 +60,10 @@ import com.perfect.prodsuit.View.Adapter.BannerAdapter
 import com.perfect.prodsuit.View.Adapter.HomeGridAdapter
 import com.perfect.prodsuit.View.Service.*
 import com.perfect.prodsuit.View.Service.LocationUpdateService
+import com.perfect.prodsuit.View.lifes.MyApp
 import com.perfect.prodsuit.Viewmodel.*
+import com.perfect.prodsuit.fire.FireBaseConfig
+import com.perfect.prodsuit.fire.MyFirebaseMessagingService
 import com.perfect.prodsuit.interfaces.MyCallback
 import me.relex.circleindicator.CircleIndicator
 import org.json.JSONArray
@@ -171,10 +179,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         super.onCreate(savedInstanceState)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_homemain)
-
+        context = this@HomeActivity
         attendanceAddViewModel = ViewModelProvider(this).get(AttendanceAddViewModel::class.java)
 
         setRegViews()
+        Config.setRedirection(context,"")
         bottombarnav()
         getBannerlist()
         getCompanyLogo()
@@ -184,11 +193,47 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //        getServiceNotification()
 //        getNotfCount()
         SubMode = "2"
+
         AddAttendanceApi(strLatitude,strLongitue,address)
         checkAttendance()
         setTechnologyPartner()
+
+//        startService(Intent(this, MyFirebaseMessagingService::class.java))
+//        FirebaseApp.initializeApp(this)
+        // Log.e(TAG,"Token  99991    "+  FirebaseMessaging.getInstance().token)
+
+        FireBaseConfig.ServiceStart(context)
+        FireBaseConfig.getToken(context)
+
+
+//        FirebaseMessaging.getInstance().token.addOnCompleteListener { task: Task<String?> ->
+//            Log.e("spalsh", task.result!!)
+//            if (task.isSuccessful){
+//                Log.e(TAG,"Token  99991    "+ task.result!!)
+//                fetchFcmServerKey()
+//
+//            }
+//        }
         
     }
+
+    private fun fetchFcmServerKey() {
+        val remoteConfig = FirebaseRemoteConfig.getInstance()
+        val configSettings = FirebaseRemoteConfigSettings.Builder()
+            .setMinimumFetchIntervalInSeconds(30) // Set the minimum fetch interval (optional)
+            .build()
+        remoteConfig.setConfigSettingsAsync(configSettings)
+        remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val fcmServerKey = remoteConfig.getString("fcm_server_key")
+                Log.e(TAG,"fcmServerKey  9999100    "+ fcmServerKey!!)
+                // Use the fcmServerKey as needed
+            } else {
+                // Fetching failed, handle the error
+            }
+        }
+    }
+
 
     private fun getLocationTracker() {
         try {
@@ -366,6 +411,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     override fun onResume() {
         super.onResume()
+        Config.setRedirection(context,"")
         getNotfCount()
         updateWidgetHandler.postDelayed(updateWidgetRunnable, UPDATE_INTERVAL)
     }
@@ -379,7 +425,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     override fun onRestart() {
         super.onRestart()
-
+        Config.setRedirection(context,"")
     }
 
     private fun checkAttendance() {

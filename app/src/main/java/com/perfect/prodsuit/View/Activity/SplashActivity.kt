@@ -122,6 +122,13 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://52.172.2.6:14010/PersuitAPI/"
 //    val BANK_KEY = "-516"
 
+    //    PerfectUAT 05-07-2023
+//    val CERT_NAME = "persuituat.pem"
+//    val BASE_URL = "https://202.164.150.65:14271/PSuiteUATAPI/api/"
+//    val IMAGE_URL = "https://202.164.150.65:14271/PSuiteUATAPI/"
+//    val BANK_KEY = "-501"
+
+
     ////    DEVELOPMENT 30.11.2022
     val CERT_NAME = "development.pem"
     val BASE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/api/"

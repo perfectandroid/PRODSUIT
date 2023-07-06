@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -273,13 +274,42 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     override fun onClick(v: View) {
         when(v.id) {
             R.id.imback -> {
-                finish()
+                //finish()
+              //  onBackPressed()
+                val isNotificationSP = applicationContext.getSharedPreferences(Config.SHARED_PREF64, 0)
+                var isNotification = isNotificationSP.getString("isNotification","")
+                if (isNotification.equals("Home")){
+
+                    Config.setRedirection(context,"")
+                    val i = Intent(this@NotificationActivity, HomeActivity::class.java)
+                    finish()
+                    startActivity(i)
+
+//                    overridePendingTransition(R.anim.exit_on_left, R.anim.enter_from_right);
+
+                }else{
+                    finish()
+                }
             }
         }
     }
 
+    override fun onBackPressed() {
+        val isNotificationSP = applicationContext.getSharedPreferences(Config.SHARED_PREF64, 0)
+        var isNotification = isNotificationSP.getString("isNotification","")
+        if (isNotification.equals("Home")){
 
+            Config.setRedirection(context,"")
 
+            val i = Intent(this@NotificationActivity, HomeActivity::class.java)
+            startActivity(i)
+            finish()
+//            overridePendingTransition(R.anim.exit_on_left, R.anim.enter_from_right);
+
+        }else{
+            finish()
+        }
+    }
 
     override fun onClick(position: Int, data: String) {
         Log.i("Data",data+"\n"+position)
