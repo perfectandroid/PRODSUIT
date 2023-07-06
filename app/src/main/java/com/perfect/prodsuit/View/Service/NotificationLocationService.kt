@@ -31,14 +31,15 @@ class NotificationLocationService : Service() {
         super.onCreate()
         context = this
         timer = Timer()
-        if (Build.VERSION.SDK_INT >= 26) {
+       // if (Build.VERSION.SDK_INT >= 26) {
             val channel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel(channelId, "Channel human readable title", NotificationManager.IMPORTANCE_DEFAULT)
             } else {
                 TODO("VERSION.SDK_INT < O")
+
             }
             (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(channel)
-        }
+       // }
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {

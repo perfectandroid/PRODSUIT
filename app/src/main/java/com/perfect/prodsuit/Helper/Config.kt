@@ -114,6 +114,7 @@ object Config {
     const val SHARED_PREF62 = "EnteredTime"
     const val SHARED_PREF63 = "Status"  // String False / True
     const val SHARED_PREF64 = "isNotification"  //NotificationBack Preesed
+    const val SHARED_PREF65 = "fireBaseToken"  //FireBase User Token
 
 
     var width = 0
@@ -744,6 +745,12 @@ object Config {
         val isNotificationEditer = isNotificationSP.edit()
         isNotificationEditer.putString("isNotification", "")
         isNotificationEditer.commit()
+
+        val fireBaseTokenSP = context.getSharedPreferences(Config.SHARED_PREF65, 0)
+        val fireBaseTokenEditer = fireBaseTokenSP.edit()
+        fireBaseTokenEditer.putString("fireBaseToken", "")
+        fireBaseTokenEditer.commit()
+
 
 
         val isMyServiceRunning = isServiceRunning(context, NotificationLocationService::class.java)

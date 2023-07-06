@@ -510,6 +510,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         // getCalendarId(context)
         checkAttendance()
         clearData()
+        getLeadRequestLicences()
         switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 llNeedTransfer!!.visibility = View.VISIBLE

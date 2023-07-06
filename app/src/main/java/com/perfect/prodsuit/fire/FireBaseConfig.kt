@@ -32,6 +32,8 @@ object FireBaseConfig {
                 Log.e(TAG,"Token  99991    "+ task.result!!)
                 val deviceId: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
                 Log.e(TAG,"uniqueId  99991    "+ deviceId)
+
+                checkUserToken(context,task.result!!,deviceId)
              //   fetchFcmServerKey()
 
            //     updateUserTokenDeviceID(context,task.result!!,deviceId)
@@ -40,6 +42,20 @@ object FireBaseConfig {
         }
     }
 
+    fun checkUserToken(context: Context, userToken: String, deviceId: String) {
+
+        val fireBaseTokenSP = context.getSharedPreferences(Config.SHARED_PREF65, 0)
+        val fireBaseToken = fireBaseTokenSP.getString("fireBaseToken","")
+
+        if (fireBaseToken.equals("")){
+
+            updateUserTokenDeviceID(context,userToken,deviceId)
+        }
+        else if (!fireBaseToken.equals(userToken)){
+
+            updateUserTokenDeviceID(context,userToken,deviceId)
+        }
+    }
 
 
     fun ServiceStart(context: Context) {
@@ -51,6 +67,11 @@ object FireBaseConfig {
     }
 
     private fun updateUserTokenDeviceID(context: Context, userToken: String, deviceId: String) {
+
+        val fireBaseTokenSP = context.getSharedPreferences(Config.SHARED_PREF65, 0)
+        val fireBaseTokenEditer = fireBaseTokenSP.edit()
+        fireBaseTokenEditer.putString("fireBaseToken", userToken)
+        fireBaseTokenEditer.commit()
 
         try {
 
@@ -86,33 +107,35 @@ object FireBaseConfig {
 //                requestObject1.put("LocationEnteredDate", ProdsuitApplication.encryptStart(strDate))
 //                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_Employee))
 
+                Log.e(TAG,"78111  deviceId   "+deviceId)
+                Log.e(TAG,"78111  userToken   "+userToken)
                 Log.e(TAG,"78111     "+requestObject1)
 
 
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            val body = RequestBody.create(
-                okhttp3.MediaType.parse("application/json; charset=utf-8"),
-                requestObject1.toString()
-            )
-            val call = apiService.getEmployeeWiseLocationList(body)
-            call.enqueue(object : retrofit2.Callback<String> {
-                override fun onResponse(
-                    call: retrofit2.Call<String>, response:
-                    Response<String>
-                ) {
-                    try {
-
-                        Log.e(TAG,"11122    "+response.body())
-                    } catch (e: Exception) {
-
-                    }
-                }
-                override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-
-                }
-            })
+//            val body = RequestBody.create(
+//                okhttp3.MediaType.parse("application/json; charset=utf-8"),
+//                requestObject1.toString()
+//            )
+//            val call = apiService.getEmployeeWiseLocationList(body)
+//            call.enqueue(object : retrofit2.Callback<String> {
+//                override fun onResponse(
+//                    call: retrofit2.Call<String>, response:
+//                    Response<String>
+//                ) {
+//                    try {
+//
+//                        Log.e(TAG,"11122    "+response.body())
+//                    } catch (e: Exception) {
+//
+//                    }
+//                }
+//                override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
+//
+//                }
+//            })
 
 
 

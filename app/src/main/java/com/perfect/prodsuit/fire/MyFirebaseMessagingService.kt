@@ -7,17 +7,13 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.provider.Settings
 import android.util.Log
-import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.NotificationActivity
-import com.perfect.prodsuit.View.Service.GpsStatusReceiver
-import com.perfect.prodsuit.View.Service.LocationReceiver
 import com.perfect.prodsuit.View.Service.NotificationEvent
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -26,6 +22,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     lateinit var context: Context
     override fun onNewToken(token: String) {
         Log.e(TAG,"Token  999900    "+token)
+        val deviceId: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+        Log.e(FireBaseConfig.TAG,"uniqueId  99991    "+ deviceId)
+
+        FireBaseConfig.checkUserToken(context, token, deviceId)
         //Called whenever a new device runs the Android application. Registers in FCM and in PubNub.
     }
 
@@ -145,8 +145,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.applogo)
-                .setContentTitle("Notification Title")
-                .setContentText("Notification Content")
+                .setContentTitle(remoteMessage.data.get("title"))
+                .setContentText(remoteMessage.data.get("body"))
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
 
