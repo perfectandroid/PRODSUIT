@@ -40,13 +40,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.*
-import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.google.firebase.FirebaseApp
-import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
@@ -55,15 +52,13 @@ import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DBHelper
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.LocationUtils.calculateDistance
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
 import com.perfect.prodsuit.View.Adapter.HomeGridAdapter
-import com.perfect.prodsuit.View.Service.*
-import com.perfect.prodsuit.View.Service.LocationUpdateService
-import com.perfect.prodsuit.View.lifes.MyApp
+import com.perfect.prodsuit.View.Service.NotificationLocationService
 import com.perfect.prodsuit.Viewmodel.*
 import com.perfect.prodsuit.fire.FireBaseConfig
-import com.perfect.prodsuit.fire.MyFirebaseMessagingService
 import com.perfect.prodsuit.interfaces.MyCallback
 import me.relex.circleindicator.CircleIndicator
 import org.json.JSONArray
@@ -237,6 +232,18 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     private fun getLocationTracker() {
         try {
+
+            val lat1 = 11.238127908836669 // Latitude of location 1
+
+            val lon1 = 75.83772864713805 // Longitude of location 1
+
+            val lat2 = 11.25938203131191 // Latitude of location 2
+
+            val lon2 = 75.78624313709264 // Longitude of location 2
+
+            val distance = calculateDistance(lat1, lon1, lat2, lon2)
+            Log.e(TAG,"246666  Distance "+distance)
+
             val db = DBHelper(this, null)
             db.getLocations()
           //  db.delete()
@@ -273,7 +280,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                     startService(Intent(this, NotificationLocationService::class.java))
 
                 }else{
-                    Log.e(TAG,"2   "+bTracker)
+                    Log.e(TAG,"191111002   "+bTracker)
                 }
 
 

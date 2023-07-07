@@ -238,6 +238,12 @@ class LocationEnableActivity : AppCompatActivity() {
 
     override fun onRestart() {
         super.onRestart()
+        Log.e(TAG,"940000551    onRestart  ")
         runTimePermission()
+    }
+
+    override fun onTopResumedActivityChanged(isTopResumedActivity: Boolean) {
+        super.onTopResumedActivityChanged(isTopResumedActivity)
+        Log.e(TAG,"940000552    onTopResumedActivityChanged  ")
     }
 }

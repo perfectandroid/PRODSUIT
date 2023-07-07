@@ -13,6 +13,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.perfect.prodsuit.Helper.DeviceHelper
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Service.NotificationEvent
 
@@ -22,7 +23,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     lateinit var context: Context
     override fun onNewToken(token: String) {
         Log.e(TAG,"Token  999900    "+token)
-        val deviceId: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+     //   val deviceId: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+        val deviceId: String = DeviceHelper.getDeviceID(context)
         Log.e(FireBaseConfig.TAG,"uniqueId  99991    "+ deviceId)
 
         FireBaseConfig.checkUserToken(context, token, deviceId)

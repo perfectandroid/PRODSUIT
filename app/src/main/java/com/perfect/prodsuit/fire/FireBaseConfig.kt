@@ -1,6 +1,7 @@
 package com.perfect.prodsuit.fire
 
 import android.app.ProgressDialog
+import android.bluetooth.BluetoothClass
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
@@ -11,6 +12,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.DeviceHelper
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -30,9 +32,9 @@ object FireBaseConfig {
             Log.e("spalsh", task.result!!)
             if (task.isSuccessful){
                 Log.e(TAG,"Token  99991    "+ task.result!!)
-                val deviceId: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+               // val deviceId: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+                val deviceId: String = DeviceHelper.getDeviceID(context)
                 Log.e(TAG,"uniqueId  99991    "+ deviceId)
-
                 checkUserToken(context,task.result!!,deviceId)
              //   fetchFcmServerKey()
 
@@ -44,17 +46,22 @@ object FireBaseConfig {
 
     fun checkUserToken(context: Context, userToken: String, deviceId: String) {
 
-        val fireBaseTokenSP = context.getSharedPreferences(Config.SHARED_PREF65, 0)
-        val fireBaseToken = fireBaseTokenSP.getString("fireBaseToken","")
+        try {
+            val fireBaseTokenSP = context.getSharedPreferences(Config.SHARED_PREF65, 0)
+            val fireBaseToken = fireBaseTokenSP.getString("fireBaseToken","")
 
-        if (fireBaseToken.equals("")){
+            if (fireBaseToken.equals("")){
 
-            updateUserTokenDeviceID(context,userToken,deviceId)
+                updateUserTokenDeviceID(context,userToken,deviceId)
+            }
+            else if (!fireBaseToken.equals(userToken)){
+
+                updateUserTokenDeviceID(context,userToken,deviceId)
+            }
+        }catch (e : Exception){
+
         }
-        else if (!fireBaseToken.equals(userToken)){
 
-            updateUserTokenDeviceID(context,userToken,deviceId)
-        }
     }
 
 

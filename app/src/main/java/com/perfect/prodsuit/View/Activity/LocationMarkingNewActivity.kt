@@ -409,7 +409,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
                 temp_Employee = ""
                 tie_Employee!!.setText("")
                 getCurrentdate("1")
-                getCurrentBranch()
+               // getCurrentBranch()
 
             }
             txtSearch!!.setOnClickListener {
@@ -445,6 +445,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
         val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
         ID_Branch = FK_BranchSP.getString("FK_Branch", null)
         tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
+
     }
 
     private fun openBottomDate() {
@@ -525,6 +526,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
             }
             strDate = sdfDate2.format(newDate)
             ID_Branch = FK_BranchSP.getString("FK_Branch", null)
+            temp_Branch = BranchNameSP.getString("BranchName", null)
             temp_Date = sdfDate1.format(newDate)
 
 
