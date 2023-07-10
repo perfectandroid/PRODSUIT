@@ -44,8 +44,7 @@
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- <uses-permission android:name="android.permission.WAKE_LOCK"/> -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
-<!--    <uses-permission android:name="android.permission.RECEIVE_SMS" />-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- <uses-permission android:name="android.permission.RECEIVE_SMS" /> -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <uses-feature android:name="android.hardware.camera" />
@@ -66,6 +65,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name="com.perfect.prodsuit.scanners.BarcodeScannerActivity"
+            android:exported="false" />
         <activity
             android:name="com.perfect.prodsuit.View.Activity.LocationEnableActivity"
             android:exported="false"
@@ -542,6 +544,7 @@
             android:windowSoftInputMode="stateHidden|adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -554,56 +557,48 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-
-<!--        <service-->
-<!--            android:name="com.perfect.prodsuit.View.Service.LocationUpdateService"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="false" />-->
-<!--        <service-->
-<!--            android:name="com.perfect.prodsuit.View.Service.LocationService"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true" />-->
-
-<!--        <receiver-->
-<!--            android:name="com.perfect.prodsuit.View.Service.LocationStateReceiver"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.location.PROVIDERS_CHANGED" />-->
-<!--            </intent-filter>-->
-<!--        </receiver>-->
-
-<!--        <service-->
-<!--            android:name="com.perfect.prodsuit.View.Service.ForegroundLocationService"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true"-->
-<!--            android:foregroundServiceType="location" />-->
-
-<!--        <receiver-->
-<!--            android:name="com.perfect.prodsuit.View.Service.GpsStatusReceiver"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.BOOT_COMPLETED" />-->
-<!--                &lt;!&ndash; <action android:name="android.location.PROVIDERS_CHANGED" /> &ndash;&gt;-->
-
-<!--            </intent-filter>-->
-<!--        </receiver>-->
-
-<!--         <receiver android:name=".View.Service.AlarmReceiver"-->
-<!--         android:enabled="true"-->
-<!--         android:exported="true">-->
-<!--         <intent-filter>-->
-<!--&lt;!&ndash;             <action android:name="android.intent.action.BOOT_COMPLETED"/>&ndash;&gt;-->
-<!--            <action android:name="android.intent.action.PROVIDER_CHANGED" />-->
-<!--         </intent-filter>-->
-<!--         </receiver>-->
-
-<!--        <service-->
-<!--            android:name="com.perfect.prodsuit.View.Service.LocationServiceCheck"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true" /> &lt;!&ndash; <service &ndash;&gt;-->
+        </provider> <!-- <service -->
+        <!-- android:name="com.perfect.prodsuit.View.Service.LocationUpdateService" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="false" /> -->
+        <!-- <service -->
+        <!-- android:name="com.perfect.prodsuit.View.Service.LocationService" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true" /> -->
+        <!-- <receiver -->
+        <!-- android:name="com.perfect.prodsuit.View.Service.LocationStateReceiver" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.location.PROVIDERS_CHANGED" /> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
+        <!-- <service -->
+        <!-- android:name="com.perfect.prodsuit.View.Service.ForegroundLocationService" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true" -->
+        <!-- android:foregroundServiceType="location" /> -->
+        <!-- <receiver -->
+        <!-- android:name="com.perfect.prodsuit.View.Service.GpsStatusReceiver" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.BOOT_COMPLETED" /> -->
+        <!-- &lt;!&ndash; <action android:name="android.location.PROVIDERS_CHANGED" /> &ndash;&gt; -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
+        <!-- <receiver android:name=".View.Service.AlarmReceiver" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true"> -->
+        <!-- <intent-filter> -->
+        <!-- &lt;!&ndash;             <action android:name="android.intent.action.BOOT_COMPLETED"/>&ndash;&gt; -->
+        <!-- <action android:name="android.intent.action.PROVIDER_CHANGED" /> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
+        <!-- <service -->
+        <!-- android:name="com.perfect.prodsuit.View.Service.LocationServiceCheck" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true" /> &lt;!&ndash; <service &ndash;&gt; -->
         <!-- android:name="com.perfect.prodsuit.View.Service.GPSService" -->
         <!-- android:enabled="true" -->
         <!-- android:exported="true" /> -->
@@ -616,13 +611,10 @@
         <!-- <category android:name="android.intent.category.DEFAULT" /> -->
         <!-- </intent-filter> -->
         <!-- </receiver> -->
-
         <service
             android:name="com.perfect.prodsuit.View.Service.NotificationLocationService"
             android:enabled="true"
             android:exported="true" />
-
-
         <service
             android:name="com.perfect.prodsuit.View.Service.LocationUpdateService"
             android:enabled="true"
@@ -637,7 +629,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name="com.perfect.prodsuit.View.Service.NotificationEvent"
             android:exported="false">
@@ -646,27 +637,16 @@
             </intent-filter>
         </receiver>
 
-
-        <service android:name=".fire.MyFirebaseMessagingService"
-            android:exported="true"
-            android:directBootAware="true">
+        <service
+            android:name="com.perfect.prodsuit.fire.MyFirebaseMessagingService"
+            android:directBootAware="true"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-
-
-
-<!--        <service-->
-<!--            android:name="com.perfect.prodsuit.View.Service.GpsTracker"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true" />-->
-
-<!--        <service-->
-<!--            android:name="com.perfect.prodsuit.View.Service.MyLocationService"-->
-<!--            android:enabled="true"-->
-<!--            android:exported="true" />-->
+        <receiver android:name=".Receivers.ReminderReceiver" />
     </application>
 
 </manifest>

@@ -48,10 +48,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.nbfcmscore.Helper.PicassoTrustAll
-import com.perfect.prodsuit.Helper.Common
-import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.Helper.DBHelper
-import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.*
 import com.perfect.prodsuit.Helper.LocationUtils.calculateDistance
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
@@ -767,6 +764,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 //                val i = Intent(this@HomeActivity, AttendanceMarkingActivity::class.java)
 //                startActivity(i)
+
+//                val intent = Intent(this, BarcodeScannerActivity::class.java)
+//                startActivity(intent)
             }
 
             R.id.ll_leads -> {
@@ -1411,6 +1411,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private fun setReminder() {
         try
         {
+
+
+
             val builder = android.app.AlertDialog.Builder(this)
             val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val layout = inflater1.inflate(R.layout.reminder_setter_popup, null)
@@ -1503,6 +1506,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
         try {
+
+        //    AlarmHelper.setReminder(context,hr,min)
+
             val uri = cr.insert(CalendarContract.Events.CONTENT_URI, values)
             val reminders = ContentValues()
             reminders.put(CalendarContract.Reminders.EVENT_ID, uri!!.lastPathSegment)
@@ -1512,6 +1518,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             )
             reminders.put(CalendarContract.Reminders.MINUTES, 10)
             cr.insert(CalendarContract.Reminders.CONTENT_URI, reminders)
+
+
+
         }catch (e: Exception){
             e.printStackTrace()
         }

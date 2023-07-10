@@ -267,7 +267,7 @@ object LeadGenerateSaveRepository {
                 requestObject1.put("BranchID", ProdsuitApplication.encryptStart(ID_Branch))
                 requestObject1.put("BranchTypeID", ProdsuitApplication.encryptStart(ID_BranchType))
                 requestObject1.put("FK_Departement", ProdsuitApplication.encryptStart(ID_Department))
-                requestObject1.put("AssignEmp", ProdsuitApplication.encryptStart(ID_Employee))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
 
                 requestObject1.put("LocLatitude", ProdsuitApplication.encryptStart(strLongitue))
                 requestObject1.put("LocLongitude", ProdsuitApplication.encryptStart(strLatitude))

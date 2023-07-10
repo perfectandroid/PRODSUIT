@@ -227,16 +227,16 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         return super.onOptionsItemSelected(item)
     }
 
-    @SuppressLint("RestrictedApi")
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.follow_up, menu)
-        if (menu is MenuBuilder) {
-            val m: MenuBuilder = menu as MenuBuilder
-            m.setOptionalIconsVisible(true)
-        }
-        return true
-    }
+//    @SuppressLint("RestrictedApi")
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        val inflater: MenuInflater = menuInflater
+//        inflater.inflate(R.menu.follow_up, menu)
+//        if (menu is MenuBuilder) {
+//            val m: MenuBuilder = menu as MenuBuilder
+//            m.setOptionalIconsVisible(true)
+//        }
+//        return true
+//    }
 
     private fun loadArrays() {
 //

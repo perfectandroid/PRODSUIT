@@ -4,7 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/actv_folwp.xml" value="0.193" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/border_1.xml" value="0.2235" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/scan_border.xml" value="0.2235" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_oop.xml" value="0.234" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_sub_2.xml" value="0.234" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_trans50.xml" value="0.234" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_attendance_marking.xml" value="0.35104166666666664" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_barcode_scanner.xml" value="0.22" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.36102564102564105" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.3328125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_enable.xml" value="0.26614583333333336" />
@@ -21,6 +27,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/filter_location_bottom_sheet.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/map_dialog.xml" value="0.36102564102564105" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/notificationview.xml" value="0.23125" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/reminder_setter_popup.xml" value="0.2864583333333333" />
       </map>
     </option>
   </component>
