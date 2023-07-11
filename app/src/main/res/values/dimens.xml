@@ -6,4 +6,7 @@
     <dimen name="head_sub_text">13dp</dimen>
     <dimen name="head_sub_count">9dp</dimen>
     <dimen name="licence_font">20dp</dimen>
+
+    <dimen name="dot_size">20dp</dimen>
+    <dimen name="dot_margin">2dp</dimen>
 </resources>

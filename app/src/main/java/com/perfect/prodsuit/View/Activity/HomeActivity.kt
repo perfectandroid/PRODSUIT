@@ -767,6 +767,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 //                val intent = Intent(this, BarcodeScannerActivity::class.java)
 //                startActivity(intent)
+
+                val intent = Intent(this, ProductSearchActivity::class.java)
+                startActivity(intent)
+
+
             }
 
             R.id.ll_leads -> {
