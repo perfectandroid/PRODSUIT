@@ -21,6 +21,13 @@
             android:fontFamily="@font/myfont"
             app:iconTint="@color/green"
             android:title="Change Mpin"/>
+
+        <item
+            android:id="@+id/nav_productenquiry"
+            android:icon="@drawable/nav_product"
+            android:fontFamily="@font/myfont"
+            app:iconTint="@color/headertoolbar2"
+            android:title="Product Enquiry"/>
         <item
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_about"

@@ -478,7 +478,8 @@ interface ApiInterface {
     @POST("UserValidations/EmployeeWiseLocationList")
     fun getEmployeeWiseLocationList(@Body body: RequestBody): Call<String>
 
-
+    @POST("MobileNotification/SaveCustomerFCMToken")
+    fun getSaveCustomerFCMToken(@Body body: RequestBody): Call<String>
 
 
 }

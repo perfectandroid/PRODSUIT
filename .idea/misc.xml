@@ -8,14 +8,18 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/custom_switch.xml" value="0.2605" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/dot_indicator_active.xml" value="0.2605" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/dot_indicator_inactive.xml" value="0.2605" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/ic_mpin.xml" value="0.291" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/lead_whatsapp.xml" value="0.2265" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/scan_border.xml" value="0.2235" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg.xml" value="0.2605" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg_light.xml" value="0.2605" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_oop.xml" value="0.234" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_sub_2.xml" value="0.234" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_trans50.xml" value="0.234" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_attendance_marking.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_barcode_scanner.xml" value="0.22" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_customer_service.xml" value="0.2630208333333333" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_customer_service_sales.xml" value="0.1921875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_document_list.xml" value="0.3453125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_document_view.xml" value="0.3453125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_emi_collection.xml" value="0.31875" />
@@ -24,6 +28,8 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.30052083333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_lead_generatn.xml" value="0.31875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.3328125" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leadmanagement.xml" value="0.2390625" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.24479166666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_enable.xml" value="0.26614583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_marking.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_marking_new.xml" value="0.35104166666666664" />
@@ -31,23 +37,31 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_map_root.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_map_root_detail.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_notification.xml" value="0.19739583333333333" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_product_enquiry_detail.xml" value="0.35260416666666666" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_product_enquiry_detail.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_product_search.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_assign.xml" value="0.35104166666666664" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_todolist.xml" value="0.334375" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_product_category.xml" value="0.36666666666666664" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_product_detail.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_product_enquiry_list.xml" value="0.25" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_product_similar.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_product_view_pager.xml" value="0.2790328973444312" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_replaced_product.xml" value="0.3333333333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/alert_bar_chart.xml" value="0.2630208333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/bannerslides.xml" value="0.246875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/company_test1.xml" value="0.2546875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirm_popup.xml" value="0.2703125" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirm_service_followup_sheet.xml" value="0.16614583333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/custom_notification_layout.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/emi_payment_bottom_sheet.xml" value="0.36666666666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/enlarge_product_image.xml" value="0.2630208333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/filter_location_bottom_sheet.xml" value="0.35104166666666664" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/filter_manage.xml" value="0.26875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/map_dialog.xml" value="0.36102564102564105" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/notificationview.xml" value="0.23125" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/product_filter.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/reminder_setter_popup.xml" value="0.2864583333333333" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/menu/main_drawer.xml" value="0.3307291666666667" />
       </map>
     </option>
   </component>

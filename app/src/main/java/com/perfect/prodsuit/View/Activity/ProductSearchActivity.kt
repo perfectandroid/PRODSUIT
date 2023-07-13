@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.impulsive.zoomimageview.ZoomImageView
+import com.perfect.nbfcmscore.Helper.PicassoTrustAll
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -45,6 +47,11 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     var til_Category: TextInputLayout? = null
     var til_Product: TextInputLayout? = null
 
+    var ll_main_page: LinearLayout? = null
+    var ll_filter_page: LinearLayout? = null
+    var ll_sort: LinearLayout? = null
+    var ll_filter: LinearLayout? = null
+
     lateinit var productCategoryViewModel: ProductCategoryViewModel
     lateinit var prodCategorySort: JSONArray
     lateinit var prodCategoryArray: JSONArray
@@ -69,6 +76,8 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     var isOffersOnly: String? = "0"
     var ID_Category: String? = ""
     var ID_Product: String? = ""
+
+    var isFilter: String? = "0" // 0 = No Filter 1 =  Filter
 
 
 
@@ -114,6 +123,7 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
+        val imback_filter = findViewById<ImageView>(R.id.imback_filter)
 
         mSwitch = findViewById<Switch>(R.id.mSwitch)
         txt_mSwitch = findViewById<TextView>(R.id.txt_mSwitch)
@@ -124,11 +134,24 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         til_Category = findViewById<TextInputLayout>(R.id.til_Category)
         til_Product = findViewById<TextInputLayout>(R.id.til_Product)
 
+        ll_main_page = findViewById<LinearLayout>(R.id.ll_main_page)
+        ll_filter_page = findViewById<LinearLayout>(R.id.ll_filter_page)
+        ll_sort = findViewById<LinearLayout>(R.id.ll_sort)
+        ll_filter = findViewById<LinearLayout>(R.id.ll_filter)
+
         recycProdEnq = findViewById<RecyclerView>(R.id.recycProdEnq)
 
         imback!!.setOnClickListener(this)
+        imback_filter!!.setOnClickListener(this)
         tie_Category!!.setOnClickListener(this)
         tie_Product!!.setOnClickListener(this)
+        ll_main_page!!.setOnClickListener(this)
+        ll_filter_page!!.setOnClickListener(this)
+        ll_sort!!.setOnClickListener(this)
+        ll_filter!!.setOnClickListener(this)
+
+        ll_main_page!!.visibility = View.VISIBLE
+        ll_filter_page!!.visibility = View.GONE
 
 
     }
@@ -136,7 +159,20 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     override fun onClick(v: View) {
         when(v.id){
             R.id.imback->{
-                finish()
+
+                if (isFilter.equals("0")){
+                    finish()
+                }else{
+                    isFilter = "0"
+                    ll_main_page!!.visibility = View.VISIBLE
+                    ll_filter_page!!.visibility = View.GONE
+                }
+
+            }
+            R.id.imback_filter->{
+                isFilter = "0"
+                ll_main_page!!.visibility = View.VISIBLE
+                ll_filter_page!!.visibility = View.GONE
             }
 
             R.id.tie_Category->{
@@ -153,6 +189,29 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                     getProductDetail(ID_Category!!)
                 }
 
+            }
+
+            R.id.ll_main_page->{
+
+            }
+
+            R.id.ll_filter_page->{
+
+            }
+            R.id.ll_sort->{
+
+            }
+            R.id.ll_filter->{
+
+                if (isFilter.equals("0")){
+                    isFilter = "1"
+                    ll_main_page!!.visibility = View.GONE
+                    ll_filter_page!!.visibility = View.VISIBLE
+                }else{
+                    isFilter = "1"
+                    ll_main_page!!.visibility = View.VISIBLE
+                    ll_filter_page!!.visibility = View.GONE
+                }
             }
         }
     }
@@ -566,12 +625,20 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
         if (data.equals("productEnquiryList")) {
 
-             val jsonObject = prodEnquiryArrayList.getJSONObject(position)
-             val intent = Intent(this, ProductEnquiryDetailActivity::class.java)
-             intent.putExtra("jsonObject",jsonObject.toString())
-             startActivity(intent)
+            val jsonObject = prodEnquiryArrayList.getJSONObject(position)
+            val intent = Intent(this, ProductEnquiryDetailActivity::class.java)
+            intent.putExtra("jsonObject",jsonObject.toString())
+            startActivity(intent)
         }
     }
 
-
+    override fun onBackPressed() {
+        if (isFilter.equals("0")){
+            finish()
+        }else{
+            isFilter = "0"
+            ll_main_page!!.visibility = View.VISIBLE
+            ll_filter_page!!.visibility = View.GONE
+        }
+    }
 }

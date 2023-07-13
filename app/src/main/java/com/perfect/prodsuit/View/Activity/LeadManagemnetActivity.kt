@@ -103,6 +103,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
         val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
         UserName = UserNameSP.getString("UserName", null).toString()
 
+
         Log.e(TAG,"")
         getCounts()
     }
@@ -271,6 +272,15 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
 
             tie_Employee = layout1.findViewById(R.id.tie_Employee) as TextInputEditText
 
+            val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
+            var isAdmin = IsAdminSP.getString("IsAdmin", null)
+            Log.e(TAG, "isAdmin 796  " + isAdmin)
+            if (isAdmin.equals("1")) {
+                ll_admin_staff!!.visibility = View.VISIBLE
+                tie_Employee!!.isEnabled = true
+            }else{
+                tie_Employee!!.isEnabled = false
+            }
 
             val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
             val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
@@ -287,11 +297,13 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                 tie_Employee!!.setText(emp_name)
             }
 
+            if (!ID_employee2.equals("")){
+
+                ID_Employee  =ID_employee2
+            }
+
             txtCancel.setOnClickListener {
                 dialog.dismiss()
-
-                ID_employee2 = ID_Employee
-                emp_name2 = emp_name
 
             }
 
@@ -303,8 +315,13 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
 //                }
 //
 //                else{
-                    ID_Employee = ID_employee2
-                    emp_name = emp_name2
+
+//                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+//                ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+//
+//                val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+//                UserName = UserNameSP.getString("UserName", null).toString()
+
                     Log.e(TAG,"002  "+ID_Employee)
                     Log.e(TAG,"927  "+emp_name)
                     dialog.dismiss()
@@ -317,8 +334,8 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
 //                dialog.dismiss()
 
                     ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
-                    ID_employee2 = ID_Employee
                     emp_name2 = ""
+                    ID_employee2 = ""
                     val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
                     tie_Employee!!.setText(UserNameSP.getString("UserName", null))
                     Log.e(TAG,"002  "+ID_Employee)
@@ -336,8 +353,6 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
 //            til_LeadValue!!.setHint("")
 
 
-            tie_Employee!!.setOnClickListener(this)
-
             tie_Employee!!.setOnClickListener(View.OnClickListener {
                 Config.disableClick(it)
 //                ID_Employee = ""
@@ -349,15 +364,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
 
 
 
-            val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
-            var isAdmin = IsAdminSP.getString("IsAdmin", null)
-            Log.e(TAG, "isAdmin 796  " + isAdmin)
-            if (isAdmin.equals("1")) {
-                ll_admin_staff!!.visibility = View.VISIBLE
-                tie_Employee!!.isEnabled = true
-            }else{
-                tie_Employee!!.isEnabled = false
-            }
+
 
             dialog.setCancelable(false)
             dialog!!.setContentView(layout1)
@@ -777,14 +784,12 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
             val jsonObject = employeeAllDetailSort.getJSONObject(position)
 //            Toast.makeText(this, ""+jsonObject.getString("EmpName"), Toast.LENGTH_SHORT).show()
             tie_Employee!!.setText(jsonObject.getString("EmpName"))
-//            emp_name = jsonObject.getString("EmpName")
-            emp_name2 = jsonObject.getString("EmpName")
-//            UserName = jsonObject.getString("UserCode")
-//            ID_Employee = jsonObject.getString("ID_Employee")
+            ID_Employee = jsonObject.getString("ID_Employee")
+            emp_name = jsonObject.getString("EmpName")
             ID_employee2 = jsonObject.getString("ID_Employee")
             Log.e(TAG,"iddddd "+jsonObject.getString("ID_Employee"))
         }
-        dialogEmployeeAllDetails!!.dismiss()
+
     }
 
 

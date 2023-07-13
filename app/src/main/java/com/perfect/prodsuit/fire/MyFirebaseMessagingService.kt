@@ -24,10 +24,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(token: String) {
         Log.e(TAG,"Token  999900    "+token)
      //   val deviceId: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
-        val deviceId: String = DeviceHelper.getDeviceID(context)
-        Log.e(FireBaseConfig.TAG,"uniqueId  99991    "+ deviceId)
-
-        FireBaseConfig.checkUserToken(context, token, deviceId)
+//        val deviceId: String = DeviceHelper.getDeviceID(context)
+//        Log.e(FireBaseConfig.TAG,"uniqueId  99991    "+ deviceId)
+//
+//        FireBaseConfig.checkUserToken(context, token, deviceId)
         //Called whenever a new device runs the Android application. Registers in FCM and in PubNub.
     }
 

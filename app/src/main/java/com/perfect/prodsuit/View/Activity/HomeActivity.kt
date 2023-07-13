@@ -167,6 +167,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //    var mJobScheduler: JobScheduler? = null
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -185,6 +186,10 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //        getServiceNotification()
 //        getNotfCount()
         SubMode = "2"
+
+        setMenuItemHidind()
+
+
 
         AddAttendanceApi(strLatitude,strLongitue,address)
         checkAttendance()
@@ -207,6 +212,12 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //            }
 //        }
         
+    }
+
+    private fun setMenuItemHidind() {
+        val menu: Menu = nav_view!!.getMenu()
+        val menuItem = menu.findItem(R.id.nav_profile)
+        // menuItem.setVisible(false);
     }
 
     private fun fetchFcmServerKey() {
@@ -768,8 +779,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                val intent = Intent(this, BarcodeScannerActivity::class.java)
 //                startActivity(intent)
 
-                val intent = Intent(this, ProductSearchActivity::class.java)
-                startActivity(intent)
+//                val intent = Intent(this, ProductSearchActivity::class.java)
+//                startActivity(intent)
 
 
             }
@@ -837,6 +848,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+
             R.id.nav_profile -> {
                 val i = Intent(this@HomeActivity, ProfileActivity::class.java)
                 startActivity(i)
@@ -844,6 +856,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             R.id.nav_changempin -> {
                // changeMpin()
                 changeMpin1()
+            }
+            R.id.nav_productenquiry -> {
+
+                val intent = Intent(this, ProductSearchActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_about -> {
                 val i = Intent(this@HomeActivity, AboutUsActivity::class.java)

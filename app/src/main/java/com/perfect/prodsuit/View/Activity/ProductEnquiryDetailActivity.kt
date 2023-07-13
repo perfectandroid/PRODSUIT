@@ -1,6 +1,8 @@
 package com.perfect.prodsuit.View.Activity
+import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.graphics.Paint
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -9,16 +11,24 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.FullLenghRecyclertview
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.ProductEnquiryListAdapter
+import com.perfect.prodsuit.View.Adapter.ProductSimilarAdapter
 import com.perfect.prodsuit.View.Adapter.ProductViewPagerAdapter
+import com.perfect.prodsuit.Viewmodel.ProductDetailViewModel
 import com.perfect.prodsuit.Viewmodel.ProductEnquiryDetailViewModel
 import me.relex.circleindicator.CircleIndicator
+import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
 
@@ -39,6 +49,17 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener{
     private var currentPage = 0
     val XMENArray = ArrayList<String>()
 
+    var jsonObj: JSONObject? = null
+    var txtProdct : TextView? = null
+    var txtProdct_mrp : TextView? = null
+    var txtProdct_sales : TextView? = null
+
+    lateinit var productDetailViewModel: ProductDetailViewModel
+    lateinit var prodDetailArrayList: JSONArray
+    lateinit var prodDetailSort: JSONArray
+    private var recycSimilarItem: FullLenghRecyclertview? = null
+    private var productCount = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -47,11 +68,20 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener{
         context = this@ProductEnquiryDetailActivity
 
         productEnquiryDetailViewModel = ViewModelProvider(this).get(ProductEnquiryDetailViewModel::class.java)
+        productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
 
         setRegViews()
 
+        var jsonObject: String? = intent.getStringExtra("jsonObject")
+        jsonObj = JSONObject(jsonObject)
+        Log.e(TAG,"577   "+jsonObj)
+        txtProdct!!.text = jsonObj!!.getString("ProductName")
+        txtProdct_mrp!!.text = "₹ "+jsonObj!!.getString("MRP")
+        txtProdct_sales!!.text = "₹ "+jsonObj!!.getString("SalPrice")
+        txtProdct_mrp!!.setPaintFlags(txtProdct_mrp!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
         detailCount = 0
         getDetailList()
+        getProductDetail("0")
 
 
 
@@ -200,8 +230,14 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener{
         val imback = findViewById<ImageView>(R.id.imback)
 
         mPager = findViewById(R.id.viewPager)
-//    //    dotsLayout = findViewById(R.id.dotsLayout)
+    //    dotsLayout = findViewById(R.id.dotsLayout)
         indicator =findViewById(R.id.indicator)
+        txtProdct = findViewById(R.id.txtProdct)
+        txtProdct_mrp = findViewById(R.id.txtProdct_mrp)
+        txtProdct_sales = findViewById(R.id.txtProdct_sales)
+
+        recycSimilarItem = findViewById(R.id.recycSimilarItem)
+
         imback!!.setOnClickListener(this)
 
 
@@ -242,4 +278,80 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener{
 //            ContextCompat.getDrawable(this, R.drawable.dot_indicator_active)
 //        )
 //    }
+
+
+    private fun getProductDetail(ID_Category: String) {
+//         var proddetail = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productDetailViewModel.getProductDetail(this, ID_Category)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (productCount == 0) {
+                                    productCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   227   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("ProductDetailsList")
+                                        prodDetailArrayList = jobjt.getJSONArray("ProductList")
+                                        if (prodDetailArrayList.length() > 0) {
+                                            Log.e(TAG, "msg   2271   " + prodDetailArrayList)
+                                            val lLayout = GridLayoutManager(this@ProductEnquiryDetailActivity, 3)
+                                            recycSimilarItem!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            val adapter = ProductSimilarAdapter(this@ProductEnquiryDetailActivity, prodDetailArrayList)
+                                            recycSimilarItem!!.adapter = adapter
+                                        //    adapter.setClickListener(this@ProductEnquiryDetailActivity)
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProductEnquiryDetailActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
 }

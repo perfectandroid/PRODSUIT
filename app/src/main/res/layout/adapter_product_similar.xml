@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="2dp">
+    <!--    app:cardUseCompatPadding="true"-->
+
+    <LinearLayout
+        android:id="@+id/ll_product_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_bg_light"
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="125dp"
+                android:padding="5dp"
+                android:src="@drawable/lead_productcolor"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtProdct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:fontFamily="@font/myfont"
+                android:text="hfhfg"
+                android:textColor="@color/colorPrimary"
+                android:layout_centerVertical="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="-2dp"
+                android:fontFamily="@font/myfont"
+                android:maxLines="1"
+                android:text="PROD4489756"
+                android:textColor="@color/textColor1"
+                android:textSize="10dp"
+                android:textStyle="normal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-3dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/txtProdct_sales"
+                    android:paddingLeft="2dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="13dp"
+                    android:textStyle="bold"
+                    android:maxLines="1"
+                    android:fontFamily="@font/myfont"
+                    android:text="47"
+                    android:textColor="@color/black"
+                    android:layout_centerVertical="true" />
+
+
+                <TextView
+                    android:id="@+id/txtProdct_mrp"
+                    android:paddingLeft="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textSize="10dp"
+                    android:textStyle="normal"
+                    android:maxLines="1"
+                    android:fontFamily="@font/myfont"
+                    android:text="55"
+                    android:textColor="@color/textColor1"
+                    android:layout_centerVertical="true" />
+
+
+
+            </LinearLayout>
+
+            <TextView
+                android:paddingLeft="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="10dp"
+                android:layout_marginTop="-2dp"
+                android:textStyle="normal"
+                android:maxLines="1"
+                android:fontFamily="@font/myfont"
+                android:text="Only 2 left"
+                android:layout_weight="1"
+                android:textColor="@color/color_mrp"
+                android:layout_centerVertical="true" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>
