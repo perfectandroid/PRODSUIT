@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.messaging.FirebaseMessaging
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Service.NotificationLocationService
 import org.json.JSONArray
@@ -115,6 +116,7 @@ object Config {
     const val SHARED_PREF63 = "Status"  // String False / True
     const val SHARED_PREF64 = "isNotification"  //NotificationBack Preesed
     const val SHARED_PREF65 = "fireBaseToken"  //FireBase User Token
+    const val SHARED_PREF66 = "deviceID"  //FireBase User Token
 
 
     var width = 0
@@ -450,6 +452,7 @@ object Config {
 
     fun logOut(context : Context) {
 
+
         val loginSP = context.getSharedPreferences(SHARED_PREF, 0)
         val loginEditer = loginSP.edit()
         loginEditer.putString("loginsession", "No")
@@ -751,6 +754,10 @@ object Config {
         fireBaseTokenEditer.putString("fireBaseToken", "")
         fireBaseTokenEditer.commit()
 
+        val deviceIDSP = context.getSharedPreferences(Config.SHARED_PREF66, 0)
+        val deviceIDEditer = deviceIDSP.edit()
+        deviceIDEditer.putString("deviceID", "")
+        deviceIDEditer.commit()
 
 
         val isMyServiceRunning = isServiceRunning(context, NotificationLocationService::class.java)

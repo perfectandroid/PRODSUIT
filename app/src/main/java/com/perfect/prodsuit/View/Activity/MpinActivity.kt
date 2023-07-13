@@ -759,18 +759,23 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                 StatusEditer.commit()
 
 
-                                val isNotificationSP = applicationContext.getSharedPreferences(Config.SHARED_PREF64, 0)
-                                var isNotification = isNotificationSP.getString("isNotification","")
-                                Log.e(TAG,"177770021   isNotification   "+isNotification)
-                                if (!isNotification.equals("")){
-                                    val i = Intent(this@MpinActivity, NotificationActivity::class.java)
-                                    startActivity(i)
-                                    finish()
-                                }else{
-                                    val i = Intent(this@MpinActivity, HomeActivity::class.java)
-                                    startActivity(i)
-                                    finish()
-                                }
+                                val i = Intent(this@MpinActivity, HomeActivity::class.java)
+                                startActivity(i)
+                                finish()
+
+
+//                                val isNotificationSP = applicationContext.getSharedPreferences(Config.SHARED_PREF64, 0)
+//                                var isNotification = isNotificationSP.getString("isNotification","")
+//                                Log.e(TAG,"177770021   isNotification   "+isNotification)
+//                                if (!isNotification.equals("")){
+//                                    val i = Intent(this@MpinActivity, NotificationActivity::class.java)
+//                                    startActivity(i)
+//                                    finish()
+//                                }else{
+//                                    val i = Intent(this@MpinActivity, HomeActivity::class.java)
+//                                    startActivity(i)
+//                                    finish()
+//                                }
 
 
 

@@ -2009,6 +2009,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             )
 
             Log.e("rreee","wwwwwww "+dataContact.size)
+            Log.e("rreee","wwwwwww "+dataContact)
             val adapter =
                 SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, cursor, dataContact, to)
 //              val adapter = ArrayAdapter(this@LeadGenerationActivity, android.R.layout.simple_list_item_1, dataContact)

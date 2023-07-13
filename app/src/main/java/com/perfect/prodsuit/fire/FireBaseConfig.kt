@@ -41,7 +41,7 @@ object FireBaseConfig {
                 Log.e(TAG,"uniqueId  99991    "+ deviceId)
              //   fetchFcmServerKey()
 
-           //     updateUserTokenDeviceID(context,task.result!!,deviceId)
+            //    updateUserTokenDeviceID(context,task.result!!,deviceId)
 
             }
         }
@@ -52,14 +52,16 @@ object FireBaseConfig {
         try {
             val fireBaseTokenSP = context.getSharedPreferences(Config.SHARED_PREF65, 0)
             val fireBaseToken = fireBaseTokenSP.getString("fireBaseToken","")
-            Log.e(TAG,"7811100  deviceId   "+deviceId)
-            Log.e(TAG,"7811100  deviceId1   "+deviceId1)
+            val deviceIDSP = context.getSharedPreferences(Config.SHARED_PREF66, 0)
+            val deviceIDNew = deviceIDSP.getString("deviceID","")
+            Log.e(TAG,"7811100  deviceId   "+deviceId1)
+            Log.e(TAG,"7811100  deviceIDNew   "+deviceIDNew)
             if (fireBaseToken.equals("")){
-
-                updateUserTokenDeviceID(context,userToken,deviceId1)
+                Log.e(TAG,"78111001  deviceIDNew   "+deviceIDNew)
+                updateUserTokenDeviceID(context,userToken,deviceId)
             }
-            else if (!fireBaseToken.equals(userToken)){
-
+            else if (!fireBaseToken.equals(userToken) || !deviceIDNew.equals(deviceId1)){
+                Log.e(TAG,"78111002  deviceIDNew   "+deviceIDNew)
                 updateUserTokenDeviceID(context,userToken,deviceId1)
             }
         }catch (e : Exception){
@@ -154,6 +156,11 @@ object FireBaseConfig {
                             val fireBaseTokenEditer = fireBaseTokenSP.edit()
                             fireBaseTokenEditer.putString("fireBaseToken", userToken)
                             fireBaseTokenEditer.commit()
+
+                            val deviceIDSP = context.getSharedPreferences(Config.SHARED_PREF66, 0)
+                            val deviceIDEditer = deviceIDSP.edit()
+                            deviceIDEditer.putString("deviceID", deviceId1)
+                            deviceIDEditer.commit()
                         }
 
                     } catch (e: Exception) {
@@ -172,4 +179,6 @@ object FireBaseConfig {
 
         }
     }
+
+
 }

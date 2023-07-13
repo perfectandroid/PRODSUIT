@@ -15,6 +15,7 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.perfect.prodsuit.Helper.DeviceHelper
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.SplashActivity
 import com.perfect.prodsuit.View.Service.NotificationEvent
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -134,16 +135,18 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 ///////////////////////////////////////
 
 
+            val notificationIntent = Intent(this, SplashActivity::class.java)
+            val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_IMMUTABLE)
 
-            val notificationIntent = Intent(context, NotificationEvent::class.java)
-            notificationIntent.action = "my.custom.ACTION_NOTIFICATION_CLICK"
-
-            val pendingIntent = PendingIntent.getBroadcast(
-                context,
-                0,
-                notificationIntent,
-                PendingIntent.FLAG_IMMUTABLE
-            )
+//            val notificationIntent = Intent(context, NotificationEvent::class.java)
+//            notificationIntent.action = "my.custom.ACTION_NOTIFICATION_CLICK"
+//
+//            val pendingIntent = PendingIntent.getBroadcast(
+//                context,
+//                0,
+//                notificationIntent,
+//                PendingIntent.FLAG_IMMUTABLE
+//            )
 
             val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.applogo)

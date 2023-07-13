@@ -16,13 +16,13 @@ class NotificationHelper ( val context: Context) {
 
         val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val runningTasks = activityManager.getRunningTasks(1)
-//        val isActivityOpen = runningTasks.isNotEmpty()
-//        if (isActivityOpen){
-//            Log.e(TAG,"17777001   isActivityOpen   "+isActivityOpen)
-//
-//            val topActivity = runningTasks[0].topActivity
-//            val className = topActivity!!.className
-//
+        val isActivityOpen = runningTasks.isNotEmpty()
+        if (isActivityOpen){
+            Log.e(TAG,"17777001   isActivityOpen   "+isActivityOpen)
+
+            val topActivity = runningTasks[0].topActivity
+            val className = topActivity!!.className
+
 //            Log.e("TAG","17777002   topActivity   "+topActivity)
 //            Log.e("TAG","17777003   className   "+className)
 //            var substring = ""
@@ -50,21 +50,20 @@ class NotificationHelper ( val context: Context) {
 //            }else{
 //
 //                Config.setRedirection(context,"")
-//
 //                val i = Intent(context, NotificationActivity::class.java)
 //                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
 //                context.startActivity(i)
 //            }
-//
-//
-//        }else{
-//
-//            Log.e(TAG,"17777004   isActivityClosed   "+isActivityOpen)
-//
-//            gotoSplash()
-//        }
 
-        gotoSplash()
+
+        }else{
+
+            Log.e(TAG,"17777004   isActivityClosed   "+isActivityOpen)
+
+            gotoSplash()
+        }
+
+
     }
 
 
@@ -74,7 +73,7 @@ class NotificationHelper ( val context: Context) {
         Config.setRedirection(context,"Home")
 
         val i = Intent(context, SplashActivity::class.java)
-        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+//        i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(i)
     }
 
