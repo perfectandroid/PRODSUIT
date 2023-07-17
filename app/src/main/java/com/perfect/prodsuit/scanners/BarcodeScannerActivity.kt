@@ -7,16 +7,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.PixelFormat
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.util.SparseArray
 import android.view.*
-import android.widget.Button
 import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.vision.CameraSource
@@ -24,8 +21,8 @@ import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.Frame
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
-import java.io.InputStream
 
 class BarcodeScannerActivity : AppCompatActivity() {
 
@@ -91,6 +88,11 @@ class BarcodeScannerActivity : AppCompatActivity() {
                     val barcode = barcodes.valueAt(0)
                     val barcodeValue = barcode.displayValue
                     Log.e(TAG,"766001 Camera barcodeValue  "+barcodeValue)
+                    val intent = Intent()
+                    intent.putExtra("barcodeValue", barcodeValue)
+                    setResult(Config.SCANNER_CODE, intent)
+                    finish() //finishing activity
+
 
                 }
             }
@@ -157,6 +159,11 @@ class BarcodeScannerActivity : AppCompatActivity() {
                             val barcode = barcodes.valueAt(0)
                             val barcodeValue = barcode.displayValue
                             Log.e(TAG,"766001 Gallary barcodeValue  "+barcodeValue)
+
+                            val intent = Intent()
+                            intent.putExtra("barcodeValue", barcodeValue)
+                            setResult(Config.SCANNER_CODE, intent)
+                            finish() //finishing activity
                         }
 
                     }

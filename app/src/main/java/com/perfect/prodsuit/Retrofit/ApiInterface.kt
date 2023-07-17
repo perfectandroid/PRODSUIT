@@ -481,5 +481,7 @@ interface ApiInterface {
     @POST("MobileNotification/SaveCustomerFCMToken")
     fun getSaveCustomerFCMToken(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/ItemSearchList")
+    fun getItemSearchList(@Body body: RequestBody): Call<String>
 
 }

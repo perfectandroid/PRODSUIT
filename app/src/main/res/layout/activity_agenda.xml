@@ -58,7 +58,7 @@
                             android:fontFamily="@font/myfont"
                             android:gravity="center_horizontal"
 
-                            android:text="Agenda"
+                            android:text="Today's List"
                             android:textAllCaps="true"
                             android:textColor="@color/white"
                             android:textSize="20dp"

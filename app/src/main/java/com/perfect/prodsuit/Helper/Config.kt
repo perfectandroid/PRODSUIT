@@ -124,7 +124,7 @@ object Config {
     var height = 0
 
 
-
+    const val SCANNER_CODE = 501
     const val SOME_TECHNICAL_ISSUES = "Some Technical Issues."
     const val PLEASE_TRY_AGAIN = "Some Technical Issues, Please try again in sometime"
     const val notificationBack = false // String False / True
@@ -830,7 +830,7 @@ object Config {
 
             var obj = JSONObject()
             obj.put("grid_id", "1")
-            obj.put("grid_name", "Agenda")
+            obj.put("grid_name", "Today's List")
           //  obj.put("image",context.resources.getDrawable(R.drawable.addrs) )
             obj.put("image","home_agenda")
             obj.put("count","0")

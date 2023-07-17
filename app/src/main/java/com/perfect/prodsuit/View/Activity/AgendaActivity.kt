@@ -4950,7 +4950,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         if ((mainpage!!.getVisibility() == View.GONE)) {
 
             mainpage!!.visibility = View.VISIBLE
-            textid!!.text="AGENDA"
+            textid!!.text="Today's List"
          //   lstChkArray.clear()
 
             val editor = sharedPreferences!!.edit()

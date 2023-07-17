@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/border_show3"
+        tools:ignore="MissingConstraints">
+        <!--        shadow_border1-->
+        <!--        android:background="@drawable/border_shadow1"-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:layout_weight="1"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/myfont"
+                        android:drawableLeft="@drawable/lead_categorys"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:text="Category"/>
+                    <TextView
+                        android:id="@+id/tvv_tvCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/myfont"
+                        android:paddingStart="2dp"
+                        android:layout_marginTop="-7dp"
+                        android:textSize="14dp"
+                        android:textColor="@color/textColor"
+                        android:text="Category"/>
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_Product"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:layout_weight="1"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/myfont"
+                        android:drawableLeft="@drawable/lead_productss"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:text="Product"/>
+                    <TextView
+                        android:id="@+id/tvv_Product"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/myfont"
+                        android:paddingStart="2dp"
+                        android:layout_marginTop="-7dp"
+                        android:textSize="14dp"
+                        android:textColor="@color/textColor"
+                        android:text="Category"/>
+
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:layout_weight="1"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/myfont"
+                        android:drawableLeft="@drawable/lead_prioritys"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:text="Priority"/>
+                    <TextView
+                        android:id="@+id/tvv_Priority"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/myfont"
+                        android:paddingStart="2dp"
+                        android:layout_marginTop="-7dp"
+                        android:textSize="14dp"
+                        android:textColor="@color/textColor"
+                        android:text="Category"/>
+
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:layout_weight="1"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/myfont"
+                        android:drawableLeft="@drawable/lead_prioritys"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:text="Model"/>
+                    <TextView
+                        android:id="@+id/tvv_Model"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/myfont"
+                        android:paddingStart="2dp"
+                        android:layout_marginTop="-7dp"
+                        android:textSize="14dp"
+                        android:textColor="@color/textColor"
+                        android:text="Category"/>
+
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:layout_weight="1"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/myfont"
+                        android:drawableLeft="@drawable/svg_amount"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:text="Offer Price"/>
+                    <TextView
+                        android:id="@+id/tvv_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/myfont"
+                        android:paddingStart="2dp"
+                        android:layout_marginTop="-7dp"
+                        android:textSize="14dp"
+                        android:textColor="@color/textColor"
+                        android:text="Category"/>
+
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:layout_weight="1"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/myfont"
+                        android:drawableLeft="@drawable/lead_actions"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:text="Action"/>
+                    <TextView
+                        android:id="@+id/tvv_action"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/myfont"
+                        android:paddingStart="2dp"
+                        android:layout_marginTop="-7dp"
+                        android:textSize="14dp"
+                        android:textColor="@color/textColor"
+                        android:text="Category"/>
+
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:layout_weight="1"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/myfont"
+                        android:drawableLeft="@drawable/lead_actiontypes"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:text="Action Type"/>
+                    <TextView
+                        android:id="@+id/tvv_action_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/myfont"
+                        android:paddingStart="2dp"
+                        android:layout_marginTop="-7dp"
+                        android:textSize="14dp"
+                        android:textColor="@color/textColor"
+                        android:text="Category"/>
+
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:layout_weight="1"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/myfont"
+                        android:drawableLeft="@drawable/lead_date"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:text="Follow Up Date"/>
+                    <TextView
+                        android:id="@+id/tvv_followup_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/myfont"
+                        android:paddingStart="2dp"
+                        android:layout_marginTop="-7dp"
+                        android:textSize="14dp"
+                        android:textColor="@color/textColor"
+                        android:text="Category"/>
+
+
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".5"
+                    android:layout_marginStart="230dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/im_edit"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:padding="2dp"
+                        android:background="@drawable/shape_bottom_rounded1"
+                        android:src="@android:drawable/ic_menu_edit"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/im_delete"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:padding="2dp"
+                        android:src="@android:drawable/ic_delete"
+                        android:background="@drawable/shape_bottom_rounded1"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#478781"
+        android:visibility="gone"/>
+
+
+</LinearLayout>

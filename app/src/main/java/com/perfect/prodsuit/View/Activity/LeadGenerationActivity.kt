@@ -36,21 +36,22 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.libraries.places.internal.it
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
-import com.perfect.prodsuit.Helper.Common
-import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
+import com.perfect.prodsuit.scanners.BarcodeScannerActivity
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.log
 
 
 class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
@@ -320,6 +321,31 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private var tv_MediaTypeClick: TextView? = null
     private var tv_UploadImage: TextView? = null
     private var tv_MoreCommInfoClick: TextView? = null
+    private var rcylisting: RecyclerView? = null
+    private var btnReset1: Button? = null
+    private var editProdcutListarray = JSONArray()
+    private var array_product_lead = JSONArray()
+    private var llDetailListing: LinearLayout? = null
+    private var popup_Dialogue: Dialog? = null
+    private var add_product_btn: ImageView? = null
+    private var refresh_btn: ImageView? = null
+    private var edtScan: ImageView? = null
+    private var llrecyvisible: LinearLayout? = null
+    private var lldeaillead: LinearLayout? = null
+    private var addmore_btn: TextView? = null
+    private var modeView = "0"
+    private var lllistdetails: LinearLayout? = null
+    private var tv_Mrp: TextView? = null
+    private var edtAmount: EditText? = null
+    private var MRP: String? = null
+    var arrPosition: Int? = 0
+    var editPosition: Int? = 0
+    var Project = ""
+    var clickMode = ""
+    var recycle_popup: RecyclerView? = null
+    var btnclick = ""
+    var MRRP = ""
+    var Offerprice = ""
 
     var recyRequest: RecyclerView? = null
 
@@ -333,10 +359,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     var searchNameTitle = arrayOf<String>()
     var dataContact = arrayOf<String>()
     var SubModeSearch: String? = ""
-    private var name : String? = null
-    private var phoneNo : String? = null
-    private var cursor : Cursor? = null
-    private var imvContactbook : ImageView? = null
+    private var name: String? = null
+    private var phoneNo: String? = null
+    private var cursor: Cursor? = null
+    private var imvContactbook: ImageView? = null
 //    private var adapter :  ArrayAdapter? = null
 
     companion object {
@@ -407,6 +433,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         var strDate: String = ""
         var strLeadThrough: String = ""
         var strFeedback: String = ""
+        var stramount: String = ""
         var strFollowupdate: String = ""
         var strExpecteddate: String = ""
         var strNeedCheck: String = "0"
@@ -455,10 +482,11 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     var saveLead = 0
     var saveLeadGenDet = 0
     var CompanyCategory = ""
-    var boolAttendance =""
+    var boolAttendance = ""
 
     var saveAttendanceMark = false
-
+    lateinit var itemSearchListViewModel: ItemSearchListViewModel
+    private var barcodeCount = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -471,7 +499,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         setContentView(R.layout.activity_leadgeneration)
         window.decorView.importantForAutofill = View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS
         context = this@LeadGenerationActivity
-        getGenralSettingsViewModel = ViewModelProvider(this).get(GetGenralSettingsViewModel::class.java)
+        getGenralSettingsViewModel =
+            ViewModelProvider(this).get(GetGenralSettingsViewModel::class.java)
         leadRequestViewModel = ViewModelProvider(this).get(LeadRequestViewModel::class.java)
         leadFromViewModel = ViewModelProvider(this).get(LeadFromViewModel::class.java)
         leadThroughViewModel = ViewModelProvider(this).get(LeadThroughViewModel::class.java)
@@ -480,7 +509,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         mediaTypeViewModel = ViewModelProvider(this).get(MediaTypeViewModel::class.java)
         customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
         pinCodeSearchViewModel = ViewModelProvider(this).get(PinCodeSearchViewModel::class.java)
-        leadGenerateSaveViewModel = ViewModelProvider(this).get(LeadGenerateSaveViewModel::class.java)
+        leadGenerateSaveViewModel =
+            ViewModelProvider(this).get(LeadGenerateSaveViewModel::class.java)
         leadEditListViewModel = ViewModelProvider(this).get(LeadEditListViewModel::class.java)
         leadEditDetailViewModel = ViewModelProvider(this).get(LeadEditDetailViewModel::class.java)
         countryViewModel = ViewModelProvider(this).get(CountryViewModel::class.java)
@@ -499,7 +529,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
-        leadGenerateDefaultvalueViewModel = ViewModelProvider(this).get(LeadGenerationDefaultvalueViewModel::class.java)
+        leadGenerateDefaultvalueViewModel =
+            ViewModelProvider(this).get(LeadGenerationDefaultvalueViewModel::class.java)
+        itemSearchListViewModel = ViewModelProvider(this).get(ItemSearchListViewModel::class.java)
 
 
         setRegViews()
@@ -539,8 +571,6 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
 
 
-
-
                 FK_Post = ""
                 FK_Area = ""
                 edtArea!!.setText("")
@@ -562,17 +592,16 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
         val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
         var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
-        if (boolAttendance){
+        if (boolAttendance) {
             val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
-            var status = StatusSP.getString("Status","")
-            if (status.equals("0") || status.equals("")){
-                Common.punchingRedirectionConfirm(this,"","")
-            }
-            else if (status.equals("1")){
+            var status = StatusSP.getString("Status", "")
+            if (status.equals("0") || status.equals("")) {
+                Common.punchingRedirectionConfirm(this, "", "")
+            } else if (status.equals("1")) {
                 saveAttendanceMark = true
             }
 
-        }else{
+        } else {
             saveAttendanceMark = true
         }
     }
@@ -582,7 +611,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         var nameKey = "LFLR"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                getGenralSettingsViewModel.getRequestLicence(this,nameKey)!!.observe(
+                getGenralSettingsViewModel.getRequestLicence(this, nameKey)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -595,10 +624,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                 val jobjt = jObject.getJSONObject("GenralSettingsDetails")
                                 var strGsValue = jobjt.getString("GsValue")
                                 Log.e(TAG, "strGsValue   5292   " + strGsValue)
-                                if (strGsValue.equals("true")){
+                                if (strGsValue.equals("true")) {
                                     Log.e(TAG, "strGsValue   52921   " + strGsValue)
                                     cardLeadRequest!!.visibility = View.VISIBLE
-                                }else{
+                                } else {
                                     Log.e(TAG, "strGsValue   52922   " + strGsValue)
                                     cardLeadRequest!!.visibility = View.GONE
                                 }
@@ -725,6 +754,12 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         edtbranch!!.setText("")
         edtdepartment!!.setText("")
         edtEmployee!!.setText("")
+        edtAmount!!.setText("")
+        editProdcutListarray = JSONArray()
+        llrecyvisible!!.visibility = View.GONE
+        lllistdetails!!.visibility = View.VISIBLE
+//        addmore_btn!!.visibility = View.GONE
+        tv_Mrp!!.setText("")
 
         strPincode = ""
         FK_Country = ""
@@ -800,6 +835,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         btnSubmit!!.setText("Submit")
         saveUpdateMode = "1"  //SAVE
         rltvPinCode!!.visibility = View.VISIBLE
+        array_product_lead = JSONArray()
 
         ID_LeadGenerate = "0"
         ID_LeadGenerateProduct = ""
@@ -915,9 +951,17 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         tv_UploadImage = findViewById<TextView>(R.id.tv_UploadImage)
         tv_MoreCommInfoClick = findViewById<TextView>(R.id.tv_MoreCommInfoClick)
         imvContactbook = findViewById<ImageView>(R.id.imvContactbook)
-
-
+        rcylisting = findViewById(R.id.rcylisting)
+        edtScan = findViewById(R.id.edtScan)
+        add_product_btn = findViewById(R.id.add_product_btn)
+        refresh_btn = findViewById(R.id.refresh_btn)
+        llrecyvisible = findViewById<LinearLayout>(R.id.llrecyvisible)
         recyRequest = findViewById<RecyclerView>(R.id.recyRequest)
+        lldeaillead = findViewById(R.id.lldeaillead)
+//        addmore_btn = findViewById(R.id.addmore_btn)
+        lllistdetails = findViewById(R.id.lllistdetails)
+        tv_Mrp = findViewById(R.id.tv_Mrp)
+        edtAmount = findViewById(R.id.edtAmount)
 
         btnReset = findViewById<Button>(R.id.btnReset)
         btnSubmit = findViewById<Button>(R.id.btnSubmit)
@@ -1003,7 +1047,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
 
-
+        edtScan!!.setOnClickListener(this)
+        add_product_btn!!.setOnClickListener(this)
+        refresh_btn!!.setOnClickListener(this)
+//        addmore_btn!!.setOnClickListener(this)
 
         date_Picker1 = findViewById<DatePicker>(R.id.date_Picker1)
         date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
@@ -1016,18 +1063,17 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private fun setLabelbyCompany() {
 
         val CompanyCategorySP = applicationContext.getSharedPreferences(Config.SHARED_PREF46, 0)
-        CompanyCategory = CompanyCategorySP.getString("CompanyCategory","").toString()
+        CompanyCategory = CompanyCategorySP.getString("CompanyCategory", "").toString()
 
-        Log.e(TAG,"CompanyCategory  857   "+CompanyCategory)
-        if (CompanyCategory.equals("0")  || CompanyCategory.equals("1")){
+        Log.e(TAG, "CompanyCategory  857   " + CompanyCategory)
+        if (CompanyCategory.equals("0") || CompanyCategory.equals("1")) {
             tv_ProductClick!!.setText("Project/Product Details")
             edtProdproduct!!.setHint("Product")
             edtProdqty!!.setHint("Qty")
             ll_product_qty!!.orientation = LinearLayout.HORIZONTAL
             edtExpecteddate!!.visibility = View.GONE
             edtProjectName!!.setHint("Model")
-        }
-        else if (CompanyCategory.equals("2")){
+        } else if (CompanyCategory.equals("2")) {
             tv_ProductClick!!.setText("Package Details")
             edtProdproduct!!.setHint("Destination")
             edtProdqty!!.setHint("No.of Passengers")
@@ -1035,7 +1081,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             edtExpecteddate!!.visibility = View.VISIBLE
             edtProjectName!!.setHint("Destination")
 
-            val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
             params.setMargins(0, 10, 0, 0)
             edtProdqty!!.setLayoutParams(params)
         }
@@ -1354,6 +1403,15 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     mediaTypeMode = "1"
                     uploadImageMode = "1"
 
+                    val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+                    rcylisting!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                    val adapter = LeadGenerationProductListAdapter(
+                        this@LeadGenerationActivity,
+                        editProdcutListarray
+                    )
+                    rcylisting!!.adapter = adapter
+                    adapter.setClickListener(this@LeadGenerationActivity)
+
                     hideViews()
                 }
 
@@ -1434,7 +1492,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             }
 
             R.id.tv_LeadRequestClick -> {
-              //  rrrr
+                //  rrrr
                 Config.disableClick(v)
                 if (leadRequestMode.equals("0")) {
                     llLeadRequest!!.visibility = View.GONE
@@ -1693,7 +1751,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //                Customer_Address = ""
 //                strCustomer = ""
             }
-            R.id.imvContactbook ->{
+            R.id.imvContactbook -> {
                 getContactRequest()
             }
 
@@ -1800,8 +1858,6 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     hideViews()
 
 
-
-
                 } else {
                     Config.disableClick(v)
                     proddetail = 0
@@ -1893,6 +1949,68 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 // }
             }
 
+            R.id.edtScan -> {
+                val intent = Intent(this, BarcodeScannerActivity::class.java)
+                startActivityForResult(intent, Config.SCANNER_CODE)
+//                ProductValidations(v)
+//                multipleProductValidation()
+//                leadProductPopup()
+            }
+
+            R.id.add_product_btn -> {
+//                clickMode = "1"
+                var clickmode = multipleProductValidation(v)
+
+                if (clickMode!!.equals("1")) {
+                    addMultipleProduct()
+                } else {
+                    multipleProductValidation(v)
+                }
+
+                Log.e("eee", "tteerrr" + clickmode)
+
+            }
+            R.id.refresh_btn -> {
+
+                lllistdetails!!.visibility = View.VISIBLE
+                llfollowup!!.visibility = View.GONE
+                edtProjectName!!.visibility = View.GONE
+                edtProdpriority!!.visibility = View.VISIBLE
+                strQty = ""
+                ID_Category = ""
+                CompanyCategory = ""
+                strExpecteddate = ""
+                strFeedback = ""
+                ID_Status = ""
+                ID_NextAction = ""
+                ID_ActionType = ""
+                ID_Priority = ""
+
+                edtProdcategory!!.setText("")
+                edtProdproduct!!.setText("")
+                edtProjectName!!.setText("")
+                edtProdqty!!.setText("")
+                edtProdfeedback!!.setText("")
+                edtExpecteddate!!.setText("")
+                edtProdpriority!!.setText("")
+                edtProdstatus!!.setText("")
+                edtFollowaction!!.setText("")
+                edtFollowtype!!.setText("")
+                edtbarnchtype!!.setText("")
+                edtbranch!!.setText("")
+                edtdepartment!!.setText("")
+                edtEmployee!!.setText("")
+                edtAmount!!.setText("")
+                tv_Mrp!!.setText("")
+
+                val sdf = SimpleDateFormat("dd-MM-yyyy")
+                val currentDate = sdf.format(Date())
+                edtFollowdate!!.setText(currentDate)
+
+                val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+                edtEmployee!!.setText(UserNameSP.getString("UserName", null))
+
+            }
             R.id.btnReset -> {
                 Config.disableClick(v)
                 clearData()
@@ -1904,9 +2022,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             }
 
             R.id.btnSubmit -> {
-
+                btnclick = "1"
                 checkAttendance()
-                if (saveAttendanceMark){
+                if (saveAttendanceMark) {
                     saveLeadGenDet = 0
                     Config.disableClick(v)
                     LeadValidations(v)
@@ -1964,10 +2082,26 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         }
     }
 
+//    private fun  leadProductPopup(){
+//        popup_Dialogue = Dialog(this)
+//        popup_Dialogue!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        popup_Dialogue!!.setContentView(R.layout.product_lisiting_popup_lead)
+//        popup_Dialogue!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+//
+//        val window: Window? = popup_Dialogue!!.getWindow()
+//        window!!.setBackgroundDrawableResource(android.R.color.transparent);
+//        window!!.setLayout(
+//            ViewGroup.LayoutParams.MATCH_PARENT,
+//            ViewGroup.LayoutParams.MATCH_PARENT
+//        )
+//
+//
+//    }
 
 
     private fun getContactRequest() {
-        if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.READ_CONTACTS
+        if (ActivityCompat.checkSelfPermission(
+                applicationContext, Manifest.permission.READ_CONTACTS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CONTACTS), 1)
@@ -1983,15 +2117,17 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         try {
 
 //
-             cursor = contentResolver.query(
-                ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null)
+            cursor = contentResolver.query(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null
+            )
             startManagingCursor(cursor)
 
 
             val dataContact = arrayOf(
                 ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                 ContactsContract.CommonDataKinds.Phone.NUMBER,
-                ContactsContract.CommonDataKinds.Phone._ID)
+                ContactsContract.CommonDataKinds.Phone._ID
+            )
             val to = intArrayOf(android.R.id.text1, android.R.id.text2)
 
 
@@ -2008,10 +2144,16 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
 
-            Log.e("rreee","wwwwwww "+dataContact.size)
-            Log.e("rreee","wwwwwww "+dataContact)
+            Log.e("rreee", "wwwwwww " + dataContact.size)
+            Log.e("rreee", "wwwwwww " + dataContact)
             val adapter =
-                SimpleCursorAdapter(this, android.R.layout.simple_list_item_2, cursor, dataContact, to)
+                SimpleCursorAdapter(
+                    this,
+                    android.R.layout.simple_list_item_2,
+                    cursor,
+                    dataContact,
+                    to
+                )
 //              val adapter = ArrayAdapter(this@LeadGenerationActivity, android.R.layout.simple_list_item_1, dataContact)
 //            ListView!!.setAdapter(adapter as ListAdapter?)
             listview!!.setAdapter(adapter)
@@ -2032,16 +2174,33 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //                    cursor!!.moveToPosition(position)
 //                    Customer_Mobile = cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
 
-                    Log.e("eedd","hfhfhfhfgdgdyfghh    "+position)
+                    Log.e("eedd", "hfhfhfhfgdgdyfghh    " + position)
                     cursor!!.moveToPosition(position)
-                    Log.e("eedd","weqweefdfdsa")
-                    Log.e("ffgg","ffffeeeeeeeeeee11222 "+cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)))
+                    Log.e("eedd", "weqweefdfdsa")
+                    Log.e(
+                        "ffgg",
+                        "ffffeeeeeeeeeee11222 " + cursor!!.getString(
+                            cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
+                        )
+                    )
 
                     edt_customer!!.setText("")
 
-                    edtCustname!!.setText(cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)))
-                    edtCustphone!!.setText(cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)))
-                    Log.e("eedd","weqweefdfdsa")
+                    edtCustname!!.setText(
+                        cursor!!.getString(
+                            cursor!!.getColumnIndex(
+                                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
+                            )
+                        )
+                    )
+                    edtCustphone!!.setText(
+                        cursor!!.getString(
+                            cursor!!.getColumnIndex(
+                                ContactsContract.CommonDataKinds.Phone.NUMBER
+                            )
+                        )
+                    )
+                    Log.e("eedd", "weqweefdfdsa")
 //                    Log.e("ffgg","ffffeeeeeeeeeee11222 "+cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)))
                     dialogContact!!.dismiss()
                 }
@@ -2049,9 +2208,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             })
 
 
-        }catch (e: Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
-            Log.e("eeee","rreeeerree "+e)
+            Log.e("eeee", "rreeeerree " + e)
         }
     }
 
@@ -2259,20 +2418,26 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                         countRequestCount++
                                         Log.e(TAG, "msg   19873   ")
 
-                                        if (leadRequestArrayList.length() > 4){
-                                            val params: ViewGroup.LayoutParams = recyRequest!!.getLayoutParams()
+                                        if (leadRequestArrayList.length() > 4) {
+                                            val params: ViewGroup.LayoutParams =
+                                                recyRequest!!.getLayoutParams()
                                             params.height = 500
                                             recyRequest!!.setLayoutParams(params)
                                         }
 
 
-                                        val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
-                                        recyRequest!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        val adapter = LeadRequestAdapter(this@LeadGenerationActivity, leadRequestArrayList)
+                                        val lLayout =
+                                            GridLayoutManager(this@LeadGenerationActivity, 1)
+                                        recyRequest!!.layoutManager =
+                                            lLayout as RecyclerView.LayoutManager?
+                                        val adapter = LeadRequestAdapter(
+                                            this@LeadGenerationActivity,
+                                            leadRequestArrayList
+                                        )
                                         recyRequest!!.adapter = adapter
                                         adapter.setClickListener(this@LeadGenerationActivity)
 
-                                      //  leadByPopup(leadByArrayList)
+                                        //  leadByPopup(leadByArrayList)
                                     }
 
                                 }
@@ -2733,20 +2898,20 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                             Log.e(TAG, "msg   20192   " + msg)
                                             leadThroghPopup(leadThroughArrayList)
                                         }
-                                } else {
+                                    } else {
 
-                                    val builder = AlertDialog.Builder(
-                                        this@LeadGenerationActivity,
-                                        R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        val builder = AlertDialog.Builder(
+                                            this@LeadGenerationActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
                                     }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
                                 }
-                            }
                             } else {
 //                            Toast.makeText(
 //                                applicationContext,
@@ -3376,6 +3541,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //                Customer_Address  = data!!.getStringExtra("Address")
             }
 
+
         }
 
         if (requestCode == SELECT_LOCATION) {
@@ -3453,8 +3619,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 }
             }
 
-        }
-        else if (requestCode == CAMERA) {
+        } else if (requestCode == CAMERA) {
 
             try {
                 if (data != null) {
@@ -3589,7 +3754,15 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             }
 
 
+        } else if (requestCode == Config.SCANNER_CODE) {
+            Log.e("TAG", "onActivityResult " + data!!.getStringExtra("barcodeValue"))
+            var barcodeValue = data!!.getStringExtra("barcodeValue").toString()
+            barcodeCount = 0
+            getItemList(barcodeValue)
+
         }
+
+
     }
 
     private fun choosePhotoFromGallary() {
@@ -3810,10 +3983,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
                                         val jobjt = jObject.getJSONObject("PincodeDetails")
                                         pinCodeArrayList = jobjt.getJSONArray("PincodeDetailsList")
-                                       // rrrrrrr
+                                        // rrrrrrr
 //                                        val jobjt = jObject.getJSONObject("PincodeDetails")
 
-                                        if (pinCodeArrayList.length() == 1){
+                                        if (pinCodeArrayList.length() == 1) {
 
                                             val jsonObject = pinCodeArrayList.getJSONObject(0)
 
@@ -3831,7 +4004,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                             edtArea!!.setText(jsonObject.getString("Area"))
                                             edtPost!!.setText(jsonObject.getString("Post"))
 
-                                            Log.e(TAG, "Post  21082   " + jsonObject.getString("Post"))
+                                            Log.e(
+                                                TAG,
+                                                "Post  21082   " + jsonObject.getString("Post")
+                                            )
 
 
 //                                            FK_Country = jobjt.getString("FK_Country")
@@ -3849,12 +4025,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //                                            edtPost!!.setText(jobjt.getString("Post"))
 //
 //                                            Log.e(TAG, "Post  21082   " + jobjt.getString("Post"))
-                                        }
-                                        else{
-                                            Log.e(TAG, "Post  210823   "+pinCodeArrayList )
+                                        } else {
+                                            Log.e(TAG, "Post  210823   " + pinCodeArrayList)
                                             pincodeDetailPopup(pinCodeArrayList)
                                         }
-
 
 
                                     } else {
@@ -3906,9 +4080,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             dialogPinCode = Dialog(this)
             dialogPinCode!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogPinCode!! .setContentView(R.layout.pincodedetail_popup)
+            dialogPinCode!!.setContentView(R.layout.pincodedetail_popup)
             dialogPinCode!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-            val recyPincodeDetails = dialogPinCode!! .findViewById(R.id.recyPincodeDetails) as RecyclerView
+            val recyPincodeDetails =
+                dialogPinCode!!.findViewById(R.id.recyPincodeDetails) as RecyclerView
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recyPincodeDetails!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -3918,7 +4093,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             adapter.setClickListener(this@LeadGenerationActivity)
 
             dialogPinCode!!.show()
-            dialogPinCode!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogPinCode!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
             dialogPinCode!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         } catch (e: Exception) {
             e.printStackTrace()
@@ -3941,7 +4119,6 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         edtWhatsApp!!.setText("")
         edtCompanyContact!!.setText("")
     }
-
 
 
     private fun getCountry(v: View) {
@@ -4722,7 +4899,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                productCategoryViewModel.getProductCategory(this,ReqMode!!,SubMode!!)!!.observe(
+                productCategoryViewModel.getProductCategory(this, ReqMode!!, SubMode!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -5281,7 +5458,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                followUpActionViewModel.getFollowupAction(this,SubMode)!!.observe(
+                followUpActionViewModel.getFollowupAction(this, SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -5570,7 +5747,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
         if (dateSelectMode == 0) {
             date_Picker1.maxDate = System.currentTimeMillis()
-        } else if (dateSelectMode == 1){
+        } else if (dateSelectMode == 1) {
             date_Picker1.setMinDate(System.currentTimeMillis());
             date_Picker1.minDate = System.currentTimeMillis()
         }
@@ -6220,6 +6397,76 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 
         }
+
+        if (data.equals("deleteArrayList")) {
+//            val jsonObject = editProdcutListarray.getJSONObject(position)
+            editPosition = position
+
+            editProdcutListarray.remove(position)
+
+
+            if (editProdcutListarray.length() > 0) {
+                llrecyvisible!!.visibility = View.VISIBLE
+                viewList(editProdcutListarray)
+            } else {
+                llrecyvisible!!.visibility = View.GONE
+                rcylisting!!.adapter = null
+            }
+        }
+
+        if (data.equals("editArrayList")) {
+            try {
+
+//                editProdcutListarray = "1"
+                arrPosition = position
+                val jsonObject = editProdcutListarray.getJSONObject(position)
+
+                ID_Category = jsonObject.getString("ID_Category")
+                ID_Product = jsonObject.getString("ID_Product")
+                ID_Priority = jsonObject.getString("ID_Priority")
+                ID_Status = jsonObject.getString("ID_Status")
+                edtProdcategory!!.setText("" + jsonObject!!.getString("CategoryName"))
+                edtProjectName!!.setText("" + jsonObject!!.getString("ProjectName"))
+                edtProdproduct!!.setText("" + jsonObject!!.getString("ProdName"))
+                edtProdpriority!!.setText("" + jsonObject!!.getString("PriorityName"))
+                edtProdfeedback!!.setText("" + jsonObject!!.getString("LgpDescription"))
+                edtProdqty!!.setText("" + jsonObject!!.getString("LgpPQuantity"))
+                edtFollowaction!!.setText("" + jsonObject!!.getString("NxtActnName"))
+                edtFollowtype!!.setText("" + jsonObject!!.getString("ActionTypeName"))
+                edtFollowdate!!.setText("" + jsonObject!!.getString("NextActionDate"))
+                edtEmployee!!.setText("" + jsonObject!!.getString("AssignEmp"))
+                edtAmount!!.setText("" + jsonObject!!.getString("LgpSalesPrice"))
+                tv_Mrp!!.setText("" + jsonObject!!.getString("MRP"))
+
+
+                editProdcutListarray.remove(position)
+                lllistdetails!!.visibility = View.VISIBLE
+                addmore_btn!!.visibility = View.GONE
+                if (editProdcutListarray.length() > 0) {
+                    llrecyvisible!!.visibility = View.VISIBLE
+                    addmore_btn!!.visibility = View.GONE
+                    viewList(editProdcutListarray)
+                } else {
+                    llrecyvisible!!.visibility = View.GONE
+                    rcylisting!!.adapter = null
+                }
+//                if (editProdcutListarray.length() > 0) {
+////                    lllistdetails!!.visibility = View.VISIBLE
+//                    addmore_btn!!.visibility = View.GONE
+//                    viewList(editProdcutListarray)
+//                } else {
+//                    lllistdetails!!.visibility = View.GONE
+//                    rcylisting!!.adapter = null
+//                }
+
+                Log.e(TAG, "        475    ")
+                Log.e(TAG, "t    475    ")
+                Log.e(TAG, "txtPpp    117    ")
+
+            } catch (e: Exception) {
+
+            }
+        }
         if (data.equals("leadthrough")) {
             dialogLeadThrough!!.dismiss()
 //            val jsonObject = leadThroughArrayList.getJSONObject(position)
@@ -6275,11 +6522,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             dialogCustSearch!!.dismiss()
             val jsonObject = customerArrayList.getJSONObject(position)
             txtcustomer!!.text = jsonObject!!.getString("CusName")
-            if(SubModeSearch=="1") {
+            if (SubModeSearch == "1") {
                 edt_customer!!.setText(jsonObject!!.getString("CusName"))
-            }
-            else
-            {
+            } else {
                 edt_customer!!.setText(jsonObject!!.getString("CusPhnNo"))
             }
 
@@ -6334,6 +6579,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             edtProdproduct!!.setText("")
             edtProdqty!!.setText("")
             edtProjectName!!.setText("")
+            edtAmount!!.setText("")
+            tv_Mrp!!.setText("")
 
             if (jsonObject.getString("Project").equals("0")) {
                 ll_product_qty!!.visibility = View.VISIBLE
@@ -6350,6 +6597,21 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             Log.e(TAG, "ID_Product   " + jsonObject.getString("ID_Product"))
             ID_Product = jsonObject.getString("ID_Product")
             edtProdproduct!!.setText(jsonObject.getString("ProductName"))
+            MRP = jsonObject.getString("MRP")
+            Log.e(TAG, "SalPrice 3333   " + MRP)
+
+            MRRP = jsonObject.getString("MRP")
+            Offerprice = jsonObject.getString("SalPrice")
+
+//            if (MRRP >= Offerprice){
+//                edtAmount!!.isClickable.equals(false)
+//            }
+
+            tv_Mrp!!.setText(jsonObject.getString("MRP"))
+            edtAmount!!.setText(jsonObject.getString("SalPrice"))
+            Log.e(TAG, "MRP 3333   " + jsonObject.getString("MRP"))
+            Log.e(TAG, "SalPrice 3333   " + jsonObject.getString("SalPrice"))
+
         }
         if (data.equals("prodpriority")) {
             dialogProdPriority!!.dismiss()
@@ -6403,16 +6665,17 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             edtFollowaction!!.setText(jsonObject.getString("NxtActnName"))
 
             ID_Status = jsonObject.getString("Status")
-           // edtProdstatus!!.setText(jsonObject.getString("StatusName"))
+            Log.e(TAG, "Status   " + jsonObject.getString("Status"))
+            // edtProdstatus!!.setText(jsonObject.getString("StatusName"))
 
 
             edtFollowtype!!.setText("")
             ID_ActionType = ""
 
             if (ID_Status.equals("1")) {
-                llfollowup!!.visibility  =View.VISIBLE
-            }else{
-                llfollowup!!.visibility  =View.GONE
+                llfollowup!!.visibility = View.VISIBLE
+            } else {
+                llfollowup!!.visibility = View.GONE
             }
 
 
@@ -6425,8 +6688,6 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             Log.e(TAG, "ID_ActionType   " + jsonObject.getString("ID_ActionType"))
             ID_ActionType = jsonObject.getString("ID_ActionType")
             edtFollowtype!!.setText(jsonObject.getString("ActnTypeName"))
-
-
 
 
         }
@@ -6631,31 +6892,31 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         }
 
         if (data.equals("LeadrequestClick")) {
-            Log.e(TAG,"6266  LeadrequestClick")
+            Log.e(TAG, "6266  LeadrequestClick")
 
             val jsonObject = leadRequestArrayList.getJSONObject(position)
 
-                llCustomerDetail!!.visibility = View.VISIBLE
-                ID_Customer = ""
-                edt_customer!!.setText("")
-                ID_CustomerAssignment = jsonObject.getString("ID_CustomerAssignment")
-                edtCustname!!.setText(jsonObject.getString("Customer"))
-                edtCustphone!!.setText(jsonObject.getString("Mobile"))
+            llCustomerDetail!!.visibility = View.VISIBLE
+            ID_Customer = ""
+            edt_customer!!.setText("")
+            ID_CustomerAssignment = jsonObject.getString("ID_CustomerAssignment")
+            edtCustname!!.setText(jsonObject.getString("Customer"))
+            edtCustphone!!.setText(jsonObject.getString("Mobile"))
 
-                custDetailMode = "0"
-                companyNameMode = "1"
-                moreCommInfoMode = "1"
-                custProdlMode = "1"
-                locationMode = "1"
-                dateMode = "1"
-                leadRequestMode = "1"
-                leadfromMode = "1"
-                leadThroughMode = "1"
-                leadByMode = "1"
-                mediaTypeMode = "1"
-                uploadImageMode = "1"
+            custDetailMode = "0"
+            companyNameMode = "1"
+            moreCommInfoMode = "1"
+            custProdlMode = "1"
+            locationMode = "1"
+            dateMode = "1"
+            leadRequestMode = "1"
+            leadfromMode = "1"
+            leadThroughMode = "1"
+            leadByMode = "1"
+            mediaTypeMode = "1"
+            uploadImageMode = "1"
 
-                hideViews()
+            hideViews()
 
 
         }
@@ -6665,7 +6926,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
     private fun LeadValidations(v: View) {
         Log.e(TAG, "LeadValidations  3732   " + ID_Customer + "  " + ID_Customer!!.length)
-        Log.e(TAG, "LeadValidations  3732   " + ID_CustomerAssignment + "  " + ID_CustomerAssignment!!.length)
+        Log.e(
+            TAG,
+            "LeadValidations  3732   " + ID_CustomerAssignment + "  " + ID_CustomerAssignment!!.length
+        )
         strComapnyName = edtCompanyName!!.text.toString()
         strContactPerson = edtContactPerson!!.text.toString()
         strContactNumber = edtContactNumber!!.text.toString()
@@ -6787,44 +7051,44 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             if (CusNameTitle.equals("")) {
                 Config.snackBars(context, v, "Select Customer Name Title")
 
-                    llCustomerDetail!!.visibility = View.VISIBLE
-                    //custDetailMode = "0"
+                llCustomerDetail!!.visibility = View.VISIBLE
+                //custDetailMode = "0"
 
-                    custDetailMode = "0"
-                    moreCommInfoMode = "1"
-                    companyNameMode = "1"
-                    custProdlMode = "1"
-                    locationMode = "1"
-                    dateMode = "1"
-                    leadRequestMode = "1"
-                    leadfromMode = "1"
-                    leadThroughMode = "1"
-                    leadByMode = "1"
-                    mediaTypeMode = "1"
-                    uploadImageMode = "1"
+                custDetailMode = "0"
+                moreCommInfoMode = "1"
+                companyNameMode = "1"
+                custProdlMode = "1"
+                locationMode = "1"
+                dateMode = "1"
+                leadRequestMode = "1"
+                leadfromMode = "1"
+                leadThroughMode = "1"
+                leadByMode = "1"
+                mediaTypeMode = "1"
+                uploadImageMode = "1"
 
-                    hideViews()
+                hideViews()
 
             } else if (Customer_Name.equals("")) {
                 Config.snackBars(context, v, "Enter Customer Name")
 
-                    llCustomerDetail!!.visibility = View.VISIBLE
-                    //custDetailMode = "0"
+                llCustomerDetail!!.visibility = View.VISIBLE
+                //custDetailMode = "0"
 
-                    custDetailMode = "0"
-                    moreCommInfoMode = "1"
-                    companyNameMode = "1"
-                    custProdlMode = "1"
-                    locationMode = "1"
-                    dateMode = "1"
-                    leadRequestMode = "1"
-                    leadfromMode = "1"
-                    leadThroughMode = "1"
-                    leadByMode = "1"
-                    mediaTypeMode = "1"
-                    uploadImageMode = "1"
+                custDetailMode = "0"
+                moreCommInfoMode = "1"
+                companyNameMode = "1"
+                custProdlMode = "1"
+                locationMode = "1"
+                dateMode = "1"
+                leadRequestMode = "1"
+                leadfromMode = "1"
+                leadThroughMode = "1"
+                leadByMode = "1"
+                mediaTypeMode = "1"
+                uploadImageMode = "1"
 
-                    hideViews()
+                hideViews()
 
             }
 //            else if (FK_Area.equals("")){
@@ -6841,6 +7105,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun MoreValidations(v: View) {
 
         Log.e(
@@ -6889,255 +7154,278 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //            ProductValidations(v)
 //        }
 
-        ProductValidations(v)
+//        ProductValidations(v)
 
+        if (array_product_lead.length() == 0) {
 
-    }
-
-    private fun ProductValidations(v: View) {
-        Log.e(
-            TAG, "MoreValidations  37322"
-                    + "\n" + "FK_Country        : " + FK_Country
-                    + "\n" + "FK_States         : " + FK_States
-                    + "\n" + "FK_District       : " + FK_District
-                    + "\n" + "FK_Area           : " + FK_Area
-                    + "\n" + "FK_Post           : " + FK_Post
-                    + "\n" + "strWhatsAppNo  : " + strWhatsAppNo
-        )
-
-        strQty = edtProdqty!!.text.toString()
-        strProduct = edtProdproduct!!.text.toString()
-        strProject = edtProjectName!!.text.toString()
-        strFeedback = edtProdfeedback!!.text.toString()
-
-        if (strQty.equals("")) {
-            strQty = "0"
-        }
-
-        if (ID_Category.equals("")) {
-            Config.snackBars(context, v, "Select Category")
-
-            llProdDetail!!.visibility = View.VISIBLE
-            // custProdlMode = "0"
-
-            custDetailMode = "1"
-            companyNameMode = "1"
-            moreCommInfoMode = "1"
-            custProdlMode = "0"
-            locationMode = "1"
-            dateMode = "1"
-            leadRequestMode = "1"
-            leadfromMode = "1"
-            leadThroughMode = "1"
-            leadByMode = "1"
-            mediaTypeMode = "1"
-            uploadImageMode = "1"
-
-            hideViews()
-
-
-
-        }
-//        else if (ID_Product.equals("")){
-//            Config.snackBars(context,v,"Select Product")
-//        }
-//        else if (strQty.equals("")){
-//            Config.snackBars(context,v,"Enter Quantity ")
-//        }
-        else if (CompanyCategory.equals("2") && strExpecteddate.equals("")){
-            Config.snackBars(context, v, "Expected date")
-        }
-        else if (ID_Priority.equals("")) {
-            Config.snackBars(context, v, "Select Priority")
-            llProdDetail!!.visibility = View.VISIBLE
-            // custProdlMode = "0"
-
-            custDetailMode = "1"
-            companyNameMode = "1"
-            moreCommInfoMode = "1"
-            custProdlMode = "0"
-            locationMode = "1"
-            dateMode = "1"
-            leadRequestMode = "1"
-            leadfromMode = "1"
-            leadThroughMode = "1"
-            leadByMode = "1"
-            mediaTypeMode = "1"
-            uploadImageMode = "1"
-
-            hideViews()
-        }
-        else if (ID_Priority.equals("")) {
-            Config.snackBars(context, v, "Select Priority")
-
-            llProdDetail!!.visibility = View.VISIBLE
-            // custProdlMode = "0"
-
-            custDetailMode = "1"
-            companyNameMode = "1"
-            moreCommInfoMode = "1"
-            custProdlMode = "0"
-            locationMode = "1"
-            dateMode = "1"
-            leadRequestMode = "1"
-            leadfromMode = "1"
-            leadThroughMode = "1"
-            leadByMode = "1"
-            mediaTypeMode = "1"
-            uploadImageMode = "1"
-
-            hideViews()
-        } else if (strFeedback.equals("")) {
-            Config.snackBars(context, v, "Enter Enquiry Note ")
-
-            llProdDetail!!.visibility = View.VISIBLE
-            // custProdlMode = "0"
-
-            custDetailMode = "1"
-            companyNameMode = "1"
-            moreCommInfoMode = "1"
-            custProdlMode = "0"
-            locationMode = "1"
-            dateMode = "1"
-            leadRequestMode = "1"
-            leadfromMode = "1"
-            leadThroughMode = "1"
-            leadByMode = "1"
-            mediaTypeMode = "1"
-            uploadImageMode = "1"
-
-            hideViews()
-
-        } else if (ID_Status.equals("")) {
-            Config.snackBars(context, v, "Select Action")
-
-            llProdDetail!!.visibility = View.VISIBLE
-            // custProdlMode = "0"
-
-            custDetailMode = "1"
-            companyNameMode = "1"
-            moreCommInfoMode = "1"
-            custProdlMode = "0"
-            locationMode = "1"
-            dateMode = "1"
-            leadRequestMode = "1"
-            leadfromMode = "1"
-            leadThroughMode = "1"
-            leadByMode = "1"
-            mediaTypeMode = "1"
-            uploadImageMode = "1"
-
-            hideViews()
-        } else if (ID_Status.equals("1")) {
-            Log.e(TAG, "ProductValidations  373221   " + ID_Status)
-            if (ID_NextAction.equals("")) {
-                Config.snackBars(context, v, "Select Followup Action")
-                llProdDetail!!.visibility = View.VISIBLE
-                // custProdlMode = "0"
-
-                custDetailMode = "1"
-                companyNameMode = "1"
-                moreCommInfoMode = "1"
-                custProdlMode = "0"
-                locationMode = "1"
-                dateMode = "1"
-                leadRequestMode = "1"
-                leadfromMode = "1"
-                leadThroughMode = "1"
-                leadByMode = "1"
-                mediaTypeMode = "1"
-                uploadImageMode = "1"
-
-                hideViews()
-            } else if (ID_ActionType.equals("")) {
-                Config.snackBars(context, v, "Select Action type")
-                llProdDetail!!.visibility = View.VISIBLE
-                // custProdlMode = "0"
-
-                custDetailMode = "1"
-                companyNameMode = "1"
-                moreCommInfoMode = "1"
-                custProdlMode = "0"
-                locationMode = "1"
-                dateMode = "1"
-                leadRequestMode = "1"
-                leadfromMode = "1"
-                leadThroughMode = "1"
-                leadByMode = "1"
-                mediaTypeMode = "1"
-                uploadImageMode = "1"
-
-                hideViews()
-            } else if (strFollowupdate.equals("")) {
-                Config.snackBars(context, v, "Select Followup Date")
-
-                llProdDetail!!.visibility = View.VISIBLE
-                // custProdlMode = "0"
-
-                custDetailMode = "1"
-                companyNameMode = "1"
-                moreCommInfoMode = "1"
-                custProdlMode = "0"
-                locationMode = "1"
-                dateMode = "1"
-                leadRequestMode = "1"
-                leadfromMode = "1"
-                leadThroughMode = "1"
-                leadByMode = "1"
-                mediaTypeMode = "1"
-                uploadImageMode = "1"
-
-                hideViews()
-
-            } else if (ID_Employee.equals("")) {
-                Config.snackBars(context, v, "Select Assigned To")
-                llProdDetail!!.visibility = View.VISIBLE
-                // custProdlMode = "0"
-
-                custDetailMode = "1"
-                companyNameMode = "1"
-                moreCommInfoMode = "1"
-                custProdlMode = "0"
-                locationMode = "1"
-                dateMode = "1"
-                leadRequestMode = "1"
-                leadfromMode = "1"
-                leadThroughMode = "1"
-                leadByMode = "1"
-                mediaTypeMode = "1"
-                uploadImageMode = "1"
-
-                hideViews()
+            var check = multipleProductValidation(v)
+            if (check!!.equals("0")) {
+                Config.snackBars(context, v, "Add Product")
             } else {
-//               if (strNeedCheck.equals("1")){
-//                   if (ID_Branch.equals("")){
-//                       Config.snackBars(context,v,"Select Branch")
-//                   }
-//                   else if (ID_BranchType.equals("")){
-//                       Config.snackBars(context,v,"Select Branch Type")
-//                   }
-//                   else if (ID_Department.equals("")){
-//                       Config.snackBars(context,v,"Select Department")
-//                   }
-//                   else if (ID_Employee.equals("")){
-//                       Config.snackBars(context,v,"Select Employee")
-//                   }
-//                   else{
-//                       LocationValidation(v)
-//                   }
-//               }
-//               else{
-//                    LocationValidation(v)
-//               }
-
+                addMultipleProduct()
                 LocationValidation(v)
             }
+
         } else {
-            Log.e(TAG, "ProductValidations  373222   " + ID_Status)
-            strFollowupdate = ""
             LocationValidation(v)
         }
+
+//        if (array_product_lead.length() == 0) {
+//
+//            if (clickMode!!.equals("0")) {
+//                Config.snackBars(context, v, "Add Product")
+//                addMultipleProduct()
+//            }
+//
+//            }else{
+//
+//        }
     }
+
+//    private fun ProductValidations(v: View) {
+//        Log.e(
+//            TAG, "MoreValidations  37322"
+//                    + "\n" + "FK_Country        : " + FK_Country
+//                    + "\n" + "FK_States         : " + FK_States
+//                    + "\n" + "FK_District       : " + FK_District
+//                    + "\n" + "FK_Area           : " + FK_Area
+//                    + "\n" + "FK_Post           : " + FK_Post
+//                    + "\n" + "strWhatsAppNo  : " + strWhatsAppNo
+//        )
+//
+//        strQty = edtProdqty!!.text.toString()
+//        strProduct = edtProdproduct!!.text.toString()
+//        strProject = edtProjectName!!.text.toString()
+//        strFeedback = edtProdfeedback!!.text.toString()
+//
+//        if (strQty.equals("")) {
+//            strQty = "0"
+//        }
+//
+//        if (ID_Category.equals("")) {
+//            Config.snackBars(context, v, "Select Category")
+//
+//            llProdDetail!!.visibility = View.VISIBLE
+//            // custProdlMode = "0"
+//
+//            custDetailMode = "1"
+//            companyNameMode = "1"
+//            moreCommInfoMode = "1"
+//            custProdlMode = "0"
+//            locationMode = "1"
+//            dateMode = "1"
+//            leadRequestMode = "1"
+//            leadfromMode = "1"
+//            leadThroughMode = "1"
+//            leadByMode = "1"
+//            mediaTypeMode = "1"
+//            uploadImageMode = "1"
+//
+//            hideViews()
+//
+//
+//
+//        }
+////        else if (ID_Product.equals("")){
+////            Config.snackBars(context,v,"Select Product")
+////        }
+////        else if (strQty.equals("")){
+////            Config.snackBars(context,v,"Enter Quantity ")
+////        }
+//        else if (CompanyCategory.equals("2") && strExpecteddate.equals("")){
+//            Config.snackBars(context, v, "Expected date")
+//        }
+//        else if (ID_Priority.equals("")) {
+//            Config.snackBars(context, v, "Select Priority")
+//            llProdDetail!!.visibility = View.VISIBLE
+//            // custProdlMode = "0"
+//
+//            custDetailMode = "1"
+//            companyNameMode = "1"
+//            moreCommInfoMode = "1"
+//            custProdlMode = "0"
+//            locationMode = "1"
+//            dateMode = "1"
+//            leadRequestMode = "1"
+//            leadfromMode = "1"
+//            leadThroughMode = "1"
+//            leadByMode = "1"
+//            mediaTypeMode = "1"
+//            uploadImageMode = "1"
+//
+//            hideViews()
+//        }
+//        else if (ID_Priority.equals("")) {
+//            Config.snackBars(context, v, "Select Priority")
+//
+//            llProdDetail!!.visibility = View.VISIBLE
+//            // custProdlMode = "0"
+//
+//            custDetailMode = "1"
+//            companyNameMode = "1"
+//            moreCommInfoMode = "1"
+//            custProdlMode = "0"
+//            locationMode = "1"
+//            dateMode = "1"
+//            leadRequestMode = "1"
+//            leadfromMode = "1"
+//            leadThroughMode = "1"
+//            leadByMode = "1"
+//            mediaTypeMode = "1"
+//            uploadImageMode = "1"
+//
+//            hideViews()
+//        } else if (strFeedback.equals("")) {
+//            Config.snackBars(context, v, "Enter Enquiry Note ")
+//
+//            llProdDetail!!.visibility = View.VISIBLE
+//            // custProdlMode = "0"
+//
+//            custDetailMode = "1"
+//            companyNameMode = "1"
+//            moreCommInfoMode = "1"
+//            custProdlMode = "0"
+//            locationMode = "1"
+//            dateMode = "1"
+//            leadRequestMode = "1"
+//            leadfromMode = "1"
+//            leadThroughMode = "1"
+//            leadByMode = "1"
+//            mediaTypeMode = "1"
+//            uploadImageMode = "1"
+//
+//            hideViews()
+//
+//        } else if (ID_Status.equals("")) {
+//            Config.snackBars(context, v, "Select Action")
+//
+//            llProdDetail!!.visibility = View.VISIBLE
+//            // custProdlMode = "0"
+//
+//            custDetailMode = "1"
+//            companyNameMode = "1"
+//            moreCommInfoMode = "1"
+//            custProdlMode = "0"
+//            locationMode = "1"
+//            dateMode = "1"
+//            leadRequestMode = "1"
+//            leadfromMode = "1"
+//            leadThroughMode = "1"
+//            leadByMode = "1"
+//            mediaTypeMode = "1"
+//            uploadImageMode = "1"
+//
+//            hideViews()
+//        } else if (ID_Status.equals("1")) {
+//            Log.e(TAG, "ProductValidations  373221   " + ID_Status)
+//            if (ID_NextAction.equals("")) {
+//                Config.snackBars(context, v, "Select Followup Action")
+//                llProdDetail!!.visibility = View.VISIBLE
+//                // custProdlMode = "0"
+//
+//                custDetailMode = "1"
+//                companyNameMode = "1"
+//                moreCommInfoMode = "1"
+//                custProdlMode = "0"
+//                locationMode = "1"
+//                dateMode = "1"
+//                leadRequestMode = "1"
+//                leadfromMode = "1"
+//                leadThroughMode = "1"
+//                leadByMode = "1"
+//                mediaTypeMode = "1"
+//                uploadImageMode = "1"
+//
+//                hideViews()
+//            } else if (ID_ActionType.equals("")) {
+//                Config.snackBars(context, v, "Select Action type")
+//                llProdDetail!!.visibility = View.VISIBLE
+//                // custProdlMode = "0"
+//
+//                custDetailMode = "1"
+//                companyNameMode = "1"
+//                moreCommInfoMode = "1"
+//                custProdlMode = "0"
+//                locationMode = "1"
+//                dateMode = "1"
+//                leadRequestMode = "1"
+//                leadfromMode = "1"
+//                leadThroughMode = "1"
+//                leadByMode = "1"
+//                mediaTypeMode = "1"
+//                uploadImageMode = "1"
+//
+//                hideViews()
+//            } else if (strFollowupdate.equals("")) {
+//                Config.snackBars(context, v, "Select Followup Date")
+//
+//                llProdDetail!!.visibility = View.VISIBLE
+//                // custProdlMode = "0"
+//
+//                custDetailMode = "1"
+//                companyNameMode = "1"
+//                moreCommInfoMode = "1"
+//                custProdlMode = "0"
+//                locationMode = "1"
+//                dateMode = "1"
+//                leadRequestMode = "1"
+//                leadfromMode = "1"
+//                leadThroughMode = "1"
+//                leadByMode = "1"
+//                mediaTypeMode = "1"
+//                uploadImageMode = "1"
+//
+//                hideViews()
+//
+//            } else if (ID_Employee.equals("")) {
+//                Config.snackBars(context, v, "Select Assigned To")
+//                llProdDetail!!.visibility = View.VISIBLE
+//                // custProdlMode = "0"
+//
+//                custDetailMode = "1"
+//                companyNameMode = "1"
+//                moreCommInfoMode = "1"
+//                custProdlMode = "0"
+//                locationMode = "1"
+//                dateMode = "1"
+//                leadRequestMode = "1"
+//                leadfromMode = "1"
+//                leadThroughMode = "1"
+//                leadByMode = "1"
+//                mediaTypeMode = "1"
+//                uploadImageMode = "1"
+//
+//                hideViews()
+//            } else {
+////               if (strNeedCheck.equals("1")){
+////                   if (ID_Branch.equals("")){
+////                       Config.snackBars(context,v,"Select Branch")
+////                   }
+////                   else if (ID_BranchType.equals("")){
+////                       Config.snackBars(context,v,"Select Branch Type")
+////                   }
+////                   else if (ID_Department.equals("")){
+////                       Config.snackBars(context,v,"Select Department")
+////                   }
+////                   else if (ID_Employee.equals("")){
+////                       Config.snackBars(context,v,"Select Employee")
+////                   }
+////                   else{
+////                       LocationValidation(v)
+////                   }
+////               }
+////               else{
+////                    LocationValidation(v)
+////               }
+//
+//                LocationValidation(v)
+//            }
+//        } else {
+//            Log.e(TAG, "ProductValidations  373222   " + ID_Status)
+//            strFollowupdate = ""
+//            LocationValidation(v)
+//        }
+//    }
 
     private fun LocationValidation(v: View) {
         Log.e(
@@ -7227,6 +7515,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         Log.e(TAG, "LocationValidation  encode2  373241   " + encode2)
 
         LeadConfirmationPopup()
+//        saveLeadGeneration()
 
         //  saveLeadGeneration()
         //   }
@@ -7249,9 +7538,11 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private fun LeadConfirmationPopup() {
         try {
 
+            Log.e(TAG, "popin  11  ")
+
             val dialogConfirmPop = Dialog(this)
             dialogConfirmPop!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogConfirmPop!!.setContentView(R.layout.lead_generation_confirmation_popup)
+            dialogConfirmPop!!.setContentView(R.layout.confirmation_pop_lead)
             dialogConfirmPop!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
 
 
@@ -7335,65 +7626,82 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 
             ////////////////////////
-            val ll_ProductDetails =
-                dialogConfirmPop!!.findViewById(R.id.ll_ProductDetails) as LinearLayout
-            val ll_prod_category =
-                dialogConfirmPop!!.findViewById(R.id.ll_prod_category) as LinearLayout
-            val ll_prod_product =
-                dialogConfirmPop!!.findViewById(R.id.ll_prod_product) as LinearLayout
-            val ll_project = dialogConfirmPop!!.findViewById(R.id.ll_project) as LinearLayout
-            val ll_prod_quantity =
-                dialogConfirmPop!!.findViewById(R.id.ll_prod_quantity) as LinearLayout
-            val ll_expected_date = dialogConfirmPop!!.findViewById(R.id.ll_expected_date) as LinearLayout
-            val ll_prod_priority = dialogConfirmPop!!.findViewById(R.id.ll_prod_priority) as LinearLayout
-            val ll_prod_status =
-                dialogConfirmPop!!.findViewById(R.id.ll_prod_status) as LinearLayout
-            val ll_prod_feedback =
-                dialogConfirmPop!!.findViewById(R.id.ll_prod_feedback) as LinearLayout
+//            val ll_ProductDetails =
+//                dialogConfirmPop!!.findViewById(R.id.ll_ProductDetails) as LinearLayout
+//            val ll_prod_category =
+//                dialogConfirmPop!!.findViewById(R.id.ll_prod_category) as LinearLayout
+//            val ll_prod_product =
+//                dialogConfirmPop!!.findViewById(R.id.ll_prod_product) as LinearLayout
+//            val ll_project = dialogConfirmPop!!.findViewById(R.id.ll_project) as LinearLayout
+//            val ll_prod_quantity =
+//                dialogConfirmPop!!.findViewById(R.id.ll_prod_quantity) as LinearLayout
+//            val ll_expected_date =
+//                dialogConfirmPop!!.findViewById(R.id.ll_expected_date) as LinearLayout
+//            val ll_prod_priority =
+//                dialogConfirmPop!!.findViewById(R.id.ll_prod_priority) as LinearLayout
+//            val ll_prod_status =
+//                dialogConfirmPop!!.findViewById(R.id.ll_prod_status) as LinearLayout
+//            val ll_prod_feedback =
+//                dialogConfirmPop!!.findViewById(R.id.ll_prod_feedback) as LinearLayout
+//
+//            val ll_followup = dialogConfirmPop!!.findViewById(R.id.ll_followup) as LinearLayout
+//            val ll_followup_action =
+//                dialogConfirmPop!!.findViewById(R.id.ll_followup_action) as LinearLayout
+//            val ll_followup_type =
+//                dialogConfirmPop!!.findViewById(R.id.ll_followup_type) as LinearLayout
+//            val ll_followup_date =
+//                dialogConfirmPop!!.findViewById(R.id.ll_followup_date) as LinearLayout
+//            val ll_branchtype = dialogConfirmPop!!.findViewById(R.id.ll_branchtype) as LinearLayout
+//            val ll_branch = dialogConfirmPop!!.findViewById(R.id.ll_branch) as LinearLayout
+//            val ll_department = dialogConfirmPop!!.findViewById(R.id.ll_department) as LinearLayout
+//            val ll_employee = dialogConfirmPop!!.findViewById(R.id.ll_employee) as LinearLayout
+//
+//            val tvp_company_name =
+//                dialogConfirmPop!!.findViewById(R.id.tvp_company_name) as TextView
+//            val tvp_contact_person =
+//                dialogConfirmPop!!.findViewById(R.id.tvp_contact_person) as TextView
+//            val tvp_contact_number =
+//                dialogConfirmPop!!.findViewById(R.id.tvp_contact_number) as TextView
+//            val tvp_media_type = dialogConfirmPop!!.findViewById(R.id.tvp_media_type) as TextView
+//
+//            val tvp_label_product =
+//                dialogConfirmPop!!.findViewById(R.id.tvp_label_product) as TextView
+//            val tvp_product_label =
+//                dialogConfirmPop!!.findViewById(R.id.tvp_product_label) as TextView
+//            val tvp_project_label =
+//                dialogConfirmPop!!.findViewById(R.id.tvp_project_label) as TextView
+//            val tvp_quantity_label =
+//                dialogConfirmPop!!.findViewById(R.id.tvp_quantity_label) as TextView
+//
+//            val tvp_category = dialogConfirmPop!!.findViewById(R.id.tvp_category) as TextView
+//            val tvp_product = dialogConfirmPop!!.findViewById(R.id.tvp_product) as TextView
+//            val tvp_project = dialogConfirmPop!!.findViewById(R.id.tvp_project) as TextView
+////            val tvp_project = dialogConfirmPop!!.findViewById(R.id.tvp_project) as TextView
+//            val tvp_quantity = dialogConfirmPop!!.findViewById(R.id.tvp_quantity) as TextView
+//            val tvp_expected_date =
+//                dialogConfirmPop!!.findViewById(R.id.tvp_expected_date) as TextView
+//            val tvp_priority = dialogConfirmPop!!.findViewById(R.id.tvp_priority) as TextView
+//            val tvp_feedback = dialogConfirmPop!!.findViewById(R.id.tvp_feedback) as TextView
+//            val tvp_status = dialogConfirmPop!!.findViewById(R.id.tvp_status) as TextView
+//            val tvp_followup_action =
+//                dialogConfirmPop!!.findViewById(R.id.tvp_followup_action) as TextView
+//            val tvp_followup_type =
+//                dialogConfirmPop!!.findViewById(R.id.tvp_followup_type) as TextView
+//            val tvp_followup_date =
+//                dialogConfirmPop!!.findViewById(R.id.tvp_followup_date) as TextView
+//            val tvp_branch_type = dialogConfirmPop!!.findViewById(R.id.tvp_branch_type) as TextView
+//            val tvp_branch = dialogConfirmPop!!.findViewById(R.id.tvp_branch) as TextView
+//            val tvp_department = dialogConfirmPop!!.findViewById(R.id.tvp_department) as TextView
+//            val tvp_employee = dialogConfirmPop!!.findViewById(R.id.tvp_employee) as TextView
 
-            val ll_followup = dialogConfirmPop!!.findViewById(R.id.ll_followup) as LinearLayout
-            val ll_followup_action =
-                dialogConfirmPop!!.findViewById(R.id.ll_followup_action) as LinearLayout
-            val ll_followup_type =
-                dialogConfirmPop!!.findViewById(R.id.ll_followup_type) as LinearLayout
-            val ll_followup_date =
-                dialogConfirmPop!!.findViewById(R.id.ll_followup_date) as LinearLayout
-            val ll_branchtype = dialogConfirmPop!!.findViewById(R.id.ll_branchtype) as LinearLayout
-            val ll_branch = dialogConfirmPop!!.findViewById(R.id.ll_branch) as LinearLayout
-            val ll_department = dialogConfirmPop!!.findViewById(R.id.ll_department) as LinearLayout
-            val ll_employee = dialogConfirmPop!!.findViewById(R.id.ll_employee) as LinearLayout
-
-            val tvp_company_name =
-                dialogConfirmPop!!.findViewById(R.id.tvp_company_name) as TextView
-            val tvp_contact_person =
-                dialogConfirmPop!!.findViewById(R.id.tvp_contact_person) as TextView
-            val tvp_contact_number =
-                dialogConfirmPop!!.findViewById(R.id.tvp_contact_number) as TextView
-            val tvp_media_type = dialogConfirmPop!!.findViewById(R.id.tvp_media_type) as TextView
-
-            val tvp_label_product = dialogConfirmPop!!.findViewById(R.id.tvp_label_product) as TextView
-            val tvp_product_label = dialogConfirmPop!!.findViewById(R.id.tvp_product_label) as TextView
-            val tvp_project_label = dialogConfirmPop!!.findViewById(R.id.tvp_project_label) as TextView
-            val tvp_quantity_label = dialogConfirmPop!!.findViewById(R.id.tvp_quantity_label) as TextView
-
-            val tvp_category = dialogConfirmPop!!.findViewById(R.id.tvp_category) as TextView
-            val tvp_product = dialogConfirmPop!!.findViewById(R.id.tvp_product) as TextView
-            val tvp_project = dialogConfirmPop!!.findViewById(R.id.tvp_project) as TextView
-            val tvp_quantity = dialogConfirmPop!!.findViewById(R.id.tvp_quantity) as TextView
-            val tvp_expected_date = dialogConfirmPop!!.findViewById(R.id.tvp_expected_date) as TextView
-            val tvp_priority = dialogConfirmPop!!.findViewById(R.id.tvp_priority) as TextView
-            val tvp_feedback = dialogConfirmPop!!.findViewById(R.id.tvp_feedback) as TextView
-            val tvp_status = dialogConfirmPop!!.findViewById(R.id.tvp_status) as TextView
-            val tvp_followup_action =
-                dialogConfirmPop!!.findViewById(R.id.tvp_followup_action) as TextView
-            val tvp_followup_type =
-                dialogConfirmPop!!.findViewById(R.id.tvp_followup_type) as TextView
-            val tvp_followup_date =
-                dialogConfirmPop!!.findViewById(R.id.tvp_followup_date) as TextView
-            val tvp_branch_type = dialogConfirmPop!!.findViewById(R.id.tvp_branch_type) as TextView
-            val tvp_branch = dialogConfirmPop!!.findViewById(R.id.tvp_branch) as TextView
-            val tvp_department = dialogConfirmPop!!.findViewById(R.id.tvp_department) as TextView
-            val tvp_employee = dialogConfirmPop!!.findViewById(R.id.tvp_employee) as TextView
+                       recycle_popup = dialogConfirmPop!!.findViewById(R.id.recycle_popup) as RecyclerView
+//
+//
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recycle_popup!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapter = Popconfirmation_lead_adapter(this@LeadGenerationActivity, editProdcutListarray)
+            recycle_popup!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
 
             val tvp_location = dialogConfirmPop!!.findViewById(R.id.tvp_location) as TextView
 
@@ -7520,64 +7828,64 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             ////////////////////
 
-            if (edtProdcategory!!.text.toString().equals("")) {
-                ll_prod_category!!.visibility = View.GONE
-            }
-
-            if (edtProdproduct!!.text.toString().equals("")) {
-                ll_prod_product!!.visibility = View.GONE
-            }
-            if (edtProjectName!!.text.toString().equals("")) {
-                ll_project!!.visibility = View.GONE
-            }
-
-            if (edtProdqty!!.text.toString().equals("")) {
-                ll_prod_quantity!!.visibility = View.GONE
-            }
-
-            if (edtExpecteddate!!.text.toString().equals("")) {
-                ll_expected_date!!.visibility = View.GONE
-            }
-            if (edtProdpriority!!.text.toString().equals("")) {
-                ll_prod_priority!!.visibility = View.GONE
-            }
-
-            if (edtProdfeedback!!.text.toString().equals("")) {
-                ll_prod_feedback!!.visibility = View.GONE
-            }
-
-//            if (edtProdstatus!!.text.toString().equals("") ) {
+//            if (edtProdcategory!!.text.toString().equals("")) {
+//                ll_prod_category!!.visibility = View.GONE
+//            }
+//
+//            if (edtProdproduct!!.text.toString().equals("")) {
+//                ll_prod_product!!.visibility = View.GONE
+//            }
+//            if (edtProjectName!!.text.toString().equals("")) {
+//                ll_project!!.visibility = View.GONE
+//            }
+//
+//            if (edtProdqty!!.text.toString().equals("")) {
+//                ll_prod_quantity!!.visibility = View.GONE
+//            }
+//
+//            if (edtExpecteddate!!.text.toString().equals("")) {
+//                ll_expected_date!!.visibility = View.GONE
+//            }
+//            if (edtProdpriority!!.text.toString().equals("")) {
+//                ll_prod_priority!!.visibility = View.GONE
+//            }
+//
+//            if (edtProdfeedback!!.text.toString().equals("")) {
+//                ll_prod_feedback!!.visibility = View.GONE
+//            }
+//
+////            if (edtProdstatus!!.text.toString().equals("") ) {
+////                ll_prod_status!!.visibility = View.GONE
+////            }
+//
+//
+//            if (!ID_Status.equals("1")) {
+//                // ll_followup_action!!.visibility = View.GONE
+//                ll_followup_type!!.visibility = View.GONE
+//                ll_followup_date!!.visibility = View.GONE
+//                ll_employee!!.visibility = View.GONE
 //                ll_prod_status!!.visibility = View.GONE
 //            }
-
-
-            if (!ID_Status.equals("1")) {
-               // ll_followup_action!!.visibility = View.GONE
-                ll_followup_type!!.visibility = View.GONE
-                ll_followup_date!!.visibility = View.GONE
-                ll_employee!!.visibility = View.GONE
-                ll_prod_status!!.visibility = View.GONE
-            }
-
-
-
-
-            if (edtbarnchtype!!.text.toString().equals("")) {
-                ll_branchtype!!.visibility = View.GONE
-            }
-
-            if (edtbranch!!.text.toString().equals("")) {
-                ll_branch!!.visibility = View.GONE
-            }
-
-            if (edtdepartment!!.text.toString().equals("")) {
-                ll_department!!.visibility = View.GONE
-            }
-
-
-            if (edtEmployee!!.text.toString().equals("")) {
-                ll_employee!!.visibility = View.GONE
-            }
+//
+//
+//
+//
+//            if (edtbarnchtype!!.text.toString().equals("")) {
+//                ll_branchtype!!.visibility = View.GONE
+//            }
+//
+//            if (edtbranch!!.text.toString().equals("")) {
+//                ll_branch!!.visibility = View.GONE
+//            }
+//
+//            if (edtdepartment!!.text.toString().equals("")) {
+//                ll_department!!.visibility = View.GONE
+//            }
+//
+//
+//            if (edtEmployee!!.text.toString().equals("")) {
+//                ll_employee!!.visibility = View.GONE
+//            }
 
             if (txtLocation!!.text.toString().equals("")) {
                 ll_LocationDetails!!.visibility = View.GONE
@@ -7617,44 +7925,43 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             tvp_cust_landline.text = edtWhatsApp!!.text.toString()
 
 
-            tvp_company_name.text = edtCompanyName!!.text.toString()
-            tvp_contact_person.text = edtContactPerson!!.text.toString()
-            tvp_contact_number.text = edtContactNumber!!.text.toString()
-            tvp_media_type.text = txtMediatype!!.text.toString()
-
-            tvp_category.text = edtProdcategory!!.text.toString()
-            tvp_product.text = edtProdproduct!!.text.toString()
-            tvp_quantity.text = edtProdqty!!.text.toString()
-            tvp_project.text = edtProjectName!!.text.toString()
-            tvp_expected_date.text = edtExpecteddate!!.text.toString()
-            tvp_priority.text = edtProdpriority!!.text.toString()
-            tvp_feedback.text = edtProdfeedback!!.text.toString()
-            tvp_status.text = edtProdstatus!!.text.toString()
-            tvp_followup_action.text = edtFollowaction!!.text.toString()
-            tvp_followup_type.text = edtFollowtype!!.text.toString()
-            tvp_followup_date.text = edtFollowdate!!.text.toString()
-            tvp_branch_type.text = edtbarnchtype!!.text.toString()
-            tvp_branch.text = edtbranch!!.text.toString()
-            tvp_department.text = edtdepartment!!.text.toString()
-            tvp_employee.text = edtEmployee!!.text.toString()
+//            tvp_company_name.text = edtCompanyName!!.text.toString()
+//            tvp_contact_person.text = edtContactPerson!!.text.toString()
+//            tvp_contact_number.text = edtContactNumber!!.text.toString()
+//            tvp_media_type.text = txtMediatype!!.text.toString()
+//
+//            tvp_category.text = edtProdcategory!!.text.toString()
+//            tvp_product.text = edtProdproduct!!.text.toString()
+//            tvp_quantity.text = edtProdqty!!.text.toString()
+//            tvp_project.text = edtProjectName!!.text.toString()
+//            tvp_expected_date.text = edtExpecteddate!!.text.toString()
+//            tvp_priority.text = edtProdpriority!!.text.toString()
+//            tvp_feedback.text = edtProdfeedback!!.text.toString()
+//            tvp_status.text = edtProdstatus!!.text.toString()
+//            tvp_followup_action.text = edtFollowaction!!.text.toString()
+//            tvp_followup_type.text = edtFollowtype!!.text.toString()
+//            tvp_followup_date.text = edtFollowdate!!.text.toString()
+//            tvp_branch_type.text = edtbarnchtype!!.text.toString()
+//            tvp_branch.text = edtbranch!!.text.toString()
+//            tvp_department.text = edtdepartment!!.text.toString()
+//            tvp_employee.text = edtEmployee!!.text.toString()
 
             tvp_location.text = txtLocation!!.text.toString()
 
             val CompanyCategorySP = context.getSharedPreferences(Config.SHARED_PREF46, 0)
-            var CompanyCategory = CompanyCategorySP.getString("CompanyCategory","").toString()
+            var CompanyCategory = CompanyCategorySP.getString("CompanyCategory", "").toString()
 
-            if (CompanyCategory.equals("0")  || CompanyCategory.equals("1")){
-                tvp_product_label.text = "Product"
-                tvp_project_label.text = "Project"
-                tvp_quantity_label.text = "Quantity"
-                tvp_label_product.text = "Project/Product"
-            }
-            else if (CompanyCategory.equals("2")){
-                tvp_product_label.text = "Destination"
-                tvp_project_label.text = "Destination"
-                tvp_quantity_label.text = "Passengers"
-                tvp_label_product.text = "Package Details"
-            }
+//            if (CompanyCategory.equals("0") || CompanyCategory.equals("1")) {
+//                tvp_product_label.text = "Product"
+//                tvp_project_label.text = "Project"
+//                tvp_quantity_label.text = "Quantity"
+//                tvp_label_product.text = "Project/Product"
+//            } else if (CompanyCategory.equals("2")) {
+//                tvp_product_label.text = "Destination"
+//                tvp_project_label.text = "Destination"
+//                tvp_quantity_label.text = "Passengers"
+//                tvp_label_product.text = "Package Details"
+//            }
 
 
 
@@ -7676,6 +7983,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
         } catch (e: Exception) {
             e.printStackTrace()
+            Log.e("fsgsfg","bbbbbbbbbbbbbbbbbb"+e)
         }
     }
 
@@ -7683,7 +7991,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //        var saveLeadGenDet = 0
         try {
 
-            Log.e(TAG, "encode1   4759   " + encode1 )
+            Log.e(TAG, "encode1   4759   " + encode1)
             Log.e(TAG, "strDate   4759   " + strDate + "   " + strFollowupdate)
 
 
@@ -7783,31 +8091,32 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                         ID_LeadFrom!!,
                         ID_LeadThrough!!,
                         strLeadThrough,
-                        ID_CollectedBy!!,
                         strWhatsAppNo,
-                        ID_Category!!,
-                        ID_Product!!,
-                        strProduct,
-                        strProject,
-                        strQty,
-                        ID_Priority!!,
-                        strFeedback,
-                        ID_Status!!,
-                        ID_NextAction,
-                        ID_ActionType,
-                        strFollowupdate,
-                        ID_Branch,
-                        ID_BranchType,
-                        ID_Department,
-                        ID_Employee,
+//                        ID_Category!!,
+//                        ID_Product!!,
+//                        strProduct,
+//                        strProject,
+//                        strQty,
+//                        ID_Priority!!,
+//                        strFeedback,
+//                        ID_Status!!,
+//                        ID_NextAction,
+//                        ID_ActionType,
+//                        strFollowupdate,
+//                        ID_Branch,
+//                        ID_BranchType,
+//                        ID_Department,
+//                        ID_Employee,
                         strLatitude!!,
                         strLongitue!!,
                         encode1,
                         encode2,
                         Customer_Mode!!,
                         Customer_Type!!,
-                        strExpecteddate,
-                        ID_CustomerAssignment!!
+//                        strExpecteddate,
+                        ID_CustomerAssignment!!,
+                        ID_CollectedBy!!,
+                        array_product_lead!!
                     )!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
@@ -8179,6 +8488,17 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                         edtProdproduct!!.setText(jobjt.getString("ProdName"))
                                         edtProdpriority!!.setText(jobjt.getString("PriorityName"))
                                         edtProdfeedback!!.setText(jobjt.getString("LgpDescription"))
+                                        edtAmount!!.setText(jobjt.getString("LgpSalesPrice"))
+
+//                                        val jObject = JSONObject()
+//
+//                                        jObject.put("CategoryName",jobjt.getString("CategoryName"))
+//                                        jObject.put("ProdName",jobjt.getString("ProdName"))
+//                                        jObject.put("PriorityName",jobjt.getString("PriorityName"))
+//                                        jObject.put("LgpDescription",jobjt.getString("LgpDescription"))
+//                                        jObject.put("LgpPQuantity",jobjt.getString("LgpPQuantity"))
+//                                        jObject.put("ActionName",jobjt.getString("ActionName"))
+//                                        jObject.put("ActionTypeName",jobjt.getString("ActionTypeName"))
 
 
                                         ///////////
@@ -8370,28 +8690,417 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         }
     }
 
+    fun multipleProductValidation(v: View): String {
+
+
+//    private fun multipleProductValidation(v: View) {
+
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = sdf.format(Date())
+        edtFollowdate!!.setText(currentDate)
+
+        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+        val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val currentDateFormate = inputFormat.parse(currentDate)
+        strFollowupdate = outputFormat.format(currentDateFormate)
+
+
+        clickMode = "0"
+//        val sdf = SimpleDateFormat("dd-MM-yyyy")
+//        val currentDate = sdf.format(Date())
+//        edtFollowdate!!.setText(currentDate)
+
+//        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+//        ID_CollectedBy = FK_EmployeeSP.getString("FK_Employee", null)
+        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+        edtEmployee!!.setText(UserNameSP.getString("UserName", null))
+        MRRP = tv_Mrp!!.text.toString()
+        strQty = edtProdqty!!.text.toString()
+        if (MRRP!!.equals("")) {
+            MRRP = "0"
+        }
+        if (strQty.equals("")) {
+            strQty = "0"
+
+        }
+
+
+        strProduct = edtProdproduct!!.text.toString()
+        strProject = edtProjectName!!.text.toString()
+        strFeedback = edtProdfeedback!!.text.toString()
+        stramount = edtAmount!!.text.toString()
+
+
+        Log.e(TAG, "   stramount        " + stramount + "===" + MRRP)
+
+
+
+        Log.e("", "tttttt" + strQty)
+        if (ID_Category.equals("")) {
+            Config.snackBars(context, v, "Select Category")
+
+        } else if (CompanyCategory.equals("2") && strExpecteddate.equals("")) {
+            Config.snackBars(context, v, "Expected date")
+        } else if (strFeedback.equals("")) {
+            Config.snackBars(context, v, "Enter Enquiry Note ")
+
+
+        } else if (ID_Status.equals("")) {
+            Config.snackBars(context, v, "Select Action")
+
+
+        } else if (ID_Status.equals("1")) {
+
+            Log.v("gfdfgdfgdf", "ProductValidations  373221   " + ID_Status)
+
+            if (ID_NextAction.equals("")) {
+                Config.snackBars(context, v, "Select Followup Action")
+
+            } else if (ID_ActionType.equals("")) {
+                Config.snackBars(context, v, "Select Action type")
+
+            } else if (strFollowupdate.equals("")) {
+                Config.snackBars(context, v, "Select Followup Date")
+
+
+            } else if (ID_Employee.equals("")) {
+                Config.snackBars(context, v, "Select Assigned To")
+
+            } else if (ID_Priority.equals("")) {
+                Config.snackBars(context, v, "Select Priority")
+                Log.e(TAG, "   stramount1        " + stramount + "===" + MRRP)
+
+            }
+//            else if (!MRRP.equals("0")){
+                else if(MRRP.toFloat() != "0".toFloat()){
+
+                Log.v("tttttyyuuiii", "in")
+
+                if (MRRP.toFloat() <= stramount.toFloat()) {
+                    Log.e(TAG, "   Valid   : Enter Amount DD     " + stramount + "===" + MRRP)
+                    Config.snackBars(context, v, "Offer Price Should be less than or Equal to MRP")
+
+                } else {
+                    clickMode = "1"
+
+//                addMultipleProduct()
+                }
+            }
+            else{
+                Log.v("gfdfgdfgdf", "else")
+                clickMode = "1"
+            }
+
+
+
+        } else {
+            Log.v("gfdfgdfgdf", "ProductValidations  dfgdfgdfgff   " + ID_Status)
+            if (ID_Priority.equals("")) {
+                Config.snackBars(context, v, "Select Priority")
+
+            }else if(MRRP.toFloat() != "0".toFloat()){
+
+                Log.e(TAG, "   111122220000 innn     " + stramount + "===" + MRRP)
+//            else if (!MRRP.equals("0")){
+                if (MRRP.toFloat() <= stramount.toFloat()) {
+                    Log.e(TAG, "   Valid   : Enter Amount DD     " + stramount + "===" + MRRP)
+                    Config.snackBars(context, v, "Offer Price Should be less than or Equal to MRP")
+
+                } else {
+                    clickMode = "1"
+
+//                addMultipleProduct()
+                }
+            }
+            else{
+                clickMode = "1"
+            }
+        }
+        return clickMode
+    }
+
+    private fun addMultipleProduct() {
+
+        Log.v("sdfdsfdsdd", "in")
+
+//        strQty = edtProdqty!!.text.toString()
+        Log.e("qqqqqqqqq", "in"  +  strQty)
+
+        val jObject = JSONObject()
+        jObject.put("CategoryName", edtProdcategory!!.text.toString())
+        jObject.put("ProdName", edtProdproduct!!.text.toString())
+        jObject.put("PriorityName", edtProdpriority!!.text.toString())
+        jObject.put("ProjectName", edtProjectName!!.text.toString())
+        jObject.put("LgpDescription", edtProdfeedback!!.text.toString())
+        jObject.put("LgpPQuantity", strQty)
+        jObject.put("NxtActnName", edtFollowaction!!.text.toString())
+        jObject.put("ActionTypeName", edtFollowtype!!.text.toString())
+        jObject.put("NextActionDate", edtFollowdate!!.text.toString())
+        jObject.put("AssignEmp", edtEmployee!!.text.toString())
+        jObject.put("ID_Category", ID_Category)
+        jObject.put("ID_Product", ID_Product)
+        jObject.put("ID_Priority", ID_Priority)
+        jObject.put("ID_Status", ID_Status)
+        jObject.put("ID_NextAction", ID_NextAction)
+        jObject.put("ID_ActionType", ID_ActionType)
+        jObject.put("LgpExpectDate", strExpecteddate)
+        jObject.put("LgpSalesPrice", edtAmount!!.text.toString())
+        jObject.put("MRP", tv_Mrp!!.text.toString())
+        jObject.put("ID_CollectedBy", ID_CollectedBy)
+        jObject.put("LgCollectedBy", ID_CollectedBy)
+
+        editProdcutListarray!!.put(jObject)
+
+        Log.e(TAG, "dsaggwq" + editProdcutListarray)
+
+        edtProdcategory!!.setText("")
+        edtProdproduct!!.setText("")
+        edtProdpriority!!.setText("")
+        edtProdfeedback!!.setText("")
+        edtProdqty!!.setText("")
+        edtFollowaction!!.setText("")
+        edtFollowtype!!.setText("")
+        tv_Mrp!!.setText("")
+//        edtFollowdate!!.setText("")
+//        edtEmployee!!.setText("")
+        edtAmount!!.setText("")
+
+        strQty = ""
+        ID_Category = ""
+        CompanyCategory = ""
+        strExpecteddate = ""
+        strFeedback = ""
+        ID_Status = ""
+        ID_NextAction = ""
+        ID_ActionType = ""
+        ID_Priority = ""
+        hideViews()
+
+
+
+        if (editProdcutListarray!!.length() > 0) {
+
+            llrecyvisible!!.visibility = View.VISIBLE
+            lllistdetails!!.visibility = View.VISIBLE
+            llfollowup!!.visibility = View.GONE
+//            addmore_btn!!.visibility = View.VISIBLE
+
+            viewList(editProdcutListarray!!)
+            modeView = "0"
+            Log.e("a", "fsssagsagsag")
+
+        } else {
+            llrecyvisible!!.visibility = View.GONE
+            llfollowup!!.visibility = View.GONE
+            rcylisting!!.adapter = null
+            Log.e("a", "fsssagsagsag2222222")
+        }
+
+        savelistDetail()
+    }
+
+    @SuppressLint("SuspiciousIndentation")
+    private fun savelistDetail() {
+
+//        ID_Category!!,
+//        ID_Product!!,
+//
+//        ID_Priority!!,
+//        ID_Status!!,
+//        ID_NextAction,
+//        ID_ActionType,
+//        strFollowupdate,
+        array_product_lead  = JSONArray()
+
+        for (i in 0 until editProdcutListarray.length()) {
+            var jsonObject = editProdcutListarray.getJSONObject(i)
+            val jObject = JSONObject()
+            Log.e(TAG, "strQty 1     112299  " + strQty)
+
+            if (jsonObject.getString("ID_Product")!!.equals("")) {
+
+                jObject.put("FK_Category", (jsonObject.getString("ID_Category")))
+                jObject.put("ID_Product", (jsonObject.getString("ID_Product")))
+                jObject.put("FK_Employee", ID_Employee)
+
+                jObject.put("ProdName", (jsonObject.getString("ProdName")))
+                jObject.put("ProjectName", (jsonObject.getString("ProjectName")))
+
+                jObject.put("LgpPQuantity",(jsonObject.getString("LgpPQuantity")))
+                jObject.put("FK_Priority", (jsonObject.getString("ID_Priority")))
+                jObject.put("LgpDescription", (jsonObject.getString("LgpDescription")))
+                jObject.put("ActStatus", (jsonObject.getString("ID_Status")))
+                jObject.put("FK_NetAction", (jsonObject.getString("ID_NextAction")))
+                jObject.put("FK_ActionType", (jsonObject.getString("ID_ActionType")))
+                jObject.put("NextActionDate", strFollowupdate)
+
+                jObject.put("LgpExpectDate", strExpecteddate)
+                jObject.put("LgpMRP", ("0"))
+                jObject.put("LgpSalesPrice", ("0"))
+
+
+                jObject.put("BranchID", ID_Branch)
+                jObject.put("BranchTypeID", ID_BranchType)
+                jObject.put("FK_Departement", ID_Department)
+
+
+                Log.e(TAG, "strQty 1     112299  " + jsonObject.getString("LgpPQuantity"))
+
+            } else {
+                jObject.put("FK_Category", (jsonObject.getString("ID_Category")))
+                jObject.put("ID_Product", (jsonObject.getString("ID_Product")))
+                jObject.put("FK_Employee", ID_Employee)
+
+
+                jObject.put("ProdName", (jsonObject.getString("ProdName")))
+                jObject.put("ProjectName", (jsonObject.getString("ProjectName")))
+
+                jObject.put("LgpPQuantity", (jsonObject.getString("LgpPQuantity")))
+                jObject.put("FK_Priority", (jsonObject.getString("ID_Priority")))
+                jObject.put("LgpDescription", (jsonObject.getString("LgpDescription")))
+                jObject.put("ActStatus", (jsonObject.getString("ID_Status")))
+                jObject.put("FK_NetAction", (jsonObject.getString("ID_NextAction")))
+                jObject.put("FK_ActionType", (jsonObject.getString("ID_ActionType")))
+                jObject.put("NextActionDate", strFollowupdate)
+
+                jObject.put("LgpExpectDate", strExpecteddate)
+                jObject.put("LgpMRP", (jsonObject.getString("MRP")))
+                jObject.put("LgpSalesPrice", (jsonObject.getString("LgpSalesPrice")))
+
+                jObject.put("BranchID", ID_Branch)
+                jObject.put("BranchTypeID", ID_BranchType)
+                jObject.put("FK_Departement", ID_Department)
+
+                Log.e(TAG, "strQty 2    112299  " + jsonObject.getString("LgpPQuantity"))
+
+            }
+
+            array_product_lead.put(jObject)
+            Log.e(TAG, "array_product_lead     1122  " + array_product_lead)
+        }
+    }
+
+    private fun viewList(editProdcutListarray: JSONArray) {
+
+        val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+        rcylisting!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+        val adapter =
+            LeadGenerationProductListAdapter(this@LeadGenerationActivity, editProdcutListarray)
+        rcylisting!!.adapter = adapter
+        adapter.setClickListener(this@LeadGenerationActivity)
+
+
+    }
+
     private fun ByteArrayToBitmap(byteArray: ByteArray): Bitmap {
         val arrayInputStream = ByteArrayInputStream(byteArray)
         return BitmapFactory.decodeStream(arrayInputStream)
     }
 
     private fun isValidEmail(email: String): Boolean {
-        if(TextUtils.isEmpty(email))
-        {
+        if (TextUtils.isEmpty(email)) {
             return true
-        }
-        else
-        {
-            if(Patterns.EMAIL_ADDRESS.matcher(email).matches())
-            {
+        } else {
+            if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 return true
-            }
-            else
-            {
+            } else {
                 return false
             }
         }
     }
 
+    private fun getItemList(barcodeValue: String) {
+        var ReqMode = "0"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                itemSearchListViewModel.getProductEnquiry(this, ReqMode!!, barcodeValue)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
 
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (barcodeCount == 0) {
+                                    barcodeCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "608   msg   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+
+                                        try {
+
+                                            val jobjt = jObject.getJSONObject("ItemList")
+                                            val jresult = jobjt.getJSONArray("ItemSearchListData")
+
+                                            Log.i("responseTry", "inside try" + jresult)
+                                            var jsonObject = jresult.getJSONObject(0)
+                                            Log.i("responseTry", "in try   = " + jsonObject)
+//                                            ID_Category = jresult.getJSONObject(0).getString("FK_Category")
+
+                                            ID_Product = jsonObject.getString("ID_Product")
+                                            ID_Category = jsonObject.getString("FK_Category")
+                                            Project = jsonObject.getString("Project")
+                                            edtProdcategory!!.setText("" + jsonObject!!.getString("CategoryName"))
+                                            edtProdproduct!!.setText("" + jsonObject!!.getString("ProductName"))
+                                            tv_Mrp!!.setText("" + jsonObject!!.getString("MRP"))
+                                            edtAmount!!.setText("" + jsonObject!!.getString("Price"))
+
+
+                                            Log.i(
+                                                "responseTry",
+                                                "ID_Category=" + jObject.getString("FK_Category")
+                                            )
+//                                            Log.i("responseTry","mrp="+jObject!!.getString("MRP"))
+
+                                        } catch (e: Exception) {
+                                            Log.i("responseTry", "inside catch")
+                                            Log.e(TAG, "msg   82223   " + e.toString())
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@LeadGenerationActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
 }

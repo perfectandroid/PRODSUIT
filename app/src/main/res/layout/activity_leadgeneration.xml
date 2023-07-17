@@ -1421,7 +1421,38 @@
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
                                             android:background="@color/leadbg_color"
-                                            android:visibility="gone">
+                                            android:visibility="visible">
+
+                                            <LinearLayout
+                                                android:id="@+id/llrecyvisible"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical"
+                                                android:background="@color/leadbg_color"
+                                                android:visibility="gone">
+                                            
+                                            <androidx.recyclerview.widget.RecyclerView
+                                                android:id="@+id/rcylisting"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_marginBottom="5dp"
+                                                android:visibility="visible"/>
+                                            </LinearLayout>
+
+                                            <TextView
+                                                android:id="@+id/addmore_btn"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="5dp"
+                                                android:layout_marginBottom="5dp"
+                                                android:text=" Add More Product "
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="center"
+                                                android:textColor="@color/white"
+                                                android:background="@drawable/btn_bgcolour"
+                                                android:layout_marginLeft="240dp"
+                                                android:visibility="gone"/>
 
                                             <!--                                            android:background="@drawable/etselect_bggrey"-->
 
@@ -1439,6 +1470,13 @@
                                                 android:src="@drawable/ic_cancel_" />
 
                                             <LinearLayout
+                                                android:id="@+id/lllistdetails"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical">
+
+                                            <LinearLayout
+                                                android:id="@+id/lldeaillead"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_margin="10dp"
@@ -1489,7 +1527,7 @@
                                                     <RelativeLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
-                                                        android:layout_weight="1"
+                                                        android:layout_weight="0.8"
                                                         android:background="@drawable/shape_bg"
                                                         android:orientation="horizontal">
 
@@ -1505,6 +1543,82 @@
                                                             android:focusableInTouchMode="false"
                                                             android:fontFamily="@font/myfont"
                                                             android:hint="Product"
+                                                            android:padding="7dp"
+                                                            android:singleLine="true"
+                                                            android:text=""
+                                                            android:textSize="15dp" />
+
+
+
+
+                                                    </RelativeLayout>
+
+                                                    <ImageView
+                                                        android:id="@+id/edtScan"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginLeft="25dp"
+                                                        android:layout_toLeftOf="@+id/img_search"
+                                                        android:layout_weight="3.5"
+                                                        android:drawableTint="@color/greydark"
+                                                        android:gravity="center_vertical"
+                                                        android:hint="Scan"
+                                                        android:visibility="visible"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:padding="5dp"
+                                                        android:text=""
+                                                        android:src="@drawable/qr_code"
+                                                        android:textSize="15dp" />
+
+
+                                                </LinearLayout>
+
+                                                <LinearLayout
+                                                    android:id="@+id/ll_Amount"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginTop="10dp"
+                                                    android:orientation="horizontal">
+
+                                                    <TextView
+                                                        android:id="@+id/tv_Mrp"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginLeft="2dp"
+                                                        android:layout_toLeftOf="@+id/img_search"
+                                                        android:layout_weight="3"
+                                                        android:drawableLeft="@drawable/rupees"
+                                                        android:background="@drawable/shape_bg"
+                                                        android:drawableTint="@color/greydark"
+                                                        android:hint="MRP"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:inputType="number"
+                                                        android:maxLength="20"
+                                                        android:padding="7dp"
+                                                        android:singleLine="true"
+                                                        android:text=""
+                                                        android:textSize="15dp" />
+
+                                                    <RelativeLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="3"
+                                                        android:background="@drawable/shape_bg"
+                                                        android:orientation="horizontal">
+
+                                                        <EditText
+                                                            android:id="@+id/edtAmount"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:background="@android:color/transparent"
+                                                            android:drawablePadding="5dp"
+                                                            android:drawableLeft="@drawable/svg_amount"
+                                                            android:drawableTint="@color/greydark"
+                                                            android:layout_marginStart="5dp"
+                                                            android:numeric="integer"
+                                                            android:maxLength="20"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:hint="Offer Price"
                                                             android:padding="7dp"
                                                             android:singleLine="true"
                                                             android:text=""
@@ -1557,24 +1671,6 @@
                                                     android:text=""
                                                     android:textSize="15dp" />
 
-                                                <EditText
-                                                    android:id="@+id/edtProdpriority"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_marginTop="10dp"
-                                                    android:layout_toLeftOf="@+id/img_search"
-                                                    android:background="@drawable/shape_bg_mandatory"
-                                                    android:drawableRight="@drawable/arrowright"
-                                                    android:drawableLeft="@drawable/lead_prioritys"
-                                                    android:drawableTint="@color/greydark"
-                                                    android:editable="false"
-                                                    android:hint="Priority"
-                                                    android:focusableInTouchMode="false"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:padding="7dp"
-                                                    android:singleLine="true"
-                                                    android:text=""
-                                                    android:textSize="15dp" />
 
                                                 <EditText
                                                     android:id="@+id/edtProdfeedback"
@@ -1633,7 +1729,6 @@
                                                     android:singleLine="true"
                                                     android:text=""
                                                     android:textSize="15dp" />
-
 
                                             </LinearLayout>
 
@@ -1849,6 +1944,108 @@
 
                                             </LinearLayout>
 
+                                                <LinearLayout
+                                                    android:id="@+id/ll_Priority"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_marginRight="10dp"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginBottom="10dp"
+                                                    android:orientation="horizontal">
+
+                                                    <RelativeLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:background="@drawable/shape_bg"
+                                                        android:orientation="horizontal">
+
+                                                        <EditText
+                                                            android:id="@+id/edtProdpriority"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:background="@drawable/shape_bg_mandatory"
+                                                            android:drawableRight="@drawable/arrowright"
+                                                            android:drawableLeft="@drawable/lead_prioritys"
+                                                            android:drawableTint="@color/greydark"
+                                                            android:editable="false"
+                                                            android:hint="Priority"
+                                                            android:focusableInTouchMode="false"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:padding="7dp"
+                                                            android:singleLine="true"
+                                                            android:text=""
+                                                            android:textSize="15dp" />
+                                                    </RelativeLayout>
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_marginBottom="10dp"
+                                                        android:layout_weight="2"
+                                                        android:orientation="horizontal">
+
+                                                    <ImageView
+                                                        android:id="@+id/add_product_btn"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_toLeftOf="@+id/img_search"
+                                                        android:layout_marginLeft="20dp"
+                                                        android:layout_marginRight="10dp"
+                                                        android:layout_gravity="center"
+                                                        android:gravity="center_vertical"
+                                                        android:src="@drawable/add_product"/>
+
+                                                    <ImageView
+                                                        android:id="@+id/refresh_btn"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="40dp"
+                                                        android:layout_marginLeft="2dp"
+                                                        android:layout_gravity="center"
+                                                        android:gravity="center_vertical"
+                                                        android:src="@drawable/refresh" />
+                                                    </LinearLayout>
+
+                                                </LinearLayout>
+<!--                                                <EditText-->
+<!--                                                    android:id="@+id/edtProdpriority"-->
+<!--                                                    android:layout_width="match_parent"-->
+<!--                                                    android:layout_height="wrap_content"-->
+<!--                                                    android:layout_toLeftOf="@+id/img_search"-->
+<!--                                                    android:background="@drawable/shape_bg_mandatory"-->
+<!--                                                    android:drawableRight="@drawable/arrowright"-->
+<!--                                                    android:drawableLeft="@drawable/lead_prioritys"-->
+<!--                                                    android:drawableTint="@color/greydark"-->
+<!--                                                    android:editable="false"-->
+<!--                                                    android:hint="Priority"-->
+<!--                                                    android:layout_marginRight="10dp"-->
+<!--                                                    android:layout_marginLeft="10dp"-->
+<!--                                                    android:focusableInTouchMode="false"-->
+<!--                                                    android:fontFamily="@font/myfont"-->
+<!--                                                    android:padding="7dp"-->
+<!--                                                    android:singleLine="true"-->
+<!--                                                    android:text=""-->
+<!--                                                    android:textSize="15dp" />-->
+
+<!--                                                <LinearLayout-->
+<!--                                                    android:layout_width="wrap_content"-->
+<!--                                                    android:layout_height="wrap_content"-->
+<!--                                                    android:layout_marginBottom="5dp"-->
+<!--                                                    android:layout_marginLeft="275dp">-->
+
+<!--                                                    <TextView-->
+<!--                                                        android:id="@+id/add_product_btn"-->
+<!--                                                        android:layout_width="wrap_content"-->
+<!--                                                        android:layout_height="wrap_content"-->
+<!--                                                        android:layout_marginTop="5dp"-->
+<!--                                                        android:text=" Add Product "-->
+<!--                                                        android:fontFamily="@font/myfont"-->
+<!--                                                        android:gravity="center"-->
+<!--                                                        android:background="@drawable/bgshape_shape" />-->
+<!--                                                </LinearLayout>-->
+
+                                            </LinearLayout>
+
                                             <LinearLayout
                                                 android:id="@+id/llNeedTransfer"
                                                 android:layout_width="match_parent"
@@ -1936,7 +2133,8 @@
                                                 </LinearLayout>
 
                                             </LinearLayout>
-
+                                            
+                                            
                                         </LinearLayout>
 
                                     </LinearLayout>

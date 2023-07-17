@@ -15,6 +15,7 @@ import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -31,15 +32,12 @@ object LeadGenerateSaveRepository {
     fun getServicesApiCall(context: Context, saveUpdateMode  :String, ID_LeadGenerate  :String,strDate :String,ID_Customer :String,ID_MediaSubMaster :String,
                            CusNameTitle :String,Customer_Name :String,Customer_Address1 :String,Customer_Address2 :String,Customer_Mobile :String,Customer_Email :String,
                            strCompanyContact :String,FK_Country :String, FK_States :String,FK_District :String,FK_Post :String,strPincode : String,FK_Area :String,ID_LeadFrom :String,ID_LeadThrough :String,
-                           strLeadThrough :String,ID_CollectedBy :String,strWhatsAppNo :String,ID_Category :String,ID_Product :String, strProduct :String,strProject :String,
-                           strQty :String,ID_Priority :String,strFeedback :String,ID_Status :String,ID_NextAction :String,ID_ActionType :String,strFollowupdate :String,ID_Branch :String,
-                           ID_BranchType :String,ID_Department :String,ID_Employee :String,strLatitude :String,strLongitue :String, encode1 :String, encode2 :String,
-                           Customer_Mode : String,Customer_Type : String,strExpecteddate :String,ID_CustomerAssignment : String): MutableLiveData<LeadGenerateSaveModel> {
+                           strLeadThrough :String,strWhatsAppNo :String,strLatitude :String,strLongitue :String, encode1 :String, encode2 :String,
+                           Customer_Mode : String,Customer_Type : String,ID_CustomerAssignment : String,ID_CollectedBy : String,array_product_lead : JSONArray
+    ): MutableLiveData<LeadGenerateSaveModel> {
         saveLeadGenerate(context, saveUpdateMode!!, ID_LeadGenerate!!, strDate, ID_Customer, ID_MediaSubMaster, CusNameTitle,
             Customer_Name, Customer_Address1, Customer_Address2, Customer_Mobile, Customer_Email, strCompanyContact, FK_Country, FK_States, FK_District, FK_Post, strPincode,
-            FK_Area, ID_LeadFrom, ID_LeadThrough, strLeadThrough, ID_CollectedBy, strWhatsAppNo, ID_Category, ID_Product, strProduct, strProject, strQty,
-            ID_Priority, strFeedback, ID_Status, ID_NextAction, ID_ActionType, strFollowupdate, ID_Branch, ID_BranchType, ID_Department, ID_Employee,
-            strLatitude, strLongitue, encode1, encode2,Customer_Mode,Customer_Type,strExpecteddate,ID_CustomerAssignment)
+            FK_Area, ID_LeadFrom, ID_LeadThrough, strLeadThrough, strWhatsAppNo, strLatitude, strLongitue, encode1, encode2,Customer_Mode,Customer_Type,ID_CustomerAssignment,ID_CollectedBy,array_product_lead)
         Log.e("LeadGenerateSaveRepository"," 226666    ")
         return leadGenSaveSetterGetter
     }
@@ -47,16 +45,14 @@ object LeadGenerateSaveRepository {
     private fun saveLeadGenerate(context: Context,  saveUpdateMode  :String, ID_LeadGenerate  :String,strDate :String,ID_Customer :String,ID_MediaSubMaster :String,
                                  CusNameTitle :String,Customer_Name :String,Customer_Address1 :String,Customer_Address2 :String,Customer_Mobile :String,Customer_Email :String,
                                  strCompanyContact :String,FK_Country :String, FK_States :String,FK_District :String,FK_Post :String,strPincode : String,FK_Area :String,ID_LeadFrom :String,ID_LeadThrough :String,
-                                 strLeadThrough :String,ID_CollectedBy :String,strWhatsAppNo :String,ID_Category :String,ID_Product :String, strProduct :String,strProject :String,
-                                 strQty :String,ID_Priority :String,strFeedback :String,ID_Status :String,ID_NextAction :String,ID_ActionType :String,strFollowupdate :String,ID_Branch :String,
-                                 ID_BranchType :String,ID_Department :String,ID_Employee :String,strLatitude :String,strLongitue :String, encode1 :String, encode2 :String,
-                                 Customer_Mode : String,Customer_Type : String,strExpecteddate :String,ID_CustomerAssignment : String) {
+                                 strLeadThrough :String,strWhatsAppNo :String,strLatitude :String,strLongitue :String, encode1 :String, encode2 :String,
+                                 Customer_Mode : String,Customer_Type : String,ID_CustomerAssignment : String,ID_CollectedBy : String,array_product_lead : JSONArray) {
 
         Log.e("TAG","saveLeadGenerate  ")
         Log.e(TAG,"LocationValidation  6421232"
                 +"\n"+"ID_LeadGenerate    : "+ ID_LeadGenerate
                 +"\n"+"Enquiry date       : "+ strDate
-                +"\n"+"Attended by        : "+ ID_CollectedBy
+//                +"\n"+"Attended by        : "+ ID_CollectedBy
                 +"\n"+"Lead Source        : "+ ID_LeadFrom
                 +"\n"+"Lead From          : "+ ID_LeadThrough
                 +"\n"+"ID_MediaSubMaster  : "+ ID_MediaSubMaster
@@ -82,21 +78,21 @@ object LeadGenerateSaveRepository {
                 +"\n"+"FK_Post           : "+ FK_Post
                 +"\n"+"strPincode        : "+ strPincode
                 +"\n"
-                +"\n"+"ID_Category        : "+ ID_Category
-                +"\n"+"ID_Product         : "+ ID_Product
-                +"\n"+"strQty             : "+ strQty
-                +"\n"+"strProduct         : "+ strProduct
-                +"\n"+"strProject         : "+ strProject
-                +"\n"+"ID_Priority        : "+ ID_Priority
-                +"\n"+"strFeedback        : "+ strFeedback
-                +"\n"+"ID_Status          : "+ ID_Status
-                +"\n"+"ID_NextAction      : "+ ID_NextAction
-                +"\n"+"ID_ActionType      : "+ ID_ActionType
-                +"\n"+"strFollowupdate    : "+ strFollowupdate
-                +"\n"+"ID_Branch          : "+ ID_Branch
-                +"\n"+"ID_BranchType      : "+ ID_BranchType
-                +"\n"+"ID_Department      : "+ ID_Department
-                +"\n"+"ID_Employee        : "+ ID_Employee
+//                +"\n"+"ID_Category        : "+ ID_Category
+//                +"\n"+"ID_Product         : "+ ID_Product
+//                +"\n"+"strQty             : "+ strQty
+//                +"\n"+"strProduct         : "+ strProduct
+//                +"\n"+"strProject         : "+ strProject
+//                +"\n"+"ID_Priority        : "+ ID_Priority
+//                +"\n"+"strFeedback        : "+ strFeedback
+//                +"\n"+"ID_Status          : "+ ID_Status
+//                +"\n"+"ID_NextAction      : "+ ID_NextAction
+//                +"\n"+"ID_ActionType      : "+ ID_ActionType
+//                +"\n"+"strFollowupdate    : "+ strFollowupdate
+//                +"\n"+"ID_Branch          : "+ ID_Branch
+//                +"\n"+"ID_BranchType      : "+ ID_BranchType
+//                +"\n"+"ID_Department      : "+ ID_Department
+//                +"\n"+"ID_Employee        : "+ ID_Employee
                 +"\n"
                 +"\n"+"strLatitude        : "+ strLatitude
                 +"\n"+"strLongitue        : "+ strLongitue
@@ -162,7 +158,6 @@ object LeadGenerateSaveRepository {
 //                requestObject1.put("LastID", ProdsuitApplication.encryptStart("0")) //New
 //
 //                requestObject1.put("LgLeadDate", ProdsuitApplication.encryptStart(strDate))
-//                requestObject1.put("LgCollectedBy", ProdsuitApplication.encryptStart(ID_CollectedBy))
 //                requestObject1.put("FK_LeadFrom", ProdsuitApplication.encryptStart(ID_LeadFrom))
 //                requestObject1.put("FK_LeadBy", ProdsuitApplication.encryptStart(ID_LeadThrough))
 //                requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart(ID_Customer))
@@ -209,7 +204,7 @@ object LeadGenerateSaveRepository {
 
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+//                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("UserName", ProdsuitApplication.encryptStart(UserNameSP.getString("UserName", null))) //New
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("UserAction", ProdsuitApplication.encryptStart(saveUpdateMode))
@@ -243,7 +238,7 @@ object LeadGenerateSaveRepository {
                 requestObject1.put("LeadByName", ProdsuitApplication.encryptStart(strLeadThrough))
                 requestObject1.put("FK_MediaMaster", ProdsuitApplication.encryptStart(""))  // Removed
 
-                requestObject1.put("LgCollectedBy", ProdsuitApplication.encryptStart(ID_CollectedBy))
+//                requestObject1.put("LgCollectedBy", ProdsuitApplication.encryptStart(ID_CollectedBy))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
@@ -252,26 +247,26 @@ object LeadGenerateSaveRepository {
 
 
 
-                requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
-                requestObject1.put("ID_Product", ProdsuitApplication.encryptStart(ID_Product))
-                requestObject1.put("ProdName", ProdsuitApplication.encryptStart(strProduct))
-                requestObject1.put("ProjectName", ProdsuitApplication.encryptStart(strProject))
-                requestObject1.put("LgpPQuantity", ProdsuitApplication.encryptStart(strQty))
-                requestObject1.put("FK_Priority", ProdsuitApplication.encryptStart(ID_Priority))
-                requestObject1.put("LgpDescription", ProdsuitApplication.encryptStart(strFeedback))
-                requestObject1.put("ActStatus", ProdsuitApplication.encryptStart(ID_Status))
-
-                requestObject1.put("FK_NetAction", ProdsuitApplication.encryptStart(ID_NextAction))
-                requestObject1.put("FK_ActionType", ProdsuitApplication.encryptStart(ID_ActionType))
-                requestObject1.put("NextActionDate", ProdsuitApplication.encryptStart(strFollowupdate))
-                requestObject1.put("BranchID", ProdsuitApplication.encryptStart(ID_Branch))
-                requestObject1.put("BranchTypeID", ProdsuitApplication.encryptStart(ID_BranchType))
-                requestObject1.put("FK_Departement", ProdsuitApplication.encryptStart(ID_Department))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
-
+//                requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
+//                requestObject1.put("ID_Product", ProdsuitApplication.encryptStart(ID_Product))
+//                requestObject1.put("ProdName", ProdsuitApplication.encryptStart(strProduct))
+//                requestObject1.put("ProjectName", ProdsuitApplication.encryptStart(strProject))
+//                requestObject1.put("LgpPQuantity", ProdsuitApplication.encryptStart(strQty))
+//                requestObject1.put("FK_Priority", ProdsuitApplication.encryptStart(ID_Priority))
+//                requestObject1.put("LgpDescription", ProdsuitApplication.encryptStart(strFeedback))
+//                requestObject1.put("ActStatus", ProdsuitApplication.encryptStart(ID_Status))
+//
+//                requestObject1.put("FK_NetAction", ProdsuitApplication.encryptStart(ID_NextAction))
+//                requestObject1.put("FK_ActionType", ProdsuitApplication.encryptStart(ID_ActionType))
+//                requestObject1.put("NextActionDate", ProdsuitApplication.encryptStart(strFollowupdate))
+//                requestObject1.put("BranchID", ProdsuitApplication.encryptStart(ID_Branch))
+//                requestObject1.put("BranchTypeID", ProdsuitApplication.encryptStart(ID_BranchType))
+//                requestObject1.put("FK_Departement", ProdsuitApplication.encryptStart(ID_Department))
+//                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
+                requestObject1.put("LgCollectedBy", ProdsuitApplication.encryptStart(ID_CollectedBy))
                 requestObject1.put("LocLatitude", ProdsuitApplication.encryptStart(strLongitue))
                 requestObject1.put("LocLongitude", ProdsuitApplication.encryptStart(strLatitude))
-                requestObject1.put("LgpExpectDate", ProdsuitApplication.encryptStart(strExpecteddate))
+//                requestObject1.put("LgpExpectDate", ProdsuitApplication.encryptStart(strExpecteddate))
               //  requestObject1.put("LocationAddress", ProdsuitApplication.encryptStart(locAddress))
 //                requestObject1.put("LocationLandMark1", ProdsuitApplication.encryptStart(encode1))
 //                requestObject1.put("LocationLandMark2", ProdsuitApplication.encryptStart(encode2))
@@ -291,9 +286,11 @@ object LeadGenerateSaveRepository {
                     requestObject1.put("FK_CustomerOthers", ProdsuitApplication.encryptStart("0"))
                 }
                 requestObject1.put("ID_CustomerAssignment", ProdsuitApplication.encryptStart(ID_CustomerAssignment))
+                requestObject1.put("ProductDetails", (array_product_lead))
 
                 Log.e(TAG,"FK_Area   1360   "+FK_Area+"   "+UserNameSP.getString("UserName", null))
-                Log.e(TAG,"requestObject1   1361   "+strDate+"   "+strFollowupdate)
+                Log.e(TAG,"array_product_lead    330022   "+array_product_lead)
+//                Log.e(TAG,"requestObject1   1361   "+strDate+"   "+strFollowupdate)
                 Log.e(TAG,"requestObject1   1362   "+encode1)
                 Log.e(TAG,"requestObject1   1363   "+requestObject1)
 
