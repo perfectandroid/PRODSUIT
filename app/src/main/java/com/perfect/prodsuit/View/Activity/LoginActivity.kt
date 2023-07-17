@@ -64,6 +64,8 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
         setTechnologyPartner()
         checkLocationPermission()
 
+        Log.e(TAG,"99991   Start")
+        Config.deleteFcmToken(context)
 
         btlogin.setOnClickListener {
             Config.disableClick(it)

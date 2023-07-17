@@ -39,6 +39,8 @@ object FireBaseConfig {
                 Log.e(TAG,"uniqueId  99991    "+ deviceId)
                 checkUserToken(context,task.result!!,deviceId)
                 Log.e(TAG,"uniqueId  99991    "+ deviceId)
+
+
              //   fetchFcmServerKey()
 
             //    updateUserTokenDeviceID(context,task.result!!,deviceId)
@@ -109,12 +111,6 @@ object FireBaseConfig {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
-//
-//                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-//                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-//                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-//                requestObject1.put("LocationEnteredDate", ProdsuitApplication.encryptStart(strDate))
-//                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_Employee))
 
 //                {"BankKey":"","Token":"9C19C49E-B5DE-4E55-8F09-546CBEA324F8","ID_User":"1","User_Type":"1","Device_ID":"2",
 //                    "User_Token":"Test User Token2","FK_Company":"1"}

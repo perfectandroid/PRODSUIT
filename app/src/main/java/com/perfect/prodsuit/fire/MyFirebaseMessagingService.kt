@@ -24,12 +24,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     lateinit var context: Context
     override fun onNewToken(token: String) {
         Log.e(TAG,"Token  999900    "+token)
-     //   val deviceId: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
-//        val deviceId: String = DeviceHelper.getDeviceID(context)
-//        Log.e(FireBaseConfig.TAG,"uniqueId  99991    "+ deviceId)
-//
-//        FireBaseConfig.checkUserToken(context, token, deviceId)
-        //Called whenever a new device runs the Android application. Registers in FCM and in PubNub.
+
     }
 
     //Handle when the device has received a mobile push notification from FCM.
@@ -47,18 +42,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             showNotification(remoteMessage)
         }
 
-
-
-
-//        if (remoteMessage.getNotification() != null) {
-//            Log.e(TAG,"remoteMessage  999900    "+remoteMessage.notification!!.title)
-//            Log.e(TAG,"remoteMessage  999900    "+remoteMessage.notification!!.body)
-//
-//
-//            createNotificationChannel()
-//            showNotification(remoteMessage.notification!!.title,remoteMessage.notification!!.body)
-//
-//        }
     }
 
     private fun createNotificationChannel() {
