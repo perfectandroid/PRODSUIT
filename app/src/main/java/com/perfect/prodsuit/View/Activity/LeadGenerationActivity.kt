@@ -3755,10 +3755,14 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 
         } else if (requestCode == Config.SCANNER_CODE) {
-            Log.e("TAG", "onActivityResult " + data!!.getStringExtra("barcodeValue"))
-            var barcodeValue = data!!.getStringExtra("barcodeValue").toString()
-            barcodeCount = 0
-            getItemList(barcodeValue)
+
+            if (data != null){
+                Log.e("TAG", "onActivityResult " + data!!.getStringExtra("barcodeValue"))
+                var barcodeValue = data!!.getStringExtra("barcodeValue").toString()
+                barcodeCount = 0
+                getItemList(barcodeValue)
+            }
+
 
         }
 
@@ -8776,13 +8780,13 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
                 Log.v("tttttyyuuiii", "in")
 
-                if (MRRP.toFloat() <= stramount.toFloat()) {
+                if (stramount.toFloat() <= MRRP.toFloat()) {
+
+                    clickMode = "1"
+                } else {
+
                     Log.e(TAG, "   Valid   : Enter Amount DD     " + stramount + "===" + MRRP)
                     Config.snackBars(context, v, "Offer Price Should be less than or Equal to MRP")
-
-                } else {
-                    clickMode = "1"
-
 //                addMultipleProduct()
                 }
             }
@@ -8802,13 +8806,13 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
                 Log.e(TAG, "   111122220000 innn     " + stramount + "===" + MRRP)
 //            else if (!MRRP.equals("0")){
-                if (MRRP.toFloat() <= stramount.toFloat()) {
-                    Log.e(TAG, "   Valid   : Enter Amount DD     " + stramount + "===" + MRRP)
-                    Config.snackBars(context, v, "Offer Price Should be less than or Equal to MRP")
-
-                } else {
+                if (stramount.toFloat() <= MRRP.toFloat()) {
                     clickMode = "1"
 
+                } else {
+
+                    Log.e(TAG, "   Valid   : Enter Amount DD     " + stramount + "===" + MRRP)
+                    Config.snackBars(context, v, "Offer Price Should be less than or Equal to MR1P")
 //                addMultipleProduct()
                 }
             }
@@ -8825,6 +8829,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 //        strQty = edtProdqty!!.text.toString()
         Log.e("qqqqqqqqq", "in"  +  strQty)
+
+
 
         val jObject = JSONObject()
         jObject.put("CategoryName", edtProdcategory!!.text.toString())
@@ -8897,6 +8903,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         }
 
         savelistDetail()
+
+
     }
 
     @SuppressLint("SuspiciousIndentation")

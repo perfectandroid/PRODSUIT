@@ -198,4 +198,10 @@ class BarcodeScannerActivity : AppCompatActivity() {
         return barcodeDetector.detect(frame)
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        intent.putExtra("barcodeValue", "")
+        setResult(Config.SCANNER_CODE, intent)
+        finish() //finishing activity
+    }
 }
