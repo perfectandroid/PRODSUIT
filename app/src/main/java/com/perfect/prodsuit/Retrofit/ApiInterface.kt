@@ -484,4 +484,7 @@ interface ApiInterface {
     @POST("UserValidations/ItemSearchList")
     fun getItemSearchList(@Body body: RequestBody): Call<String>
 
+    @POST("CustomerPortalAPI/GetCustomerAccessDetails")
+    fun getCustomerAccessDetails(@Body body: RequestBody): Call<String>
+
 }

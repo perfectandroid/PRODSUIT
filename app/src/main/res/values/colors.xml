@@ -153,8 +153,11 @@
     <color name="color_upcoming">#2e8bc0</color>
     <color name="color_complete">#024C02</color>
 
+    <color name="dropbg_color">#E1F0F0F0</color>
 
-    <color name="boxStrokeColor">#979797</color>
+
+<!--    <color name="boxStrokeColor">#979797</color>-->
+    <color name="boxStrokeColor">#000000</color>
     <color name="textColor">#979797</color>
     <color name="textColor1">#534E4E</color>
     <color name="hintTextColor">#838282</color>
