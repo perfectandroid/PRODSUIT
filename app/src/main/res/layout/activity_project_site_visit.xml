@@ -615,7 +615,7 @@
                                                     android:background="@color/dropbg_color"
                                                     android:paddingBottom="10dp"
                                                     android:layout_margin="2dp"
-                                                    android:visibility="visible">
+                                                    android:visibility="gone">
 
 
                                                     <LinearLayout
@@ -888,7 +888,7 @@
                                                     android:background="@color/dropbg_color"
                                                     android:paddingBottom="10dp"
                                                     android:layout_margin="2dp"
-                                                    android:visibility="gone">
+                                                    android:visibility="visible">
 
 
                                                     <com.google.android.material.textfield.TextInputLayout

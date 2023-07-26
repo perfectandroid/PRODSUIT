@@ -451,5 +451,8 @@
 
 
     <color name="color_mrp">#CA7F7F</color>
+    <color name="tab_active">#B3BEBF</color>
+    <color name="tab_inactive">#E8E7E7</color>
+    <color name="btn_more">#B3ADAD</color>
 
 </resources>

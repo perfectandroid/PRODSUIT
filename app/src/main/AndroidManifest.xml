@@ -67,11 +67,17 @@
         android:usesCleartextTraffic="true">
 
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.StockTransferActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.ProjectSiteVisitActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="com.perfect.prodsuit.View.Activity.ProjectActivity"
             android:exported="false"
