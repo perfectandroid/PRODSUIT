@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -36,7 +37,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.libraries.places.internal.it
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
@@ -141,6 +141,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     var recyLeadby: RecyclerView? = null
     var recyContact: RecyclerView? = null
     var listview: ListView? = null
+    var idsearch_contact: SearchView? = null
     var recyMediaType: RecyclerView? = null
     private var imgvupload1: ImageView? = null
     private var imgvupload2: ImageView? = null
@@ -483,6 +484,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     var saveLeadGenDet = 0
     var CompanyCategory = ""
     var boolAttendance = ""
+    var arrupdateedit: String? = "0"
 
     var saveAttendanceMark = false
     lateinit var itemSearchListViewModel: ItemSearchListViewModel
@@ -543,6 +545,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         checkAttendance()
         clearData()
         getLeadRequestLicences()
+        DecimelFormatters.setDecimelPlace(edtAmount!!)
         switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 llNeedTransfer!!.visibility = View.VISIBLE
@@ -571,10 +574,11 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
 
 
-                FK_Post = ""
-                FK_Area = ""
-                edtArea!!.setText("")
-                edtPost!!.setText("")
+//                FK_Post = ""
+//                FK_Area = ""
+                Log.e(TAG, "123451   ")
+//                edtArea!!.setText("")
+//                edtPost!!.setText("")
 
             }
 
@@ -713,6 +717,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         edtCountry!!.setText("")
         edtState!!.setText("")
         edtDistrict!!.setText("")
+        Log.e(TAG, "123452   ")
         edtArea!!.setText("")
         edtPost!!.setText("")
         edtWhatsApp!!.setText("")
@@ -1961,8 +1966,16 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //                clickMode = "1"
                 var clickmode = multipleProductValidation(v)
 
+
                 if (clickMode!!.equals("1")) {
-                    addMultipleProduct()
+                    var hasId = hasMultipleProduct(editProdcutListarray, ID_Category!!, ID_Product!!)
+                    Log.e(TAG,"has id "+ hasId)
+                    if (hasId){
+                        addMultipleProduct()
+                    }else{
+                        Config.snackBars(context, v, "Duplicate Product")
+                    }
+
                 } else {
                     multipleProductValidation(v)
                 }
@@ -1971,7 +1984,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             }
             R.id.refresh_btn -> {
-
+                arrupdateedit = "0"
                 lllistdetails!!.visibility = View.VISIBLE
                 llfollowup!!.visibility = View.GONE
                 edtProjectName!!.visibility = View.GONE
@@ -2124,6 +2137,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 
             val dataContact = arrayOf(
+                ContactsContract.CommonDataKinds.Photo.PHOTO,
                 ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                 ContactsContract.CommonDataKinds.Phone.NUMBER,
                 ContactsContract.CommonDataKinds.Phone._ID
@@ -2137,6 +2151,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             dialogContact!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
             listview = dialogContact!!.findViewById(R.id.ListView) as ListView
 
+            idsearch_contact = dialogContact!!.findViewById(R.id.idsearch_contact) as SearchView
             val window: Window? = dialogContact!!.getWindow()
             window!!.setBackgroundDrawableResource(android.R.color.transparent)
             window!!.setLayout(
@@ -2157,9 +2172,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //              val adapter = ArrayAdapter(this@LeadGenerationActivity, android.R.layout.simple_list_item_1, dataContact)
 //            ListView!!.setAdapter(adapter as ListAdapter?)
             listview!!.setAdapter(adapter)
-            listview
             dialogContact!!.show()
 
+            Log.e("eerr", "eeeeeeeeeeeeeeee    " )
 //            cursor!!.moveToPosition(0)
 //            cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
 //            Log.e("ffgg","ffffeeeeeeeeeee "+adapter.cursor.count)
@@ -2205,6 +2220,23 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     dialogContact!!.dismiss()
                 }
 
+            })
+
+
+            idsearch_contact!!.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+
+                    cursor = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        dataContact,"${ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME} LIKE ?",
+                        Array(1){"%$newText%"},
+                        ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
+                    adapter.changeCursor(cursor)
+                    return false
+                }
             })
 
 
@@ -4005,6 +4037,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                             edtCountry!!.setText(jsonObject.getString("Country"))
                                             edtState!!.setText(jsonObject.getString("States"))
                                             edtDistrict!!.setText(jsonObject.getString("District"))
+                                            Log.e(TAG, "123453   ")
                                             edtArea!!.setText(jsonObject.getString("Area"))
                                             edtPost!!.setText(jsonObject.getString("Post"))
 
@@ -4118,6 +4151,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         edtCountry!!.setText("")
         edtState!!.setText("")
         edtDistrict!!.setText("")
+        Log.e(TAG, "123454   ")
         edtArea!!.setText("")
         edtPost!!.setText("")
         edtWhatsApp!!.setText("")
@@ -6404,9 +6438,31 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
         if (data.equals("deleteArrayList")) {
 //            val jsonObject = editProdcutListarray.getJSONObject(position)
-            editPosition = position
+//            editPosition = position
 
-            editProdcutListarray.remove(position)
+            val dialog = BottomSheetDialog(this)
+            val view = layoutInflater.inflate(R.layout.alert_delete, null)
+
+            val btnNo = view.findViewById<Button>(R.id.btn_No)
+            val btnYes = view.findViewById<Button>(R.id.btn_Yes)
+
+            btnNo.setOnClickListener {
+                dialog .dismiss()
+//                chipNavigationBar!!.setItemSelected(R.id.home, true)
+            }
+            btnYes.setOnClickListener {
+//                finish()
+                editProdcutListarray.remove(position)
+                viewList(editProdcutListarray)
+                dialog.dismiss()
+
+            }
+            dialog.setCancelable(true)
+            dialog!!.setContentView(view)
+
+            dialog.show()
+
+//            editProdcutListarray.remove(position)
 
 
             if (editProdcutListarray.length() > 0) {
@@ -6421,14 +6477,18 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         if (data.equals("editArrayList")) {
             try {
 
-//                editProdcutListarray = "1"
+                arrupdateedit = "1"
                 arrPosition = position
                 val jsonObject = editProdcutListarray.getJSONObject(position)
+
+                Log.e(TAG, "1212122    " +position)
 
                 ID_Category = jsonObject.getString("ID_Category")
                 ID_Product = jsonObject.getString("ID_Product")
                 ID_Priority = jsonObject.getString("ID_Priority")
                 ID_Status = jsonObject.getString("ID_Status")
+                ID_NextAction = jsonObject.getString("ID_NextAction")
+                ID_ActionType = jsonObject.getString("ID_ActionType")
                 edtProdcategory!!.setText("" + jsonObject!!.getString("CategoryName"))
                 edtProjectName!!.setText("" + jsonObject!!.getString("ProjectName"))
                 edtProdproduct!!.setText("" + jsonObject!!.getString("ProdName"))
@@ -6442,15 +6502,30 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 edtAmount!!.setText("" + jsonObject!!.getString("LgpSalesPrice"))
                 tv_Mrp!!.setText("" + jsonObject!!.getString("MRP"))
 
+                Log.e(TAG, "12121   " +jsonObject.getString("ID_Status"))
+                Log.e(TAG, "12121   " +jsonObject.getString("ProdName"))
+                Log.e(TAG, "12121    " +editProdcutListarray)
 
-                editProdcutListarray.remove(position)
+                if (jsonObject.getString("ID_Status").equals("1")){
+
+                    llfollowup!!.visibility = View.VISIBLE
+                }else{
+
+                    llfollowup!!.visibility = View.GONE
+                }
+
+//                editProdcutListarray.remove(position)
                 lllistdetails!!.visibility = View.VISIBLE
                 addmore_btn!!.visibility = View.GONE
                 if (editProdcutListarray.length() > 0) {
                     llrecyvisible!!.visibility = View.VISIBLE
                     addmore_btn!!.visibility = View.GONE
                     viewList(editProdcutListarray)
-                } else {
+                }else if (jsonObject.getString("ID_Status").equals("1")){
+
+
+                }
+                else {
                     llrecyvisible!!.visibility = View.GONE
                     rcylisting!!.adapter = null
                 }
@@ -6564,6 +6639,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             edtCountry!!.setText(jsonObject.getString("CntryName"))
             edtState!!.setText(jsonObject.getString("StName"))
             edtDistrict!!.setText(jsonObject.getString("DtName"))
+            Log.e(TAG, "123455   ")
             edtArea!!.setText(jsonObject.getString("Area"))
             edtPost!!.setText(jsonObject.getString("PostName"))
             edtPincode!!.setText(jsonObject.getString("Pincode"))
@@ -6757,6 +6833,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             edtState!!.setText("")
             edtDistrict!!.setText("")
+            Log.e(TAG, "123456   ")
             edtArea!!.setText("")
             edtPost!!.setText("")
             edtPincode!!.setText("")
@@ -6780,6 +6857,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             FK_Post = ""
 
             edtDistrict!!.setText("")
+            Log.e(TAG, "123457   ")
             edtArea!!.setText("")
             edtPost!!.setText("")
             edtPincode!!.setText("")
@@ -6800,7 +6878,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             FK_Area = ""
             FK_Place = ""
             FK_Post = ""
-
+            Log.e(TAG, "123458   ")
             edtArea!!.setText("")
             edtPost!!.setText("")
             edtPincode!!.setText("")
@@ -6817,6 +6895,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 
             FK_Area = jsonObject.getString("FK_Area")
+            Log.e(TAG, "123459   ")
             edtArea!!.setText(jsonObject.getString("Area"))
 //             edtPincode!!.setText(jsonObject.getString("PinCode"))
 //
@@ -6860,6 +6939,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             edtCountry!!.setText(jsonObject.getString("Country"))
             edtState!!.setText(jsonObject.getString("States"))
             edtDistrict!!.setText(jsonObject.getString("District"))
+            Log.e(TAG, "123450   ")
             edtArea!!.setText(jsonObject.getString("Area"))
             edtPost!!.setText(jsonObject.getString("Post"))
 
@@ -7166,6 +7246,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             if (check!!.equals("0")) {
                 Config.snackBars(context, v, "Add Product")
             } else {
+
                 addMultipleProduct()
                 LocationValidation(v)
             }
@@ -8737,15 +8818,17 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
         Log.e(TAG, "   stramount        " + stramount + "===" + MRRP)
 
-
-
         Log.e("", "tttttt" + strQty)
         if (ID_Category.equals("")) {
             Config.snackBars(context, v, "Select Category")
 
         } else if (CompanyCategory.equals("2") && strExpecteddate.equals("")) {
             Config.snackBars(context, v, "Expected date")
-        } else if (strFeedback.equals("")) {
+
+        }else if ((MRRP.toFloat() != "0".toFloat()) && (stramount.toFloat() > MRRP.toFloat())) {
+            Config.snackBars(context, v, "Offer Price Should be less than or Equal to MRP")
+        }
+        else if (strFeedback.equals("")) {
             Config.snackBars(context, v, "Enter Enquiry Note ")
 
 
@@ -8753,9 +8836,11 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             Config.snackBars(context, v, "Select Action")
 
 
-        } else if (ID_Status.equals("1")) {
+        } else if (ID_Status.equals("1"))
+        {
 
             Log.v("gfdfgdfgdf", "ProductValidations  373221   " + ID_Status)
+            Log.v("gfdfgdfgdfygyhuhuhu", "ID_NextAction  373221   " + ID_NextAction)
 
             if (ID_NextAction.equals("")) {
                 Config.snackBars(context, v, "Select Followup Action")
@@ -8776,20 +8861,20 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             }
 //            else if (!MRRP.equals("0")){
-                else if(MRRP.toFloat() != "0".toFloat()){
-
-                Log.v("tttttyyuuiii", "in")
-
-                if (stramount.toFloat() <= MRRP.toFloat()) {
-
-                    clickMode = "1"
-                } else {
-
-                    Log.e(TAG, "   Valid   : Enter Amount DD     " + stramount + "===" + MRRP)
-                    Config.snackBars(context, v, "Offer Price Should be less than or Equal to MRP")
-//                addMultipleProduct()
-                }
-            }
+//                else if(MRRP.toFloat() != "0".toFloat()){
+//
+//                Log.v("tttttyyuuiii", "in")
+//
+//                if (stramount.toFloat() <= MRRP.toFloat()) {
+//
+//                    clickMode = "1"
+//                } else {
+//
+//                    Log.e(TAG, "   Valid   : Enter Amount DD     " + stramount + "===" + MRRP)
+//                    Config.snackBars(context, v, "Offer Price Should be less than or Equal to MRP")
+////                addMultipleProduct()
+//                }
+//            }
             else{
                 Log.v("gfdfgdfgdf", "else")
                 clickMode = "1"
@@ -8797,25 +8882,27 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 
 
-        } else {
+        } else
+        {
             Log.v("gfdfgdfgdf", "ProductValidations  dfgdfgdfgff   " + ID_Status)
             if (ID_Priority.equals("")) {
                 Config.snackBars(context, v, "Select Priority")
 
-            }else if(MRRP.toFloat() != "0".toFloat()){
-
-                Log.e(TAG, "   111122220000 innn     " + stramount + "===" + MRRP)
-//            else if (!MRRP.equals("0")){
-                if (stramount.toFloat() <= MRRP.toFloat()) {
-                    clickMode = "1"
-
-                } else {
-
-                    Log.e(TAG, "   Valid   : Enter Amount DD     " + stramount + "===" + MRRP)
-                    Config.snackBars(context, v, "Offer Price Should be less than or Equal to MR1P")
-//                addMultipleProduct()
-                }
             }
+//            else if(MRRP.toFloat() != "0".toFloat()){
+//
+//                Log.e(TAG, "   111122220000 innn     " + stramount + "===" + MRRP)
+////            else if (!MRRP.equals("0")){
+//                if (stramount.toFloat() <= MRRP.toFloat()) {
+//                    clickMode = "1"
+//
+//                } else {
+//
+//                    Log.e(TAG, "   Valid   : Enter Amount DD     " + stramount + "===" + MRRP)
+//                    Config.snackBars(context, v, "Offer Price Should be less than or Equal to MR1P")
+////                addMultipleProduct()
+//                }
+//            }
             else{
                 clickMode = "1"
             }
@@ -8832,30 +8919,69 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 
 
-        val jObject = JSONObject()
-        jObject.put("CategoryName", edtProdcategory!!.text.toString())
-        jObject.put("ProdName", edtProdproduct!!.text.toString())
-        jObject.put("PriorityName", edtProdpriority!!.text.toString())
-        jObject.put("ProjectName", edtProjectName!!.text.toString())
-        jObject.put("LgpDescription", edtProdfeedback!!.text.toString())
-        jObject.put("LgpPQuantity", strQty)
-        jObject.put("NxtActnName", edtFollowaction!!.text.toString())
-        jObject.put("ActionTypeName", edtFollowtype!!.text.toString())
-        jObject.put("NextActionDate", edtFollowdate!!.text.toString())
-        jObject.put("AssignEmp", edtEmployee!!.text.toString())
-        jObject.put("ID_Category", ID_Category)
-        jObject.put("ID_Product", ID_Product)
-        jObject.put("ID_Priority", ID_Priority)
-        jObject.put("ID_Status", ID_Status)
-        jObject.put("ID_NextAction", ID_NextAction)
-        jObject.put("ID_ActionType", ID_ActionType)
-        jObject.put("LgpExpectDate", strExpecteddate)
-        jObject.put("LgpSalesPrice", edtAmount!!.text.toString())
-        jObject.put("MRP", tv_Mrp!!.text.toString())
-        jObject.put("ID_CollectedBy", ID_CollectedBy)
-        jObject.put("LgCollectedBy", ID_CollectedBy)
 
-        editProdcutListarray!!.put(jObject)
+
+        if (arrupdateedit!!.equals("0")) {
+
+            val jObject = JSONObject()
+            jObject.put("CategoryName", edtProdcategory!!.text.toString())
+            jObject.put("ProdName", edtProdproduct!!.text.toString())
+            jObject.put("PriorityName", edtProdpriority!!.text.toString())
+            jObject.put("ProjectName", edtProjectName!!.text.toString())
+            jObject.put("LgpDescription", edtProdfeedback!!.text.toString())
+            jObject.put("LgpPQuantity", strQty)
+            jObject.put("NxtActnName", edtFollowaction!!.text.toString())
+            jObject.put("ActionTypeName", edtFollowtype!!.text.toString())
+            jObject.put("NextActionDate", edtFollowdate!!.text.toString())
+            jObject.put("AssignEmp", edtEmployee!!.text.toString())
+            jObject.put("ID_Category", ID_Category)
+            jObject.put("ID_Product", ID_Product)
+            jObject.put("ID_Priority", ID_Priority)
+            jObject.put("FK_Employee", ID_Employee)
+            jObject.put("ID_Status", ID_Status)
+            jObject.put("ID_NextAction", ID_NextAction)
+            jObject.put("ID_ActionType", ID_ActionType)
+            jObject.put("LgpExpectDate", strExpecteddate)
+            jObject.put("LgpSalesPrice", edtAmount!!.text.toString())
+            jObject.put("MRP", tv_Mrp!!.text.toString())
+            jObject.put("ID_CollectedBy", ID_CollectedBy)
+            jObject.put("LgCollectedBy", ID_CollectedBy)
+
+            Log.e(TAG,"eeeeeeeeeee3=  "+ ID_Category)
+            Log.e(TAG,"eeeeeeeeeee4=  "+ ID_Product)
+            editProdcutListarray!!.put(jObject)
+
+        }
+
+        if (arrupdateedit!!.equals("1")) {
+
+            val jObject = editProdcutListarray.getJSONObject(arrPosition!!)
+
+            jObject.put("CategoryName", edtProdcategory!!.text.toString())
+            jObject.put("ProdName", edtProdproduct!!.text.toString())
+            jObject.put("PriorityName", edtProdpriority!!.text.toString())
+            jObject.put("ProjectName", edtProjectName!!.text.toString())
+            jObject.put("LgpDescription", edtProdfeedback!!.text.toString())
+            jObject.put("LgpPQuantity", strQty)
+            jObject.put("NxtActnName", edtFollowaction!!.text.toString())
+            jObject.put("ActionTypeName", edtFollowtype!!.text.toString())
+            jObject.put("NextActionDate", edtFollowdate!!.text.toString())
+            jObject.put("AssignEmp", edtEmployee!!.text.toString())
+            jObject.put("ID_Category", ID_Category)
+            jObject.put("FK_Employee", ID_Employee)
+            jObject.put("ID_Product", ID_Product)
+            jObject.put("ID_Priority", ID_Priority)
+            jObject.put("ID_Status", ID_Status)
+            jObject.put("ID_NextAction", ID_NextAction)
+            jObject.put("ID_ActionType", ID_ActionType)
+            jObject.put("LgpExpectDate", strExpecteddate)
+            jObject.put("LgpSalesPrice", edtAmount!!.text.toString())
+            jObject.put("MRP", tv_Mrp!!.text.toString())
+            jObject.put("ID_CollectedBy", ID_CollectedBy)
+            jObject.put("LgCollectedBy", ID_CollectedBy)
+
+            arrupdateedit = "0"
+        }
 
         Log.e(TAG, "dsaggwq" + editProdcutListarray)
 
@@ -8907,6 +9033,18 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
     }
 
+    fun hasMultipleProduct(json: JSONArray, ID_Category: String, ID_Product: String): Boolean {
+
+        Log.e(TAG,"rrrrrrrrrrrrrrrrrrrrrrrrr   "+json.length())
+        Log.e(TAG,"ssssssssss1=   "+ID_Category)
+        Log.e(TAG,"ssssssssss2=   "+ID_Product)
+        for (i in 0 until json.length()) {
+            Log.e(TAG,"rrrrrrrrrrrrrrrrrrrrrrrrr  2 "+json)
+            if (json.getJSONObject(i).getString("ID_Category") == (ID_Category) && json.getJSONObject(i).getString("ID_Product") == ID_Product) return false
+        }
+        return true
+    }
+
     @SuppressLint("SuspiciousIndentation")
     private fun savelistDetail() {
 
@@ -8929,7 +9067,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
                 jObject.put("FK_Category", (jsonObject.getString("ID_Category")))
                 jObject.put("ID_Product", (jsonObject.getString("ID_Product")))
-                jObject.put("FK_Employee", ID_Employee)
+                jObject.put("FK_Employee", (jsonObject.getString("FK_Employee")))
 
                 jObject.put("ProdName", (jsonObject.getString("ProdName")))
                 jObject.put("ProjectName", (jsonObject.getString("ProjectName")))
@@ -8957,7 +9095,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             } else {
                 jObject.put("FK_Category", (jsonObject.getString("ID_Category")))
                 jObject.put("ID_Product", (jsonObject.getString("ID_Product")))
-                jObject.put("FK_Employee", ID_Employee)
+                jObject.put("FK_Employee", (jsonObject.getString("FK_Employee")))
 
 
                 jObject.put("ProdName", (jsonObject.getString("ProdName")))

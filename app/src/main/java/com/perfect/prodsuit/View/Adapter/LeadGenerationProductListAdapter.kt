@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
@@ -45,10 +46,42 @@ class LeadGenerationProductListAdapter(internal var context: Context, internal v
                 holder.tvv_followup_date.text = jsonObject!!.getString("NextActionDate")
                 holder.tvv_amount.text = "₹ "+jsonObject!!.getString("LgpSalesPrice")
                 holder.tvv_Model.text = jsonObject!!.getString("ProjectName")
+                holder.tvv_mrp.text = "₹ "+jsonObject!!.getString("MRP")
 
-                if (jsonObject!!.equals("")){
-                    holder.tvv_Product.visibility = View.GONE
+                Log.e(TAG, "ID_Status 0000777   " + jsonObject!!.getString("ID_Status"))
+
+                if (jsonObject!!.getString("ID_Status").equals("1")){
+
+                    Log.e(TAG, "ID_Status 0000777  12 " + jsonObject!!.getString("ID_Status"))
+
+                    holder.tvv_tvCategory.visibility = View.VISIBLE
+                    holder.tvv_Product.visibility = View.VISIBLE
+                    holder.tvv_Priority.visibility = View.VISIBLE
+                    holder.tvv_action.visibility = View.VISIBLE
+                    holder.tvv_action_type.visibility = View.VISIBLE
+                    holder.tvv_followup_date.visibility = View.VISIBLE
+                    holder.tvv_amount.visibility = View.VISIBLE
+                    holder.tvv_Model.visibility = View.VISIBLE
+                }else{
+
+                    Log.e(TAG, "ID_Status 0000777 123  " + jsonObject!!.getString("ID_Status"))
+
+                    holder.tvv_tvCategory.visibility = View.VISIBLE
+                    holder.tvv_Product.visibility = View.VISIBLE
+                    holder.tvv_Priority.visibility = View.VISIBLE
+                    holder.tvv_action.visibility = View.VISIBLE
+                    holder.tvv_amount.visibility = View.VISIBLE
+                    holder.tvv_Model.visibility = View.VISIBLE
+                    holder.llfollowup.visibility = View.GONE
+                    holder.llactionType.visibility = View.GONE
                 }
+//
+//                if (jsonObject!!.getString("MRP").equals("")){
+//                    holder.tvv_mrp.visibility = View.GONE
+//                }
+//                if (jsonObject!!.getString("tvv_amount").equals("")){
+//                    holder.tvv_amount.visibility = View.GONE
+//                }
 
 
                 holder.im_delete!!.setTag(position)
@@ -94,6 +127,9 @@ class LeadGenerationProductListAdapter(internal var context: Context, internal v
         internal var im_delete: ImageView
         internal var tvv_amount: TextView
         internal var tvv_Model: TextView
+        internal var tvv_mrp: TextView
+        internal var llfollowup: LinearLayout
+        internal var llactionType: LinearLayout
 
         init {
 
@@ -107,6 +143,9 @@ class LeadGenerationProductListAdapter(internal var context: Context, internal v
             im_delete = v.findViewById<View>(R.id.im_delete) as ImageView
             tvv_amount = v.findViewById<View>(R.id.tvv_amount) as TextView
             tvv_Model = v.findViewById<View>(R.id.tvv_Model) as TextView
+            tvv_mrp = v.findViewById<View>(R.id.tvv_mrp) as TextView
+            llfollowup = v.findViewById<View>(R.id.llfollowup) as LinearLayout
+            llactionType = v.findViewById<View>(R.id.llactionType) as LinearLayout
 
 
         }

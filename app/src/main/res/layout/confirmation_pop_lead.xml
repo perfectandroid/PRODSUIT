@@ -810,7 +810,7 @@
                                 android:background="@color/white"
                                 android:padding="5dp"
                                 android:fontFamily="@font/myfont"
-                                android:text="Address1"/>
+                                android:text="House Name"/>
 
                             <TextView
                                 android:layout_width="20dp"
@@ -877,7 +877,7 @@
                                 android:background="@color/white"
                                 android:padding="5dp"
                                 android:fontFamily="@font/myfont"
-                                android:text="Address2"/>
+                                android:text="Place"/>
 
                             <TextView
                                 android:layout_width="20dp"
