@@ -490,4 +490,15 @@ interface ApiInterface {
     @POST("CustomerPortalAPI/GetCustomerAccessDetails")
     fun getCustomerAccessDetails(@Body body: RequestBody): Call<String>
 
+    @POST("Stock/StockRTEmployeeDetails")
+    fun getStockRTEmployeeDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Stock/StockRTProductDetails")
+    fun getStockRTProductDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Stock/UpdateStockTransfer")
+    fun updateStockTransfer(@Body body: RequestBody): Call<String>
+
+
+
 }

@@ -13,7 +13,7 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Model.ModelStockTransferDetails
 import com.perfect.prodsuit.R
 
-class StockTransConfirmAdapter (internal var context: Context, internal var mList: List<ModelStockTransferDetails>):
+class StockTransConfirmAdapter (internal var context: Context, internal var mList: List<ModelStockTransferDetails>,internal var mode : String):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG : String = "StockDetailAdapter"
@@ -34,11 +34,16 @@ class StockTransConfirmAdapter (internal var context: Context, internal var mLis
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
 
+
+
                 val empModel = mList[position]
                 holder.tv_confirm_stock.text = empModel.StockMode
                 holder.tv_confirm_product.text = empModel.Product
                 holder.tv_confirm_qty.text = empModel.Quantity+" / "+empModel.StatndByQuantity
 
+                if (mode.equals("0")){
+                    holder.tv_confirm_stock.visibility = View.GONE
+                }
 
             }
         } catch (e: Exception) {

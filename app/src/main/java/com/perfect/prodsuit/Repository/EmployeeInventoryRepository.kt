@@ -59,21 +59,22 @@ object EmployeeInventoryRepository {
             val requestObject1 = JSONObject()
             try {
 
-//                {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","ReqMode":"22","FK_Company":"1","ID_BranchType":"2"}
+//               {"BankKey":"-500","FK_Company":"1","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","ReqMode":"37","Critrea1":"1","Critrea2":"2"}
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("23"))
+
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
-                // requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_Branch", ProdsuitApplication.encryptStart(Fk_Branch))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("37"))
+                requestObject1.put("Critrea1", ProdsuitApplication.encryptStart(Fk_Branch))
+                requestObject1.put("Critrea2", ProdsuitApplication.encryptStart(Fk_Department))
 
-                Log.e(TAG,"78  getBranchInventory    "+requestObject1)
+                Log.e(TAG,"78  StockRTEmployeeDetails    "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -81,7 +82,7 @@ object EmployeeInventoryRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getEmpUsingBranch(body)
+            val call = apiService.getStockRTEmployeeDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:

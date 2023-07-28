@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -12,7 +11,6 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -35,14 +33,13 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
+class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
 
-    val TAG : String = "StockTransferActivity"
+    val TAG : String = "StockRequestActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
 
     var tie_Date : TextInputEditText? = null
-    var tie_Request : TextInputEditText? = null
     var tie_FromBranch : TextInputEditText? = null
     var tie_FromDepartment : TextInputEditText? = null
     var tie_FromEmployee : TextInputEditText? = null
@@ -58,11 +55,9 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
     var img_EmpAdd : ImageView? = null
     var img_EmpClear : ImageView? = null
-    
+
     var btnReset : Button? = null
     var btnSubmit : Button? = null
-
-//    var tie_ToBranch : TextInputLayout? = null
 
     var til_Date : TextInputLayout? = null
     var til_FromBranch : TextInputLayout? = null
@@ -172,13 +167,16 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
     val modelStockTransferDetails = ArrayList<ModelStockTransferDetails>()
     private var dialogConfirm : Dialog? = null
 
+    var saveDetailArray :JSONArray? = null
+    lateinit var saveUpdateStockRTViewModel: SaveUpdateStockRTViewModel
+    var saveUpdateCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        setContentView(R.layout.activity_stock_transfer)
-        context = this@StockTransferActivity
+        setContentView(R.layout.activity_stock_request)
+        context = this@StockRequestActivity
 
         stockRequestViewModel = ViewModelProvider(this).get(StockRequestViewModel::class.java)
         departmentInvertoryViewModel = ViewModelProvider(this).get(DepartmentInvertoryViewModel::class.java)
@@ -186,9 +184,9 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
         employeeInventoryViewModel = ViewModelProvider(this).get(EmployeeInventoryViewModel::class.java)
         stockModeViewModel = ViewModelProvider(this).get(StockModeViewModel::class.java)
         productStockViewModel = ViewModelProvider(this).get(ProductStockViewModel::class.java)
+        saveUpdateStockRTViewModel = ViewModelProvider(this).get(SaveUpdateStockRTViewModel::class.java)
 
         setRegViews()
-
     }
 
     private fun setRegViews() {
@@ -197,7 +195,6 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
         imback!!.setOnClickListener(this)
 
         tie_Date = findViewById(R.id.tie_Date)
-        tie_Request = findViewById(R.id.tie_Request)
         tie_FromBranch = findViewById(R.id.tie_FromBranch)
         tie_FromDepartment = findViewById(R.id.tie_FromDepartment)
         tie_FromEmployee = findViewById(R.id.tie_FromEmployee)
@@ -223,9 +220,10 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
         til_Quantity = findViewById(R.id.til_Quantity)
         tv_error = findViewById(R.id.tv_error)
 
+
         img_EmpAdd = findViewById(R.id.img_EmpAdd)
         img_EmpClear = findViewById(R.id.img_EmpClear)
-        
+
         btnReset = findViewById(R.id.btnReset)
         btnSubmit = findViewById(R.id.btnSubmit)
 
@@ -238,7 +236,6 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
         recyStockDetails = findViewById(R.id.recyStockDetails)
 
         tie_Date!!.setOnClickListener(this)
-        tie_Request!!.setOnClickListener(this)
         tv_FromClick!!.setOnClickListener(this)
         tv_ToClick!!.setOnClickListener(this)
 
@@ -275,10 +272,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
 
 
-
     }
-
-
 
     private fun getSharedData() {
         try {
@@ -446,7 +440,6 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
     }
 
     override fun onClick(v: View) {
-
         when(v.id){
             R.id.imback->{
                 finish()
@@ -457,14 +450,6 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                 Config.disableClick(v)
                 openBottomDate()
             }
-            R.id.tie_Request->{
-                Log.e(TAG,"tie_Request   2471   ")
-                Config.disableClick(v)
-                requestCount = 0
-                getRequest()
-
-            }
-
 
 
             R.id.tv_FromClick->{
@@ -528,7 +513,6 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             R.id.tie_ToEmployee->{
 
                 if (FK_BranchTo.equals("")){
-
                     til_ToBranch!!.setError("Please select a Branch")
                     til_ToBranch!!.setErrorIconDrawable(null)
                     showFrom = 0
@@ -542,7 +526,6 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                     showTo = 1
                     hideShowFromTo()
                 }else{
-
                     empModeFromTo = 1
                     FK_BranchTemp = FK_BranchTo
                     FK_DepartmntTemp = FK_DepartmentTo
@@ -562,18 +545,14 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             }
             R.id.tie_Product->{
 
-                if (!FK_StockMode.equals("")){
-
-                    productCount = 0
-                    Config.disableClick(v)
-                    getProduct(FK_StockMode!!)
-                }else{
-
-                    til_StockMode!!.setError("Select Stock Mode")
-                    til_StockMode!!.setErrorIconDrawable(null)
-
-                }
-
+//                if (!FK_StockMode.equals("")){
+//
+//                }else{
+//
+//                }
+                productCount = 0
+                Config.disableClick(v)
+                getProduct(FK_StockMode!!)
 
             }
 
@@ -588,15 +567,14 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             }
 
             R.id.btnReset->{
-              clearAllData(v)
+                clearAllData(v)
             }
 
             R.id.btnSubmit->{
-               saveValidation(v)
+                saveValidation(v)
             }
 
         }
-
     }
 
 
@@ -606,12 +584,12 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
             til_Date!!.setError("Please select Date")
             til_Date!!.setErrorIconDrawable(null)
-            // Config.snackBarWarning(context,v,"Select Date")
+           // Config.snackBarWarning(context,v,"Select Date")
         }
         else if (FK_BranchFrom.equals("")){
             til_FromBranch!!.setError("Please select a Branch")
             til_FromBranch!!.setErrorIconDrawable(null)
-            //  Config.snackBarWarning(context,v,"Please select a Branch")
+          //  Config.snackBarWarning(context,v,"Please select a Branch")
             showFrom = 1
             showTo = 0
             hideShowFromTo()
@@ -619,13 +597,13 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
         else if (FK_DepartmentFrom.equals("")){
             til_FromDepartment!!.setError("Please select a Department")
             til_FromBranch!!.setErrorIconDrawable(null)
-            // Config.snackBarWarning(context,v,"Please select a Department")
+           // Config.snackBarWarning(context,v,"Please select a Department")
             showFrom = 1
             showTo = 0
             hideShowFromTo()
         }
         else if (FK_BranchTo.equals("")){
-            // Config.snackBarWarning(context,v,"Please select a Branch")
+           // Config.snackBarWarning(context,v,"Please select a Branch")
             til_ToBranch!!.setError("Please select a Branch")
             til_ToBranch!!.setErrorIconDrawable(null)
 
@@ -634,7 +612,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             hideShowFromTo()
         }
         else if (FK_DepartmentTo.equals("")){
-            // Config.snackBarWarning(context,v,"Please select a Department")
+           // Config.snackBarWarning(context,v,"Please select a Department")
             til_ToDepartment!!.setError("Please select a Department")
             til_ToDepartment!!.setErrorIconDrawable(null)
             showFrom = 0
@@ -643,44 +621,45 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
         }
         else if (FK_BranchFrom.equals(FK_BranchTo) && FK_DepartmentFrom.equals(FK_DepartmentTo)){
-            //  Config.snackBarWarning(context,v,"Please fill mandatory fields , From and To Detail should not be same")
+          //  Config.snackBarWarning(context,v,"Please fill mandatory fields , From and To Detail should not be same")
 
-            Log.e(TAG,"60880  ")
-            if (FK_DepartmentFrom.equals(FK_DepartmentTo) &&  FK_EmployeeFrom.equals("") && FK_EmployeeTo.equals("")){
-                Log.e(TAG,"60881  ")
-                til_ToDepartment!!.setError("Department should not be same")
-                til_ToDepartment!!.setErrorIconDrawable(null)
-                showFrom = 0
-                showTo = 1
-                hideShowFromTo()
-            }else if (!FK_EmployeeFrom.equals("") || !FK_EmployeeTo.equals("")){
-                Log.e(TAG,"60882  ")
-                til_ToDepartment!!.isErrorEnabled = false
-                til_ToDepartment!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
-                if (FK_EmployeeFrom.equals(FK_EmployeeTo)){
-                    Log.e(TAG,"60883  ")
-                    til_ToEmployee!!.setError("Employee should not be same")
-                    til_ToEmployee!!.setErrorIconDrawable(null)
-                    showFrom = 0
-                    showTo = 1
-                    hideShowFromTo()
-                }else{
-                    til_ToEmployee!!.isErrorEnabled = false
-                    til_ToEmployee!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
-                    if (modelStockTransferDetails.size == 0){
-                        Log.e(TAG,"60885  ")
-                        tv_error!!.visibility = View.VISIBLE
-                        tv_error!!.setText("Please fill mandatory fields, Atleast one stock Transfer details")
-                       // Config.snackBarWarning(context,v,"Please fill mandatory fields, Atleast one stock Transfer details")
-                    }
-                    else{
-                        tv_error!!.visibility = View.GONE
-                        Log.e(TAG,"60886  ")
-                        Log.e(TAG,"4367567 hjvchkjvchkjvckj")
-                        confirmationScreen(v)
-                    }
-                }
-            }
+              Log.e(TAG,"60880  ")
+           if (FK_DepartmentFrom.equals(FK_DepartmentTo) &&  FK_EmployeeFrom.equals("") && FK_EmployeeTo.equals("")){
+               Log.e(TAG,"60881  ")
+               til_ToDepartment!!.setError("Branch & Department should not be same")
+               til_ToDepartment!!.setErrorIconDrawable(null)
+               showFrom = 0
+               showTo = 1
+               hideShowFromTo()
+           }else if (!FK_EmployeeFrom.equals("") || !FK_EmployeeTo.equals("")){
+               Log.e(TAG,"60882  ")
+               til_ToDepartment!!.isErrorEnabled = false
+               til_ToDepartment!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+               if (FK_EmployeeFrom.equals(FK_EmployeeTo)){
+                   Log.e(TAG,"60883  ")
+                   til_ToEmployee!!.setError("Branch,Department & Employee should not be same")
+                   til_ToEmployee!!.setErrorIconDrawable(null)
+                   showFrom = 0
+                   showTo = 1
+                   hideShowFromTo()
+               }else{
+                   til_ToEmployee!!.isErrorEnabled = false
+                   til_ToEmployee!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                   if (modelStockTransferDetails.size == 0){
+                       Log.e(TAG,"60885  ")
+                       tv_error!!.visibility = View.VISIBLE
+                       tv_error!!.setText("Please fill mandatory fields, Atleast one stock Transfer details")
+                     //  Config.snackBarWarning(context,v,"Please fill mandatory fields, Atleast one stock Transfer details")
+                   }
+                   else{
+                       tv_error!!.visibility = View.GONE
+                       Log.e(TAG,"60886  ")
+                       Log.e(TAG,"4367567 hjvchkjvchkjvckj")
+                       createDetailArray(v)
+                     //  confirmationScreen(v)
+                   }
+               }
+           }
 
 
         }
@@ -696,9 +675,35 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             tv_error!!.visibility = View.GONE
             Log.e(TAG,"60888  ")
             Log.e(TAG,"4367567 hjvchkjvchkjvckj")
-            confirmationScreen(v)
+            createDetailArray(v)
+
+//            confirmationScreen(v)
         }
 
+    }
+
+    private fun createDetailArray(v : View) {
+       try {
+           saveDetailArray = JSONArray()
+
+//           var obj = JSONObject()
+           for (i in 0 until modelStockTransferDetails.size) {
+               var empModel = modelStockTransferDetails[i]
+               var obj = JSONObject()
+               obj.put("ID_Product", empModel.FK_Product)
+               obj.put("Quantity", empModel.Quantity)
+               obj.put("ID_Stock", "0")
+               obj.put("QuantityStandBy", empModel.StatndByQuantity)
+               obj.put("StockMode", "0")
+               saveDetailArray!!.put(obj)
+           }
+           confirmationScreen(v)
+//           jsonObject.put("EmployeeStockTransferDetails", array)
+           Log.e(TAG,"70000  jsonObject  "+saveDetailArray)
+
+       }catch (e : Exception){
+           Log.e(TAG,"70000  Exception  "+e.toString())
+       }
     }
 
     private fun confirmationScreen(v : View) {
@@ -713,6 +718,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             var ll_femployee = dialogConfirm!! .findViewById(R.id.ll_femployee) as LinearLayout
             var ll_temployee = dialogConfirm!! .findViewById(R.id.ll_temployee) as LinearLayout
 
+            var tv_labelStock = dialogConfirm!! .findViewById(R.id.tv_labelStock) as TextView
             var tvc_date = dialogConfirm!! .findViewById(R.id.tvc_date) as TextView
             var tvc_fbranch = dialogConfirm!! .findViewById(R.id.tvc_fbranch) as TextView
             var tvc_fdepartment = dialogConfirm!! .findViewById(R.id.tvc_fdepartment) as TextView
@@ -728,6 +734,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             var btnCancel = dialogConfirm!! .findViewById(R.id.btnCancel) as Button
             var btnOk = dialogConfirm!! .findViewById(R.id.btnOk) as Button
 
+            tv_labelStock!!.visibility  =View.GONE
             tvc_date!!.setText(tie_Date!!.text.toString())
             tvc_fbranch!!.setText(tie_FromBranch!!.text.toString())
             tvc_fdepartment!!.setText(tie_FromDepartment!!.text.toString())
@@ -744,16 +751,21 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             }
 
             if (modelStockTransferDetails.size>0){
-              
-                val lLayout = GridLayoutManager(this@StockTransferActivity, 1)
+
+                val lLayout = GridLayoutManager(this@StockRequestActivity, 1)
                 recyConfirmStock!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
-                var confirmAdapter = StockTransConfirmAdapter(this@StockTransferActivity,modelStockTransferDetails,"1")
+                var confirmAdapter = StockTransConfirmAdapter(this@StockRequestActivity,modelStockTransferDetails,"0")
                 recyConfirmStock!!.adapter = confirmAdapter
 
             }
 
             btnCancel!!.setOnClickListener {
                 dialogConfirm!!.dismiss()
+            }
+
+            btnOk!!.setOnClickListener {
+                dialogConfirm!!.dismiss()
+                saveStockRequest()
             }
 
             val window: Window? = dialogConfirm!!.getWindow()
@@ -764,6 +776,86 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    private fun saveStockRequest() {
+
+        var STRequest = "1"
+        var TransMode = "INTR"
+        var FK_StockRequest = "0"
+        var ID_StockTransfer = "0"
+        var FK_EmployeeFromTemp = "0"
+        var FK_EmployeeToTemp = "0"
+
+        if (!FK_EmployeeFrom.equals("")){
+            FK_EmployeeFromTemp = FK_EmployeeFrom!!
+        }
+        if (!FK_EmployeeTo.equals("")){
+            FK_EmployeeToTemp = FK_EmployeeTo!!
+        }
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                saveUpdateStockRTViewModel.saveUpdateStockRT(this, FK_BranchFrom!!,FK_DepartmentFrom!!,FK_EmployeeFromTemp!!,STRequest,strDate,
+                    FK_BranchTo,FK_DepartmentTo!!,FK_EmployeeToTemp!!,TransMode,FK_StockRequest,ID_StockTransfer,saveDetailArray!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (saveUpdateCount == 0){
+                                    saveUpdateCount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   81000   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        Log.e(TAG,"msg   81000   "+msg)
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@StockRequestActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e:Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 
@@ -885,145 +977,6 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
         dialog.show()
     }
 
-    private fun getRequest() {
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                var ID_BranchType = "2"
-                progressDialog = ProgressDialog(context, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                stockRequestViewModel.getStockRequest(this)!!.observe(
-                    this,
-                    Observer { serviceSetterGetter ->
-
-                        try {
-                            val msg = serviceSetterGetter.message
-                            if (msg!!.length > 0) {
-
-                                if (requestCount == 0){
-                                    requestCount++
-
-                                    val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   2471   "+msg)
-                                    if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("StockRequestDetails")
-                                        stockRequestArrayList = jobjt.getJSONArray("StockRequestList")
-                                        if (stockRequestArrayList.length() > 0) {
-
-                                            requestPopup(stockRequestArrayList)
-
-                                        }
-
-                                    } else {
-                                        val builder = AlertDialog.Builder(
-                                            this@StockTransferActivity,
-                                            R.style.MyDialogTheme
-                                        )
-                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                        }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()
-                                    }
-                                }
-
-                            } else {
-//                                Toast.makeText(
-//                                    applicationContext,
-//                                    "Some Technical Issues.",
-//                                    Toast.LENGTH_LONG
-//                                ).show()
-                            }
-                        }catch (e : Exception){
-                            Toast.makeText(
-                                applicationContext,
-                                ""+Config.SOME_TECHNICAL_ISSUES,
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-    }
-
-    private fun requestPopup(stockRequestArrayList: JSONArray) {
-        try {
-
-            dialogStockRequest = Dialog(this)
-            dialogStockRequest!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogStockRequest!!.setContentView(R.layout.stock_request_popup)
-            dialogStockRequest!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-            recyStockRequest = dialogStockRequest!!.findViewById(R.id.recyStockRequest) as RecyclerView
-            val etsearch = dialogStockRequest!!.findViewById(R.id.etsearch) as EditText
-
-            stockRequestsort = JSONArray()
-            for (k in 0 until stockRequestArrayList.length()) {
-                val jsonObject = stockRequestArrayList.getJSONObject(k)
-                // reportNamesort.put(k,jsonObject)
-                stockRequestsort.put(jsonObject)
-            }
-
-            val lLayout = GridLayoutManager(this@StockTransferActivity, 1)
-            recyStockRequest!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//            recyCustomer!!.setHasFixedSize(true)
-//             val adapter = BranchAdapter(this@StockTransferActivity, stockRequestArrayList)
-            val adapter = StockRequestAdapter(this@StockTransferActivity, stockRequestsort)
-            recyStockRequest!!.adapter = adapter
-            adapter.setClickListener(this@StockTransferActivity)
-
-            etsearch!!.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(p0: Editable?) {
-                }
-
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                }
-
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-                    //  list_view!!.setVisibility(View.VISIBLE)
-                    val textlength = etsearch!!.text.length
-                    stockRequestsort = JSONArray()
-
-                    for (k in 0 until stockRequestArrayList.length()) {
-                        val jsonObject = stockRequestArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("Branch").length) {
-                            if (jsonObject.getString("Branch")!!.toLowerCase().trim()
-                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
-                            ) {
-                                stockRequestsort.put(jsonObject)
-                            }
-
-                        }
-                    }
-
-                    Log.e(TAG, "branchSort               7103    " + stockRequestsort)
-                    val adapter = StockRequestAdapter(this@StockTransferActivity, stockRequestsort)
-                    recyStockRequest!!.adapter = adapter
-                    adapter.setClickListener(this@StockTransferActivity)
-                }
-            })
-
-            dialogStockRequest!!.show()
-            dialogStockRequest!!.getWindow()!!.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            );
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Log.e(TAG, "Exception  1132   " + e.toString())
-        }
-    }
-
     private fun getBranchInventory() {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -1060,7 +1013,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
                                     } else {
                                         val builder = AlertDialog.Builder(
-                                            this@StockTransferActivity,
+                                            this@StockRequestActivity,
                                             R.style.MyDialogTheme
                                         )
                                         builder.setMessage(jObject.getString("EXMessage"))
@@ -1115,13 +1068,13 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                 branchsort.put(jsonObject)
             }
 
-            val lLayout = GridLayoutManager(this@StockTransferActivity, 1)
+            val lLayout = GridLayoutManager(this@StockRequestActivity, 1)
             recyBranch!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-//             val adapter = BranchAdapter(this@StockTransferActivity, branchArrayList)
-            val adapter = BranchAdapter(this@StockTransferActivity, branchsort)
+//             val adapter = BranchAdapter(this@StockRequestActivity, branchArrayList)
+            val adapter = BranchAdapter(this@StockRequestActivity, branchsort)
             recyBranch!!.adapter = adapter
-            adapter.setClickListener(this@StockTransferActivity)
+            adapter.setClickListener(this@StockRequestActivity)
 
             etsearch!!.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
@@ -1149,9 +1102,9 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                     }
 
                     Log.e(TAG, "branchSort               7103    " + branchsort)
-                    val adapter = BranchAdapter(this@StockTransferActivity, branchsort)
+                    val adapter = BranchAdapter(this@StockRequestActivity, branchsort)
                     recyBranch!!.adapter = adapter
-                    adapter.setClickListener(this@StockTransferActivity)
+                    adapter.setClickListener(this@StockRequestActivity)
                 }
             })
 
@@ -1208,7 +1161,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
                                     } else {
                                         val builder = AlertDialog.Builder(
-                                            this@StockTransferActivity,
+                                            this@StockRequestActivity,
                                             R.style.MyDialogTheme
                                         )
                                         builder.setMessage(jObject.getString("EXMessage"))
@@ -1262,13 +1215,13 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                 departmentSortFrom.put(jsonObject)
             }
 
-            val lLayout = GridLayoutManager(this@StockTransferActivity, 1)
+            val lLayout = GridLayoutManager(this@StockRequestActivity, 1)
             recyDeaprtmentFrom!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
 //            val adapter = DepartmentAdapter(this@FollowUpActivity, departmentArrayList)
-            val adapter = DepartmentAdapter(this@StockTransferActivity, departmentSortFrom)
+            val adapter = DepartmentAdapter(this@StockRequestActivity, departmentSortFrom)
             recyDeaprtmentFrom!!.adapter = adapter
-            adapter.setClickListener(this@StockTransferActivity)
+            adapter.setClickListener(this@StockRequestActivity)
 
             etsearch!!.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
@@ -1294,9 +1247,9 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                     }
 
                     Log.e(TAG,"departmentSort               7103    "+departmentSortFrom)
-                    val adapter = DepartmentAdapter(this@StockTransferActivity, departmentSortFrom)
+                    val adapter = DepartmentAdapter(this@StockRequestActivity, departmentSortFrom)
                     recyDeaprtmentFrom!!.adapter = adapter
-                    adapter.setClickListener(this@StockTransferActivity)
+                    adapter.setClickListener(this@StockRequestActivity)
                 }
             })
 
@@ -1324,13 +1277,13 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                 departmentSortTo.put(jsonObject)
             }
 
-            val lLayout = GridLayoutManager(this@StockTransferActivity, 1)
+            val lLayout = GridLayoutManager(this@StockRequestActivity, 1)
             recyDeaprtmentTo!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
 //            val adapter = DepartmentAdapter(this@FollowUpActivity, departmentArrayList)
-            val adapter = DepartmentAdapter(this@StockTransferActivity, departmentSortTo)
+            val adapter = DepartmentAdapter(this@StockRequestActivity, departmentSortTo)
             recyDeaprtmentTo!!.adapter = adapter
-            adapter.setClickListener(this@StockTransferActivity)
+            adapter.setClickListener(this@StockRequestActivity)
 
             etsearch!!.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
@@ -1356,9 +1309,9 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                     }
 
                     Log.e(TAG,"departmentSort               7103    "+departmentSortTo)
-                    val adapter = DepartmentAdapter(this@StockTransferActivity, departmentSortTo)
+                    val adapter = DepartmentAdapter(this@StockRequestActivity, departmentSortTo)
                     recyDeaprtmentTo!!.adapter = adapter
-                    adapter.setClickListener(this@StockTransferActivity)
+                    adapter.setClickListener(this@StockRequestActivity)
                 }
             })
 
@@ -1413,7 +1366,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
                                     } else {
                                         val builder = AlertDialog.Builder(
-                                            this@StockTransferActivity,
+                                            this@StockRequestActivity,
                                             R.style.MyDialogTheme
                                         )
                                         builder.setMessage(jObject.getString("EXMessage"))
@@ -1468,13 +1421,13 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             }
 
 
-            val lLayout = GridLayoutManager(this@StockTransferActivity, 1)
+            val lLayout = GridLayoutManager(this@StockRequestActivity, 1)
             recyEmployeeFrom!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
 //            val adapter = EmployeeInventoryAdapter(this@FollowUpActivity, employeeArrayListFrom)
-            val adapter = EmployeeInventoryAdapter(this@StockTransferActivity, employeeSortFrom)
+            val adapter = EmployeeInventoryAdapter(this@StockRequestActivity, employeeSortFrom)
             recyEmployeeFrom!!.adapter = adapter
-            adapter.setClickListener(this@StockTransferActivity)
+            adapter.setClickListener(this@StockRequestActivity)
 
             etsearch!!.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
@@ -1500,9 +1453,9 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                     }
 
                     Log.e(TAG,"employeeSort               7103    "+employeeSortFrom)
-                    val adapter = EmployeeInventoryAdapter(this@StockTransferActivity, employeeSortFrom)
+                    val adapter = EmployeeInventoryAdapter(this@StockRequestActivity, employeeSortFrom)
                     recyEmployeeFrom!!.adapter = adapter
-                    adapter.setClickListener(this@StockTransferActivity)
+                    adapter.setClickListener(this@StockRequestActivity)
                 }
             })
 
@@ -1531,13 +1484,12 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             }
 
 
-            val lLayout = GridLayoutManager(this@StockTransferActivity, 1)
+            val lLayout = GridLayoutManager(this@StockRequestActivity, 1)
             recyEmployeeTo!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-//            val adapter = EmployeeInventoryAdapter(this@FollowUpActivity, employeeArrayListFrom)
-            val adapter = EmployeeInventoryAdapter(this@StockTransferActivity, employeeSortTo)
+            val adapter = EmployeeInventoryAdapter(this@StockRequestActivity, employeeSortTo)
             recyEmployeeTo!!.adapter = adapter
-            adapter.setClickListener(this@StockTransferActivity)
+            adapter.setClickListener(this@StockRequestActivity)
 
             etsearch!!.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
@@ -1563,9 +1515,9 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                     }
 
                     Log.e(TAG,"employeeSort               7103    "+employeeSortTo)
-                    val adapter = EmployeeInventoryAdapter(this@StockTransferActivity, employeeSortTo)
+                    val adapter = EmployeeInventoryAdapter(this@StockRequestActivity, employeeSortTo)
                     recyEmployeeTo!!.adapter = adapter
-                    adapter.setClickListener(this@StockTransferActivity)
+                    adapter.setClickListener(this@StockRequestActivity)
                 }
             })
 
@@ -1577,82 +1529,71 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
     }
 
     private fun getStockMode() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                stockModeViewModel.getStockMode(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
 
-        try {
-            var stockMode = Config.getStockMode(this@StockTransferActivity)
-            val jObject = JSONObject(stockMode)
-            val jobjt = jObject.getJSONObject("stockModeDetails")
-            stockModeArrayList = jobjt.getJSONArray("stockModeDetailsList")
-            stockModePopup(stockModeArrayList)
-        }catch (e : Exception){
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
 
-            Log.e(TAG,"14785  "+e.toString())
+                                if (stockCount == 0){
+                                    stockCount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   2471   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("BranchDetails")
+                                        stockModeArrayList = jobjt.getJSONArray("BranchDetailsList")
+                                        if (stockModeArrayList.length() > 0) {
+                                            stockModePopup(stockModeArrayList)
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@StockRequestActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
-//        when (Config.ConnectivityUtils.isConnected(this)) {
-//            true -> {
-//                progressDialog = ProgressDialog(context, R.style.Progress)
-//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//                progressDialog!!.setCancelable(false)
-//                progressDialog!!.setIndeterminate(true)
-//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-//                progressDialog!!.show()
-//                stockModeViewModel.getStockMode(this)!!.observe(
-//                    this,
-//                    Observer { serviceSetterGetter ->
-//
-//                        try {
-//                            val msg = serviceSetterGetter.message
-//                            if (msg!!.length > 0) {
-//
-//                                if (stockCount == 0){
-//                                    stockCount++
-//
-//                                    val jObject = JSONObject(msg)
-//                                    Log.e(TAG,"msg   2471   "+msg)
-//                                    if (jObject.getString("StatusCode") == "0") {
-//                                        val jobjt = jObject.getJSONObject("BranchDetails")
-//                                        stockModeArrayList = jobjt.getJSONArray("BranchDetailsList")
-//                                        if (stockModeArrayList.length() > 0) {
-//                                            stockModePopup(stockModeArrayList)
-//                                        }
-//
-//                                    } else {
-//                                        val builder = AlertDialog.Builder(
-//                                            this@StockTransferActivity,
-//                                            R.style.MyDialogTheme
-//                                        )
-//                                        builder.setMessage(jObject.getString("EXMessage"))
-//                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                        }
-//                                        val alertDialog: AlertDialog = builder.create()
-//                                        alertDialog.setCancelable(false)
-//                                        alertDialog.show()
-//                                    }
-//                                }
-//
-//                            } else {
-////                                Toast.makeText(
-////                                    applicationContext,
-////                                    "Some Technical Issues.",
-////                                    Toast.LENGTH_LONG
-////                                ).show()
-//                            }
-//                        }catch (e : Exception){
-//                            Toast.makeText(
-//                                applicationContext,
-//                                ""+Config.SOME_TECHNICAL_ISSUES,
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                        }
-//
-//                    })
-//                progressDialog!!.dismiss()
-//            }
-//            false -> {
-//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-//                    .show()
-//            }
-//        }
     }
 
     private fun stockModePopup(stockModeArrayList: JSONArray) {
@@ -1673,13 +1614,12 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             }
 
 
-            val lLayout = GridLayoutManager(this@StockTransferActivity, 1)
+            val lLayout = GridLayoutManager(this@StockRequestActivity, 1)
             recyStockMode!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-//            val adapter = EmployeeInventoryAdapter(this@FollowUpActivity, employeeArrayListFrom)
-            val adapter = StockModeAdapter(this@StockTransferActivity, stockModesort)
+            val adapter = StockModeAdapter(this@StockRequestActivity, stockModesort)
             recyStockMode!!.adapter = adapter
-            adapter.setClickListener(this@StockTransferActivity)
+            adapter.setClickListener(this@StockRequestActivity)
 
             etsearch!!.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
@@ -1696,8 +1636,8 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
                     for (k in 0 until stockModeArrayList.length()) {
                         val jsonObject = stockModeArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("StockMode").length) {
-                            if (jsonObject.getString("StockMode")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                        if (textlength <= jsonObject.getString("EmpName").length) {
+                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
                                 stockModesort.put(jsonObject)
                             }
 
@@ -1705,9 +1645,9 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                     }
 
                     Log.e(TAG,"employeeSort               7103    "+stockModesort)
-                    val adapter = StockModeAdapter(this@StockTransferActivity, stockModesort)
+                    val adapter = StockModeAdapter(this@StockRequestActivity, stockModesort)
                     recyStockMode!!.adapter = adapter
-                    adapter.setClickListener(this@StockTransferActivity)
+                    adapter.setClickListener(this@StockRequestActivity)
                 }
             })
 
@@ -1751,7 +1691,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
                                     } else {
                                         val builder = AlertDialog.Builder(
-                                            this@StockTransferActivity,
+                                            this@StockRequestActivity,
                                             R.style.MyDialogTheme
                                         )
                                         builder.setMessage(jObject.getString("EXMessage"))
@@ -1807,13 +1747,12 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             }
 
 
-            val lLayout = GridLayoutManager(this@StockTransferActivity, 1)
+            val lLayout = GridLayoutManager(this@StockRequestActivity, 1)
             recyProduct!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-//            val adapter = EmployeeInventoryAdapter(this@FollowUpActivity, employeeArrayListFrom)
-            val adapter = ProductStockAdapter(this@StockTransferActivity, productsort)
+            val adapter = ProductStockAdapter(this@StockRequestActivity, productsort)
             recyProduct!!.adapter = adapter
-            adapter.setClickListener(this@StockTransferActivity)
+            adapter.setClickListener(this@StockRequestActivity)
 
             etsearch!!.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
@@ -1839,9 +1778,9 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                     }
 
                     Log.e(TAG,"employeeSort               7103    "+productsort)
-                    val adapter = ProductStockAdapter(this@StockTransferActivity, productsort)
+                    val adapter = ProductStockAdapter(this@StockRequestActivity, productsort)
                     recyProduct!!.adapter = adapter
-                    adapter.setClickListener(this@StockTransferActivity)
+                    adapter.setClickListener(this@StockRequestActivity)
                 }
             })
 
@@ -1866,16 +1805,15 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             strStandQuantity = "0"
         }
 
-        if (FK_StockMode.equals("")){
-            til_StockMode!!.setError("Select Stock Mode")
-            til_StockMode!!.setErrorIconDrawable(null)
-        }
-        else if (FK_Product.equals("")){
+
+//        if (FK_StockMode.equals("")){
+//            til_StockMode!!.setError("Select Stock Mode")
+//            til_StockMode!!.setErrorIconDrawable(null)
+//        }
+//        else
+        if (FK_Product.equals("")){
             til_Product!!.setError("Select Product")
             til_Product!!.setErrorIconDrawable(null)
-            til_StockMode!!.isErrorEnabled = false
-            til_StockMode!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
-
         }else if (strQuantity!!.toFloat() <= 0){
             til_Quantity!!.setError("Enter Quantity")
             til_Quantity!!.setErrorIconDrawable(null)
@@ -1884,6 +1822,8 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             til_Product!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
         }else{
 
+
+
             if (modAddorEdit == 0){
                 var hasId =  hasStockOrProduct(modelStockTransferDetails!!,FK_StockMode!!,FK_Product!!)
                 if (hasId){
@@ -1891,13 +1831,13 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                     modelStockTransferDetails.add(ModelStockTransferDetails(FK_StockMode!!,tie_StockMode!!.text.toString(),FK_Product!!,tie_Product!!.text.toString(),strQuantity!!,strStandQuantity!!))
                     if (modelStockTransferDetails.size>0){
                         ll_stocklist!!.visibility =View.VISIBLE
-                        val lLayout = GridLayoutManager(this@StockTransferActivity, 1)
+                        val lLayout = GridLayoutManager(this@StockRequestActivity, 1)
                         recyStockDetails!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
-                        stockAdapter = StockDetailAdapter(this@StockTransferActivity,modelStockTransferDetails,"1")
+                        stockAdapter = StockDetailAdapter(this@StockRequestActivity,modelStockTransferDetails,"0")
                         recyStockDetails!!.adapter = stockAdapter
-                        stockAdapter!!.setClickListener(this@StockTransferActivity)
+                        stockAdapter!!.setClickListener(this@StockRequestActivity)
 
-                        // adapter1.setClickListener(this@StockTransferActivity)
+                        // adapter1.setClickListener(this@StockRequestActivity)
                     }else{
                         ll_stocklist!!.visibility =View.GONE
                     }
@@ -1939,7 +1879,8 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
     private fun hasStockOrProduct(modelStockTransferDetails: ArrayList<ModelStockTransferDetails>, FK_StockMode: String, FK_Product: String): Boolean {
         for (i in 0 until modelStockTransferDetails.size) {  // iterate through the JsonArray
-            if (modelStockTransferDetails.get(i).FK_StockMode == FK_StockMode && modelStockTransferDetails.get(i).FK_Product == FK_Product) return false
+//            if (modelStockTransferDetails.get(i).FK_StockMode == FK_StockMode && modelStockTransferDetails.get(i).FK_Product == FK_Product) return false
+            if (modelStockTransferDetails.get(i).FK_Product == FK_Product) return false
         }
         return true
     }
@@ -2046,33 +1987,6 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
     override fun onClick(position: Int, data: String) {
 
-        if (data.equals("stockrequest")) {
-            dialogStockRequest!!.dismiss()
-
-            val jsonObject = stockRequestsort.getJSONObject(position)
-
-
-            FK_BranchFrom = "1"
-            BranchNameFrom =  jsonObject.getString("Branch")
-            tie_FromBranch!!.setText(BranchNameFrom)
-
-            FK_BranchTo = "1"
-            tie_ToBranch!!.setText(jsonObject.getString("Branch"))
-
-            FK_DepartmentFrom = "2"
-            DepartmentFrom = jsonObject.getString("Department")
-            tie_FromDepartment!!.setText(DepartmentFrom)
-
-            FK_DepartmentTo = "3"
-            tie_ToDepartment!!.setText(jsonObject.getString("Department"))
-
-            FK_EmployeeFrom = "2"
-            tie_FromEmployee!!.setText(jsonObject.getString("Employees"))
-
-            FK_EmployeeTo = "3"
-            tie_ToEmployee!!.setText(jsonObject.getString("EmployeeTo"))
-
-        }
 
         if (data.equals("branch")) {
             dialogBranch!!.dismiss()
@@ -2120,6 +2034,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                 til_ToEmployee!!.isErrorEnabled = false
                 til_ToEmployee!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
 
+
             }
 
             if (depModeFromTo == 1){
@@ -2152,7 +2067,6 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                 Log.e(TAG,"FK_Employee   "+jsonObject.getString("FK_Employee"))
                 FK_EmployeeFrom = jsonObject.getString("FK_Employee")
                 tie_FromEmployee!!.setText(jsonObject.getString("Name"))
-
                 tv_error!!.visibility = View.GONE
             }
 
@@ -2174,9 +2088,9 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
             dialogStockMode!!.dismiss()
             val jsonObject = stockModesort.getJSONObject(position)
-            Log.e(TAG, "FK_StockMode   " + jsonObject.getString("FK_StockMode"))
-            FK_StockMode = jsonObject.getString("FK_StockMode")
-            tie_StockMode!!.setText(jsonObject.getString("StockMode"))
+            Log.e(TAG, "ID_Branch   " + jsonObject.getString("ID_Branch"))
+            FK_StockMode = jsonObject.getString("ID_Branch")
+            tie_StockMode!!.setText(jsonObject.getString("BranchName"))
 
             tv_error!!.visibility = View.GONE
 
@@ -2190,8 +2104,6 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             tie_Product!!.setText(jsonObject.getString("Name"))
 
             tv_error!!.visibility = View.GONE
-            til_Product!!.isErrorEnabled = false
-            til_Product!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
 
         }
 
@@ -2222,6 +2134,5 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
         }
 
     }
-
 
 }

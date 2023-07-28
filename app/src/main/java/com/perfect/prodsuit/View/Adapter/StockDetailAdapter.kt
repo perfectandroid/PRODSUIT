@@ -13,7 +13,7 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Model.ModelStockTransferDetails
 import com.perfect.prodsuit.R
 
-class StockDetailAdapter(internal var context: Context, internal var mList: List<ModelStockTransferDetails>):
+class StockDetailAdapter(internal var context: Context, internal var mList: List<ModelStockTransferDetails>,internal var mode : String):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG : String = "StockDetailAdapter"
@@ -38,6 +38,10 @@ class StockDetailAdapter(internal var context: Context, internal var mList: List
                 holder.tv_stock.text = empModel.StockMode
                 holder.tv_product.text = empModel.Product
                 holder.tv_qty.text = empModel.Quantity+" / "+empModel.StatndByQuantity
+
+                if (mode.equals("0")){
+                    holder.tv_stock.visibility = View.GONE
+                }
 
                 holder.im_delete!!.setTag(position)
                 holder.im_delete!!.setOnClickListener(View.OnClickListener {

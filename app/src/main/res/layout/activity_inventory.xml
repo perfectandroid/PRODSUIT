@@ -1,0 +1,469 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_header">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imback"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="left"
+                    android:background="@color/color_activity_transparent"
+                    android:padding="10dp"
+                    android:tint="@color/white"
+                    android:src="@drawable/back_arro"
+                    tools:ignore="UseAppTint" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/myfont"
+                android:gravity="center"
+                android:text="Inventory"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:tint="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imLeadedit"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/color_activity_transparent"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_edit"
+                    android:visibility="invisible"
+                    tools:ignore="UseAppTint" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:padding="20dp"
+                        android:src="@drawable/inventory"/>
+
+                </LinearLayout>
+
+                <!--                            <LinearLayout-->
+                <!--                                android:id="@+id/llleadgeneration"-->
+                <!--                                android:layout_width="match_parent"-->
+                <!--                                android:layout_height="80dp"-->
+                <!--                                android:layout_gravity="center"-->
+                <!--                                android:gravity="center"-->
+                <!--                                android:layout_marginBottom="10dp"-->
+                <!--                                android:layout_marginTop="20dp"-->
+                <!--                                android:layout_marginLeft="20dp"-->
+                <!--                                android:layout_marginRight="20dp"-->
+                <!--                                android:background="@drawable/svg_lead_gen_main"-->
+                <!--                                android:orientation="horizontal">-->
+
+                <!--                                <LinearLayout-->
+                <!--                                    android:layout_width="30dp"-->
+                <!--                                    android:layout_height="match_parent"-->
+                <!--                                    android:orientation="vertical">-->
+
+
+                <!--                                </LinearLayout>-->
+
+                <!--                                <LinearLayout-->
+                <!--                                    android:layout_width="80dp"-->
+                <!--                                    android:layout_height="match_parent"-->
+                <!--                                    android:background="@drawable/svg_lead_gen_sub"-->
+                <!--                                    android:orientation="vertical">-->
+
+
+                <!--                                </LinearLayout>-->
+
+                <!--                                <LinearLayout-->
+                <!--                                    android:layout_width="match_parent"-->
+                <!--                                    android:layout_height="match_parent"-->
+                <!--                                    android:layout_weight="1"-->
+                <!--                                    android:orientation="vertical">-->
+
+                <!--                                    <TextView-->
+                <!--                                        android:layout_width="match_parent"-->
+                <!--                                        android:layout_height="match_parent"-->
+                <!--                                        android:layout_gravity="center"-->
+                <!--                                        android:gravity="center"-->
+                <!--                                        android:text="Lead Generation"-->
+                <!--                                        android:textStyle="bold"-->
+                <!--                                        android:textColor="@color/white"-->
+                <!--                                        android:textSize="18dp"-->
+                <!--                                        android:fontFamily="@font/myfont"-->
+                <!--                                        android:visibility="visible"/>-->
+
+
+                <!--                                </LinearLayout>-->
+
+
+
+                <!--                            </LinearLayout>-->
+
+
+                <!--                            <LinearLayout-->
+                <!--                                android:id="@+id/llleadmanagement"-->
+                <!--                                android:layout_width="match_parent"-->
+                <!--                                android:layout_height="80dp"-->
+                <!--                                android:layout_gravity="center"-->
+                <!--                                android:gravity="center"-->
+                <!--                                android:layout_marginBottom="20dp"-->
+                <!--                                android:layout_marginTop="20dp"-->
+                <!--                                android:layout_marginLeft="20dp"-->
+                <!--                                android:layout_marginRight="20dp"-->
+                <!--                                android:background="@drawable/svg_lead_man_main"-->
+                <!--                                android:orientation="horizontal">-->
+
+                <!--                                <LinearLayout-->
+                <!--                                    android:layout_width="30dp"-->
+                <!--                                    android:layout_height="match_parent"-->
+                <!--                                    android:orientation="vertical">-->
+
+
+                <!--                                </LinearLayout>-->
+
+                <!--                                <LinearLayout-->
+                <!--                                    android:layout_width="80dp"-->
+                <!--                                    android:layout_height="match_parent"-->
+                <!--                                    android:background="@drawable/svg_lead_man_sub"-->
+                <!--                                    android:orientation="vertical">-->
+
+
+                <!--                                </LinearLayout>-->
+
+                <!--                                <LinearLayout-->
+                <!--                                    android:layout_width="match_parent"-->
+                <!--                                    android:layout_height="match_parent"-->
+                <!--                                    android:orientation="vertical">-->
+
+                <!--                                    <TextView-->
+                <!--                                        android:layout_width="match_parent"-->
+                <!--                                        android:layout_height="match_parent"-->
+                <!--                                        android:layout_gravity="center"-->
+                <!--                                        android:gravity="center"-->
+                <!--                                        android:text="Lead Management"-->
+                <!--                                        android:textStyle="bold"-->
+                <!--                                        android:textColor="@color/white"-->
+                <!--                                        android:textSize="18dp"-->
+                <!--                                        android:fontFamily="@font/myfont"-->
+                <!--                                        android:visibility="visible"/>-->
+
+
+                <!--                                </LinearLayout>-->
+                <!--                            </LinearLayout>-->
+
+                <!--                        <LinearLayout-->
+                <!--                            android:id="@+id/llleadgeneration1"-->
+                <!--                            android:layout_width="match_parent"-->
+                <!--                            android:layout_height="100dp"-->
+                <!--                            android:layout_gravity="center"-->
+                <!--                            android:gravity="center"-->
+                <!--                            android:layout_marginBottom="10dp"-->
+                <!--                            android:layout_marginTop="20dp"-->
+                <!--                            android:layout_marginLeft="20dp"-->
+                <!--                            android:layout_marginRight="20dp"-->
+                <!--                            android:background="@drawable/leadgen1"-->
+                <!--                            android:orientation="horizontal"-->
+                <!--                            android:visibility="gone">-->
+
+
+                <!--                            <TextView-->
+                <!--                                android:layout_width="wrap_content"-->
+                <!--                                android:layout_height="wrap_content"-->
+                <!--                                android:layout_gravity="center"-->
+                <!--                                android:gravity="left"-->
+                <!--                                android:layout_marginTop="10dp"-->
+                <!--                                android:layout_marginBottom="20dp"-->
+                <!--                                android:layout_marginLeft="80dp"-->
+                <!--                                android:layout_marginRight="20dp"-->
+                <!--                                android:text="Lead Generation"-->
+                <!--                                android:textStyle="bold"-->
+                <!--                                android:textColor="@color/black"-->
+                <!--                                android:textSize="20dp"-->
+                <!--                                android:fontFamily="@font/myfont" />-->
+                <!--                        </LinearLayout>-->
+
+
+                <!--                        <LinearLayout-->
+                <!--                            android:id="@+id/llleadmanagement1"-->
+                <!--                            android:layout_width="match_parent"-->
+                <!--                            android:layout_height="100dp"-->
+                <!--                            android:layout_gravity="center"-->
+                <!--                            android:gravity="center"-->
+                <!--                            android:layout_marginBottom="20dp"-->
+                <!--                            android:layout_marginTop="10dp"-->
+                <!--                            android:layout_marginLeft="20dp"-->
+                <!--                            android:layout_marginRight="20dp"-->
+                <!--                            android:background="@drawable/leadgen2"-->
+                <!--                            android:orientation="horizontal"-->
+                <!--                            android:visibility="gone">-->
+
+                <!--                            <TextView-->
+                <!--                                android:layout_width="wrap_content"-->
+                <!--                                android:layout_height="wrap_content"-->
+                <!--                                android:layout_gravity="center"-->
+                <!--                                android:gravity="left"-->
+                <!--                                android:layout_marginTop="10dp"-->
+                <!--                                android:layout_marginBottom="20dp"-->
+                <!--                                android:layout_marginLeft="80dp"-->
+                <!--                                android:layout_marginRight="10dp"-->
+                <!--                                android:text="Lead Management"-->
+                <!--                                android:textStyle="bold"-->
+                <!--                                android:textColor="@color/black"-->
+                <!--                                android:textSize="20dp"-->
+                <!--                                android:fontFamily="@font/myfont" />-->
+                <!--                        </LinearLayout>-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        android:padding="1dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp">
+
+                        <LinearLayout
+                            android:id="@+id/llstockrequest"
+                            android:layout_width="match_parent"
+                            android:layout_height="90dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="1dp"
+                            android:background="@drawable/border_1"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="100dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/shapes_1"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="80dp"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+                                    <LinearLayout
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:background="@drawable/background_shape"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="30dp"
+                                            android:layout_height="30dp"
+                                            android:src="@drawable/svg_inv_request"
+                                            tools:ignore="UseAppTint" />
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="Stock Request"
+                                    android:layout_weight="1"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/color_common1"
+                                    android:textSize="20dp"
+                                    android:fontFamily="@font/myfont" />
+
+
+                            </LinearLayout>
+
+
+
+
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <View
+                        android:id="@+id/view_height"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:orientation="vertical"/>
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp">
+
+                        <!--                            android:backgroundTint="@color/service2"-->
+
+                        <LinearLayout
+                            android:id="@+id/llstocktransfer"
+                            android:layout_width="match_parent"
+                            android:layout_height="90dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:padding="1dp"
+                            android:background="@drawable/border_3"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="100dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/shapes_3"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="80dp"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+                                    <LinearLayout
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:background="@drawable/background_shape"
+                                        android:gravity="center"
+                                        android:orientation="vertical">
+
+                                        <ImageView
+                                            android:layout_width="30dp"
+                                            android:layout_height="30dp"
+                                            android:src="@drawable/svg_inv_transfer"
+                                            tools:ignore="UseAppTint" />
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+                                <!--                                    android:background="@drawable/svg_service_assign"-->
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:text="Stock Transfer"
+                                    android:layout_weight="1"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/color_common3"
+                                    android:textSize="20dp"
+                                    android:fontFamily="@font/myfont" />
+
+
+                            </LinearLayout>
+
+
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+
+
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

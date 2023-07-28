@@ -786,8 +786,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                startActivity(i)
 
 
-                val i = Intent(this@HomeActivity, StockTransferActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@HomeActivity, StockTransferActivity::class.java)
+//                startActivity(i)
+
+//                val i = Intent(this@HomeActivity, StockRequestActivity::class.java)
+//                startActivity(i)
 
             }
 
@@ -845,6 +848,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             R.id.rlnotification -> {
 //                val i = Intent(this@HomeActivity, NotificationActivity::class.java)
 //                startActivity(i)
+
+                val i = Intent(this@HomeActivity, InventoryActivity::class.java)
+                startActivity(i)
             }
         }
     }

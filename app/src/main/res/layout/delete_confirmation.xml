@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/logoutsuccess"
+            android:src="@drawable/svg_delete"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"/>
     </LinearLayout>
@@ -35,7 +35,8 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:visibility="gone"/>
         <TextView
             android:id="@+id/tv_delete_msg"
             android:layout_width="match_parent"

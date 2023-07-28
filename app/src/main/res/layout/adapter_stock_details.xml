@@ -23,18 +23,18 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:padding="2dp"
                         android:orientation="vertical">
@@ -42,8 +42,9 @@
                         <TextView
                             android:id="@+id/tv_stock"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:padding="2dp"
+                            android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:fontFamily="@font/myfont"
                             android:textColor="@color/black"
@@ -56,8 +57,9 @@
                         <TextView
                             android:id="@+id/tv_product"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:padding="1dp"
+                            android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:fontFamily="@font/myfont"
                             android:textColor="@color/black"
@@ -108,7 +110,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="45dp"
                     android:layout_weight="1.6"
                     android:gravity="center"
                     android:orientation="horizontal">
@@ -117,7 +119,10 @@
                         android:id="@+id/im_edit"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:padding="2dp"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
                         android:background="@drawable/shape_bottom_rounded1"
                         android:src="@android:drawable/ic_menu_edit"/>
 

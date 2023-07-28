@@ -49,7 +49,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/myfont"
                 android:gravity="center"
-                android:text="Stock Transfer "
+                android:text="Stock Request "
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="20dp"
@@ -127,7 +127,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:gravity="center"
-                                    android:text="Tranfer"
+                                    android:text="Request"
                                     android:padding="8dp"
                                     android:textColor="@color/colorPrimaryDark"
                                     android:textSize="17dp"
@@ -147,7 +147,7 @@
                                         android:id="@+id/til_Date"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:hint="Date"
+                                        android:hint="Date *"
                                         android:layout_marginTop="5dp"
                                         android:drawableTint="@color/textColor"
                                         android:fontFamily="@font/myfont"
@@ -183,7 +183,8 @@
                                         android:layout_marginTop="5dp"
                                         android:drawableTint="@color/textColor"
                                         android:fontFamily="@font/myfont"
-                                        style="@style/Widget.App.TextInputLayout">
+                                        style="@style/Widget.App.TextInputLayout"
+                                        android:visibility="gone">
 
                                         <com.google.android.material.textfield.TextInputEditText
                                             android:id="@+id/tie_Request"
@@ -255,7 +256,7 @@
                                         android:textAllCaps="true"
                                         android:background="@drawable/shape_gradient2"
                                         android:fontFamily="@font/myfont" />
-<!--                                    android:background="#E8E7E7"-->
+                                    <!--                                    android:background="#E8E7E7"-->
 
                                     <TextView
                                         android:id="@+id/tv_ToClick"
@@ -272,7 +273,7 @@
                                         android:textAllCaps="true"
                                         android:background="@drawable/shape_gradient1"
                                         android:fontFamily="@font/myfont" />
-<!--                                    android:background="#B3BEBF"-->
+                                    <!--                                    android:background="#B3BEBF"-->
 
 
                                 </LinearLayout>
@@ -296,7 +297,7 @@
                                             android:id="@+id/til_FromBranch"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:hint="Branch"
+                                            android:hint="Branch *"
                                             android:layout_marginTop="5dp"
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
@@ -327,7 +328,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
-                                            android:hint="Department"
+                                            android:hint="Department *"
                                             android:layout_marginTop="5dp"
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
@@ -401,7 +402,7 @@
                                             android:id="@+id/til_ToBranch"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:hint="Branch"
+                                            android:hint="Branch *"
                                             android:layout_marginTop="5dp"
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
@@ -433,7 +434,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_weight="1"
-                                            android:hint="Department"
+                                            android:hint="Department *"
                                             android:layout_marginTop="5dp"
                                             android:drawableTint="@color/textColor"
                                             android:fontFamily="@font/myfont"
@@ -816,7 +817,8 @@
                                         android:layout_marginTop="5dp"
                                         android:drawableTint="@color/textColor"
                                         android:fontFamily="@font/myfont"
-                                        style="@style/Widget.App.TextInputLayout">
+                                        style="@style/Widget.App.TextInputLayout"
+                                        android:visibility="gone">
 
                                         <com.google.android.material.textfield.TextInputEditText
                                             android:id="@+id/tie_StockMode"
@@ -831,7 +833,6 @@
                                             android:drawablePadding="5dp"
                                             android:drawableTint="@color/textColor"
                                             android:textSize="14dp"
-                                            android:maxLength="10"
                                             android:focusableInTouchMode="false"
                                             android:editable="false"
                                             android:fontFamily="@font/myfont"
@@ -877,7 +878,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:hint="Quantity"
+                                        android:hint="Quantity *"
                                         android:layout_marginTop="5dp"
                                         android:drawableTint="@color/textColor"
                                         android:fontFamily="@font/myfont"

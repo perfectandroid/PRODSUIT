@@ -13,17 +13,17 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ProductStockAdapter (internal var context: Context, internal var jsonArray: JSONArray):
+class EmployeeInventoryAdapter (internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "ProductStockAdapter"
+    internal val TAG : String = "EmployeeAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_product_stock, parent, false
+            R.layout.adapter_employee, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -36,12 +36,17 @@ class ProductStockAdapter (internal var context: Context, internal var jsonArray
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
-
-                holder.txtProductStock.text        = jsonObject!!.getString("Name")
-
-                holder.ll_ProductStock!!.setTag(position)
-                holder.ll_ProductStock!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "productstock")
+                holder.txtEmployee.text        = jsonObject!!.getString("Name")
+                holder.txtDesignation.text        = jsonObject!!.getString("Designation")
+//                if (position % 2 == 0){
+//                    holder.llemployee!!.setBackgroundColor(context.getColor(R.color.greylight))
+//                }
+//                else{
+//                    holder.llemployee!!.setBackgroundColor(context.getColor(R.color.white))
+//                }
+                holder.llemployee!!.setTag(position)
+                holder.llemployee!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "employee")
                 })
             }
         } catch (e: Exception) {
@@ -59,21 +64,24 @@ class ProductStockAdapter (internal var context: Context, internal var jsonArray
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position
+        return position % 2
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtProductStock   : TextView
+        internal var txtEmployee   : TextView
+        internal var txtDesignation   : TextView
         internal var txtsino       : TextView
-        internal var ll_ProductStock    : LinearLayout
+        internal var llemployee    : LinearLayout
         init {
-            txtProductStock          = v.findViewById<View>(R.id.txtProductStock) as TextView
+            txtEmployee          = v.findViewById<View>(R.id.txtEmployee) as TextView
+            txtDesignation          = v.findViewById<View>(R.id.txtDesignation) as TextView
             txtsino              = v.findViewById<View>(R.id.txtsino) as TextView
-            ll_ProductStock           = v.findViewById<View>(R.id.ll_ProductStock) as LinearLayout
+            llemployee           = v.findViewById<View>(R.id.llemployee) as LinearLayout
         }
     }
 
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 }

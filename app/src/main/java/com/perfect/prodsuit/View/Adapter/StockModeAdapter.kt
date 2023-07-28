@@ -37,7 +37,7 @@ class StockModeAdapter(internal var context: Context, internal var jsonArray: JS
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
 
-                holder.txtStockMode.text        = jsonObject!!.getString("BranchName")
+                holder.txtStockMode.text        = jsonObject!!.getString("StockMode")
 
                 holder.ll_StockMode!!.setTag(position)
                 holder.ll_StockMode!!.setOnClickListener(View.OnClickListener {

@@ -60,18 +60,19 @@ object ProductStockRepository {
             val requestObject1 = JSONObject()
             try {
 
-//                {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","ReqMode":"22","FK_Company":"1","ID_BranchType":"2"}
+//               {"BankKey":"-500","FK_Company":"1","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","ReqMode":"40","TransMode":"INTR"}
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("14"))
+
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_Category", ProdsuitApplication.encryptStart("0"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("40"))
+                requestObject1.put("TransMode", ProdsuitApplication.encryptStart("INTR"))
+
                 Log.e(TAG,"78  getProduct stock    "+requestObject1)
 
             } catch (e: Exception) {
@@ -81,7 +82,7 @@ object ProductStockRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getProductDetail(body)
+            val call = apiService.getStockRTProductDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:

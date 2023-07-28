@@ -796,6 +796,36 @@ object Config {
         }
     }
 
+    fun getStockMode(context : Context): String {
+        var result =""
+        try {
+
+            val jsonObject1 = JSONObject()
+            val jsonObject = JSONObject()
+            val array = JSONArray()
+
+            var obj = JSONObject()
+            obj.put("FK_StockMode", "1")
+            obj.put("StockMode", "ActualStock")
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("FK_StockMode", "2")
+            obj.put("StockMode", "ReturnStock")
+            array.put(obj)
+
+            jsonObject.put("stockModeDetailsList", array)
+            jsonObject1.put("stockModeDetails", jsonObject)
+            Log.e("JsonObject", jsonObject.toString())
+            result = jsonObject1.toString()
+
+        }catch (e :  Exception){
+            result = ""
+        }
+
+        return result
+    }
+
     fun getHomeGrid(context : Context): String {
 
         var result =""
@@ -851,6 +881,15 @@ object Config {
             obj.put("image","home_notification")
             obj.put("count","0")
             array.put(obj)
+
+//            obj = JSONObject()
+//            obj.put("grid_id", "3")
+//            obj.put("grid_name", "Inventory")
+//            // obj.put("image",context.resources.getDrawable(R.drawable.agntremrk) )
+//            obj.put("image","home_inventory")
+//            obj.put("count","0")
+//            array.put(obj)
+
 
             if(iLead.equals("true")){
                 obj = JSONObject()

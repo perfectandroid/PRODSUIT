@@ -17,7 +17,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_gradient3"
             android:orientation="vertical">
 
             <LinearLayout
@@ -47,7 +46,7 @@
                             android:fontFamily="@font/myfont"
                             android:textColor="@color/black"
                             android:singleLine="true"
-                            android:textSize="11dp"
+                            android:textSize="12dp"
                             android:text="dfgdfg"
                             android:visibility="visible"/>
 
@@ -60,7 +59,7 @@
                             android:gravity="center_vertical"
                             android:fontFamily="@font/myfont"
                             android:textColor="@color/black"
-                            android:textSize="11dp"
+                            android:textSize="12dp"
                             android:text="dfgdrretyreyrefg"
                             android:visibility="visible"/>
 
@@ -85,7 +84,7 @@
                         android:gravity="center"
                         android:fontFamily="@font/myfont"
                         android:textColor="@color/black"
-                        android:textSize="11dp"
+                        android:textSize="12dp"
                         android:text=""
                         android:visibility="visible"/>
 
