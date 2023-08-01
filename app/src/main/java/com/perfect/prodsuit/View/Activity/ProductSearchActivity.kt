@@ -12,6 +12,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -51,6 +52,10 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     var ll_filter_page: LinearLayout? = null
     var ll_sort: LinearLayout? = null
     var ll_filter: LinearLayout? = null
+    var ll_noproduct: LinearLayout? = null
+
+    var img_list: ImageView? = null
+    var img_grid: ImageView? = null
 
     lateinit var productCategoryViewModel: ProductCategoryViewModel
     lateinit var prodCategorySort: JSONArray
@@ -78,6 +83,7 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     var ID_Product: String? = ""
 
     var isFilter: String? = "0" // 0 = No Filter 1 =  Filter
+    private var modelg = 1 // 1 = List 2 =  Grid
 
 
 
@@ -138,6 +144,10 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         ll_filter_page = findViewById<LinearLayout>(R.id.ll_filter_page)
         ll_sort = findViewById<LinearLayout>(R.id.ll_sort)
         ll_filter = findViewById<LinearLayout>(R.id.ll_filter)
+        ll_noproduct = findViewById<LinearLayout>(R.id.ll_noproduct)
+
+        img_list = findViewById<ImageView>(R.id.img_list)
+        img_grid = findViewById<ImageView>(R.id.img_grid)
 
         recycProdEnq = findViewById<RecyclerView>(R.id.recycProdEnq)
 
@@ -149,11 +159,27 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         ll_filter_page!!.setOnClickListener(this)
         ll_sort!!.setOnClickListener(this)
         ll_filter!!.setOnClickListener(this)
+        img_list!!.setOnClickListener(this)
+        img_grid!!.setOnClickListener(this)
 
         ll_main_page!!.visibility = View.VISIBLE
         ll_filter_page!!.visibility = View.GONE
 
+        setGridList()
 
+
+
+    }
+
+    private fun setGridList() {
+        if (modelg == 1){
+            img_list!!.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary))
+            img_grid!!.setColorFilter(ContextCompat.getColor(this, R.color.grey))
+        }
+        if (modelg == 2){
+            img_list!!.setColorFilter(ContextCompat.getColor(this, R.color.grey))
+            img_grid!!.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary))
+        }
     }
 
     override fun onClick(v: View) {
@@ -201,6 +227,16 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             R.id.ll_sort->{
 
             }
+            R.id.img_grid->{
+
+                modelg = 2
+                changeProductDesign()
+            }
+            R.id.img_list->{
+                modelg = 1
+                changeProductDesign()
+
+            }
             R.id.ll_filter->{
 
                 if (isFilter.equals("0")){
@@ -214,6 +250,22 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 }
             }
         }
+    }
+
+    private fun changeProductDesign() {
+       try {
+           setGridList()
+           if (prodEnquiryArrayList.length() > 0) {
+               ll_noproduct!!.visibility = View.GONE
+               val lLayout = GridLayoutManager(this@ProductSearchActivity, modelg)
+               recycProdEnq!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+               val adapter = ProductEnquiryListAdapter(this@ProductSearchActivity, prodEnquiryArrayList,modelg)
+               recycProdEnq!!.adapter = adapter
+               adapter.setClickListener(this@ProductSearchActivity)
+           }
+       }catch (e: Exception){
+
+       }
     }
 
     private fun getCategory() {
@@ -386,6 +438,7 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                         try {
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
+
                                 if (productCount == 0) {
                                     productCount++
                                     val jObject = JSONObject(msg)
@@ -397,12 +450,14 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                         if (prodDetailArrayList.length() > 0) {
 //                                             if (proddetail == 0){
 //                                                 proddetail++
+
                                             productDetailPopup(prodDetailArrayList)
 //                                             }
 
                                         }
 
                                     } else {
+
                                         val builder = AlertDialog.Builder(
                                             this@ProductSearchActivity,
                                             R.style.MyDialogTheme
@@ -514,8 +569,10 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
 
     private fun getProductEnquiryList() {
+        setGridList()
         var ReqMode = "0"
         recycProdEnq!!.adapter = null
+        prodEnquiryArrayList = JSONArray()
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -533,17 +590,18 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                             if (msg!!.length > 0) {
                                 if (enquiryCount == 0) {
                                     enquiryCount++
+                                    ll_noproduct!!.visibility = View.VISIBLE
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   227   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
-                                        val jobjt = jObject.getJSONObject("ProductDetailsList")
-                                        prodEnquiryArrayList = jobjt.getJSONArray("ProductList")
+                                        val jobjt = jObject.getJSONObject("ProductEnquiryList")
+                                        prodEnquiryArrayList = jobjt.getJSONArray("ProductEnquiryListData")
                                         if (prodEnquiryArrayList.length() > 0) {
-
-                                            val lLayout = GridLayoutManager(this@ProductSearchActivity, 1)
+                                            ll_noproduct!!.visibility = View.GONE
+                                            val lLayout = GridLayoutManager(this@ProductSearchActivity, modelg)
                                             recycProdEnq!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            val adapter = ProductEnquiryListAdapter(this@ProductSearchActivity, prodEnquiryArrayList)
+                                            val adapter = ProductEnquiryListAdapter(this@ProductSearchActivity, prodEnquiryArrayList,modelg)
                                             recycProdEnq!!.adapter = adapter
                                             adapter.setClickListener(this@ProductSearchActivity)
                                         }
@@ -551,6 +609,7 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
 
                                     } else {
+                                        ll_noproduct!!.visibility = View.VISIBLE
                                         val builder = AlertDialog.Builder(
                                             this@ProductSearchActivity,
                                             R.style.MyDialogTheme

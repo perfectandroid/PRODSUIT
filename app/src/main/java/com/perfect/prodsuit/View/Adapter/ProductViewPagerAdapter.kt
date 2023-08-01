@@ -33,7 +33,7 @@ class ProductViewPagerAdapter(private val context: Context, mResources: List<Str
         val imageView = itemView.findViewById<View>(R.id.image) as ImageView
         val IMAGE_URLSP = context.getSharedPreferences(Config.SHARED_PREF29, 0)
         var IMAGE_URL   = IMAGE_URLSP.getString("IMAGE_URL", null)
-        Log.e("TAG","310  "+IMAGE_URL+mResources.get(position))
+        Log.e(TAG,"3101  "+IMAGE_URL+mResources.get(position))
         PicassoTrustAll.getInstance(context)!!.load(IMAGE_URL+""+mResources.get(position)).into(imageView)
         imageView.setOnClickListener {
             Log.e(TAG,"41111  "+position)
@@ -47,21 +47,27 @@ class ProductViewPagerAdapter(private val context: Context, mResources: List<Str
 
     private fun ShowEnalargeImage(imageUrl: String) {
 
-        var  dialogDetailSheet = Dialog(context)
-        dialogDetailSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogDetailSheet!! .setContentView(R.layout.enlarge_product_image)
-        dialogDetailSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+        try {
+            var  dialogDetailSheet = Dialog(context)
+            dialogDetailSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogDetailSheet!! .setContentView(R.layout.enlarge_product_image)
+            dialogDetailSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
 
 
-     //   var img_enlarge: ImageView? = dialogDetailSheet.findViewById<ImageView>(R.id.img_enlarge)
-        var img_enlarge: ZoomImageView? = dialogDetailSheet.findViewById<ZoomImageView>(R.id.img_enlarge)
-        PicassoTrustAll.getInstance(context)!!.load(imageUrl).into(img_enlarge)
+            //   var img_enlarge: ImageView? = dialogDetailSheet.findViewById<ImageView>(R.id.img_enlarge)
+            var img_enlarge: ZoomImageView? = dialogDetailSheet.findViewById<ZoomImageView>(R.id.img_enlarge)
+            PicassoTrustAll.getInstance(context)!!.load(imageUrl).into(img_enlarge)
 
-        val window: Window? = dialogDetailSheet!!.getWindow()
-        window!!.setBackgroundDrawableResource(android.R.color.transparent);
-        window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            val window: Window? = dialogDetailSheet!!.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
-        dialogDetailSheet!!.show()
+            dialogDetailSheet!!.show()
+        }catch (e: Exception){
+
+        }
+
+
 
     }
 

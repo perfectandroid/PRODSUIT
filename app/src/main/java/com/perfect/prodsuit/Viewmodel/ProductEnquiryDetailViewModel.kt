@@ -11,8 +11,8 @@ class ProductEnquiryDetailViewModel  : ViewModel() {
 
     var productEnquiryDetailData: MutableLiveData<ProductEnquiryDetailModel>? = null
 
-    fun getProductEnquiryDetail(context: Context) : LiveData<ProductEnquiryDetailModel>? {
-        productEnquiryDetailData = ProductEnquiryDetailRepository.getServicesApiCall(context)
+    fun getProductEnquiryDetail(context: Context,ID_Category : String,ID_Product : String) : LiveData<ProductEnquiryDetailModel>? {
+        productEnquiryDetailData = ProductEnquiryDetailRepository.getServicesApiCall(context,ID_Category,ID_Product)
         return productEnquiryDetailData
     }
 }

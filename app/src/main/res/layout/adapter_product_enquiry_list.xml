@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/white"
     android:padding="0dp">
     <!--    app:cardUseCompatPadding="true"-->
 
@@ -18,15 +19,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3.5"
+            android:layout_weight="3.2"
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:padding="5dp"
-                android:src="@drawable/lead_productcolor"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:background="@drawable/shape_image_border"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/img_product"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:padding="5dp"
+                    android:src="@drawable/svg_noimage"/>
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
 
@@ -108,7 +121,8 @@
                         android:text="PROD4489756"
                         android:textColor="@color/textColor1"
                         android:textSize="12dp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        android:visibility="gone"/>
 
 
 
@@ -297,6 +311,7 @@
                         android:visibility="gone"/>
 
                     <TextView
+                        android:id="@+id/txtProdct_qty"
                         android:paddingLeft="2dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -323,9 +338,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3.9"
+            android:layout_weight="3.5"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="40dp"

@@ -499,6 +499,12 @@ interface ApiInterface {
     @POST("Stock/UpdateStockTransfer")
     fun updateStockTransfer(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/ProductEnquiryList")
+    fun getProductEnquiryList(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/ProductEnquiryDetails")
+    fun getProductEnquiryDetails(@Body body: RequestBody): Call<String>
+
 
 
 }

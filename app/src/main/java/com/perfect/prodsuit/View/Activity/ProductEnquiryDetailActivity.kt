@@ -14,13 +14,17 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.FullLenghRecyclertview
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ProductEnquiryListAdapter
 import com.perfect.prodsuit.View.Adapter.ProductSimilarAdapter
@@ -33,7 +37,7 @@ import org.json.JSONObject
 import java.util.*
 
 
-class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener{
+class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
 
     var TAG = "ProductEnquiryDetailActivity"
     lateinit var context: Context
@@ -51,14 +55,34 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener{
 
     var jsonObj: JSONObject? = null
     var txtProdct : TextView? = null
+    var txtProdctDesc : TextView? = null
     var txtProdct_mrp : TextView? = null
     var txtProdct_sales : TextView? = null
+    var txtProdct_qty : TextView? = null
+    var ll_main : LinearLayout? = null
+    var ll_noimage : LinearLayout? = null
+    var ll_viewPager : LinearLayout? = null
+
 
     lateinit var productDetailViewModel: ProductDetailViewModel
     lateinit var prodDetailArrayList: JSONArray
     lateinit var prodDetailSort: JSONArray
-    private var recycSimilarItem: FullLenghRecyclertview? = null
+    private var recycSimilarItem: RecyclerView? = null
     private var productCount = 0
+    lateinit var jresult: JSONArray
+
+//    private var nestedscroll: NestedScrollView? = null
+
+    var ID_Category: String? = ""
+    var ID_Product: String? = ""
+    var strName: String? = ""
+    var strMRP: String? = ""
+    var strSalPrice: String? = ""
+    var strCode: String? = ""
+    var strCurQty: String? = ""
+    private var modelg = 2 // 1 = List 2 =  Grid
+    var img_list: ImageView? = null
+    var img_grid: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,68 +98,51 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener{
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
-        Log.e(TAG,"577   "+jsonObj)
-        txtProdct!!.text = jsonObj!!.getString("ProductName")
-        txtProdct_mrp!!.text = "₹ "+jsonObj!!.getString("MRP")
-        txtProdct_sales!!.text = "₹ "+jsonObj!!.getString("SalPrice")
-        txtProdct_mrp!!.setPaintFlags(txtProdct_mrp!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
-        detailCount = 0
-        getDetailList()
-        getProductDetail("0")
-
-
-
-//        val sliderItems = listOf(
-//            SliderItem(R.drawable.svg_service_banner),
-//            SliderItem(R.drawable.svg_walking_customer),
-//            SliderItem(R.drawable.welcomelogo)
-//        )
-//
-//        val sliderAdapter = ProductViewPagerAdapter(sliderItems)
-//        viewPager.adapter = sliderAdapter!!
-//       // viewPager.setOnClickListener(this@ProductEnquiryDetailActivity)
-//
-//        // Add dot indicators
-//        addDotsIndicator(sliderItems.size)
-//
-//        // Attach a ViewPager2.OnPageChangeCallback to update dot indicators
-//        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-//            override fun onPageSelected(position: Int) {
-//                super.onPageSelected(position)
-//
-//            }
-//
-//            override fun onPageScrolled(
-//                position: Int,
-//                positionOffset: Float,
-//                positionOffsetPixels: Int
-//            ) {
-//                super.onPageScrolled(position, positionOffset, positionOffsetPixels)
-//                updateDotsIndicator(position)
-//            }
-//
-//            override fun onPageScrollStateChanged(state: Int) {
-//                super.onPageScrollStateChanged(state)
-//
-//            }
-//        })
-
-
-
+        getDetail()
 
 
     }
+    private fun setGridList() {
+        if (modelg == 1){
+            img_list!!.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary))
+            img_grid!!.setColorFilter(ContextCompat.getColor(this, R.color.grey))
+        }
+        if (modelg == 2){
+            img_list!!.setColorFilter(ContextCompat.getColor(this, R.color.grey))
+            img_grid!!.setColorFilter(ContextCompat.getColor(this, R.color.colorPrimary))
+        }
+    }
+
+    private fun getDetail() {
+        Log.e(TAG,"577   "+jsonObj)
+        // txtProdct!!.text = jsonObj!!.getString("Name")
+        strName = jsonObj!!.getString("Name")
+        strMRP = jsonObj!!.getString("MRP")
+        strSalPrice = jsonObj!!.getString("SalPrice")
+        strCode = jsonObj!!.getString("Code")
+        strCurQty = jsonObj!!.getString("CurrentQuantity")
+        ID_Category = jsonObj!!.getString("ID_Category")
+        ID_Product = jsonObj!!.getString("ID_Product")
+//        txtProdct_mrp!!.text = "₹ "+jsonObj!!.getString("MRP")
+//        txtProdct_sales!!.text = "₹ "+jsonObj!!.getString("SalPrice")
+//        txtProdct_mrp!!.setPaintFlags(txtProdct_mrp!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
+        detailCount = 0
+        getDetailList()
+        //  getProductDetail("0")
+    }
 
     private fun getDetailList() {
+        setGridList()
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
+                ll_main!!.visibility = View.GONE
                 progressDialog = ProgressDialog(this, R.style.Progress)
                 progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
                 progressDialog!!.setCancelable(false)
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                productEnquiryDetailViewModel.getProductEnquiryDetail(this)!!.observe(
+                productEnquiryDetailViewModel.getProductEnquiryDetail(this,ID_Category!!,ID_Product!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -146,15 +153,41 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener{
 
                                 val jObject = JSONObject(msg)
                                 if (jObject.getString("StatusCode") == "0") {
+                                    ll_main!!.visibility = View.VISIBLE
+                                    prodDetailArrayList = JSONArray()
+                                    jresult = JSONArray()
                                     Log.e(TAG,"jObject  12001  "+jObject)
-                                    val jsonObj: JSONObject = jObject.getJSONObject("BannerDetails")
-                                    val jresult = jsonObj.getJSONArray("BannerDetailsList")
+                                    val jsonObj: JSONObject = jObject.getJSONObject("ProductEnquiryDetails")
+                                    jresult = jsonObj.getJSONArray("ImageList")
                                     Log.e(TAG,"jresult  12002  "+jresult)
 
-                                    for (i in 0 until jresult!!.length()) {
-                                        try {
-                                            val json = jresult!!.getJSONObject(i)
-                                            var s = "" + json.getString("ImagePath")
+                                    txtProdct!!.setText(strName)
+                                    txtProdctDesc!!.text = jsonObj!!.getString("ProductDescription")
+                                    txtProdct_mrp!!.setText(strMRP)
+                                    txtProdct_sales!!.setText(strSalPrice)
+                                    txtProdct_mrp!!.setPaintFlags(txtProdct_mrp!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
+
+                                    if (strCurQty.equals("")){
+                                        txtProdct_qty!!.text ="Out of Stock"
+                                    }else{
+                                        var fQty = strCurQty!!.toFloat()
+                                        if (fQty <= 0){
+                                            txtProdct_qty!!.text ="Out of Stock"
+                                        }else{
+                                            txtProdct_qty!!.text ="Only "+strCurQty+" left"
+                                        }
+                                    }
+
+
+                                    if (jresult!!.length()>0){
+
+                                        ll_noimage!!.visibility = View.GONE
+                                        ll_viewPager!!.visibility = View.VISIBLE
+                                        XMENArray.clear()
+                                        for (i in 0 until jresult!!.length()) {
+                                            try {
+                                                val json = jresult!!.getJSONObject(i)
+                                                var s = "" + json.getString("Image")
 //
 //                                            XMENArray!!.add(s)
 //                                            viewPager!!.adapter = BannerAdapter(
@@ -163,49 +196,71 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener{
 //                                            )
 //                                            indicator!!.setViewPager(viewPager)
 
-                                            XMENArray!!.add(s)
-                                            mPager!!.adapter = ProductViewPagerAdapter(
-                                                this@ProductEnquiryDetailActivity,
-                                                XMENArray
-                                            )
-                                            indicator!!.setViewPager(mPager)
+                                                XMENArray!!.add(s)
+                                                mPager!!.adapter = ProductViewPagerAdapter(
+                                                    this@ProductEnquiryDetailActivity,
+                                                    XMENArray
+                                                )
+                                                indicator!!.setViewPager(mPager)
 
 
-                                        } catch (e: Exception) {
-                                            Log.e(TAG,"Exception  12001  "+e.toString())
+                                            } catch (e: Exception) {
+                                                Log.e(TAG,"Exception  12001  "+e.toString())
+                                            }
                                         }
+                                        //  mPager!!.setPageTransformer(true, CubeInScalingAnimation())
+                                        val handler = Handler()
+                                        val Update = Runnable {
+                                            //Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
+                                            if (currentPage == jresult!!.length()) {
+                                                currentPage = 0
+                                            }
+                                            mPager!!.setCurrentItem(currentPage++, true)
+
+                                        }
+                                        val swipeTimer = Timer()
+                                        swipeTimer.schedule(object : TimerTask() {
+                                            override fun run() {
+                                                handler.post(Update)
+                                            }
+                                        }, 100, 3000)
+                                    }
+                                    else{
+                                        ll_noimage!!.visibility = View.VISIBLE
+                                        ll_viewPager!!.visibility = View.GONE
+                                    }
+                                    prodDetailArrayList = jsonObj.getJSONArray("RelatedItem")
+                                    Log.e(TAG,"prodDetailArrayList  1666666  "+prodDetailArrayList.length())
+                                    if (prodDetailArrayList.length() > 0) {
+                                        Log.e(TAG, "msg   2271   " + prodDetailArrayList)
+                                        Log.e(TAG, "msg   2271001   ")
+                                        val lLayout = GridLayoutManager(this@ProductEnquiryDetailActivity, modelg)
+                                        recycSimilarItem!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        recycSimilarItem!!.isNestedScrollingEnabled = true
+                                        recycSimilarItem!!.setHasFixedSize(true)
+                                        val adapter = ProductSimilarAdapter(this@ProductEnquiryDetailActivity, prodDetailArrayList,modelg)
+                                        recycSimilarItem!!.adapter = adapter
+//                                        nestedscroll!!.smoothScrollTo(0, 0)
+                                        adapter.setClickListener(this@ProductEnquiryDetailActivity)
+                                        Log.e(TAG, "msg   2271002   ")
                                     }
 
-                                    //  mPager!!.setPageTransformer(true, CubeInScalingAnimation())
-                                    val handler = Handler()
-                                    val Update = Runnable {
-                                        //Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
-                                        if (currentPage == jresult!!.length()) {
-                                            currentPage = 0
-                                        }
-                                        mPager!!.setCurrentItem(currentPage++, true)
 
-                                    }
-                                    val swipeTimer = Timer()
-                                    swipeTimer.schedule(object : TimerTask() {
-                                        override fun run() {
-                                            handler.post(Update)
-                                        }
-                                    }, 3000, 3000)
 
 
 
                                 } else {
-//                                    val builder = AlertDialog.Builder(
-//                                            this@HomeActivity,
-//                                            R.style.MyDialogTheme
-//                                    )
-//                                    builder.setMessage(jObject.getString("EXMessage"))
-//                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                    }
-//                                    val alertDialog: AlertDialog = builder.create()
-//                                    alertDialog.setCancelable(false)
-//                                    alertDialog.show()
+                                    ll_main!!.visibility = View.GONE
+                                    val builder = AlertDialog.Builder(
+                                            this@ProductEnquiryDetailActivity,
+                                            R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
                             }
 
@@ -233,12 +288,22 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener{
     //    dotsLayout = findViewById(R.id.dotsLayout)
         indicator =findViewById(R.id.indicator)
         txtProdct = findViewById(R.id.txtProdct)
+        txtProdctDesc = findViewById(R.id.txtProdctDesc)
         txtProdct_mrp = findViewById(R.id.txtProdct_mrp)
         txtProdct_sales = findViewById(R.id.txtProdct_sales)
+        txtProdct_qty = findViewById(R.id.txtProdct_qty)
+        ll_main = findViewById(R.id.ll_main)
+        ll_viewPager = findViewById(R.id.ll_viewPager)
+        ll_noimage = findViewById(R.id.ll_noimage)
+     //   nestedscroll = findViewById(R.id.nestedscroll)
+        img_list = findViewById<ImageView>(R.id.img_list)
+        img_grid = findViewById<ImageView>(R.id.img_grid)
 
         recycSimilarItem = findViewById(R.id.recycSimilarItem)
 
         imback!!.setOnClickListener(this)
+        img_list!!.setOnClickListener(this)
+        img_grid!!.setOnClickListener(this)
 
 
     }
@@ -249,35 +314,40 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener{
                 finish()
             }
 
+            R.id.img_grid->{
+
+                modelg = 2
+                changeProductDesign()
+            }
+            R.id.img_list->{
+                modelg = 1
+                changeProductDesign()
+
+            }
+
         }
     }
-//    private fun addDotsIndicator(numDots: Int) {
-//        val dots = arrayOfNulls<ImageView>(numDots)
-//        val dotSize = resources.getDimensionPixelSize(R.dimen.dot_size)
-//        val dotMargin = resources.getDimensionPixelSize(R.dimen.dot_margin)
-//
-//        for (i in 0 until numDots) {
-//            dots[i] = ImageView(this)
-//            dots[i]?.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.dot_indicator_inactive))
-//            val params = LinearLayout.LayoutParams(dotSize, dotSize)
-//            params.setMargins(dotMargin, 0, dotMargin, 0)
-//            dotsLayout.addView(dots[i], params)
-//        }
-//
-//        // Set the first dot as active
-//        dots[0]?.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.dot_indicator_active))
-//    }
-//
-//    private fun updateDotsIndicator(currentDot: Int) {
-//        val numDots = dotsLayout.childCount
-//        for (i in 0 until numDots) {
-//            val dot = dotsLayout.getChildAt(i) as ImageView
-//            dot.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.dot_indicator_inactive))
-//        }
-//        (dotsLayout.getChildAt(currentDot) as ImageView).setImageDrawable(
-//            ContextCompat.getDrawable(this, R.drawable.dot_indicator_active)
-//        )
-//    }
+
+    private fun changeProductDesign() {
+        try {
+            setGridList()
+            if (prodDetailArrayList.length() > 0) {
+                Log.e(TAG, "msg   2271   " + prodDetailArrayList)
+                Log.e(TAG, "msg   2271001   ")
+                val lLayout = GridLayoutManager(this@ProductEnquiryDetailActivity, modelg)
+                recycSimilarItem!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                val adapter = ProductSimilarAdapter(this@ProductEnquiryDetailActivity, prodDetailArrayList,modelg)
+                recycSimilarItem!!.adapter = adapter
+//                nestedscroll!!.smoothScrollTo(0, 0)
+                adapter.setClickListener(this@ProductEnquiryDetailActivity)
+                Log.e(TAG, "msg   2271002   ")
+            }
+
+
+        }catch (e: Exception){
+
+        }
+    }
 
 
     private fun getProductDetail(ID_Category: String) {
@@ -307,10 +377,11 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener{
                                         prodDetailArrayList = jobjt.getJSONArray("ProductList")
                                         if (prodDetailArrayList.length() > 0) {
                                             Log.e(TAG, "msg   2271   " + prodDetailArrayList)
-                                            val lLayout = GridLayoutManager(this@ProductEnquiryDetailActivity, 3)
+                                            val lLayout = GridLayoutManager(this@ProductEnquiryDetailActivity, modelg)
                                             recycSimilarItem!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            val adapter = ProductSimilarAdapter(this@ProductEnquiryDetailActivity, prodDetailArrayList)
+                                            val adapter = ProductSimilarAdapter(this@ProductEnquiryDetailActivity, prodDetailArrayList,modelg)
                                             recycSimilarItem!!.adapter = adapter
+
                                         //    adapter.setClickListener(this@ProductEnquiryDetailActivity)
                                         }
 
@@ -352,6 +423,40 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener{
             }
         }
 
+    }
+
+    override fun onClick(position: Int, data: String) {
+        if (data.equals("productEnquiryDetails")) {
+
+            val jsonObject = prodDetailArrayList.getJSONObject(position)
+
+            strName = jsonObject!!.getString("Name")
+            strMRP = jsonObject!!.getString("MRP")
+            strSalPrice = jsonObject!!.getString("SalPrice")
+            strCode = jsonObject!!.getString("Code")
+            strCurQty = jsonObject!!.getString("CurrentQuantity")
+            ID_Category = jsonObject!!.getString("ID_Category")
+            ID_Product = jsonObject!!.getString("ID_Product")
+//        txtProdct_mrp!!.text = "₹ "+jsonObj!!.getString("MRP")
+//        txtProdct_sales!!.text = "₹ "+jsonObj!!.getString("SalPrice")
+//        txtProdct_mrp!!.setPaintFlags(txtProdct_mrp!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
+            detailCount = 0
+            getDetailList()
+
+        }
+    }
+
+    fun smoothScrollToPosition(recyclerView: RecyclerView, position: Int) {
+        val smoothScroller = object : LinearSmoothScroller(recyclerView.context) {
+            override fun getVerticalSnapPreference(): Int {
+                // Set the scrolling behavior here.
+                // SNAP_TO_START will scroll the item to the top of the RecyclerView
+                // SNAP_TO_END will scroll the item to the bottom of the RecyclerView
+                return SNAP_TO_START
+            }
+        }
+        smoothScroller.targetPosition = position
+        recyclerView.layoutManager?.startSmoothScroll(smoothScroller)
     }
 
 }

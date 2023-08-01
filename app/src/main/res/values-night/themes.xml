@@ -307,4 +307,12 @@
         <item name="android:windowBackground">@color/white</item>
     </style>
 
+    <style name="TextInputLayoutStyle1" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <!-- Customize other attributes here if needed -->
+        <item name="boxStrokeColor">@color/redDark</item>
+        <item name="boxStrokeWidth">2dp</item>
+
+        <!-- Add more attributes as per your requirements -->
+    </style>
+
 </resources>

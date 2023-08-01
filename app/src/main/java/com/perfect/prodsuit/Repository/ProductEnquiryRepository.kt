@@ -59,16 +59,32 @@ object ProductEnquiryRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+
+
+//                {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","FK_Company":"1","FK_Category":"1","FK_Branch":"0","FK_Product":"401","Offer":"0","Name":""}
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("14"))
+                val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
+
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ID_Category", ProdsuitApplication.encryptStart(ID_Category))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
+                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
+                requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
+                requestObject1.put("Offer", ProdsuitApplication.encryptStart(isOffersOnly))
+                requestObject1.put("Name", ProdsuitApplication.encryptStart(""))
+
+
+//                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+//                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("14"))
+//                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+//                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+//                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+//                requestObject1.put("ID_Category", ProdsuitApplication.encryptStart(ID_Category))
 
                 Log.e(TAG,"requestObject1   80   "+requestObject1)
                 Log.e(TAG,"ID_Category   80   "+ID_Category)
@@ -82,7 +98,8 @@ object ProductEnquiryRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getProductDetail(body)
+//            val call = apiService.getProductDetail(body)
+            val call = apiService.getProductEnquiryList(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
