@@ -215,9 +215,23 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
     private fun setMenuItemHidind() {
-        val menu: Menu = nav_view!!.getMenu()
-        val menuItem = menu.findItem(R.id.nav_profile)
-        // menuItem.setVisible(false);
+        try {
+            val menu: Menu = nav_view!!.getMenu()
+            val menuproduct = menu.findItem(R.id.nav_productenquiry)
+
+            val ModuleListSP = context.getSharedPreferences(Config.SHARED_PREF54, 0)
+            val jsonObj = JSONObject(ModuleListSP.getString("ModuleList",""))
+            var iInventory = jsonObj!!.getString("INVENTORY")
+
+            if (!iInventory.equals("true")){
+                menuproduct.setVisible(false);
+            }
+
+        }catch (e : Exception){
+
+        }
+
+
     }
 
     private fun fetchFcmServerKey() {
@@ -363,9 +377,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             Log.e(TAG,"32222    "+e.toString())
         }
     }
-
-
-
 
 
     private fun getServiceNotification() {
