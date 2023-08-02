@@ -41,7 +41,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
-                    android:text="Please login to your account by entering your credentials, we will sent you OTP to verify."
+                    android:text="Please login to your account by entering your registered mobile number, we will sent you OTP to verify."
                     android:textColor="@color/white"
                     android:textSize="18dp"
                     app:fontFamily="@font/myfont" />

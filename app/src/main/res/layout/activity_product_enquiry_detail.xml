@@ -95,18 +95,19 @@
                 <ScrollView
                     android:id="@+id/nestedscroll"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fillViewport="true"
+                    android:layout_height="wrap_content"
                     android:scrollbars="none"
+                    android:overScrollMode="always"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                     <LinearLayout
                         android:id="@+id/ll_main"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:background="@color/greylight"
                         android:orientation="vertical"
                         android:visibility="visible">
+
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
@@ -116,7 +117,8 @@
                             android:outlineAmbientShadowColor="@color/colorPrimaryDark"
                             android:outlineSpotShadowColor="@color/colorPrimaryDark"
                             app:cardCornerRadius="2dp"
-                            app:cardElevation="2dp">
+                            app:cardElevation="2dp"
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -396,7 +398,8 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:orientation="horizontal">
+                                    android:orientation="horizontal"
+                                    android:visibility="gone">
 
                                     <TextView
                                         android:layout_width="match_parent"
@@ -445,7 +448,8 @@
                                 <androidx.recyclerview.widget.RecyclerView
                                     android:id="@+id/recycSimilarItem"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:nestedScrollingEnabled="true"
                                     android:visibility="visible" />
 
 

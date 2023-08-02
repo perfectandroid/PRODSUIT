@@ -15,7 +15,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,10 +22,8 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.Helper.FullLenghRecyclertview
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.ProductEnquiryListAdapter
 import com.perfect.prodsuit.View.Adapter.ProductSimilarAdapter
 import com.perfect.prodsuit.View.Adapter.ProductViewPagerAdapter
 import com.perfect.prodsuit.Viewmodel.ProductDetailViewModel
@@ -161,87 +158,122 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener, 
                                     jresult = jsonObj.getJSONArray("ImageList")
                                     Log.e(TAG,"jresult  12002  "+jresult)
 
-                                    txtProdct!!.setText(strName)
-                                    txtProdctDesc!!.text = jsonObj!!.getString("ProductDescription")
-                                    txtProdct_mrp!!.setText(strMRP)
-                                    txtProdct_sales!!.setText(strSalPrice)
-                                    txtProdct_mrp!!.setPaintFlags(txtProdct_mrp!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
-
-                                    if (strCurQty.equals("")){
-                                        txtProdct_qty!!.text ="Out of Stock"
-                                    }else{
-                                        var fQty = strCurQty!!.toFloat()
-                                        if (fQty <= 0){
-                                            txtProdct_qty!!.text ="Out of Stock"
-                                        }else{
-                                            txtProdct_qty!!.text ="Only "+strCurQty+" left"
-                                        }
-                                    }
-
-
-                                    if (jresult!!.length()>0){
-
-                                        ll_noimage!!.visibility = View.GONE
-                                        ll_viewPager!!.visibility = View.VISIBLE
-                                        XMENArray.clear()
-                                        for (i in 0 until jresult!!.length()) {
-                                            try {
-                                                val json = jresult!!.getJSONObject(i)
-                                                var s = "" + json.getString("Image")
+//                                    txtProdct!!.setText(strName)
+//                                    txtProdctDesc!!.text = jsonObj!!.getString("ProductDescription")
+//                                    txtProdct_mrp!!.setText(strMRP)
+//                                    txtProdct_sales!!.setText(strSalPrice)
+//                                    txtProdct_mrp!!.setPaintFlags(txtProdct_mrp!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
 //
-//                                            XMENArray!!.add(s)
-//                                            viewPager!!.adapter = BannerAdapter(
-//                                                this@ProductEnquiryDetailActivity,
-//                                                XMENArray
-//                                            )
-//                                            indicator!!.setViewPager(viewPager)
+//                                    if (strCurQty.equals("")){
+//                                        txtProdct_qty!!.text ="Out of Stock"
+//                                    }else{
+//                                        var fQty = strCurQty!!.toFloat()
+//                                        if (fQty <= 0){
+//                                            txtProdct_qty!!.text ="Out of Stock"
+//                                        }else{
+//                                            txtProdct_qty!!.text ="Only "+strCurQty+" left"
+//                                        }
+//                                    }
+//
+//
+//                                    if (jresult!!.length()>0){
+//
+//                                        ll_noimage!!.visibility = View.GONE
+//                                        ll_viewPager!!.visibility = View.VISIBLE
+//                                        XMENArray.clear()
+//                                        for (i in 0 until jresult!!.length()) {
+//                                            try {
+//                                                val json = jresult!!.getJSONObject(i)
+//                                                var s = "" + json.getString("Image")
+////
+////                                            XMENArray!!.add(s)
+////                                            viewPager!!.adapter = BannerAdapter(
+////                                                this@ProductEnquiryDetailActivity,
+////                                                XMENArray
+////                                            )
+////                                            indicator!!.setViewPager(viewPager)
+//
+//                                                XMENArray!!.add(s)
+//                                                mPager!!.adapter = ProductViewPagerAdapter(
+//                                                    this@ProductEnquiryDetailActivity,
+//                                                    XMENArray
+//                                                )
+//                                                indicator!!.setViewPager(mPager)
+//
+//
+//                                            } catch (e: Exception) {
+//                                                Log.e(TAG,"Exception  12001  "+e.toString())
+//                                            }
+//                                        }
+//                                        //  mPager!!.setPageTransformer(true, CubeInScalingAnimation())
+//                                        val handler = Handler()
+//                                        val Update = Runnable {
+//                                            //Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
+//                                            if (currentPage == jresult!!.length()) {
+//                                                currentPage = 0
+//                                            }
+//                                            mPager!!.setCurrentItem(currentPage++, true)
+//
+//                                        }
+//                                        val swipeTimer = Timer()
+//                                        swipeTimer.schedule(object : TimerTask() {
+//                                            override fun run() {
+//                                                handler.post(Update)
+//                                            }
+//                                        }, 100, 3000)
+//                                    }
+//                                    else{
+//                                        ll_noimage!!.visibility = View.VISIBLE
+//                                        ll_viewPager!!.visibility = View.GONE
+//                                    }
 
-                                                XMENArray!!.add(s)
-                                                mPager!!.adapter = ProductViewPagerAdapter(
-                                                    this@ProductEnquiryDetailActivity,
-                                                    XMENArray
-                                                )
-                                                indicator!!.setViewPager(mPager)
-
-
-                                            } catch (e: Exception) {
-                                                Log.e(TAG,"Exception  12001  "+e.toString())
-                                            }
-                                        }
-                                        //  mPager!!.setPageTransformer(true, CubeInScalingAnimation())
-                                        val handler = Handler()
-                                        val Update = Runnable {
-                                            //Log.e("TAG","currentPage  438   "+currentPage+"   "+jresult!!.length())
-                                            if (currentPage == jresult!!.length()) {
-                                                currentPage = 0
-                                            }
-                                            mPager!!.setCurrentItem(currentPage++, true)
-
-                                        }
-                                        val swipeTimer = Timer()
-                                        swipeTimer.schedule(object : TimerTask() {
-                                            override fun run() {
-                                                handler.post(Update)
-                                            }
-                                        }, 100, 3000)
-                                    }
-                                    else{
-                                        ll_noimage!!.visibility = View.VISIBLE
-                                        ll_viewPager!!.visibility = View.GONE
-                                    }
                                     prodDetailArrayList = jsonObj.getJSONArray("RelatedItem")
                                     Log.e(TAG,"prodDetailArrayList  1666666  "+prodDetailArrayList.length())
                                     if (prodDetailArrayList.length() > 0) {
                                         Log.e(TAG, "msg   2271   " + prodDetailArrayList)
                                         Log.e(TAG, "msg   2271001   ")
                                         val lLayout = GridLayoutManager(this@ProductEnquiryDetailActivity, modelg)
+                                        lLayout.setSpanSizeLookup(object :
+                                            GridLayoutManager.SpanSizeLookup() {
+                                            override fun getSpanSize(position: Int): Int {
+                                                return if (position == 0) 2 else 1
+                                            }
+                                        })
                                         recycSimilarItem!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                         recycSimilarItem!!.isNestedScrollingEnabled = true
                                         recycSimilarItem!!.setHasFixedSize(true)
-                                        val adapter = ProductSimilarAdapter(this@ProductEnquiryDetailActivity, prodDetailArrayList,modelg)
+                                        val adapter = ProductSimilarAdapter(this@ProductEnquiryDetailActivity, prodDetailArrayList,modelg,jresult,strName!!,strMRP!!,strSalPrice!!,strCurQty!!)
                                         recycSimilarItem!!.adapter = adapter
 //                                        nestedscroll!!.smoothScrollTo(0, 0)
                                         adapter.setClickListener(this@ProductEnquiryDetailActivity)
+//                                        recycSimilarItem!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//                                            private var lastDy = 0
+//
+//                                            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                                                // dy will be positive when scrolling down and negative when scrolling up
+//                                                if (dy > 0) {
+//                                                    // Scrolling downwards
+//                                                    Log.e(TAG, "Scrolling downwards   227100200   ")
+//                                                } else {
+//                                                    // Scrolling upwards
+//                                                    Log.e(TAG, "Scrolling upwards   227100200   ")
+//                                                }
+//
+//                                                // Optionally, you can check if the RecyclerView has reached the top or bottom
+//                                                if (!recyclerView.canScrollVertically(1)) {
+//                                                    // Reached the bottom of the RecyclerView
+//                                                } else if (!recyclerView.canScrollVertically(-1)) {
+//                                                    // Reached the top of the RecyclerView
+//                                                }
+//
+//                                                // Save the last dy value to calculate the scrolling direction
+//                                                lastDy = dy
+//                                            }
+//
+//                                            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+//                                                // Do nothing here
+//                                            }
+//                                        })
                                         Log.e(TAG, "msg   2271002   ")
                                     }
 
@@ -305,6 +337,23 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener, 
         img_list!!.setOnClickListener(this)
         img_grid!!.setOnClickListener(this)
 
+//        recycSimilarItem!!.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+//            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+//                super.onScrolled(recyclerView, dx, dy)
+//                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+//                val totalItemCount = layoutManager.itemCount
+//                val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
+//
+//                // Check if the last visible item is the last item in the list
+//                Log.e(TAG,"318888   "+totalItemCount)
+//                if (lastVisibleItem == totalItemCount - 1) {
+//                    Log.e(TAG,"318888   "+totalItemCount)
+//                    // This means the RecyclerView has been scrolled to the bottom
+//                    // Perform any action you want when the RecyclerView reaches the bottom
+//                }
+//            }
+//        })
+
 
     }
 
@@ -330,13 +379,32 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener, 
 
     private fun changeProductDesign() {
         try {
-            setGridList()
+          //  setGridList()
             if (prodDetailArrayList.length() > 0) {
                 Log.e(TAG, "msg   2271   " + prodDetailArrayList)
                 Log.e(TAG, "msg   2271001   ")
+
                 val lLayout = GridLayoutManager(this@ProductEnquiryDetailActivity, modelg)
+//                lLayout.setSpanSizeLookup(object :
+//                    GridLayoutManager.SpanSizeLookup() {
+//                    override fun getSpanSize(position: Int): Int {
+//                        Log.e(TAG,"position  39000   "+position+"  "+modelg)
+////                        var spCount = 1
+////                        if (modelg == 1){
+////                            spCount = 1
+////                        }
+////                        if (modelg == 2){
+////                            spCount = 2
+////                        }
+////                        if (position == modelg){
+////                            spCount =
+////                        }
+//                     //   return modelg
+//                        return if (position == 0) 1 else 2
+//                    }
+//                })
                 recycSimilarItem!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                val adapter = ProductSimilarAdapter(this@ProductEnquiryDetailActivity, prodDetailArrayList,modelg)
+                val adapter = ProductSimilarAdapter(this@ProductEnquiryDetailActivity, prodDetailArrayList,modelg,jresult,strName!!,strMRP!!,strSalPrice!!,strCurQty!!)
                 recycSimilarItem!!.adapter = adapter
 //                nestedscroll!!.smoothScrollTo(0, 0)
                 adapter.setClickListener(this@ProductEnquiryDetailActivity)
@@ -378,8 +446,14 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener, 
                                         if (prodDetailArrayList.length() > 0) {
                                             Log.e(TAG, "msg   2271   " + prodDetailArrayList)
                                             val lLayout = GridLayoutManager(this@ProductEnquiryDetailActivity, modelg)
+                                            lLayout.setSpanSizeLookup(object :
+                                                GridLayoutManager.SpanSizeLookup() {
+                                                override fun getSpanSize(position: Int): Int {
+                                                    return if (position == 0) 2 else 1
+                                                }
+                                            })
                                             recycSimilarItem!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            val adapter = ProductSimilarAdapter(this@ProductEnquiryDetailActivity, prodDetailArrayList,modelg)
+                                            val adapter = ProductSimilarAdapter(this@ProductEnquiryDetailActivity, prodDetailArrayList,modelg,jresult,strName!!,strMRP!!,strSalPrice!!,strCurQty!!)
                                             recycSimilarItem!!.adapter = adapter
 
                                         //    adapter.setClickListener(this@ProductEnquiryDetailActivity)
@@ -428,6 +502,8 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener, 
     override fun onClick(position: Int, data: String) {
         if (data.equals("productEnquiryDetails")) {
 
+            Log.e(TAG,"ggggggg   "+position)
+
             val jsonObject = prodDetailArrayList.getJSONObject(position)
 
             strName = jsonObject!!.getString("Name")
@@ -442,6 +518,20 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener, 
 //        txtProdct_mrp!!.setPaintFlags(txtProdct_mrp!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
             detailCount = 0
             getDetailList()
+
+        }
+
+        if (data.equals("Clickimggrid")) {
+
+            Log.e(TAG,"ggggggg  Clickimggrid   "+position)
+            modelg = 2
+            changeProductDesign()
+        }
+
+        if (data.equals("Clickimglist")) {
+            Log.e(TAG,"ggggggg Clickimglist  "+position)
+            modelg = 1
+            changeProductDesign()
 
         }
     }

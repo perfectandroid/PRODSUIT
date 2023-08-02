@@ -47,6 +47,7 @@ class ProductEnquiryListAdapter (internal var context: Context, internal var jso
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
 
+                holder.ll_topimage.visibility = View.GONE
                 holder.txtProdct.text        = jsonObject!!.getString("Name")
                 holder.txtProdct_mrp.text        = "₹ "+jsonObject!!.getString("MRP")
                 holder.txtProdct_sales.text        = "₹ "+jsonObject!!.getString("SalPrice")
@@ -98,6 +99,7 @@ class ProductEnquiryListAdapter (internal var context: Context, internal var jso
         internal var txtProdct_qty      : TextView
         internal var img_product        : ImageView
         internal var ll_product_list    : LinearLayout
+        internal var ll_topimage    : LinearLayout
         init {
             img_product           = v.findViewById<View>(R.id.img_product) as ImageView
             txtProdct             = v.findViewById<View>(R.id.txtProdct) as TextView
@@ -105,6 +107,7 @@ class ProductEnquiryListAdapter (internal var context: Context, internal var jso
             txtProdct_sales       = v.findViewById<View>(R.id.txtProdct_sales) as TextView
             txtProdct_qty         = v.findViewById<View>(R.id.txtProdct_qty) as TextView
             ll_product_list       = v.findViewById<View>(R.id.ll_product_list) as LinearLayout
+            ll_topimage       = v.findViewById<View>(R.id.ll_topimage) as LinearLayout
 
         }
     }
