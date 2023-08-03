@@ -66,6 +66,12 @@
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.StockRTListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.InventoryActivity"
             android:exported="false"
             android:screenOrientation="portrait"

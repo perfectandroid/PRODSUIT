@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_header"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imback"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="left"
+                        android:background="@color/color_activity_transparent"
+                        android:padding="10dp"
+                        android:tint="@color/white"
+                        android:src="@drawable/back_arro"
+                        tools:ignore="UseAppTint"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tv_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center"
+                    android:text="Stock Request "
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:tint="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/imgClosing"
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="10dp"
+                        android:background="@color/color_activity_transparent"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_close"
+                        app:tint="@color/white"
+                        android:visibility="visible"
+                        tools:ignore="UseAppTint" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llsearch"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:paddingBottom="10dp"
+                android:orientation="horizontal">
+                <!--                android:background="#e97a7a"-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/searchbg"
+                    android:layout_weight="0.2">
+                    <EditText
+                        android:id="@+id/etsearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:hint="Search..."
+                        android:lines="1"
+                        android:scrollHorizontally="true"
+                        android:ellipsize="end"
+                        android:inputType="text"
+                        android:textColorHint="@color/grey"
+                        android:paddingLeft="10dp"
+                        android:background="@drawable/searchbg"
+                        android:drawableLeft="@drawable/ic_search"
+                        android:fontFamily="@font/myfont"
+                        android:drawableTint="@color/grey"
+                        android:layout_weight="1"
+                        android:drawablePadding="10dp"
+                        android:paddingRight="10dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/llBtn"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycStockRT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="true"
+                    android:visibility="visible" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+
+                android:layout_alignParentBottom="true"
+                android:visibility="gone">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/myfont"
+                    android:background="@drawable/shape_round_trans"
+                    android:gravity="center"
+                    android:text="Close"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textSize="17dp"
+                    android:padding="5dp"
+                    android:textStyle="normal"
+                    android:tint="@color/white" />
+
+
+
+                <Button
+                    android:id="@+id/btnReset"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1.5"
+                    android:background="@drawable/btn_shape_reset"
+                    android:fontFamily="@font/myfont"
+                    android:padding="2dp"
+                    android:text="Reset"
+                    android:textStyle="bold"
+                    android:textColor="@color/greydark"
+                    android:textAllCaps="true"
+                    android:textSize="15dp"
+                    android:visibility="gone"/>
+
+                <Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/myfont"
+                    android:background="@drawable/btn_shape_submit"
+                    android:padding="2dp"
+                    android:layout_weight="1"
+                    android:textAllCaps="true"
+                    android:text="Submit"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

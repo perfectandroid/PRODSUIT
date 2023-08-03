@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -39,6 +40,7 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
 
+    var img_list : ImageView? = null
     var tie_Date : TextInputEditText? = null
     var tie_FromBranch : TextInputEditText? = null
     var tie_FromDepartment : TextInputEditText? = null
@@ -194,6 +196,8 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
 
+        img_list = findViewById(R.id.img_list)
+        img_list!!.setOnClickListener(this)
         tie_Date = findViewById(R.id.tie_Date)
         tie_FromBranch = findViewById(R.id.tie_FromBranch)
         tie_FromDepartment = findViewById(R.id.tie_FromDepartment)
@@ -443,6 +447,12 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         when(v.id){
             R.id.imback->{
                 finish()
+            }
+            R.id.img_list->{
+
+                val intent = Intent(this@StockRequestActivity, StockRTListActivity::class.java)
+                intent.putExtra("headerTitle","Request List")
+                startActivityForResult(intent, Config.CODE_STOCK_LIST!!);
             }
 
 
@@ -1981,6 +1991,18 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         til_ToEmployee!!.isErrorEnabled = false
         til_ToEmployee!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
 
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.e(TAG, "onActivityResult  20711   " + requestCode + "   " + resultCode + "  " + data)
+        if (requestCode == Config.CODE_STOCK_LIST) {
+            if (data != null) {
+
+                Log.e(TAG,"20711    "+data.getStringExtra("strLongitue"))
+            }
+        }
 
     }
 

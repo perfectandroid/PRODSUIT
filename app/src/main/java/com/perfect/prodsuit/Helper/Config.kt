@@ -34,6 +34,7 @@ import javax.net.ssl.*
 
 object Config {
 
+    var CODE_STOCK_LIST: Int? = 1001
 
     const val SHARED_PREF = "loginsession"
     const val SHARED_PREF1 = "FK_Employee"

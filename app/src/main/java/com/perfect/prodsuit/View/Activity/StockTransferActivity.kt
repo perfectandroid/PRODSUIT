@@ -1,18 +1,26 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.Manifest
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.cardview.widget.CardView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -32,6 +40,7 @@ import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -41,6 +50,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
 
+    var img_list : ImageView? = null
     var tie_Date : TextInputEditText? = null
     var tie_Request : TextInputEditText? = null
     var tie_FromBranch : TextInputEditText? = null
@@ -195,6 +205,9 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
+
+        img_list = findViewById(R.id.img_list)
+        img_list!!.setOnClickListener(this)
 
         tie_Date = findViewById(R.id.tie_Date)
         tie_Request = findViewById(R.id.tie_Request)
@@ -452,6 +465,12 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                 finish()
             }
 
+            R.id.img_list->{
+
+                val intent = Intent(this@StockTransferActivity, StockRTListActivity::class.java)
+                intent.putExtra("headerTitle","Transfer List")
+                startActivityForResult(intent, Config.CODE_STOCK_LIST!!);
+            }
 
             R.id.tie_Date->{
                 Config.disableClick(v)
@@ -2040,6 +2059,18 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
         til_ToEmployee!!.isErrorEnabled = false
         til_ToEmployee!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
 
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.e(TAG, "onActivityResult  20711   " + requestCode + "   " + resultCode + "  " + data)
+        if (requestCode == Config.CODE_STOCK_LIST) {
+            if (data != null) {
+
+                Log.e(TAG,"20711    "+data.getStringExtra("strLongitue"))
+            }
+        }
 
     }
 
