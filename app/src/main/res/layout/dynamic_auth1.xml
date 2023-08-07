@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_sub_auth1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/nnnw"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/myfont"
+        android:text="LgLeadNo"
+        android:layout_marginTop="-5dp"
+        android:gravity="center_vertical"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="13dp"
+        android:textStyle="normal"
+        android:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/nnnww32"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/myfont"
+        android:text="000248"
+        android:layout_marginTop="-5dp"
+        android:gravity="center_vertical"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="13dp"
+        android:textStyle="normal"
+        android:tint="@color/white" />
+
+
+</LinearLayout>

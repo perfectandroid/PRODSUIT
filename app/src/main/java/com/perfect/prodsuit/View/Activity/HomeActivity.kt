@@ -860,8 +860,15 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                val i = Intent(this@HomeActivity, NotificationActivity::class.java)
 //                startActivity(i)
 
-                val i = Intent(this@HomeActivity, InventoryActivity::class.java)
+//                val i = Intent(this@HomeActivity, InventoryActivity::class.java)
+//                startActivity(i)
+
+//                val i = Intent(this@HomeActivity, ApproveActivity::class.java)
+//                startActivity(i)
+
+                val i = Intent(this@HomeActivity, ApprovalListActivity::class.java)
                 startActivity(i)
+
             }
         }
     }
