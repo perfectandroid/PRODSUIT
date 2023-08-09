@@ -455,4 +455,8 @@
     <color name="tab_inactive">#E8E7E7</color>
     <color name="btn_more">#B3ADAD</color>
 
+    <color name="color_approve">#287378</color>
+    <color name="color_reject">#ED8661</color>
+<!--    <color name="color_reject">#858484</color>-->
+
 </resources>

@@ -85,8 +85,24 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyAprrove"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" />
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -154,13 +170,13 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/myfont"
-                                    android:text="256"
                                     android:layout_margin="5dp"
+                                    android:background="@drawable/shape_bottomleft"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center"
                                     android:paddingLeft="15dp"
                                     android:paddingRight="15dp"
-                                    android:gravity="center"
-                                    android:background="@drawable/shape_bottomleft"
+                                    android:text="256"
                                     android:textAllCaps="true"
                                     android:textColor="#517A50"
                                     android:textSize="20dp"

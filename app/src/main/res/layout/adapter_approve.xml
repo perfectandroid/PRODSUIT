@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        app:cardCornerRadius="5dp"
+        android:layout_margin="0dp"
+        app:cardElevation="2dp"
+        app:cardUseCompatPadding="true"
+        tools:ignore="MissingConstraints">
+        <!--    app:cardUseCompatPadding="true"-->
+
+        <RelativeLayout
+            android:id="@+id/rltv_main"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:padding="10dp"
+            android:paddingBottom="0dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/vtr_branch"
+                    app:tint="#517A50"/>
+
+                <TextView
+                    android:id="@+id/tv_values"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/myfont"
+                    android:text="Lead"
+                    android:layout_marginTop="-5dp"
+                    android:gravity="center_vertical"
+                    android:textAllCaps="false"
+                    android:textColor="#8E8D8D"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:tint="@color/white" />
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_counts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/shape_bottomleft"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:text="256"
+                    android:textAllCaps="true"
+                    android:textColor="#517A50"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:tint="@color/white" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+
+
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,4 +9,7 @@
 
     <dimen name="dot_size">20dp</dimen>
     <dimen name="dot_margin">2dp</dimen>
+
+    <dimen name="drawable_padding">15dp</dimen>
+
 </resources>
