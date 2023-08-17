@@ -11,8 +11,8 @@ class ApprovalDetailViewModel : ViewModel() {
 
     var approvalDetailData: MutableLiveData<ApprovalDetailModel>? = null
 
-    fun getApprovalDetail(context: Context) : LiveData<ApprovalDetailModel>? {
-        approvalDetailData = ApprovalDetailRepository.getServicesApiCall(context)
+    fun getApprovalDetail(context: Context,Module : String,AuthID : String) : LiveData<ApprovalDetailModel>? {
+        approvalDetailData = ApprovalDetailRepository.getServicesApiCall(context,Module,AuthID)
         return approvalDetailData
     }
 }

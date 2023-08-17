@@ -399,6 +399,37 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                                             commonAppEditer.putString("commonApp", Mode)
                                             commonAppEditer.commit()
 
+//                                            val BASE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF7, 0)
+//                                            val BASE_URLEditer = BASE_URLSP.edit()
+//                                            BASE_URLEditer.putString("BASE_URL", "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/api/")
+//                                            BASE_URLEditer.commit()
+//
+//                                            val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
+//                                            val IMAGE_URLEditer = IMAGE_URLSP.edit()
+//                                            IMAGE_URLEditer.putString("IMAGE_URL", "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/")
+//                                            IMAGE_URLEditer.commit()
+//
+//
+//                                            val CERT_NAMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF8, 0)
+//                                            val CERT_NAMEEditer = CERT_NAMESP.edit()
+//                                            CERT_NAMEEditer.putString("CERT_NAME", CERT_NAME)
+//                                            CERT_NAMEEditer.commit()
+//
+//                                            val BANK_KEYESP = applicationContext.getSharedPreferences(Config.SHARED_PREF9, 0)
+//                                            val BANK_KEYEditer = BANK_KEYESP.edit()
+//                                            BANK_KEYEditer.putString("BANK_KEY", "-511")
+//                                            BANK_KEYEditer.commit()
+//
+//                                            val companyCodeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF17, 0)
+//                                            val companyCodeEditer = companyCodeSP.edit()
+//                                            companyCodeEditer.putString("companyCode", companyCode)
+//                                            companyCodeEditer.commit()
+//
+//                                            val commonAppSP = applicationContext.getSharedPreferences(Config.SHARED_PREF18, 0)
+//                                            val commonAppEditer = commonAppSP.edit()
+//                                            commonAppEditer.putString("commonApp", "0")
+//                                            commonAppEditer.commit()
+
 
                                             showMaintanace()
 

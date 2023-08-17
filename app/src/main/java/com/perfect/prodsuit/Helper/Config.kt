@@ -89,7 +89,7 @@ object Config {
     const val SHARED_PREF38 = "FK_BranchType"
     const val SHARED_PREF39 = "FK_Company"
     const val SHARED_PREF40 = "FK_BranchCodeUser"
-    const val SHARED_PREF41 = "FK_UserRole"
+    const val SHARED_PREF41 = "FK_UserRole"  // UserGroup
     const val SHARED_PREF42 = "UserRole"
     const val SHARED_PREF43 = "IsAdmin"
     const val SHARED_PREF44 = "ID_User"  // FK_User
@@ -246,6 +246,11 @@ object Config {
 
 
 
+    }
+
+    fun addSpaceBetweenLowerAndUpper(text: String): String {
+        val regex = "(?<=\\p{Ll})(?=\\p{Lu})".toRegex()
+        return text.replace(regex, " ")
     }
 
     fun getActionTypes(): String {

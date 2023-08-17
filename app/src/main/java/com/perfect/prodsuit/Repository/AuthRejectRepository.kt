@@ -9,7 +9,8 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.ApprovalModel
+import com.perfect.prodsuit.Model.AuthRejectModel
+import com.perfect.prodsuit.Model.BranchTypeModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -20,22 +21,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object ApprovalRepository {
+object AuthRejectRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val approvalSetterGetter = MutableLiveData<ApprovalModel>()
-    val TAG: String = "ApprovalRepository"
+    val authRejectSetterGetter = MutableLiveData<AuthRejectModel>()
+    val TAG: String = "AuthRejectRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<ApprovalModel> {
-        getApproval(context)
-        return approvalSetterGetter
+    fun getServicesApiCall(context: Context, FK_AuthID : String, ID_Reason : String, strReason : String): MutableLiveData<AuthRejectModel> {
+        updateAuthReject(context, FK_AuthID,ID_Reason, strReason)
+        return authRejectSetterGetter
     }
 
-    private fun getApproval(context: Context) {
-
-
+    private fun updateAuthReject(context: Context, FK_AuthID: String, ID_Reason : String, strReason: String) {
         try {
-            approvalSetterGetter.value = ApprovalModel("")
+            authRejectSetterGetter.value = AuthRejectModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -62,23 +61,25 @@ object ApprovalRepository {
 
             try {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
-                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
-                val FK_UserRoleSP = context.getSharedPreferences(Config.SHARED_PREF41, 0)
-                val ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
 
-//                {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","FK_Company":"1","FK_UserGroup":"14","FK_User":"1"}
+//               {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","FK_Company":"1","AuthID":"12399","EntrBy":"riyaske","FK_Reason":"","Reason":""}
+
+
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("FK_UserGroup", ProdsuitApplication.encryptStart(FK_UserRoleSP.getString("FK_UserRole", null)))
-                requestObject1.put("FK_User", ProdsuitApplication.encryptStart(ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("AuthID", ProdsuitApplication.encryptStart(FK_AuthID))
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
+                requestObject1.put("FK_Reason", ProdsuitApplication.encryptStart(ID_Reason))
+                requestObject1.put("Reason", ProdsuitApplication.encryptStart(strReason))
 
-                Log.e(TAG,"78 getAuthorizationModuleList  "+requestObject1)
 
+
+                Log.e(TAG,"81 saveAuthorizationRejectUpdate  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -86,7 +87,7 @@ object ApprovalRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getAuthorizationModuleList(body)
+            val call = apiService.saveAuthorizationRejectUpdate(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -94,23 +95,19 @@ object ApprovalRepository {
                 ) {
                     try {
                         progressDialog!!.dismiss()
-                        Log.e(TAG,"78 jObject  "+response.body())
-
                         val jObject = JSONObject(response.body())
-                        Log.e(TAG,"78 jObject  "+jObject)
-                        val leads = ArrayList<ApprovalModel>()
-                        leads.add(ApprovalModel(response.body()))
+                        val leads = ArrayList<AuthRejectModel>()
+                        leads.add(AuthRejectModel(response.body()))
                         val msg = leads[0].message
-                        approvalSetterGetter.value = ApprovalModel(msg)
+                        authRejectSetterGetter.value = AuthRejectModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
-                        Log.e(TAG,"78 jObject  "+e.toString())
-                        Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES+"1", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
-                    Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES+"12", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
@@ -118,40 +115,6 @@ object ApprovalRepository {
             progressDialog!!.dismiss()
             Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
         }
-
-//        try {
-//
-//            var msg = "{\n" +
-//                    "  \"ApprovalDetails\": {\n" +
-//                    "    \"ApprovalDetailList\": [\n" +
-//                    "      {\n" +
-//                    "        \"Title\": \"Lead\",\n" +
-//                    "        \"Count\": \"14\"\n" +
-//                    "      },\n" +
-//                    "      {\n" +
-//                    "        \"Title\": \"Service\",\n" +
-//                    "        \"Count\": \"35\"\n" +
-//                    "      },\n" +
-//                    "      {\n" +
-//                    "        \"Title\": \"Master\",\n" +
-//                    "        \"Count\": \"12\"\n" +
-//                    "      },\n" +
-//                    "      {\n" +
-//                    "        \"Title\": \"Inventory\",\n" +
-//                    "        \"Count\": \"24\"\n" +
-//                    "      }\n" +
-//                    "    ],\n" +
-//                    "    \"ResponseCode\": \"0\",\n" +
-//                    "    \"ResponseMessage\": \"Transaction Verified\"\n" +
-//                    "  },\n" +
-//                    "  \"StatusCode\": 0,\n" +
-//                    "  \"EXMessage\": \"Transaction Verified\"\n" +
-//                    "}"
-//
-//            approvalSetterGetter.value = ApprovalModel(msg)
-//        }catch (e: Exception){
-//
-//        }
-
     }
+
 }

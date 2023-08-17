@@ -1,10 +1,12 @@
 package com.perfect.prodsuit.View.Adapter
 
 import android.content.Context
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +25,7 @@ class ApproveAdapter (internal var context: Context, internal var jsonArray: JSO
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_approve, parent, false
+            R.layout.adapter_approve2, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -37,9 +39,11 @@ class ApproveAdapter (internal var context: Context, internal var jsonArray: JSO
                 val pos = position+1
 
 
-                holder.tv_values.text        = jsonObject!!.getString("Title")
-                holder.tv_counts.text        = jsonObject!!.getString("Count")
+               // val htmlContent = "<table><tr><td>Bill Total </td><td> : </td><td style=\\\"text-align:right;\\\">67500.00</td></tr><tr><td>Discount </td><td> : </td><td style=\\\"text-align:right;\\\">0.00</td></tr><tr><td>OtherCharge </td><td> : </td><td style=\\\"text-align:right;\\\">0.00</td></tr><tr><td>RoundOff </td><td> : </td><td style=\\\"text-align:right;\\\">0.00</td></tr><tr><td><strong>Net Amount </strong></td><td> : </td><td style=\\\"text-align: right;\\\"><strong>67500.00</strong></td></tr></table>"
 
+                holder.tv_values.text        = jsonObject!!.getString("Module_Name")
+                holder.tv_counts.text        = jsonObject!!.getString("NoofRecords")
+            //    holder.tv_values.setText(Html.fromHtml(htmlContent, Html.FROM_HTML_MODE_LEGACY))
 
                 holder.rltv_main!!.setTag(position)
                 holder.rltv_main!!.setOnClickListener(View.OnClickListener {
@@ -67,11 +71,11 @@ class ApproveAdapter (internal var context: Context, internal var jsonArray: JSO
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         internal var tv_values          : TextView
         internal var tv_counts          : TextView
-        internal var rltv_main    : RelativeLayout
+        internal var rltv_main    : LinearLayout
         init {
             tv_values        = v.findViewById<View>(R.id.tv_values) as TextView
             tv_counts        = v.findViewById<View>(R.id.tv_counts) as TextView
-            rltv_main  = v.findViewById<View>(R.id.rltv_main) as RelativeLayout
+            rltv_main  = v.findViewById<View>(R.id.rltv_main) as LinearLayout
         }
     }
 

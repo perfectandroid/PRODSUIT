@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.marginTop
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -48,32 +49,58 @@ class ApprovalListDetailAdapter (internal var context: Context, internal var jso
                     val key = keys.next()
                     Log.e(TAG,"JSON_KEY  4566   :  "+ key +"  :  "+jsonObject!!.getString(key)) // Output: key1, key2, key3
 
-                    val dynamicLinearLayout = LinearLayout(context)
-                    dynamicLinearLayout.layoutParams = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT)
-                    dynamicLinearLayout.orientation = LinearLayout.VERTICAL
+                    if (!key.equals("SlNo")){
 
-                    val customFont: Typeface = context.resources.getFont(R.font.myfont)
+                        val dynamicLinearLayout = LinearLayout(context)
+                        dynamicLinearLayout.layoutParams = LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT)
+                        dynamicLinearLayout.orientation = LinearLayout.HORIZONTAL
+                        val drawablePadding = context.resources.getDimensionPixelSize(R.dimen.drawable_padding)
 
-                    val textView1 = TextView(context)
-                    textView1.text = key
-                    textView1!!.setTextSize(15F)
-                    textView1!!.setTypeface(customFont);
-                    textView1!!.setTextColor(context.resources.getColor(R.color.black))
+                        val customFont: Typeface = context.resources.getFont(R.font.myfont)
+
+                        val textView1 = TextView(context)
+                        val layoutParams1 = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                        layoutParams1.weight = 1.9f
+                        textView1!!.layoutParams = layoutParams1
+//                        val layoutParams1 = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+//                        layoutParams1.weight = 1.9f
+//                        textView1!!.layoutParams = layoutParams1
+                        textView1.text = key
+                        textView1!!.setTextSize(15F)
+                        textView1!!.setTypeface(customFont);
+                        textView1!!.setTextColor(context.resources.getColor(R.color.black))
+
+                        val textView0 = TextView(context)
+                        //  textView1.text = key
+                        textView0.text = " : "
+                        textView0.compoundDrawablePadding = drawablePadding
+                        textView0!!.setTextSize(15F)
+                        textView0.setCompoundDrawablePadding(2)
+                        textView0!!.setTypeface(customFont);
+                        textView0!!.setTextColor(context.resources.getColor(R.color.black))
+                        textView0!!.setPadding(5, -10, 5, 0)
+
+                        val textView2 = TextView(context)
+                        val layoutParams2 = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                        layoutParams2.weight = 1.0f
+                        textView2!!.layoutParams = layoutParams2
+                        textView2.text = jsonObject!!.getString(key)
+                        textView2!!.setTextSize(14F)
+                        textView2!!.setTypeface(customFont);
+                        textView2!!.setTextColor(context.resources.getColor(R.color.greydark))
+                        textView2!!.setPadding(0, -10, 0, 0)
+                        textView2!!.marginTop.div(-10)
 
 
-                    val textView2 = TextView(context)
-                    textView2.text = jsonObject!!.getString(key)
-                    textView2!!.setTextSize(14F)
-                    textView2!!.setTypeface(customFont);
-                    textView2!!.setTextColor(context.resources.getColor(R.color.greydark))
-                    textView2!!.setPadding(0, -10, 0, 0)
+                        dynamicLinearLayout.addView(textView1);
+                        dynamicLinearLayout.addView(textView0);
+                        dynamicLinearLayout.addView(textView2);
 
-                    dynamicLinearLayout.addView(textView1);
-                    dynamicLinearLayout.addView(textView2);
+                        dynamicLinearLayoutmain.addView(dynamicLinearLayout);
+                    }
 
-                    dynamicLinearLayoutmain.addView(dynamicLinearLayout);
 
                 }
 

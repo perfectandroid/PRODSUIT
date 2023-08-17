@@ -505,6 +505,20 @@ interface ApiInterface {
     @POST("UserValidations/ProductEnquiryDetails")
     fun getProductEnquiryDetails(@Body body: RequestBody): Call<String>
 
+    @POST("Authorization/AuthorizationModuleList")
+    fun getAuthorizationModuleList(@Body body: RequestBody): Call<String>
+
+    @POST("Authorization/AuthorizationList")
+    fun getAuthorizationList(@Body body: RequestBody): Call<String>
+
+    @POST("Authorization/AuthorizationAction")
+    fun getAuthorizationAction(@Body body: RequestBody): Call<String>
+
+    @POST("Authorization/AuthorizationRejectUpdate")
+    fun saveAuthorizationRejectUpdate(@Body body: RequestBody): Call<String>
+
+    @POST("Authorization/AuthorizationApproveUpdate")
+    fun saveAuthorizationApproveUpdate(@Body body: RequestBody): Call<String>
 
 
 }

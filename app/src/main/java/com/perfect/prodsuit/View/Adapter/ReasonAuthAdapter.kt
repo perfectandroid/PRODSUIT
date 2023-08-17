@@ -36,7 +36,7 @@ class ReasonAuthAdapter (internal var context: Context, internal var jsonArray: 
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text           = pos.toString()
-                holder.txtReason.text           =jsonObject!!.getString("Reason")
+                holder.txtReason.text           =jsonObject!!.getString("ResnName")
 
                 holder.llReason!!.setTag(position)
                 holder.llReason!!.setOnClickListener(View.OnClickListener {

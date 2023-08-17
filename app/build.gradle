@@ -5,23 +5,51 @@ plugins {
 }
 
 android {
+
+    signingConfigs {
+        // HIDE
+        release {
+            storeFile file('D:\\Ranjith\\PRODSUIT\\Release\\persuitedevelopment.jks')
+            storePassword 'persuite@dev2023'
+            keyAlias 'persuitedev'
+            keyPassword 'persuite@dev2023'
+//            v1SigningEnabled true
+//            v2SigningEnabled true
+        }
+
+    }
+    aaptOptions {
+        cruncherEnabled = false
+    }
+
     compileSdkVersion 31
     buildToolsVersion "30.0.0"
     defaultConfig {
 //        applicationId "com.perfect.prodsuit"
 //        applicationId "com.mscore.calicuttownbank"
-        applicationId "com.perfect.prodsuite"
+//        applicationId "com.perfect.prodsuite"  // upload
+        applicationId "com.perfect.sheetal"
         minSdkVersion 26
         targetSdkVersion 31
         versionCode 1
-        versionName "1.0.0"
+        versionName "1.0.1"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
+            lintOptions {
+                disable 'MissingTranslation'
+                checkReleaseBuilds false
+                abortOnError false
+            }
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled = true
         }
     }
     compileOptions {

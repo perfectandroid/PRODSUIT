@@ -44,6 +44,7 @@ object LoginActivityRepository {
 //            val TestingBankKeypref = context.getSharedPreferences(Config.SHARED_PREF12, 0)
 //            val Testingsslcertificatepref = context.getSharedPreferences(Config.SHARED_PREF13, 0)
 //            val Loginmobilenumberpref = context.getSharedPreferences(Config.SHARED_PREF14, 0)
+            Log.e("TAG","BASE_URLSP  74747474   "+BASE_URLSP.getString("BASE_URL", null))
 
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)

@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,8 +11,6 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,11 +19,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.ApprovalListDetailAdapter
 import com.perfect.prodsuit.View.Adapter.ApproveAdapter
-import com.perfect.prodsuit.Viewmodel.ApprovalDetailViewModel
 import com.perfect.prodsuit.Viewmodel.ApprovalViewModel
-import com.perfect.prodsuit.Viewmodel.StockRTListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -37,6 +31,7 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
     lateinit var context: Context
 
     lateinit var approvalViewModel: ApprovalViewModel
+    lateinit var approvalArray: JSONArray
     lateinit var approvalArrayList: JSONArray
     internal var recyAprrove: RecyclerView? = null
     var approveCount = 0
@@ -78,12 +73,12 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
                                     Log.e(TAG, "msg   999101   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
-                                        val jobjt = jObject.getJSONObject("ApprovalDetails")
-                                        approvalArrayList = jobjt.getJSONArray("ApprovalDetailList")
+                                        val jobjt = jObject.getJSONObject("AuthorizationModuleList")
+                                        approvalArrayList = jobjt.getJSONArray("AuthorizationModuleDetails")
 
-                                        Log.e(TAG, "approvalArrayList   999101   " + approvalArrayList)
+                                        Log.e(TAG, "approvalArray   999101   " + approvalArrayList)
                                         if (approvalArrayList.length()> 0){
-                                            val lLayout = GridLayoutManager(this@ApproveActivity, 2)
+                                            val lLayout = GridLayoutManager(this@ApproveActivity, 1)
                                             recyAprrove!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                             val adapter = ApproveAdapter(this@ApproveActivity, approvalArrayList)
                                             recyAprrove!!.adapter = adapter
@@ -154,9 +149,15 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
             val jsonObject = approvalArrayList.getJSONObject(position)
 
             val i = Intent(this@ApproveActivity, ApprovalListActivity::class.java)
+            i.putExtra("jsonObject",jsonObject.toString())
             startActivity(i)
 
         }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        approveCount = 0
+        getAppoval()
+    }
 }

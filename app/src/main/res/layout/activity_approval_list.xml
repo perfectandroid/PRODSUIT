@@ -39,6 +39,7 @@
 
 
             <TextView
+                android:id="@+id/tv_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -83,20 +84,30 @@
             android:layout_height="match_parent"
             android:background="@color/greylight">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyAprrove"
+                <LinearLayout
+                    android:id="@+id/ll_main"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="visible" />
+                    android:padding="5dp"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyAprrove"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
 
 
 
-            </LinearLayout>
+                </LinearLayout>
+
+            </ScrollView>
+
+
 
 
         </RelativeLayout>

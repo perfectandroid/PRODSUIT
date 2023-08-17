@@ -5,12 +5,15 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -48,13 +51,19 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
     lateinit var reasonSort: JSONArray
     internal var recyReason: RecyclerView? = null
     var dialogReason: Dialog? = null
-    var reasonCount = 0
+    var Module = ""
 
+    private var tv_header: TextView? = null
     private var txtRjtCancel: TextView? = null
     private var txtRjtSubmit: TextView? = null
 
     private var tie_Reason: TextInputEditText? = null
     private var tie_Remarks: TextInputEditText? = null
+
+    private var ll_main: LinearLayout? = null
+
+    var jsonObj: JSONObject? = null
+    var reasonCount = 0
 
 
 
@@ -70,9 +79,13 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         reasonViewModel = ViewModelProvider(this).get(ReasonViewModel::class.java)
 
         setRegViews()
+        var jsonObject: String? = intent.getStringExtra("jsonObject")
+        jsonObj = JSONObject(jsonObject)
+        Module = jsonObj!!.getString("Module")
+        tv_header!!.setText(""+jsonObj!!.getString("Module_Name"))
 
         approveCount = 0
-        getAppoval()
+        getAppoval(Module)
 
     }
 
@@ -81,10 +94,12 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
 
+        tv_header = findViewById(R.id.tv_header)
         recyAprrove = findViewById(R.id.recyAprrove)
+        ll_main = findViewById(R.id.ll_main)
     }
 
-    private fun getAppoval() {
+    private fun getAppoval(Module :  String) {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -93,7 +108,7 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                approvalListViewModel.getApprovalList(this)!!.observe(
+                approvalListViewModel.getApprovalList(this,Module!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -106,16 +121,154 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                                     Log.e(TAG, "msg   999101   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
-                                        val jobjt = jObject.getJSONObject("ApprovalDetails")
-                                        approvalArrayList = jobjt.getJSONArray("ApprovalDetailList")
+//                                        val jobjt = jObject.getJSONObject("ApprovalDetails")
+//                                        approvalArrayList = jobjt.getJSONArray("ApprovalDetailList")
+                                        val jobjt = jObject.getJSONObject("AuthorizationList")
+                                        approvalArrayList = jobjt.getJSONArray("ListData")
 
                                         Log.e(TAG, "approvalArrayList   999101   " + approvalArrayList)
                                         if (approvalArrayList.length()> 0){
-                                            val lLayout = GridLayoutManager(this@ApprovalListActivity, 1)
-                                            recyAprrove!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            val adapter = ApproveListAdapter(this@ApprovalListActivity, approvalArrayList)
-                                            recyAprrove!!.adapter = adapter
-                                            adapter.setClickListener(this@ApprovalListActivity)
+//                                            val lLayout = GridLayoutManager(this@ApprovalListActivity, 1)
+//                                            recyAprrove!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                            val adapter = ApproveListAdapter(this@ApprovalListActivity, approvalArrayList)
+//                                            recyAprrove!!.adapter = adapter
+//                                            adapter.setClickListener(this@ApprovalListActivity)
+                                            for (i in 0 until approvalArrayList.length()) {
+                                               var jsonObject = approvalArrayList.getJSONObject(i)
+
+                                                val customFont: Typeface = context.resources.getFont(R.font.myfont)
+                                                val length: Int = jsonObject!!.length()
+                                                val keys = jsonObject!!.keys()
+                                                val dynamicLinearLayoutmain = LinearLayout(context)
+                                                dynamicLinearLayoutmain.layoutParams = LinearLayout.LayoutParams(
+                                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                                    LinearLayout.LayoutParams.WRAP_CONTENT)
+                                                dynamicLinearLayoutmain.orientation = LinearLayout.VERTICAL
+                                                while (keys.hasNext()) {
+                                                    val key = keys.next()
+
+                                                    if (!key.equals("SlNo") && !key.equals("ID_FIELD")  && !key.equals("drank") && !key.equals("TotalCount")){
+                                                        Log.e(TAG,"JSON_KEY  4566   :  "+ key +"  :  "+jsonObject!!.getString(key)) // Output: key1, key2, key3
+
+//                    val img: Drawable = context.getResources().getDrawable(R.drawable.vtr_common)
+
+                                                        val drawable1 = ContextCompat.getDrawable(context, R.drawable.vtr_common)
+                                                        val drawablePadding = context.resources.getDimensionPixelSize(R.dimen.drawable_padding)
+
+
+                                                        val dynamicLinearLayout = LinearLayout(context)
+                                                        dynamicLinearLayout.layoutParams = LinearLayout.LayoutParams(
+                                                            LinearLayout.LayoutParams.MATCH_PARENT,
+                                                            LinearLayout.LayoutParams.WRAP_CONTENT)
+                                                        dynamicLinearLayout.orientation = LinearLayout.HORIZONTAL
+
+
+
+
+                                                        val textView1 = TextView(context)
+                                                        val layoutParams1 = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                                                        layoutParams1.weight = 1.9f
+                                                        textView1!!.layoutParams = layoutParams1
+                                                        //  textView1.text = key
+                                                        val cleanText: String = Config.addSpaceBetweenLowerAndUpper(key)
+                                                        Log.e(TAG,"722224   "+key+"  :   cleanText   "+cleanText+"  :  "+Config.addSpaceBetweenLowerAndUpper(key))
+
+                                                        textView1.text = cleanText
+                                                        //    textView1.setCompoundDrawablesWithIntrinsicBounds(drawable1, null, null, null)
+                                                        textView1.compoundDrawablePadding = drawablePadding
+                                                        textView1!!.setTextSize(15F)
+                                                        textView1.setCompoundDrawablePadding(2)
+                                                        textView1!!.setTypeface(customFont);
+                                                        textView1!!.setTextColor(context.resources.getColor(R.color.black))
+
+                                                        val textView0 = TextView(context)
+                                                        //  textView1.text = key
+                                                        textView0.text = " : "
+                                                        textView0.compoundDrawablePadding = drawablePadding
+                                                        textView0!!.setTextSize(15F)
+                                                        textView0.setCompoundDrawablePadding(2)
+                                                        textView0!!.setTypeface(customFont);
+                                                        textView0!!.setTextColor(context.resources.getColor(R.color.black))
+                                                        textView0!!.setPadding(5, -10, 5, 0)
+
+
+                                                        val textView2 = TextView(context)
+                                                        textView2.text = jsonObject!!.getString(key)
+                                                        val layoutParams2 = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                                                        layoutParams2.weight = 1.0f
+                                                        textView2!!.layoutParams = layoutParams2
+                                                        //  textView2.text = "ghfdghjbvhjbfvghjdfmhjbfbnbjknjkkjvfbdnkngkjdfjglkdftytrytrytrytryryrbfvhfghfghfghfghfhbfhfhhfghkjghdfjhdfhh"
+                                                        textView2!!.setTextSize(14F)
+                                                        textView2!!.setTypeface(customFont);
+                                                        textView2!!.setTextColor(context.resources.getColor(R.color.greydark))
+                                                        textView2!!.setPadding(15, -0, 0, 0)
+
+                                                        dynamicLinearLayoutmain.id = i
+
+
+//                                                        dynamicLinearLayoutmain.setOnClickListener {
+//                                                            Log.e(TAG,"dynamicLinearLayoutmain 205555   "+i)
+//                                                            val jsonObject = approvalArrayList.getJSONObject(i)
+//                                                            val i = Intent(this@ApprovalListActivity, ApprovalListDetailActivity::class.java)
+//                                                            i.putExtra("jsonObject",jsonObject.toString())
+//                                                            i.putExtra("Module",Module)
+//                                                            startActivity(i)
+//                                                        }
+
+                                                        val layoutParamsSub = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                                                        layoutParamsSub.setMargins(15, -2, 15, -2)
+
+                                                        dynamicLinearLayout.addView(textView1);
+                                                        dynamicLinearLayout.addView(textView0);
+                                                        dynamicLinearLayout.addView(textView2);
+                                                        dynamicLinearLayout.layoutParams = layoutParamsSub
+
+                                                        val layoutParamMain = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                                                        layoutParamMain.setMargins(5, 5, 5, 0)
+                                                        dynamicLinearLayoutmain.setBackgroundResource(R.drawable.shape_shadownew)
+                                                        dynamicLinearLayoutmain.layoutParams = layoutParamMain
+
+                                                        dynamicLinearLayoutmain.addView(dynamicLinearLayout);
+
+                                                    }
+
+                                                }
+                                                val textView3 = TextView(context)
+                                                //  textView1.text = key
+                                                textView3.text = "More Details"
+//                                                textView3.compoundDrawablePadding = drawablePadding
+                                                textView3!!.setTextSize(16F)
+                                                textView3!!.setTypeface(textView3!!.getTypeface(), Typeface.BOLD);
+//                                                textView3!!.setTextColor(Color.parseColor("#FFFFFF"));
+                                                textView3.setCompoundDrawablePadding(2)
+//                                                textView3!!.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrow_next, 0);
+                                               // textView3!!.setTypeface(customFont);
+                                                textView3!!.setTextColor(context.resources.getColor(R.color.white))
+                                                textView3!!.setPadding(30, 10, 30, 10)
+
+                                                val layoutParamMain = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                                                layoutParamMain.setMargins(5, 5, 20, 20)
+                                                layoutParamMain.gravity = Gravity.END
+                                                textView3.setBackgroundResource(R.drawable.shape_border_round_trans)
+                                                textView3.layoutParams = layoutParamMain
+
+                                                textView3!!.setOnClickListener {
+                                                    Log.e(TAG,"dynamicLinearLayoutmain 205555   "+i)
+                                                    val jsonObject = approvalArrayList.getJSONObject(i)
+                                                    val i = Intent(this@ApprovalListActivity, ApprovalListDetailActivity::class.java)
+                                                    i.putExtra("jsonObject",jsonObject.toString())
+                                                    i.putExtra("Module",Module)
+                                                    startActivity(i)
+                                                }
+
+
+                                                ll_main!!.addView(dynamicLinearLayoutmain);
+                                                dynamicLinearLayoutmain.addView(textView3);
+
+
+
+                                            }
+
                                         }
 
 
@@ -230,7 +383,7 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                                     if (jObject.getString("StatusCode") == "0") {
 
                                         val jobjt = jObject.getJSONObject("ReasonDetails")
-                                        reasonArrayList = jobjt.getJSONArray("ReasonDetailList")
+                                        reasonArrayList = jobjt.getJSONArray("ReasonDetailsList")
 
                                         Log.e(TAG, "reasonArrayList   999101   " + reasonArrayList)
                                         if (reasonArrayList.length()> 0){
@@ -324,8 +477,10 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
     override fun onClick(position: Int, data: String) {
         if (data.equals("approveListClick")){
             Log.e(TAG,"Position   "+position)
-
+            val jsonObject = approvalArrayList.getJSONObject(position)
             val i = Intent(this@ApprovalListActivity, ApprovalListDetailActivity::class.java)
+            i.putExtra("jsonObject",jsonObject.toString())
+            i.putExtra("Module",Module)
             startActivity(i)
         }
         if (data.equals("approveClick")){
@@ -343,11 +498,15 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         if (data.equals("reasonClick")){
             dialogReason!!.dismiss()
             val jsonObject = reasonSort.getJSONObject(position)
-            tie_Reason!!.setText(jsonObject.getString("Reason"))
+            tie_Reason!!.setText(jsonObject.getString("ResnName"))
         }
 
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        approveCount = 0
+        getAppoval(Module)
 
-
+    }
 }

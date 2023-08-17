@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--    <item >-->
+<!--        <shape-->
+<!--            android:shape="rectangle">-->
+<!--            <solid android:color="@android:color/darker_gray" />-->
+<!--            <corners android:radius="5dp"/>-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--    <item android:right="5dp" android:left="5dp" android:bottom="5dp" android:top="5dp">-->
+<!--        <shape-->
+<!--            android:shape="rectangle">-->
+<!--            <solid android:color="@android:color/white"/>-->
+<!--            <corners android:radius="5dp"/>-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--</layer-list>-->
+
+<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--    <item >-->
+<!--        <shape-->
+<!--            android:shape="rectangle">-->
+<!--            <solid android:color="#E3E1E1" />-->
+<!--            <corners android:radius="5dp"/>-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--    <item android:right="2dp" android:left="2dp" android:bottom="3dp">-->
+<!--        <shape-->
+<!--            android:shape="rectangle">-->
+<!--            <solid android:color="@android:color/white"/>-->
+<!--            <corners android:radius="5dp"/>-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--</layer-list>-->
+
+<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--    &lt;!&ndash;the shadow comes from here&ndash;&gt;-->
+<!--    <item-->
+<!--        android:bottom="0dp"-->
+<!--        android:drawable="@android:drawable/dialog_holo_light_frame"-->
+<!--        android:left="0dp"-->
+<!--        android:right="0dp"-->
+<!--        android:top="0dp">-->
+
+<!--    </item>-->
+
+<!--    <item-->
+<!--        android:bottom="0dp"-->
+<!--        android:left="0dp"-->
+<!--        android:right="0dp"-->
+<!--        android:top="0dp">-->
+<!--        &lt;!&ndash;whatever you want in the background, here i preferred solid white &ndash;&gt;-->
+<!--        <shape android:shape="rectangle">-->
+<!--            <solid android:color="@android:color/white" />-->
+
+<!--        </shape>-->
+<!--    </item>-->
+<!--</layer-list>-->
+
+<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >-->
+
+<!--    &lt;!&ndash; Drop Shadow Stack &ndash;&gt;-->
+<!--    <item>-->
+<!--        <shape>-->
+<!--            <padding-->
+<!--                android:bottom="1dp"-->
+<!--                android:left="1dp"-->
+<!--                android:right="1dp"-->
+<!--                android:top="1dp" />-->
+
+<!--            <solid android:color="#00CCCCCC" />-->
+
+<!--            <corners android:radius="3dp" />-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--    <item>-->
+<!--        <shape>-->
+<!--            <padding-->
+<!--                android:bottom="1dp"-->
+<!--                android:left="1dp"-->
+<!--                android:right="1dp"-->
+<!--                android:top="1dp" />-->
+
+<!--            <solid android:color="#10CCCCCC" />-->
+
+<!--            <corners android:radius="3dp" />-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--    <item>-->
+<!--        <shape>-->
+<!--            <padding-->
+<!--                android:bottom="1dp"-->
+<!--                android:left="1dp"-->
+<!--                android:right="1dp"-->
+<!--                android:top="1dp" />-->
+
+<!--            <solid android:color="#20CCCCCC" />-->
+
+<!--            <corners android:radius="3dp" />-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--    <item>-->
+<!--        <shape>-->
+<!--            <padding-->
+<!--                android:bottom="1dp"-->
+<!--                android:left="1dp"-->
+<!--                android:right="1dp"-->
+<!--                android:top="1dp" />-->
+
+<!--            <solid android:color="#30CCCCCC" />-->
+
+<!--            <corners android:radius="3dp" />-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--    <item>-->
+<!--        <shape>-->
+<!--            <padding-->
+<!--                android:bottom="1dp"-->
+<!--                android:left="1dp"-->
+<!--                android:right="1dp"-->
+<!--                android:top="1dp" />-->
+
+<!--            <solid android:color="#50CCCCCC" />-->
+
+<!--            <corners android:radius="3dp" />-->
+<!--        </shape>-->
+<!--    </item>-->
+
+<!--    &lt;!&ndash; Background &ndash;&gt;-->
+<!--    <item>-->
+<!--        <shape>-->
+<!--            <solid android:color="@android:color/white" />-->
+
+<!--            <corners android:radius="3dp" />-->
+<!--        </shape>-->
+<!--    </item>-->
+
+<!--</layer-list>-->
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/white" />
+            <corners android:radius="1dp" />
+            <stroke
+                android:width="1dp"
+                android:color="@color/grey"/>
+        </shape>
+    </item>
+</selector>

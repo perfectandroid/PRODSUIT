@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/rltv_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="1dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/tv_counts"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:layout_weight="2.7"
+            android:background="#D7DDDA"
+            android:fontFamily="@font/myfont"
+            android:gravity="center"
+            android:text="256"
+            android:textAllCaps="true"
+            android:textColor="#000000"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:tint="@color/white" />
+
+<!--        android:background="@drawable/svg_auth_round"-->
+
+
+        <TextView
+            android:id="@+id/tv_values"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/img_arrow"
+            android:layout_toRightOf="@+id/tv_counts"
+            android:fontFamily="@font/myfont"
+            android:gravity="center_vertical"
+            android:text="Lead"
+            android:textAllCaps="false"
+            android:textColor="#6A6A6A"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:tint="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="3">
+
+            <ImageView
+                android:id="@+id/img_arrow"
+                android:layout_width="40dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:src="@drawable/arrowright"
+                app:tint="@color/grey"
+                android:visibility="visible"/>
+            <!--        android:src="@drawable/svg_auth_arrow"-->
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"/>
+
+
+
+</LinearLayout>

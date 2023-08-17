@@ -55,7 +55,7 @@ class LocationHelper(private val context: Context) {
                     Manifest.permission.ACCESS_BACKGROUND_LOCATION
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
-
+                Log.e(TAG,"5600003   ")
                 callback(null)
                 return
 
@@ -63,6 +63,7 @@ class LocationHelper(private val context: Context) {
 
             val locationTask: Task<Location> = fusedLocationClient.getLastLocation()
             locationTask.addOnCompleteListener { task ->
+                Log.e(TAG,"5600000   "+task.isSuccessful+"  :  "+task.result)
                 if (task.isSuccessful && task.result != null) {
                     Log.e(TAG,"5600001   ")
                     callback(task.result)

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="40dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@drawable/vtr_thumb"/>
+
+    <TextView
+        android:id="@+id/tv_succesmsg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:fontFamily="@font/myfont"
+        android:text="dsfdsgdsgd"/>
+
+
+    <TextView
+        android:id="@+id/tv_succesok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:background="@drawable/shape_border_round_trans"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="75dp"
+        android:paddingRight="75dp"
+        android:fontFamily="@font/myfont"
+        android:text="ok"/>
+
+
+
+
+
+
+</LinearLayout>

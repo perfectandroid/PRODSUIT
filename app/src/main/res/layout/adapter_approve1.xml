@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rltv_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/svg_auth_rectangle"
+        android:layout_margin="5dp"
+        tools:ignore="MissingConstraints">
+
+        <TextView
+            android:id="@+id/tv_counts"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/myfont"
+            android:background="@drawable/svg_auth_round"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="256"
+            android:textAllCaps="true"
+            android:textColor="#517A50"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:tint="@color/white" />
+
+
+        <TextView
+            android:id="@+id/tv_values"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/img_arrow"
+            android:layout_toRightOf="@+id/tv_counts"
+            android:fontFamily="@font/myfont"
+            android:gravity="center_vertical"
+            android:text="Lead"
+            android:textAllCaps="false"
+            android:textColor="#515050"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/img_arrow"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/svg_auth_arrow" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

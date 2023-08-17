@@ -12,6 +12,7 @@ import android.location.Location
 import android.location.LocationManager
 import android.os.BatteryManager
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -31,11 +32,12 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LocationReceiver: BroadcastReceiver() {
+class  LocationReceiver: BroadcastReceiver() {
     var TAG = "LocationReceiver"
 
     var geocoder: Geocoder? = null
     var addresses: List<Address>? = null
+   var fusedLocationClient: FusedLocationProviderClient? = null
 
     override fun onReceive(context: Context?, intent: Intent?) {
         Log.e(TAG,"122222   Action   "+intent!!.getAction())
@@ -45,6 +47,7 @@ class LocationReceiver: BroadcastReceiver() {
             val db = DBHelper(context!!, null)
 
             try {
+                fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
                 val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
                 val currentDate = sdf.format(Date())
                 Log.e(TAG, "DATE TIME  196  " + currentDate)
@@ -52,6 +55,7 @@ class LocationReceiver: BroadcastReceiver() {
                 Log.e(TAG, "newDate  196  " + newDate)
                 val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
                 val sdfTime1 = SimpleDateFormat("hh:mm aa")
+
 
                 val locationHelper = LocationHelper(context)
                 locationHelper.getCurrentLocation { location ->
@@ -87,12 +91,13 @@ class LocationReceiver: BroadcastReceiver() {
 
                     } else {
                         // Failed to get the location
+                        Log.e(TAG,"19600000 Failed to get the location  :   ")
                     }
                 }
 
             }catch (e: Exception){
 
-                Log.e(TAG,"Exception 196  "+e.toString())
+                Log.e(TAG,"Exception   "+e.toString())
             }
 
 
