@@ -76,6 +76,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leadmanagement.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_marking.xml" value="0.21197916666666666" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_marking_new.xml" value="0.21041666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_notification.xml" value="0.30520833333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_product_enquiry_detail.xml" value="0.17742908871454435" />
@@ -88,7 +89,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_assign_tab.xml" value="0.27447916666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_services.xml" value="0.31979166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_site_visit.xml" value="0.346875" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_request.xml" value="0.30572916666666666" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_request.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_rtlist.xml" value="0.29739583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_transfer.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_approe_list.xml" value="0.346875" />

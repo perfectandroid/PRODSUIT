@@ -71,8 +71,8 @@ object EmployeeInventoryRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("37"))
-                requestObject1.put("Critrea1", ProdsuitApplication.encryptStart(Fk_Branch))
-                requestObject1.put("Critrea2", ProdsuitApplication.encryptStart(Fk_Department))
+                requestObject1.put("Critrea1", ProdsuitApplication.encryptStart(Fk_Department))
+                requestObject1.put("Critrea2", ProdsuitApplication.encryptStart(Fk_Branch))
 
                 Log.e(TAG,"78  StockRTEmployeeDetails    "+requestObject1)
             } catch (e: Exception) {

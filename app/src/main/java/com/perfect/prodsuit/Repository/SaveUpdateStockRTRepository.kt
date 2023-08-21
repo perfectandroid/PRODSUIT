@@ -120,11 +120,12 @@ object SaveUpdateStockRTRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
                 requestObject1.put("UserAction", ProdsuitApplication.encryptStart("1"))
+
                 requestObject1.put("FK_BranchFrom", ProdsuitApplication.encryptStart(FK_BranchFrom))
                 requestObject1.put("FK_DepartmentFrom", ProdsuitApplication.encryptStart(FK_DepartmentFrom))
                 requestObject1.put("FK_EmployeeFrom", ProdsuitApplication.encryptStart(FK_EmployeeFrom))
 
-                requestObject1.put("STRequest", ProdsuitApplication.encryptStart(STRequest))
+                requestObject1.put("STRequest", ProdsuitApplication.encryptStart(STRequest))  //  1= Save .2 Update
                 requestObject1.put("TransDate", ProdsuitApplication.encryptStart(strDate))
 
                 requestObject1.put("FK_BranchTo", ProdsuitApplication.encryptStart(FK_BranchTo))

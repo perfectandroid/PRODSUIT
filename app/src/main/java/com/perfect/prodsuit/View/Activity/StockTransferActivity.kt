@@ -374,12 +374,12 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                 }
                 editable === tie_FromDepartment!!.editableText -> {
                     Log.e(TAG,"283022    ")
-                    if (tie_FromDepartment!!.text!!.length > 9 ){
-                        til_FromDepartment!!.isErrorEnabled = false
-                        til_FromDepartment!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    if (tie_FromDepartment!!.text!!.toString().equals("")){
+                        til_FromDepartment!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
                     }
                     else{
-                        til_FromDepartment!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                        til_FromDepartment!!.isErrorEnabled = false
+                        til_FromDepartment!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
                     }
 
 

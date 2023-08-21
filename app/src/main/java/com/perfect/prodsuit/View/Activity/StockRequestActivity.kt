@@ -359,12 +359,13 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 }
                 editable === tie_FromDepartment!!.editableText -> {
                     Log.e(TAG,"283022    ")
-                    if (tie_FromDepartment!!.text!!.length > 9 ){
-                        til_FromDepartment!!.isErrorEnabled = false
-                        til_FromDepartment!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    if (tie_FromDepartment!!.text!!.toString().equals("") ){
+                        til_FromDepartment!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+
                     }
                     else{
-                        til_FromDepartment!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                        til_FromDepartment!!.isErrorEnabled = false
+                        til_FromDepartment!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
                     }
 
 
@@ -775,6 +776,7 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
             btnOk!!.setOnClickListener {
                 dialogConfirm!!.dismiss()
+                saveUpdateCount = 0
                 saveStockRequest()
             }
 
@@ -829,7 +831,7 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                                     Log.e(TAG,"msg   81000   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         Log.e(TAG,"msg   81000   "+msg)
-
+                                        successBottomSheet(jObject)
                                     } else {
                                         val builder = AlertDialog.Builder(
                                             this@StockRequestActivity,
@@ -869,6 +871,36 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         }
     }
 
+    private fun successBottomSheet(jObject : JSONObject) {
+        try {
+            val dialog1 = BottomSheetDialog(this,R.style.BottomSheetDialog)
+            val view = layoutInflater.inflate(R.layout.succes_bottomsheet, null)
+            dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val window: Window? = dialog1.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            dialog1!!.setCancelable(false)
+            dialog1!!.setCanceledOnTouchOutside(false)
+            dialog1!!.getBehavior().setDraggable(false);
+
+            var tv_succesmsg = view.findViewById<TextView>(R.id.tv_succesmsg)
+            var tv_gotit = view.findViewById<TextView>(R.id.tv_gotit)
+
+            tv_succesmsg!!.setText(jObject.getString("EXMessage"))
+            tv_gotit!!.setOnClickListener {
+                dialog1.dismiss()
+                deleteAll(it)
+
+            }
+
+
+            dialog1!!.setContentView(view)
+            dialog1.show()
+
+        }catch (e: Exception){
+            Log.e(TAG,"777  Exception   "+e.toString())
+        }
+    }
 
     private fun hideShowFromTo() {
 

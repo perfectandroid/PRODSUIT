@@ -73,7 +73,7 @@
                     android:padding="5dp"
                     android:src="@drawable/svg_stock_list"
                     app:tint="@color/white"
-                    android:visibility="visible"
+                    android:visibility="invisible"
                     tools:ignore="UseAppTint" />
 
             </LinearLayout>
@@ -980,7 +980,7 @@
                                                 android:background="@drawable/shape_bg"
                                                 android:fontFamily="@font/myfont"
                                                 android:padding="10dp"
-                                                android:src="@drawable/vtr_clear"
+                                                android:src="@drawable/autorenew"
                                                 android:text=""
                                                 android:textColor="@color/black"
                                                 android:textSize="13dp"
