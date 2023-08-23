@@ -82,7 +82,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/grey">
+            android:background="#FBFBFB">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -101,7 +101,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:background="@color/grey">
+                        android:background="#FBFBFB">
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
@@ -112,7 +112,7 @@
                             android:backgroundTint="#FFFFFF"
                             android:outlineAmbientShadowColor="@color/colorPrimaryDark"
                             android:outlineSpotShadowColor="@color/colorPrimaryDark"
-                            app:cardElevation="2dp"
+                            app:cardElevation="5dp"
                             app:cardUseCompatPadding="true">
 
 
@@ -124,24 +124,27 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
-                                    android:text="Tranfer"
-                                    android:padding="8dp"
-                                    android:textColor="@color/colorPrimaryDark"
-                                    android:textSize="17dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:gravity="center_vertical"
+                                    android:text="Transfer"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:paddingLeft="15dp"
+                                    android:paddingRight="15dp"
+                                    android:textColor="@color/greydark"
+                                    android:background="#E7EDED"
+                                    android:textSize="18dp"
                                     android:textStyle="bold"
                                     android:layout_weight="1"
-                                    android:textAllCaps="true"
-                                    android:background="@drawable/shape_gradient1"
+                                    android:textAllCaps="false"
                                     android:fontFamily="@font/myfont" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:padding="15dp"
+                                    android:padding="10dp"
                                     android:orientation="vertical">
 
                                     <com.google.android.material.textfield.TextInputLayout
@@ -226,7 +229,7 @@
                             android:backgroundTint="#FFFFFF"
                             android:outlineAmbientShadowColor="@color/colorPrimaryDark"
                             android:outlineSpotShadowColor="@color/colorPrimaryDark"
-                            app:cardElevation="2dp"
+                            app:cardElevation="5dp"
                             app:cardUseCompatPadding="true">
 
                             <LinearLayout
@@ -238,7 +241,6 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:padding="1dp"
-                                    android:background="@drawable/shape_gradient1"
                                     android:orientation="horizontal">
 
                                     <TextView
@@ -253,8 +255,8 @@
                                         android:textSize="17dp"
                                         android:textStyle="bold"
                                         android:layout_weight="1"
-                                        android:textAllCaps="true"
-                                        android:background="@drawable/shape_gradient2"
+                                        android:textAllCaps="false"
+                                        android:background="@drawable/shape_bottom_border"
                                         android:fontFamily="@font/myfont" />
 <!--                                    android:background="#E8E7E7"-->
 
@@ -270,8 +272,8 @@
                                         android:textSize="17dp"
                                         android:textStyle="bold"
                                         android:layout_weight="1"
-                                        android:textAllCaps="true"
-                                        android:background="@drawable/shape_gradient1"
+                                        android:textAllCaps="false"
+                                        android:background="@drawable/shape_bottom_border1"
                                         android:fontFamily="@font/myfont" />
 <!--                                    android:background="#B3BEBF"-->
 
@@ -515,7 +517,7 @@
                             android:backgroundTint="#FFFFFF"
                             android:outlineAmbientShadowColor="@color/colorPrimaryDark"
                             android:outlineSpotShadowColor="@color/colorPrimaryDark"
-                            app:cardElevation="2dp"
+                            app:cardElevation="5dp"
                             app:cardUseCompatPadding="true">
 
                             <LinearLayout
@@ -525,18 +527,21 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:gravity="center"
+                                    android:layout_gravity="center_vertical"
+                                    android:gravity="center_vertical"
                                     android:text="Details"
-                                    android:padding="8dp"
-                                    android:textColor="@color/colorPrimaryDark"
-                                    android:textSize="17dp"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="5dp"
+                                    android:paddingLeft="15dp"
+                                    android:paddingRight="15dp"
+                                    android:textColor="@color/greydark"
+                                    android:background="#E7EDED"
+                                    android:textSize="18dp"
                                     android:textStyle="bold"
                                     android:layout_weight="1"
-                                    android:textAllCaps="true"
-                                    android:background="@drawable/shape_gradient1"
+                                    android:textAllCaps="false"
                                     android:fontFamily="@font/myfont" />
 
                                 <LinearLayout

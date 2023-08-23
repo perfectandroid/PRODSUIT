@@ -520,5 +520,14 @@ interface ApiInterface {
     @POST("Authorization/AuthorizationApproveUpdate")
     fun saveAuthorizationApproveUpdate(@Body body: RequestBody): Call<String>
 
+    @POST("Stock/GetStockRequestList")
+    fun getStockRequestList(@Body body: RequestBody): Call<String>
+
+    @POST("Stock/GetStockRequestProductList")
+    fun getStockRequestProductList(@Body body: RequestBody): Call<String>
+
+    @POST("Stock/StockSTDelete")
+    fun StockSTDelete(@Body body: RequestBody): Call<String>
+
 
 }

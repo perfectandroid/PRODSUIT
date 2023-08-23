@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
@@ -113,6 +115,7 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     var employeeCount = 0
     var stockCount = 0
     var productCount = 0
+    var stockproductCount = 0
 
 
 
@@ -169,9 +172,20 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     val modelStockTransferDetails = ArrayList<ModelStockTransferDetails>()
     private var dialogConfirm : Dialog? = null
 
+    lateinit var stockReqProductlistViewModel: StockReqProductlistViewModel
+    lateinit var stockProductListArrayList: JSONArray
+
     var saveDetailArray :JSONArray? = null
     lateinit var saveUpdateStockRTViewModel: SaveUpdateStockRTViewModel
     var saveUpdateCount = 0
+
+    var STRequest = "1"  // Request =1, Transfer = 0
+    var FK_StockRequest = "0" // Transfer => Request ID
+    var TransMode = "INTR"
+    var Detailed = "1"
+    var ID_StockTransfer = "0" // Save 0 , Update ID_Transfer
+    var UserAction = "1" // Save =  1 , Update = 2
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -187,6 +201,7 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         stockModeViewModel = ViewModelProvider(this).get(StockModeViewModel::class.java)
         productStockViewModel = ViewModelProvider(this).get(ProductStockViewModel::class.java)
         saveUpdateStockRTViewModel = ViewModelProvider(this).get(SaveUpdateStockRTViewModel::class.java)
+        stockReqProductlistViewModel = ViewModelProvider(this).get(StockReqProductlistViewModel::class.java)
 
         setRegViews()
     }
@@ -230,6 +245,7 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
         btnReset = findViewById(R.id.btnReset)
         btnSubmit = findViewById(R.id.btnSubmit)
+
 
         tv_FromClick = findViewById(R.id.tv_FromClick)
         tv_ToClick = findViewById(R.id.tv_ToClick)
@@ -793,10 +809,7 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     private fun saveStockRequest() {
 
-        var STRequest = "1"
-        var TransMode = "INTR"
-        var FK_StockRequest = "0"
-        var ID_StockTransfer = "0"
+
         var FK_EmployeeFromTemp = "0"
         var FK_EmployeeToTemp = "0"
 
@@ -815,7 +828,7 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                saveUpdateStockRTViewModel.saveUpdateStockRT(this, FK_BranchFrom!!,FK_DepartmentFrom!!,FK_EmployeeFromTemp!!,STRequest,strDate,
+                saveUpdateStockRTViewModel.saveUpdateStockRT(this,UserAction, FK_BranchFrom!!,FK_DepartmentFrom!!,FK_EmployeeFromTemp!!,STRequest,strDate,
                     FK_BranchTo,FK_DepartmentTo!!,FK_EmployeeToTemp!!,TransMode,FK_StockRequest,ID_StockTransfer,saveDetailArray!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -909,20 +922,20 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
 //        tv_FromClick!!.setBackgroundColor(resources.getColor(R.color.tab_inactive, null))
 //        tv_ToClick!!.setBackgroundColor(resources.getColor(R.color.tab_inactive, null))
-        tv_FromClick!!.setBackgroundResource(R.drawable.shape_gradient1)
-        tv_ToClick!!.setBackgroundResource(R.drawable.shape_gradient1)
+        tv_FromClick!!.setBackgroundResource(R.drawable.shape_bottom_border1)
+        tv_ToClick!!.setBackgroundResource(R.drawable.shape_bottom_border1)
 
         if (showFrom == 1){
             ll_from!!.visibility = View.VISIBLE
 //            tv_FromClick!!.setBackgroundColor(resources.getColor(R.color.tab_active, null))
-            tv_FromClick!!.setBackgroundResource(R.drawable.shape_gradient2)
+            tv_FromClick!!.setBackgroundResource(R.drawable.shape_bottom_border)
 
 
         }
         if (showTo == 1){
             ll_to!!.visibility = View.VISIBLE
 //            tv_ToClick!!.setBackgroundColor(resources.getColor(R.color.tab_active, null))
-            tv_ToClick!!.setBackgroundResource(R.drawable.shape_gradient2)
+            tv_ToClick!!.setBackgroundResource(R.drawable.shape_bottom_border)
         }
     }
 
@@ -958,6 +971,7 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
         val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+        date_Picker1.maxDate = System.currentTimeMillis()
 
 //        if (dateMode == 0){
 //            date_Picker1.maxDate = System.currentTimeMillis()
@@ -1986,6 +2000,8 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         getCurrentDate()
         getSharedData()
 
+        btnSubmit!!.setText("Submit")
+        UserAction = "1"
         FK_EmployeeFrom = ""
         tie_FromEmployee!!.setText("")
         FK_BranchTo = ""
@@ -2014,6 +2030,7 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         showTo = 0
         hideShowFromTo()
 
+
         til_ToBranch!!.isErrorEnabled = false
         til_ToBranch!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
 
@@ -2023,6 +2040,11 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         til_ToEmployee!!.isErrorEnabled = false
         til_ToEmployee!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
 
+        STRequest = "1"  // Request =1, Transfer = 0
+        FK_StockRequest = "0" // Transfer => Request ID
+        TransMode = "INTR"
+        ID_StockTransfer = "0" // Save 0 , Update ID_Transfer
+
 
     }
 
@@ -2031,12 +2053,172 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         Log.e(TAG, "onActivityResult  20711   " + requestCode + "   " + resultCode + "  " + data)
         if (requestCode == Config.CODE_STOCK_LIST) {
             if (data != null) {
+                try {
 
-                Log.e(TAG,"20711    "+data.getStringExtra("strLongitue"))
+                    UserAction = "2"
+                    var jsonObj: JSONObject? = null
+                    var jsonObject: String? = data.getStringExtra("jsonObject")
+                    jsonObj = JSONObject(jsonObject)
+                    Log.e(TAG,"207111    "+jsonObj)
+                    ID_StockTransfer = jsonObj.getString("StockTransferID")
+
+                    FK_BranchFrom = jsonObj.getString("BranchID")
+                    FK_DepartmentFrom = jsonObj.getString("DepartmentID")
+                    FK_EmployeeFrom = jsonObj.getString("EmployeeID")
+
+                    FK_BranchTo = jsonObj.getString("BranchIDTo")
+                    FK_DepartmentTo = jsonObj.getString("DepartmentIDTo")
+                    FK_EmployeeTo = jsonObj.getString("EmployeeIDTo")
+
+
+                    tie_FromBranch!!.setText(jsonObj.getString("BranchName"))
+                    tie_FromDepartment!!.setText(jsonObj.getString("DepartmentName"))
+                    tie_FromEmployee!!.setText(jsonObj.getString("EmployeeName"))
+
+                    tie_ToBranch!!.setText(jsonObj.getString("BranchNameTo"))
+                    tie_ToDepartment!!.setText(jsonObj.getString("DepartmentNameTo"))
+                    tie_ToEmployee!!.setText(jsonObj.getString("EmployeeNameTo"))
+
+                    val sdf = SimpleDateFormat("dd-MM-yyyy")
+                    Log.e(TAG,"DATE TIME  196  "+jsonObj.getString("TransDate"))
+                    val newDate: Date = sdf.parse(jsonObj.getString("TransDate"))
+                    Log.e(TAG,"newDate  196  "+newDate)
+                    val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
+                    val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
+
+
+                    tie_Date!!.setText(""+sdfDate1.format(newDate))
+                    strDate = sdfDate2.format(newDate)
+
+                    btnSubmit!!.setText("Update")
+
+                    stockproductCount = 0
+                    loadStockRequestProductList(ID_StockTransfer)
+
+                    if (jsonObj.getString("Transfered").equals("1")){
+                        Config.showCustomToast ("Already Transfered!!", this)
+                    }
+
+
+
+                }catch (e: Exception){
+                    Log.e(TAG,"207112    "+e.toString())
+                }
+
             }
         }
 
     }
+
+    private fun loadStockRequestProductList(ID_StockTransfer: String) {
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                stockReqProductlistViewModel.getStockReqProductlist(this,ID_StockTransfer!!,TransMode,Detailed)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (stockproductCount == 0){
+                                    stockproductCount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   21210   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("StockRequestProductList")
+
+                                        stockProductListArrayList = jobjt.getJSONArray("StockRequestProductListData")
+                                        if (stockProductListArrayList.length()>0){
+                                            modelStockTransferDetails.clear()
+                                            for (i in 0 until stockProductListArrayList.length()) {
+                                                val jsonObject = stockProductListArrayList.getJSONObject(i)
+                                                //modelStockTransferDetails.add(ModelStockTransferDetails(FK_StockMode!!,tie_StockMode!!.text.toString(),FK_Product!!,tie_Product!!.text.toString(),strQuantity!!,strStandQuantity!!))
+                                                modelStockTransferDetails.add(ModelStockTransferDetails(jsonObject.getString("ID_Stock"),jsonObject.getString("StockMode"),jsonObject.getString("ID_Product"),jsonObject.getString("Product"),jsonObject.getString("Quantity"),jsonObject.getString("QuantityStandBy")))
+                                            }
+                                            recyStockDetails!!.adapter = null
+                                            if (modelStockTransferDetails.size>0){
+                                                ll_stocklist!!.visibility =View.VISIBLE
+                                                val lLayout = GridLayoutManager(this@StockRequestActivity, 1)
+                                                recyStockDetails!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
+                                                stockAdapter = StockDetailAdapter(this@StockRequestActivity,modelStockTransferDetails,"0")
+                                                recyStockDetails!!.adapter = stockAdapter
+                                                stockAdapter!!.setClickListener(this@StockRequestActivity)
+
+                                                // adapter1.setClickListener(this@StockRequestActivity)
+                                            }else{
+                                                ll_stocklist!!.visibility =View.GONE
+                                            }
+                                            clearDetails()
+
+
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@StockRequestActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+//    fun snackbarCustom(context: Context, message: String) {
+//
+//        val snackbar = Snackbar.make(view, "", Snackbar.LENGTH_LONG)
+//        val customSnackView: View = LayoutInflater.from(context).inflate(R.layout.custom_snackbar, null)
+//        snackbar.view.setBackgroundColor(Color.TRANSPARENT)
+//        val snackbarLayout = snackbar.view as Snackbar.SnackbarLayout
+//
+//        snackbarLayout.setPadding(0, 0, 0, 0)
+//
+//        val bGotoWebsite: Button = customSnackView.findViewById(R.id.gotoWebsiteButton)
+//
+//        // add the custom snack bar layout to snackbar layout
+//        snackbarLayout.addView(customSnackView, 0)
+//
+//        snackbar.show()
+//
+//    }
 
 
     override fun onClick(position: Int, data: String) {

@@ -794,20 +794,20 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
 //        tv_FromClick!!.setBackgroundColor(resources.getColor(R.color.tab_inactive, null))
 //        tv_ToClick!!.setBackgroundColor(resources.getColor(R.color.tab_inactive, null))
-        tv_FromClick!!.setBackgroundResource(R.drawable.shape_gradient1)
-        tv_ToClick!!.setBackgroundResource(R.drawable.shape_gradient1)
+        tv_FromClick!!.setBackgroundResource(R.drawable.shape_bottom_border1)
+        tv_ToClick!!.setBackgroundResource(R.drawable.shape_bottom_border1)
 
         if (showFrom == 1){
             ll_from!!.visibility = View.VISIBLE
 //            tv_FromClick!!.setBackgroundColor(resources.getColor(R.color.tab_active, null))
-            tv_FromClick!!.setBackgroundResource(R.drawable.shape_gradient2)
+            tv_FromClick!!.setBackgroundResource(R.drawable.shape_bottom_border)
 
 
         }
         if (showTo == 1){
             ll_to!!.visibility = View.VISIBLE
 //            tv_ToClick!!.setBackgroundColor(resources.getColor(R.color.tab_active, null))
-            tv_ToClick!!.setBackgroundResource(R.drawable.shape_gradient2)
+            tv_ToClick!!.setBackgroundResource(R.drawable.shape_bottom_border)
         }
     }
 
@@ -843,6 +843,8 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
         val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
         val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+
+        date_Picker1.maxDate = System.currentTimeMillis()
 
 //        if (dateMode == 0){
 //            date_Picker1.maxDate = System.currentTimeMillis()

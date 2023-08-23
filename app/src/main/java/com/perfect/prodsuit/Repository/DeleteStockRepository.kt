@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.StockRTListModel
+import com.perfect.prodsuit.Model.DeleteStockModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -20,21 +20,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object StockRTListRepository {
-
+object DeleteStockRepository {
     private var progressDialog: ProgressDialog? = null
-    val stockRTListSetterGetter = MutableLiveData<StockRTListModel>()
-    val TAG: String = "StockRTListRepository"
+    val deleteStockSetterGetter = MutableLiveData<DeleteStockModel>()
+    val TAG: String = "DeleteStockRepository"
 
-    fun getServicesApiCall(context: Context, TransMode : String, Detailed : String): MutableLiveData<StockRTListModel> {
-        getStockRTList(context, TransMode,Detailed)
-        return stockRTListSetterGetter
+    fun getServicesApiCall(context: Context,FK_StockTransfer : String, TransMode : String, Reason : String): MutableLiveData<DeleteStockModel> {
+        deleteStock(context,FK_StockTransfer, TransMode, Reason)
+        return deleteStockSetterGetter
     }
 
-    private fun getStockRTList(context: Context, TransMode: String, Detailed: String) {
+    private fun deleteStock(context: Context, FK_StockTransfer: String, TransMode: String, Reason: String) {
 
         try {
-            stockRTListSetterGetter.value = StockRTListModel("")
+            deleteStockSetterGetter.value = DeleteStockModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -60,8 +59,8 @@ object StockRTListRepository {
             val requestObject1 = JSONObject()
             try {
 
-//                {""BankKey"":""-500"",""FK_Company"":""1"",""Token"":""F5517387-B815-4DCC-B2CC-E0A2F3160E22"",""EntrBy"":""SONAKM"",""TransMode"":""INTR"",
-//                ""FK_BranchCodeUser"":""3"",""Detailed"":""0""}
+//                {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","FK_Company":"1","FK_StockTransfer":"271",
+//                    "EntrBy":"SONAKM","TransMode":"INTR","FK_BranchCodeUser":"3","Reason":"1"}
 
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
@@ -71,12 +70,13 @@ object StockRTListRepository {
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("FK_StockTransfer", ProdsuitApplication.encryptStart(FK_StockTransfer))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
                 requestObject1.put("TransMode", ProdsuitApplication.encryptStart(TransMode))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
-                requestObject1.put("Detailed", ProdsuitApplication.encryptStart(Detailed))
+                requestObject1.put("Reason", ProdsuitApplication.encryptStart(Reason))
 
                 Log.e(TAG,"requestObject1   8100   "+requestObject1)
 
@@ -87,7 +87,7 @@ object StockRTListRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getStockRequestList(body)
+            val call = apiService.StockSTDelete(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -96,10 +96,10 @@ object StockRTListRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val country = ArrayList<StockRTListModel>()
-                        country.add(StockRTListModel(response.body()))
+                        val country = ArrayList<DeleteStockModel>()
+                        country.add(DeleteStockModel(response.body()))
                         val msg = country[0].message
-                        stockRTListSetterGetter.value = StockRTListModel(msg)
+                        deleteStockSetterGetter.value = DeleteStockModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
@@ -129,55 +129,5 @@ object StockRTListRepository {
             ).show()
         }
 
-
-//        try {
-//
-//            var msg = "{\n" +
-//                    "  \"StockRTDetails\": {\n" +
-//                    "    \"StockRTList\": [\n" +
-//                    "      {\n" +
-//                    "        \"Date\": \"04/05/2023\",\n" +
-//                    "        \"Branch\": \"Perfect Software Solution\",\n" +
-//                    "        \"DepartmentFrom\": \"Service\",\n" +
-//                    "        \"DepartmentTo\": \"Head Office Chalappuram\",\n" +
-//                    "        \"EmployeesFrom\": \"VYSHAKH PN\",\n" +
-//                    "        \"EmployeeTo\": \"Sona\"\n" +
-//                    "      },\n" +
-//                    "      {\n" +
-//                    "        \"Date\": \"04/05/2023\",\n" +
-//                    "        \"Branch\": \"Perfect Software Solution\",\n" +
-//                    "        \"DepartmentFrom\": \"Sales\",\n" +
-//                    "        \"DepartmentTo\": \"Head Office Chalappuram\",\n" +
-//                    "        \"EmployeesFrom\": \"Sona\",\n" +
-//                    "        \"EmployeeTo\": \"Shan\"\n" +
-//                    "      },\n" +
-//                    "      {\n" +
-//                    "        \"Date\": \"04/05/2023\",\n" +
-//                    "        \"Branch\": \"Perfect Software Solution\",\n" +
-//                    "        \"DepartmentFrom\": \"Support\",\n" +
-//                    "        \"DepartmentTo\": \"Head Office Chalappuram\",\n" +
-//                    "        \"EmployeesFrom\": \"Anvin\",\n" +
-//                    "        \"EmployeeTo\": \"Shan\"\n" +
-//                    "      },\n" +
-//                    "      {\n" +
-//                    "        \"Date\": \"04/05/2023\",\n" +
-//                    "        \"Branch\": \"Perfect Software Solution\",\n" +
-//                    "        \"DepartmentFrom\": \"Sales\",\n" +
-//                    "        \"DepartmentTo\": \"Head Office Chalappuram\",\n" +
-//                    "        \"EmployeesFrom\": \"Shi\",\n" +
-//                    "        \"EmployeeTo\": \"Shan\"\n" +
-//                    "      }\n" +
-//                    "    ],\n" +
-//                    "    \"ResponseCode\": \"0\",\n" +
-//                    "    \"ResponseMessage\": \"Transaction Verified\"\n" +
-//                    "  },\n" +
-//                    "  \"StatusCode\": 0,\n" +
-//                    "  \"EXMessage\": \"Transaction Verified\"\n" +
-//                    "}"
-//
-//            stockRTListSetterGetter.value = StockRTListModel(msg)
-//        }catch (e: Exception){
-//
-//        }
     }
 }

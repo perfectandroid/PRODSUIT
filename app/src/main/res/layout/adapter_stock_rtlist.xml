@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="0dp"
-    android:backgroundTint="@color/white"
+    android:backgroundTint="#E7EDED"
     android:layout_marginTop="0dp"
-    app:cardElevation="0dp"
+    app:cardElevation="2dp"
     app:cardUseCompatPadding="true">
     <!--    app:cardUseCompatPadding="true"-->
 
@@ -28,22 +28,23 @@
             android:paddingRight="10dp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:background="@drawable/round_border_trans"
             android:orientation="vertical">
+
+<!--            android:background="@drawable/round_border_trans"-->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-
-
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.8"
+                    android:background="#E7EDED"
+                    android:padding="5dp"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="visible">
 
                     <ImageView
                         android:layout_width="20dp"
@@ -57,7 +58,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textSize="16dp"
-                        android:paddingLeft="2dp"
+                        android:paddingLeft="5dp"
                         android:paddingRight="7dp"
                         android:textStyle="bold"
                         android:fontFamily="@font/myfont"
@@ -69,21 +70,54 @@
 
                 </LinearLayout>
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/ll_approved"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:background="@color/white"
-                    android:fontFamily="@font/myfont"
-                    android:text="Assigned"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:visibility="invisible"/>
+                    android:gravity="end|center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="invisible">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@drawable/shape_trans_corner"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:gravity="end|center_vertical"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/myfont"
+                            android:text="Transfered"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            android:layout_marginLeft="10dp"
+                            android:visibility="visible"/>
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="10dp"
+                            android:src="@drawable/domain_verification"
+                            app:tint="@color/colorPrimary"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
 
 
             </LinearLayout>
+
 
 
             <LinearLayout
@@ -102,14 +136,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@color/white"
-                        android:textSize="13dp"
+                        android:textSize="14dp"
                         android:textStyle="bold"
-                        android:drawableLeft="@drawable/vtr_branch"
+                        android:drawableTint="@color/textColor1"
                         android:drawablePadding="5dp"
                         android:fontFamily="@font/myfont"
                         android:text="Branch"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor1"
                         android:visibility="visible"/>
 
 
@@ -119,13 +152,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@color/white"
-                        android:textSize="13dp"
+                        android:textSize="14dp"
                         android:layout_marginTop="-3dp"
                         android:textStyle="normal"
                         android:fontFamily="@font/myfont"
                         android:text="07/02/2023 12:31PM"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/textColor1" />
 
 
                 </LinearLayout>
@@ -141,14 +173,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@color/white"
-                        android:textSize="13dp"
+                        android:textSize="14dp"
                         android:textStyle="bold"
-                        android:drawableLeft="@drawable/vtr_department"
+                        android:drawableTint="@color/textColor1"
                         android:drawablePadding="5dp"
                         android:fontFamily="@font/myfont"
                         android:text="Department From"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor1"
                         android:visibility="visible"/>
 
 
@@ -157,13 +188,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@color/white"
-                        android:textSize="13dp"
+                        android:textSize="14dp"
                         android:layout_marginTop="-3dp"
                         android:textStyle="normal"
                         android:fontFamily="@font/myfont"
                         android:text="07/02/2023 12:31PM"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/textColor1" />
 
 
                 </LinearLayout>
@@ -187,14 +217,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@color/white"
-                        android:textSize="13dp"
+                        android:textSize="14dp"
                         android:textStyle="bold"
-                        android:drawableLeft="@drawable/vtr_department"
+                        android:drawableTint="@color/textColor1"
                         android:drawablePadding="5dp"
                         android:fontFamily="@font/myfont"
                         android:text="Department To"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor1"
                         android:visibility="visible"/>
 
 
@@ -203,13 +232,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@color/white"
-                        android:textSize="13dp"
+                        android:textSize="14dp"
                         android:layout_marginTop="-3dp"
                         android:textStyle="normal"
                         android:fontFamily="@font/myfont"
                         android:text="07/02/2023 12:31PM"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/textColor1" />
 
 
                 </LinearLayout>
@@ -225,14 +253,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@color/white"
-                        android:textSize="13dp"
+                        android:textSize="14dp"
                         android:textStyle="bold"
-                        android:drawableLeft="@drawable/vtr_employee"
+                        android:drawableTint="@color/textColor1"
                         android:drawablePadding="5dp"
                         android:fontFamily="@font/myfont"
                         android:text="Employee From"
-                        android:textColor="@color/black"
+                        android:textColor="@color/textColor1"
                         android:visibility="visible"/>
 
 
@@ -241,14 +268,64 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@color/white"
-                        android:textSize="13dp"
+                        android:textSize="14dp"
                         android:layout_marginTop="-3dp"
                         android:textStyle="normal"
                         android:fontFamily="@font/myfont"
                         android:text="07/02/2023 12:31PM"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/textColor1" />
 
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/tv_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_bg_view"
+                        android:fontFamily="@font/myfont"
+                        android:gravity="center"
+                        android:text="View"
+                        android:textColor="#38795C"
+                        android:textSize="16dp"
+                        android:textStyle="normal"
+                        android:visibility="visible" />
+
+<!--                    E6E2E2-->
+
+                    <TextView
+                        android:id="@+id/tv_delete"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:fontFamily="@font/myfont"
+                        android:text="Delete"
+                        android:textColor="#8A574A"
+                        android:textSize="16dp"
+                        android:textStyle="normal"
+                        android:visibility="gone"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/shape_bg_delete" />
 
                 </LinearLayout>
 

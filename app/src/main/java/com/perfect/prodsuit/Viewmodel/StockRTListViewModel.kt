@@ -11,8 +11,8 @@ class StockRTListViewModel: ViewModel() {
 
     var stockRTListData: MutableLiveData<StockRTListModel>? = null
 
-    fun getStockRTList(context: Context, ID_Category : String, ID_Product : String) : LiveData<StockRTListModel>? {
-        stockRTListData = StockRTListRepository.getServicesApiCall(context,ID_Category,ID_Product)
+    fun getStockRTList(context: Context, TransMode : String, Detailed : String) : LiveData<StockRTListModel>? {
+        stockRTListData = StockRTListRepository.getServicesApiCall(context,TransMode,Detailed)
         return stockRTListData
     }
 

@@ -22,7 +22,11 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/search_bgsvg.xml" value="0.2125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_approve.xml" value="0.26" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg.xml" value="0.1875" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg_delete.xml" value="0.263" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg_view.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_border_round_trans.xml" value="0.263" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bottom_border.xml" value="0.263" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bottom_border1.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bottom_shadow.xml" value="0.1725" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bottom_shadow_trans.xml" value="0.1725" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bottomleft.xml" value="0.2595" />
@@ -30,6 +34,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient1.xml" value="0.2765" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient2.xml" value="0.2765" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient3.xml" value="0.2765" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient4.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_header.xml" value="0.307" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_header_list.xml" value="0.2765" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_headers.xml" value="0.2765" />
@@ -41,6 +46,8 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_round_trans.xml" value="0.2625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_shadow.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_shadownew.xml" value="0.263" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_trans_corner.xml" value="0.263" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_trans_corner1.xml" value="0.202" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shapes_1.xml" value="0.2625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_auth_arrow.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_auth_rectangle.xml" value="0.263" />
@@ -91,7 +98,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_site_visit.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_request.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_rtlist.xml" value="0.29739583333333336" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_transfer.xml" value="0.346875" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_transfer.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_approe_list.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_approve.xml" value="0.24583333333333332" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_approve1.xml" value="0.33" />
@@ -126,6 +133,8 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirm_stock_transfer.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirmation_pop_lead.xml" value="0.28125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/cs_detail_bottom_sheet.xml" value="0.2328125" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/custom_snackbar.xml" value="0.22864583333333333" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/custom_toast.xml" value="0.3380208333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/delete_confirmation.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/dynamic_auth1.xml" value="0.27291666666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/emi_payment_bottom_sheet.xml" value="0.30462962962962964" />

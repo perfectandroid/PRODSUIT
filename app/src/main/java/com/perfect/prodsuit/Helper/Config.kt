@@ -8,9 +8,11 @@ import android.graphics.Color
 import android.net.ConnectivityManager
 import android.util.Log
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.gms.tasks.Task
@@ -203,6 +205,41 @@ object Config {
             val activeNetworkInfo = connectivityManager.activeNetworkInfo
             return activeNetworkInfo != null && activeNetworkInfo.isConnected
         }
+    }
+
+    fun showCustomToast(message: String, context: Context)
+    {
+
+//        val customSnackView: View = LayoutInflater.from(context).inflate(R.layout.custom_snackbar, null)
+//        val layout = LayoutInflater.from(context).inflate (
+//            R.layout.custom_snackbar,
+//            context.findViewById(R.id.toast_container)
+//        )
+//
+//        // set the text of the TextView of the message
+////        val textView = layout.findViewById<TextView>(R.id.toast_text)
+////        textView.text = message
+//
+//        // use the application extension function
+//        this.apply {
+//            setGravity(Gravity.BOTTOM, 0, 40)
+//            duration = Toast.LENGTH_LONG
+//            view = layout
+//            show()
+//        }
+
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater.inflate(R.layout.custom_toast, null)
+
+        val textView1 = layout.findViewById<TextView>(R.id.textView1)
+        textView1.text = message
+
+        val toast = Toast(context)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+        toast.show()
+
+
     }
 
     @SuppressLint("ResourceAsColor")

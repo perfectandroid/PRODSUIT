@@ -27,15 +27,15 @@ object SaveUpdateStockRTRepository {
     val saveUpdateStockRTSetterGetter = MutableLiveData<SaveUpdateStockRTModel>()
     val TAG: String = "SaveUpdateStockRTRepository"
 
-    fun getServicesApiCall(context: Context,FK_BranchFrom : String,FK_DepartmentFrom : String,FK_EmployeeFrom : String,STRequest : String,strDate : String,
+    fun getServicesApiCall(context: Context,UserAction : String,FK_BranchFrom : String,FK_DepartmentFrom : String,FK_EmployeeFrom : String,STRequest : String,strDate : String,
                            FK_BranchTo : String,FK_DepartmentTo : String,FK_EmployeeTo : String,TransMode : String,FK_StockRequest : String,ID_StockTransfer : String,
                            saveDetailArray : JSONArray): MutableLiveData<SaveUpdateStockRTModel> {
-        SaveUpdateStockRT(context,  FK_BranchFrom!!,FK_DepartmentFrom!!,FK_EmployeeFrom!!,STRequest,strDate, FK_BranchTo,FK_DepartmentTo,FK_EmployeeTo,
+        SaveUpdateStockRT(context, UserAction, FK_BranchFrom!!,FK_DepartmentFrom!!,FK_EmployeeFrom!!,STRequest,strDate, FK_BranchTo,FK_DepartmentTo,FK_EmployeeTo,
             TransMode,FK_StockRequest,ID_StockTransfer,saveDetailArray)
         return saveUpdateStockRTSetterGetter
     }
 
-    private fun SaveUpdateStockRT(context: Context, FK_BranchFrom : String,FK_DepartmentFrom : String,FK_EmployeeFrom : String,STRequest : String,strDate : String,
+    private fun SaveUpdateStockRT(context: Context,UserAction : String, FK_BranchFrom : String,FK_DepartmentFrom : String,FK_EmployeeFrom : String,STRequest : String,strDate : String,
                                   FK_BranchTo : String,FK_DepartmentTo : String,FK_EmployeeTo : String,TransMode : String,FK_StockRequest : String,ID_StockTransfer : String,
                                   saveDetailArray : JSONArray) {
 
@@ -119,7 +119,7 @@ object SaveUpdateStockRTRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
-                requestObject1.put("UserAction", ProdsuitApplication.encryptStart("1"))
+                requestObject1.put("UserAction", ProdsuitApplication.encryptStart(UserAction))
 
                 requestObject1.put("FK_BranchFrom", ProdsuitApplication.encryptStart(FK_BranchFrom))
                 requestObject1.put("FK_DepartmentFrom", ProdsuitApplication.encryptStart(FK_DepartmentFrom))

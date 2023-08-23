@@ -850,7 +850,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
         if (!TransactionDetails.equals("")){
             card_Key1!!.visibility = View.VISIBLE
             val animator = ObjectAnimator.ofFloat(card_Key1, "alpha", 0f, 1.5f)
-            animator.duration = 2000 // Animation duration in milliseconds
+            animator.duration = 1000 // Animation duration in milliseconds
             animator.start()
             webTransDetail!!.getSettings().setJavaScriptEnabled(true);
             webTransDetail!!.loadDataWithBaseURL(null, TransactionDetails, "text/html", "utf-8", null);
@@ -868,7 +868,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
         if (!PartyDetails.equals("")){
             card_Key2!!.visibility = View.VISIBLE
             val animator = ObjectAnimator.ofFloat(card_Key2, "alpha", 0f, 1.5f)
-            animator.duration = 2000 // Animation duration in milliseconds
+            animator.duration = 1000 // Animation duration in milliseconds
             animator.start()
             webPartyDetails!!.getSettings().setJavaScriptEnabled(true);
             webPartyDetails!!.loadDataWithBaseURL(null, PartyDetails, "text/html", "utf-8", null);
@@ -885,7 +885,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
         if (!FooterLeft.equals("")){
             card_Key4!!.visibility = View.VISIBLE
             val animator = ObjectAnimator.ofFloat(card_Key4, "alpha", 0f, 1.5f)
-            animator.duration = 2000 // Animation duration in milliseconds
+            animator.duration = 1000 // Animation duration in milliseconds
             animator.start()
             webFooterLeft!!.getSettings().setJavaScriptEnabled(true);
             webFooterLeft!!.loadDataWithBaseURL(null, FooterLeft, "text/html", "utf-8", null);
@@ -903,7 +903,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
         if (!FooterRight.equals("")){
             card_Key5!!.visibility = View.VISIBLE
             val animator = ObjectAnimator.ofFloat(card_Key5, "alpha", 0f, 1.5f)
-            animator.duration = 2000 // Animation duration in milliseconds
+            animator.duration = 1000 // Animation duration in milliseconds
             animator.start()
             webFooterRight!!.getSettings().setJavaScriptEnabled(true);
             webFooterRight!!.loadDataWithBaseURL(null, FooterRight, "text/html", "utf-8", null);
@@ -922,7 +922,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
         if (key4ArrayList.length()>0){
             card_Key3!!.visibility = View.VISIBLE
             val animator = ObjectAnimator.ofFloat(card_Key3, "alpha", 0f, 1.5f)
-            animator.duration = 2000 // Animation duration in milliseconds
+            animator.duration = 1000 // Animation duration in milliseconds
             animator.start()
             webDetails!!.getSettings().setJavaScriptEnabled(true);
             webDetails!!.loadDataWithBaseURL(null, SubTitleHTML, "text/html", "utf-8", null);
