@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="0dp"
+    android:backgroundTint="@color/white"
+    android:layout_marginTop="0dp"
+    app:cardElevation="0dp">
+    <!--    app:cardUseCompatPadding="true"-->
+
+    <LinearLayout
+        android:id="@+id/ll_ProductStock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="15dp"
+            android:maxLines="2"
+            android:fontFamily="@font/myfont"
+            android:background="@color/list_si"
+            android:text="14"
+            android:layout_weight="3.3"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:id="@+id/txtsino" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/list_data"
+            android:paddingBottom="2dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:padding="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/list_data"
+                android:textSize="15dp"
+                android:maxLines="2"
+                android:fontFamily="@font/myfont"
+                android:text="gdfgdfghdfghd"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:layout_centerVertical="true"
+                android:id="@+id/txtProductStock" />
+            <!--        android:drawableRight="@drawable/arrowright"-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:paddingLeft="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/list_data"
+                    android:textSize="13dp"
+                    android:maxLines="2"
+                    android:fontFamily="@font/myfont"
+                    android:text="fgdfhdf"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/txtCurrStock"
+                    android:visibility="visible"/>
+
+                <TextView
+                    android:paddingLeft="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/list_data"
+                    android:textSize="13dp"
+                    android:maxLines="2"
+                    android:fontFamily="@font/myfont"
+                    android:text="hfhfg"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/txtStandQty"
+                    android:visibility="visible"/>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="15dp"
+            android:maxLines="2"
+            android:paddingLeft="8dp"
+            android:fontFamily="@font/myfont"
+            android:background="@color/list_data"
+            android:text=""
+            android:drawableLeft="@drawable/svg_right_arrow"
+            android:layout_weight="3.4"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true" />
+
+
+    </LinearLayout>
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/list_line"/>
+
+</androidx.cardview.widget.CardView>

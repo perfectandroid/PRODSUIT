@@ -102,6 +102,7 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
     private fun getAppoval(Module :  String) {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
+                ll_main!!.removeAllViews()
                 progressDialog = ProgressDialog(context, R.style.Progress)
                 progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
                 progressDialog!!.setCancelable(false)
@@ -120,7 +121,7 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   999101   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
-
+                                        ll_main!!.removeAllViews()
 //                                        val jobjt = jObject.getJSONObject("ApprovalDetails")
 //                                        approvalArrayList = jobjt.getJSONArray("ApprovalDetailList")
                                         val jobjt = jObject.getJSONObject("AuthorizationList")
@@ -144,6 +145,8 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                                                     LinearLayout.LayoutParams.MATCH_PARENT,
                                                     LinearLayout.LayoutParams.WRAP_CONTENT)
                                                 dynamicLinearLayoutmain.orientation = LinearLayout.VERTICAL
+                                                dynamicLinearLayoutmain.setBackgroundColor(context.resources.getColor(R.color.black));
+
                                                 while (keys.hasNext()) {
                                                     val key = keys.next()
 
@@ -238,18 +241,20 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                                                 textView3.text = "More Details"
 //                                                textView3.compoundDrawablePadding = drawablePadding
                                                 textView3!!.setTextSize(16F)
-                                                textView3!!.setTypeface(textView3!!.getTypeface(), Typeface.BOLD);
+                                                textView3!!.setTypeface(textView3!!.getTypeface(), Typeface.NORMAL);
 //                                                textView3!!.setTextColor(Color.parseColor("#FFFFFF"));
                                                 textView3.setCompoundDrawablePadding(2)
 //                                                textView3!!.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrow_next, 0);
                                                // textView3!!.setTypeface(customFont);
-                                                textView3!!.setTextColor(context.resources.getColor(R.color.white))
+                                                textView3!!.setTextColor(context.resources.getColor(R.color.more_textcolor))
                                                 textView3!!.setPadding(30, 10, 30, 10)
+                                                textView3!!.textAlignment = View.TEXT_ALIGNMENT_CENTER
 
-                                                val layoutParamMain = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                                                layoutParamMain.setMargins(5, 5, 20, 20)
-                                                layoutParamMain.gravity = Gravity.END
-                                                textView3.setBackgroundResource(R.drawable.shape_border_round_trans)
+                                                val layoutParamMain = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                                                layoutParamMain.setMargins(20, 20, 20, 20)
+                                                layoutParamMain.gravity = Gravity.CENTER
+                                             //   textView3.setBackgroundResource(R.drawable.shape_border_round_trans)
+                                                textView3.setBackgroundResource(R.drawable.shape_bg_view1)
                                                 textView3.layoutParams = layoutParamMain
 
                                                 textView3!!.setOnClickListener {
@@ -264,8 +269,6 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
                                                 ll_main!!.addView(dynamicLinearLayoutmain);
                                                 dynamicLinearLayoutmain.addView(textView3);
-
-
 
                                             }
 

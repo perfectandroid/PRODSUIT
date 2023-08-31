@@ -1704,12 +1704,14 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             R.id.lllocation -> {
 
                 val intent = Intent(this@LeadGenerationActivity, LocationPickerActivity::class.java)
+                intent.putExtra("mode","0")
                 startActivityForResult(intent, SELECT_LOCATION!!);
             }
 
             R.id.txtLocation -> {
 
                 val intent = Intent(this@LeadGenerationActivity, LocationPickerActivity::class.java)
+                intent.putExtra("mode","0")
                 startActivityForResult(intent, SELECT_LOCATION!!);
             }
 

@@ -156,7 +156,7 @@
                         android:layout_marginTop="-3dp"
                         android:textStyle="normal"
                         android:fontFamily="@font/myfont"
-                        android:text="07/02/2023 12:31PM"
+                        android:text=""
                         android:textColor="@color/textColor1" />
 
 
@@ -192,7 +192,7 @@
                         android:layout_marginTop="-3dp"
                         android:textStyle="normal"
                         android:fontFamily="@font/myfont"
-                        android:text="07/02/2023 12:31PM"
+                        android:text=""
                         android:textColor="@color/textColor1" />
 
 
@@ -236,7 +236,7 @@
                         android:layout_marginTop="-3dp"
                         android:textStyle="normal"
                         android:fontFamily="@font/myfont"
-                        android:text="07/02/2023 12:31PM"
+                        android:text=""
                         android:textColor="@color/textColor1" />
 
 
@@ -272,7 +272,7 @@
                         android:layout_marginTop="-3dp"
                         android:textStyle="normal"
                         android:fontFamily="@font/myfont"
-                        android:text="07/02/2023 12:31PM"
+                        android:text=""
                         android:textColor="@color/textColor1" />
 
 

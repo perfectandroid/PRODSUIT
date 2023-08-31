@@ -72,6 +72,10 @@ class StockRTListActivity : AppCompatActivity(), View.OnClickListener , ItemClic
     var deleteCount = 0
 
 
+    var TransMode : String? = ""
+    var headerTitle : String? = ""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -84,6 +88,9 @@ class StockRTListActivity : AppCompatActivity(), View.OnClickListener , ItemClic
         deleteStockViewModel = ViewModelProvider(this).get(DeleteStockViewModel::class.java)
 
         setRegViews()
+
+        TransMode  = intent.getStringExtra("TransMode")
+        headerTitle  = intent.getStringExtra("headerTitle")
         getDetail()
 
         stockCount = 0
@@ -105,6 +112,8 @@ class StockRTListActivity : AppCompatActivity(), View.OnClickListener , ItemClic
         imback!!.setOnClickListener(this)
         imgClosing!!.setOnClickListener(this)
 
+        tv_header!!.setText(headerTitle)
+
     }
 
     private fun getDetail() {
@@ -122,7 +131,7 @@ class StockRTListActivity : AppCompatActivity(), View.OnClickListener , ItemClic
     private fun getStckList() {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                var TransMode = "INTR"
+
                 var Detailed = "0"
                 progressDialog = ProgressDialog(context, R.style.Progress)
                 progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -130,7 +139,7 @@ class StockRTListActivity : AppCompatActivity(), View.OnClickListener , ItemClic
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                stockRTListViewModel.getStockRTList(this, TransMode,Detailed)!!.observe(
+                stockRTListViewModel.getStockRTList(this, TransMode!!,Detailed)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 

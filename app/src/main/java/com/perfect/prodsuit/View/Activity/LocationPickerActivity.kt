@@ -73,6 +73,8 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
     var lm: LocationManager? = null
     var gps_enabled = false
     var network_enabled = false
+    var modeLocation : String? = ""
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,6 +83,8 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_location_picker)
         context = this@LocationPickerActivity
+
+        modeLocation = intent.getStringExtra("mode")
         Log.e(TAG,"841")
         //getLocationPermission()
         lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -285,33 +289,37 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
                 googleMap.setMyLocationEnabled(false);
                 googleMap.getUiSettings().setMyLocationButtonEnabled(false);
             }
-//            googleMap.setOnMapClickListener(OnMapClickListener { latLng ->
-//                googleMap.clear()
-//                try {
-//                    geocoder = Geocoder(this, Locale.getDefault())
-//                    addresses = geocoder!!.getFromLocation(latLng.latitude, latLng.longitude, 1);
-//                    address = addresses!!.get(0).getAddressLine(0)
-//                    city = addresses!!.get(0).locality
-//                    state = addresses!!.get(0).adminArea
-//                    country = addresses!!.get(0).countryName
-//                    postalCode = addresses!!.get(0).postalCode
-//                    knownName = addresses!!.get(0).featureName
-//                    strLongitue = latLng.longitude.toString()
-//                    strLatitude = latLng.latitude.toString()
-//                    val latLng = LatLng(latLng.latitude, latLng.longitude)
-//                    val markerOptions = MarkerOptions()
-//                    markerOptions.position(latLng)
-//                    markerOptions.title(address+","+city+","+state+","+country+","+postalCode)
-//                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-//                    mCurrLocationMarker = googleMap.addMarker(markerOptions)
-//                    edtSearch!!.setText(address+","+city+","+state+","+country+","+postalCode)
-//                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-//                    googleMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
-//                }catch (e: Exception){
-//                    Log.e(TAG,"Exception   286    "+e.toString())
-//                }
-//
-//            })
+
+            if (modeLocation.equals("1")){
+                googleMap.setOnMapClickListener(OnMapClickListener { latLng ->
+                    googleMap.clear()
+                    try {
+                        geocoder = Geocoder(this, Locale.getDefault())
+                        addresses = geocoder!!.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                        address = addresses!!.get(0).getAddressLine(0)
+                        city = addresses!!.get(0).locality
+                        state = addresses!!.get(0).adminArea
+                        country = addresses!!.get(0).countryName
+                        postalCode = addresses!!.get(0).postalCode
+                        knownName = addresses!!.get(0).featureName
+                        strLongitue = latLng.longitude.toString()
+                        strLatitude = latLng.latitude.toString()
+                        val latLng = LatLng(latLng.latitude, latLng.longitude)
+                        val markerOptions = MarkerOptions()
+                        markerOptions.position(latLng)
+                        markerOptions.title(address+","+city+","+state+","+country+","+postalCode)
+                        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                        mCurrLocationMarker = googleMap.addMarker(markerOptions)
+                        edtSearch!!.setText(address+","+city+","+state+","+country+","+postalCode)
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+                        googleMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
+                    }catch (e: Exception){
+                        Log.e(TAG,"Exception   286    "+e.toString())
+                    }
+
+                })
+            }
+
 
         }catch (e: Exception){
 

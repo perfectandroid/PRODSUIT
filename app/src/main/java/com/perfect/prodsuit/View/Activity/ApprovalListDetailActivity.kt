@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
@@ -849,16 +850,17 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
     private fun showTransactionDetails() {
         if (!TransactionDetails.equals("")){
             card_Key1!!.visibility = View.VISIBLE
-            val animator = ObjectAnimator.ofFloat(card_Key1, "alpha", 0f, 1.5f)
-            animator.duration = 1000 // Animation duration in milliseconds
+            val animator = ObjectAnimator.ofFloat(card_Key1, "alpha", 0f, 0.5f)
+            animator.duration = 900 // Animation duration in milliseconds
             animator.start()
             webTransDetail!!.getSettings().setJavaScriptEnabled(true);
+            webTransDetail!!.setBackgroundColor(context.getColor(R.color.web_color));
             webTransDetail!!.loadDataWithBaseURL(null, TransactionDetails, "text/html", "utf-8", null);
 
             Handler(Looper.getMainLooper()).postDelayed({
                 //Do something after 100ms
                 showPartyDetails()
-            }, 1000)
+            }, 900)
         }else{
             showPartyDetails()
         }
@@ -867,15 +869,16 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
     private fun showPartyDetails() {
         if (!PartyDetails.equals("")){
             card_Key2!!.visibility = View.VISIBLE
-            val animator = ObjectAnimator.ofFloat(card_Key2, "alpha", 0f, 1.5f)
-            animator.duration = 1000 // Animation duration in milliseconds
+            val animator = ObjectAnimator.ofFloat(card_Key2, "alpha", 0f, 0.5f)
+            animator.duration = 900 // Animation duration in milliseconds
             animator.start()
             webPartyDetails!!.getSettings().setJavaScriptEnabled(true);
+            webPartyDetails!!.setBackgroundColor(context.getColor(R.color.web_color));
             webPartyDetails!!.loadDataWithBaseURL(null, PartyDetails, "text/html", "utf-8", null);
             Handler(Looper.getMainLooper()).postDelayed({
                 //Do something after 100ms
                 showFooterLeft()
-            }, 1000)
+            }, 900)
         }else{
             showFooterLeft()
         }
@@ -884,15 +887,16 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
     private fun showFooterLeft() {
         if (!FooterLeft.equals("")){
             card_Key4!!.visibility = View.VISIBLE
-            val animator = ObjectAnimator.ofFloat(card_Key4, "alpha", 0f, 1.5f)
-            animator.duration = 1000 // Animation duration in milliseconds
+            val animator = ObjectAnimator.ofFloat(card_Key4, "alpha", 0f, 0.5f)
+            animator.duration = 900 // Animation duration in milliseconds
             animator.start()
             webFooterLeft!!.getSettings().setJavaScriptEnabled(true);
+            webFooterLeft!!.setBackgroundColor(context.getColor(R.color.web_color));
             webFooterLeft!!.loadDataWithBaseURL(null, FooterLeft, "text/html", "utf-8", null);
             Handler(Looper.getMainLooper()).postDelayed({
                 //Do something after 100ms
                 showFooterRight()
-            }, 1000)
+            }, 900)
         }else{
             showFooterRight()
         }
@@ -902,15 +906,16 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
         Log.e(TAG,"902222  showFooterRight "+FooterRight)
         if (!FooterRight.equals("")){
             card_Key5!!.visibility = View.VISIBLE
-            val animator = ObjectAnimator.ofFloat(card_Key5, "alpha", 0f, 1.5f)
+            val animator = ObjectAnimator.ofFloat(card_Key5, "alpha", 0f, 0.5f)
             animator.duration = 1000 // Animation duration in milliseconds
             animator.start()
             webFooterRight!!.getSettings().setJavaScriptEnabled(true);
+            webFooterRight!!.setBackgroundColor(context.getColor(R.color.web_color));
             webFooterRight!!.loadDataWithBaseURL(null, FooterRight, "text/html", "utf-8", null);
             Handler(Looper.getMainLooper()).postDelayed({
                 //Do something after 100ms
                 showkey4ArrayList()
-            }, 1000)
+            }, 900)
         }else{
             showkey4ArrayList()
         }
@@ -922,9 +927,10 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
         if (key4ArrayList.length()>0){
             card_Key3!!.visibility = View.VISIBLE
             val animator = ObjectAnimator.ofFloat(card_Key3, "alpha", 0f, 1.5f)
-            animator.duration = 1000 // Animation duration in milliseconds
+            animator.duration = 900 // Animation duration in milliseconds
             animator.start()
             webDetails!!.getSettings().setJavaScriptEnabled(true);
+            webDetails!!.setBackgroundColor(context.getColor(R.color.web_color));
             webDetails!!.loadDataWithBaseURL(null, SubTitleHTML, "text/html", "utf-8", null);
 
 //                                            val lLayout = GridLayoutManager(this@ApprovalListDetailActivity, 1)
@@ -997,7 +1003,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
                         val layoutParamMain = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                         layoutParamMain.setMargins(5, 5, 5, 0)
-                        dynamicLinearLayoutmain.setBackgroundResource(R.drawable.shape_shadownew)
+                        dynamicLinearLayoutmain.setBackgroundResource(R.drawable.shape_approve_list)
                         dynamicLinearLayoutmain.layoutParams = layoutParamMain
 
                         dynamicLinearLayoutmain.addView(dynamicLinearLayout);

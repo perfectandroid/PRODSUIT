@@ -2,6 +2,7 @@ package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
 import android.app.AlertDialog
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
@@ -9,7 +10,10 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -392,16 +396,67 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
                                             startActivity(i)
                                             finish()
                                         } else {
-                                            val builder = AlertDialog.Builder(
-                                                this@LoginActivity,
-                                                R.style.MyDialogTheme
-                                            )
-                                            builder.setMessage(jObject.getString("EXMessage"))
-                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+
+                                            try {
+
+                                                val dialog1 = Dialog(this)
+                                                dialog1!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                                dialog1!!.setCancelable(false)
+                                                dialog1!!.setContentView(R.layout.alert_invalid_user)
+                                                dialog1!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+
+                                                val tv_invalid = dialog1!!.findViewById(R.id.tv_invalid) as TextView
+                                                val btn_Gotit = dialog1!!.findViewById(R.id.btn_Gotit) as Button
+
+                                                tv_invalid.setText(jObject.getString("EXMessage"))
+
+                                                btn_Gotit!!.setOnClickListener {
+                                                    dialog1.dismiss()
+
+                                                }
+
+                                                dialog1!!.show()
+                                                dialog1!!.getWindow()!!.setLayout(
+                                                    ViewGroup.LayoutParams.MATCH_PARENT,
+                                                    ViewGroup.LayoutParams.WRAP_CONTENT
+                                                );
+
+
+//
+//                                                val dialog1 = Dialog(this)
+//                                                dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//                                                dialog1!!.getWindow()!!.setLayout(
+//                                                    ViewGroup.LayoutParams.MATCH_PARENT,
+//                                                    ViewGroup.LayoutParams.WRAP_CONTENT
+//                                                );
+//                                                dialog1.setCancelable(false)
+//                                                dialog1.setContentView(R.layout.alert_invalid_user)
+//                                                val btn_Gotit = dialog1.findViewById(R.id.btn_Gotit) as Button
+//                                                val tv_invalid = dialog1.findViewById(R.id.tv_invalid) as TextView
+//                                                tv_invalid.setText(jObject.getString("EXMessage"))
+//
+//                                                btn_Gotit.setOnClickListener {
+//                                                    dialog1.dismiss()
+//                                                }
+//
+//                                                dialog1.show()
+                                            } catch (e: Exception) {
+                                                e.printStackTrace()
                                             }
-                                            val alertDialog: AlertDialog = builder.create()
-                                            alertDialog.setCancelable(false)
-                                            alertDialog.show()
+
+
+
+//                                            val builder = AlertDialog.Builder(
+//                                                this@LoginActivity,
+//                                                R.style.MyDialogTheme
+//                                            )
+//                                            builder.setMessage(jObject.getString("EXMessage"))
+//                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                            }
+//                                            val alertDialog: AlertDialog = builder.create()
+//                                            alertDialog.setCancelable(false)
+//                                            alertDialog.show()
                                         }
                                     }
                                 } else {

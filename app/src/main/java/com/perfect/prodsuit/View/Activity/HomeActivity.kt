@@ -860,11 +860,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                val i = Intent(this@HomeActivity, NotificationActivity::class.java)
 //                startActivity(i)
 
-                val i = Intent(this@HomeActivity, InventoryActivity::class.java)
-                startActivity(i)
-
-//                val i = Intent(this@HomeActivity, ApproveActivity::class.java)
+//                val i = Intent(this@HomeActivity, InventoryActivity::class.java)
 //                startActivity(i)
+
+                val i = Intent(this@HomeActivity, ApproveActivity::class.java)
+                startActivity(i)
 
 //                val i = Intent(this@HomeActivity, ApprovalListDetailActivity::class.java)
 //                startActivity(i)
@@ -2038,6 +2038,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             if (grid_id.equals("3")){
                 val i = Intent(this@HomeActivity, NotificationActivity::class.java)
                 startActivity(i)
+
             }
             if (grid_id.equals("4")){
                 val i = Intent(this@HomeActivity, LeadActivity::class.java)

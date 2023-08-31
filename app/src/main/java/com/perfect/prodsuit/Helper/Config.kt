@@ -849,12 +849,12 @@ object Config {
 
             var obj = JSONObject()
             obj.put("FK_StockMode", "1")
-            obj.put("StockMode", "ActualStock")
+            obj.put("StockMode", "Actual Stock")
             array.put(obj)
 
             obj = JSONObject()
             obj.put("FK_StockMode", "2")
-            obj.put("StockMode", "ReturnStock")
+            obj.put("StockMode", "Return Stock")
             array.put(obj)
 
             jsonObject.put("stockModeDetailsList", array)

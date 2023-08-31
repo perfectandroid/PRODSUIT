@@ -469,6 +469,7 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
                 val intent = Intent(this@StockRequestActivity, StockRTListActivity::class.java)
                 intent.putExtra("headerTitle","Request List")
+                intent.putExtra("TransMode",TransMode)
                 startActivityForResult(intent, Config.CODE_STOCK_LIST!!);
             }
 
@@ -1884,7 +1885,7 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 var hasId =  hasStockOrProduct(modelStockTransferDetails!!,FK_StockMode!!,FK_Product!!)
                 if (hasId){
 
-                    modelStockTransferDetails.add(ModelStockTransferDetails(FK_StockMode!!,tie_StockMode!!.text.toString(),FK_Product!!,tie_Product!!.text.toString(),strQuantity!!,strStandQuantity!!))
+                    modelStockTransferDetails.add(ModelStockTransferDetails(FK_StockMode!!,tie_StockMode!!.text.toString(),FK_Product!!,tie_Product!!.text.toString(),strQuantity!!,strStandQuantity!!,"0"))
                     if (modelStockTransferDetails.size>0){
                         ll_stocklist!!.visibility =View.VISIBLE
                         val lLayout = GridLayoutManager(this@StockRequestActivity, 1)
@@ -2142,7 +2143,7 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                                             for (i in 0 until stockProductListArrayList.length()) {
                                                 val jsonObject = stockProductListArrayList.getJSONObject(i)
                                                 //modelStockTransferDetails.add(ModelStockTransferDetails(FK_StockMode!!,tie_StockMode!!.text.toString(),FK_Product!!,tie_Product!!.text.toString(),strQuantity!!,strStandQuantity!!))
-                                                modelStockTransferDetails.add(ModelStockTransferDetails(jsonObject.getString("ID_Stock"),jsonObject.getString("StockMode"),jsonObject.getString("ID_Product"),jsonObject.getString("Product"),jsonObject.getString("Quantity"),jsonObject.getString("QuantityStandBy")))
+                                                modelStockTransferDetails.add(ModelStockTransferDetails(jsonObject.getString("ID_Stock"),jsonObject.getString("StockMode"),jsonObject.getString("ID_Product"),jsonObject.getString("Product"),jsonObject.getString("Quantity"),jsonObject.getString("QuantityStandBy"),"0"))
                                             }
                                             recyStockDetails!!.adapter = null
                                             if (modelStockTransferDetails.size>0){

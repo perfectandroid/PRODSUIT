@@ -529,5 +529,11 @@ interface ApiInterface {
     @POST("Stock/StockSTDelete")
     fun StockSTDelete(@Body body: RequestBody): Call<String>
 
+    @POST("Stock/StockSTProductDetails")
+    fun getStockSTProductDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Stock/GetStockRequestListInTransfer")
+    fun getStockRequestListInTransfer(@Body body: RequestBody): Call<String>
+
 
 }

@@ -32,7 +32,7 @@ class StockDetailAdapter(internal var context: Context, internal var mList: List
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
             if (holder is MainViewHolder) {
-                Log.e(TAG,"onBindViewHolder   1051   ")
+                Log.e(TAG,"onBindViewHolder   1051   "+mode)
 
                 val empModel = mList[position]
                 holder.tv_stock.text = empModel.StockMode
@@ -41,6 +41,9 @@ class StockDetailAdapter(internal var context: Context, internal var mList: List
 
                 if (mode.equals("0")){
                     holder.tv_stock.visibility = View.GONE
+                }
+                if (mode.equals("1")){
+                    holder.tv_stock.visibility = View.VISIBLE
                 }
 
                 holder.im_delete!!.setTag(position)
