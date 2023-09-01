@@ -23,10 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.Helper.DecimelFormatters
-import com.perfect.prodsuit.Helper.FullLenghRecyclertview
-import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.*
 import com.perfect.prodsuit.Model.ModelStockTransferDetails
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
@@ -186,6 +183,8 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     var ID_StockTransfer = "0" // Save 0 , Update ID_Transfer
     var UserAction = "1" // Save =  1 , Update = 2
 
+    var saveAttendanceMark = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -204,6 +203,8 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         stockReqProductlistViewModel = ViewModelProvider(this).get(StockReqProductlistViewModel::class.java)
 
         setRegViews()
+
+        checkAttendance()
     }
 
     private fun setRegViews() {
@@ -292,6 +293,27 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
 
 
+    }
+
+    private fun checkAttendance() {
+
+        saveAttendanceMark = false
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        Log.e(TAG,"1633331      "+boolAttendance)
+        if (boolAttendance) {
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status", "")
+            if (status.equals("0") || status.equals("")) {
+                Common.punchingRedirectionConfirm(this, "", "")
+            } else if (status.equals("1")) {
+                saveAttendanceMark = true
+            }
+
+        } else {
+            saveAttendanceMark = true
+        }
     }
 
     private fun getSharedData() {
@@ -599,7 +621,12 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             }
 
             R.id.btnSubmit->{
-                saveValidation(v)
+                checkAttendance()
+                if (saveAttendanceMark) {
+                    Config.disableClick(v)
+                    saveValidation(v)
+                }
+
             }
 
         }

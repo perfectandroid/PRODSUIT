@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.FullLenghRecyclertview
 import com.perfect.prodsuit.Helper.ItemClickListener
@@ -137,6 +138,8 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
     var FooterLeft =  ""
     var FooterRight =  ""
 
+    var saveAttendanceMark = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -157,7 +160,8 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
         Module = intent!!.getStringExtra("Module").toString()
         AuthID = jsonObj!!.getString("ID_FIELD")
 
-
+        Log.e(TAG,"163333   Start")
+        checkAttendance()
         stockCount = 0
         getStckList(Module,AuthID)
 
@@ -217,6 +221,27 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
         btnApprove!!.setOnClickListener(this)
 
 
+    }
+
+    private fun checkAttendance() {
+
+        saveAttendanceMark = false
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        Log.e(TAG,"1633331      "+boolAttendance)
+        if (boolAttendance) {
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status", "")
+            if (status.equals("0") || status.equals("")) {
+                Common.punchingRedirectionConfirm(this, "", "")
+            } else if (status.equals("1")) {
+                saveAttendanceMark = true
+            }
+
+        } else {
+            saveAttendanceMark = true
+        }
     }
 
     private fun getStckList(Module : String,AuthID : String) {
@@ -1152,14 +1177,21 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
             }
 
             R.id.btnReject->{
-                Config.disableClick(v)
-                rejectBottomSheet()
+                checkAttendance()
+                if (saveAttendanceMark) {
+                    Config.disableClick(v)
+                    rejectBottomSheet()
+                }
+
             }
 
             R.id.btnApprove->{
-                Config.disableClick(v)
-                approveConfirmation()
 
+                checkAttendance()
+                if (saveAttendanceMark) {
+                    Config.disableClick(v)
+                    approveConfirmation()
+                }
 
             }
 

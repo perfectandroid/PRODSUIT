@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -75,6 +76,7 @@ class StockRTListActivity : AppCompatActivity(), View.OnClickListener , ItemClic
     var TransMode : String? = ""
     var headerTitle : String? = ""
 
+    var saveAttendanceMark = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -608,9 +610,13 @@ class StockRTListActivity : AppCompatActivity(), View.OnClickListener , ItemClic
         }
 
         if (data.equals("deleteClicks")) {
-            val jsonObject = stockRTSort.getJSONObject(position)
-            var FK_StockTransfer = jsonObject.getString("StockTransferID")
-            deleteBottomSheet(position,FK_StockTransfer)
+            checkAttendance()
+            if (saveAttendanceMark) {
+                val jsonObject = stockRTSort.getJSONObject(position)
+                var FK_StockTransfer = jsonObject.getString("StockTransferID")
+                deleteBottomSheet(position,FK_StockTransfer)
+            }
+
 
         }
 
@@ -626,6 +632,27 @@ class StockRTListActivity : AppCompatActivity(), View.OnClickListener , ItemClic
 //        startActivity(i)
 
 
+    }
+
+    private fun checkAttendance() {
+
+        saveAttendanceMark = false
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        Log.e(TAG,"1633331      "+boolAttendance)
+        if (boolAttendance) {
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status", "")
+            if (status.equals("0") || status.equals("")) {
+                Common.punchingRedirectionConfirm(this, "", "")
+            } else if (status.equals("1")) {
+                saveAttendanceMark = true
+            }
+
+        } else {
+            saveAttendanceMark = true
+        }
     }
 
 }
