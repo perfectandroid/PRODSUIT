@@ -1262,7 +1262,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             tv_header1 = dialogProdInformation!!.findViewById(R.id.tv_header) as TextView
 
             if (SubMode!!.equals("1")) {
-                tv_header1!!.text = "Pickup Note"
+                tv_header1!!.text = "Pickup Information"
 
                 Log.e(TAG, "wwwwwwwwwww 111" + SubMode)
                 if (prodInformationArrayList2.length() == 0) {
@@ -1300,7 +1300,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                 }
             }else if (SubMode!!.equals("2")) {
-                tv_header1!!.text = "Delivery Note"
+                tv_header1!!.text = "Delivery Information"
 
 
                 llbilltype!!.visibility = View.GONE
