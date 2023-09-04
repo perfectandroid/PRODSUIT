@@ -27,12 +27,12 @@ object UpdatePickUpAndDeliveryRespository {
     val updatePickUpAndDeliverySetterGetter = MutableLiveData<UpdatePickUpAndDeliveryModel>()
     val TAG: String = "UpdatePickUpAndDeliveryRespository"
 
-    fun getServicesApiCall(context: Context, ID_ProductDelivery : String, PickDeliveryTime : String, PickDeliveryDate : String, remark : String, FK_BillType : String, Productdetails : JSONArray, PaymentDetail : JSONArray,StandByAmount:String,Status: String,strLongitue : String, strLatitude: String, locAddress :String): MutableLiveData<UpdatePickUpAndDeliveryModel> {
-        getViewDocument(context,ID_ProductDelivery,PickDeliveryTime,PickDeliveryDate,remark,FK_BillType,Productdetails,PaymentDetail,StandByAmount,Status,strLongitue,strLatitude,locAddress)
+    fun getServicesApiCall(context: Context, ID_ProductDelivery : String, PickDeliveryTime : String, PickDeliveryDate : String, remark : String, FK_BillType : String, Productdetails : JSONArray, PaymentDetail : JSONArray, DeliveryComplaints : JSONArray,StandByAmount:String,Status: String,strLongitue : String, strLatitude: String, locAddress :String): MutableLiveData<UpdatePickUpAndDeliveryModel> {
+        getViewDocument(context,ID_ProductDelivery,PickDeliveryTime,PickDeliveryDate,remark,FK_BillType,Productdetails,PaymentDetail,DeliveryComplaints,StandByAmount,Status,strLongitue,strLatitude,locAddress)
         return updatePickUpAndDeliverySetterGetter
     }
 
-    private fun getViewDocument(context: Context, ID_ProductDelivery : String, PickDeliveryTime : String, PickDeliveryDate : String,remark : String,FK_BillType : String,Productdetails : JSONArray, PaymentDetail : JSONArray,StandByAmount: String,Status: String,strLongitue : String, strLatitude: String, locAddress :String) {
+    private fun getViewDocument(context: Context, ID_ProductDelivery : String, PickDeliveryTime : String, PickDeliveryDate : String,remark : String,FK_BillType : String,Productdetails : JSONArray, PaymentDetail : JSONArray,DeliveryComplaints : JSONArray,StandByAmount: String,Status: String,strLongitue : String, strLatitude: String, locAddress :String) {
 
         try {
             updatePickUpAndDeliverySetterGetter.value = UpdatePickUpAndDeliveryModel("")
@@ -87,6 +87,7 @@ object UpdatePickUpAndDeliveryRespository {
 
                 requestObject1.put("Productdetails", (Productdetails))
                 requestObject1.put("PaymentDetail", (PaymentDetail))
+                requestObject1.put("DeliveryComplaints", (DeliveryComplaints))
 
 
 //                Log.e(TAG,"ID_LeadGenerate   84   "+ID_LeadGenerate+"  ::::  "+ID_LeadGenerateProduct+"  ::::  "+ID_LeadDocumentDetails)

@@ -152,6 +152,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     private var txtLeadNo : TextView? = null
     private var txtCategory : TextView? = null
     private var txtProduct : TextView? = null
+    private var txtInfoOfferprice : TextView? = null
+    private var txtInfoMrp : TextView? = null
     private var txtTargetDate : TextView? = null
     private var txtAction : TextView? = null
     private var tabLayout : TabLayout? = null
@@ -2118,6 +2120,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         var txtInfoCollectedBy1 = findViewById<TextView>(R.id.txtInfoCollectedBy)
         var txtInfoAssigned1 = findViewById<TextView>(R.id.txtInfoAssigned)
         var txtInfoNextActionDate1 = findViewById<TextView>(R.id.txtInfoNextActionDate)
+        var txtInfoMrp = findViewById<TextView>(R.id.txtInfoMrp)
+        var txtInfoOfferprice = findViewById<TextView>(R.id.txtInfoOfferprice)
 
 //        var txtProject1 = findViewById<TextView>(R.id.txtInfoProject)
 //        var txtInfoExpected1 = findViewById<TextView>(R.id.txtInfoExpected)
@@ -2181,6 +2185,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         txtInfoCollectedBy1.setText(jsonObject1.getString("CollectedBy"))
                                         txtInfoAssigned1.setText(jsonObject1.getString("AssignedTo"))
                                         txtInfoNextActionDate1.setText(jsonObject1.getString("TargetDate"))
+                                        txtInfoMrp!!.setText(jsonObject1.getString("LgpMRP"))
+                                        txtInfoOfferprice!!.setText(jsonObject1.getString("LgpSalesPrice"))
 
 
 
@@ -2890,8 +2896,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 //                                        latitude = jobjt!!.getString("LocationLatitude")
 //                                        longitude = jobjt!!.getString("LocationLongitude")
 
-                                        latitude = jobjt!!.getString("LocationLongitude")
-                                        longitude = jobjt!!.getString("LocationLatitude")
+                                        longitude = jobjt!!.getString("LocationLongitude")
+                                        latitude = jobjt!!.getString("LocationLatitude")
                                         Log.e("LocationDetails", latitude + "\n" + longitude)
 
                                         if (!latitude.equals("") || !longitude.equals("")){

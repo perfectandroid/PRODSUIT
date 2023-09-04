@@ -8,6 +8,7 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:id="@+id/ll_Pickup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -15,6 +16,7 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="5dp"
+        android:visibility="gone"
         android:paddingBottom="10dp"
         android:background="@drawable/border_shadow2"
         tools:ignore="MissingConstraints">
@@ -102,9 +104,11 @@
 
 
                 <LinearLayout
+                    android:id="@+id/provideStandBy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="visible"
                     android:layout_marginLeft="5dp"
                     android:orientation="horizontal">
 
@@ -137,8 +141,6 @@
 
                 </LinearLayout>
 
-
-
             </LinearLayout>
 
             <LinearLayout
@@ -167,7 +169,7 @@
                         android:paddingLeft="10dp"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
-                        android:drawableLeft="@drawable/svg_fd_actiontype"
+                        android:drawableLeft="@drawable/vtr_quantity"
                         android:drawablePadding="5dp"
                         android:drawableTint="@color/textColor"
                         android:textSize="14dp"
@@ -195,7 +197,7 @@
                         android:id="@+id/tie_StandByProduct"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/svg_fd_actiontype"
+                        android:drawableLeft="@drawable/product_svg"
                         android:drawableRight="@drawable/arrow_down"
                         android:drawablePadding="5dp"
                         android:drawableTint="@color/textColor"
@@ -229,7 +231,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:hint="StandBy Quantity"
+                    android:hint="StandBy Qty"
                     android:layout_marginRight="5dp"
                     android:drawableTint="@color/textColor"
                     android:fontFamily="@font/myfont"
@@ -243,7 +245,7 @@
                         android:paddingLeft="10dp"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
-                        android:drawableLeft="@drawable/svg_fd_actiontype"
+                        android:drawableLeft="@drawable/icon_svg_quantity"
                         android:drawablePadding="5dp"
                         android:drawableTint="@color/textColor"
                         android:textSize="14dp"
@@ -267,7 +269,7 @@
                     android:drawableTint="@color/textColor"
                     android:fontFamily="@font/myfont"
                     style="@style/Widget.App.TextInputLayout"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/tie_StandByAmount"
@@ -278,7 +280,7 @@
                         android:paddingTop="8dp"
                         android:maxLength="13"
                         android:paddingBottom="8dp"
-                        android:drawableLeft="@drawable/svg_fd_actiontype"
+                        android:drawableLeft="@drawable/rupees"
                         android:drawablePadding="5dp"
                         android:drawableTint="@color/textColor"
                         android:textSize="14dp"
@@ -322,7 +324,379 @@
                         android:paddingLeft="10dp"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
-                        android:drawableLeft="@drawable/svg_fd_actiontype"
+                        android:drawableLeft="@drawable/icon_svg_remark"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:maxLength="150"
+                        android:textSize="14dp"
+                        android:focusableInTouchMode="true"
+                        android:editable="true"
+                        android:fontFamily="@font/myfont"
+                        android:textColor="@color/greydarks"
+                        android:textStyle="normal"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_delivery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:visibility="visible"
+        android:paddingBottom="10dp"
+        android:background="@drawable/border_shadow2"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="5dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:paddingLeft="8dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@color/white"
+                            android:textSize="13dp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/myfont"
+                            android:text="Product Name"
+                            android:textColor="@color/black"
+                            android:visibility="visible"/>
+
+
+                        <TextView
+                            android:id="@+id/tv_ProductName_Delivery"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@color/white"
+                            android:textSize="13dp"
+                            android:layout_marginTop="-3dp"
+                            android:textStyle="normal"
+                            android:fontFamily="@font/myfont"
+                            android:text=""
+                            android:textColor="@color/black" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:id="@+id/llcomple.Reg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/white"
+                        android:textSize="13dp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/myfont"
+                        android:text="Complaint.Reg"
+                        android:textColor="@color/black"
+                        android:visibility="visible"/>
+
+                    <CheckBox
+                        android:id="@+id/check_Complaintbox"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:theme="@style/checkBoxStyle"
+                        android:gravity="start"
+                        android:layout_gravity="start"
+                        android:visibility="visible" />
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_complaintbox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/white"
+                        android:textSize="13dp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/myfont"
+                        android:text="Compl.Reg"
+                        android:textColor="@color/black"
+                        android:visibility="visible"/>
+
+                    <CheckBox
+                        android:id="@+id/checkComplaintbox"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:theme="@style/checkBoxStyle"
+                        android:gravity="start"
+                        android:layout_gravity="start"
+                        android:visibility="visible" />
+
+
+
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_Quantity_delivery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Quantity"
+                    android:layout_marginRight="5dp"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    style="@style/Widget.App.TextInputLayout">
+
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/tie_Quantity_delivery"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:paddingLeft="10dp"-->
+<!--                        android:paddingTop="8dp"-->
+<!--                        android:paddingBottom="8dp"-->
+<!--                        android:drawableLeft="@drawable/vtr_quantity"-->
+<!--                        android:drawablePadding="5dp"-->
+<!--                        android:drawableTint="@color/textColor"-->
+<!--                        android:textSize="14dp"-->
+<!--                        android:focusableInTouchMode="false"-->
+<!--                        android:editable="false"-->
+<!--                        android:inputType="number"-->
+<!--                        android:fontFamily="@font/myfont"-->
+<!--                        android:textColor="@color/greydarks"-->
+<!--                        android:textStyle="normal"/>-->
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_Quantity_delivery"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/vtr_quantity"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:editable="false"
+                        android:focusableInTouchMode="false"
+                        android:fontFamily="@font/myfont"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/greydarks"
+                        android:textSize="14dp"
+                        android:textStyle="normal" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_Priority"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Priority"
+                    android:layout_marginLeft="5dp"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    style="@style/Widget.App.TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_Priority"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/priority"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:editable="false"
+                        android:focusableInTouchMode="false"
+                        android:fontFamily="@font/myfont"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/greydarks"
+                        android:textSize="14dp"
+                        android:textStyle="normal" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_ComplaintQty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Complaint Qty"
+                    android:layout_marginRight="5dp"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    style="@style/Widget.App.TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_ComplaintQty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:drawableLeft="@drawable/complaintdeli"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:textSize="14dp"
+                        android:focusableInTouchMode="true"
+                        android:editable="true"
+                        android:maxLength="12"
+                        android:inputType="number"
+                        android:fontFamily="@font/myfont"
+                        android:textColor="@color/greydarks"
+                        android:textStyle="normal"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_Complaint_Type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Complaint Type"
+                    android:layout_marginLeft="5dp"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    style="@style/Widget.App.TextInputLayout"
+                    android:visibility="visible">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_Complaint_Type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/complaint_type"
+                        android:drawableRight="@drawable/arrow_down"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/textColor"
+                        android:editable="false"
+                        android:focusableInTouchMode="false"
+                        android:fontFamily="@font/myfont"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:textColor="@color/greydarks"
+                        android:textSize="14dp"
+                        android:textStyle="normal" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/til_Description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Description"
+                    android:drawableTint="@color/textColor"
+                    android:fontFamily="@font/myfont"
+                    style="@style/Widget.App.TextInputLayout">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tie_Description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:drawableLeft="@drawable/icon_svg_description"
                         android:drawablePadding="5dp"
                         android:drawableTint="@color/textColor"
                         android:maxLength="150"

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.CheckBox
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -30,6 +31,8 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
     internal val TAG                  : String = "ProdInformationAdapter"
     internal var jsonObject           : JSONObject? = null
     private var clickListener         : ItemClickListener? = null
+    var ID_Priority: String? = ""
+    var ID_ComplaintList: String? = ""
 
     var strStandByAmount: String? = "0.00"
 
@@ -56,10 +59,133 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
 
                     Log.e(TAG,"til_StandByAmount   "+jsonObject!!.getString("SubMode"))
                     holder.til_StandByAmount.visibility = View.VISIBLE
+                    holder.ll_Pickup.visibility = View.VISIBLE
+                    holder.ll_delivery.visibility = View.GONE
+                    holder.ll_Pickup.visibility = View.VISIBLE
+                    holder.ll_delivery.visibility = View.GONE
 
-                }else{
+
+                }
+                else{
                     Log.e(TAG,"til_StandByAmount else   "+jsonObject!!.getString("SubMode"))
+
+                    holder.tie_Priority.setText(jsonObject!!.getString("PriorityName"))
+                    holder.tie_Quantity_delivery.setText(jsonObject!!.getString("Quantity"))
+                    holder.tie_Complaint_Type.setText(jsonObject!!.getString("ComplaintName"))
+                    holder.tv_ProductName_Delivery.setText(jsonObject!!.getString("Product"))
+                    holder.tie_ComplaintQty.setText(jsonObject!!.getString("ComplaintQty"))
+                    holder.tie_Description.setText(jsonObject!!.getString("Description"))
+
                     holder.til_StandByAmount.visibility = View.GONE
+                    holder.ll_delivery.visibility = View.VISIBLE
+                    holder.ll_Pickup.visibility = View.GONE
+
+
+                    Log.e(TAG, "isSelectedDelivery1231   " + jsonObject!!.getString("isSelectedDelivery"))
+
+                        if (jsonObject!!.getString("isSelectedDelivery").equals("0")) {
+                            holder.check_Complaintbox.isChecked = false
+
+                            holder.tie_Priority.isEnabled = false
+                            holder.tie_ComplaintQty.isEnabled = false
+                            holder.tie_Complaint_Type.isEnabled = false
+                            holder.tie_Description.isEnabled = false
+
+                            Log.e(TAG, "isSelectedDelivery off   " + jsonObject!!.getString("isSelectedDelivery"))
+                            Log.e(TAG, "isSelectedDelivery  false  ")
+                        } else {
+                            holder.check_Complaintbox.isChecked = true
+                            Log.e(TAG, "isSelectedDelivery On   " + jsonObject!!.getString("isSelectedDelivery"))
+                            Log.e(TAG, "isSelectedDelivery  true  ")
+
+                        }
+
+                    holder.check_Complaintbox!!.setTag(position)
+                    holder.check_Complaintbox!!.setOnClickListener(View.OnClickListener {
+                        if (holder.check_Complaintbox.isChecked){
+                            Log.e(TAG,"82 checkbox   on")
+                            holder.check_Complaintbox!!.isChecked = true
+
+                            val jsonObject1 = jsonArray.getJSONObject(position)
+                            jsonObject1.put("isSelectedDelivery","1")
+                            holder.tie_Priority.isEnabled = true
+                            holder.tie_ComplaintQty.isEnabled = true
+                            holder.tie_Complaint_Type.isEnabled = true
+                            holder.tie_Description.isEnabled = true
+
+                            Log.e(TAG,"adapter 22  "+jsonObject1)
+                        }else{
+                            Log.e(TAG,"82 checkbox   off")
+                            val jsonObject1 = jsonArray.getJSONObject(position)
+                            jsonObject1.put("isSelectedDelivery","0")
+                            jsonObject1.put("ID_Priority","")
+                            jsonObject1.put("ID_ComplaintList","")
+                            jsonObject1.put("ComplaintName","")
+
+                            holder.tie_Priority.isEnabled = false
+                            holder.tie_ComplaintQty.isEnabled = false
+                            holder.tie_Complaint_Type.isEnabled = false
+                            holder.tie_Description.isEnabled = false
+
+                            holder.tie_Priority.setText("")
+                            holder.tie_ComplaintQty.setText("")
+                            holder.tie_Complaint_Type.setText("")
+                            holder.tie_Description.setText("")
+                            Log.e(TAG,"adapter 11  "+jsonObject1)
+                        }
+
+                    })
+
+                    holder.tie_ComplaintQty.setTag(position)
+                    holder.tie_ComplaintQty.addTextChangedListener(object : TextWatcher {
+                        override fun afterTextChanged(s: Editable?) {
+                        }
+
+                        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+
+                        }
+
+                        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                            val jsonObject1 = jsonArray.getJSONObject(position)
+                            jsonObject1.put("ComplaintQty",s.toString())
+                        }
+
+                    })
+
+                    holder.tie_Description.setTag(position)
+                    holder.tie_Description.addTextChangedListener(object : TextWatcher {
+                        override fun afterTextChanged(s: Editable?) {
+                        }
+
+                        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+
+                        }
+
+                        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                            val jsonObject1 = jsonArray.getJSONObject(position)
+                            jsonObject1.put("Description",s.toString())
+                        }
+
+                    })
+
+
+
+                    holder.tie_Priority.setOnClickListener(View.OnClickListener {
+                        clickListener!!.onClick(position, "PriorityCheck")
+
+                        Log.e(TAG,"PriorityCheck    ")
+                    })
+
+//                    holder.tie_Complaint_Type.setTag(position)
+                    holder.tie_Complaint_Type.setOnClickListener(View.OnClickListener {
+                        clickListener!!.onClick(position, "ComplaintTypeclick")
+
+                        Log.e(TAG,"ComplaintType 111   ")
+                    })
+
+                    Log.e(TAG,"PriorityName 0088    "+jsonObject!!.getString("PriorityName"))
                 }
 
                 //checkbox
@@ -83,7 +209,6 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
                 }else{
                     holder.tie_StandByAmount.isEnabled = false
                 }
-
 
                 Log.e(TAG,"isSelected  666111    "+jsonObject!!.getString("isSelected"))
 
@@ -158,6 +283,7 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
                 holder.tie_StandByAmount.setText(jsonObject!!.getString("SPAmount"))
                 holder.tie_Remarks.setText(jsonObject!!.getString("Remarks"))
                 DecimelFormatters.setDecimelPlace(holder.tie_StandByAmount!!)
+
 
                 holder.tie_StandByProduct.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "ProductName")
@@ -316,11 +442,11 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
                         Log.e(TAG,"82 swOnOff   on")
                         val jsonObject1 = jsonArray.getJSONObject(position)
                         jsonObject1.put("ProvideStandBy","1")
-                        holder.tie_StandByAmount.isEnabled = true
+                        holder.tie_StandByAmount.isEnabled = false
                         holder.tie_Quantity.isEnabled = true
                         holder.tie_StandByProduct.isEnabled = true
                         holder.tie_StandByQuantity.isEnabled = true
-                        holder.tie_StandByAmount.setText("0.00")
+//                        holder.tie_StandByAmount.setText("0.00")
                         clickListener!!.onClick(position, "changeAmount")
                     }else{
                         Log.e(TAG,"82 swOnOff   off")
@@ -360,7 +486,13 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         internal var tv_ProductName          : TextView
+        internal var tv_ProductName_Delivery : TextView
+        internal var tie_Quantity_delivery   : TextInputEditText
+        internal var tie_Complaint_Type      : TextInputEditText
+        internal var tie_Priority            : TextInputEditText
+        internal var tie_ComplaintQty        : TextInputEditText
         internal var tie_Quantity            : TextInputEditText
+        internal var tie_Description         : TextInputEditText
         internal lateinit var til_Quantity   : TextInputLayout
         internal lateinit var til_StandByProduct    : TextInputLayout
         internal lateinit var til_StandByQuantity   : TextInputLayout
@@ -370,21 +502,37 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
         internal var tie_StandByAmount       : TextInputEditText
         internal var tie_Remarks             : TextInputEditText
         internal var swOnOff                 : SwitchCompat
-        internal var checkbox                 : CheckBox
+        internal var checkbox                : CheckBox
+        internal var check_Complaintbox      : CheckBox
+        internal var ll_complaintbox         : LinearLayout
+        internal var provideStandBy          : LinearLayout
+        internal var ll_Pickup               : LinearLayout
+        internal var ll_delivery             : LinearLayout
 //        internal var txtGridNotification  : TextView
 //        internal var image                : ImageView
 //        internal var ll_homeGrid          : LinearLayout
 
         init {
-            tv_ProductName         = v.findViewById<View>(R.id.tv_ProductName) as TextView
-            tie_Quantity           = v.findViewById<View>(R.id.tie_Quantity) as TextInputEditText
+            tv_ProductName         = v.findViewById<View>(R.id.tv_ProductName)         as TextView
+            tv_ProductName_Delivery= v.findViewById<View>(R.id.tv_ProductName_Delivery)as TextView
+            tie_Quantity_delivery  = v.findViewById<View>(R.id.tie_Quantity_delivery)  as TextInputEditText
+            tie_Priority           = v.findViewById<View>(R.id.tie_Priority)           as TextInputEditText
+            tie_ComplaintQty       = v.findViewById<View>(R.id.tie_ComplaintQty)       as TextInputEditText
+            tie_Complaint_Type     = v.findViewById<View>(R.id.tie_Complaint_Type)     as TextInputEditText
+            tie_Description        = v.findViewById<View>(R.id.tie_Description)     as TextInputEditText
+            tie_Quantity           = v.findViewById<View>(R.id.tie_Quantity)        as TextInputEditText
             tie_StandByQuantity    = v.findViewById<View>(R.id.tie_StandByQuantity) as TextInputEditText
-            tie_StandByProduct     = v.findViewById<View>(R.id.tie_StandByProduct) as TextInputEditText
-            tie_StandByAmount      = v.findViewById<View>(R.id.tie_StandByAmount) as TextInputEditText
-            til_StandByAmount      = v.findViewById<View>(R.id.til_StandByAmount) as TextInputLayout
-            tie_Remarks            = v.findViewById<View>(R.id.tie_Remarks) as TextInputEditText
-            swOnOff                = v.findViewById<View>(R.id.swOnOff) as SwitchCompat
-            checkbox                = v.findViewById<View>(R.id.checkbox) as CheckBox
+            tie_StandByProduct     = v.findViewById<View>(R.id.tie_StandByProduct)  as TextInputEditText
+            tie_StandByAmount      = v.findViewById<View>(R.id.tie_StandByAmount)   as TextInputEditText
+            til_StandByAmount      = v.findViewById<View>(R.id.til_StandByAmount)   as TextInputLayout
+            tie_Remarks            = v.findViewById<View>(R.id.tie_Remarks)         as TextInputEditText
+            swOnOff                = v.findViewById<View>(R.id.swOnOff)             as SwitchCompat
+            checkbox               = v.findViewById<View>(R.id.checkbox)            as CheckBox
+            check_Complaintbox     = v.findViewById<View>(R.id.check_Complaintbox)  as CheckBox
+            ll_complaintbox        = v.findViewById<View>(R.id.ll_complaintbox)     as LinearLayout
+            provideStandBy         = v.findViewById<View>(R.id.provideStandBy)      as LinearLayout
+            ll_Pickup              = v.findViewById<View>(R.id.ll_Pickup)           as LinearLayout
+            ll_delivery            = v.findViewById<View>(R.id.ll_delivery)         as LinearLayout
 
 //            txtGridNotification   = v.findViewById<View>(R.id.txtGridNotification) as TextView
 //            image                 = v.findViewById<View>(R.id.image) as ImageView

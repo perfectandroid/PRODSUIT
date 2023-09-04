@@ -38,13 +38,14 @@
             android:textStyle="bold"
             android:textSize="18dp" />
         <TextView
+            android:id="@+id/textid1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="15dp"
             android:textColor="@color/black"
             android:textSize="15dp"
-            android:text="Do you want to delete this product?"
+            android:text=""
             android:fontFamily="@font/myfont"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"

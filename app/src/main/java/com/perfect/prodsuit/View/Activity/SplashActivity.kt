@@ -2,12 +2,8 @@ package com.perfect.prodsuit.View.Activity
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
-import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -129,11 +125,59 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY = "-501"
 
 
+//        sheetal 24/7/2023
+//    val CERT_NAME = "sheetal.pem"
+//    val BASE_URL  = "https://45.118.163.44:14003/ProdSuiteAPISHEETAL/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14003/ProdSuiteAPISHEETAL/"
+//    val BANK_KEY  = "-517"
+
+
+//    val CERT_NAME = "persuituat.pem"
+//    val BASE_URL = "https://202.164.150.65:14271/PSuiteUATAPI/api/"
+//    val IMAGE_URL = "https://202.164.150.65:14271/PSuiteUATAPI/"
+//    val BANK_KEY = "-501"
+
+
+//      sheethal 3/8/2023
+//    val CERT_NAME = "sheetal1.pem"
+//    val BASE_URL  = "https://45.118.163.44:14001/ProdSuiteAPISHEETAL/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14001/ProdSuiteAPISHEETAL/"
+//    val BANK_KEY  = "-517"
+
+
+
+//    localsheetal ip 11.8.2023
+//    val CERT_NAME = "sheetallocal.pem"
+//    val BASE_URL  = "https://192.168.1.40:443/PerSuiteAPISHEETAL/api/"
+//    val IMAGE_URL = "https://192.168.1.40:443/PerSuiteAPISHEETAL/"
+//    val BANK_KEY  = "-517"
+
+
+//    sheetalLive 11.8.2023
+//    val CERT_NAME = "sheetallive.pem"
+//    val BASE_URL  = "https://59.96.61.232:14001/PerSuiteAPISHEETAL/api/"
+//    val IMAGE_URL = "https://59.96.61.232:14001/PerSuiteAPISHEETAL/"
+//    val BANK_KEY  = "-517"
+
+
     ////    DEVELOPMENT 30.11.2022
     val CERT_NAME = "development.pem"
     val BASE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
     val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
     val BANK_KEY = "-500"
+
+//    23.8.2023
+//    val CERT_NAME = "latestdemo.pem"
+//    val BASE_URL = "https://45.118.163.44:14001/ProdSuiteAPIPerfectDemo/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14001/ProdSuiteAPIPerfectDemo"
+//    val BANK_KEY = "-510"
+
+
+//    Demo 4/8/2023
+//    val CERT_NAME = "persuitdemo.pem"
+//    val BASE_URL  = "https://45.118.163.44:14001/ProdSuiteAPIPerfectDemo/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14001/ProdSuiteAPIPerfectDemo"
+//    val BANK_KEY  = "-510"
 
     var TAG = "SplashActivity"
     lateinit var splashresellerActivityViewModel: SplashresellerActivityViewModel

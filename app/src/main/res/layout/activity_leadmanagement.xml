@@ -824,7 +824,7 @@
                                             android:layout_marginLeft="20dp"
                                             android:layout_weight="1"
                                             android:fontFamily="@font/myfont"
-                                            android:text="Todays List"
+                                            android:text="Today's List"
                                             android:textColor="@color/color_common1"
                                             android:textSize="20dp"
                                             android:textStyle="bold" />
