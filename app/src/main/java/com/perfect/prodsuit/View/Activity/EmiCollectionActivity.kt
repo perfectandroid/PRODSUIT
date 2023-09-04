@@ -694,6 +694,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             }
             R.id.edtLocation->{
                 val intent = Intent(this@EmiCollectionActivity, LocationPickerActivity::class.java)
+                intent.putExtra("mode","0")
                 startActivityForResult(intent, SELECT_LOCATION!!);
             }
 

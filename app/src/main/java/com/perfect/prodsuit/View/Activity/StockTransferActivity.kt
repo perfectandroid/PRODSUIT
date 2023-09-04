@@ -30,10 +30,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.Helper.DecimelFormatters
-import com.perfect.prodsuit.Helper.FullLenghRecyclertview
-import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.*
 import com.perfect.prodsuit.Model.ModelStockTransferDetails
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
@@ -119,6 +116,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
     var FK_StockMode: String? = ""
     var FK_Product: String? = ""
+    var ID_Stock: String? = "0"
 
     var requestCount = 0
     var depCount = 0
@@ -171,17 +169,34 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
     private var dialogStockMode: Dialog? = null
     var recyStockMode: RecyclerView? = null
 
-    lateinit var productStockViewModel: ProductStockViewModel
+    lateinit var productStockTransferViewModel: ProductStockTransferViewModel
     lateinit var productArrayList: JSONArray
     lateinit var productsort: JSONArray
     private var dialogProduct: Dialog? = null
     var recyProduct: RecyclerView? = null
+    var TransMode = "INST"
+    var Detailed = "1"
+
+    lateinit var stockReqProductlistViewModel: StockReqProductlistViewModel
+    lateinit var stockProductListArrayList: JSONArray
+    var stockproductCount = 0
 
     var strQuantity: String? = ""
     var strStandQuantity: String? = ""
+    var strChkQuantity: String? = ""
+    var strChkStandQuantity: String? = ""
     val modelStockTransferDetails = ArrayList<ModelStockTransferDetails>()
     private var dialogConfirm : Dialog? = null
 
+    var saveDetailArray :JSONArray? = null
+    lateinit var saveUpdateStockRTViewModel: SaveUpdateStockRTViewModel
+    var saveUpdateCount = 0
+    var UserAction = "1" // Save =  1 , Update = 2
+    var FK_StockTransfer = "0" // Save 0 , Update ID_Transfer
+    var FK_StockRequest = "0" // Save 0 , Update ID_Transfer
+    var STRequest = "0"  // Request =1, Transfer = 0
+
+    var saveAttendanceMark = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -195,9 +210,13 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
         branchInventoryViewModel = ViewModelProvider(this).get(BranchInventoryViewModel::class.java)
         employeeInventoryViewModel = ViewModelProvider(this).get(EmployeeInventoryViewModel::class.java)
         stockModeViewModel = ViewModelProvider(this).get(StockModeViewModel::class.java)
-        productStockViewModel = ViewModelProvider(this).get(ProductStockViewModel::class.java)
+        productStockTransferViewModel = ViewModelProvider(this).get(ProductStockTransferViewModel::class.java)
+        saveUpdateStockRTViewModel = ViewModelProvider(this).get(SaveUpdateStockRTViewModel::class.java)
+        stockReqProductlistViewModel = ViewModelProvider(this).get(StockReqProductlistViewModel::class.java)
 
         setRegViews()
+
+        checkAttendance()
 
     }
 
@@ -289,6 +308,27 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
 
 
+    }
+
+    private fun checkAttendance() {
+
+        saveAttendanceMark = false
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        Log.e(TAG,"1633331      "+boolAttendance)
+        if (boolAttendance) {
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status", "")
+            if (status.equals("0") || status.equals("")) {
+                Common.punchingRedirectionConfirm(this, "", "")
+            } else if (status.equals("1")) {
+                saveAttendanceMark = true
+            }
+
+        } else {
+            saveAttendanceMark = true
+        }
     }
 
 
@@ -469,6 +509,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
                 val intent = Intent(this@StockTransferActivity, StockRTListActivity::class.java)
                 intent.putExtra("headerTitle","Transfer List")
+                intent.putExtra("TransMode",TransMode)
                 startActivityForResult(intent, Config.CODE_STOCK_LIST!!);
             }
 
@@ -479,8 +520,10 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             R.id.tie_Request->{
                 Log.e(TAG,"tie_Request   2471   ")
                 Config.disableClick(v)
+
                 requestCount = 0
                 getRequest()
+
 
             }
 
@@ -502,72 +545,83 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
             R.id.tie_FromDepartment->{
 
-                depModeFromTo = 0
-                FK_BranchTemp = FK_BranchFrom
-                depCount = 0
-                Config.disableClick(v)
-                getDepartmentInventory(FK_BranchTemp)
+                if (UserAction.equals("1")){
+                    depModeFromTo = 0
+                    FK_BranchTemp = FK_BranchFrom
+                    depCount = 0
+                    Config.disableClick(v)
+                    getDepartmentInventory(FK_BranchTemp)
+                }
+
             }
 
             R.id.tie_FromEmployee->{
+                if (UserAction.equals("1")){
+                    if (FK_BranchFrom.equals("")){
 
-                if (FK_BranchFrom.equals("")){
+                    }
+                    else if (FK_DepartmentFrom.equals("")){
 
-
-                }
-                else if (FK_DepartmentFrom.equals("")){
-
-                }else{
-                    empModeFromTo = 0
-                    FK_BranchTemp = FK_BranchFrom
-                    FK_DepartmntTemp = FK_DepartmentFrom
-                    employeeCount = 0
-                    Config.disableClick(v)
-                    getEmployeeInventory(FK_BranchTemp!!,FK_DepartmntTemp!!)
+                    }else{
+                        empModeFromTo = 0
+                        FK_BranchTemp = FK_BranchFrom
+                        FK_DepartmntTemp = FK_DepartmentFrom
+                        employeeCount = 0
+                        Config.disableClick(v)
+                        getEmployeeInventory(FK_BranchTemp!!,FK_DepartmntTemp!!)
+                    }
                 }
 
             }
 
             R.id.tie_ToBranch->{
-                branchCount = 0
-                Config.disableClick(v)
-                getBranchInventory()
+
+                if (UserAction.equals("1")){
+                    branchCount = 0
+                    Config.disableClick(v)
+                    getBranchInventory()
+                }
+
             }
 
             R.id.tie_ToDepartment->{
 
-                depModeFromTo = 1
-                FK_BranchTemp = FK_BranchTo
-                depCount = 0
-                Config.disableClick(v)
-                getDepartmentInventory(FK_BranchTemp)
+                if (UserAction.equals("1")){
+                    depModeFromTo = 1
+                    FK_BranchTemp = FK_BranchTo
+                    depCount = 0
+                    Config.disableClick(v)
+                    getDepartmentInventory(FK_BranchTemp)
+                }
 
             }
 
             R.id.tie_ToEmployee->{
 
-                if (FK_BranchTo.equals("")){
+                if (UserAction.equals("1")){
+                    if (FK_BranchTo.equals("")){
 
-                    til_ToBranch!!.setError("Please select a Branch")
-                    til_ToBranch!!.setErrorIconDrawable(null)
-                    showFrom = 0
-                    showTo = 1
-                    hideShowFromTo()
-                }
-                else if (FK_DepartmentTo.equals("")){
-                    til_ToDepartment!!.setError("Please select a Department")
-                    til_ToDepartment!!.setErrorIconDrawable(null)
-                    showFrom = 0
-                    showTo = 1
-                    hideShowFromTo()
-                }else{
+                        til_ToBranch!!.setError("Please select a Branch")
+                        til_ToBranch!!.setErrorIconDrawable(null)
+                        showFrom = 0
+                        showTo = 1
+                        hideShowFromTo()
+                    }
+                    else if (FK_DepartmentTo.equals("")){
+                        til_ToDepartment!!.setError("Please select a Department")
+                        til_ToDepartment!!.setErrorIconDrawable(null)
+                        showFrom = 0
+                        showTo = 1
+                        hideShowFromTo()
+                    }else{
 
-                    empModeFromTo = 1
-                    FK_BranchTemp = FK_BranchTo
-                    FK_DepartmntTemp = FK_DepartmentTo
-                    employeeCount = 0
-                    Config.disableClick(v)
-                    getEmployeeInventory(FK_BranchTemp!!,FK_DepartmntTemp!!)
+                        empModeFromTo = 1
+                        FK_BranchTemp = FK_BranchTo
+                        FK_DepartmntTemp = FK_DepartmentTo
+                        employeeCount = 0
+                        Config.disableClick(v)
+                        getEmployeeInventory(FK_BranchTemp!!,FK_DepartmntTemp!!)
+                    }
                 }
 
             }
@@ -581,15 +635,16 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             }
             R.id.tie_Product->{
 
-                if (!FK_StockMode.equals("")){
-
-                    productCount = 0
-                    Config.disableClick(v)
-                    getProduct(FK_StockMode!!)
-                }else{
+                Log.e(TAG,"FK_StockMode 61777  "+FK_StockMode)
+                if (FK_StockMode.equals("") || FK_StockMode.equals("0")){
 
                     til_StockMode!!.setError("Select Stock Mode")
                     til_StockMode!!.setErrorIconDrawable(null)
+                }else{
+                    productCount = 0
+                    Config.disableClick(v)
+                    getProduct(FK_StockMode!!)
+
 
                 }
 
@@ -611,7 +666,12 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             }
 
             R.id.btnSubmit->{
-               saveValidation(v)
+                checkAttendance()
+                if (saveAttendanceMark) {
+                    Config.disableClick(v)
+                    saveValidation(v)
+                }
+
             }
 
         }
@@ -696,7 +756,9 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                         tv_error!!.visibility = View.GONE
                         Log.e(TAG,"60886  ")
                         Log.e(TAG,"4367567 hjvchkjvchkjvckj")
-                        confirmationScreen(v)
+                      //  confirmationScreen(v)
+
+                        createDetailArray(v)
                     }
                 }
             }
@@ -715,9 +777,52 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             tv_error!!.visibility = View.GONE
             Log.e(TAG,"60888  ")
             Log.e(TAG,"4367567 hjvchkjvchkjvckj")
-            confirmationScreen(v)
+            //confirmationScreen(v)
+
+            createDetailArray(v)
         }
 
+    }
+
+    private fun createDetailArray(v : View) {
+        try {
+            saveDetailArray = JSONArray()
+
+//           var obj = JSONObject()
+            var breakPos: Int? = null
+            var boolBreak: Boolean? = true
+            for (i in 0 until modelStockTransferDetails.size) {
+                var empModel = modelStockTransferDetails[i]
+                var obj = JSONObject()
+
+                if (empModel.FK_StockMode.equals("") || empModel.FK_StockMode.equals("0")){
+                    breakPos = i
+                    boolBreak = false
+                    break
+                }
+
+                Log.e(TAG,"76999    "+empModel.FK_StockMode)
+                obj.put("ID_Product", empModel.FK_Product)
+                obj.put("Quantity", empModel.Quantity)
+                obj.put("ID_Stock", empModel.ID_Stock)
+                obj.put("QuantityStandBy", empModel.StatndByQuantity)
+                obj.put("StockMode", empModel.FK_StockMode)
+                saveDetailArray!!.put(obj)
+            }
+
+            if (boolBreak == true){
+                confirmationScreen(v)
+            }else{
+                Config.snackBars(context,v,"Please fill stock mode")
+            }
+          //
+//           jsonObject.put("EmployeeStockTransferDetails", array)
+            Log.e(TAG,"70000  jsonObject  "+saveDetailArray)
+            Log.e(TAG,"70000  jsonObject  "+breakPos)
+
+        }catch (e : Exception){
+            Log.e(TAG,"70000  Exception  "+e.toString())
+        }
     }
 
     private fun confirmationScreen(v : View) {
@@ -771,6 +876,12 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
             }
 
+            btnOk!!.setOnClickListener {
+                dialogConfirm!!.dismiss()
+                saveUpdateCount = 0
+                saveStockRequest()
+            }
+
             btnCancel!!.setOnClickListener {
                 dialogConfirm!!.dismiss()
             }
@@ -783,6 +894,114 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    private fun saveStockRequest() {
+
+
+        var FK_EmployeeFromTemp = "0"
+        var FK_EmployeeToTemp = "0"
+
+        if (!FK_EmployeeFrom.equals("")){
+            FK_EmployeeFromTemp = FK_EmployeeFrom!!
+        }
+        if (!FK_EmployeeTo.equals("")){
+            FK_EmployeeToTemp = FK_EmployeeTo!!
+        }
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                saveUpdateStockRTViewModel.saveUpdateStockRT(this,UserAction, FK_BranchFrom!!,FK_DepartmentFrom!!,FK_EmployeeFromTemp!!,STRequest,strDate,
+                    FK_BranchTo,FK_DepartmentTo!!,FK_EmployeeToTemp!!,TransMode,FK_StockRequest,FK_StockTransfer,saveDetailArray!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (saveUpdateCount == 0){
+                                    saveUpdateCount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   81000   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        Log.e(TAG,"msg   81000   "+msg)
+                                        successBottomSheet(jObject)
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@StockTransferActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e:Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun successBottomSheet(jObject : JSONObject) {
+        try {
+            val dialog1 = BottomSheetDialog(this,R.style.BottomSheetDialog)
+            val view = layoutInflater.inflate(R.layout.succes_bottomsheet, null)
+            dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val window: Window? = dialog1.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            dialog1!!.setCancelable(false)
+            dialog1!!.setCanceledOnTouchOutside(false)
+            dialog1!!.getBehavior().setDraggable(false);
+
+            var tv_succesmsg = view.findViewById<TextView>(R.id.tv_succesmsg)
+            var tv_gotit = view.findViewById<TextView>(R.id.tv_gotit)
+
+            tv_succesmsg!!.setText(jObject.getString("EXMessage"))
+            tv_gotit!!.setOnClickListener {
+                dialog1.dismiss()
+                deleteAll(it)
+
+            }
+
+
+            dialog1!!.setContentView(view)
+            dialog1.show()
+
+        }catch (e: Exception){
+            Log.e(TAG,"777  Exception   "+e.toString())
         }
     }
 
@@ -910,13 +1129,40 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 var ID_BranchType = "2"
+
+                var FK_BranchFromTemp = "0"
+                var FK_DepartmentFromTemp = "0"
+                var FK_EmployeeFromTemp = "0"
+                var FK_BranchToTemp = "0"
+                var FK_DepartmentToTemp = "0"
+                var FK_EmployeeToTemp = "0"
+
+                if (!FK_BranchFrom.equals("")){
+                    FK_BranchFromTemp = FK_BranchFrom!!
+                }
+                if (!FK_DepartmentFrom.equals("")){
+                    FK_DepartmentFromTemp = FK_DepartmentFrom!!
+                }
+                if (!FK_EmployeeFrom.equals("")){
+                    FK_EmployeeFromTemp = FK_EmployeeFrom!!
+                }
+                if (!FK_BranchTo.equals("")){
+                    FK_BranchToTemp = FK_BranchTo!!
+                }
+                if (!FK_DepartmentTo.equals("")){
+                    FK_DepartmentToTemp = FK_DepartmentTo!!
+                }
+                if (!FK_EmployeeTo.equals("")){
+                    FK_EmployeeToTemp = FK_EmployeeTo!!
+                }
+
                 progressDialog = ProgressDialog(context, R.style.Progress)
                 progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
                 progressDialog!!.setCancelable(false)
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                stockRequestViewModel.getStockRequest(this)!!.observe(
+                stockRequestViewModel.getStockRequest(this,FK_BranchFromTemp!!,FK_DepartmentFromTemp!!,FK_EmployeeFromTemp!!,FK_BranchToTemp!!,FK_DepartmentToTemp!!,FK_EmployeeToTemp!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -928,9 +1174,9 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                                     requestCount++
 
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   2471   "+msg)
+                                    Log.e(TAG,"msg   96777   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("StockRequestDetails")
+                                        val jobjt = jObject.getJSONObject("StockRequestInTransfer")
                                         stockRequestArrayList = jobjt.getJSONArray("StockRequestList")
                                         if (stockRequestArrayList.length() > 0) {
 
@@ -987,6 +1233,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             recyStockRequest = dialogStockRequest!!.findViewById(R.id.recyStockRequest) as RecyclerView
             val etsearch = dialogStockRequest!!.findViewById(R.id.etsearch) as EditText
 
+
             stockRequestsort = JSONArray()
             for (k in 0 until stockRequestArrayList.length()) {
                 val jsonObject = stockRequestArrayList.getJSONObject(k)
@@ -1034,11 +1281,15 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                 }
             })
 
+            val window: Window? = dialogStockRequest!!.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
             dialogStockRequest!!.show()
-            dialogStockRequest!!.getWindow()!!.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            );
+//            dialogStockRequest!!.getWindow()!!.setLayout(
+//                ViewGroup.LayoutParams.MATCH_PARENT,
+//                ViewGroup.LayoutParams.WRAP_CONTENT
+//            );
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG, "Exception  1132   " + e.toString())
@@ -1741,6 +1992,14 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
     private fun getProduct(FK_StockMode: String) {
 
+        var ReqMode = "0"
+        if (FK_StockMode.equals("1")){
+            ReqMode = "38"
+        }
+        if (FK_StockMode.equals("2")){
+            ReqMode = "104"
+        }
+
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1749,7 +2008,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                productStockViewModel.getProductStock(this,FK_StockMode!!)!!.observe(
+                productStockTransferViewModel.getProductStockTransfer(this,ReqMode!!,FK_BranchFrom!!,FK_DepartmentFrom!!,TransMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -1761,11 +2020,11 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                                     productCount++
 
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   1037   "+msg)
+                                    Log.e(TAG,"msg   17730   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("StockRTProductDetails")
+                                        val jobjt = jObject.getJSONObject("StockSTProductDetails")
 
-                                        productArrayList = jobjt.getJSONArray("StockRTProductList")
+                                        productArrayList = jobjt.getJSONArray("StockSTProductList")
                                         if (productArrayList.length()>0){
                                             productPopup(productArrayList)
                                         }
@@ -1832,7 +2091,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             recyProduct!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
 //            val adapter = EmployeeInventoryAdapter(this@FollowUpActivity, employeeArrayListFrom)
-            val adapter = ProductStockAdapter(this@StockTransferActivity, productsort)
+            val adapter = ProductStockTransferAdapter(this@StockTransferActivity, productsort)
             recyProduct!!.adapter = adapter
             adapter.setClickListener(this@StockTransferActivity)
 
@@ -1860,7 +2119,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                     }
 
                     Log.e(TAG,"employeeSort               7103    "+productsort)
-                    val adapter = ProductStockAdapter(this@StockTransferActivity, productsort)
+                    val adapter = ProductStockTransferAdapter(this@StockTransferActivity, productsort)
                     recyProduct!!.adapter = adapter
                     adapter.setClickListener(this@StockTransferActivity)
                 }
@@ -1887,7 +2146,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             strStandQuantity = "0"
         }
 
-        if (FK_StockMode.equals("")){
+        if (FK_StockMode.equals("") || FK_StockMode.equals("0")){
             til_StockMode!!.setError("Select Stock Mode")
             til_StockMode!!.setErrorIconDrawable(null)
         }
@@ -1909,7 +2168,8 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                 var hasId =  hasStockOrProduct(modelStockTransferDetails!!,FK_StockMode!!,FK_Product!!)
                 if (hasId){
 
-                    modelStockTransferDetails.add(ModelStockTransferDetails(FK_StockMode!!,tie_StockMode!!.text.toString(),FK_Product!!,tie_Product!!.text.toString(),strQuantity!!,strStandQuantity!!))
+                    Log.e(TAG,"212999   DATA   "+FK_Product  +"   :   "+ID_Stock)
+                    modelStockTransferDetails.add(ModelStockTransferDetails(FK_StockMode!!,tie_StockMode!!.text.toString(),FK_Product!!,tie_Product!!.text.toString(),strQuantity!!,strStandQuantity!!, ID_Stock!! ))
                     if (modelStockTransferDetails.size>0){
                         ll_stocklist!!.visibility =View.VISIBLE
                         val lLayout = GridLayoutManager(this@StockTransferActivity, 1)
@@ -1931,6 +2191,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
             else{
 
+                Log.e(TAG,"2129991   DATA   "+FK_Product  +"   :   "+ID_Stock)
                 Log.e(TAG,"4122   modEditPosition   "+modEditPosition)
                 var hasId =  hasAll(modelStockTransferDetails!!,FK_StockMode!!,FK_Product!!,modEditPosition!!)
                 if (hasId){
@@ -1941,6 +2202,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                     empModel.Product = tie_Product!!.text.toString()
                     empModel.Quantity = tie_Quantity!!.text.toString()
                     empModel.StatndByQuantity = tie_StandByQuantity!!.text.toString()
+                    empModel.ID_Stock = ID_Stock!!
                     stockAdapter!!.notifyItemChanged(modEditPosition)
 
                     clearDetails()
@@ -1968,7 +2230,8 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
     private fun hasAll(modelStockTransferDetails: ArrayList<ModelStockTransferDetails>, FK_StockMode: String, FK_Product: String,modEditPosition : Int): Boolean {
         for (i in 0 until modelStockTransferDetails.size) {  // iterate through the JsonArray
             if (modEditPosition != i){
-                if (modelStockTransferDetails.get(i).FK_StockMode == FK_StockMode && modelStockTransferDetails.get(i).FK_Product == FK_Product) return false
+//                if (modelStockTransferDetails.get(i).FK_StockMode == FK_StockMode && modelStockTransferDetails.get(i).FK_Product == FK_Product) return false
+                if (modelStockTransferDetails.get(i).FK_Product == FK_Product) return false
             }
         }
         return true
@@ -2024,6 +2287,10 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
         getCurrentDate()
         getSharedData()
 
+        FK_StockRequest = "0"
+        FK_StockTransfer = ""
+        ID_Stock = "0"
+        UserAction = "1"
         FK_EmployeeFrom = ""
         tie_FromEmployee!!.setText("")
         FK_BranchTo = ""
@@ -2069,11 +2336,171 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
         Log.e(TAG, "onActivityResult  20711   " + requestCode + "   " + resultCode + "  " + data)
         if (requestCode == Config.CODE_STOCK_LIST) {
             if (data != null) {
+                try {
 
-                Log.e(TAG,"20711    "+data.getStringExtra("strLongitue"))
+                    UserAction = "2"
+                    var jsonObj: JSONObject? = null
+                    var jsonObject: String? = data.getStringExtra("jsonObject")
+                    jsonObj = JSONObject(jsonObject)
+                    Log.e(TAG,"207111    "+jsonObj)
+
+                    FK_StockTransfer = jsonObj.getString("StockTransferID")
+                    FK_StockRequest = jsonObj.getString("FK_StockRequest")
+
+                    FK_BranchFrom = jsonObj.getString("BranchID")
+                    FK_DepartmentFrom = jsonObj.getString("DepartmentID")
+                    FK_EmployeeFrom = jsonObj.getString("EmployeeID")
+
+                    FK_BranchTo = jsonObj.getString("BranchIDTo")
+                    FK_DepartmentTo = jsonObj.getString("DepartmentIDTo")
+                    FK_EmployeeTo = jsonObj.getString("EmployeeIDTo")
+
+
+                    tie_FromBranch!!.setText(jsonObj.getString("BranchName"))
+                    tie_FromDepartment!!.setText(jsonObj.getString("DepartmentName"))
+                    tie_FromEmployee!!.setText(jsonObj.getString("EmployeeName"))
+
+                    tie_ToBranch!!.setText(jsonObj.getString("BranchNameTo"))
+                    tie_ToDepartment!!.setText(jsonObj.getString("DepartmentNameTo"))
+                    tie_ToEmployee!!.setText(jsonObj.getString("EmployeeNameTo"))
+
+                    val sdf = SimpleDateFormat("dd-MM-yyyy")
+                    Log.e(TAG,"DATE TIME  196  "+jsonObj.getString("TransDate"))
+                    val newDate: Date = sdf.parse(jsonObj.getString("TransDate"))
+                    Log.e(TAG,"newDate  196  "+newDate)
+                    val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
+                    val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
+
+
+                    tie_Date!!.setText(""+sdfDate1.format(newDate))
+                    strDate = sdfDate2.format(newDate)
+
+                    btnSubmit!!.setText("Update")
+
+                    stockproductCount = 0
+                    loadStockRequestProductList(FK_StockTransfer)
+
+                    if (jsonObj.getString("Transfered").equals("1")){
+                        Config.showCustomToast ("Already Transfered!!", this)
+                    }
+                    else if (jsonObj.getString("Approved").equals("1")){
+                        Config.showCustomToast ("Already Approved!!", this)
+                    }
+
+
+                }catch (e: Exception){
+                    Log.e(TAG,"207112    "+e.toString())
+                }
+
             }
         }
 
+    }
+
+    private fun loadStockRequestProductList(ID_StockTransfer: String) {
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                stockReqProductlistViewModel.getStockReqProductlist(this,ID_StockTransfer!!,TransMode,Detailed)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (stockproductCount == 0){
+                                    stockproductCount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   21210   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("StockRequestProductList")
+
+                                        stockProductListArrayList = jobjt.getJSONArray("StockRequestProductListData")
+                                        if (stockProductListArrayList.length()>0){
+                                            modelStockTransferDetails.clear()
+                                            for (i in 0 until stockProductListArrayList.length()) {
+                                                val jsonObject = stockProductListArrayList.getJSONObject(i)
+
+                                                var stockMode = Config.getStockMode(this@StockTransferActivity)
+                                                val jObject = JSONObject(stockMode)
+                                                val jobjt = jObject.getJSONObject("stockModeDetails")
+                                                stockModeArrayList = jobjt.getJSONArray("stockModeDetailsList")
+
+                                                var stkMode = ""
+                                                for (i in 0 until stockModeArrayList.length()) {
+                                                    val jsonObject1 = stockModeArrayList.getJSONObject(i)
+                                                    if (jsonObject1.getString("FK_StockMode").equals(jsonObject.getString("StockMode"))){
+                                                        stkMode = jsonObject1.getString("StockMode")
+                                                    }
+                                                }
+                                                Log.e(TAG,"77777    "+jsonObject.getString("StockMode")  +" :: "+stkMode)
+                                                //modelStockTransferDetails.add(ModelStockTransferDetails(FK_StockMode!!,tie_StockMode!!.text.toString(),FK_Product!!,tie_Product!!.text.toString(),strQuantity!!,strStandQuantity!!))
+                                                modelStockTransferDetails.add(ModelStockTransferDetails(jsonObject.getString("StockMode"),stkMode,jsonObject.getString("ID_Product"),jsonObject.getString("Product"),jsonObject.getString("Quantity"),jsonObject.getString("QuantityStandBy"),jsonObject.getString("ID_Stock")))
+                                            }
+                                            recyStockDetails!!.adapter = null
+                                            if (modelStockTransferDetails.size>0){
+                                                ll_stocklist!!.visibility =View.VISIBLE
+                                                val lLayout = GridLayoutManager(this@StockTransferActivity, 1)
+                                                recyStockDetails!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
+                                                stockAdapter = StockDetailAdapter(this@StockTransferActivity,modelStockTransferDetails,"1")
+                                                recyStockDetails!!.adapter = stockAdapter
+                                                stockAdapter!!.setClickListener(this@StockTransferActivity)
+
+                                                // adapter1.setClickListener(this@StockTransferActivity)
+                                            }else{
+                                                ll_stocklist!!.visibility =View.GONE
+                                            }
+                                            clearDetails()
+
+
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@StockTransferActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES+"dfs",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
 
@@ -2083,27 +2510,44 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             dialogStockRequest!!.dismiss()
 
             val jsonObject = stockRequestsort.getJSONObject(position)
+            UserAction = "1"
 
-
-            FK_BranchFrom = "1"
-            BranchNameFrom =  jsonObject.getString("Branch")
+            FK_StockRequest= jsonObject.getString("FK_StockTransfer")
+            FK_StockTransfer = "0"
+            FK_BranchFrom = jsonObject.getString("BranchID")
+            BranchNameFrom =  jsonObject.getString("BranchName")
             tie_FromBranch!!.setText(BranchNameFrom)
 
-            FK_BranchTo = "1"
-            tie_ToBranch!!.setText(jsonObject.getString("Branch"))
+            FK_BranchTo = jsonObject.getString("BranchIDTo")
+            tie_ToBranch!!.setText(jsonObject.getString("BranchName"))
 
-            FK_DepartmentFrom = "2"
-            DepartmentFrom = jsonObject.getString("Department")
+            FK_DepartmentFrom = jsonObject.getString("DepartmentID")
+            DepartmentFrom = jsonObject.getString("DepartmentName")
             tie_FromDepartment!!.setText(DepartmentFrom)
 
-            FK_DepartmentTo = "3"
-            tie_ToDepartment!!.setText(jsonObject.getString("Department"))
+            FK_DepartmentTo = jsonObject.getString("DepartmentIDTo")
+            tie_ToDepartment!!.setText(jsonObject.getString("DepartmentName"))
 
-            FK_EmployeeFrom = "2"
-            tie_FromEmployee!!.setText(jsonObject.getString("Employees"))
+            FK_EmployeeFrom = jsonObject.getString("EmployeeID")
+            tie_FromEmployee!!.setText(jsonObject.getString("EmployeeName"))
 
-            FK_EmployeeTo = "3"
-            tie_ToEmployee!!.setText(jsonObject.getString("EmployeeTo"))
+            FK_EmployeeTo = jsonObject.getString("EmployeeIDTo")
+            tie_ToEmployee!!.setText(jsonObject.getString("EmployeeNameTo"))
+
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            Log.e(TAG,"DATE TIME  196  "+jsonObject.getString("TransDate"))
+            val newDate: Date = sdf.parse(jsonObject.getString("TransDate"))
+            Log.e(TAG,"newDate  196  "+newDate)
+            val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
+            val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
+
+
+            tie_Date!!.setText(""+sdfDate1.format(newDate))
+            strDate = sdfDate2.format(newDate)
+
+            stockproductCount = 0
+            loadStockRequestProductList(FK_StockRequest)
+
 
         }
 
@@ -2212,6 +2656,9 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             tie_StockMode!!.setText(jsonObject.getString("StockMode"))
 
             tv_error!!.visibility = View.GONE
+            FK_Product = ""
+            tie_Product!!.setText("")
+
 
         }
 
@@ -2221,6 +2668,10 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             val jsonObject = productsort.getJSONObject(position)
             FK_Product = jsonObject.getString("FK_Product")
             tie_Product!!.setText(jsonObject.getString("Name"))
+            ID_Stock =jsonObject.getString("ID_Stock")
+
+            strChkQuantity = jsonObject.getString("CurrentStock")
+            strChkStandQuantity = jsonObject.getString("StandbyQuantity")
 
             tv_error!!.visibility = View.GONE
             til_Product!!.isErrorEnabled = false
@@ -2242,14 +2693,36 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
         if (data.equals("editStocks")){
 
             Log.e(TAG,"1476  "+position)
-            modAddorEdit = 1
-            modEditPosition = position
-            FK_StockMode = modelStockTransferDetails[position].FK_StockMode
-            tie_StockMode!!.setText(modelStockTransferDetails[position].StockMode)
-            FK_Product = modelStockTransferDetails[position].FK_Product
-            tie_Product!!.setText(modelStockTransferDetails[position].Product)
-            tie_Quantity!!.setText(modelStockTransferDetails[position].Quantity)
-            tie_StandByQuantity!!.setText(modelStockTransferDetails[position].StatndByQuantity)
+
+            try {
+                modAddorEdit = 1
+                modEditPosition = position
+                FK_StockMode = modelStockTransferDetails[position].FK_StockMode
+
+//                var stockMode = Config.getStockMode(this@StockTransferActivity)
+//                val jObject = JSONObject(stockMode)
+//                val jobjt = jObject.getJSONObject("stockModeDetails")
+//                stockModeArrayList = jobjt.getJSONArray("stockModeDetailsList")
+//
+//                for (i in 0 until stockModeArrayList.length()) {
+//                    val jsonObject = stockModeArrayList.getJSONObject(i)
+//                    if (jsonObject.getString("FK_StockMode").equals(FK_StockMode)){
+//                        modelStockTransferDetails[position].StockMode = jsonObject.getString("StockMode")
+//                    }
+//                }
+
+                tie_StockMode!!.setText(modelStockTransferDetails[position].StockMode)
+                FK_Product = modelStockTransferDetails[position].FK_Product
+                tie_Product!!.setText(modelStockTransferDetails[position].Product)
+                tie_Quantity!!.setText(modelStockTransferDetails[position].Quantity)
+                tie_StandByQuantity!!.setText(modelStockTransferDetails[position].StatndByQuantity)
+
+            }catch (e : Exception){
+
+                Log.e(TAG,"14785  "+e.toString())
+            }
+
+
 
 
         }

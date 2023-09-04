@@ -54,6 +54,7 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
     private fun getAppoval() {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
+                recyAprrove!!.adapter = null
                 progressDialog = ProgressDialog(context, R.style.Progress)
                 progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
                 progressDialog!!.setCancelable(false)

@@ -3,13 +3,13 @@
     android:padding="10dp"
     android:shape="rectangle" >
 
-    <solid android:color="#E7EDED" />
-<!--    E7EDED-->
+    <solid android:color="@color/web_color1" />
+    <!--    E7EDED-->
     <stroke
         android:width="0.3dip"
         android:color="#38795C" />
 
     <corners android:radius="3dp" />
-<!--    8B9C94-->
+    <!--    8B9C94-->
 
 </shape>

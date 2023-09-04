@@ -1031,6 +1031,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 Log.e(TAG,"1031  tie_Location ")
                 Config.disableClick(v)
                 val intent = Intent(this@CustomerServiceActivity, LocationPickerActivity::class.java)
+                intent.putExtra("mode","1")
                 startActivityForResult(intent, SELECT_LOCATION!!);
 
             }

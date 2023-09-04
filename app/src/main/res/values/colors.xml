@@ -462,4 +462,13 @@
     <color name="color_reject">#ED8661</color>
 <!--    <color name="color_reject">#858484</color>-->
 
+    <!-- Authorization-->
+    <color name="web_bgcolor">#E8EDEE</color>
+    <color name="web_color">#CADADA</color>
+    <color name="web_color1">#CBD5D5</color>
+    <color name="web_color2">#E7EDED</color>
+    <color name="web_color3">#DCE1E1</color>
+
+    <color name="more_textcolor">#4A7763</color>
+
 </resources>

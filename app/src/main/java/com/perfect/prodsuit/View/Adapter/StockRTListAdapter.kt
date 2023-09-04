@@ -47,7 +47,7 @@ class StockRTListAdapter (internal var context: Context, internal var jsonArray:
                     holder.ll_approved!!.visibility = View.VISIBLE
 //                    holder.tv_delete!!.visibility = View.VISIBLE
                 }
-                if (!jsonObject!!.getString("Transfered").equals("1")){
+                if (!jsonObject!!.getString("Approved").equals("1")){
 //                    holder.ll_approved!!.visibility = View.VISIBLE
                     holder.tv_delete!!.visibility = View.VISIBLE
                 }
