@@ -40,8 +40,7 @@
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
-<!--    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />-->
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" /> <!-- <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" /> -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- <uses-permission android:name="android.permission.WAKE_LOCK"/> -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- <uses-permission android:name="android.permission.RECEIVE_SMS" /> -->
@@ -65,6 +64,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.ReminderShowActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="com.perfect.prodsuit.View.Activity.ApprovalListActivity"
             android:exported="false"
@@ -716,6 +721,13 @@
         </service>
 
         <receiver android:name="com.perfect.prodsuit.Receivers.ReminderReceiver" />
+        <receiver
+            android:name="com.perfect.prodsuit.Receivers.MyAlarmReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="${applicationId}.ACTION_ALARM" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
