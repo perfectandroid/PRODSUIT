@@ -95,6 +95,13 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.DeliveryActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.MaterialRequestActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.InventoryActivity"
             android:exported="false"
             android:screenOrientation="portrait"
@@ -388,6 +395,19 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.ProjectFollowUpActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.MaterialUsageActivity"
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- <activity -->
+        <!-- android:name="com.perfect.prodsuit.View.Activity.MeterialUsage" -->
+        <!-- android:exported="false" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar" -->
+        <!-- tools:ignore="MissingClass" /> -->
         <activity
             android:name="com.perfect.prodsuit.View.Activity.ExpenseAddActivity"
             android:screenOrientation="portrait"

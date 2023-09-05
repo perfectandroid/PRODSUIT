@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
@@ -38,6 +39,16 @@ class ProjectEmpDetailAdapter  (internal var context: Context, internal var mLis
 //                holder.tv_emp_type.text =
 
 
+                holder.im_delete!!.setTag(position)
+                holder.im_delete!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "deleteArrayList")
+                })
+
+                holder.im_edit!!.setTag(position)
+                holder.im_edit!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "editArrayList")
+                })
+
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -58,14 +69,18 @@ class ProjectEmpDetailAdapter  (internal var context: Context, internal var mLis
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        var tv_category: TextView
-        var tv_employee: TextView
+        var tv_category : TextView
+        var tv_employee : TextView
+        var im_delete   : ImageView
+        var im_edit     : ImageView
 //        var tv_emp_type: TextView
 
 
         init {
             tv_category = v.findViewById(R.id.tv_category) as TextView
             tv_employee = v.findViewById(R.id.tv_employee) as TextView
+            im_delete  = v.findViewById(R.id.im_delete) as ImageView
+            im_edit = v.findViewById(R.id.im_edit) as ImageView
 //            tv_emp_type = v.findViewById(R.id.tv_emp_type) as TextView
 
         }

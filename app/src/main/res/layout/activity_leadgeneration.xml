@@ -1071,7 +1071,7 @@
                                             android:layout_margin="10dp"
                                             android:background="@color/leadbg_color"
                                             android:paddingBottom="10dp"
-                                            android:visibility="visible">
+                                            android:visibility="gone">
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
@@ -1421,7 +1421,7 @@
                                             android:layout_height="wrap_content"
                                             android:orientation="vertical"
                                             android:background="@color/leadbg_color"
-                                            android:visibility="gone">
+                                            android:visibility="visible">
 
                                             <LinearLayout
                                                 android:id="@+id/llrecyvisible"
@@ -1669,7 +1669,8 @@
                                                     android:padding="7dp"
                                                     android:singleLine="true"
                                                     android:text=""
-                                                    android:textSize="15dp" />
+                                                    android:textSize="15dp"
+                                                    android:visibility="gone"/>
 
 
                                                 <EditText

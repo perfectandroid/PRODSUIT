@@ -27,15 +27,15 @@ object UpdateLeadManagementRepository {
     private var progressDialog: ProgressDialog? = null
     fun getServicesApiCall(context: Context,ID_LeadGenerateProduct :String,ID_LeadGenerate :String,ID_ActionType :String,ID_Employee :String,ID_Status :String,strFollowUpDate :String,strFollowUpTime : String,
                            strCustomerRemark :String,strEmployeeRemark :String,ID_NextAction :String,ID_NextActionType :String,strNextFollowUpDate :String,ID_Priority :String,
-                           ID_Department :String,ID_NextEmployee :String, strCallStatus: String?,strCallDuration: String?,strLatitude: String?,strLongitude: String?,encode1: String?,encode2: String?): MutableLiveData<UpdateLeadManagementModel> {
+                           ID_Department :String,ID_NextEmployee :String, strCallStatus: String?,strCallDuration: String?,strLatitude: String?,strLongitude: String?,encode1: String?,encode2: String?,ForAllProduct: String?): MutableLiveData<UpdateLeadManagementModel> {
         getUpdateLeadManagement(context,ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,strFollowUpTime,
-            strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
+            strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2,ForAllProduct)
         return updateLeadManagementSetterGetter
     }
 
     private fun getUpdateLeadManagement(context: Context,ID_LeadGenerateProduct :String,ID_LeadGenerate :String,ID_ActionType :String,ID_Employee :String,ID_Status :String,strFollowUpDate :String,strFollowUpTime : String,
                                         strCustomerRemark :String,strEmployeeRemark :String,ID_NextAction :String,ID_NextActionType :String,strNextFollowUpDate :String,ID_Priority :String,
-                                        ID_Department :String,ID_NextEmployee :String,strCallStatus: String?,strCallDuration: String?,strLatitude: String?,strLongitude: String?,encode1: String?,encode2: String?) {
+                                        ID_Department :String,ID_NextEmployee :String,strCallStatus: String?,strCallDuration: String?,strLatitude: String?,strLongitude: String?,encode1: String?,encode2: String?,ForAllProduct: String?) {
 
         Log.e(TAG,"FOLLOWUP  25981 "
                 +"\n ID_LeadGenerateProduct :  "+ID_LeadGenerateProduct
@@ -44,7 +44,7 @@ object UpdateLeadManagementRepository {
                 +"\n ID_Employee            :  "+ID_Employee
                 +"\n ID_Status              :  "+ID_Status
                 +"\n strFollowUpDate        :  "+strFollowUpDate
-           //     +"\n strFollowUpTime        :  "+strFollowUpTime
+                +"\n ForAllProduct          :  "+ForAllProduct
                 +"\n strCallStatus          :  "+strCallStatus
                 +"\n strCallDuration        :  "+strCallDuration
                 +"\n strCustomerRemark      :  "+strCustomerRemark
@@ -149,12 +149,13 @@ object UpdateLeadManagementRepository {
                 requestObject1.put("LgFollowUpTime", ProdsuitApplication.encryptStart(strFollowUpTime))
                 requestObject1.put("LgFollowUpStatus", ProdsuitApplication.encryptStart(strCallStatus))
                 requestObject1.put("LgFollowupDuration", ProdsuitApplication.encryptStart(strCallDuration))
-                requestObject1.put("LocLatitude", ProdsuitApplication.encryptStart(strLatitude))
-                requestObject1.put("LocLongitude", ProdsuitApplication.encryptStart(strLongitude))
+                requestObject1.put("LocLatitude", ProdsuitApplication.encryptStart(strLongitude))
+                requestObject1.put("LocLongitude", ProdsuitApplication.encryptStart(strLatitude))
 //                requestObject1.put("LocationLandMark1", ProdsuitApplication.encryptStart(encode1))
 //                requestObject1.put("LocationLandMark2", ProdsuitApplication.encryptStart(encode2))
                 requestObject1.put("LocationLandMark1", encode1)
                 requestObject1.put("LocationLandMark2", encode2)
+                requestObject1.put("ForAllProduct", ForAllProduct)
 
 
                 Log.v(TAG,"requestObject1   1581   "+requestObject1)

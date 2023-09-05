@@ -77,6 +77,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private var productName: String? = ""
     private var productId: String? = ""
     private var pos: Int = 0
+    private var positions: Int = 0
     var arrAddUpdate: String? = "0"
     var paymentCount = 0
     var billTypecount = 0
@@ -93,6 +94,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private var tv_RegisteredOn: TextView? = null
     private var tv_AddressLine1: TextView? = null
     private var tv_AddressLine2: TextView? = null
+    private var tvv_productname: TextView? = null
+    private var tvv_categorys: TextView? = null
     private var tv_Post: TextView? = null
     private var tv_Area: TextView? = null
     private var tv_District: TextView? = null
@@ -118,6 +121,15 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private var txt_pay_Amount: TextView? = null
     private var txt_pay_method: TextView? = null
     private var txt_bal_Amount: TextView? = null
+    private var tie_vehicleNo: TextView? = null
+    private var tvv_CustomersName: TextView? = null
+    private var tv_ReferenceNo: TextView? = null
+    private var tv_addressMobilenumber: TextView? = null
+    private var tv_Country: TextView? = null
+    private var tv_Mobileno: TextView? = null
+    private var tie_Drivername: TextView? = null
+    private var til_driver_Mobile: TextView? = null
+    private var til_Ewaybill: TextView? = null
     private var btnApply: Button? = null
     private var img_PayRefresh: ImageView? = null
     private var recyPaymentList: RecyclerView? = null
@@ -125,6 +137,16 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private var ll_paymentlist: LinearLayout? = null
     private var img_PayAdd: ImageView? = null
     private var llpaymentmethod: LinearLayout? = null
+    private var llreference: LinearLayout? = null
+    private var ll_Customername: LinearLayout? = null
+    private var llregistration: LinearLayout? = null
+    private var ll_mobileno: LinearLayout? = null
+    private var ll_ticket: LinearLayout? = null
+    private var view_mobile: View? = null
+    private var ticket_view: View? = null
+    private var customer_view: View? = null
+    private var reference_view: View? = null
+    private var registration_view: View? = null
     private var status_check: String? = null
     private var billtype: String? = null
     private var status_id = ""
@@ -135,6 +157,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private var llProductDetails: LinearLayout? = null
     private var llsubmit: LinearLayout? = null
     private var llPickDeliveryInformation: LinearLayout? = null
+    private var ll_deliveryDetailslist: LinearLayout? = null
+    private var ll_prodDetail_pickup: LinearLayout? = null
 
     var TicketDetailsMode: String? = "1"
     var llpaymentmethodCount: String? = ""
@@ -143,6 +167,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     var PickDeliveryInformationMode: String? = "1"
     var ProductInformationMode: String? = "1"
     var productinfodetailscount = 0
+    var productinfodetailsdeliverycount = 0
     var applyMode = 0
     var ID_ProductDelivery: String? = ""
     var PickDeliveryDate = ""
@@ -161,12 +186,16 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
     private var tie_PickDeliveryDate: TextInputEditText? = null
     private var tie_PickDeliveryTime: TextInputEditText? = null
+    private var tvv_list_name: TextView? = null
     private var tie_Remark: TextInputEditText? = null
 
     private var PRODUCT_INFORM: Int? = 100
 
     var prodInformationCount = 0
     var proddetail = 0
+    var prodpriority = 0
+    var complainttype = 0
+    var prodcomplaint = 0
     var productposition = ""
     var ID_Category = "0"
     var IsSelected = ""
@@ -174,11 +203,16 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     var pickupdeliStatusCount = 0
     lateinit var ProdInformationViewModel: PaymentMethodViewModel
     var prodInformationArrayList: JSONArray = JSONArray()
+    var prodInformationDeliveryArrayList: JSONArray = JSONArray()
     var prodInformationArrayList2: JSONArray = JSONArray()
+    var prodInformationDeliveryArrayList2: JSONArray = JSONArray()
+    var prodPriorityArrayList: JSONArray = JSONArray()
+    var complaintTypeArrayList: JSONArray = JSONArray()
     var prodDetailArrayList: JSONArray = JSONArray()
     var arrPayment = JSONArray()
     var arrayPaymentmethod = JSONArray()
     var Productdetails = JSONArray()
+    var DeliveryComplaints = JSONArray()
     var jsonObject5 = JSONObject()
     var providesatndby : String = ""
     lateinit var addproductDetailArrayList: JSONArray
@@ -188,6 +222,9 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     lateinit var pickupDeliveryUpdateDetailsArrayList: JSONArray
     lateinit var prodDetailSort: JSONArray
     lateinit var productinfodetailsviewmodel: ProductInfoDetailsViewModel
+    lateinit var deliveryinformationViewModel: DeliveryInformationViewModel
+    lateinit var productPriorityViewModel: ProductPriorityViewModel
+    lateinit var complaintTypeViewModel: ComplaintTypeViewModel
     lateinit var productDetailViewModel: ProductDetailViewModel
     lateinit var pickupdeliveryproductviewmodel: PickupDeliveryProductViewModel
     lateinit var pickupdelibilltypeviewmodel: PickupDeliBillTypeViewModel
@@ -197,10 +234,14 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private var dialogProdDet: Dialog? = null
     private var dialogPayment: Dialog? = null
     private var dialogPaymentMethod: Dialog? = null
+    private var dialogProdPriority: Dialog? = null
+    private var dialogProdComplaint: Dialog? = null
     var ID_PaymentMethod: String? = ""
     var recyProdInformation: RecyclerView? = null
     var recyProdDetail: RecyclerView? = null
     var recyPaymentMethod: RecyclerView? = null
+    var recyProdPriority: RecyclerView? = null
+    var recylist: RecyclerView? = null
     var tv_Pop_StandByTotal: TextView? = null
     var lladdProduct: LinearLayout? = null
     var llbilltype: LinearLayout? = null
@@ -224,6 +265,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     var locKnownName: String? = ""
     var strLatitude: String? = ""
     var strLongitue: String? = ""
+    var FK_Category: String? = ""
 
     var lm: LocationManager? = null
     var gps_enabled = false
@@ -260,21 +302,17 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
         setContentView(R.layout.activity_pick_up_and_delivery_update)
         context = this@PickUpAndDeliveryUpdateActivity
 
-        pickupdeliveryupdatedetailsviewmodel =
-            ViewModelProvider(this).get(PickUpDeliveryUpdateDetailsViewModel::class.java)
-        productinfodetailsviewmodel =
-            ViewModelProvider(this).get(ProductInfoDetailsViewModel::class.java)
+        pickupdeliveryupdatedetailsviewmodel = ViewModelProvider(this).get(PickUpDeliveryUpdateDetailsViewModel::class.java)
+        productinfodetailsviewmodel = ViewModelProvider(this).get(ProductInfoDetailsViewModel::class.java)
         productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
-        pickupdeliveryproductviewmodel =
-            ViewModelProvider(this).get(PickupDeliveryProductViewModel::class.java)
-        pickupdelistandbyproductviewmodel =
-            ViewModelProvider(this).get(PickupDeliStandByProductViewModel::class.java)
-        paymentMethodeViewModel =
-            ViewModelProvider(this).get(PaymentMethodViewModel::class.java)
-        pickupdelibilltypeviewmodel =
-            ViewModelProvider(this).get(PickupDeliBillTypeViewModel::class.java)
-        updatepickupanddeliveryviewmodel =
-            ViewModelProvider(this).get(UpdatePickUpAndDeliveryViewModel::class.java)
+        pickupdeliveryproductviewmodel = ViewModelProvider(this).get(PickupDeliveryProductViewModel::class.java)
+        pickupdelistandbyproductviewmodel = ViewModelProvider(this).get(PickupDeliStandByProductViewModel::class.java)
+        paymentMethodeViewModel = ViewModelProvider(this).get(PaymentMethodViewModel::class.java)
+        pickupdelibilltypeviewmodel = ViewModelProvider(this).get(PickupDeliBillTypeViewModel::class.java)
+        deliveryinformationViewModel = ViewModelProvider(this).get(DeliveryInformationViewModel::class.java)
+        productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
+        complaintTypeViewModel = ViewModelProvider(this).get(ComplaintTypeViewModel::class.java)
+        updatepickupanddeliveryviewmodel = ViewModelProvider(this).get(UpdatePickUpAndDeliveryViewModel::class.java)
 
 
         if (getIntent().hasExtra("SubMode")) {
@@ -329,6 +367,29 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
         tv_State = findViewById(R.id.tv_State)
         tv_tvProduct = findViewById(R.id.tv_tvProduct)
         tv_tvCategory = findViewById(R.id.tv_tvCategory)
+        tvv_productname = findViewById(R.id.tvv_productname)
+        tvv_categorys = findViewById(R.id.tvv_categorys)
+        ll_deliveryDetailslist = findViewById(R.id.ll_deliveryDetailslist)
+        llreference = findViewById(R.id.llreference)
+        ll_Customername = findViewById(R.id.ll_Customername)
+        ll_mobileno = findViewById(R.id.ll_mobileno)
+        view_mobile = findViewById(R.id.view_mobile)
+        customer_view = findViewById(R.id.customer_view)
+        reference_view = findViewById(R.id.reference_view)
+        llregistration = findViewById(R.id.llregistration)
+        registration_view = findViewById(R.id.registration_view)
+        ll_ticket = findViewById(R.id.ll_ticket)
+        ticket_view = findViewById(R.id.ticket_view)
+        ll_prodDetail_pickup = findViewById(R.id.ll_prodDetail_pickup)
+        tie_vehicleNo = findViewById(R.id.tie_vehicleNo)
+        tie_Drivername = findViewById(R.id.tie_Drivername)
+        til_driver_Mobile = findViewById(R.id.til_driver_Mobile)
+        til_Ewaybill = findViewById(R.id.til_Ewaybill)
+        tvv_CustomersName = findViewById(R.id.tvv_CustomersName)
+        tv_Mobileno = findViewById(R.id.tv_Mobileno)
+        tv_ReferenceNo = findViewById(R.id.tv_ReferenceNo)
+        tv_addressMobilenumber = findViewById(R.id.tv_addressMobilenumber)
+        tv_Country = findViewById(R.id.tv_Country)
 
         llTicketDetails = findViewById<LinearLayout>(R.id.llTicketDetails)
         llCustomerDetails = findViewById<LinearLayout>(R.id.llCustomerDetails)
@@ -486,12 +547,23 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                         val Area = jobjt.getString("Area")
                                         val District = jobjt.getString("District")
                                         val State = jobjt.getString("State")
+                                        val Country = jobjt.getString("Country")
+                                        val MobileNumber = jobjt.getString("MobileNo")
 
                                         tv_TicketNumber!!.setText(jobjt.getString("CSRTickno"))
                                         tv_RegisteredOn!!.setText(jobjt.getString("CSRRegDate"))
                                         tv_CustomerName!!.setText(jobjt.getString("Customer"))
                                         tv_tvProduct!!.setText(jobjt.getString("Product"))
                                         tv_tvCategory!!.setText(jobjt.getString("Category"))
+                                        tie_vehicleNo!!.setText(jobjt.getString("DelVehicleNo"))
+                                        tie_Drivername!!.setText(jobjt.getString("DelDriverName"))
+                                        til_driver_Mobile!!.setText(jobjt.getString("DelDriverMobileNo"))
+                                        til_Ewaybill!!.setText(jobjt.getString("PdEWayBillNo"))
+                                        tvv_CustomersName!!.setText(jobjt.getString("Customer"))
+                                        tv_Mobileno!!.setText(jobjt.getString("MobileNo"))
+                                        tv_ReferenceNo!!.setText(jobjt.getString("CSRTickno"))
+//                                        tv_addressMobilenumber!!.setText(jobjt.getString("MobileNo"))
+//                                        tv_Country!!.setText(jobjt.getString("tv_Country"))
 
                                         if (Address1!!.equals("")) {
                                             tv_AddressLine1!!.visibility = View.GONE
@@ -523,7 +595,16 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                         } else {
                                             tv_State!!.setText(State)
                                         }
-
+                                        if (Country.equals("")){
+                                            tv_Country!!.visibility = View.GONE
+                                        }else{
+                                            tv_Country!!.setText(Country)
+                                        }
+                                        if (MobileNumber.equals("")){
+                                            tv_addressMobilenumber!!.visibility = View.GONE
+                                        }else{
+                                            tv_addressMobilenumber!!.setText(MobileNumber)
+                                        }
                                     } else {
                                         val builder = AlertDialog.Builder(
                                             this@PickUpAndDeliveryUpdateActivity,
@@ -568,18 +649,47 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
         if (SubMode.equals("1")) {
             tv_header!!.text = "Pick up"
-            tv_PickDeliveryInformationClick!!.text = "Pickup Information"
-            til_PickDeliveryDate!!.hint = "Pick Up Date *"
-            til_PickDeliveryTime!!.hint = "Pick up Time *"
-            tv_ProductInformationClick!!.text = "PickUp Note"
+            tv_PickDeliveryInformationClick!!.text = "Pickup Note"
+            til_PickDeliveryDate!!.hint       = "Pick Up Date *"
+            til_PickDeliveryTime!!.hint       = "Pick up Time *"
+            tv_ProductInformationClick!!.text = "PickUp Information"
+            llreference!!.visibility          = View.GONE
+            ll_Customername!!.visibility      = View.GONE
+            ll_mobileno!!.visibility          = View.GONE
+            view_mobile!!.visibility          = View.GONE
+            customer_view!!.visibility        = View.GONE
+            reference_view!!.visibility       = View.GONE
+            llregistration!!.visibility       = View.VISIBLE
+            registration_view!!.visibility    = View.VISIBLE
+            ll_ticket!!.visibility            = View.VISIBLE
+            ticket_view!!.visibility          = View.VISIBLE
+            ll_prodDetail_pickup!!.visibility = View.VISIBLE
+            ll_deliveryDetailslist!!.visibility  = View.GONE
+//            tv_ProductInformationClick!!.text = "Product"
 
         }
         if (SubMode.equals("2")) {
             tv_header!!.text = "Delivery"
-            tv_PickDeliveryInformationClick!!.text = "Delivery Information"
-            til_PickDeliveryDate!!.hint = "Delivery Date *"
-            til_PickDeliveryTime!!.hint = "Delivery Time *"
-            tv_ProductInformationClick!!.text = "Delivery Note"
+            tv_PickDeliveryInformationClick!!.text = "Delivery Note"
+            til_PickDeliveryDate!!.hint            = "Delivery Date *"
+            til_PickDeliveryTime!!.hint            = "Delivery Time *"
+            tv_ProductInformationClick!!.text      = "Delivery Information"
+            tv_TicketDetailsClick!!.text           = "Sales Details"
+            tv_CustomerDetailsClick!!.text         = "Delivery Address"
+            tv_ProductDetailsClick!!.text          = "Delivery Details"
+            llreference!!.visibility               = View.VISIBLE
+            ll_Customername!!.visibility           = View.VISIBLE
+            ll_mobileno!!.visibility               = View.VISIBLE
+            view_mobile!!.visibility               = View.VISIBLE
+            customer_view!!.visibility             = View.VISIBLE
+            reference_view!!.visibility            = View.VISIBLE
+            llregistration!!.visibility            = View.VISIBLE
+            registration_view!!.visibility         = View.VISIBLE
+            ll_ticket!!.visibility                 = View.GONE
+            ticket_view!!.visibility               = View.GONE
+            ll_deliveryDetailslist!!.visibility    = View.VISIBLE
+            ll_prodDetail_pickup!!.visibility      = View.GONE
+//            tvv_productname!!.text = "Vehicle No"
         }
     }
 
@@ -940,7 +1050,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                             jObject.put("isEnable", ("0"))
                                             jObject.put("SubMode", SubMode)
 
-
+                                            Log.e(TAG, "wwwwwwwwwww 222 " + SubMode)
                                             prodInformationArrayList2.put(jObject)
 
 
@@ -1019,6 +1129,100 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
         }
     }
 
+    private fun getProductInformationDelivery() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                deliveryinformationViewModel.getDeliveryInformation(
+                    this, SubMode!!, ID_ProductDelivery!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        //  try {
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            if (productinfodetailsdeliverycount == 0) {
+                                productinfodetailsdeliverycount++
+
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG, "msg   2353   " + msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("DeliveryProductInformationDetails")
+                                    prodInformationDeliveryArrayList = jobjt.getJSONArray("DeliveryProductInformationDetailsList")
+
+                                    if (prodInformationDeliveryArrayList.length() > 0) {
+                                        Log.e(TAG, "prodInformationDeliveryArrayList   558   " + prodInformationDeliveryArrayList)
+
+                                        for (i in 0 until prodInformationDeliveryArrayList.length()) {
+                                            var jsonObject = prodInformationDeliveryArrayList.getJSONObject(i)
+                                            val jObject = JSONObject()
+
+                                            FK_Category = jsonObject.getString("FK_Category")
+
+                                            jObject.put("ID_ProductDelivery", jsonObject.getString("ID_ProductDelivery"))
+                                            jObject.put("FK_Product", jsonObject.getString("FK_Product"))
+                                            jObject.put("FK_Category", jsonObject.getString("FK_Category"))
+                                            jObject.put("Product", jsonObject.getString("Product"))
+                                            jObject.put("Quantity", jsonObject.getString("Quantity"))
+                                            jObject.put("TransMode", jsonObject.getString("TransMode"))
+                                            jObject.put("PriorityName", "")
+                                            jObject.put("ID_Priority", "")
+                                            jObject.put("ComplaintQty", "")
+                                            jObject.put("ID_ComplaintList", "")
+                                            jObject.put("ComplaintName", "")
+                                            jObject.put("Description", "")
+                                            jObject.put("isSelectedDelivery", ("0"))
+//                                            jObject.put("isEnable", ("0"))
+                                            jObject.put("SubMode", SubMode)
+
+
+                                            Log.e(TAG, "wwwwwwwwwww eeeeee " + SubMode)
+                                            prodInformationArrayList2.put(jObject)
+
+
+                                        }
+                                        Log.e(TAG, "fffffffffffffffffff " + prodInformationArrayList2)
+
+                                        val lLayout = GridLayoutManager(this@PickUpAndDeliveryUpdateActivity, 1)
+                                        recyProdInformation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapterHome = ProdInformationAdapter(this@PickUpAndDeliveryUpdateActivity, prodInformationArrayList2)
+                                        recyProdInformation!!.adapter = adapterHome
+                                        adapterHome.setClickListener(this@PickUpAndDeliveryUpdateActivity)
+
+                                        Log.e(TAG, "dddddddddddddddddddd  " + prodInformationArrayList2)
+                                    }
+                                } else {
+
+                                }
+                            }
+
+                        } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            progressDialog!!.dismiss()
+                        }
+//                        } catch (e: Exception) {
+//                            Log.e(TAG, "ProductInformationBottom               1"+e)
+//                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
     private fun ProductInformationBottom() {
         Log.e(TAG, "ProductInformationBottom               0")
         try {
@@ -1058,12 +1262,76 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             tv_header1 = dialogProdInformation!!.findViewById(R.id.tv_header) as TextView
 
             if (SubMode!!.equals("1")) {
-                tv_header1!!.text = "Pickup Note"
-            }
-            if (SubMode!!.equals("2")) {
-                tv_header1!!.text = "Delivery Note"
+                tv_header1!!.text = "Pickup Information"
+
+                Log.e(TAG, "wwwwwwwwwww 111" + SubMode)
+                if (prodInformationArrayList2.length() == 0) {
+                    productinfodetailscount = 0
+                    getProductInformationDetails()
+
+                } else {
+
+//                    if (StandByAmount.equals("0.00") || StandByAmount!!.equals("")) {
+//                        llbilltype!!.visibility = View.VISIBLE
+//
+//                    } else {
+//
+//                        llbilltype!!.visibility = View.VISIBLE
+//                        setAmount()
+////                    Log.e(TAG, "standbytotal1           3"+standbytotal1)
+//                    }
+
+                    if (standbytotal1.equals("0.00")){
+                        llbilltype!!.visibility = View.GONE
+                    }else{
+                        llbilltype!!.visibility = View.VISIBLE
+                        setAmount()
+                    }
+
+
+                    val lLayout = GridLayoutManager(this@PickUpAndDeliveryUpdateActivity, 1)
+                    recyProdInformation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                    val adapterHome = ProdInformationAdapter(this@PickUpAndDeliveryUpdateActivity, prodInformationArrayList2)
+                    recyProdInformation!!.adapter = adapterHome
+                    adapterHome.setClickListener(this@PickUpAndDeliveryUpdateActivity)
+
+//                standbyTotal = (DecimelFormatters.set2DecimelPlace(standbyTotal.toFloat() + StandByAmount!!.toFloat()))
+//                standbyTotal = ""
+
+                }
+            }else if (SubMode!!.equals("2")) {
+                tv_header1!!.text = "Delivery Information"
+
+
                 llbilltype!!.visibility = View.GONE
                 lladdProduct!!.visibility = View.GONE
+
+
+                if (prodInformationArrayList2.length() == 0) {
+                    productinfodetailsdeliverycount = 0
+                    Log.e(TAG, "wwwwwwwwwww 121   " + SubMode)
+                    getProductInformationDelivery()
+
+                } else {
+
+//                    if (standbytotal1.equals("0.00")){
+//                        llbilltype!!.visibility = View.GONE
+//                    }else{
+//                        llbilltype!!.visibility = View.VISIBLE
+//                        setAmount()
+//                    }
+
+
+                    val lLayout = GridLayoutManager(this@PickUpAndDeliveryUpdateActivity, 1)
+                    recyProdInformation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                    val adapterHome = ProdInformationAdapter(this@PickUpAndDeliveryUpdateActivity, prodInformationArrayList2)
+                    recyProdInformation!!.adapter = adapterHome
+                    adapterHome.setClickListener(this@PickUpAndDeliveryUpdateActivity)
+
+//                standbyTotal = (DecimelFormatters.set2DecimelPlace(standbyTotal.toFloat() + StandByAmount!!.toFloat()))
+//                standbyTotal = ""
+
+                }
             }
 
 
@@ -1150,40 +1418,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
 //            }
 
-            if (prodInformationArrayList2.length() == 0) {
-                productinfodetailscount = 0
-                getProductInformationDetails()
 
-            } else {
-
-//                    if (StandByAmount.equals("0.00") || StandByAmount!!.equals("")) {
-//                        llbilltype!!.visibility = View.VISIBLE
-//
-//                    } else {
-//
-//                        llbilltype!!.visibility = View.VISIBLE
-//                        setAmount()
-////                    Log.e(TAG, "standbytotal1           3"+standbytotal1)
-//                    }
-
-                if (standbytotal1.equals("0.00")){
-                    llbilltype!!.visibility = View.GONE
-                }else{
-                    llbilltype!!.visibility = View.VISIBLE
-                    setAmount()
-                }
-
-
-                val lLayout = GridLayoutManager(this@PickUpAndDeliveryUpdateActivity, 1)
-                recyProdInformation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                val adapterHome = ProdInformationAdapter(this@PickUpAndDeliveryUpdateActivity, prodInformationArrayList2)
-                recyProdInformation!!.adapter = adapterHome
-                adapterHome.setClickListener(this@PickUpAndDeliveryUpdateActivity)
-
-//                standbyTotal = (DecimelFormatters.set2DecimelPlace(standbyTotal.toFloat() + StandByAmount!!.toFloat()))
-//                standbyTotal = ""
-
-            }
 //            productinfodetailscount = 0
 //            getProductInformationDetails()
 
@@ -1195,6 +1430,185 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
         }
     }
 
+    private fun getProductPriority() {
+        var prodpriority = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productPriorityViewModel.getProductPriority(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   353   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("PriorityDetailsList")
+                                prodPriorityArrayList = jobjt.getJSONArray("PriorityList")
+                                if (prodPriorityArrayList.length()>0){
+                                    if (prodpriority == 0){
+                                        prodpriority++
+                                        productPriorityPopup(prodPriorityArrayList)
+                                    }
+
+                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@PickUpAndDeliveryUpdateActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun productPriorityPopup(prodPriorityArrayList: JSONArray) {
+
+        try {
+
+
+            dialogProdPriority = Dialog(this)
+            dialogProdPriority!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdPriority!! .setContentView(R.layout.product_priority_popup)
+            dialogProdPriority!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyProdPriority = dialogProdPriority!! .findViewById(R.id.recyProdPriority) as RecyclerView
+
+
+            Log.e(TAG,"complaint pop 112244  "+prodPriorityArrayList)
+
+            val lLayout = GridLayoutManager(this@PickUpAndDeliveryUpdateActivity, 1)
+            recyProdPriority!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = ProductPriorityAdapter(this@PickUpAndDeliveryUpdateActivity, prodPriorityArrayList)
+            recyProdPriority!!.adapter = adapter
+            adapter.setClickListener(this@PickUpAndDeliveryUpdateActivity)
+
+
+
+            dialogProdPriority!!.show()
+            dialogProdPriority!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+
+    private fun getComplaintType() {
+        var prodcomplaint = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                        complaintTypeViewModel.getComplaintType(this,FK_Category!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   178   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("ProductComplaintsList")
+                                complaintTypeArrayList = jobjt.getJSONArray("ProductComplaintsList")
+                                if (complaintTypeArrayList.length()>0){
+                                    if (prodcomplaint == 0){
+                                        prodcomplaint++
+                                        complaintTypePopup(complaintTypeArrayList)
+                                    }
+
+                                }
+
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@PickUpAndDeliveryUpdateActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun complaintTypePopup(complaintTypeArrayList: JSONArray) {
+
+        try {
+
+            Log.e(TAG,"complaint pop  "+complaintTypeArrayList)
+            dialogProdComplaint = Dialog(this)
+            dialogProdComplaint!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdComplaint!! .setContentView(R.layout.list_popup)
+            dialogProdComplaint!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recylist = dialogProdComplaint!! .findViewById(R.id.recylist) as RecyclerView
+            tvv_list_name = dialogProdComplaint!! .findViewById(R.id.tvv_list_name) as TextView
+
+            tvv_list_name!!.setText("Complaint Type")
+
+            val lLayout = GridLayoutManager(this@PickUpAndDeliveryUpdateActivity, 1)
+            recylist!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            val adapter = ComplaintTypeAdapter(this@PickUpAndDeliveryUpdateActivity, complaintTypeArrayList)
+            recylist!!.adapter = adapter
+            adapter.setClickListener(this@PickUpAndDeliveryUpdateActivity)
+
+            Log.e(TAG,"complaint pop 889977  "+complaintTypeArrayList)
+
+            dialogProdComplaint!!.show()
+            dialogProdComplaint!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"complaint pop1111  "+e)
+        }
+
+    }
 
 
 
@@ -1871,8 +2285,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                     Log.e(TAG, "msg   227   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
-                                        val jobjt = jObject.getJSONObject("BillTyep")
-                                        billtypeArrayList = jobjt.getJSONArray("BillTyepList")
+                                        val jobjt = jObject.getJSONObject("BillType")
+                                        billtypeArrayList = jobjt.getJSONArray("BillTypeList")
                                         if (billtypeArrayList.length() > 0) {
 //                                             if (proddetail == 0){
 //                                                 proddetail++
@@ -1910,6 +2324,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                 "" + Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
+                            Log.e(TAG,"catch   "+e)
                         }
                         progressDialog!!.dismiss()
                     })
@@ -2129,7 +2544,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                updatepickupanddeliveryviewmodel.getUpdatePickUpAndDelivery(this, ID_ProductDelivery!!, PickDeliveryTime, PickDeliveryDate, remark!!, FK_BillType!!, Productdetails, arrayPaymentmethod!!, StandByAmount!!, status_id!!, strLongitue!!, strLatitude!!, locAddress!!)!!.observe(
+                updatepickupanddeliveryviewmodel.getUpdatePickUpAndDelivery(this, ID_ProductDelivery!!, PickDeliveryTime, PickDeliveryDate, remark!!, FK_BillType!!, Productdetails, arrayPaymentmethod!!,DeliveryComplaints!!, StandByAmount!!, status_id!!, strLongitue!!, strLatitude!!, locAddress!!)!!.observe(
                     this,
                     Observer { deleteleadSetterGetter ->
                         val msg = deleteleadSetterGetter.message
@@ -2223,7 +2638,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //            IsSelected = jsonObject5.getString("isSelected")
 //            Log.e(TAG,"343434  "+IsSelected)
 
-//            Log.e(TAG, "5555555555555  " +jsonObject5.getString("ProvideStandBy"))
+            Log.e(TAG, "5555555555555  " +jsonObject5.getString("ProvideStandBy"))
 //            Log.e(TAG, "4444444444444  " +jsonObject5.getString("isSelected"))
             setAmount()
 
@@ -2319,6 +2734,120 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //            StandByAmount = jsonObject.getString("StandByAmount")
             setAmount()
 
+
+        }
+
+        if (data.equals("prodpriority")) {
+
+            dialogProdPriority!!.dismiss()
+            Log.e(TAG, "qqqqwwwww   " + prodPriorityArrayList)
+
+            Log.e(TAG, "qqqqwwwww   " + position)
+            val jsonObject3 = prodPriorityArrayList.getJSONObject(position)
+
+            Log.e(TAG, "aaaaassss   " + jsonObject3)
+            Log.e(TAG, "qqqqwwwww   " + prodInformationDeliveryArrayList)
+
+            val jObject = JSONObject()
+            val jsonObject2 = prodInformationArrayList2.getJSONObject(positions)
+
+
+            jObject.put("ID_ProductDelivery", jsonObject2.getString("ID_ProductDelivery"))
+            jObject.put("FK_Product", jsonObject2.getString("FK_Product"))
+            jObject.put("FK_Category", jsonObject2.getString("FK_Category"))
+            jObject.put("Product", jsonObject2.getString("Product"))
+            jObject.put("Quantity", jsonObject2.getString("Quantity"))
+            jObject.put("TransMode", jsonObject2.getString("TransMode"))
+            jObject.put("PriorityName", jsonObject3.getString("PriorityName"))
+            jObject.put("ID_Priority", jsonObject3.getString("ID_Priority"))
+            jObject.put("ComplaintQty",jsonObject2.getString("ComplaintQty"))
+            jObject.put("ID_ComplaintList",jsonObject2.getString("ID_ComplaintList"))
+            jObject.put("ComplaintName",jsonObject2.getString("ComplaintName"))
+            jObject.put("Description", jsonObject2.getString("Description"))
+            jObject.put("isSelectedDelivery", jsonObject2.getString("isSelectedDelivery"))
+            jObject.put("SubMode", SubMode)
+
+
+            prodInformationArrayList2!!.put(positions, jObject)
+            Log.e(TAG, "checkkkkkkkkkkk       " + prodInformationArrayList2.toString())
+
+            Log.e(TAG, "dddddddd        " + position)
+            Log.e(TAG, "fffdddd         " + jObject)
+
+
+            val lLayout = GridLayoutManager(this@PickUpAndDeliveryUpdateActivity, 1)
+            recyProdInformation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapterHome = ProdInformationAdapter(this@PickUpAndDeliveryUpdateActivity, prodInformationArrayList2)
+            recyProdInformation!!.adapter = adapterHome
+            adapterHome.setClickListener(this@PickUpAndDeliveryUpdateActivity)
+
+        }
+
+        if (data.equals("PriorityCheck")) {
+
+            prodpriority = 0
+            positions = position
+            Log.e(TAG, "dddd111111111111111111 " + positions)
+
+            getProductPriority()
+
+
+        }
+
+        if (data.equals("ComplaintTypeclick")) {
+
+            complainttype = 0
+            positions = position
+            Log.e(TAG, "dddd111111111111111111 " + positions)
+
+            getComplaintType()
+
+
+        }
+        if (data.equals("ComplaintType")) {
+
+            dialogProdComplaint!!.dismiss()
+
+            Log.e(TAG, " ComplaintType qqqqwwwww   " + complaintTypeArrayList)
+            Log.e(TAG, "ComplaintType qqqqwwwww   " + position)
+
+            val jsonObject3 = complaintTypeArrayList.getJSONObject(position)
+
+            Log.e(TAG, "ComplaintType aaaaassss   " + jsonObject3)
+//            Log.e(TAG, "ComplaintType qqqqwwwww   " + prodInformationDeliveryArrayList)
+
+            val jObject = JSONObject()
+            val jsonObject2 = prodInformationArrayList2.getJSONObject(positions)
+
+//
+            jObject.put("ID_ProductDelivery", jsonObject2.getString("ID_ProductDelivery"))
+            jObject.put("FK_Product", jsonObject2.getString("FK_Product"))
+            jObject.put("FK_Category", jsonObject2.getString("FK_Category"))
+            jObject.put("Product", jsonObject2.getString("Product"))
+            jObject.put("Quantity", jsonObject2.getString("Quantity"))
+            jObject.put("TransMode", jsonObject2.getString("TransMode"))
+            jObject.put("PriorityName", jsonObject2.getString("PriorityName"))
+            jObject.put("ID_Priority", jsonObject2.getString("ID_Priority"))
+            jObject.put("ComplaintQty",jsonObject2.getString("ComplaintQty"))
+            jObject.put("ID_ComplaintList",jsonObject3.getString("ID_ComplaintList"))
+            jObject.put("ComplaintName",jsonObject3.getString("ComplaintName"))
+            jObject.put("Description", jsonObject2.getString("Description"))
+            jObject.put("isSelectedDelivery", jsonObject2.getString("isSelectedDelivery"))
+            jObject.put("SubMode", SubMode)
+
+
+            prodInformationArrayList2!!.put(positions, jObject)
+            Log.e(TAG, "ComplaintType checkkkkkkkkkkk       " + prodInformationArrayList2.toString())
+
+            Log.e(TAG, "ComplaintType dddddddd        " + position)
+            Log.e(TAG, "ComplaintType fffdddd         " + jObject)
+
+
+            val lLayout = GridLayoutManager(this@PickUpAndDeliveryUpdateActivity, 1)
+            recyProdInformation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapterHome = ProdInformationAdapter(this@PickUpAndDeliveryUpdateActivity, prodInformationArrayList2)
+            recyProdInformation!!.adapter = adapterHome
+            adapterHome.setClickListener(this@PickUpAndDeliveryUpdateActivity)
 
         }
 
@@ -2473,50 +3002,103 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             val jObject = JSONObject()
 
             Log.e(TAG, "mnmnmmnmnn  " + Productdetails)
+            if (SubMode!!.equals("1")) {
 
-            if (jsonObject5.getString("isSelected").equals("1")) {
+                if (jsonObject5.getString("isSelected").equals("1")) {
 //                if (IsSelected.equals("1")){
-                jObject.put("ID_Product", ProdsuitApplication.encryptStart(jsonObject.getString("ID_Product")))
-                jObject.put("ProvideStandBy", ProdsuitApplication.encryptStart(jsonObject.getString("ProvideStandBy")))
-                jObject.put("Quantity", ProdsuitApplication.encryptStart(jsonObject.getString("Quantity")))
-                jObject.put("FK_StandByProduct", ProdsuitApplication.encryptStart(jsonObject.getString("Product")))
-                jObject.put("StandByQuantity", ProdsuitApplication.encryptStart(jsonObject.getString("SPQuantity")))
-                jObject.put("StandByAmount", ProdsuitApplication.encryptStart(jsonObject.getString("SPAmount")))
-                for (i in 0 until prodDetailArrayList.length()) {
-                    var jsonObject1 = prodDetailArrayList.getJSONObject(i)
+                    jObject.put(
+                        "ID_Product",
+                        ProdsuitApplication.encryptStart(jsonObject.getString("ID_Product"))
+                    )
+                    jObject.put(
+                        "ProvideStandBy",
+                        ProdsuitApplication.encryptStart(jsonObject.getString("ProvideStandBy"))
+                    )
+                    jObject.put(
+                        "Quantity",
+                        ProdsuitApplication.encryptStart(jsonObject.getString("Quantity"))
+                    )
+                    jObject.put(
+                        "FK_StandByProduct",
+                        ProdsuitApplication.encryptStart(jsonObject.getString("Product"))
+                    )
+                    jObject.put(
+                        "StandByQuantity",
+                        ProdsuitApplication.encryptStart(jsonObject.getString("SPQuantity"))
+                    )
+                    jObject.put(
+                        "StandByAmount",
+                        ProdsuitApplication.encryptStart(jsonObject.getString("SPAmount"))
+                    )
+                    for (i in 0 until prodDetailArrayList.length()) {
+                        var jsonObject1 = prodDetailArrayList.getJSONObject(i)
 
 //                        Log.e(TAG, "vhevk1  " + jsonObject1.getString("ID_Product") + "  " + jsonObject.getString("ID_Product"))
 //                    Log.e(TAG, "vhevk2  " + )
 
-                    if (jsonObject.getString("ID_Product").equals(jsonObject1.getString("ID_Product"))) {
+                        if (jsonObject.getString("ID_Product")
+                                .equals(jsonObject1.getString("ID_Product"))
+                        ) {
 
-                        jObject.put("FK_EmployeeStock", ProdsuitApplication.encryptStart(jsonObject1.getString("ID_Product")))
-                    } else {
-                        jObject.put("FK_EmployeeStock", ("0"))
+                            jObject.put(
+                                "FK_EmployeeStock",
+                                ProdsuitApplication.encryptStart(jsonObject1.getString("ID_Product"))
+                            )
+                        } else {
+                            jObject.put("FK_EmployeeStock", ("0"))
+                        }
+
                     }
+                    Productdetails.put(jObject)
+
+                    Log.e(TAG, "1fffffffffffffffffffffffffffffff  " + Productdetails)
 
                 }
-                Productdetails.put(jObject)
 
-                Log.e(TAG, "1fffffffffffffffffffffffffffffff  " + Productdetails)
+                for (i in 0 until arrPayment.length()) {
+                    var jsonObject = arrPayment.getJSONObject(i)
+                    val jObject = JSONObject()
+                    jObject.put(
+                        "PaymentMethod",
+                        ProdsuitApplication.encryptStart(jsonObject.getString("MethodID"))
+                    )
+                    jObject.put(
+                        "PAmount",
+                        ProdsuitApplication.encryptStart(jsonObject.getString("Amount"))
+                    )
+                    jObject.put(
+                        "Refno",
+                        ProdsuitApplication.encryptStart(jsonObject.getString("RefNo"))
+                    )
 
+                    arrayPaymentmethod.put(jObject)
+
+                    Log.e(TAG, "1234561 arrayPaymentmethod  " + arrayPaymentmethod)
+                }
+
+                DeliveryComplaints = JSONArray()
+                saveUpdatePickUpAndDelivery()
+
+
+            }else if (SubMode!!.equals("2")){
+
+                Productdetails     = JSONArray()
+                arrayPaymentmethod = JSONArray()
+
+
+
+                jObject.put("FK_Product", ProdsuitApplication.encryptStart(jsonObject.getString("FK_Product")))
+                jObject.put("Qty", ProdsuitApplication.encryptStart(jsonObject.getString("ComplaintQty")))
+                jObject.put("ComplaintID", ProdsuitApplication.encryptStart(jsonObject.getString("ID_ComplaintList")))
+                jObject.put("Description", ProdsuitApplication.encryptStart(jsonObject.getString("Description")))
+                jObject.put("Priority", ProdsuitApplication.encryptStart(jsonObject.getString("ID_Priority")))
+
+                DeliveryComplaints.put(jObject)
+
+                Log.e(TAG, "1234561 DeliveryComplaints  " + DeliveryComplaints)
+
+                saveUpdatePickUpAndDelivery()
             }
-
-            for (i in 0 until arrPayment.length()) {
-                var jsonObject = arrPayment.getJSONObject(i)
-                val jObject = JSONObject()
-                jObject.put("PaymentMethod", ProdsuitApplication.encryptStart(jsonObject.getString("MethodID")))
-                jObject.put("PAmount", ProdsuitApplication.encryptStart(jsonObject.getString("Amount")))
-                jObject.put("Refno", ProdsuitApplication.encryptStart(jsonObject.getString("RefNo")))
-
-                arrayPaymentmethod.put(jObject)
-
-                Log.e(TAG, "1234561 arrayPaymentmethod  " + arrayPaymentmethod)
-            }
-
-            saveUpdatePickUpAndDelivery()
-
-
         }
     }
 
@@ -2551,22 +3133,14 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                 if (status_id.equals("")) {
                                     Config.snackBarWarning(context, view, "Please Select Status")
 
+                                } else if (jsonObject.getString("Product").equals("")) {
+                                    Config.snackBarWarning(context, view, "StandByProduct is emplty")
+
                                 } else if (jsonObject.getString("SPQuantity").equals("")) {
 
-                                    Config.snackBarWarning(
-                                        context,
-                                        view,
-                                        "StandByQuantity is emplty"
-                                    )
+                                    Config.snackBarWarning(context, view, "StandByQuantity is emplty")
 
-                                } else if (jsonObject.getString("Product").equals("")) {
-                                    Config.snackBarWarning(
-                                        context,
-                                        view,
-                                        "StandByProduct is emplty"
-                                    )
-
-                                } else if (jsonObject.getString("SPAmount").equals("0.00")) {
+                                } else if (jsonObject.getString("SPAmount").equals("")) {
                                     Config.snackBarWarning(context, view, "StandByAmount is emplty")
 
                                 } else if (FK_BillType!!.equals("")) {
@@ -2593,14 +3167,33 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                         if (prodInformationArrayList2.length() > 0) {
 
-                            if (jsonObject.getString("isSelected").equals("1")) {
+                            Log.e(TAG, "prodInformationArrayList2 1234  " +prodInformationArrayList2 )
+//                            if (jsonObject.getString("isSelected").equals("1")) {
+                            if (jsonObject.getString("isSelectedDelivery").equals("1")) {
 
-                                Log.e(TAG, "nnnnnnnnn  " + jsonObject.getString("isSelected"))
+                                Log.e(TAG, "nnnnnnnnn  " + jsonObject.getString("isSelectedDelivery"))
                                 if (status_id!!.equals("")) {
 
-                                    Log.e(TAG, "ssssssssss  " + status_id)
+                                    Log.e(TAG, "12  " + status_id)
                                     Config.snackBarWarning(context, view, "Please Select Status")
-                                } else {
+
+                                }else if (jsonObject.getString("ID_Priority").equals("")){
+
+                                    Log.e(TAG, "123  " + jsonObject.getString("ID_Priority"))
+                                    Config.snackBarWarning(context, view, "Please Select Priority")
+
+                                }else if (jsonObject.getString("ComplaintQty").equals("")){
+
+                                    Log.e(TAG, "1234  " + jsonObject.getString("ComplaintQty"))
+                                    Config.snackBarWarning(context, view, "Please Enter Complaint Qty")
+
+                                }else if (jsonObject.getString("ID_ComplaintList").equals("")){
+
+                                    Log.e(TAG, "1234  " + jsonObject.getString("ID_ComplaintList"))
+                                    Config.snackBarWarning(context, view, "Please Select Complaint Type")
+                                }
+
+                                else {
                                     Log.e(TAG, "bfbbfbbffb  " + status_id)
                                     passvalue()
 
@@ -2624,7 +3217,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             } else {
                 validatestatus(view)
             }
-        }catch (e: Exception) {
+        }
+        catch (e: Exception) {
             Log.e(TAG, "uuuuuuu  " + e.toString())
         }
 //            Log.e(TAG, "5555555555555  " + jsonObject5.getString("ProvideStandBy"))

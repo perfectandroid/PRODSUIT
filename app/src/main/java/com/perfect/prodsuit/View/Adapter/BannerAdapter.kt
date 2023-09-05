@@ -32,6 +32,7 @@ class BannerAdapter(private val context: Context, mResources: List<String>) : Pa
         val IMAGE_URLSP = context.getSharedPreferences(Config.SHARED_PREF29, 0)
         var IMAGE_URL   = IMAGE_URLSP.getString("IMAGE_URL", null)
         Log.e("TAG","310  "+mResources.get(position))
+        Log.e("TAG","310112  "+IMAGE_URL+""+mResources.get(position))
         PicassoTrustAll.getInstance(context)!!.load(IMAGE_URL+""+mResources.get(position)).into(imageView)
         container.addView(itemView)
         return itemView

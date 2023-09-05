@@ -27,6 +27,9 @@ android {
     defaultConfig {
 //        applicationId "com.perfect.prodsuit"
 //        applicationId "com.mscore.calicuttownbank"
+//        applicationId "com.perfect.prodsuite"
+//        applicationId "com.perfect.sheetal"
+//        applicationId "com.perfect.prodsuite_demo"
 //        applicationId "com.perfect.prodsuite"  // upload
         applicationId "com.perfect.sheetal"
         minSdkVersion 26

@@ -33,7 +33,7 @@ class ProductPriorityAdapter(internal var context: Context, internal var jsonArr
         try {
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-                Log.e(TAG,"onBindViewHolder   1051   ")
+                Log.e(TAG,"onBindViewHolder   111224455   "+position)
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtpriority.text        = jsonObject!!.getString("PriorityName")

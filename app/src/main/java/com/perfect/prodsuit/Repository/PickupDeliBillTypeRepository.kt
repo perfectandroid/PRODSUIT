@@ -9,7 +9,6 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.PickDeliveryListModel
 import com.perfect.prodsuit.Model.PickupDeliBillTypeModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
@@ -79,7 +78,7 @@ object PickupDeliBillTypeRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getPickupDeliveryBillTyep(body)
+            val call = apiService.getPickupDeliveryBillType(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:

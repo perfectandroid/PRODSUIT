@@ -1970,12 +1970,19 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 
                 if (clickMode!!.equals("1")) {
-                    var hasId = hasMultipleProduct(editProdcutListarray, ID_Category!!, ID_Product!!)
-                    Log.e(TAG,"has id "+ hasId)
-                    if (hasId){
-                        addMultipleProduct()
+
+                    if (arrupdateedit!!.equals("0")) {
+
+                        var hasId =
+                            hasMultipleProduct(editProdcutListarray, ID_Category!!, ID_Product!!)
+                        Log.e(TAG, "has id " + hasId)
+                        if (hasId) {
+                            addMultipleProduct()
+                        } else {
+                            Config.snackBars(context, v, "Duplicate Product")
+                        }
                     }else{
-                        Config.snackBars(context, v, "Duplicate Product")
+                        addMultipleProduct()
                     }
 
                 } else {
@@ -6447,6 +6454,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             val btnNo = view.findViewById<Button>(R.id.btn_No)
             val btnYes = view.findViewById<Button>(R.id.btn_Yes)
+            val textid1 = view.findViewById<TextView>(R.id.textid1)
+
+            textid1!!.setText("Do you want to delete this product?")
 
             btnNo.setOnClickListener {
                 dialog .dismiss()
@@ -6756,6 +6766,16 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             if (ID_Status.equals("1")) {
                 llfollowup!!.visibility = View.VISIBLE
+
+                val sdf = SimpleDateFormat("dd-MM-yyyy")
+                val currentDate = sdf.format(Date())
+                edtFollowdate!!.setText(currentDate)
+
+                val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+                val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+                val currentDateFormate = inputFormat.parse(currentDate)
+                strFollowupdate = outputFormat.format(currentDateFormate)
+
             } else {
                 llfollowup!!.visibility = View.GONE
             }
@@ -8782,20 +8802,15 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 //    private fun multipleProductValidation(v: View) {
 
-        val sdf = SimpleDateFormat("dd-MM-yyyy")
-        val currentDate = sdf.format(Date())
-        edtFollowdate!!.setText(currentDate)
 
-        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
-        val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-        val currentDateFormate = inputFormat.parse(currentDate)
-        strFollowupdate = outputFormat.format(currentDateFormate)
-
+        Log.e(TAG, " strFollowupdate     121   " + strFollowupdate)
 
         clickMode = "0"
 //        val sdf = SimpleDateFormat("dd-MM-yyyy")
 //        val currentDate = sdf.format(Date())
 //        edtFollowdate!!.setText(currentDate)
+
+
 
 //        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
 //        ID_CollectedBy = FK_EmployeeSP.getString("FK_Employee", null)
@@ -8816,7 +8831,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         strProject = edtProjectName!!.text.toString()
         strFeedback = edtProdfeedback!!.text.toString()
         stramount = edtAmount!!.text.toString()
+        strFollowupdate = edtFollowdate!!.text.toString()
 
+        Log.e(TAG, " strFollowupdate        " +strFollowupdate)
 
         Log.e(TAG, "   stramount        " + stramount + "===" + MRRP)
 
@@ -8934,7 +8951,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             jObject.put("LgpPQuantity", strQty)
             jObject.put("NxtActnName", edtFollowaction!!.text.toString())
             jObject.put("ActionTypeName", edtFollowtype!!.text.toString())
-            jObject.put("NextActionDate", edtFollowdate!!.text.toString())
+            jObject.put("NextActionDate", strFollowupdate)
             jObject.put("AssignEmp", edtEmployee!!.text.toString())
             jObject.put("ID_Category", ID_Category)
             jObject.put("ID_Product", ID_Product)
@@ -8951,6 +8968,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             Log.e(TAG,"eeeeeeeeeee3=  "+ ID_Category)
             Log.e(TAG,"eeeeeeeeeee4=  "+ ID_Product)
+            Log.e(TAG,"eeeeeeeeeee5=  "+ strFollowupdate)
             editProdcutListarray!!.put(jObject)
 
         }
@@ -8967,7 +8985,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             jObject.put("LgpPQuantity", strQty)
             jObject.put("NxtActnName", edtFollowaction!!.text.toString())
             jObject.put("ActionTypeName", edtFollowtype!!.text.toString())
-            jObject.put("NextActionDate", edtFollowdate!!.text.toString())
+            jObject.put("NextActionDate", strFollowupdate)
             jObject.put("AssignEmp", edtEmployee!!.text.toString())
             jObject.put("ID_Category", ID_Category)
             jObject.put("FK_Employee", ID_Employee)
@@ -8982,6 +9000,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             jObject.put("ID_CollectedBy", ID_CollectedBy)
             jObject.put("LgCollectedBy", ID_CollectedBy)
 
+            Log.e(TAG,"eeeeeeeeeee8=  "+ strFollowupdate)
             arrupdateedit = "0"
         }
 
@@ -8995,7 +9014,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         edtFollowaction!!.setText("")
         edtFollowtype!!.setText("")
         tv_Mrp!!.setText("")
-//        edtFollowdate!!.setText("")
+        edtFollowdate!!.setText("")
 //        edtEmployee!!.setText("")
         edtAmount!!.setText("")
 
@@ -9008,8 +9027,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         ID_NextAction = ""
         ID_ActionType = ""
         ID_Priority = ""
+        strFollowupdate = ""
         hideViews()
-
 
 
         if (editProdcutListarray!!.length() > 0) {
@@ -9065,6 +9084,12 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             val jObject = JSONObject()
             Log.e(TAG, "strQty 1     112299  " + strQty)
 
+            val strrfollowup = jsonObject.getString("NextActionDate")
+            val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+            val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val currentDateFormate = inputFormat.parse(strrfollowup)
+            val folloupdate = outputFormat.format(currentDateFormate)
+
             if (jsonObject.getString("ID_Product")!!.equals("")) {
 
                 jObject.put("FK_Category", (jsonObject.getString("ID_Category")))
@@ -9080,7 +9105,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 jObject.put("ActStatus", (jsonObject.getString("ID_Status")))
                 jObject.put("FK_NetAction", (jsonObject.getString("ID_NextAction")))
                 jObject.put("FK_ActionType", (jsonObject.getString("ID_ActionType")))
-                jObject.put("NextActionDate", strFollowupdate)
+                jObject.put("NextActionDate", folloupdate)
 
                 jObject.put("LgpExpectDate", strExpecteddate)
                 jObject.put("LgpMRP", ("0"))
@@ -9109,7 +9134,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 jObject.put("ActStatus", (jsonObject.getString("ID_Status")))
                 jObject.put("FK_NetAction", (jsonObject.getString("ID_NextAction")))
                 jObject.put("FK_ActionType", (jsonObject.getString("ID_ActionType")))
-                jObject.put("NextActionDate", strFollowupdate)
+                jObject.put("NextActionDate", folloupdate)
 
                 jObject.put("LgpExpectDate", strExpecteddate)
                 jObject.put("LgpMRP", (jsonObject.getString("MRP")))

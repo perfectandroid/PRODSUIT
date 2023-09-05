@@ -137,6 +137,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     lateinit var followUpActionArrayList : JSONArray
     lateinit var followUpActionSort : JSONArray
     private var dialogFollowupAction : Dialog? = null
+    private var check_product : CheckBox? = null
     var recyFollowupAction: RecyclerView? = null
 
     lateinit var productPriorityViewModel: ProductPriorityViewModel
@@ -197,6 +198,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     var strCustomerRemark = ""
     var strEmployeeRemark = ""
     var strNextFollowUpDate = ""
+    var ForAllProduct = "0"
 
 
 
@@ -369,6 +371,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         til_CallDuration            = findViewById(R.id.til_CallDuration) as TextInputLayout
         ll_location                 = findViewById(R.id.ll_location) as LinearLayout
         ll_images                   = findViewById(R.id.ll_images) as LinearLayout
+        check_product               = findViewById(R.id.check_product) as CheckBox
 
 
         tie_CallTime             = findViewById(R.id.tie_CallTime) as TextInputEditText
@@ -415,6 +418,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         tie_Longitude!!.setOnClickListener(this)
         imgv_upload1!!.setOnClickListener(this)
         imgv_upload2!!.setOnClickListener(this)
+        check_product!!.setOnClickListener(this)
 
 
         btnReset!!.setOnClickListener(this)
@@ -570,6 +574,15 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
             }
 
+            R.id.check_product->{
+
+                if (check_product!!.isChecked){
+                    ForAllProduct = "1"
+                }else{
+                    ForAllProduct = "0"
+                }
+                Log.e(TAG,"ForAllProduct  1121 "+ForAllProduct)
+            }
 
 
 
@@ -2968,8 +2981,6 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
     private fun saveUpdate() {
 
-
-
         Log.e(TAG,"FOLLOWUP  25981 "
                 +"\n ID_LeadGenerateProduct :  "+ID_LeadGenerateProduct
                 +"\n ID_LeadGenerate        :  "+ID_LeadGenerate
@@ -2998,7 +3009,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
         saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,strFollowUpTime,
             strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
-            strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
+            strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2,ForAllProduct)
 
 
 
@@ -3008,7 +3019,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     private fun saveUpdateLeadManagement(ID_LeadGenerateProduct: String?, ID_LeadGenerate: String?, ID_ActionType: String?, ID_Employee: String?,
         ID_Status: String?, strFollowUpDate: String,strFollowUpTime : String, strCustomerRemark: String, strEmployeeRemark: String, ID_NextAction: String?, ID_NextActionType: String?,
         strNextFollowUpDate: String, ID_Priority: String?, ID_Department: String?, ID_NextEmployee: String?,
-                                         strCallStatus: String?,strCallDuration: String?,strLatitude: String?,strLongitude: String?,encode1: String?,encode2: String?) {
+                                         strCallStatus: String?,strCallDuration: String?,strLatitude: String?,strLongitude: String?,encode1: String?,encode2: String?,ForAllProduct: String?) {
 
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -3020,7 +3031,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 progressDialog!!.show()
                 updateLeadManagementViewModel.getUpdateLeadManagement(this,ID_LeadGenerateProduct!!,ID_LeadGenerate!!,ID_ActionType!!,ID_Employee!!,ID_Status!!,strFollowUpDate,
                     strFollowUpTime, strCustomerRemark,strEmployeeRemark,ID_NextAction!!,ID_NextActionType!!,strNextFollowUpDate,ID_Priority!!,ID_Department!!,ID_NextEmployee!!,
-                    strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)!!.observe(
+                    strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2,ForAllProduct!!)!!.observe(
                     this,
                     Observer { deleteleadSetterGetter ->
                         val msg = deleteleadSetterGetter.message

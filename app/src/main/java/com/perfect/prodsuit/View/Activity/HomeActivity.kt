@@ -143,6 +143,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private var ll_leads: LinearLayout? = null
     private var ll_service: LinearLayout? = null
     private var ll_collection: LinearLayout? = null
+//    private var llcompany_name1: LinearLayout? = null
 
     private var im_leads: ImageView? = null
     private var im_service: ImageView? = null
@@ -612,6 +613,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
         img_techpartner= findViewById(R.id.img_techpartner)
         img_logo= findViewById(R.id.img_logo)
+//        llcompany_name1= findViewById(R.id.llcompany_name1)
 
         val headerView: View = nav_view!!.getHeaderView(0)
         tv_navName = headerView!!.findViewById(R.id.tv_navName)
@@ -633,6 +635,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         ll_report!!.setOnClickListener(this)
         rlnotification!!.setOnClickListener(this)
         imgAttendance!!.setOnClickListener(this)
+//        llcompany_name1!!.setOnClickListener(this)
       //  txtv_notfcount!!.setOnClickListener(this)
 
         ll_leads = findViewById(R.id.ll_leads)
@@ -794,8 +797,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                val intent = Intent(this, ProductSearchActivity::class.java)
 //                startActivity(intent)
 //
-//                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
-//                startActivity(i)
+                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
+                startActivity(i)
 
 
 //                val i = Intent(this@HomeActivity, StockTransferActivity::class.java)
@@ -805,6 +808,10 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                startActivity(i)
 
             }
+//            R.id.llcompany_name1 -> {
+//                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
+//                startActivity(i)
+//            }
 
             R.id.ll_leads -> {
                 val i = Intent(this@HomeActivity, LeadActivity::class.java)
