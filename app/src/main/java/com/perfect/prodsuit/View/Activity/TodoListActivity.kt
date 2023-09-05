@@ -54,10 +54,12 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     private var progressDialog: ProgressDialog? = null
     private var tv_listCount: TextView?          = null
     lateinit var context: Context
+    internal var tv_header: TextView? = null
     lateinit var todolistViewModel: TodoListViewModel
     private var rv_todolist: RecyclerView?=null
     lateinit var todoArrayList : JSONArray
     private var SubMode:String?=""
+    private var headerTitle:String?=""
     private var ID_Employee:String? = ""
     private var emp_name:String? = ""
     private var UserName:String? = ""
@@ -154,6 +156,12 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
             ID_Employee = intent.getStringExtra("ID_Employee")
             Log.e(TAG,"7777777    "+ID_Employee)
         }
+
+        if (getIntent().hasExtra("headerTitle")) {
+            headerTitle = intent.getStringExtra("headerTitle")
+            tv_header!!.setText(headerTitle)
+        }
+
         if (getIntent().hasExtra("EmpName")) {
             emp_name = intent.getStringExtra("EmpName")
             Log.e(TAG,"7777777    "+emp_name)
@@ -193,6 +201,8 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
         var criteria = ""
     }
     private fun setRegViews() {
+
+        tv_header = findViewById(R.id.tv_header)
         rv_todolist = findViewById(R.id.rv_todolist)
         val imback = findViewById<ImageView>(R.id.imback)
 

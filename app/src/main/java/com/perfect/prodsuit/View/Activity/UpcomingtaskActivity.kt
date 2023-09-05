@@ -53,10 +53,12 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     val TAG : String = "UpcomingtaskActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
+    internal var tv_header: TextView? = null
     lateinit var upcomingtaskslistViewModel: UpcomingtasksListViewModel
     private var rv_upcmngtasklist: RecyclerView?=null
     lateinit var upcmngtaskArrayList : JSONArray
     private var SubMode:String?=""
+    private var headerTitle:String?=""
     private var UserName:String? = ""
     var SendMailCount = 0
     internal var yr: Int =0
@@ -144,6 +146,10 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         if (getIntent().hasExtra("SubMode")) {
             SubMode = intent.getStringExtra("SubMode")
         }
+        if (getIntent().hasExtra("headerTitle")) {
+            headerTitle = intent.getStringExtra("headerTitle")
+            tv_header!!.setText(headerTitle)
+        }
         if (getIntent().hasExtra("ID_Employee")) {
             ID_Employee = intent.getStringExtra("ID_Employee")
             Log.e(TAG,"44444    "+ID_Employee)
@@ -180,6 +186,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         var criteria = ""
     }
     private fun setRegViews() {
+        tv_header = findViewById(R.id.tv_header)
         rv_upcmngtasklist = findViewById(R.id.rv_upcmngtasklist)
         val imback = findViewById<ImageView>(R.id.imback)
         val imgv_filter= findViewById<ImageView>(R.id.imgv_filter)

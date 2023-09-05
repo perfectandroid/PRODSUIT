@@ -90,7 +90,9 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_marking_new.xml" value="0.21041666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_picker.xml" value="0.26944444444444443" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_login.xml" value="0.22" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_mylead.xml" value="0.2574074074074074" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_notification.xml" value="0.30520833333333336" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_overdue.xml" value="0.2574074074074074" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_product_enquiry_detail.xml" value="0.17742908871454435" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_product_search.xml" value="0.30462962962962964" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_project.xml" value="0.24479166666666666" />
@@ -107,6 +109,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_rtlist.xml" value="0.22" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_transfer.xml" value="0.22" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_todolist.xml" value="0.26944444444444443" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_upcomingtask.xml" value="0.2574074074074074" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_approe_list.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_approve.xml" value="0.24583333333333332" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_approve1.xml" value="0.33" />
