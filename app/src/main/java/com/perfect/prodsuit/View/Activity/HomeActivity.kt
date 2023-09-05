@@ -1522,6 +1522,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 Config.Utils.hideSoftKeyBoard(this, it)
                 addEvent(yr, month, day, hr, min, etdis!!.text.toString(), " Reminder",dateShow,timeShow)
                 alertDialog.dismiss()
+                chipNavigationBar!!.setItemSelected(R.id.home, true)
             }
             alertDialog.setCancelable(false)
             alertDialog.show()
