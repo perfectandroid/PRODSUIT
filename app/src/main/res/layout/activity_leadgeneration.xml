@@ -1672,6 +1672,27 @@
                                                     android:textSize="15dp"
                                                     android:visibility="gone"/>
 
+                                                <EditText
+                                                    android:id="@+id/edtFloor"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_toLeftOf="@+id/img_search"
+                                                    android:drawableRight="@drawable/arrowright"
+                                                    android:drawableLeft="@drawable/floor"
+                                                    android:drawableTint="@color/greydark"
+                                                    android:editable="false"
+                                                    android:background="@drawable/shape_bg"
+                                                    android:focusableInTouchMode="false"
+                                                    android:drawablePadding="5dp"
+                                                    android:hint="Floor"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:padding="7dp"
+                                                    android:layout_marginTop="10dp"
+                                                    android:singleLine="true"
+                                                    android:text=""
+                                                    android:textSize="15dp"
+                                                    android:visibility="visible"/>
+
 
                                                 <EditText
                                                     android:id="@+id/edtProdfeedback"

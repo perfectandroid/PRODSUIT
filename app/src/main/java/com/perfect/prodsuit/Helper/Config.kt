@@ -919,11 +919,19 @@ object Config {
 
             obj = JSONObject()
             obj.put("grid_id", "3")
-            obj.put("grid_name", "Notification")
-           // obj.put("image",context.resources.getDrawable(R.drawable.agntremrk) )
+            obj.put("grid_name", "Authorization")
+            // obj.put("image",context.resources.getDrawable(R.drawable.agntremrk) )
             obj.put("image","home_notification")
             obj.put("count","0")
             array.put(obj)
+
+//            obj = JSONObject()
+//            obj.put("grid_id", "3")
+//            obj.put("grid_name", "Notification")
+//           // obj.put("image",context.resources.getDrawable(R.drawable.agntremrk) )
+//            obj.put("image","home_notification")
+//            obj.put("count","0")
+//            array.put(obj)
 
 //            obj = JSONObject()
 //            obj.put("grid_id", "3")

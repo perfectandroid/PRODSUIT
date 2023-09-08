@@ -499,7 +499,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                     notificationCount = count
                                     val jsonObject = homeArraySort.getJSONObject(2)
                                     jsonObject.put("count",notificationCount)
-                                    recyHomegrid!!.adapter!!.notifyItemChanged(2)
+                             //       recyHomegrid!!.adapter!!.notifyItemChanged(2)
 
 //                                    adapterHome = HomeGridAdapter(this@HomeActivity, homeArraySort,notificationCount!!)
 //                                    recyHomegrid!!.adapter!!.notifyDataSetChanged()

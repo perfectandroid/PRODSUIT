@@ -58,6 +58,9 @@ interface ApiInterface {
     @POST("PickUpDelivery/BillType")
     fun getPickupDeliveryBillType(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/ProductLocationList")
+    fun getFloorProductLocationList(@Body body: RequestBody): Call<String>
+
     @POST("PickUpDelivery/PickUpDeliveryDetails")
     fun getDeliveryListDetails(@Body body: RequestBody): Call<String>
 

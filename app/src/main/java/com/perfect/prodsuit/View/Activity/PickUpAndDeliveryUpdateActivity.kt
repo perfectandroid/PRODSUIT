@@ -1454,7 +1454,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                 if (prodPriorityArrayList.length()>0){
                                     if (prodpriority == 0){
                                         prodpriority++
-                                        productPriorityPopup(prodPriorityArrayList)
+                                            productPriorityPopup(prodPriorityArrayList)
                                     }
 
                                 }
