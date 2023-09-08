@@ -2055,27 +2055,57 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             edtFollowaction!!.setText(jsonObject.getString("NxtActnName"))
 
             ID_Status = jsonObject.getString("Status")
-            Log.e(TAG, "Status   " + jsonObject.getString("Status"))
+            Log.e(TAG, "Status  11111 " + jsonObject.getString("Status"))
             // edtProdstatus!!.setText(jsonObject.getString("StatusName"))
 
 
             edtFollowtype!!.setText("")
             ID_ActionType = ""
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            val currentDate = sdf.format(Date())
 
             if (ID_Status.equals("1")) {
                 llfollowup!!.visibility = View.VISIBLE
 
-                val sdf = SimpleDateFormat("dd-MM-yyyy")
-                val currentDate = sdf.format(Date())
+
                 edtFollowdate!!.setText(currentDate)
+
+
 
                 val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
                 val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
                 val currentDateFormate = outputFormat.parse(currentDate)
-                strFollowupdate = outputFormat.format(currentDateFormate)
+               // strFollowupdate = outputFormat.format(currentDateFormate)
+              //  strFollowupdate = currentDateFormate.toString()
+
+                Log.e(TAG,"currentDate  11111111  "+currentDate)
+                Log.e(TAG,"currentDateFormate  11111111  "+currentDateFormate)
+                Log.e(TAG,"currentDateFormate  11111112  "+outputFormat.format(currentDateFormate))
+
+                val inputDateFormat = "dd-MM-yyyy"
+                val outputDateFormat = "yyyy-MM-dd"
+
+                val formattedDate = changeDateFormat(currentDate, inputDateFormat, outputDateFormat)
+                Log.e(TAG,"currentDate  11111111  "+formattedDate)
+                strFollowupdate = formattedDate
+
+//                val inputDate = "2023-09-08" // Your input date string
+//                val inputDateFormat = "yyyy-MM-dd" // The format of your input date
+//                val outputDateFormat = "dd MMM yyyy" // The format you want to change it to
+
+//                val formattedDate = changeDateFormat(inputDate, inputDateFormat, outputDateFormat)
+//                Log.e(TAG,"currentDate  11111111  "+formattedDate)
+
 
             } else {
                 llfollowup!!.visibility = View.GONE
+                val inputDateFormat = "dd-MM-yyyy"
+                val outputDateFormat = "yyyy-MM-dd"
+
+                val formattedDate = changeDateFormat(currentDate, inputDateFormat, outputDateFormat)
+                Log.e(TAG,"currentDate  11111111  "+formattedDate)
+                strFollowupdate = formattedDate
+
             }
 
 
@@ -2144,6 +2174,18 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
     }
 
+    fun changeDateFormat(inputDate: String, inputFormat: String, outputFormat: String): String {
+        try {
+            val inputDateFormat = SimpleDateFormat(inputFormat, Locale.getDefault())
+            val outputDateFormat = SimpleDateFormat(outputFormat, Locale.getDefault())
+            val date = inputDateFormat.parse(inputDate)
+            return outputDateFormat.format(date)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return ""
+        }
+    }
+
     private fun MoreValidations(v: View) {
 
         Log.e(
@@ -2171,6 +2213,12 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
         MRRP = tv_Mrp!!.text.toString()
         strQty = edtProdqty!!.text.toString()
+        var fQty = 0
+        if (strQty.equals("")){
+            fQty = 0
+        }else{
+            fQty = strQty.toInt()
+        }
         stramount = edtAmount!!.text.toString()
         if (MRRP!!.equals("")) {
             MRRP = "0"
@@ -2204,7 +2252,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             }
 
         }
-        else if (strQty.equals("")) {
+        else if (strQty.equals("") || fQty == 0) {
             if (CompanyCategory.equals("0") || CompanyCategory.equals("1")) {
                 Config.snackBars(context, v, "Enter Quantity")
             } else if (CompanyCategory.equals("2")) {
@@ -2682,7 +2730,16 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
         val currentDateFormate = inputFormat.parse(currentDate)
         strDate = outputFormat.format(currentDateFormate)
-        strFollowupdate = outputFormat.format(currentDateFormate)
+      //  strFollowupdate = outputFormat.format(currentDateFormate)
+
+        val inputDateFormat = "dd-MM-yyyy"
+        val outputDateFormat = "yyyy-MM-dd"
+
+        val formattedDate = changeDateFormat(currentDate, inputDateFormat, outputDateFormat)
+        Log.e(TAG,"currentDate  11111111  "+formattedDate)
+        strFollowupdate = formattedDate
+
+
         strExpecteddate = ""
 
         btnSubmit!!.setText("Submit")
