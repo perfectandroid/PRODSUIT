@@ -544,5 +544,8 @@ interface ApiInterface {
     @POST("Stock/GetStockRequestListInTransfer")
     fun getStockRequestListInTransfer(@Body body: RequestBody): Call<String>
 
+    @POST("Authorization/AuthorizationCorrection")
+    fun getAuthorizationCorrection(@Body body: RequestBody): Call<String>
+
 
 }

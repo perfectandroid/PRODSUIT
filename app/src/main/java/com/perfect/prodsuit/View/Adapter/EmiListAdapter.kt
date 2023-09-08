@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
@@ -55,8 +56,8 @@ class EmiListAdapter (internal var context: Context, internal var jsonArray: JSO
                 holder.tv_Finance_Plan.text        = jsonObject!!.getString("FinancePlan")
                 holder.tv_Next_EMI.text        = jsonObject!!.getString("NextEMIDate")
                 holder.tv_Due_Date.text        = jsonObject!!.getString("DueDate")
-                holder.tv_DueAmount.text        = jsonObject!!.getString("DueAmount")
-                holder.tv_Balance.text        = jsonObject!!.getString("Balance")
+                holder.tv_DueAmount.text        = Config.changeTwoDecimel(jsonObject!!.getString("DueAmount"))
+                holder.tv_Balance.text        = Config.changeTwoDecimel(jsonObject!!.getString("Balance"))
                 holder.tv_Area.text        = jsonObject!!.getString("Area")
 
 

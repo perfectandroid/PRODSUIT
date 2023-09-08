@@ -54,10 +54,12 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     private var progressDialog: ProgressDialog? = null
     private var tv_listCount: TextView?          = null
     lateinit var context: Context
+    internal var tv_header: TextView? = null
     lateinit var overduelistViewModel: OverDueListViewModel
     private var rv_overduelist: RecyclerView?=null
     lateinit var overdueArrayList : JSONArray
     private var SubMode:String?=""
+    private var headerTitle:String?=""
     private var UserName:String? = ""
     internal var yr: Int =0
     internal var month:Int = 0
@@ -145,6 +147,10 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         if (getIntent().hasExtra("SubMode")) {
             SubMode = intent.getStringExtra("SubMode")
         }
+        if (getIntent().hasExtra("headerTitle")) {
+            headerTitle = intent.getStringExtra("headerTitle")
+            tv_header!!.setText(headerTitle)
+        }
         if (getIntent().hasExtra("ID_Employee")) {
             ID_Employee = intent.getStringExtra("ID_Employee")
             Log.e(TAG,"44444    "+ID_Employee)
@@ -181,6 +187,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         var submode = "2"
     }
         private fun setRegViews() {
+            tv_header = findViewById(R.id.tv_header)
         rv_overduelist = findViewById(R.id.rv_overduelist)
            val imback = findViewById<ImageView>(R.id.imback)
            val imgv_filter= findViewById<ImageView>(R.id.imgv_filter)

@@ -819,6 +819,7 @@
                                         android:orientation="horizontal">
 
                                         <TextView
+                                            android:id="@+id/tv_today"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="20dp"
@@ -928,6 +929,7 @@
 
 
                                         <TextView
+                                            android:id="@+id/tv_pending"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="20dp"
@@ -1037,6 +1039,7 @@
                                         <!--                                    android:background="@drawable/svg_service_followup"-->
 
                                         <TextView
+                                            android:id="@+id/tv_upcoming"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="20dp"
@@ -1146,6 +1149,7 @@
                                         <!--                                    android:background="@drawable/svg_service_followup"-->
 
                                         <TextView
+                                            android:id="@+id/tv_mylead"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="20dp"

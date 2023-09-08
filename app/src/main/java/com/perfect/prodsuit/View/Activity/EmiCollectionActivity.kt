@@ -617,11 +617,11 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                                         if (emiAccountDetailsArrayList.length() > 0) {
                                             val jsonObject1 = emiAccountDetailsArrayList.getJSONObject(0)
 
-                                            strBalance = jsonObject1.getString("Balance")
-                                            strBalanceTemp = jsonObject1.getString("Balance")
-                                            strInsAmountTemp = jsonObject1.getString("Amount")
-                                            edtInsAmount!!.setText(jsonObject1.getString("Amount"))
-                                            edtFine!!.setText(jsonObject1.getString("Fine"))
+                                            strBalance = Config.changeTwoDecimel(jsonObject1.getString("Balance"))
+                                            strBalanceTemp = Config.changeTwoDecimel(jsonObject1.getString("Balance"))
+                                            strInsAmountTemp = Config.changeTwoDecimel(jsonObject1.getString("Amount"))
+                                            edtInsAmount!!.setText(Config.changeTwoDecimel(jsonObject1.getString("Amount")))
+                                            edtFine!!.setText(Config.changeTwoDecimel(jsonObject1.getString("Fine")))
                                         }
 
 

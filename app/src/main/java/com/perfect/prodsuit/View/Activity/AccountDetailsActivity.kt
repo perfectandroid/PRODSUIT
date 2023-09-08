@@ -2185,8 +2185,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         txtInfoCollectedBy1.setText(jsonObject1.getString("CollectedBy"))
                                         txtInfoAssigned1.setText(jsonObject1.getString("AssignedTo"))
                                         txtInfoNextActionDate1.setText(jsonObject1.getString("TargetDate"))
-                                        txtInfoMrp!!.setText(jsonObject1.getString("LgpMRP"))
-                                        txtInfoOfferprice!!.setText(jsonObject1.getString("LgpSalesPrice"))
+                                        txtInfoMrp!!.setText(Config.changeTwoDecimel(jsonObject1.getString("LgpMRP")))
+                                        txtInfoOfferprice!!.setText(Config.changeTwoDecimel(jsonObject1.getString("LgpSalesPrice")))
 
 
 

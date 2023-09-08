@@ -86,8 +86,8 @@ class ProductSimilarAdapter (internal var context: Context, internal var jsonArr
                     holder.ll_product_list.visibility = View.GONE
                     holder.txtHeadProdct!!.setText(strName)
                     holder.txtHeadProdctDesc!!.text = jsonObj!!.getString("ProductDescription")
-                    holder.txtHeadProdct_mrp!!.setText(strMRP)
-                    holder.txtHeadProdct_sales!!.setText(strSalPrice)
+                    holder.txtHeadProdct_mrp!!.setText(Config.changeTwoDecimel(strMRP))
+                    holder.txtHeadProdct_sales!!.setText(Config.changeTwoDecimel(strSalPrice))
                     holder.txtHeadProdct_mrp!!.setPaintFlags(holder.txtHeadProdct_mrp!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
 
                     if (strCurQty.equals("")){
@@ -97,7 +97,7 @@ class ProductSimilarAdapter (internal var context: Context, internal var jsonArr
                         if (fQty <= 0){
                             holder.txtHeadProdct_qty!!.text ="Out of Stock"
                         }else{
-                            holder.txtHeadProdct_qty!!.text ="Only "+strCurQty+" left"
+                            holder.txtHeadProdct_qty!!.text ="Only "+Config.changeTwoDecimel(strCurQty)+" left"
                         }
                     }
                     if (jresult!!.length()>0){
@@ -170,8 +170,8 @@ class ProductSimilarAdapter (internal var context: Context, internal var jsonArr
                     jsonObject = jsonArray.getJSONObject(pos)
 
                     holder.txtProdct.text        = jsonObject!!.getString("Name")
-                    holder.txtProdct_mrp.text        = "₹ "+jsonObject!!.getString("MRP")
-                    holder.txtProdct_sales.text        = "₹ "+jsonObject!!.getString("SalPrice")
+                    holder.txtProdct_mrp.text        = "₹ "+Config.changeTwoDecimel(jsonObject!!.getString("MRP"))
+                    holder.txtProdct_sales.text        = "₹ "+Config.changeTwoDecimel(jsonObject!!.getString("SalPrice"))
                     holder.txtProdct_mrp!!.setPaintFlags(holder.txtProdct_mrp!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
 
                     if (jsonObject!!.getString("CurrentQuantity").equals("")){
@@ -181,7 +181,7 @@ class ProductSimilarAdapter (internal var context: Context, internal var jsonArr
                         if (fQty <= 0){
                             holder.txtProdct_qty.text ="Out of Stock"
                         }else{
-                            holder.txtProdct_qty.text ="Only "+jsonObject!!.getString("CurrentQuantity")+" left"
+                            holder.txtProdct_qty.text ="Only "+Config.changeTwoDecimel(jsonObject!!.getString("CurrentQuantity"))+" left"
                         }
                     }
 

@@ -36,6 +36,7 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
     internal var ettime: EditText? = null
     internal var etdis: EditText? = null
     internal var view_height: View? = null
+    internal var view_height1: View? = null
     internal var yr: Int =0
     internal var month:Int = 0
     internal var day:Int = 0
@@ -48,6 +49,7 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
     private var mMinute:Int = 0
     private var cardwalking: CardView? = null
     private var chipNavigationBar: ChipNavigationBar? = null
+    private var llquicklead: LinearLayout? = null
     private var llleadgeneration: LinearLayout? = null
     private var llleadmanagement: LinearLayout? = null
     private var llwalking: LinearLayout? = null
@@ -72,8 +74,11 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
         view_height = findViewById<View>(R.id.view_height)
+        view_height1 = findViewById<View>(R.id.view_height1)
         cardwalking = findViewById<CardView>(R.id.cardwalking)
+        llquicklead = findViewById<LinearLayout>(R.id.llquicklead)
         llleadgeneration = findViewById<LinearLayout>(R.id.llleadgeneration)
+        llquicklead!!.setOnClickListener(this)
         llleadgeneration!!.setOnClickListener(this)
         llleadmanagement = findViewById<LinearLayout>(R.id.llleadmanagement)
         llleadmanagement!!.setOnClickListener(this)
@@ -86,6 +91,11 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
             R.id.imback->{
                 finish()
             }
+            R.id.llquicklead->{
+                val i = Intent(this@LeadActivity, LeadGenerationQuickActivity::class.java)
+                startActivity(i)
+            }
+
             R.id.llleadgeneration->{
                 val i = Intent(this@LeadActivity, LeadGenerationActivity::class.java)
                 startActivity(i)
@@ -427,10 +437,12 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
                                     Log.e(TAG, "strGsValue   52921   " + strGsValue)
                                     cardwalking!!.visibility = View.VISIBLE
                                     view_height!!.visibility = View.GONE
+                                    view_height1!!.visibility = View.GONE
                                 }else{
                                     Log.e(TAG, "strGsValue   52922   " + strGsValue)
                                     cardwalking!!.visibility = View.GONE
                                     view_height!!.visibility = View.VISIBLE
+                                    view_height1!!.visibility = View.VISIBLE
                                 }
 
                             } else {

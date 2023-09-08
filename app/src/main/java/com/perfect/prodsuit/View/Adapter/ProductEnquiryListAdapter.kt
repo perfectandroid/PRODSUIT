@@ -49,8 +49,8 @@ class ProductEnquiryListAdapter (internal var context: Context, internal var jso
 
                 holder.ll_topimage.visibility = View.GONE
                 holder.txtProdct.text        = jsonObject!!.getString("Name")
-                holder.txtProdct_mrp.text        = "₹ "+jsonObject!!.getString("MRP")
-                holder.txtProdct_sales.text        = "₹ "+jsonObject!!.getString("SalPrice")
+                holder.txtProdct_mrp.text        = "₹ "+Config.changeTwoDecimel(jsonObject!!.getString("MRP"))
+                holder.txtProdct_sales.text        = "₹ "+Config.changeTwoDecimel(jsonObject!!.getString("SalPrice"))
                 holder.txtProdct_mrp!!.setPaintFlags(holder.txtProdct_mrp!!.getPaintFlags() or Paint.STRIKE_THRU_TEXT_FLAG)
 
                 if (jsonObject!!.getString("CurrentQuantity").equals("")){
@@ -60,7 +60,7 @@ class ProductEnquiryListAdapter (internal var context: Context, internal var jso
                     if (fQty <= 0){
                         holder.txtProdct_qty.text ="Out of Stock"
                     }else{
-                        holder.txtProdct_qty.text ="Only "+jsonObject!!.getString("CurrentQuantity")+" left"
+                        holder.txtProdct_qty.text ="Only "+Config.changeTwoDecimel(jsonObject!!.getString("CurrentQuantity"))+" left"
                     }
                 }
 

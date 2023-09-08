@@ -79,6 +79,11 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
     private var tv_my_leadCount: TextView? = null
     private var imgv_filterManage: ImageView? = null
 
+    private var tv_today: TextView? = null
+    private var tv_pending: TextView? = null
+    private var tv_upcoming: TextView? = null
+    private var tv_mylead: TextView? = null
+
     lateinit var context: Context
 
     lateinit var agendaCountViewModel: AgendaCountViewModel
@@ -123,6 +128,12 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
         tv_upcoming_count = findViewById(R.id.tv_upcoming_count)
         tv_my_leadCount = findViewById(R.id.tv_my_leadCount)
 
+        tv_today = findViewById(R.id.tv_today)
+        tv_pending = findViewById(R.id.tv_pending)
+        tv_upcoming = findViewById(R.id.tv_upcoming)
+        tv_mylead = findViewById(R.id.tv_mylead)
+
+
         lltodolist!!.setOnClickListener(this)
         lloverdue!!.setOnClickListener(this)
         lloverUpcoming!!.setOnClickListener(this)
@@ -138,6 +149,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
             R.id.lltodolist->{
                 val i = Intent(this@LeadManagemnetActivity, TodoListActivity::class.java)
                 i.putExtra("SubMode","1")
+                i.putExtra("headerTitle",tv_today!!.text.toString())
                 i.putExtra("ID_Employee",ID_Employee)
                 i.putExtra("EmpName",emp_name)
                 i.putExtra("UserName",UserName)
@@ -149,6 +161,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
             R.id.lloverdue->{
                 val i = Intent(this@LeadManagemnetActivity, OverDueActivity::class.java)
                 i.putExtra("SubMode","2")
+                i.putExtra("headerTitle",tv_pending!!.text.toString())
                 i.putExtra("ID_Employee",ID_Employee)
                 i.putExtra("EmpName",emp_name)
                 i.putExtra("UserName",UserName)
@@ -159,6 +172,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
             R.id.lloverUpcoming->{
                 val i = Intent(this@LeadManagemnetActivity, UpcomingtaskActivity::class.java)
                 i.putExtra("SubMode","3")
+                i.putExtra("headerTitle",tv_upcoming!!.text.toString())
                 i.putExtra("ID_Employee",ID_Employee)
                 i.putExtra("EmpName",emp_name)
                 i.putExtra("UserName",UserName)
@@ -168,6 +182,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
             R.id.llmyLead->{
                 val i = Intent(this@LeadManagemnetActivity, MyLeadActivity::class.java)
                 i.putExtra("SubMode","4")
+                i.putExtra("headerTitle",tv_mylead!!.text.toString())
                 i.putExtra("ID_Employee",ID_Employee)
                 i.putExtra("EmpName",emp_name)
                 i.putExtra("UserName",UserName)

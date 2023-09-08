@@ -53,11 +53,13 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
     val TAG : String = "MyLeadActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
+    internal var tv_header: TextView? = null
     lateinit var myLeadlistViewModel: MyLeadListViewModel
     private var rv_myLeadlist: RecyclerView?=null
     private var tv_listCount: TextView?          = null
     lateinit var upcmngtaskArrayList : JSONArray
     private var SubMode:String?=""
+    private var headerTitle:String?=""
     private var UserName:String? = ""
     private var Reciever_Id:String? = ""
     internal var yr: Int =0
@@ -143,6 +145,10 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         if (getIntent().hasExtra("SubMode")) {
             SubMode = intent.getStringExtra("SubMode")
         }
+        if (getIntent().hasExtra("headerTitle")) {
+            headerTitle = intent.getStringExtra("headerTitle")
+            tv_header!!.setText(headerTitle)
+        }
         if (getIntent().hasExtra("ID_Employee")) {
             ID_Employee = intent.getStringExtra("ID_Employee")
             Log.e(TAG,"44444    "+ID_Employee)
@@ -179,6 +185,7 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         var criteria = ""
     }
     private fun setRegViews() {
+        tv_header = findViewById(R.id.tv_header)
         rv_myLeadlist = findViewById(R.id.rv_myLead)
         val imback = findViewById<ImageView>(R.id.imback)
         val imgv_filter= findViewById<ImageView>(R.id.imgv_filter)

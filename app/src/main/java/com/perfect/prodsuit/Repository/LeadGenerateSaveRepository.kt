@@ -291,6 +291,7 @@ object LeadGenerateSaveRepository {
                 Log.e(TAG,"FK_Area   1360   "+FK_Area+"   "+UserNameSP.getString("UserName", null))
                 Log.e(TAG,"array_product_lead    330022   "+array_product_lead)
 //                Log.e(TAG,"requestObject1   1361   "+strDate+"   "+strFollowupdate)
+                Log.e(TAG,"Customer_Type   1362   "+Customer_Type)
                 Log.e(TAG,"requestObject1   1362   "+encode1)
                 Log.e(TAG,"requestObject1   1363   "+requestObject1)
 

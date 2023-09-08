@@ -3,10 +3,7 @@ package com.perfect.prodsuit.View.Activity
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.*
-import android.content.ContentValues
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -51,6 +48,7 @@ import com.perfect.nbfcmscore.Helper.PicassoTrustAll
 import com.perfect.prodsuit.Helper.*
 import com.perfect.prodsuit.Helper.LocationUtils.calculateDistance
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Receivers.MyAlarmReceiver
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
 import com.perfect.prodsuit.View.Adapter.HomeGridAdapter
 import com.perfect.prodsuit.View.Service.NotificationLocationService
@@ -167,6 +165,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 //    var mJobScheduler: JobScheduler? = null
 
+
+    private lateinit var alarmManager: AlarmManager
+    private lateinit var pendingIntent: PendingIntent
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -867,11 +868,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                val i = Intent(this@HomeActivity, NotificationActivity::class.java)
 //                startActivity(i)
 
-                val i = Intent(this@HomeActivity, InventoryActivity::class.java)
-                startActivity(i)
-
-//                val i = Intent(this@HomeActivity, ApproveActivity::class.java)
+//                val i = Intent(this@HomeActivity, InventoryActivity::class.java)
 //                startActivity(i)
+
+                val i = Intent(this@HomeActivity, ApproveActivity::class.java)
+                startActivity(i)
 
 //                val i = Intent(this@HomeActivity, ApprovalListDetailActivity::class.java)
 //                startActivity(i)
@@ -1492,7 +1493,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             val alertDialog = builder.create()
             val c = Calendar.getInstance()
             val sdf = SimpleDateFormat("dd-MM-yyyy")
-            val sdf1 = SimpleDateFormat("hh:mm a")
+            val sdf1 = SimpleDateFormat("hh:mm a",Locale.getDefault())
             val sdf2 = SimpleDateFormat("hh:mm")
             yr = c.get(Calendar.YEAR)
             month = c.get(Calendar.MONTH)
@@ -1503,8 +1504,14 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             val split = s.split((":").toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val strhr = split[0]
             val strmin = split[1]
+
+
+            var dateShow = etdate!!.text.toString()
+            var timeShow = ettime!!.text.toString()
+
             hr = Integer.parseInt(strhr)
             min = Integer.parseInt(strmin)
+
             ettime!!.setOnClickListener(View.OnClickListener { timeSelector() })
             etdate!!.setOnClickListener(View.OnClickListener { dateSelector() })
             btncancel.setOnClickListener {
@@ -1513,8 +1520,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 alertDialog.dismiss() }
             btnsubmit.setOnClickListener {
                 Config.Utils.hideSoftKeyBoard(this, it)
-                addEvent(yr, month, day, hr, min, etdis!!.text.toString(), " Reminder")
+                addEvent(yr, month, day, hr, min, etdis!!.text.toString(), " Reminder",dateShow,timeShow)
                 alertDialog.dismiss()
+                chipNavigationBar!!.setItemSelected(R.id.home, true)
             }
             alertDialog.setCancelable(false)
             alertDialog.show()
@@ -1525,74 +1533,136 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     }
 
-    fun addEvent(iyr: Int, imnth: Int, iday: Int, ihour: Int, imin: Int, descriptn: String, Title: String) {
-        if (ActivityCompat.checkSelfPermission(
-                        applicationContext,
-                        Manifest.permission.WRITE_CALENDAR
-                ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.WRITE_CALENDAR),
-                    1
-            )
-        }
-        val cr = contentResolver
-        val beginTime = Calendar.getInstance()
-        beginTime.set(2022, 11 - 1, 28, 9, 30)
-        val endTime = Calendar.getInstance()
-        endTime.set(iyr, imnth, iday, ihour, imin)
-        val values = ContentValues()
-        values.put(CalendarContract.Events.DTSTART, endTime.timeInMillis)
-        values.put(CalendarContract.Events.DTEND, endTime.timeInMillis)
-        values.put(CalendarContract.Events.TITLE, Title)
-        values.put(CalendarContract.Events.DESCRIPTION, descriptn)
+    fun addEvent(iyr: Int, imnth: Int, iday: Int, ihour: Int, imin: Int, descriptn: String, Title: String,dateShow: String ,timeShow: String ) {
 
 
-        val calendarId = getCalendarId(context)
-        Log.i("Calender", calendarId.toString())
-        if(calendarId != null) {
-            values.put(CalendarContract.Events.CALENDAR_ID, calendarId)
-        }
-
-
-        val tz = TimeZone.getDefault()
-        values.put(CalendarContract.Events.EVENT_TIMEZONE, tz.id)
-        values.put(CalendarContract.Events.EVENT_LOCATION, "India")
-
-
-
-
+//        if (ActivityCompat.checkSelfPermission(
+//                        applicationContext,
+//                        Manifest.permission.WRITE_CALENDAR
+//                ) != PackageManager.PERMISSION_GRANTED
+//        ) {
+//            ActivityCompat.requestPermissions(
+//                    this,
+//                    arrayOf(Manifest.permission.WRITE_CALENDAR),
+//                    1
+//            )
+//        }
+//        val cr = contentResolver
+//        val beginTime = Calendar.getInstance()
+//        beginTime.set(2022, 11 - 1, 28, 9, 30)
+//        val endTime = Calendar.getInstance()
+//        endTime.set(iyr, imnth, iday, ihour, imin)
+//        val values = ContentValues()
+//        values.put(CalendarContract.Events.DTSTART, endTime.timeInMillis)
+//        values.put(CalendarContract.Events.DTEND, endTime.timeInMillis)
+//        values.put(CalendarContract.Events.TITLE, Title)
+//        values.put(CalendarContract.Events.DESCRIPTION, descriptn)
+//
+//        Log.e(TAG,"154444 : "+iyr+" : "+ imnth+" : "+iday+" : "+ ihour+" : "+imin)
+//
+//        val calendarId = getCalendarId(context)
+//        Log.i("Calender", calendarId.toString())
+//        if(calendarId != null) {
+//            values.put(CalendarContract.Events.CALENDAR_ID, calendarId)
+//        }
+//
+//
+//        val tz = TimeZone.getDefault()
+//        values.put(CalendarContract.Events.EVENT_TIMEZONE, tz.id)
+//        values.put(CalendarContract.Events.EVENT_LOCATION, "India")
+//
+//
+//
+//
+//
+//        try {
+//
+//        //    AlarmHelper.setReminder(context,hr,min)
+//
+//            val uri = cr.insert(CalendarContract.Events.CONTENT_URI, values)
+//            val reminders = ContentValues()
+//            reminders.put(CalendarContract.Reminders.EVENT_ID, uri!!.lastPathSegment)
+//            reminders.put(
+//                    CalendarContract.Reminders.METHOD,
+//                    CalendarContract.Reminders.METHOD_ALERT
+//            )
+//            reminders.put(CalendarContract.Reminders.MINUTES, 10)
+//            cr.insert(CalendarContract.Reminders.CONTENT_URI, reminders)
+//
+//
+//
+//        }catch (e: Exception){
+//            e.printStackTrace()
+//        }
 
         try {
 
-        //    AlarmHelper.setReminder(context,hr,min)
+            var random1 = (0..1000000).shuffled().last()
+            val requestCode = random1++
+            alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(this, MyAlarmReceiver::class.java)
+            intent.putExtra("REQUEST_CODE", requestCode)
+            intent.putExtra("title", Title)
+            intent.putExtra("message", descriptn)
+            intent.putExtra("dateShow", dateShow)
+            intent.putExtra("timeShow", timeShow)
+            intent.putExtra("date", ""+iday+"-"+imnth+"-"+iyr)
+            intent.putExtra("time", ""+ihour+":"+imin)
+            pendingIntent = PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_MUTABLE)
+            val calendar: Calendar = Calendar.getInstance()
+//            calendar.set(
+//                calendar.get(iyr),
+//                calendar.get(imnth),
+//                calendar.get(iday),
+//                ihour,
+//                imin,
+//                0
+//            )
 
-            val uri = cr.insert(CalendarContract.Events.CONTENT_URI, values)
-            val reminders = ContentValues()
-            reminders.put(CalendarContract.Reminders.EVENT_ID, uri!!.lastPathSegment)
-            reminders.put(
-                    CalendarContract.Reminders.METHOD,
-                    CalendarContract.Reminders.METHOD_ALERT
-            )
-            reminders.put(CalendarContract.Reminders.MINUTES, 10)
-            cr.insert(CalendarContract.Reminders.CONTENT_URI, reminders)
+            Log.e("TAG","888888   "+calendar.get(Calendar.YEAR)+":"+calendar.get(Calendar.MONTH)+":"+calendar.get(Calendar.DAY_OF_MONTH))
+            Log.e("TAG","8888882   "+ihour+"  :  "+imin)
+
+            if (Build.VERSION.SDK_INT >= 23) {
+                calendar.set(
+                    iyr,
+                    imnth,
+                    iday,
+                    ihour,
+                    imin,
+                    0
+                )
+               // Log.e("TAG","8888881   "+timePicker.hour+":"+timePicker!!.minute)
+            } else {
+                calendar.set(
+                    iyr,
+                    imnth,
+                    iday,
+                    ihour,
+                    imin, 0
+                )
+               // Log.e("TAG","8888881   "+timePicker.currentHour+":"+timePicker!!.currentMinute)
+            }
 
 
+            alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.timeInMillis, pendingIntent);
+            Log.e("TAG","1999      Alarm Set  "+descriptn+"  :   "+requestCode)
 
-        }catch (e: Exception){
-            e.printStackTrace()
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("Reminder set successfully.")
+                .setCancelable(false)
+                .setPositiveButton(
+                    "OK"
+                ) { dialog, id -> dialog.dismiss()
+                }
+            val alert = builder.create()
+            alert.show()
+
+        }
+        catch (e : Exception){
+
+            Log.e(TAG,"1620     "+e.toString())
         }
 
-        val builder = AlertDialog.Builder(this)
-        builder.setMessage("Reminder set successfully.")
-            .setCancelable(false)
-            .setPositiveButton(
-                    "OK"
-            ) { dialog, id -> dialog.dismiss()
-            }
-        val alert = builder.create()
-        alert.show()
 
     }
 
