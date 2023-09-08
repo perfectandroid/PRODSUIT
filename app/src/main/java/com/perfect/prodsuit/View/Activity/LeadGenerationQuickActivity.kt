@@ -2194,12 +2194,14 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 //        }
         if (ID_Product.equals("")) {
 
+
             if (CompanyCategory.equals("0") || CompanyCategory.equals("1")) {
                 Config.snackBars(context, v, "Select Product")
             } else if (CompanyCategory.equals("2")) {
                 Config.snackBars(context, v, "Select Destination")
+            }else{
+                Config.snackBars(context, v, "Select Product")
             }
-
 
         }
         else if (strQty.equals("")) {
@@ -2207,7 +2209,8 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                 Config.snackBars(context, v, "Enter Quantity")
             } else if (CompanyCategory.equals("2")) {
                 Config.snackBars(context, v, "Enter No.of Passengers")
-                edtProdqty!!.setHint("No.of Passengers")
+            }else{
+                Config.snackBars(context, v, "Enter Quantity")
             }
         }
         else if (CompanyCategory.equals("2") && strExpecteddate.equals("")) {
