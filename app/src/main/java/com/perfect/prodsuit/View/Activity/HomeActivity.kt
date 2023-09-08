@@ -498,7 +498,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                     notificationCount = count
                                     val jsonObject = homeArraySort.getJSONObject(2)
                                     jsonObject.put("count",notificationCount)
-                                    recyHomegrid!!.adapter!!.notifyItemChanged(2)
+                             //       recyHomegrid!!.adapter!!.notifyItemChanged(2)
 
 //                                    adapterHome = HomeGridAdapter(this@HomeActivity, homeArraySort,notificationCount!!)
 //                                    recyHomegrid!!.adapter!!.notifyDataSetChanged()
@@ -796,8 +796,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                val intent = Intent(this, ProductSearchActivity::class.java)
 //                startActivity(intent)
 //
-                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
+//                startActivity(i)
 
 
 //                val i = Intent(this@HomeActivity, StockTransferActivity::class.java)

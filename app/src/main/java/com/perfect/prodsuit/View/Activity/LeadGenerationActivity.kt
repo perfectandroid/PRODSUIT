@@ -73,6 +73,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private var mMinute: Int = 0
     val TAG: String = "LeadGenerationActivity"
     lateinit var context: Context
+    private var FK_ProductLocation: String? = ""
 
     private var cardLeadRequest: CardView? = null
     private var progressDialog: ProgressDialog? = null
@@ -162,6 +163,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     lateinit var leadSubMediaArrayList: JSONArray
     lateinit var leadSubMediaSort: JSONArray
     lateinit var leadRequestArrayList: JSONArray
+    lateinit var floorlistArray: JSONArray
     lateinit var leadByArrayList: JSONArray
     lateinit var leadBySort: JSONArray
     lateinit var mediaTypeArrayList: JSONArray
@@ -235,7 +237,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private var imgPinSearch: ImageView? = null
 
     private var edtProdcategory: EditText? = null
+    private var edtFloor: EditText? = null
+    private var tvv_list_name: TextView? = null
     private var edtProdproduct: EditText? = null
+    private var llsearch: LinearLayout? = null
     private var edtProjectName: EditText? = null
     private var edtProdqty: EditText? = null
     private var edtProdfeedback: EditText? = null
@@ -259,6 +264,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     lateinit var branchTypeViewModel: BranchTypeViewModel
     lateinit var branchViewModel: BranchViewModel
     lateinit var departmentViewModel: DepartmentViewModel
+    lateinit var floorViewModel: FloorViewModel
     lateinit var employeeViewModel: EmployeeViewModel
     lateinit var leadGenerateDefaultvalueViewModel: LeadGenerationDefaultvalueViewModel
     lateinit var leadRequestViewModel: LeadRequestViewModel
@@ -296,6 +302,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private var dialogDepartment: Dialog? = null
     private var dialogEmployee: Dialog? = null
     private var dialogLeadEdit: Dialog? = null
+    private var dialogfloor: Dialog? = null
 
     var recyProdCategory: RecyclerView? = null
     var recyProdDetail: RecyclerView? = null
@@ -308,6 +315,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     var recyDeaprtment: RecyclerView? = null
     var recyEmployee: RecyclerView? = null
     var recyLeadDetail: RecyclerView? = null
+    var recylist: RecyclerView? = null
 
 
     private var tv_CustClick: TextView? = null
@@ -440,6 +448,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         var strNeedCheck: String = "0"
         var strWhatsAppNo: String = ""
         var strCompanyContact: String = ""
+        var strLocationName: String = ""
+        var ID_ProductLocation: String = "0"
 
         var encode1: String = ""
         var encode2: String = ""
@@ -454,6 +464,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
     var countRequestCount = 0
     var requestLicenceCount = 0
+    var floorcount = 0
 
     var countLeadFrom = 0
     var countLeadThrough = 0
@@ -534,6 +545,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         leadGenerateDefaultvalueViewModel =
             ViewModelProvider(this).get(LeadGenerationDefaultvalueViewModel::class.java)
         itemSearchListViewModel = ViewModelProvider(this).get(ItemSearchListViewModel::class.java)
+        floorViewModel = ViewModelProvider(this).get(FloorViewModel::class.java)
 
 
         setRegViews()
@@ -967,6 +979,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         lllistdetails = findViewById(R.id.lllistdetails)
         tv_Mrp = findViewById(R.id.tv_Mrp)
         edtAmount = findViewById(R.id.edtAmount)
+        edtFloor = findViewById(R.id.edtFloor)
 
         btnReset = findViewById<Button>(R.id.btnReset)
         btnSubmit = findViewById<Button>(R.id.btnSubmit)
@@ -1055,6 +1068,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         edtScan!!.setOnClickListener(this)
         add_product_btn!!.setOnClickListener(this)
         refresh_btn!!.setOnClickListener(this)
+        edtFloor!!.setOnClickListener(this)
 //        addmore_btn!!.setOnClickListener(this)
 
         date_Picker1 = findViewById<DatePicker>(R.id.date_Picker1)
@@ -1069,6 +1083,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
         val CompanyCategorySP = applicationContext.getSharedPreferences(Config.SHARED_PREF46, 0)
         CompanyCategory = CompanyCategorySP.getString("CompanyCategory", "").toString()
+        Log.e(TAG, "CompanyCategory  1122   " + CompanyCategory)
 
         Log.e(TAG, "CompanyCategory  857   " + CompanyCategory)
         if (CompanyCategory.equals("0") || CompanyCategory.equals("1")) {
@@ -1077,6 +1092,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             edtProdqty!!.setHint("Qty")
             ll_product_qty!!.orientation = LinearLayout.HORIZONTAL
             edtExpecteddate!!.visibility = View.GONE
+            edtScan!!.visibility = View.VISIBLE
+            edtFloor!!.visibility = View.GONE
             edtProjectName!!.setHint("Model")
         } else if (CompanyCategory.equals("2")) {
             tv_ProductClick!!.setText("Package Details")
@@ -1085,6 +1102,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             ll_product_qty!!.orientation = LinearLayout.VERTICAL
             edtExpecteddate!!.visibility = View.VISIBLE
             edtProjectName!!.setHint("Destination")
+            edtScan!!.visibility = View.GONE
+            edtFloor!!.visibility = View.GONE
 
             val params: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -1092,6 +1111,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             )
             params.setMargins(0, 10, 0, 0)
             edtProdqty!!.setLayoutParams(params)
+        }
+        else if (CompanyCategory.equals("8")){
+            edtFloor!!.visibility = View.VISIBLE
+
         }
 
 
@@ -1872,6 +1895,12 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 }
             }
 
+            R.id.edtFloor -> {
+                Config.disableClick(v)
+                floorcount = 0
+                getFloorList()
+            }
+
             R.id.edtProdpriority -> {
                 Config.disableClick(v)
                 Log.v("sdfsdfsd4fgf", "clicked")
@@ -2638,6 +2667,119 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             }
 
         }
+    }
+
+    private fun getFloorList() {
+//         var proddetail = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                floorViewModel.getfloor_List(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (floorcount == 0) {
+                                    floorcount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   8855   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("ProductLocationList")
+                                        floorlistArray = jobjt.getJSONArray("ProductLocationListData")
+                                        if (floorlistArray.length() > 0) {
+
+                                            showFloorlist(floorlistArray)
+
+
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@LeadGenerationActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+                                progressDialog!!.dismiss()
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                            Log.e(TAG,"catch   "+e)
+                        }
+                        progressDialog!!.dismiss()
+                    })
+
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+    private fun showFloorlist(floorlistArray: JSONArray) {
+
+        try {
+
+            Log.e(TAG,"showFloorlist 0 "+floorlistArray)
+
+            dialogfloor = Dialog(this)
+            dialogfloor!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogfloor!! .setContentView(R.layout.list_popup)
+            dialogfloor!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recylist = dialogfloor!! .findViewById(R.id.recylist) as RecyclerView
+
+            tvv_list_name = dialogfloor!! .findViewById(R.id.tvv_list_name) as TextView
+            llsearch = dialogfloor!!.findViewById(R.id.llsearch) as LinearLayout
+
+            tvv_list_name!!.setText("Floor List")
+            llsearch!!.visibility = View.GONE
+
+            Log.e(TAG,"showFloorlist 1 "+floorlistArray)
+
+//            Log.e(TAG,"complaint pop 112244  "+prodPriorityArrayList)
+
+            val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
+            recylist!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapter = FloorListAdapter(this@LeadGenerationActivity, floorlistArray)
+            recylist!!.adapter = adapter
+            adapter.setClickListener(this@LeadGenerationActivity)
+
+            Log.e(TAG,"showFloorlist 2 "+floorlistArray)
+
+            dialogfloor!!.show()
+            dialogfloor!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
 
@@ -6501,6 +6643,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 ID_Status = jsonObject.getString("ID_Status")
                 ID_NextAction = jsonObject.getString("ID_NextAction")
                 ID_ActionType = jsonObject.getString("ID_ActionType")
+                ID_ProductLocation = jsonObject.getString("ID_ProductLocation")
                 edtProdcategory!!.setText("" + jsonObject!!.getString("CategoryName"))
                 edtProjectName!!.setText("" + jsonObject!!.getString("ProjectName"))
                 edtProdproduct!!.setText("" + jsonObject!!.getString("ProdName"))
@@ -6513,9 +6656,11 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 edtEmployee!!.setText("" + jsonObject!!.getString("AssignEmp"))
                 edtAmount!!.setText("" + jsonObject!!.getString("LgpSalesPrice"))
                 tv_Mrp!!.setText("" + jsonObject!!.getString("MRP"))
+                edtFloor!!.setText("" + jsonObject!!.getString("LocationName"))
 
                 Log.e(TAG, "12121   " +jsonObject.getString("ID_Status"))
                 Log.e(TAG, "12121   " +jsonObject.getString("ProdName"))
+                Log.e(TAG,"eeeeeeeeeee 22  "+ ID_ProductLocation)
                 Log.e(TAG, "12121    " +editProdcutListarray)
 
                 if (jsonObject.getString("ID_Status").equals("1")){
@@ -6801,6 +6946,17 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             Log.e(TAG, "ID_BranchType   " + jsonObject.getString("ID_BranchType"))
             ID_BranchType = jsonObject.getString("ID_BranchType")
             edtbarnchtype!!.setText(jsonObject.getString("BranchTypeName"))
+
+
+        }
+
+        if (data.equals("ProductLocationList")) {
+            dialogfloor!!.dismiss()
+
+            val jsonObject = floorlistArray.getJSONObject(position)
+            Log.e(TAG, "ID_ProductLocation   " + jsonObject.getString("ID_ProductLocation"))
+            ID_ProductLocation = jsonObject.getString("ID_ProductLocation")
+            edtFloor!!.setText(jsonObject.getString("LocationName"))
 
 
         }
@@ -8965,7 +9121,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             jObject.put("MRP", tv_Mrp!!.text.toString())
             jObject.put("ID_CollectedBy", ID_CollectedBy)
             jObject.put("LgCollectedBy", ID_CollectedBy)
+            jObject.put("FK_ProductLocation", ID_ProductLocation)
 
+            Log.e(TAG,"eeeeeeeeeee01=  "+ ID_ProductLocation)
             Log.e(TAG,"eeeeeeeeeee3=  "+ ID_Category)
             Log.e(TAG,"eeeeeeeeeee4=  "+ ID_Product)
             Log.e(TAG,"eeeeeeeeeee5=  "+ strFollowupdate)
@@ -8999,7 +9157,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             jObject.put("MRP", tv_Mrp!!.text.toString())
             jObject.put("ID_CollectedBy", ID_CollectedBy)
             jObject.put("LgCollectedBy", ID_CollectedBy)
+            jObject.put("FK_ProductLocation", ID_ProductLocation)
 
+            Log.e(TAG,"eeeeeeeeeee 45=  "+ ID_ProductLocation)
             Log.e(TAG,"eeeeeeeeeee8=  "+ strFollowupdate)
             arrupdateedit = "0"
         }
@@ -9015,6 +9175,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         edtFollowtype!!.setText("")
         tv_Mrp!!.setText("")
         edtFollowdate!!.setText("")
+        edtFloor!!.setText("")
 //        edtEmployee!!.setText("")
         edtAmount!!.setText("")
 
@@ -9027,6 +9188,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         ID_NextAction = ""
         ID_ActionType = ""
         ID_Priority = ""
+        ID_ProductLocation = "0"
         strFollowupdate = ""
         hideViews()
 
@@ -9046,9 +9208,11 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             llrecyvisible!!.visibility = View.GONE
             llfollowup!!.visibility = View.GONE
             rcylisting!!.adapter = null
-            Log.e("a", "fsssagsagsag2222222")
+            Log.e(TAG, "fsssagsagsag2222222")
         }
 
+
+        Log.e(TAG, "00033226   "+editProdcutListarray)
         savelistDetail()
 
 
@@ -9084,6 +9248,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             val jObject = JSONObject()
             Log.e(TAG, "strQty 1     112299  " + strQty)
 
+
+
             val strrfollowup = jsonObject.getString("NextActionDate")
             val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
             val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -9105,17 +9271,21 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 jObject.put("ActStatus", (jsonObject.getString("ID_Status")))
                 jObject.put("FK_NetAction", (jsonObject.getString("ID_NextAction")))
                 jObject.put("FK_ActionType", (jsonObject.getString("ID_ActionType")))
+                jObject.put("FK_ActionType", (jsonObject.getString("ID_ActionType")))
+                jObject.put("FK_ProductLocation", (jsonObject.getString("FK_ProductLocation")))
                 jObject.put("NextActionDate", folloupdate)
 
                 jObject.put("LgpExpectDate", strExpecteddate)
                 jObject.put("LgpMRP", ("0"))
                 jObject.put("LgpSalesPrice", ("0"))
+//                jObject.put("FK_ProductLocation", ID_ProductLocation)
 
 
                 jObject.put("BranchID", ID_Branch)
                 jObject.put("BranchTypeID", ID_BranchType)
                 jObject.put("FK_Departement", ID_Department)
 
+                Log.e(TAG,"eeeeeeeeeee 85  "+ jsonObject.getString("FK_ProductLocation"))
 
                 Log.e(TAG, "strQty 1     112299  " + jsonObject.getString("LgpPQuantity"))
 
@@ -9134,6 +9304,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 jObject.put("ActStatus", (jsonObject.getString("ID_Status")))
                 jObject.put("FK_NetAction", (jsonObject.getString("ID_NextAction")))
                 jObject.put("FK_ActionType", (jsonObject.getString("ID_ActionType")))
+                jObject.put("FK_ProductLocation", (jsonObject.getString("FK_ProductLocation")))
                 jObject.put("NextActionDate", folloupdate)
 
                 jObject.put("LgpExpectDate", strExpecteddate)
@@ -9143,8 +9314,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 jObject.put("BranchID", ID_Branch)
                 jObject.put("BranchTypeID", ID_BranchType)
                 jObject.put("FK_Departement", ID_Department)
+//                jObject.put("FK_ProductLocation", ID_ProductLocation)
 
                 Log.e(TAG, "strQty 2    112299  " + jsonObject.getString("LgpPQuantity"))
+                Log.e(TAG,"eeeeeeeeeee 65  "+ ID_ProductLocation)
 
             }
 

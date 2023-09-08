@@ -43,7 +43,7 @@ class HomeGridAdapter(internal var context: Context, internal var jsonArray: JSO
                 holder.image.setImageDrawable(context.resources.getDrawable(resourceId))
                 holder.txtGridNotification.text        = jsonObject!!.getString("count")
                 if (jsonObject!!.getString("grid_id").equals("3")){
-                    holder.txtGridNotification.visibility = View.VISIBLE
+                 //   holder.txtGridNotification.visibility = View.VISIBLE
 
                 }
 

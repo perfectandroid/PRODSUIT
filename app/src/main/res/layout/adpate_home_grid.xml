@@ -11,8 +11,9 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:orientation="vertical"
-        android:gravity="center"
-        android:background="@drawable/svg_home_grid">
+        android:gravity="center">
+
+<!--        android:background="@drawable/svg_home_grid"-->
 
         <RelativeLayout
             android:id="@+id/rlnotification"
