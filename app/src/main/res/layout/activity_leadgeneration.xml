@@ -614,7 +614,7 @@
                                             android:orientation="vertical"
                                             android:background="@color/leadbg_color"
                                             android:paddingBottom="10dp"
-                                            android:visibility="gone">
+                                            android:visibility="visible">
                                             <!--                                            android:background="@drawable/etselect_bggrey"-->
 
 
@@ -692,8 +692,8 @@
                                                             android:background="@android:color/transparent"
                                                             android:fontFamily="@font/myfont"
                                                             android:hint="Search"
-                                                            android:padding="7dp"
                                                             android:maxLength="25"
+                                                            android:padding="7dp"
                                                             android:singleLine="true"
                                                             android:text=""
                                                             android:textSize="14dp" />

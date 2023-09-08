@@ -56,6 +56,9 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
     lateinit var authApproveViewModel: AuthApproveViewModel
     var approveCount = 0
 
+    var correctionCount = 0
+    lateinit var authCorrectionViewModel: AuthCorrectionViewModel
+
 
 
 
@@ -74,6 +77,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
     internal var tv_Key5Click: TextView? = null
 
     internal var btnReject: Button? = null
+    internal var btnCorrection: Button? = null
     internal var btnApprove: Button? = null
 
 
@@ -152,6 +156,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
         reasonViewModel = ViewModelProvider(this).get(ReasonViewModel::class.java)
         authRejectViewModel = ViewModelProvider(this).get(AuthRejectViewModel::class.java)
         authApproveViewModel = ViewModelProvider(this).get(AuthApproveViewModel::class.java)
+        authCorrectionViewModel = ViewModelProvider(this).get(AuthCorrectionViewModel::class.java)
 
         setRegViews()
 //        generateSS()
@@ -188,6 +193,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
         tv_Key5Click = findViewById(R.id.tv_Key5Click)
 
         btnReject = findViewById(R.id.btnReject)
+        btnCorrection = findViewById(R.id.btnCorrection)
         btnApprove = findViewById(R.id.btnApprove)
         llBtn = findViewById(R.id.llBtn)
 
@@ -218,6 +224,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
         tv_Key5Click!!.setOnClickListener(this)
 
         btnReject!!.setOnClickListener(this)
+        btnCorrection!!.setOnClickListener(this)
         btnApprove!!.setOnClickListener(this)
 
 
@@ -287,6 +294,13 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                         FooterLeft =  jobjt.getString("FooterLeft")
                                         FooterRight =  jobjt.getString("FooterRight")
                                         key4ArrayList = jobjt.getJSONArray("SubDetailsData")
+
+
+
+                                        if (jobjt.getString("ActiveCorrectionOption").equals("True")){
+                                            btnCorrection!!.visibility = View.VISIBLE
+                                        }
+
 
                                         card_Key1!!.visibility = View.GONE
                                         card_Key2!!.visibility = View.GONE
@@ -1195,7 +1209,13 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
             }
 
-
+            R.id.btnCorrection->{
+                checkAttendance()
+                if (saveAttendanceMark) {
+                    Config.disableClick(v)
+                    correctionBottomSheet()
+                }
+            }
 
         }
     }
@@ -1291,6 +1311,116 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
         }catch (e: Exception){
             Log.e(TAG,"777  Exception   "+e.toString())
+        }
+    }
+
+    private fun correctionBottomSheet() {
+        try {
+            val dialog1 = BottomSheetDialog(this,R.style.BottomSheetDialog)
+            val view = layoutInflater.inflate(R.layout.corection_bottomsheet, null)
+            dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val window: Window? = dialog1.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            dialog1!!.setCancelable(true)
+            dialog1!!.setCanceledOnTouchOutside(false)
+            dialog1!!.getBehavior().setDraggable(false);
+
+            var tv_succesmsg = view.findViewById<TextView>(R.id.tv_succesmsg)
+            var tv_gotit = view.findViewById<TextView>(R.id.tv_gotit)
+            tv_succesmsg.text = "Confirm correction request ?"
+            tv_gotit!!.setOnClickListener {
+                dialog1.dismiss()
+                correctionCount = 0
+                authorizationCorrection()
+            }
+
+            dialog1!!.setContentView(view)
+            dialog1.show()
+
+        }catch (e: Exception){
+            Log.e(TAG,"777  Exception   "+e.toString())
+        }
+    }
+
+    private fun authorizationCorrection() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                authCorrectionViewModel.getAuthCorrection(this,FK_AuthID)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (correctionCount == 0) {
+                                    correctionCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "Reject msg   93222220   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+
+                                        successBottomSheet(jObject)
+
+//                                        val jobjt = jObject.getJSONObject("ReasonDetails")
+//                                        reasonArrayList = jobjt.getJSONArray("ReasonDetailsList")
+//
+//                                        Log.e(TAG, "reasonArrayList   999101   " + reasonArrayList)
+//                                        if (reasonArrayList.length()> 0){
+////                                            val lLayout = GridLayoutManager(this@ApprovalListActivity, 1)
+////                                            recyAprrove!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+////                                            val adapter = ApproveListAdapter(this@ApprovalListActivity, approvalArrayList)
+////                                            recyAprrove!!.adapter = adapter
+////                                            adapter.setClickListener(this@ApprovalListActivity)
+//
+//                                            reasonpopup(reasonArrayList)
+//
+//
+//                                        }
+
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ApprovalListDetailActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 

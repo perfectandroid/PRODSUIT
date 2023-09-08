@@ -59,9 +59,10 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_icon_refresh.xml" value="0.1875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_inv_request.xml" value="0.2625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_inv_transfer.xml" value="0.2625" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_lead_gen_sub.xml" value="0.2625" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_lead_gen_sub.xml" value="0.16" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_ser_cs.xml" value="0.2625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_ser_sf.xml" value="0.1725" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_warning.xml" value="0.2675" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/top_round_shape.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/top_rounded_white.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/user_color.xml" value="0.229" />
@@ -83,9 +84,11 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.30520833333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.3145833333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_inventory.xml" value="0.25" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_lead_generation_quick.xml" value="0.33" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_lead_generatn.xml" value="0.29583333333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.30625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leadmanagement.xml" value="0.346875" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.346875" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_marking.xml" value="0.21197916666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_marking_new.xml" value="0.21041666666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_location_picker.xml" value="0.26944444444444443" />
@@ -146,7 +149,9 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/company_test1.xml" value="0.26944444444444443" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirm_stock_transfer.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirmation_pop_lead.xml" value="0.28125" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirmation_pop_quicklead.xml" value="0.28489583333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirmmpin_popup.xml" value="0.2869791666666667" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/corection_bottomsheet.xml" value="0.3625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/cs_add_new_user_sheet.xml" value="0.26944444444444443" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/cs_detail_bottom_sheet.xml" value="0.2328125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/custom_snackbar.xml" value="0.22864583333333333" />

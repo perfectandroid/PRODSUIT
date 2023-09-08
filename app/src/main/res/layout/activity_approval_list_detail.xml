@@ -1656,16 +1656,43 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_weight="1.5"
-                    android:background="@drawable/btn_shape_reset"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_shape_submit"
                     android:fontFamily="@font/myfont"
                     android:padding="2dp"
                     android:text="Reject"
                     android:textAllCaps="false"
-                    android:textColor="@color/greydark"
+                    android:textColor="@color/white"
                     android:textSize="15dp"
                     android:textStyle="bold"
                     android:visibility="visible" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/white"/>
+
+                <Button
+                    android:id="@+id/btnCorrection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_shape_submit"
+                    android:fontFamily="@font/myfont"
+                    android:padding="2dp"
+                    android:text="Correction"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="30dp"
+                    android:background="@color/white"/>
 
                 <Button
                     android:id="@+id/btnApprove"
