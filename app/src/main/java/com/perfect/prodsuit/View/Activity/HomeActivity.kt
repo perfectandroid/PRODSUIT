@@ -33,6 +33,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
@@ -135,6 +136,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     var SubMode : String = ""
 
     lateinit var attendanceAddViewModel: AttendanceAddViewModel
+    lateinit var dashboardcountViewModel: DashBoardCountViewModel
     val UPDATE_INTERVAL = 1500L
     private val updateWidgetHandler = Handler()
 
@@ -152,6 +154,14 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private var tv_leads: TextView? = null
     private var tv_service: TextView? = null
     private var tv_collection: TextView? = null
+    private var tvv_count_home_1: TextView? = null
+    private var tvv_name_home_2: TextView? = null
+    private var tvv_count_home_3: TextView? = null
+    private var tvv_name_home_4: TextView? = null
+    private var tvv_count_home_5: TextView? = null
+    private var tvv_name_home_6: TextView? = null
+    private var tvv_count_home_7: TextView? = null
+    private var tvv_name_home_8: TextView? = null
 
     private var recyHomegrid: RecyclerView? = null
     lateinit var homeArrayList: JSONArray
@@ -176,6 +186,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         setContentView(R.layout.activity_homemain)
         context = this@HomeActivity
         attendanceAddViewModel = ViewModelProvider(this).get(AttendanceAddViewModel::class.java)
+        dashboardcountViewModel = ViewModelProvider(this).get(DashBoardCountViewModel::class.java)
 
         setRegViews()
         Config.setRedirection(context,"")
@@ -185,6 +196,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         getCalendarId(context)
         checkAndRequestPermissions()
         getLocationTracker()
+//        getDashBoardCount()
 //        getServiceNotification()
 //        getNotfCount()
         SubMode = "2"
@@ -549,6 +561,67 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         }
     }
 
+    private fun getDashBoardCount() {
+        var dashboardcount = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+//                progressDialog = ProgressDialog(context, R.style.Progress)
+//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//                progressDialog!!.setCancelable(false)
+//                progressDialog!!.setIndeterminate(true)
+//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+//                progressDialog!!.show()
+                dashboardcountViewModel.getDashBoardCount(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG,"msg   353   "+msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("UserTaskList")
+                                val JObject = jobjt.getJSONArray("UserTaskListData")
+                                if (JObject.length()>0){
+                                    if (dashboardcount == 0){
+                                        dashboardcount++
+
+
+
+                                    }
+
+                                }
+
+                            } else {
+//                                val builder = AlertDialog.Builder(
+//                                    this@HomeActivity,
+//                                    R.style.MyDialogTheme
+//                                )
+//                                builder.setMessage(jObject.getString("EXMessage"))
+//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                }
+//                                val alertDialog: AlertDialog = builder.create()
+//                                alertDialog.setCancelable(false)
+//                                alertDialog.show()
+                            }
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+                    })
+//                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+
     private fun bottombarnav() {
         chipNavigationBar = findViewById(R.id.chipNavigation)
         val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
@@ -610,10 +683,19 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         tv_DateTime = findViewById(R.id.tv_DateTime)
         tv_Status = findViewById(R.id.tv_Status)
         txtv_notfcount= findViewById(R.id.txtv_notfcount)
+//        tvv_count_home_1= findViewById(R.id.tvv_count_home_1)
+//        tvv_name_home_2= findViewById(R.id.tvv_name_home_2)
+//        tvv_count_home_3= findViewById(R.id.tvv_count_home_3)
+//        tvv_name_home_4= findViewById(R.id.tvv_name_home_4)
+//        tvv_count_home_5= findViewById(R.id.tvv_count_home_5)
+//        tvv_name_home_6= findViewById(R.id.tvv_name_home_6)
+//        tvv_count_home_7= findViewById(R.id.tvv_count_home_7)
+//        tvv_name_home_8= findViewById(R.id.tvv_name_home_8)
 
         img_techpartner= findViewById(R.id.img_techpartner)
         img_logo= findViewById(R.id.img_logo)
 //        llcompany_name1= findViewById(R.id.llcompany_name1)
+
 
         val headerView: View = nav_view!!.getHeaderView(0)
         tv_navName = headerView!!.findViewById(R.id.tv_navName)
@@ -759,6 +841,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
         if (homeArraySort.length()>0){
             val lLayout = GridLayoutManager(this@HomeActivity, 3)
+//           val lLayout = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
             recyHomegrid!!.layoutManager = lLayout as RecyclerView.LayoutManager?
             adapterHome = HomeGridAdapter(this@HomeActivity, homeArraySort,notificationCount!!)
             recyHomegrid!!.adapter = adapterHome
@@ -865,14 +948,14 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 startActivity(i)
             }
             R.id.rlnotification -> {
-//                val i = Intent(this@HomeActivity, NotificationActivity::class.java)
-//                startActivity(i)
+                val i = Intent(this@HomeActivity, NotificationActivity::class.java)
+                startActivity(i)
 
 //                val i = Intent(this@HomeActivity, InventoryActivity::class.java)
 //                startActivity(i)
 
-                val i = Intent(this@HomeActivity, ApproveActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@HomeActivity, ApproveActivity::class.java)
+//                startActivity(i)
 
 //                val i = Intent(this@HomeActivity, ApprovalListDetailActivity::class.java)
 //                startActivity(i)
@@ -1415,12 +1498,12 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                         if(!logo.equals(""))
                                         {
 
-                                            val decodedString = Base64.decode(logo, Base64.DEFAULT)
-                                            ByteArrayToBitmap(decodedString)
-                                            val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-                                            val stream = ByteArrayOutputStream()
-                                            decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                                            Glide.with(this) .load(stream.toByteArray()).into(imgAttendance!!)
+//                                            val decodedString = Base64.decode(logo, Base64.DEFAULT)
+//                                            ByteArrayToBitmap(decodedString)
+//                                            val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+//                                            val stream = ByteArrayOutputStream()
+//                                            decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
+//                                            Glide.with(this) .load(stream.toByteArray()).into(imgAttendance!!)
 
                                         }
                                     }
@@ -2113,7 +2196,10 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 startActivity(i)
             }
             if (grid_id.equals("3")){
-                val i = Intent(this@HomeActivity, NotificationActivity::class.java)
+//                val i = Intent(this@HomeActivity, NotificationActivity::class.java)
+//                startActivity(i)
+
+                val i = Intent(this@HomeActivity, ApproveActivity::class.java)
                 startActivity(i)
 
             }

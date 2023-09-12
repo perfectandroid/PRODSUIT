@@ -6643,7 +6643,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 ID_Status = jsonObject.getString("ID_Status")
                 ID_NextAction = jsonObject.getString("ID_NextAction")
                 ID_ActionType = jsonObject.getString("ID_ActionType")
-                ID_ProductLocation = jsonObject.getString("ID_ProductLocation")
+                ID_ProductLocation = jsonObject.getString("FK_ProductLocation")
                 edtProdcategory!!.setText("" + jsonObject!!.getString("CategoryName"))
                 edtProjectName!!.setText("" + jsonObject!!.getString("ProjectName"))
                 edtProdproduct!!.setText("" + jsonObject!!.getString("ProdName"))
@@ -6700,7 +6700,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 Log.e(TAG, "txtPpp    117    ")
 
             } catch (e: Exception) {
-
+                Log.e(TAG, "        112556633    "+e)
             }
         }
         if (data.equals("leadthrough")) {
@@ -8977,9 +8977,16 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         if (MRRP!!.equals("")) {
             MRRP = "0"
         }
-        if (strQty.equals("")) {
-            strQty = "0"
+//        if (strQty.equals("")) {
+//            strQty = "0"
+//
+//        }
 
+        var fQty = 0
+        if (strQty.equals("")){
+            fQty = 0
+        }else{
+            fQty = strQty.toInt()
         }
 
 
@@ -8997,6 +9004,14 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         if (ID_Category.equals("")) {
             Config.snackBars(context, v, "Select Category")
 
+        }else if (strQty.equals("") || fQty == 0) {
+            if (CompanyCategory.equals("0") || CompanyCategory.equals("1")) {
+                Config.snackBars(context, v, "Enter Quantity")
+            } else if (CompanyCategory.equals("2")) {
+                Config.snackBars(context, v, "Enter No.of Passengers")
+            }else{
+                Config.snackBars(context, v, "Enter Quantity")
+            }
         } else if (CompanyCategory.equals("2") && strExpecteddate.equals("")) {
             Config.snackBars(context, v, "Expected date")
 

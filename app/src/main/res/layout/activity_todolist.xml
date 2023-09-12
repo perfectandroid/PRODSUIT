@@ -46,10 +46,9 @@
 
                 <TextView
                     android:id="@+id/tv_header"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1.9"
                     android:gravity="center"
                     android:text="To-do List"
                     android:layout_marginTop="10dp"

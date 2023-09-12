@@ -34,6 +34,7 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
     lateinit var approvalArray: JSONArray
     lateinit var approvalArrayList: JSONArray
     internal var recyAprrove: RecyclerView? = null
+    internal var imv_nodata: ImageView? = null
     var approveCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -78,6 +79,7 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
                                         approvalArrayList = jobjt.getJSONArray("AuthorizationModuleDetails")
 
                                         Log.e(TAG, "approvalArray   999101   " + approvalArrayList)
+
                                         if (approvalArrayList.length()> 0){
                                             val lLayout = GridLayoutManager(this@ApproveActivity, 1)
                                             recyAprrove!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -85,6 +87,14 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
                                             recyAprrove!!.adapter = adapter
                                              adapter.setClickListener(this@ApproveActivity)
                                         }
+//                                        else if (approvalArray.equals("")){
+//
+//                                            Log.e(TAG, "approvalArray   10001   " + approvalArrayList)
+//
+//                                            recyAprrove!!.visibility = View.GONE
+//                                            imv_nodata!!.visibility = View.VISIBLE
+//
+//                                        }
 
 
                                     } else {
@@ -132,6 +142,7 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
         imback!!.setOnClickListener(this)
 
         recyAprrove = findViewById(R.id.recyAprrove)
+//        imv_nodata = findViewById(R.id.imv_nodata)
 
 
     }

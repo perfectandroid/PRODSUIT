@@ -44,16 +44,15 @@
 
                 <TextView
                     android:id="@+id/tv_header"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:layout_weight="1.3"
+                    android:layout_marginRight="10dp"
                     android:text="Upcoming Tasks"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:tint="@color/white"
                     android:textColor="@color/white"
                     android:textSize="20dp"
