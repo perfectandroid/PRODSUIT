@@ -162,8 +162,18 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
 //        generateSS()
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
+
         Module = intent!!.getStringExtra("Module").toString()
-        AuthID = jsonObj!!.getString("ID_FIELD")
+        Log.e(TAG,"jsonObj  16555   "+jsonObj)
+        Log.e(TAG,"Module  16555   "+Module)
+        if (Module.equals("AWAIT")){
+            Module =  jsonObj!!.getString("Module")
+            AuthID = jsonObj!!.getString("ID_AuthorizationData")
+        }else{
+
+            AuthID = jsonObj!!.getString("ID_FIELD")
+        }
+
 
         Log.e(TAG,"163333   Start")
         checkAttendance()

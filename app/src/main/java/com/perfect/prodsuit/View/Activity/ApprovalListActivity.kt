@@ -150,7 +150,7 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                                                 while (keys.hasNext()) {
                                                     val key = keys.next()
 
-                                                    if (!key.equals("SlNo") && !key.equals("ID_FIELD")  && !key.equals("drank") && !key.equals("TotalCount") && !key.equals("ID_AuthorizationData") && !key.equals("Module")){
+                                                    if (!key.equals("SlNo") && !key.equals("ID_FIELD")  && !key.equals("drank") && !key.equals("TotalCount") && !key.equals("ID_AuthorizationData") && !key.equals("Module") && !key.equals("SkipPreviousLevel")){
                                                         Log.e(TAG,"JSON_KEY  4566   :  "+ key +"  :  "+jsonObject!!.getString(key)) // Output: key1, key2, key3
 
 //                    val img: Drawable = context.getResources().getDrawable(R.drawable.vtr_common)
@@ -268,7 +268,15 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
 
                                                 ll_main!!.addView(dynamicLinearLayoutmain);
-                                                dynamicLinearLayoutmain.addView(textView3);
+
+                                                if (Module.equals("AWAIT")){
+                                                    if (jsonObject.getString("SkipPreviousLevel").equals("true")){
+                                                        dynamicLinearLayoutmain.addView(textView3);
+                                                    }
+                                                }else{
+                                                    dynamicLinearLayoutmain.addView(textView3);
+                                                }
+
 
                                             }
 
