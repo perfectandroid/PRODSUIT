@@ -88,7 +88,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://45.118.163.44:14003/ProdSuiteAPIUnisoft/"
 //    val BANK_KEY = "-512"
 
-    ////   Sunitha` 17.05.2023
+    ////   Sunitha` 13.09.2023
 //    val CERT_NAME = "sunitha.pem"
 //    val BASE_URL = "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/"

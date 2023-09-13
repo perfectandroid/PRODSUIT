@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "724142368412",
-    "project_id": "persuit-sheetal",
-    "storage_bucket": "persuit-sheetal.appspot.com"
+    "project_number": "176128857959",
+    "project_id": "prodsuit-385011",
+    "storage_bucket": "prodsuit-385011.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:724142368412:android:89c5c5cb5fd91a4519af59",
+        "mobilesdk_app_id": "1:176128857959:android:a408495533a47ffd9101c2",
         "android_client_info": {
-          "package_name": "com.perfect.sheetal"
+          "package_name": "com.perfect.prodsuite"
         }
       },
       "oauth_client": [
         {
-          "client_id": "724142368412-91tkca658mp3soaep82n5llqji33fgss.apps.googleusercontent.com",
+          "client_id": "176128857959-ijndvue96ep6lftfrt5p74eh996ehahl.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCqiTW83kNGBIB0CwXMC_Eao1CrJLB7LTo"
+          "current_key": "AIzaSyAhc93Leb62cueA7On9x7y5ycKImT-xDEY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "724142368412-91tkca658mp3soaep82n5llqji33fgss.apps.googleusercontent.com",
+              "client_id": "176128857959-ijndvue96ep6lftfrt5p74eh996ehahl.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

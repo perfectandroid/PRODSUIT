@@ -1031,7 +1031,7 @@
                                     android:layout_marginTop="5dp"
                                     android:layout_marginBottom="0dp"
                                     app:cardMaxElevation="1dp"
-                                    android:visibility="gone">
+                                    android:visibility="visible">
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -1058,7 +1058,8 @@
                                             android:padding="7dp"
                                             android:singleLine="true"
                                             android:text=""
-                                            android:textSize="15dp" />
+                                            android:textSize="15dp"
+                                            android:visibility="gone"/>
 
                                         <LinearLayout
                                             android:id="@+id/llUploadImages"
@@ -1067,7 +1068,6 @@
                                             android:layout_gravity="center"
                                             android:gravity="center"
                                             android:padding="10dp"
-
                                             android:orientation="horizontal"
                                             android:visibility="visible">
 

@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.ContactsContract
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
@@ -81,13 +82,21 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
     private var imvContactbook: ImageView? = null
     private var edtScan: ImageView? = null
 //    private var refresh_btn: ImageView? = null
-//    private var imgv_upload1: ImageView? = null
-//    private var imgv_upload2: ImageView? = null
-//    private var imgClose1: ImageView? = null
-//    private var imgClose2: ImageView? = null
+    private var imgvupload1: ImageView? = null
+    private var imgvupload2: ImageView? = null
+    private var imgClose1: ImageView? = null
+    private var imgClose2: ImageView? = null
+    private val GALLERY = 1
+    private val CAMERA = 2
+    private val PERMISSION_REQUEST_CODE = 200
 
     private var ll_product_qty: LinearLayout? = null
     private var llfollowup: LinearLayout? = null
+    private val MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1
+    private var image1 = ""
+    private var image2 = ""
+    private var strImage: String? = null
+    private var destination: File? = null
 
     var listview: ListView? = null
     private var cursor: Cursor? = null
@@ -306,6 +315,11 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         imvContactbook = findViewById<ImageView>(R.id.imvContactbook)
         edtScan = findViewById<ImageView>(R.id.edtScan)
 
+        imgvupload1 = findViewById(R.id.imgv_upload1)
+        imgvupload2 = findViewById(R.id.imgv_upload2)
+        imgClose1 = findViewById(R.id.imgClose1)
+        imgClose2 = findViewById(R.id.imgClose2)
+
         btnReset = findViewById<Button>(R.id.btnReset)
         btnSubmit = findViewById<Button>(R.id.btnSubmit)
 
@@ -320,9 +334,14 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
         img_search!!.setOnClickListener(this)
         imvContactbook!!.setOnClickListener(this)
+        imgvupload1!!.setOnClickListener(this)
+        imgvupload2!!.setOnClickListener(this)
+        imgClose1!!.setOnClickListener(this)
+        imgClose2!!.setOnClickListener(this)
         edtScan!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
         btnReset!!.setOnClickListener(this)
+
 
         searchNameTitle = arrayOf("Mr. ", "Mrs. ", "Miss. ", "M/s. ", "Dr. ", "Ms. ", "Fr. ", "Sr. ")
         detailsShowing()
@@ -514,6 +533,52 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                     }
                 } catch (e: Exception) {
                     Log.e("TAG", "Exception  64   " + e.toString())
+                }
+            }
+
+            R.id.imgv_upload1 -> {
+                try {
+                    Config.Utils.hideSoftKeyBoard(this@LeadGenerationQuickActivity, v)
+                    strImage = "1"
+                    showPictureDialog()
+                } catch (e: java.lang.Exception) {
+                    if (checkCamera()) {
+                    } else {
+                        requestPermission()
+                    }
+                }
+            }
+            R.id.imgv_upload2 -> {
+                try {
+                    Config.Utils.hideSoftKeyBoard(this@LeadGenerationQuickActivity, v)
+                    strImage = "2"
+                    showPictureDialog()
+                } catch (e: java.lang.Exception) {
+                    if (checkCamera()) {
+                    } else {
+                        requestPermission()
+                    }
+                }
+            }
+
+            R.id.imgClose1 -> {
+                try {
+                    image1 = ""
+                    encode1 = ""
+                    imgvupload1!!.setImageResource(R.drawable.lead_uploads)
+                } catch (e: java.lang.Exception) {
+
+                }
+            }
+            R.id.imgClose2 -> {
+                try {
+
+                    image2 = ""
+                    encode2 = ""
+
+                    imgvupload2!!.setImageResource(R.drawable.lead_uploads)
+                } catch (e: java.lang.Exception) {
+
                 }
             }
 
@@ -769,7 +834,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                     dataContact,
                     to
                 )
-//              val adapter = ArrayAdapter(this@LeadGenerationActivity, android.R.layout.simple_list_item_1, dataContact)
+//              val adapter = ArrayAdapter(this@LeadGenerationQuickActivity, android.R.layout.simple_list_item_1, dataContact)
 //            ListView!!.setAdapter(adapter as ListAdapter?)
             listview!!.setAdapter(adapter)
             dialogContact!!.show()
@@ -1826,6 +1891,187 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             }
         }
 
+        if (requestCode == GALLERY) {
+            if (data != null) {
+                val contentURI = data!!.data
+                try {
+                    var selectedImageUri: Uri = data.getData()!!
+                    data.getData()
+                    if (strImage.equals("1")) {
+
+                        //   val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
+                        imgvupload1!!.setImageURI(contentURI)
+                        image1 = getRealPathFromURI(selectedImageUri)
+                        Log.e(TAG, "image1  2052    " + image1)
+                        if (image1 != null) {
+                        }
+                    }
+                    if (strImage.equals("2")) {
+
+                        //  val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
+                        imgvupload2!!.setImageURI(contentURI)
+                        image2 = getRealPathFromURI(selectedImageUri)
+                        if (image2 != null) {
+                        }
+                    }
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    Toast.makeText(this@LeadGenerationQuickActivity, "Failed!", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+
+        } else if (requestCode == CAMERA) {
+
+            try {
+                if (data != null) {
+                    try {
+                        if (ContextCompat.checkSelfPermission(
+                                this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            ) != PackageManager.PERMISSION_GRANTED
+                        ) {
+                            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                                    this,
+                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                                )
+                            ) {
+                                // Show an explanation to the user *asynchronously* -- don't block
+                                // this thread waiting for the user's response! After the user
+                                // sees the explanation, try again to request the permission.
+
+                            } else {
+                                // No explanation needed; request the permission
+                                ActivityCompat.requestPermissions(
+                                    this,
+                                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                    MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                                )
+                            }
+                        } else {
+
+                            val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
+                            val bytes = ByteArrayOutputStream()
+                            thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+//                    destination = File(
+//                        (Environment.getExternalStorageDirectory()).toString() + "/" +
+//                                getString(R.string.app_name),
+//                        "IMG_" + System.currentTimeMillis() + ".jpg"
+//                    )
+//                    destination = File((Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
+//                               "",
+//                        "IMG_" + System.currentTimeMillis() + ".jpg"
+//                    )
+//                    val fo: FileOutputStream
+
+                            try {
+//                        if (!destination!!.getParentFile().exists()) {
+//                            destination!!.getParentFile().mkdirs()
+//                        }
+//                        if (!destination!!.exists()) {
+//                            destination!!.createNewFile()
+//                        }
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                                    destination = File(
+                                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
+                                        ""
+                                    )
+                                    // destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)  +"/" +  getString(R.string.app_name));
+                                } else {
+                                    destination = File(
+                                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
+                                        ""
+                                    )
+                                }
+
+                                if (!destination!!.exists()) {
+                                    destination!!.createNewFile()
+                                }
+
+                                destination = File(
+                                    (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
+                                            "",
+                                    "IMG_" + System.currentTimeMillis() + ".jpg"
+                                )
+                                val fo: FileOutputStream
+
+
+                                fo = FileOutputStream(destination)
+                                fo.write(bytes.toByteArray())
+                                fo.close()
+                            } catch (e: FileNotFoundException) {
+                                e.printStackTrace()
+                                Log.e(TAG, "FileNotFoundException   23671    " + e.toString())
+
+                            } catch (e: IOException) {
+                                e.printStackTrace()
+                                Log.e(TAG, "FileNotFoundException   23672    " + e.toString())
+                            }
+
+                            if (strImage.equals("1")) {
+                                image1 = destination!!.getAbsolutePath()
+                                Log.e(TAG, "image1  20522    " + image1)
+                                destination = File(image1)
+
+
+                                val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                                val converetdImage = getResizedBitmap(myBitmap, 500)
+                                //  val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
+                                if (imgvupload1 != null) {
+                                    imgvupload1!!.setImageBitmap(converetdImage)
+                                }
+                                imgvupload1!!.setImageBitmap(converetdImage)
+
+                                if (image1 != null) {
+
+                                }
+                            }
+                            if (strImage.equals("2")) {
+                                image2 = destination!!.getAbsolutePath()
+                                Log.e(TAG, "image2  20522    " + image2)
+                                destination = File(image2)
+
+                                val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                                val converetdImage = getResizedBitmap(myBitmap, 500)
+                                //   val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
+                                if (imgvupload2 != null) {
+                                    imgvupload2!!.setImageBitmap(converetdImage)
+                                }
+                                imgvupload2!!.setImageBitmap(converetdImage)
+
+                                if (image2 != null) {
+
+                                }
+                            }
+
+                        }
+                    } catch (e: IOException) {
+                        e.printStackTrace()
+                        Toast.makeText(this@LeadGenerationQuickActivity, "Failed!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            } catch (e: Exception) {
+
+            }
+
+
+        }
+
+    }
+
+    fun getResizedBitmap(image: Bitmap, maxSize: Int): Bitmap {
+        var width = image.width
+        var height = image.height
+        val bitmapRatio = width.toFloat() / height.toFloat()
+        if (bitmapRatio > 1) {
+            width = maxSize
+            height = (width / bitmapRatio).toInt()
+        } else {
+            height = maxSize
+            width = (height * bitmapRatio).toInt()
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true)
     }
 
     private fun getItemList(barcodeValue: String) {
@@ -1923,6 +2169,99 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
     }
 
+    private fun choosePhotoFromGallary() {
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(galleryIntent, GALLERY)
+    }
+
+    private fun showPictureDialog() {
+
+        try {
+            val pm = packageManager
+            val hasPerm = pm.checkPermission(Manifest.permission.CAMERA, packageName)
+            if (hasPerm == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) !== PackageManager.PERMISSION_GRANTED
+                ) {
+                    // Permission is not granted
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                    ) {
+                        // Show an explanation to the user *asynchronously* -- don't block
+                        // this thread waiting for the user's response! After the user
+                        // sees the explanation, try again to request the permission.
+                    } else {
+                        // No explanation needed; request the permission
+                        ActivityCompat.requestPermissions(
+                            this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                        )
+                    }
+                } else {
+                    val pictureDialog = AlertDialog.Builder(this)
+                    pictureDialog.setTitle("Select From")
+                    val pictureDialogItems = arrayOf("Gallery", "Camera")
+                    pictureDialog.setItems(pictureDialogItems) { dialog, which ->
+                        when (which) {
+                            0 -> choosePhotoFromGallary()
+                            1 -> takePhotoFromCamera()
+                        }
+                    }
+                    pictureDialog.show()
+                }
+            } else ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.CAMERA),
+                CAMERA
+            )
+        } catch (e: Exception) {
+
+        }
+
+    }
+
+    private fun checkCamera(): Boolean {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Permission is not granted
+            return false;
+        }
+        return true;
+
+    }
+
+    private fun takePhotoFromCamera() {
+        val photo = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(photo, CAMERA)
+    }
+
+    private fun requestPermission() {
+
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf<String>(Manifest.permission.CAMERA),
+            PERMISSION_REQUEST_CODE
+        )
+    }
+
+    fun getRealPathFromURI(uri: Uri): String {
+        var path = ""
+        if (getContentResolver() != null) {
+            val cursor = getContentResolver().query(uri, null, null, null, null)
+            if (cursor != null) {
+                cursor!!.moveToFirst()
+                val idx = cursor!!.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+                path = cursor!!.getString(idx)
+                cursor!!.close()
+            }
+        }
+        return path
+    }
+
 
 
     override fun onClick(position: Int, data: String) {
@@ -1961,11 +2300,11 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 //
 //
 //
-//            LeadGenerationActivity.FK_Country = jsonObject.getString("CountryID")
-//            LeadGenerationActivity.FK_States = jsonObject.getString("StatesID")
-//            LeadGenerationActivity.FK_District = jsonObject.getString("DistrictID")
-//            LeadGenerationActivity.FK_Post = jsonObject.getString("PostID")
-//            LeadGenerationActivity.FK_Area = jsonObject.getString("FK_Area")
+//            FK_Country = jsonObject.getString("CountryID")
+//            FK_States = jsonObject.getString("StatesID")
+//            FK_District = jsonObject.getString("DistrictID")
+//            FK_Post = jsonObject.getString("PostID")
+//            FK_Area = jsonObject.getString("FK_Area")
 //
 //            edtPincode!!.setText(jsonObject.getString("Pincode"))
 //            edtCountry!!.setText(jsonObject.getString("CntryName"))
@@ -2157,6 +2496,8 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         val MobilePattern = "[0-9]{10}"
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
 
+
+
         if (strDate.equals("")) {
             Config.snackBars(context, v, "Select Enquiry Date")
         }
@@ -2340,6 +2681,39 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         array_product_lead.put(jObject)
         Log.e(TAG, "array_product_lead     1122  " + array_product_lead)
 
+        if (image1.equals("")) {
+            encode1 = ""
+        } else {
+            val bitmap = BitmapFactory.decodeFile(image1)
+            val converetdImage = getResizedBitmap(bitmap, 500)
+            val stream = ByteArrayOutputStream()
+            converetdImage.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                encode1 = Base64.getEncoder().encodeToString(stream.toByteArray());
+            } else {
+                encode1 = android.util.Base64.encodeToString(
+                    stream.toByteArray(),
+                    android.util.Base64.DEFAULT
+                )
+            }
+        }
+        if (image2.equals("")) {
+            encode2 = ""
+        } else {
+            val bitmap = BitmapFactory.decodeFile(image2)
+            val converetdImage = getResizedBitmap(bitmap, 500)
+            val stream = ByteArrayOutputStream()
+            converetdImage.compress(Bitmap.CompressFormat.PNG, 100, stream)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                encode2 = Base64.getEncoder().encodeToString(stream.toByteArray())
+            } else {
+                encode2 = android.util.Base64.encodeToString(
+                    stream.toByteArray(),
+                    android.util.Base64.DEFAULT
+                )
+            }
+        }
+
         LeadConfirmationPopup()
 
     }
@@ -2452,6 +2826,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         try {
 
             Log.e(TAG, "encode1   4759   " + encode1)
+            Log.e(TAG, "encode2   4759   " + encode2)
             Log.e(TAG, "strDate   4759   " + strDate + "   " + strFollowupdate)
 
 
@@ -2588,7 +2963,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                                                 tv_succesok!!.setOnClickListener {
                                                     suceessDialog!!.dismiss()
 
-//                                                    val i = Intent(this@LeadGenerationActivity, LeadActivity::class.java)
+//                                                    val i = Intent(this@LeadGenerationQuickActivity, LeadActivity::class.java)
 //                                                    startActivity(i)
                                                     finish()
 
@@ -2724,6 +3099,14 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
         strLatitude = ""
         strLongitue = ""
+
+        image1 = ""
+        image2 = ""
+        encode1 = ""
+        encode2 = ""
+
+        imgvupload1!!.setImageResource(R.drawable.lead_uploads)
+        imgvupload2!!.setImageResource(R.drawable.lead_uploads)
 
 
         val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
