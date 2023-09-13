@@ -846,10 +846,11 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
             var mobileno = tv_Mobile!!.text.toString()
             if (mobileno.equals("")){
-                Config.snackBarWarning(context,v,"Invalid mobile number")
+                Config.snackBarWarning(context,v,""+Config.INVALID_MOBILE)
             }else{
                 //intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + "8075283549"))
-                intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
+              //  intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
+                intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mobileno))
                 startActivity(intent)
             }
 

@@ -179,6 +179,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private lateinit var alarmManager: AlarmManager
     private lateinit var pendingIntent: PendingIntent
 
+    private val CALENDAR_PERMISSION_REQUEST_CODE = 101
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -200,6 +202,14 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //        getServiceNotification()
 //        getNotfCount()
         SubMode = "2"
+
+//        if (hasCalendarPermission()) {
+//            // Permission is already granted, perform your calendar-related operations here
+//            Log.e(TAG,"269991    Granted")
+//        } else {
+//            // Permission is not granted, request it
+//            requestCalendarPermission()
+//        }
 
         setMenuItemHidind()
 
@@ -227,6 +237,47 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //        }
         
     }
+
+
+    /////
+
+    private fun hasCalendarPermission(): Boolean {
+        val calendarPermission = Manifest.permission.READ_CALENDAR
+        val permissionStatus = ContextCompat.checkSelfPermission(this, calendarPermission)
+        return permissionStatus == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestCalendarPermission() {
+        val calendarPermission = Manifest.permission.READ_CALENDAR
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(calendarPermission),
+            CALENDAR_PERMISSION_REQUEST_CODE
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == CALENDAR_PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission granted, you can now access the calendar
+                // Perform your calendar-related operations here
+                Log.e(TAG,"269992    Granted")
+            } else {
+                // Permission denied, inform the user or take appropriate action
+                Log.e(TAG,"269993    Denied")
+                requestCalendarPermission()
+            }
+        }
+    }
+
+
+    ////
 
     private fun setMenuItemHidind() {
         try {

@@ -9266,10 +9266,14 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 
             val strrfollowup = jsonObject.getString("NextActionDate")
-            val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
-            val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-            val currentDateFormate = inputFormat.parse(strrfollowup)
-            val folloupdate = outputFormat.format(currentDateFormate)
+            var folloupdate = ""
+            if (!strrfollowup.equals("")){
+                val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+                val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+                val currentDateFormate = inputFormat.parse(strrfollowup)
+                folloupdate = outputFormat.format(currentDateFormate)
+            }
+
 
             if (jsonObject.getString("ID_Product")!!.equals("")) {
 

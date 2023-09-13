@@ -831,8 +831,13 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                 Log.e("TODO","8001   "+jsonObject.getString("ID_LeadGenerate"))
                 Log.e("TODO","8002   "+jsonObject.getString("ID_LeadGenerateProduct"))
 
-                intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
-                startActivity(intent)
+                if (mobileno.equals("")){
+                    Toast.makeText(applicationContext,""+Config.INVALID_MOBILE,Toast.LENGTH_SHORT).show()
+                }else{
+//                    intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
+                    intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mobileno))
+                    startActivity(intent)
+                }
 
 //                intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
 //                startActivity(intent)

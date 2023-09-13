@@ -639,13 +639,30 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
         ) {
             ActivityCompat.requestPermissions(this, permissions, ALL_PERMISSIONS)
         } else {
+//
+//                //intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + "8075283549"))
+//                intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
+//                startActivity(intent)
 
-                //intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + "8075283549"))
-                intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
-                startActivity(intent)
+            if (mobileno.equals("")){
+                Toast.makeText(applicationContext,""+Config.INVALID_MOBILE,Toast.LENGTH_SHORT).show()
+            }else{
+//                    intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
+//                intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mobileno))
+//                startActivity(intent)
+
+                if (mobileno.equals("")){
+                    Toast.makeText(applicationContext,""+Config.INVALID_MOBILE,Toast.LENGTH_SHORT).show()
+                }else{
+//                    intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
+                    intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mobileno))
+                    startActivity(intent)
+                }
+
             }
-
         }
+
+    }
 
     private fun checkLocationPermission(v: View) {
         val ALL_PERMISSIONS = 102

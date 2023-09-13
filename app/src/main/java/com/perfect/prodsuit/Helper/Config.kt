@@ -131,6 +131,7 @@ object Config {
     const val SOME_TECHNICAL_ISSUES = "Some Technical Issues."
     const val PLEASE_TRY_AGAIN = "Some Technical Issues, Please try again in sometime"
     const val notificationBack = false // String False / True
+    const val INVALID_MOBILE = "Invalid Mobile Number"
 
     fun getHostnameVerifier(): HostnameVerifier {
         return HostnameVerifier { hostname, session -> true }
@@ -1005,7 +1006,7 @@ object Config {
             obj.put("grid_id", "10")
             obj.put("grid_name", "Reminder")
             //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
-            obj.put("image","home_reminder")
+            obj.put("image","reminder_home_1")
             obj.put("count","0")
             array.put(obj)
 
@@ -1013,7 +1014,7 @@ object Config {
             obj.put("grid_id", "11")
             obj.put("grid_name", "Profile")
             //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
-            obj.put("image","home_profile")
+            obj.put("image","profile_home_1")
             obj.put("count","0")
             array.put(obj)
 

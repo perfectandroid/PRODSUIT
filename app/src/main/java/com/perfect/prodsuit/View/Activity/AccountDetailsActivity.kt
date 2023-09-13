@@ -1011,10 +1011,18 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             }
             BroadCallEditer.commit()
 
+
             var mobileno = txtPhone!!.text.toString()
-            //intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + "8075283549"))
-            intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
-            startActivity(intent)
+
+            if (mobileno.equals("")){
+                Toast.makeText(applicationContext,""+Config.INVALID_MOBILE,Toast.LENGTH_SHORT).show()
+            }else{
+                //intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + "8075283549"))
+              //  intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "+91" + mobileno))
+                intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:"+ mobileno))
+                startActivity(intent)
+            }
+
         }
        // Toast.makeText(applicationContext,"Call ",Toast.LENGTH_SHORT).show()
 

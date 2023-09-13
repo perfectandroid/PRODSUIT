@@ -25,7 +25,7 @@ class MyAlarmReceiver : BroadcastReceiver() {
     private val channelName = "my_channel_id"
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        Toast.makeText(context, "Alarm triggered!", Toast.LENGTH_SHORT).show()
+      //  Toast.makeText(context, "Alarm triggered!", Toast.LENGTH_SHORT).show()
         val requestCode = intent?.getIntExtra("REQUEST_CODE", -1)
         val message = intent?.getStringExtra("message")
         val date = intent?.getStringExtra("date")
