@@ -21,6 +21,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/leadfrom_color.xml" value="0.1" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/noproduct_svg.xml" value="0.2625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/profile_home_1.xml" value="0.2675" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/search_24.xml" value="0.2675" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/search_bgsvg.xml" value="0.2125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_approve.xml" value="0.26" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_approve_list.xml" value="0.1685" />
@@ -116,6 +117,8 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_transfer.xml" value="0.22" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_todolist.xml" value="0.26944444444444443" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_upcomingtask.xml" value="0.2574074074074074" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_walking_customer.xml" value="0.2921875" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_walking_existing.xml" value="0.24739583333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_approe_list.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_approve.xml" value="0.24583333333333332" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_approve1.xml" value="0.33" />

@@ -127,37 +127,37 @@
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/til_CustomerName"
-                                style="@style/Widget.App.TextInputLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
+                                android:hint="Customer Name *"
                                 android:layout_marginTop="10dp"
+                                android:layout_marginLeft="15dp"
                                 android:layout_marginRight="15dp"
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
-                                android:hint="Customer Name *">
+                                app:endIconMode="custom"
+                                app:startIconDrawable="@drawable/svg_walk_customer"
+                                app:startIconTint="@color/textColor"
+                                style="@style/Widget.App.TextInputLayout">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/tie_CustomerName"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:drawableLeft="@drawable/svg_walk_customer"
-                                    android:drawablePadding="5dp"
-                                    android:drawableTint="@color/textColor"
-                                    android:editable="true"
-                                    android:focusableInTouchMode="true"
-                                    android:fontFamily="@font/myfont"
                                     android:gravity="center_vertical"
-                                    android:maxLength="25"
-                                    android:singleLine="true"
-                                    android:paddingLeft="10dp"
-                                    android:paddingTop="8dp"
-                                    android:paddingBottom="8dp"
-                                    android:textColor="@color/greydarks"
+                                    android:paddingTop="1dp"
+                                    android:paddingBottom="1dp"
                                     android:textSize="14dp"
-                                    android:textStyle="normal" />
+                                    android:focusableInTouchMode="true"
+                                    android:editable="true"
+                                    android:drawableTint="@color/textColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:textColor="@color/greydarks"
+                                    android:drawablePadding="-10dp"
+                                    android:textStyle="normal"/>
 
                             </com.google.android.material.textfield.TextInputLayout>
+
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/til_Phone"
@@ -169,14 +169,17 @@
                                 android:layout_marginRight="15dp"
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
+                                app:endIconMode="custom"
+                                app:startIconDrawable="@drawable/svg_walk_phone"
                                 android:hint="Phone">
+<!--                                app:endIconDrawable="@drawable/search_24"-->
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/tie_Phone"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:drawableLeft="@drawable/svg_walk_phone"
-                                    android:drawablePadding="5dp"
+                                    android:drawablePadding="-10dp"
                                     android:drawableTint="@color/textColor"
                                     android:editable="true"
                                     android:nextFocusForward="@id/tie_AssignedTo"
@@ -197,33 +200,32 @@
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/til_AssignedTo"
-                                style="@style/Widget.App.TextInputLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
+                                android:hint="Assigned To *"
                                 android:layout_marginTop="10dp"
+                                android:layout_marginLeft="15dp"
                                 android:layout_marginRight="15dp"
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
-                                android:hint="Assigned To *">
+                                app:endIconMode="custom"
+                                app:startIconDrawable="@drawable/svg_walk_assigned"
+                                app:startIconTint="@color/textColor"
+                                app:endIconDrawable="@drawable/arrow_down"
+                                style="@style/Widget.App.TextInputLayout">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/tie_AssignedTo"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:drawableLeft="@drawable/svg_walk_assigned"
-                                    android:drawableRight="@drawable/arrow_down"
-                                    android:drawablePadding="5dp"
+                                    android:drawablePadding="-10dp"
                                     android:drawableTint="@color/textColor"
                                     android:editable="false"
-                                    android:nextFocusForward="@id/tie_AssignedDate"
                                     android:focusableInTouchMode="false"
                                     android:fontFamily="@font/myfont"
                                     android:gravity="center_vertical"
-                                    android:paddingLeft="10dp"
-                                    android:singleLine="true"
-                                    android:paddingTop="8dp"
-                                    android:paddingBottom="8dp"
+                                    android:paddingTop="1dp"
+                                    android:paddingBottom="1dp"
                                     android:textColor="@color/greydarks"
                                     android:textSize="14dp"
                                     android:textStyle="normal" />
@@ -232,33 +234,32 @@
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/til_AssignedDate"
-                                style="@style/Widget.App.TextInputLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
+                                android:hint="Assigned Date *"
                                 android:layout_marginTop="10dp"
+                                android:layout_marginLeft="15dp"
                                 android:layout_marginRight="15dp"
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
-                                android:hint="Assigned Date *">
+                                app:endIconMode="custom"
+                                app:startIconDrawable="@drawable/svg_walk_date"
+                                app:startIconTint="@color/textColor"
+                                app:endIconDrawable="@drawable/arrow_down"
+                                style="@style/Widget.App.TextInputLayout">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/tie_AssignedDate"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:drawableLeft="@drawable/svg_walk_date"
-                                    android:drawableRight="@drawable/arrow_down"
-                                    android:drawablePadding="5dp"
+                                    android:drawablePadding="-10dp"
                                     android:drawableTint="@color/textColor"
                                     android:editable="false"
-                                    android:nextFocusForward="@id/tie_Description"
                                     android:focusableInTouchMode="false"
                                     android:fontFamily="@font/myfont"
                                     android:gravity="center_vertical"
-                                    android:paddingLeft="10dp"
-                                    android:singleLine="true"
-                                    android:paddingTop="8dp"
-                                    android:paddingBottom="8dp"
+                                    android:paddingTop="1dp"
+                                    android:paddingBottom="1dp"
                                     android:textColor="@color/greydarks"
                                     android:textSize="14dp"
                                     android:textStyle="normal" />
@@ -267,40 +268,38 @@
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/til_Description"
-                                style="@style/Widget.App.TextInputLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="15dp"
+                                android:hint="Description"
                                 android:layout_marginTop="10dp"
+                                android:layout_marginLeft="15dp"
                                 android:layout_marginRight="15dp"
-                                android:layout_marginBottom="25dp"
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
-                                android:hint="Description">
+                                app:endIconMode="custom"
+                                app:startIconDrawable="@drawable/svg_walk_desc"
+                                app:startIconTint="@color/textColor"
+                                style="@style/Widget.App.TextInputLayout">
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/tie_Description"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:drawableLeft="@drawable/svg_walk_desc"
-                                    android:drawablePadding="5dp"
-                                    android:drawableTint="@color/textColor"
-                                    android:editable="true"
-                                    android:focusableInTouchMode="true"
-                                    android:fontFamily="@font/myfont"
                                     android:gravity="center_vertical"
-                                    android:justificationMode="inter_word"
-                                    android:maxLength="250"
-                                    android:maxLines="4"
-                                    android:nextFocusForward="@id/btnSubmit"
-                                    android:paddingLeft="10dp"
-                                    android:paddingTop="8dp"
-                                    android:paddingBottom="8dp"
-                                    android:textColor="@color/greydarks"
+                                    android:paddingTop="1dp"
+                                    android:paddingBottom="1dp"
                                     android:textSize="14dp"
-                                    android:textStyle="normal" />
+                                    android:focusableInTouchMode="true"
+                                    android:editable="true"
+                                    android:drawableTint="@color/textColor"
+                                    android:fontFamily="@font/myfont"
+                                    android:textColor="@color/greydarks"
+                                    android:drawablePadding="-10dp"
+                                    android:textStyle="normal"/>
 
                             </com.google.android.material.textfield.TextInputLayout>
+
+
 
                         </LinearLayout>
 

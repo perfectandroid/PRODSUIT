@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -26,6 +27,7 @@ import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.AssignedToAdapter
 import com.perfect.prodsuit.Viewmodel.AssignedToWalkingViewModel
 import com.perfect.prodsuit.Viewmodel.CreateWalkingCustomerViewModel
+import com.perfect.prodsuit.Viewmodel.WalkExistViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 import java.text.SimpleDateFormat
@@ -70,6 +72,10 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
     lateinit var createWalkingCustomerViewModel: CreateWalkingCustomerViewModel
     var saveAttendanceMark = false
 
+    var walkExistCount: Int = 0
+    lateinit var walkExistViewModel: WalkExistViewModel
+    lateinit var walkExistList : JSONArray
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -77,11 +83,26 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
         setContentView(R.layout.activity_walking_customer)
         assignedToWalkingViewModel = ViewModelProvider(this).get(AssignedToWalkingViewModel::class.java)
         createWalkingCustomerViewModel = ViewModelProvider(this).get(CreateWalkingCustomerViewModel::class.java)
+        walkExistViewModel = ViewModelProvider(this).get(WalkExistViewModel::class.java)
+
         context = this@WalkingCustomerActivity
         setRegViews()
         defaultLoad()
 
         checkAttendance()
+
+//        til_Phone!!.setEndIconOnClickListener {
+//            Config.disableClick(it)
+//            strPhone = tie_Phone!!.text.toString()
+//
+//            if (strPhone.equals("")){
+//                Config.snackBars(context,it,"Enter Phone Number")
+//            }else{
+//                walkExistCount = 0
+//                getExistingCustomerData()
+//
+//            }
+//        }
 
 
     }
@@ -485,6 +506,59 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
 
         }else{
             saveAttendanceMark = true
+        }
+    }
+
+
+    private fun getExistingCustomerData() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                walkExistViewModel.getWalkExist(this,strPhone!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            if (walkExistCount == 0){
+                                walkExistCount++
+                                Log.e(TAG,"msg   52777   "+msg)
+                                val jObject = JSONObject(msg)
+                                if (jObject.getString("StatusCode").equals("0")) {
+                                   // successPopup(jObject)
+
+//                                    val jobjt = jObject.getJSONObject("ExistCustomerDetails")
+//                                    walkExistList = jobjt.getJSONArray("ExistCustomerDetailList")
+                                    val i = Intent(this@WalkingCustomerActivity, WalkingExistingActivity::class.java)
+                                    i.putExtra("jsonObject",jObject.toString())
+                                    startActivity(i)
+
+                                }else{
+                                    val builder = AlertDialog.Builder(
+                                        this@WalkingCustomerActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            }
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 

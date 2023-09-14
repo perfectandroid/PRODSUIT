@@ -65,6 +65,11 @@
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.WalkingExistingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.LeadGenerationQuickActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -98,10 +103,9 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-<!--        <activity-->
-<!--            android:name="com.perfect.prodsuit.View.Activity.DeliveryActivity"-->
-<!--            android:exported="false" />-->
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- <activity -->
+        <!-- android:name="com.perfect.prodsuit.View.Activity.DeliveryActivity" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name="com.perfect.prodsuit.View.Activity.MaterialRequestActivity"
             android:exported="false"
