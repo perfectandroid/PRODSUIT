@@ -212,6 +212,9 @@ interface ApiInterface {
     @POST("UserValidations/PendingCountDetails")
     fun getPendingCountDetails(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/UserTaskList")
+    fun getUserTaskList(@Body body: RequestBody): Call<String>
+
     @POST("UserValidations/ActionType")
     fun getActionType(@Body body: RequestBody): Call<String>
 

@@ -293,10 +293,12 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/ll_standbytotal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="5.5"
                             android:padding="2dp"
+                            android:visibility="visible"
                             android:background="@drawable/border_shadow1"
                             android:orientation="vertical">
 
@@ -340,7 +342,7 @@
                         <LinearLayout
                             android:id="@+id/llsubmit"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="50dp"
                             android:layout_weight="5.5"
                             android:orientation="vertical">
 
@@ -366,7 +368,7 @@
                         <LinearLayout
                             android:id="@+id/lladdProduct"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="50dp"
                             android:layout_weight="5.5"
                             android:orientation="vertical"
                             android:visibility="visible">

@@ -1030,7 +1030,7 @@ object Config {
             obj.put("grid_id", "12")
             obj.put("grid_name", "Contact Us")
             //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
-            obj.put("image","home_contactus")
+            obj.put("image","contactus_home_1")
             obj.put("count","0")
             array.put(obj)
 
@@ -1038,7 +1038,7 @@ object Config {
             obj.put("grid_id", "13")
             obj.put("grid_name", "About Us")
             //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
-            obj.put("image","home_aboutus")
+            obj.put("image","aboutus_home_1")
             obj.put("count","0")
             array.put(obj)
 
@@ -1077,53 +1077,6 @@ object Config {
 
             jsonObject.put("compServiceDetails", array)
             jsonObject1.put("compServiceType", jsonObject)
-            result = jsonObject1.toString()
-
-        }catch (e : Exception){
-            result = ""
-        }
-        return result
-    }
-
-    fun getHomeCount(context : Context): String {
-        var result =""
-        try {
-
-
-            val jsonObject1 = JSONObject()
-            val jsonObject = JSONObject()
-            val array = JSONArray()
-
-            var obj = JSONObject()
-            obj.put("grid_home_id", "1")
-            obj.put("grid_name", "Today's List")
-            obj.put("image","todays_list_home")
-            obj.put("count","0")
-            array.put(obj)
-
-            obj = JSONObject()
-            obj.put("grid_home_id", "2")
-            obj.put("grid_name", "Today's List")
-            obj.put("image","todays_list_home")
-            obj.put("count","0")
-            array.put(obj)
-
-            obj = JSONObject()
-            obj.put("grid_home_id", "3")
-            obj.put("grid_name", "Today's List")
-            obj.put("image","todays_list_home")
-            obj.put("count","0")
-            array.put(obj)
-
-            obj = JSONObject()
-            obj.put("grid_home_id", "4")
-            obj.put("grid_name", "Today's List")
-            obj.put("image","todays_list_home")
-            obj.put("count","0")
-            array.put(obj)
-
-            jsonObject.put("homegridCountDetail", array)
-            jsonObject1.put("homegridCount", jsonObject)
             result = jsonObject1.toString()
 
         }catch (e : Exception){

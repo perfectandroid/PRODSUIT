@@ -1260,15 +1260,16 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             tie_location =
                 dialogProdInformation!!.findViewById(R.id.tie_location) as AutoCompleteTextView
             tv_header1 = dialogProdInformation!!.findViewById(R.id.tv_header) as TextView
+            val ll_standbytotal = dialogProdInformation!!.findViewById(R.id.ll_standbytotal) as LinearLayout
 
             if (SubMode!!.equals("1")) {
                 tv_header1!!.text = "Pickup Information"
+                ll_standbytotal.visibility = View.VISIBLE
 
                 Log.e(TAG, "wwwwwwwwwww 111" + SubMode)
                 if (prodInformationArrayList2.length() == 0) {
                     productinfodetailscount = 0
                     getProductInformationDetails()
-
                 } else {
 
 //                    if (StandByAmount.equals("0.00") || StandByAmount!!.equals("")) {
@@ -1305,6 +1306,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                 llbilltype!!.visibility = View.GONE
                 lladdProduct!!.visibility = View.GONE
+                ll_standbytotal.visibility = View.GONE
 
 
                 if (prodInformationArrayList2.length() == 0) {

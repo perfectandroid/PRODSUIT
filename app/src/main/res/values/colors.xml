@@ -66,6 +66,8 @@
 
 
     <color name="homecolor">#D3EDF1</color>
+    <color name="correctioncard">#B7CACC</color>
+    <color name="correctioncardheader">#6B9093</color>
 
 
 <!--    Company Color-->
@@ -182,6 +184,7 @@
     <color name="report_list4">#A6DDBF</color>
     <color name="report_list5">#EDD7AF</color>
     <color name="report_list6">#EFC5BE</color>
+    <color name="shade_1">#A4A4A4</color>
 
 <!--    <color name="tab_background_selected">#EF667B</color>-->
 <!--    <color name="tab_background_unselected">#E8465F</color>-->

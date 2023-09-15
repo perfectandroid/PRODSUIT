@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        app:cardElevation="10dp"
+        android:visibility="visible"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="4dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardMaxElevation="5dp"
+        app:cardPreventCornerOverlap="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"
+                android:src="@drawable/lead_home1" />
+
+            <TextView
+                android:id="@+id/tvv_home_count"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="0"
+                android:fontFamily="@font/myfont"
+                android:layout_marginTop="-5dp"
+                android:textColor="@color/green"
+                android:justificationMode="inter_word"
+                android:textSize="22dp"
+                android:drawableTint="@color/colorPrimary"
+                android:textStyle="bold"
+                android:visibility="visible"/>
+            <TextView
+                android:id="@+id/tvv_home_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Lead"
+                android:fontFamily="@font/myfont"
+                android:textColor="@color/shade_1"
+                android:justificationMode="inter_word"
+                android:textSize="13dp"
+                android:drawableTint="@color/colorPrimary"
+                android:textStyle="bold"
+                android:visibility="visible"/>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+    </LinearLayout>

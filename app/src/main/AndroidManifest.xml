@@ -70,6 +70,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.LeadCorrectionActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.LeadGenerationQuickActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -654,7 +659,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.perfect.sheetal.fileprovider"
+            android:authorities="com.perfect.prodsuite.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

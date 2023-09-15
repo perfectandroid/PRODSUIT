@@ -52,6 +52,7 @@ import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Receivers.MyAlarmReceiver
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
 import com.perfect.prodsuit.View.Adapter.HomeGridAdapter
+import com.perfect.prodsuit.View.Adapter.HomeGrideCountAdapter
 import com.perfect.prodsuit.View.Service.NotificationLocationService
 import com.perfect.prodsuit.Viewmodel.*
 import com.perfect.prodsuit.fire.FireBaseConfig
@@ -98,6 +99,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     internal var ettime: EditText? = null
     internal var etdis: EditText? = null
     internal var tv_navName: TextView? = null
+    internal var name_employee: TextView? = null
     internal var tv_navDateTime: TextView? = null
     internal var tv_navStatus: TextView? = null
     internal var tv_Name: TextView? = null
@@ -164,7 +166,10 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private var tvv_name_home_8: TextView? = null
 
     private var recyHomegrid: RecyclerView? = null
+    private var recy_count_home: RecyclerView? = null
     lateinit var homeArrayList: JSONArray
+    lateinit var homeArrayCountlabel: JSONArray
+    lateinit var homeArrayCountsort: JSONArray
     lateinit var homeArraySort: JSONArray
     var notificationCount : String = "0"
     lateinit var adapterHome : HomeGridAdapter
@@ -189,16 +194,15 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         context = this@HomeActivity
         attendanceAddViewModel = ViewModelProvider(this).get(AttendanceAddViewModel::class.java)
         dashboardcountViewModel = ViewModelProvider(this).get(DashBoardCountViewModel::class.java)
-
         setRegViews()
         Config.setRedirection(context,"")
         bottombarnav()
-        getBannerlist()
+//        getBannerlist()
         getCompanyLogo()
         getCalendarId(context)
         checkAndRequestPermissions()
         getLocationTracker()
-//        getDashBoardCount()
+        getDashBoardCount()
 //        getServiceNotification()
 //        getNotfCount()
         SubMode = "2"
@@ -632,12 +636,21 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                             if (jObject.getString("StatusCode") == "0") {
 
                                 val jobjt = jObject.getJSONObject("UserTaskList")
-                                val JObject = jobjt.getJSONArray("UserTaskListData")
+                                var JObject = jobjt.getJSONArray("UserTaskListData")
                                 if (JObject.length()>0){
                                     if (dashboardcount == 0){
                                         dashboardcount++
 
+//                                            val lLayout = GridLayoutManager(this@HomeActivity, 1)
+//                                            recy_count_home!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                            adapterHome = HomeGrideCountAdapter(this@HomeActivity,JObject)
+//                                            recy_count_home!!.adapter = adapterHome
+//                                            adapterHome.setClickListener(this@HomeActivity)
 
+                                        val HorizontalLayout = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+                                        recy_count_home!!.setLayoutManager(HorizontalLayout)
+                                       val adapterHome = HomeGrideCountAdapter(this@HomeActivity,JObject!!)
+                                        recy_count_home!!.adapter = adapterHome
 
                                     }
 
@@ -734,6 +747,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         tv_DateTime = findViewById(R.id.tv_DateTime)
         tv_Status = findViewById(R.id.tv_Status)
         txtv_notfcount= findViewById(R.id.txtv_notfcount)
+        recy_count_home= findViewById(R.id.recy_count_home)
+
 //        tvv_count_home_1= findViewById(R.id.tvv_count_home_1)
 //        tvv_name_home_2= findViewById(R.id.tvv_name_home_2)
 //        tvv_count_home_3= findViewById(R.id.tvv_count_home_3)
@@ -750,6 +765,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
         val headerView: View = nav_view!!.getHeaderView(0)
         tv_navName = headerView!!.findViewById(R.id.tv_navName)
+        name_employee = findViewById(R.id.name_employee)
         tv_navDateTime = headerView!!.findViewById(R.id.tv_navDateTime)
         tv_navStatus = headerView!!.findViewById(R.id.tv_navStatus)
 
@@ -870,6 +886,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         }
 
         gridList()
+//        gridcount()
 
 
     }
@@ -902,6 +919,41 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
     }
+
+
+//    private fun gridcount() {
+//        var gridList = Config.getHomeGrid(this@HomeActivity)
+//        Log.e(TAG,"ActionType   44  "+gridList)
+//        val jObject = JSONObject(gridList)
+//        val jobjt = jObject.getJSONObject("homegridCount")
+//        homeArrayCountlabel = jobjt.getJSONArray("homegridCountDetail")
+//
+//        Log.e(TAG,"426  :  "+homeArrayCountlabel)
+//        homeArraySort = JSONArray()
+//        for (k in 0 until homeArrayCountlabel.length()) {
+//            val jsonObject = homeArrayCountlabel.getJSONObject(k)
+//            if (homeArrayCountsort.length()!=4){
+//                homeArrayCountsort.put(jsonObject)
+//            }
+//        }
+//
+//        if (homeArraySort.length()>0){
+////            val lLayout = GridLayoutManager(this@HomeActivity, 3)
+////           val lLayout = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+////            recyHomegrid!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+////            adapterHome = HomeGrideCountAdapter(this@HomeActivity, homeArrayCountlabel)
+////            recyHomegrid!!.adapter = adapterHome
+////            adapterHome.setClickListener(this@HomeActivity)
+//
+//            val HorizontalLayout = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
+//            recy_count_home!!.setLayoutManager(HorizontalLayout)
+//            val adapterHome = HomeGrideCountAdapter(this@HomeActivity,homeArrayCountlabel!!)
+//            recy_count_home!!.adapter = adapterHome
+//        }
+//
+//
+//
+//    }
 
     override fun onClick(v: View?) {
         when(v?.id){
@@ -937,6 +989,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 //                val i = Intent(this@HomeActivity, StockTransferActivity::class.java)
 //                startActivity(i)
+
+                val i = Intent(this@HomeActivity, LeadCorrectionActivity::class.java)
+                startActivity(i)
 
 //                val i = Intent(this@HomeActivity, StockRequestActivity::class.java)
 //                startActivity(i)
@@ -1437,7 +1492,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                             if (currentPage == jresult!!.length()) {
                                                 currentPage = 0
                                             }
-                                            mPager!!.setCurrentItem(currentPage++, true)
+//                                            mPager!!.setCurrentItem(currentPage++, true)
 
                                         }
                                         val swipeTimer = Timer()
@@ -1549,12 +1604,12 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                         if(!logo.equals(""))
                                         {
 
-//                                            val decodedString = Base64.decode(logo, Base64.DEFAULT)
-//                                            ByteArrayToBitmap(decodedString)
-//                                            val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
-//                                            val stream = ByteArrayOutputStream()
-//                                            decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
-//                                            Glide.with(this) .load(stream.toByteArray()).into(imgAttendance!!)
+                                            val decodedString = Base64.decode(logo, Base64.DEFAULT)
+                                            ByteArrayToBitmap(decodedString)
+                                            val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+                                            val stream = ByteArrayOutputStream()
+                                            decodedByte.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                                            Glide.with(this) .load(stream.toByteArray()).into(imgAttendance!!)
 
                                         }
                                     }
@@ -2089,6 +2144,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         val LOGIN_DATETIMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF30, 0)
 //        tv_Name!!.text = UserNameSP.getString("UserName", "")
         tv_navName!!.text = UserNameSP.getString("UserName", "")
+        name_employee!!.text = UserNameSP.getString("UserName", "")
+        Log.e(TAG,"weewec   "+UserNameSP.getString("UserName", ""))
       //  tv_DateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
         tv_navDateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
 
