@@ -469,10 +469,10 @@ interface ApiInterface {
     @POST("UserValidations/FollowupStatusUpdate")
     fun UpdateFollowupStatusUpdate(@Body body: RequestBody): Call<String>
 
-    @POST("UserValidations/WalkingCustomerAssignedTo")
+    @POST("WalkingCustomer/WalkingCustomerAssignedTo")
     fun getWalkingCustomerAssignedTo(@Body body: RequestBody): Call<String>
 
-    @POST("UserValidations/UpdateWalkingCustomer")
+    @POST("WalkingCustomer/UpdateWalkingCustomer")
     fun UpdateWalkingCustomerData(@Body body: RequestBody): Call<String>
 
     @POST("UserValidations/AttanceMarkingUpdate")
@@ -549,6 +549,9 @@ interface ApiInterface {
 
     @POST("Authorization/AuthorizationCorrection")
     fun getAuthorizationCorrection(@Body body: RequestBody): Call<String>
+
+    @POST("WalkingCustomer/WalkingCustomerListByMobileNumer")
+    fun getWalkingCustomerListByMobileNumer(@Body body: RequestBody): Call<String>
 
 
 }
