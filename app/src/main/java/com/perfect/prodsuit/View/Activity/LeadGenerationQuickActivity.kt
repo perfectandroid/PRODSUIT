@@ -124,6 +124,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
     var recyProdCategory: RecyclerView? = null
 
     var proddetail = 0
+    var proddetailMode = 0
     lateinit var productDetailViewModel: ProductDetailViewModel
     lateinit var prodDetailArrayList: JSONArray
     lateinit var prodDetailSort: JSONArray
@@ -268,6 +269,10 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         setRegViews()
         getDefaultValueSettings()
         checkAttendance()
+
+        proddetailMode = 0
+        proddetail = 0
+        getProductDetail(ID_Category!!)
 
         prodpriority = 0
         priorityMode = 0
@@ -456,6 +461,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
             R.id.edtProdproduct -> {
                 Config.disableClick(v)
+                proddetailMode = 1
                 proddetail = 0
                 getProductDetail(ID_Category!!)
 //                if (ID_Category.equals("")) {
@@ -1057,7 +1063,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         }
     }
 
-    private fun getProductDetail(ID_Category: String) {
+    private fun getProductDetail(ID_Categorys: String) {
 //         var proddetail = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -1067,7 +1073,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                productDetailViewModel.getProductDetail(this, ID_Category)!!.observe(
+                productDetailViewModel.getProductDetail(this, ID_Categorys)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -1083,10 +1089,34 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                                         val jobjt = jObject.getJSONObject("ProductDetailsList")
                                         prodDetailArrayList = jobjt.getJSONArray("ProductList")
                                         if (prodDetailArrayList.length() > 0) {
-//                                             if (proddetail == 0){
-//                                                 proddetail++
-                                            productDetailPopup(prodDetailArrayList)
-//                                             }
+
+                                            if (proddetailMode == 0){
+
+                                                val jsonObject = prodDetailArrayList.getJSONObject(0)
+                                                Log.e(TAG, "ID_Product   " + jsonObject.getString("ID_Product"))
+                                                ID_Category = jsonObject.getString("FK_Category")
+                                                ID_Product = jsonObject.getString("ID_Product")
+                                                edtProdproduct!!.setText(jsonObject.getString("ProductName"))
+                                                edtProdqty!!.setText("1")
+                                                strQty = "1"
+                                                MRP = jsonObject.getString("MRP")
+                                                Log.e(TAG, "SalPrice 3333   " + MRP)
+
+                                                MRRP = jsonObject.getString("MRP")
+                                                Offerprice = jsonObject.getString("SalPrice")
+
+                                                tv_Mrp!!.setText(jsonObject.getString("MRP"))
+                                                edtAmount!!.setText(jsonObject.getString("SalPrice"))
+                                                Log.e(TAG, "MRP 3333   " + jsonObject.getString("MRP"))
+                                                Log.e(TAG, "SalPrice 3333   " + jsonObject.getString("SalPrice"))
+
+                                            }else{
+                                                Log.v("sdfsdfsd4fgf", "in4")
+                                                productDetailPopup(prodDetailArrayList)
+                                            }
+
+
+
 
                                         }
 

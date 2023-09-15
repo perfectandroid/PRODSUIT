@@ -60,6 +60,7 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
     var strAssignedDate: String? = ""
     var strDescription: String? = ""
     var ID_AssignedTo: String? = ""
+    var leadByMobileNo: String? = "[]"
 
     var assignedToCount: Int = 0
     lateinit var assignedToWalkingViewModel: AssignedToWalkingViewModel
@@ -81,6 +82,7 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_walking_customer)
+        setContentView(R.layout.activity_walking_customer)
         assignedToWalkingViewModel = ViewModelProvider(this).get(AssignedToWalkingViewModel::class.java)
         createWalkingCustomerViewModel = ViewModelProvider(this).get(CreateWalkingCustomerViewModel::class.java)
         walkExistViewModel = ViewModelProvider(this).get(WalkExistViewModel::class.java)
@@ -91,18 +93,18 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
 
         checkAttendance()
 
-//        til_Phone!!.setEndIconOnClickListener {
-//            Config.disableClick(it)
-//            strPhone = tie_Phone!!.text.toString()
-//
-//            if (strPhone.equals("")){
-//                Config.snackBars(context,it,"Enter Phone Number")
-//            }else{
-//                walkExistCount = 0
-//                getExistingCustomerData()
-//
-//            }
-//        }
+        til_Phone!!.setEndIconOnClickListener {
+            Config.disableClick(it)
+            strPhone = tie_Phone!!.text.toString()
+            Config.Utils.hideSoftKeyBoard(context,it)
+
+            if (strPhone.equals("") || strPhone!!.length < 10 ){
+                Config.snackBars(context,it,"Enter Minimum 10 digit Phone Number")
+            }else{
+                walkExistCount = 0
+                getExistingCustomerData()
+            }
+        }
 
 
     }
@@ -422,7 +424,7 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                createWalkingCustomerViewModel.CreateWalkingCustomer(this,strCustomer!!,strPhone!!,ID_AssignedTo!!,strAssignedDate!!,strDescription!!)!!.observe(
+                createWalkingCustomerViewModel.CreateWalkingCustomer(this,strCustomer!!,strPhone!!,ID_AssignedTo!!,strAssignedDate!!,strDescription!!,leadByMobileNo!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -531,8 +533,8 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
                                 if (jObject.getString("StatusCode").equals("0")) {
                                    // successPopup(jObject)
 
-//                                    val jobjt = jObject.getJSONObject("ExistCustomerDetails")
-//                                    walkExistList = jobjt.getJSONArray("ExistCustomerDetailList")
+                                    val jobjt = jObject.getJSONObject("WalkingCustomerList")
+                                    walkExistList = jobjt.getJSONArray("WalkingCustomerDetails")
                                     val i = Intent(this@WalkingCustomerActivity, WalkingExistingActivity::class.java)
                                     i.putExtra("jsonObject",jObject.toString())
                                     startActivity(i)

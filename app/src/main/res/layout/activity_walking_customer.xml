@@ -171,6 +171,7 @@
                                 android:fontFamily="@font/myfont"
                                 app:endIconMode="custom"
                                 app:startIconDrawable="@drawable/svg_walk_phone"
+                                app:endIconDrawable="@drawable/search_24"
                                 android:hint="Phone">
 <!--                                app:endIconDrawable="@drawable/search_24"-->
 
