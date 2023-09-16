@@ -561,30 +561,30 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                 var count =jobjt.getString("count")
                                 Log.i("Array size", count)
                                 txtv_notfcount!!.text=count
-                                if (adapterHome != null){
-                                    Log.e(TAG,"adapterHome  2211  ")
-                                    notificationCount = count
-                                    val jsonObject = homeArraySort.getJSONObject(2)
-                                    jsonObject.put("count",notificationCount)
-                             //       recyHomegrid!!.adapter!!.notifyItemChanged(2)
-
-//                                    adapterHome = HomeGridAdapter(this@HomeActivity, homeArraySort,notificationCount!!)
-//                                    recyHomegrid!!.adapter!!.notifyDataSetChanged()
-
-
-                                }
+//                                if (adapterHome != null){
+//                                    Log.e(TAG,"adapterHome  2211  ")
+//                                    notificationCount = count
+//                                    val jsonObject = homeArraySort.getJSONObject(2)
+//                                    jsonObject.put("count",notificationCount)
+//                             //       recyHomegrid!!.adapter!!.notifyItemChanged(2)
+//
+////                                    adapterHome = HomeGridAdapter(this@HomeActivity, homeArraySort,notificationCount!!)
+////                                    recyHomegrid!!.adapter!!.notifyDataSetChanged()
+//
+//
+//                                }
 
 
                             } else {
                                 Log.e(TAG,"187777   "+jObject.getString("StatusCode"))
                                 txtv_notfcount!!.text="0"
-                                if (adapterHome != null){
-                                    Log.e(TAG,"adapterHome  2212  ")
-                                    notificationCount = "0"
-                                    val jsonObject = homeArraySort.getJSONObject(2)
-                                    jsonObject.put("count",notificationCount)
-                                    recyHomegrid!!.adapter!!.notifyItemChanged(2)
-                                }
+//                                if (adapterHome != null){
+//                                    Log.e(TAG,"adapterHome  2212  ")
+//                                    notificationCount = "0"
+//                                    val jsonObject = homeArraySort.getJSONObject(2)
+//                                    jsonObject.put("count",notificationCount)
+//                                    recyHomegrid!!.adapter!!.notifyItemChanged(2)
+//                                }
 //                                val builder = AlertDialog.Builder(
 //                                    this@HomeActivity,
 //                                    R.style.MyDialogTheme
@@ -990,8 +990,13 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                val i = Intent(this@HomeActivity, StockTransferActivity::class.java)
 //                startActivity(i)
 
-                val i = Intent(this@HomeActivity, LeadCorrectionActivity::class.java)
+//                val i = Intent(this@HomeActivity, LeadCorrectionActivity::class.java)
+//                startActivity(i)
+
+                val i = Intent(this@HomeActivity, CorrectionSplitupActivity::class.java)
                 startActivity(i)
+
+
 
 //                val i = Intent(this@HomeActivity, StockRequestActivity::class.java)
 //                startActivity(i)

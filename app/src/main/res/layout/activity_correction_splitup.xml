@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/greylight"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:background="@color/color_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--    android:background="@color/greylight"-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/llBtn"
+                android:layout_marginBottom="2dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/llHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:background="@drawable/shape_header"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:orientation="vertical"
+                        android:gravity="left|center"
+                        android:layout_weight="2.5">
+
+                        <ImageView
+                            android:id="@+id/imback"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="left"
+                            android:background="@color/color_activity_transparent"
+                            android:paddingLeft="10dp"
+                            android:tint="@color/white"
+                            android:src="@drawable/back_arro"
+                            tools:ignore="UseAppTint" />
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="Correction List"
+                        android:textAllCaps="false"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@color/white"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/myfont" />
+
+                    <ImageView
+                        android:id="@+id/imLeadedit"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_gravity="left"
+                        android:layout_weight="2.5"
+                        android:background="@color/color_activity_transparent"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_edit"
+                        android:tint="@color/white"
+                        tools:ignore="UseAppTint"
+                        android:visibility="invisible"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/llHeader"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycCorrSplit"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="visible" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
