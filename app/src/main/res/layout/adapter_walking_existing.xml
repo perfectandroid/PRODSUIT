@@ -8,11 +8,11 @@
     app:cardCornerRadius="2dp"
     android:layout_marginLeft="2dp"
     android:layout_marginRight="2dp"
-    android:backgroundTint="#ECEFEF"
-    android:outlineAmbientShadowColor="@color/black"
-    android:outlineSpotShadowColor="@color/black"
+    android:backgroundTint="#D9E1E1"
     app:cardElevation="2dp"
-    app:cardUseCompatPadding="true">
+    android:layout_marginTop="2dp"
+    android:outlineAmbientShadowColor="@color/black"
+    android:outlineSpotShadowColor="@color/black">
     <!--    app:cardUseCompatPadding="true"-->
     <!--    android:backgroundTint="@color/white"-->
 

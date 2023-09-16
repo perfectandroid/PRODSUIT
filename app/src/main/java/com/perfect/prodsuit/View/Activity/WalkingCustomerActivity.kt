@@ -77,11 +77,12 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
     lateinit var walkExistViewModel: WalkExistViewModel
     lateinit var walkExistList : JSONArray
 
+    private var array_walkingUpdate = JSONArray()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        setContentView(R.layout.activity_walking_customer)
         setContentView(R.layout.activity_walking_customer)
         assignedToWalkingViewModel = ViewModelProvider(this).get(AssignedToWalkingViewModel::class.java)
         createWalkingCustomerViewModel = ViewModelProvider(this).get(CreateWalkingCustomerViewModel::class.java)
@@ -168,6 +169,7 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
 
                 checkAttendance()
                 if (saveAttendanceMark){
+                    array_walkingUpdate = JSONArray()
                     validation(v)
                 }
 
@@ -424,7 +426,7 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                createWalkingCustomerViewModel.CreateWalkingCustomer(this,strCustomer!!,strPhone!!,ID_AssignedTo!!,strAssignedDate!!,strDescription!!,leadByMobileNo!!)!!.observe(
+                createWalkingCustomerViewModel.CreateWalkingCustomer(this,strCustomer!!,strPhone!!,ID_AssignedTo!!,strAssignedDate!!,strDescription!!,array_walkingUpdate!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -537,6 +539,7 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
                                     walkExistList = jobjt.getJSONArray("WalkingCustomerDetails")
                                     val i = Intent(this@WalkingCustomerActivity, WalkingExistingActivity::class.java)
                                     i.putExtra("jsonObject",jObject.toString())
+                                    i.putExtra("strPhone",strPhone)
                                     startActivity(i)
 
                                 }else{

@@ -12,6 +12,7 @@ import com.perfect.prodsuit.Model.CreateWalkingCustomerModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -25,12 +26,12 @@ object CreateWalkingCustomerRepository {
     val TAG: String = "CreateWalkingCustomerRepository"
     private var progressDialog: ProgressDialog? = null
 
-    fun getServicesApiCall(context: Context,strCustomer : String,strPhone : String,ID_AssignedTo : String,strAssignedDate : String,strDescription : String,leadByMobileNo : String): MutableLiveData<CreateWalkingCustomerModel> {
+    fun getServicesApiCall(context: Context,strCustomer : String,strPhone : String,ID_AssignedTo : String,strAssignedDate : String,strDescription : String,leadByMobileNo : JSONArray): MutableLiveData<CreateWalkingCustomerModel> {
         CreateWalkingCustomer(context, strCustomer,strPhone,ID_AssignedTo,strAssignedDate,strDescription,leadByMobileNo)
         return createWalkingCustomerSetterGetter
     }
 
-    private fun CreateWalkingCustomer(context: Context,strCustomer : String,strPhone : String,ID_AssignedTo : String,strAssignedDate : String,strDescription : String,leadByMobileNo : String) {
+    private fun CreateWalkingCustomer(context: Context,strCustomer : String,strPhone : String,ID_AssignedTo : String,strAssignedDate : String,strDescription : String,leadByMobileNo : JSONArray) {
         try {
             createWalkingCustomerSetterGetter.value =  CreateWalkingCustomerModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -80,7 +81,7 @@ object CreateWalkingCustomerRepository {
                 requestObject1.put("CaDescription", ProdsuitApplication.encryptStart(strDescription))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
-                requestObject1.put("leadByMobileNo", ProdsuitApplication.encryptStart(leadByMobileNo))
+                requestObject1.put("leadByMobileNo", leadByMobileNo)
 
                 Log.e(TAG,"requestObject1   671   "+requestObject1)
 

@@ -51,7 +51,7 @@
                 android:orientation="vertical">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_AssignedTo"
+                    android:id="@+id/til_UpAssignedTo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Assigned To *"
@@ -65,7 +65,7 @@
                     style="@style/Widget.App.TextInputLayout">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tie_AssignedTo"
+                        android:id="@+id/tie_UpAssignedTo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="-10dp"
@@ -83,7 +83,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_AssignedDate"
+                    android:id="@+id/til_UpAssignedDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Assigned Date *"
@@ -97,7 +97,7 @@
                     style="@style/Widget.App.TextInputLayout">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tie_AssignedDate"
+                        android:id="@+id/tie_UpAssignedDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="-10dp"
