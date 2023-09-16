@@ -84,6 +84,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
     var filterDate         : String? = ""
     var strlatitude        : String? = ""
     var strlongitude       : String? = ""
+    var clicksubmit        = ""
     private var SELECT_LOCATION: Int? = 103
     private val START_LOCATION = 100
     var ID_ImageLocation: String?= ""
@@ -260,6 +261,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
                     }
                     Log.e(TAG,"444444555555 #    "+date)
                     Log.e(TAG,"444444555555 *    "+filterDate)
+                    Log.e(TAG,"4444445555551 *    "+pickup_and_deliverysort)
                 }
                 dialog1.dismiss()
                 val adapter = PickupDeliveryListAdapter(this@PickUpAndDeliveryListActivity, pickup_and_deliverysort,SubMode!!)
@@ -427,7 +429,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
 //        Log.e(TAG, "caall   11104   " + position)
         if (data.equals("pickupDelivery")){
             Config.disableClick(view)
-            var jsonObject: JSONObject? = pickUpDeliveryArrayList.getJSONObject(position)
+            var jsonObject: JSONObject? = pickup_and_deliverysort.getJSONObject(position)
             ID_ProductDelivery = jsonObject!!.getString("ID_ProductDelivery")
             val i = Intent(this@PickUpAndDeliveryListActivity, PickUpAndDeliveryUpdateActivity::class.java)
             i.putExtra("SubMode",SubMode)

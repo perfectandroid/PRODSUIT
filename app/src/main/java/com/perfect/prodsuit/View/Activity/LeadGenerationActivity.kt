@@ -9256,12 +9256,16 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //        ID_NextAction,
 //        ID_ActionType,
 //        strFollowupdate,
+
+        Log.e(TAG, "editProdcutListarray    000333  " + editProdcutListarray)
+        Log.e(TAG, "editProdcutListarray    000333  " + editProdcutListarray.length())
         array_product_lead  = JSONArray()
+
 
         for (i in 0 until editProdcutListarray.length()) {
             var jsonObject = editProdcutListarray.getJSONObject(i)
             val jObject = JSONObject()
-            Log.e(TAG, "strQty 1     112299  " + strQty)
+            Log.e(TAG, "strQty 1     333221115  " + strQty)
 
 
 
