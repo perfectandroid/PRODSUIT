@@ -4,8 +4,6 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -27,11 +26,9 @@ import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
-import com.perfect.prodsuit.Model.ModelServiceAttended
 import com.perfect.prodsuit.Model.ModelWalkingExist
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.AssignedToAdapter
-import com.perfect.prodsuit.View.Adapter.ServiceAttendedAdapter
 import com.perfect.prodsuit.View.Adapter.WalkingExistingAdapter
 import com.perfect.prodsuit.Viewmodel.AssignedToWalkingViewModel
 import com.perfect.prodsuit.Viewmodel.CreateWalkingCustomerViewModel
@@ -250,6 +247,10 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
 
     private fun getArraList(v: View) {
         array_walkingUpdate = JSONArray()
+
+
+        Log.e(TAG,"25555500    array_walkingUpdate:  "+array_walkingUpdate.length())
+        Log.e(TAG,"25555511   modelWalkingExist:  "+modelWalkingExist.size)
         for (k in 0 until modelWalkingExist.size) {
 
             Log.e(TAG,"14777"+k+"    Customer:  "+modelWalkingExist[k].Customer)
@@ -352,7 +353,24 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
                 Log.e(TAG,"178882   "+modelWalkingExist[position].FollowUpDate)
 
                 tie_UpAssignedDate!!.setText(modelWalkingExist[position].FollowUpDate)
-                strUpAssignedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(modelWalkingExist[position].FollowUpDate)
+                val inputPattern = "dd-MM-yyyy"
+                val outputPattern = "yyyy-MM-dd"
+                val inputFormat = SimpleDateFormat(inputPattern)
+                val outputFormat = SimpleDateFormat(outputPattern)
+
+                var date: Date? = null
+                var str: String? = null
+
+                try {
+                    date = inputFormat.parse(modelWalkingExist[position].FollowUpDate)
+                    strUpAssignedDate = outputFormat.format(date)
+                } catch (e: Exception) {
+                    Log.e(TAG,"147852   "+e.toString())
+                    e.printStackTrace()
+                }
+
+                Log.e(TAG,"147852   "+strUpAssignedDate)
+                //strUpAssignedDate = SimpleDateFormat("yyyy-MM-dd", modelWalkingExist[position].FollowUpDate))
             }
 
 
@@ -397,7 +415,7 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
             dialog.show()
 
         }catch (e: Exception){
-            Log.e(TAG,"777  Exception   "+e.toString())
+            Log.e(TAG,"7771  Exception   "+e.toString())
         }
     }
 
@@ -426,7 +444,7 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
             dialog1.show()
 
         }catch (e: Exception){
-            Log.e(TAG,"777  Exception   "+e.toString())
+            Log.e(TAG,"7772  Exception   "+e.toString())
         }
     }
 

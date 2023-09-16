@@ -100,6 +100,7 @@ object CreateWalkingCustomerRepository {
                     Response<String>
                 ) {
                     try {
+                        Log.e(TAG,"111121    "+response.body())
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
                         val leads = ArrayList<CreateWalkingCustomerModel>()
@@ -109,7 +110,8 @@ object CreateWalkingCustomerRepository {
 
                     } catch (e: Exception) {
 
-                        // Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
+                        Log.e(TAG,"111122    "+e.toString())
+                       //  Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
