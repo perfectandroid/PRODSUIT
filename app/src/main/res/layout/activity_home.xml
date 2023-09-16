@@ -204,7 +204,7 @@
                                     android:layout_gravity="center"
                                     android:paddingTop="5dp"
                                     android:gravity="center"
-                                    android:src="@drawable/lead_home1" />
+                                    android:src="@drawable/lead_home_1" />
                             </RelativeLayout>
 
                             <TextView
