@@ -31,7 +31,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:scaleType="fitXY"
-                android:src="@drawable/lead_home1" />
+                android:src="@drawable/lead_home_1" />
 
             <TextView
                 android:id="@+id/tvv_home_count"

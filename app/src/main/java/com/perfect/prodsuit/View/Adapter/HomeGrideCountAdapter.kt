@@ -63,7 +63,7 @@ class HomeGrideCountAdapter (internal var context: Context, internal var jsonArr
 
                 if (position.equals(1)){
 
-                    val d: Drawable = context.resources.getDrawable(R.drawable.lead_home1)
+                    val d: Drawable = context.resources.getDrawable(R.drawable.lead_home_1)
                     holder.image.setImageDrawable(d)
                     holder.tvv_home_count!!.setTextColor(ContextCompat.getColorStateList(context,R.color.ColorWarm))
                 }
