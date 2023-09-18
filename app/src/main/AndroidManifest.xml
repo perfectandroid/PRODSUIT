@@ -71,6 +71,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.CorrectionModuleListActivity"
+            android:exported="false" />
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.WalkingExistingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
