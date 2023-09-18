@@ -44,8 +44,8 @@
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/profile_image"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:src="@drawable/profile"
                             app:civ_border_color="@color/white"
                             android:layout_alignParentLeft="true"
@@ -63,7 +63,7 @@
                             android:gravity="center"
                             android:layout_marginRight="5dp"
                             android:fontFamily="@font/myfont"
-                            android:text=""
+                            android:text="ghjghjg"
                             android:textColor="@color/colorPrimary"
                             android:textSize="17dp"
                             android:textStyle="bold" />

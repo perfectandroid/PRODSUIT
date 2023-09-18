@@ -180,6 +180,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 //    var mJobScheduler: JobScheduler? = null
 
+    lateinit var dashCountArrayList: JSONArray
+
 
     private lateinit var alarmManager: AlarmManager
     private lateinit var pendingIntent: PendingIntent
@@ -636,21 +638,18 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                             if (jObject.getString("StatusCode") == "0") {
 
                                 val jobjt = jObject.getJSONObject("UserTaskList")
-                                var JObject = jobjt.getJSONArray("UserTaskListData")
-                                if (JObject.length()>0){
+                                dashCountArrayList = jobjt.getJSONArray("UserTaskListData")
+                                if (dashCountArrayList.length()>0){
                                     if (dashboardcount == 0){
                                         dashboardcount++
 
-//                                            val lLayout = GridLayoutManager(this@HomeActivity, 1)
-//                                            recy_count_home!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                            adapterHome = HomeGrideCountAdapter(this@HomeActivity,JObject)
-//                                            recy_count_home!!.adapter = adapterHome
-//                                            adapterHome.setClickListener(this@HomeActivity)
 
                                         val HorizontalLayout = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
                                         recy_count_home!!.setLayoutManager(HorizontalLayout)
-                                       val adapterHome = HomeGrideCountAdapter(this@HomeActivity,JObject!!)
-                                        recy_count_home!!.adapter = adapterHome
+                                        val adapterDash = HomeGrideCountAdapter(this@HomeActivity,dashCountArrayList)
+                                        recy_count_home!!.adapter = adapterDash
+                                        adapterDash.setClickListener(this@HomeActivity)
+
 
                                     }
 
@@ -2379,6 +2378,37 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 //  Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
 
+
+        }
+
+        if (data.equals("homeDashClicks")) {
+            Log.e(TAG,"2385    "+position)
+            val jsonObject = dashCountArrayList.getJSONObject(position)
+            // Task is Unique
+            if (jsonObject.getString("Task").equals("Correction")){
+//                val i = Intent(this@HomeActivity, CorrectionSplitupActivity::class.java)
+//                startActivity(i)
+//                if value=1 go to individual page,
+//                if value>1 and ModuleCount>1 go to Module List (2nd page)
+//                if value>1 and ModuleCount=1 go to splitup (3rd page)
+
+                if (jsonObject.getInt("Value") == 1){
+                    val i = Intent(this@HomeActivity, LeadCorrectionActivity::class.java)
+                    i.putExtra("jsonObject",jsonObject.toString())
+                    startActivity(i)
+                }
+                else if (jsonObject.getInt("Value") > 1 && jsonObject.getInt("ModuleCount") > 1){
+//                    val i = Intent(this@HomeActivity, ApprovalListActivity::class.java)
+//                    i.putExtra("jsonObject",jsonObject.toString())
+//                    startActivity(i)
+                }
+                else if (jsonObject.getInt("Value") > 1 && jsonObject.getInt("ModuleCount") == 1){
+                    val i = Intent(this@HomeActivity, CorrectionSplitupActivity::class.java)
+                    i.putExtra("jsonObject",jsonObject.toString())
+                    startActivity(i)
+                }
+
+            }
 
         }
     }

@@ -7,21 +7,24 @@
     android:orientation="vertical">
 
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        app:cardElevation="10dp"
-        android:visibility="visible"
-        app:cardCornerRadius="10dp"
-        android:layout_margin="4dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardMaxElevation="5dp"
-        app:cardPreventCornerOverlap="true">
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:layout_width="110dp"-->
+<!--        android:layout_height="110dp"-->
+<!--        app:cardElevation="10dp"-->
+<!--        android:visibility="visible"-->
+<!--        app:cardCornerRadius="10dp"-->
+<!--        android:layout_margin="4dp"-->
+<!--        app:cardBackgroundColor="@color/white"-->
+<!--        app:cardMaxElevation="5dp"-->
+<!--        app:cardPreventCornerOverlap="true">-->
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/ll_homedash"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
             android:layout_gravity="center"
+            android:background="@drawable/shape_home_dash"
+            android:layout_margin="4dp"
             android:orientation="vertical">
 
             <ImageView
@@ -54,7 +57,7 @@
                 android:gravity="center"
                 android:text="Lead"
                 android:fontFamily="@font/myfont"
-                android:textColor="@color/shade_1"
+                android:textColor="@color/colorPrimary"
                 android:justificationMode="inter_word"
                 android:textSize="13dp"
                 android:drawableTint="@color/colorPrimary"
@@ -64,5 +67,5 @@
         </LinearLayout>
 
 
-    </androidx.cardview.widget.CardView>
+<!--    </androidx.cardview.widget.CardView>-->
     </LinearLayout>

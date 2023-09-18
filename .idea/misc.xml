@@ -44,6 +44,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_header.xml" value="0.307" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_header_list.xml" value="0.2765" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_headers.xml" value="0.2765" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_home_dash.xml" value="0.2255" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_image_border.xml" value="0.2575" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_list.xml" value="0.2765" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_message.xml" value="0.16" />
@@ -134,6 +135,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_emi_list.xml" value="0.315625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_employee.xml" value="0.2708333333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_employee_all.xml" value="0.3234375" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_home_grid_count.xml" value="0.28802083333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_lead_by.xml" value="0.3171875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_more_service_attended.xml" value="0.30462962962962964" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_payment_list.xml" value="0.30462962962962964" />
