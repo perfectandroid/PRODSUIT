@@ -1,19 +1,23 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.R.id
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.database.Cursor
 import android.os.Bundle
+import android.provider.BaseColumns
+import android.provider.CallLog
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +37,7 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, ItemClickListener {
 
     var TAG = "WalkingCustomerActivity"
@@ -43,16 +48,20 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
     private var til_Phone: TextInputLayout? = null
     private var til_AssignedTo: TextInputLayout? = null
     private var til_AssignedDate: TextInputLayout? = null
+    private var til_AttachVoice: TextInputLayout? = null
     private var til_Description: TextInputLayout? = null
 
     private var tie_CustomerName: TextInputEditText? = null
     private var tie_Phone: TextInputEditText? = null
     private var tie_AssignedTo: TextInputEditText? = null
     private var tie_AssignedDate: TextInputEditText? = null
+    private var tie_Attachvoice: TextInputEditText? = null
     private var tie_Description: TextInputEditText? = null
 
     private var btnReset: Button? = null
     private var btnSubmit: Button? = null
+    private var imcontactlog: ImageView? = null
+    private var lvCustno: ListView? = null
 
     var dateSelectMode: Int = 0
     var strCustomer: String? = ""
@@ -115,16 +124,20 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
+        val imVoice = findViewById<ImageView>(R.id.imVoice)
+        imVoice!!.setOnClickListener(this)
 
         tie_CustomerName = findViewById<TextInputEditText>(R.id.tie_CustomerName)
         tie_Phone = findViewById<TextInputEditText>(R.id.tie_Phone)
         tie_AssignedDate = findViewById<TextInputEditText>(R.id.tie_AssignedDate)
+        tie_Attachvoice = findViewById<TextInputEditText>(R.id.tie_Attachvoice)
         tie_AssignedTo = findViewById<TextInputEditText>(R.id.tie_AssignedTo)
         tie_Description = findViewById<TextInputEditText>(R.id.tie_Description)
 
         til_CustomerName = findViewById<TextInputLayout>(R.id.til_CustomerName)
         til_Phone = findViewById<TextInputLayout>(R.id.til_Phone)
         til_AssignedDate = findViewById<TextInputLayout>(R.id.til_AssignedDate)
+        til_AttachVoice = findViewById(R.id.til_AttachVoice)
         til_AssignedTo = findViewById<TextInputLayout>(R.id.til_AssignedTo)
         til_Description = findViewById<TextInputLayout>(R.id.til_Description)
 
@@ -132,11 +145,14 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
 
         btnReset = findViewById<Button>(R.id.btnReset)
         btnSubmit = findViewById<Button>(R.id.btnSubmit)
+        imcontactlog = findViewById<ImageView>(R.id.imcontactlog)
 
         tie_AssignedDate!!.setOnClickListener(this)
+        tie_Attachvoice!!.setOnClickListener(this)
         tie_AssignedTo!!.setOnClickListener(this)
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
+        imcontactlog!!.setOnClickListener(this)
 
         til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_AssignedDate!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
@@ -149,6 +165,10 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
                 finish()
             }
 
+            R.id.imVoice->{
+                startActivity(Intent(this@WalkingCustomerActivity, VoiceRecordingActivity::class.java))
+            }
+
             R.id.tie_AssignedTo->{
                 Config.disableClick(v)
                 assignedToCount = 0
@@ -159,9 +179,16 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
                 dateSelectMode = 0
                 openBottomSheet()
             }
+            R.id.tie_Attachvoice->{
+                startActivity(Intent(this@WalkingCustomerActivity, VoiceRecordingActivity::class.java))
+            }
 
             R.id.btnReset->{
               resetData()
+            }
+
+            R.id.imcontactlog->{
+                getCustnumber()
             }
 
             R.id.btnSubmit->{
@@ -177,6 +204,39 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
         }
     }
 
+    private fun getCustnumber() {
+        try {
+            val builder = AlertDialog.Builder(this@WalkingCustomerActivity)
+            val inflater1 =
+                this@WalkingCustomerActivity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout = inflater1.inflate(R.layout.custlog_popup, null)
+            lvCustno = layout.findViewById(R.id.lvCustno)
+            builder.setView(layout)
+            val alertDialog = builder.create()
+            getCallLogDetail(alertDialog, context)
+            alertDialog.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getCallLogDetail(alertDialog: AlertDialog, context: Context) {
+        val projection = arrayOf(BaseColumns._ID, CallLog.Calls.NUMBER, CallLog.Calls.TYPE, CallLog.Calls.DURATION)
+        val resolver = context.contentResolver
+        val cur: Cursor? = resolver.query(CallLog.Calls.CONTENT_URI, projection, null, null, CallLog.Calls.DEFAULT_SORT_ORDER)
+        if (!cur!!.isAfterLast()) {
+            val numberColumn: Int = cur.getColumnIndex(CallLog.Calls.NUMBER)
+            val typeColumn: Int = cur.getColumnIndex(CallLog.Calls.TYPE)
+            val durationcolumn: Int = cur.getColumnIndex(CallLog.Calls.DURATION)
+            val number: String = cur.getString(numberColumn)
+            val type: String = cur.getString(typeColumn)
+            val duration: String = cur.getString(durationcolumn)
+            cur.moveToNext()
+        }
+
+
+
+    }
     private fun resetData() {
 
         tie_CustomerName!!.setText("")
