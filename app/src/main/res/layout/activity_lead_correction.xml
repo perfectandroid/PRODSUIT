@@ -13,545 +13,608 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/navbg"
-        android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-    <LinearLayout
-        android:id="@+id/ll_toplayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_header">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imback"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_gravity="left"
-                android:background="@color/color_activity_transparent"
-                android:padding="10dp"
-                android:tint="@color/white"
-                android:layout_weight="3.5"
-                android:src="@drawable/back_arro"
-                tools:ignore="UseAppTint" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Correction Details"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginRight="25dp"
-                android:textColor="@color/white"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:fontFamily="@font/myfont" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_gravity="left"
-                android:background="@color/color_activity_transparent"
-                android:padding="10dp"
-                android:tint="@color/white"
-                android:layout_weight="4"
-                android:visibility="invisible"
-                android:src="@drawable/back_arro"
-                tools:ignore="UseAppTint" />
-
-             </LinearLayout>
-        </LinearLayout>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/correctioncard"
-            app:cardCornerRadius="5dp"
-            android:layout_margin="5dp"
-            android:layout_marginTop="10dp"
-            app:cardUseCompatPadding="true">
+            android:layout_height="match_parent"
+            android:background="@drawable/navbg"
+            android:layout_above="@+id/llBtn"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/ll_toplayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/tv_Customer"
-                        android:fontFamily="@font/myfont"
+                    android:background="@drawable/shape_header">
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="18dp"
-                        android:textStyle="bold"
-                        android:text="Details"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvv_leadno_1"
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="match_parent"
-                        android:textStyle="bold"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="18dp"
-                        android:layout_weight="1"
-                        android:text="Lead No"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/greydark"
-                        android:textAllCaps="false"
-                        android:textColor="@color/colorPrimary"
-                        android:visibility="visible"/>
-
-                    <TextView
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="10dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="12dp"
-                        android:text=":"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/greydark"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:visibility="gone"/>
-
-                    <TextView
-                        android:id="@+id/tvv_leadNo_2"
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="18dp"
-                        android:text="00225"
-                        android:layout_weight="3"
+                        android:layout_height="60dp"
                         android:gravity="center"
-                        android:drawablePadding="10dp"
-                        android:background="@drawable/bg_shpae_correction"
-                        android:drawableTint="@color/greydark"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:visibility="visible"/>
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/grey_dark"
-                    android:visibility="visible"/>
+                        android:orientation="horizontal">
 
-                <LinearLayout
+                        <ImageView
+                            android:id="@+id/imback"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_gravity="left"
+                            android:background="@color/color_activity_transparent"
+                            android:padding="10dp"
+                            android:tint="@color/white"
+                            android:layout_weight="3.5"
+                            android:src="@drawable/back_arro"
+                            tools:ignore="UseAppTint" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:text="Correction Details"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginRight="25dp"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/myfont" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_gravity="left"
+                            android:background="@color/color_activity_transparent"
+                            android:padding="10dp"
+                            android:tint="@color/white"
+                            android:layout_weight="4"
+                            android:visibility="invisible"
+                            android:src="@drawable/back_arro"
+                            tools:ignore="UseAppTint" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/correctioncard"
+                    app:cardCornerRadius="5dp"
+                    android:layout_margin="5dp"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvv_leadname_1"
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="12dp"
-                        android:layout_weight="1"
-                        android:textStyle="bold"
-                        android:text="Lead Name"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/greydark"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:visibility="visible"/>
-
-                    <TextView
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="10dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="12dp"
-                        android:text=":"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/greydark"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:visibility="visible"/>
-
-                    <TextView
-                        android:id="@+id/tvv_leadName_2"
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="12dp"
-                        android:text="Shaan"
-                        android:layout_weight="1"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/greydark"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:visibility="visible"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvv_leadremark_1"
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textStyle="bold"
-                        android:textSize="12dp"
-                        android:layout_weight="1"
-                        android:text="Remark"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/greydark"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:visibility="visible"/>
-
-                    <TextView
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="10dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="12dp"
-                        android:text=":"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/greydark"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:visibility="visible"/>
-
-                    <TextView
-                        android:id="@+id/tvv_leadremark_2"
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="12dp"
-                        android:text="dsagdsagsw"
-                        android:layout_weight="1"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/greydark"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:visibility="visible"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvv_correctionPerson_1"
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="12dp"
-                        android:layout_weight="1"
-                        android:text="Sender"
-                        android:drawablePadding="10dp"
-                        android:textStyle="bold"
-                        android:drawableTint="@color/greydark"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:visibility="visible"/>
-
-                    <TextView
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="10dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="12dp"
-                        android:text=":"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/greydark"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:visibility="visible"/>
-
-                    <TextView
-                        android:id="@+id/tvv_correctionPerson_2"
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="12dp"
-                        android:text="Lead No"
-                        android:layout_weight="1"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/greydark"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:visibility="visible"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvv_leadname"
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="12dp"
-                        android:layout_weight="1"
-                        android:text="Lead No"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/greydark"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:visibility="visible"/>
-
-                    <TextView
-                        android:id="@+id/tv_address"
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="10dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="12dp"
-                        android:text=":"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/greydark"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:visibility="visible"/>
-
-                    <TextView
-                        android:id="@+id/tv_leadNO"
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="12dp"
-                        android:text="Lead No"
-                        android:layout_weight="1"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/greydark"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black"
-                        android:visibility="visible"/>
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/correctioncard"
-            app:cardCornerRadius="5dp"
-            android:layout_margin="5dp"
-            android:layout_marginTop="10dp"
-            app:cardUseCompatPadding="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:fontFamily="@font/myfont"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:textSize="18dp"
-                        android:textStyle="bold"
-                        android:text="Product Details"
-                        android:layout_marginTop="5dp"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/grey_dark"
-                    android:visibility="visible"/>
-
-                <LinearLayout
-                    android:id="@+id/ll_ProductDetails"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical"
-                    android:visibility="visible">
+                    app:cardUseCompatPadding="true">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/border_show3"
-                        android:padding="1dp"
-                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
                         android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingBottom="2dp"
-                            android:background="@color/correctioncardheader"
-                            android:orientation="horizontal"
-                            android:visibility="visible">
+                            android:layout_weight="1"
+                            android:layout_marginTop="10dp"
+                            android:visibility="gone"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/tv_Customer"
+                                android:fontFamily="@font/myfont"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="18dp"
+                                android:textStyle="bold"
+                                android:text="Details"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:orientation="horizontal">
 
                             <TextView
-                                android:id="@+id/category_prod"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:textColor="@color/white"
-                                android:textSize="12dp"
-                                android:layout_weight="1.2"
-                                android:textStyle="normal"
-                                android:textAllCaps="true"
-                                android:padding="5dp"
+                                android:id="@+id/tvv_leadno_1"
                                 android:fontFamily="@font/myfont"
-                                android:text="Category"/>
+                                android:layout_width="match_parent"
+                                android:textStyle="bold"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="18dp"
+                                android:layout_weight="1"
+                                android:text="Lead No"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/greydark"
+                                android:textAllCaps="false"
+                                android:textColor="@color/colorPrimary"
+                                android:visibility="visible"/>
+
                             <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:layout_weight="1.2"
-                                android:textColor="@color/white"
-                                android:textSize="12dp"
-                                android:textStyle="normal"
-                                android:textAllCaps="true"
-                                android:padding="5dp"
                                 android:fontFamily="@font/myfont"
-                                android:text="Product"/>
+                                android:layout_width="10dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="12dp"
+                                android:text=":"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/greydark"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:visibility="gone"/>
+
                             <TextView
+                                android:id="@+id/tvv_leadNo_2"
+                                android:fontFamily="@font/myfont"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="18dp"
+                                android:text="00225"
+                                android:layout_weight="3"
                                 android:gravity="center"
-                                android:layout_weight="1.2"
+                                android:drawablePadding="10dp"
+                                android:background="@drawable/bg_shpae_correction"
+                                android:drawableTint="@color/greydark"
+                                android:textAllCaps="false"
                                 android:textColor="@color/white"
-                                android:textSize="12dp"
-                                android:textStyle="normal"
-                                android:textAllCaps="true"
-                                android:padding="5dp"
-                                android:fontFamily="@font/myfont"
-                                android:text="MRP"/>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center"
-                                android:textColor="@color/white"
-                                android:textSize="12dp"
-                                android:textStyle="normal"
-                                android:layout_weight="1.2"
-                                android:textAllCaps="true"
-                                android:padding="5dp"
-                                android:fontFamily="@font/myfont"
-                                android:text="Offer Price"/>
+                                android:visibility="visible"/>
                         </LinearLayout>
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@color/color_background2"/>
+                            android:layout_marginTop="5dp"
+                            android:background="@color/grey_dark"
+                            android:visibility="visible"/>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="10dp"
-                            android:backgroundTint="@color/correctioncard"
-                            tools:ignore="MissingConstraints">
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
 
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/recycle_productlist"
+                            <TextView
+                                android:id="@+id/tvv_leadname_1"
+                                android:fontFamily="@font/myfont"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="12dp"
+                                android:layout_weight="1"
+                                android:textStyle="bold"
+                                android:text="Lead Name"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/greydark"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:visibility="visible"/>
 
+                            <TextView
+                                android:fontFamily="@font/myfont"
+                                android:layout_width="10dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="12dp"
+                                android:text=":"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/greydark"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:visibility="visible"/>
 
+                            <TextView
+                                android:id="@+id/tvv_leadName_2"
+                                android:fontFamily="@font/myfont"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="12dp"
+                                android:text="Shaan"
+                                android:layout_weight="1"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/greydark"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:visibility="visible"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal">
 
+                            <TextView
+                                android:id="@+id/tvv_leadremark_1"
+                                android:fontFamily="@font/myfont"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textStyle="bold"
+                                android:textSize="12dp"
+                                android:layout_weight="1"
+                                android:text="Remark"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/greydark"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:visibility="visible"/>
+
+                            <TextView
+                                android:fontFamily="@font/myfont"
+                                android:layout_width="10dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="12dp"
+                                android:text=":"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/greydark"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:visibility="visible"/>
+
+                            <TextView
+                                android:id="@+id/tvv_leadremark_2"
+                                android:fontFamily="@font/myfont"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="12dp"
+                                android:text="dsagdsagsw"
+                                android:layout_weight="1"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/greydark"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:visibility="visible"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvv_correctionPerson_1"
+                                android:fontFamily="@font/myfont"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="12dp"
+                                android:layout_weight="1"
+                                android:text="Sender"
+                                android:drawablePadding="10dp"
+                                android:textStyle="bold"
+                                android:drawableTint="@color/greydark"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:visibility="visible"/>
+
+                            <TextView
+                                android:fontFamily="@font/myfont"
+                                android:layout_width="10dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="12dp"
+                                android:text=":"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/greydark"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:visibility="visible"/>
+
+                            <TextView
+                                android:id="@+id/tvv_correctionPerson_2"
+                                android:fontFamily="@font/myfont"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="12dp"
+                                android:text="Lead No"
+                                android:layout_weight="1"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/greydark"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:visibility="visible"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvv_leadname"
+                                android:fontFamily="@font/myfont"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="12dp"
+                                android:layout_weight="1"
+                                android:text="Lead No"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/greydark"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:visibility="visible"/>
+
+                            <TextView
+                                android:id="@+id/tv_address"
+                                android:fontFamily="@font/myfont"
+                                android:layout_width="10dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="12dp"
+                                android:text=":"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/greydark"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:visibility="visible"/>
+
+                            <TextView
+                                android:id="@+id/tv_leadNO"
+                                android:fontFamily="@font/myfont"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="12dp"
+                                android:text="Lead No"
+                                android:layout_weight="1"
+                                android:drawablePadding="10dp"
+                                android:drawableTint="@color/greydark"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black"
+                                android:visibility="visible"/>
                         </LinearLayout>
 
 
                     </LinearLayout>
 
-                </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/correctioncard"
+                    app:cardCornerRadius="5dp"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="10dp"
+                    app:cardUseCompatPadding="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal">
+                            <TextView
+                                android:fontFamily="@font/myfont"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:textSize="18dp"
+                                android:textStyle="bold"
+                                android:text="Product Details"
+                                android:layout_marginTop="5dp"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/grey_dark"
+                            android:visibility="visible"/>
+
+                        <LinearLayout
+                            android:id="@+id/ll_ProductDetails"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="10dp"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/border_show3"
+                                android:padding="1dp"
+                                android:layout_marginTop="2dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingBottom="2dp"
+                                    android:background="@color/correctioncardheader"
+                                    android:orientation="horizontal"
+                                    android:visibility="visible">
+
+                                    <TextView
+                                        android:id="@+id/category_prod"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center_vertical"
+                                        android:textColor="@color/white"
+                                        android:layout_marginLeft="3dp"
+                                        android:textSize="12dp"
+                                        android:layout_weight="1.3"
+                                        android:textStyle="normal"
+                                        android:textAllCaps="true"
+                                        android:padding="5dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:text="Category"/>
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center_vertical"
+                                        android:layout_weight="1.3"
+                                        android:layout_marginLeft="3dp"
+                                        android:textColor="@color/white"
+                                        android:textSize="12dp"
+                                        android:textStyle="normal"
+                                        android:textAllCaps="true"
+                                        android:padding="5dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:text="Product"/>
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center_vertical"
+                                        android:layout_weight="1.3"
+                                        android:layout_marginLeft="3dp"
+                                        android:textColor="@color/white"
+                                        android:textSize="12dp"
+                                        android:textStyle="normal"
+                                        android:textAllCaps="true"
+                                        android:padding="5dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:text="MRP"/>
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center_vertical"
+                                        android:textColor="@color/white"
+                                        android:layout_marginLeft="3dp"
+                                        android:textSize="12dp"
+                                        android:textStyle="normal"
+                                        android:layout_weight="1.3"
+                                        android:textAllCaps="true"
+                                        android:padding="5dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:text="Amount"/>
+                                </LinearLayout>
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/color_background2"/>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:paddingLeft="5dp"
+                                    android:paddingRight="5dp"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="10dp"
+                                    android:backgroundTint="@color/correctioncard"
+                                    tools:ignore="MissingConstraints">
+
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:id="@+id/recycle_productlist"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent" />
+
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
         </LinearLayout>
-      </LinearLayout>
+
         <LinearLayout
-            android:id="@+id/llsubmit"
+            android:id="@+id/llBtn"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/color_background"
+            android:layout_alignParentBottom="true">
+
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:background="@color/colorPrimary"
+                android:layout_weight="1.5"
+                android:background="@drawable/btn_shape_reset"
+                android:fontFamily="@font/myfont"
+                android:padding="10dp"
+                android:text="Reset"
+                android:textStyle="bold"
+                android:textColor="@color/greydark"
+                android:textAllCaps="true"
+                android:textSize="15dp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_shape_submit"
+                android:fontFamily="@font/myfont"
+                android:padding="10dp"
+                android:text="SUBMIT"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:textSize="15dp"
+                android:visibility="gone"/>
+            <!--            android:background="@color/white"-->
+
+            <!--            android:background="@drawable/btn_bgcolourshad"-->
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1.5"
+                android:background="@drawable/btn_shape_reset"
+                android:fontFamily="@font/myfont"
+                android:padding="2dp"
+                android:text="Cancel"
+                android:textAllCaps="true"
+                android:textColor="@color/greydark"
                 android:textSize="15dp"
                 android:textStyle="bold"
-                android:fontFamily="@font/myfont"
-                android:text="Update"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textSize="15dp"
+                android:textStyle="bold"
                 android:textColor="@color/white"
+                android:fontFamily="@font/myfont"
+                android:background="@drawable/btn_shape_submit"
+                android:padding="2dp"
+                android:layout_weight="1"
+                android:textAllCaps="true"
+                android:text="Submit"
                 android:visibility="visible"/>
+            <!--            android:background="@drawable/btn_bgcolourshadow1"-->
 
-
-
+            <!--            btn_bgcolourblack-->
         </LinearLayout>
     </RelativeLayout>
 

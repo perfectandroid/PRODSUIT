@@ -1,19 +1,29 @@
 package com.perfect.prodsuit.View.Adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Model.ModelLeadCorrectionDetails
+import com.perfect.prodsuit.Model.ModelWalkingExist
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class CorrectionProductAdapter (internal var context: Context, internal var jsonArray: JSONArray):
+class CorrectionProductAdapter (internal var context: Context, internal var modelLeadCorrectionDetails: List<ModelLeadCorrectionDetails>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG: String = "CorrectionProductAdapter"
@@ -30,31 +40,61 @@ class CorrectionProductAdapter (internal var context: Context, internal var json
     }
 
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         try {
             Log.e(TAG, "Exception   49731   ")
-            jsonObject = jsonArray.getJSONObject(position)
 
             Log.e(TAG, "jsonObject   497310   "+jsonObject)
             if (holder is MainViewHolder) {
                 Log.e(TAG, "onBindViewHolder   1051   ")
+                val ItemsModel = modelLeadCorrectionDetails[position]
                 val pos = position + 1
 
-//                holder.tvv_Product.text = jsonObject!!.getString("ProdName")
-//                holder.tvv_Priority.text = jsonObject!!.getString("PriorityName")
-//                holder.tvv_amount.text = jsonObject!!.getString("MRP")+" / "+jsonObject!!.getString("LgpSalesPrice")
-//
-//                if (jsonObject!!.getString("LgpSalesPrice").equals("")){
-//                    holder.tvv_amount.visibility = View.GONE
-//                }
-//
-//                if (jsonObject!!.getString("ProdName").equals("")){
-//                    holder.tvv_tvCategory.text = jsonObject!!.getString("CategoryName")
-////                    holder.category_prod.text = "Category"
-//                }else{
-//                    holder.tvv_tvCategory.text = jsonObject!!.getString("ProdName")
-////                    holder.category_prod.text = "Product"
-//                }
+                DecimelFormatters.setDecimelPlace(holder.edt_offerpriz!!)
+
+                holder.tvv_tvCategory.text = ItemsModel.Category
+                holder.tvv_Product.text = ItemsModel.Product
+                holder.tvv_mrp.text = ItemsModel.MRP
+                holder.edt_offerpriz.setText(ItemsModel.OfferPrice)
+
+                holder.edt_offerpriz.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                    }
+
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                    }
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                        var MRRP = holder.tvv_mrp.text.toString()
+                        var offer = holder.edt_offerpriz.text.toString()
+
+
+
+                        if (MRRP!!.equals("")) {
+                            MRRP = "0"
+                        }
+
+                        if (offer!!.equals("")) {
+                            offer = "0"
+                        }
+                        Log.e(TAG,"70001  MRRP      "+MRRP)
+                        Log.e(TAG,"70001  MRRP      "+MRRP.toFloat())
+                        Log.e(TAG,"70002  offer     "+offer)
+
+                        if ((MRRP.toFloat() != "0".toFloat()) && (offer.toFloat() > MRRP.toFloat())) {
+
+                          //  Toast.makeText(context,"Offer Price Should be less than or Equal to MRP",Toast.LENGTH_SHORT).show()
+                              Config.showCustomToast1("Offer Price Should be less than or Equal to MRP",context)
+                            modelLeadCorrectionDetails[position].OfferPrice = Config.changeTwoDecimel(offer)
+                            holder.edt_offerpriz.setBackgroundDrawable(context.resources.getDrawable(R.drawable.shape_bg_red))
+                        }
+                        else{
+                            modelLeadCorrectionDetails[position].OfferPrice = Config.changeTwoDecimel(offer)
+                            holder.edt_offerpriz.setBackgroundDrawable(context.resources.getDrawable(R.drawable.shape_bg))
+                        }
+                    }
+                })
 
 
             }
@@ -65,7 +105,7 @@ class CorrectionProductAdapter (internal var context: Context, internal var json
     }
 
     override fun getItemCount(): Int {
-        return jsonArray.length()
+        return modelLeadCorrectionDetails.size
     }
 
     override fun getItemId(position: Int): Long {
@@ -82,7 +122,7 @@ class CorrectionProductAdapter (internal var context: Context, internal var json
         internal var tvv_Product: TextView
         internal var tvv_product_name: TextView
         internal var tvv_mrp: TextView
-        internal var tvv_offerpriz: EditText
+        internal var edt_offerpriz: EditText
 
         init {
 
@@ -90,7 +130,7 @@ class CorrectionProductAdapter (internal var context: Context, internal var json
             tvv_Product = v.findViewById<View>(R.id.tvv_Product) as TextView
             tvv_product_name = v.findViewById<View>(R.id.tvv_product_name) as TextView
             tvv_mrp = v.findViewById<View>(R.id.tvv_mrp) as TextView
-            tvv_offerpriz = v.findViewById<View>(R.id.tvv_offerpriz) as EditText
+            edt_offerpriz = v.findViewById<View>(R.id.edt_offerpriz) as EditText
 //            category_prod = v.findViewById<View>(R.id.category_prod) as TextView
 
 
