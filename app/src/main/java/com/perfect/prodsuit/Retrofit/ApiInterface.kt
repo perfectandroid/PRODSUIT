@@ -556,5 +556,9 @@ interface ApiInterface {
     @POST("WalkingCustomer/WalkingCustomerListByMobileNumer")
     fun getWalkingCustomerListByMobileNumer(@Body body: RequestBody): Call<String>
 
+    @POST("Authorization/AuthorizationCorrectionDetailsList")
+    fun getAuthorizationCorrectionDetailsList(@Body body: RequestBody): Call<String>
+
+
 
 }

@@ -243,6 +243,24 @@ object Config {
 
     }
 
+
+    fun showCustomToast1(message: String, context: Context)
+    {
+
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater.inflate(R.layout.custome_toast1, null)
+
+        val textView1 = layout.findViewById<TextView>(R.id.textView1)
+        textView1.text = message
+
+        val toast = Toast(context)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = layout
+        toast.show()
+
+
+    }
+
     @SuppressLint("ResourceAsColor")
     fun snackBars(context: Context, view: View, message: String) {
 //        val snackbar: Snackbar = Snackbar.make(view, ""+message, Snackbar.LENGTH_LONG)

@@ -67,13 +67,15 @@ object DashBoardCountRepository {
                 val FK_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
 
+//                {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","FK_Company":"1","FK_UserGroup":"13","FK_User":"72","FK_Employee":"40","FK_Branch":"2"}
+
 //                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("42"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("FK_UserGroup", ProdsuitApplication.encryptStart(FK_UserGroupSP.getString("FK_UserRole", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("FK_User", ProdsuitApplication.encryptStart(FK_UserSP.getString("ID_User", null)))
-                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
 
                 Log.e(TAG,"requestObject1   552266   "+requestObject1)

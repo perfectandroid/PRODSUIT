@@ -9,9 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.nbfcmscore.Helper.PicassoTrustAll
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
@@ -23,10 +26,7 @@ class HomeGrideCountAdapter (internal var context: Context, internal var jsonArr
     internal val TAG : String = "HomeGrideCountAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
-    private var lead: String? = null
-    private var service: String? = null
-    private var authorization: String? = null
-    private var delivery: String? = null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
@@ -47,49 +47,58 @@ class HomeGrideCountAdapter (internal var context: Context, internal var jsonArr
                 val pos = position+1
                 holder.tvv_home_name.text        = jsonObject!!.getString("Task")
                 holder.tvv_home_count.text        = jsonObject!!.getString("Value")
+               // holder.tvv_home_count.textColors =
+                holder.tvv_home_count.setTextColor(Color.parseColor(jsonObject!!.getString("MobColor")))
+
+                val IMAGE_URLSP = context.getSharedPreferences(Config.SHARED_PREF29, 0)
+                var IMAGE_URL   = IMAGE_URLSP.getString("IMAGE_URL", null)
+                Log.e("TAG","310112  "+IMAGE_URL+""+jsonObject!!.getString("MobImage"))
+                PicassoTrustAll.getInstance(context)!!.load(IMAGE_URL+""+jsonObject!!.getString("MobImage")).error(R.drawable.svg_trans).into(holder.image)
+
+              //  rrrrr
 //                val resourceId = context.resources.getIdentifier(jsonObject!!.getString("sheetal_logoround"), "drawable", context.packageName)
 //                holder.image.setImageDrawable(context.resources.getDrawable(resourceId))
 //                holder.txtGridNotification.text        = jsonObject!!.getString("count")
 
 
 
-                if (position.equals(0)){
-
-                    val d: Drawable = context.resources.getDrawable(R.drawable.authorization_home1)
-                    holder.image.setImageDrawable(d)
-//                    holder.tvv_home_count.setTextColor()
-                    holder.tvv_home_count!!.setTextColor(ContextCompat.getColorStateList(context,R.color.green1))
-                }
-
-                if (position.equals(1)){
-
-                    val d: Drawable = context.resources.getDrawable(R.drawable.lead_home_1)
-                    holder.image.setImageDrawable(d)
-                    holder.tvv_home_count!!.setTextColor(ContextCompat.getColorStateList(context,R.color.ColorWarm))
-                }
-                if (position.equals(2)){
-
-                    val d: Drawable = context.resources.getDrawable(R.drawable.service_home1)
-                    holder.image.setImageDrawable(d)
-                    holder.tvv_home_count!!.setTextColor(ContextCompat.getColorStateList(context,R.color.leadstatus_color5))
-                }
-                if (position.equals(3)){
-
-                    val d: Drawable = context.resources.getDrawable(R.drawable.pickup_delivery_home1)
-                    holder.image.setImageDrawable(d)
-                    holder.tvv_home_count!!.setTextColor(ContextCompat.getColorStateList(context,R.color.pop_gradient3))
-                }
-
-
+//                if (position.equals(0)){
+//
+//                    val d: Drawable = context.resources.getDrawable(R.drawable.authorization_home1)
+//                    holder.image.setImageDrawable(d)
+////                    holder.tvv_home_count.setTextColor()
+//                    holder.tvv_home_count!!.setTextColor(ContextCompat.getColorStateList(context,R.color.green1))
+//                }
+//
+//                if (position.equals(1)){
+//
+//                    val d: Drawable = context.resources.getDrawable(R.drawable.lead_home_1)
+//                    holder.image.setImageDrawable(d)
+//                    holder.tvv_home_count!!.setTextColor(ContextCompat.getColorStateList(context,R.color.ColorWarm))
+//                }
+//                if (position.equals(2)){
+//
+//                    val d: Drawable = context.resources.getDrawable(R.drawable.service_home1)
+//                    holder.image.setImageDrawable(d)
+//                    holder.tvv_home_count!!.setTextColor(ContextCompat.getColorStateList(context,R.color.leadstatus_color5))
+//                }
+//                if (position.equals(3)){
+//
+//                    val d: Drawable = context.resources.getDrawable(R.drawable.pickup_delivery_home1)
+//                    holder.image.setImageDrawable(d)
+//                    holder.tvv_home_count!!.setTextColor(ContextCompat.getColorStateList(context,R.color.pop_gradient3))
+//                }
+//
+//
 //                if (jsonObject!!.getString("grid_id").equals("3")){
 //
 //
 //                }
 
-//                holder.ll_homeGrid!!.setTag(position)
-//                holder.ll_homeGrid!!.setOnClickListener(View.OnClickListener {
-//                    clickListener!!.onClick(position, "homeGrid")
-//                })
+                holder.ll_homedash!!.setTag(position)
+                holder.ll_homedash!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "homeDashClicks")
+                })
 
             }
         } catch (e: Exception) {
@@ -107,7 +116,7 @@ class HomeGrideCountAdapter (internal var context: Context, internal var jsonArr
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position % 2
+        return position
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -115,19 +124,19 @@ class HomeGrideCountAdapter (internal var context: Context, internal var jsonArr
         internal var tvv_home_count          : TextView
 //        internal var txtGridNotification  : TextView
         internal var image                : ImageView
-//        internal var ll_homeGrid          : LinearLayout
+        internal var ll_homedash          : LinearLayout
 
         init {
             tvv_home_count          = v.findViewById<View>(R.id.tvv_home_count) as TextView
             tvv_home_name           = v.findViewById<View>(R.id.tvv_home_name) as TextView
             image                   = v.findViewById<View>(R.id.image) as ImageView
 //            txtGridNotification   = v.findViewById<View>(R.id.txtGridNotification) as TextView
-//            ll_homeGrid           = v.findViewById<View>(R.id.ll_homeGrid) as LinearLayout
+            ll_homedash           = v.findViewById<View>(R.id.ll_homedash) as LinearLayout
 
         }
     }
 
-//    fun setClickListener(itemClickListener: ItemClickListener?) {
-//        clickListener = itemClickListener
-//    }
+    fun setClickListener(itemClickListener: ItemClickListener?) {
+        clickListener = itemClickListener
+    }
 }

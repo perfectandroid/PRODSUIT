@@ -34,6 +34,10 @@ class CorrectionSplitupActivity : AppCompatActivity(), View.OnClickListener, Ite
     lateinit var correctionSplitupArrayList: JSONArray
     var recycCorrSplit: RecyclerView? = null
 
+    var jsonObj: JSONObject? = null
+    var TransMode = ""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -44,12 +48,14 @@ class CorrectionSplitupActivity : AppCompatActivity(), View.OnClickListener, Ite
         correctionSplitupViewModel = ViewModelProvider(this).get(CorrectionSplitupViewModel::class.java)
 
         setRegViews()
-
+        var jsonObject: String? = intent.getStringExtra("jsonObject")
+        jsonObj = JSONObject(jsonObject)
+        TransMode = jsonObj!!.getString("TransMode")
         correctionCount = 0
-        getCorrectionSplitData()
+        getCorrectionSplitData(TransMode)
     }
 
-    private fun getCorrectionSplitData() {
+    private fun getCorrectionSplitData(TransMode : String) {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -58,7 +64,7 @@ class CorrectionSplitupActivity : AppCompatActivity(), View.OnClickListener, Ite
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                correctionSplitupViewModel.getCorrectionSplitup(this,"")!!.observe(
+                correctionSplitupViewModel.getCorrectionSplitup(this,TransMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -70,17 +76,18 @@ class CorrectionSplitupActivity : AppCompatActivity(), View.OnClickListener, Ite
                                 if (jObject.getString("StatusCode").equals("0")) {
                                   //  successPopup(jObject)
 
-                                    val jobjt = jObject.getJSONObject("ExistCustomerDetails")
-                                    correctionSplitupArrayList = jobjt.getJSONArray("ExistCustomerDetailList")
+                                    val jobjt = jObject.getJSONObject("AuthorizationCorrectionDetailsData")
+                                    correctionSplitupArrayList = jobjt.getJSONArray("AuthorizationCorrectionDetails")
 
                                     if (correctionSplitupArrayList.length() > 0){
 
-                                    val lLayout = GridLayoutManager(this@CorrectionSplitupActivity, 1)
-                                    recycCorrSplit!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                    recycCorrSplit!!.setHasFixedSize(true)
-                                    var adapter = CorrectionSplitupAdapter(applicationContext, correctionSplitupArrayList)
-                                    recycCorrSplit!!.adapter = adapter
-                                    adapter!!.setClickListener(this@CorrectionSplitupActivity)
+                                        val lLayout = GridLayoutManager(this@CorrectionSplitupActivity, 1)
+                                        recycCorrSplit!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        recycCorrSplit!!.setHasFixedSize(true)
+                                        var adapter = CorrectionSplitupAdapter(applicationContext, correctionSplitupArrayList)
+                                        recycCorrSplit!!.adapter = adapter
+                                        adapter!!.setClickListener(this@CorrectionSplitupActivity)
+
                                     }
 
 

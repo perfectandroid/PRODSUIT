@@ -40,11 +40,11 @@ class CorrectionSplitupAdapter (internal var context: Context, internal var json
 
                 Log.e(TAG, "onBindViewHolder   1051   ")
 
-                holder.tv_leadNo.text          = jsonObject!!.getString("LeadNo")
-                holder.tv_customername.text    = jsonObject!!.getString("Customer")
-                holder.tv_customermobile.text  = jsonObject!!.getString("Mobile")
-                holder.tv_LeadName.text        = jsonObject!!.getString("LeadName")
-                holder.tv_FollowUpDate.text    = jsonObject!!.getString("FollowUpDate")
+                holder.tv_leadNo.text          = jsonObject!!.getString("TransNo")
+                holder.tv_customername.text    = jsonObject!!.getString("CorrectionPassBy")
+            //    holder.tv_customermobile.text  = jsonObject!!.getString("Mobile")
+                holder.tv_LeadName.text        = jsonObject!!.getString("TransTitle")
+                holder.tv_FollowUpDate.text    = jsonObject!!.getString("CorrectionPassOn")
 
 
 

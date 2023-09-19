@@ -10,41 +10,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
-        android:background="@drawable/border_show3"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:orientation="vertical"
-            android:layout_marginTop="3dp"
             android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="3dp"
                     android:layout_weight="1.3"
                     android:paddingRight="5dp"
+                    android:gravity="center"
                     android:orientation="vertical"
                     android:visibility="visible">
 
                     <TextView
                         android:id="@+id/tvv_tvCategory"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:fontFamily="@font/myfont"
                         android:layout_gravity="center"
+                        android:gravity="center_vertical"
                         android:paddingStart="2dp"
-                        android:layout_marginTop="15dp"
                         android:textSize="12dp"
                         android:singleLine="true"
                         android:textColor="@color/textColor"
@@ -71,8 +71,8 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="3dp"
                     android:layout_weight="1.3"
                     android:paddingRight="5dp"
                     android:orientation="vertical"
@@ -80,12 +80,12 @@
 
                     <TextView
                         android:id="@+id/tvv_Product"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:fontFamily="@font/myfont"
                         android:layout_gravity="center"
+                        android:gravity="center_vertical"
                         android:paddingStart="2dp"
-                        android:layout_marginTop="15dp"
                         android:singleLine="true"
                         android:textSize="12dp"
                         android:textColor="@color/textColor"
@@ -97,21 +97,21 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="3dp"
                     android:layout_weight="1.3"
-                    android:paddingRight="10dp"
+                    android:paddingRight="5dp"
                     android:orientation="vertical"
                     android:visibility="visible">
 
                     <TextView
                         android:id="@+id/tvv_mrp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:fontFamily="@font/myfont"
                         android:paddingStart="2dp"
                         android:layout_gravity="center"
-                        android:layout_marginTop="15dp"
+                        android:gravity="center_vertical"
                         android:textSize="12dp"
                         android:singleLine="false"
                         android:textColor="@color/textColor"
@@ -124,26 +124,29 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="3dp"
                     android:layout_weight="1.3"
                     android:paddingRight="10dp"
                     android:orientation="vertical"
                     android:visibility="visible">
 
                     <EditText
-                        android:id="@+id/tvv_offerpriz"
+                        android:id="@+id/edt_offerpriz"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:background="@drawable/shape_bg"
                         android:fontFamily="@font/myfont"
                         android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:maxLength="10"
                         android:paddingStart="2dp"
-                        android:layout_marginTop="5dp"
-                        android:textSize="12dp"
-                        android:singleLine="false"
+                        android:singleLine="true"
+                        android:text="Offer Priz"
                         android:textColor="@color/textColor"
-                        android:text="Offer Priz"/>
-
+                        android:textSize="12dp" />
 
 
                 </LinearLayout>
@@ -155,6 +158,12 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/textColor"/>
+
 
 
 </LinearLayout>

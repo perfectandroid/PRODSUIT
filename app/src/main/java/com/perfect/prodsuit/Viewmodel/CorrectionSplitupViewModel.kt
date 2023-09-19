@@ -11,8 +11,8 @@ class CorrectionSplitupViewModel  : ViewModel()  {
 
     var correctionSplitupData: MutableLiveData<CorrectionSplitupModel>? = null
 
-    fun getCorrectionSplitup(context: Context, strPhone : String) : MutableLiveData<CorrectionSplitupModel>? {
-        correctionSplitupData = CorrectionSplitupRepository.getServicesApiCall(context,strPhone)
+    fun getCorrectionSplitup(context: Context, TransMode : String) : MutableLiveData<CorrectionSplitupModel>? {
+        correctionSplitupData = CorrectionSplitupRepository.getServicesApiCall(context,TransMode)
         return correctionSplitupData
     }
 }
