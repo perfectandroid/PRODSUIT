@@ -81,10 +81,10 @@ class HomeGrideCountAdapter (internal var context: Context, internal var jsonArr
                 }
 
 
-                if (jsonObject!!.getString("grid_id").equals("3")){
-
-
-                }
+//                if (jsonObject!!.getString("grid_id").equals("3")){
+//
+//
+//                }
 
 //                holder.ll_homeGrid!!.setTag(position)
 //                holder.ll_homeGrid!!.setOnClickListener(View.OnClickListener {

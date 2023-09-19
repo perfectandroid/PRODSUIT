@@ -993,9 +993,12 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                val i = Intent(this@HomeActivity, LeadCorrectionActivity::class.java)
 //                startActivity(i)
 
-                val i = Intent(this@HomeActivity, CorrectionSplitupActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@HomeActivity, CorrectionSplitupActivity::class.java)
+//                startActivity(i)
 
+
+                val i = Intent(this@HomeActivity, CorrectionModuleListActivity::class.java)
+                startActivity(i)
 
 
 //                val i = Intent(this@HomeActivity, StockRequestActivity::class.java)

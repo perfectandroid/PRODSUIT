@@ -8,13 +8,16 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.CorrectionModuleListAdapter
 import com.perfect.prodsuit.View.Adapter.ProductPriorityAdapter
 import com.perfect.prodsuit.View.Adapter.ServicePriorityAdapter
 import com.perfect.prodsuit.Viewmodel.CorrectionModuleListViewModel
+import com.perfect.prodsuit.Viewmodel.ReportNameViewModel
 import com.perfect.prodsuit.Viewmodel.ServicePriorityViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -34,6 +37,10 @@ class CorrectionModuleListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_correction_module_list)
 
+        context = this@CorrectionModuleListActivity
+        correctionmodulelistViewModel = ViewModelProvider(this).get(CorrectionModuleListViewModel::class.java)
+
+        getCorrectionModuleList()
         setRegViews()
     }
 
@@ -61,18 +68,18 @@ class CorrectionModuleListActivity : AppCompatActivity() {
                                 if (correctionmodulecount == 0){
                                     correctionmodulecount++
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   353   "+msg)
+                                    Log.e(TAG,"msg   665   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
                                         val jobjt = jObject.getJSONObject("AuthorizationCorrectionModuleList")
                                         correctionmodulelistarray = jobjt.getJSONArray("AuthorizationModuleCorrectionDetails")
                                         if (correctionmodulelistarray.length()>0){
 
-//                                            val lLayout = GridLayoutManager(this@CorrectionModuleListActivity, 1)
-//                                            recycorrectionmodules!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                            recycorrectionmodules!!.setHasFixedSize(true)
-//                                            val adapter = ProductPriorityAdapter(this@CorrectionModuleListActivity, prodPriorityArrayList)
-//                                            recycorrectionmodules!!.adapter = adapter
+                                            val lLayout = GridLayoutManager(this@CorrectionModuleListActivity, 1)
+                                            recycorrectionmodules!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            recycorrectionmodules!!.setHasFixedSize(true)
+                                            val adapter = CorrectionModuleListAdapter(this@CorrectionModuleListActivity, correctionmodulelistarray)
+                                            recycorrectionmodules!!.adapter = adapter
 //                                            adapter.setClickListener(this@CorrectionModuleListActivity)
 
 
