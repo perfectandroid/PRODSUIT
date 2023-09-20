@@ -11,8 +11,8 @@ class CorrectionLeadViewModel : ViewModel()  {
 
     var correctionLeadData: MutableLiveData<CorrectionLeadModel>? = null
 
-    fun getCorrectionLead(context: Context) : LiveData<CorrectionLeadModel>? {
-        correctionLeadData = CorrectionLeadRepository.getServicesApiCall(context)
+    fun getCorrectionLead(context: Context,TransMode: String,FK_TransMaster: String,ID_AuthorizationData: String) : LiveData<CorrectionLeadModel>? {
+        correctionLeadData = CorrectionLeadRepository.getServicesApiCall(context,TransMode,FK_TransMaster,ID_AuthorizationData)
         return correctionLeadData
     }
 

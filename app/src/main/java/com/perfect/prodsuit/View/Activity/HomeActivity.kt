@@ -2406,13 +2406,17 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                if value>1 and ModuleCount=1 go to splitup (3rd page)
 
                 if (jsonObject.getInt("Value") == 1){
-//                    val i = Intent(this@HomeActivity, LeadCorrectionActivity::class.java)
+                    val i = Intent(this@HomeActivity, LeadCorrectionActivity::class.java)
+                    i.putExtra("jsonObject",jsonObject.toString())
+                    startActivity(i)
+
+//                    val i = Intent(this@HomeActivity, CorrectionSplitupActivity::class.java)
 //                    i.putExtra("jsonObject",jsonObject.toString())
 //                    startActivity(i)
 
-                    val i = Intent(this@HomeActivity, CorrectionSplitupActivity::class.java)
-                    i.putExtra("jsonObject",jsonObject.toString())
-                    startActivity(i)
+//                    val i = Intent(this@HomeActivity, CorrectionModuleListActivity::class.java)
+//                    i.putExtra("jsonObject",jsonObject.toString())
+//                    startActivity(i)
                 }
                 else if (jsonObject.getInt("Value") > 1 && jsonObject.getInt("ModuleCount") > 1){
                     val i = Intent(this@HomeActivity, CorrectionModuleListActivity::class.java)

@@ -42,6 +42,7 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
     lateinit var context                   : Context
     lateinit var correctionLeadViewModel   : CorrectionLeadViewModel
     lateinit var correctionleadArrayList   : JSONArray
+    lateinit var correctionsenderArrayList   : JSONArray
 
     val modelLeadCorrectionDetails = ArrayList<ModelLeadCorrectionDetails>()
     var correctionProductAdapter: CorrectionProductAdapter? = null
@@ -50,6 +51,11 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
     private var btnSubmit: Button? = null
 
     var correctioncount = 0
+    var jsonObj: JSONObject? = null
+    var TransMode = ""
+    private var FK_TransMaster: String? = ""
+    private var Module_sub: String? = ""
+    private var ID_AuthorizationData: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,10 +64,27 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
 
 
         correctionLeadViewModel = ViewModelProvider(this).get(CorrectionLeadViewModel::class.java)
-        setRegViews()
 
+        var jsonObject: String? = intent.getStringExtra("jsonObject")
+        jsonObj = JSONObject(jsonObject)
+        getIntent().hasExtra("Module_sub")
+        Module_sub = intent.getStringExtra("Module_sub")
+        FK_TransMaster = jsonObj!!.getString("FK_TransMaster")
+        ID_AuthorizationData = jsonObj!!.getString("ID_AuthorizationData")
+
+        Log.e(TAG,"FK_TransMaster 445   "+FK_TransMaster)
+        Log.e(TAG,"Module 445   "+Module_sub)
+
+        if (Module_sub.equals("1")){
+
+            TransMode = jsonObj!!.getString("Module")
+        }else{
+            TransMode = jsonObj!!.getString("TransMode")
+            Log.e(TAG,"TransMode 445   "+jsonObj!!.getString("TransMode"))
+        }
+        setRegViews()
+        getCorrectionDetails(TransMode,FK_TransMaster!!,ID_AuthorizationData!!)
         correctioncount = 0
-        getCorrectionDetails()
     }
 
     private fun setRegViews(){
@@ -86,7 +109,7 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
 
     }
 
-    private fun getCorrectionDetails() {
+    private fun getCorrectionDetails(TransMode : String,FK_TransMaster: String,ID_AuthorizationData: String) {
 
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -96,7 +119,7 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                correctionLeadViewModel.getCorrectionLead(this)!!.observe(
+                correctionLeadViewModel.getCorrectionLead(this,TransMode,FK_TransMaster,ID_AuthorizationData)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -104,9 +127,9 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
                             val jObject = JSONObject(msg)
                             Log.e(TAG,"msg   353   "+msg)
                             if (jObject.getString("StatusCode") == "0") {
-
-                                val jobjt = jObject.getJSONObject("CorrectionDetails")
-                                correctionleadArrayList = jobjt.getJSONArray("CorrectionDetailList")
+                                val jobjt = jObject.getJSONObject("AuthorizationCorrectionLeadDetails")
+                                correctionleadArrayList = jobjt.getJSONArray("ProductDetails")
+//                                correctionsenderArrayList = jobjt.getJSONArray("SenderDetails")
                                 if (correctionleadArrayList.length()>0){
                                     if (correctioncount == 0){
                                         correctioncount++
@@ -114,8 +137,13 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
                                         modelLeadCorrectionDetails.clear()
                                         for (i in 0 until correctionleadArrayList.length()) {
                                             var jsonObject = correctionleadArrayList.getJSONObject(i)
-                                            modelLeadCorrectionDetails!!.add(ModelLeadCorrectionDetails(jsonObject.getString("ID_Category"),jsonObject.getString("Category")
-                                                ,jsonObject.getString("ID_Product"),jsonObject.getString("Product"),jsonObject.getString("MRP"),jsonObject.getString("OfferPrice")))
+
+                                            tvv_leadNo_2!!.setText(jobjt.getString("LeadNo"))
+                                            tvv_leadName_2!!.setText(jobjt.getString("CusName"))
+//                                            tvv_leadremark_2!!.setText(jsonObject.getString("Remark"))
+                                            Log.e(TAG,"Remark   353   "+jsonObject.getString("Remark"))
+                                            modelLeadCorrectionDetails!!.add(ModelLeadCorrectionDetails(jsonObject.getString("FK_Category")
+                                                ,jsonObject.getString("ID_Product"),jsonObject.getString("ProdName"),jsonObject.getString("LgpMRP"),jsonObject.getString("LgpSalesPrice")))
                                         }
 
                                         if (modelLeadCorrectionDetails.size>0){
@@ -184,8 +212,8 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
     private fun validation() {
         if (modelLeadCorrectionDetails.size > 0){
             for (i in 0 until modelLeadCorrectionDetails.size) {
-                var MRRP = modelLeadCorrectionDetails[i].MRP
-                var offer = modelLeadCorrectionDetails[i].OfferPrice
+                var MRRP = modelLeadCorrectionDetails[i].LgpMRP
+                var offer = modelLeadCorrectionDetails[i].LgpSalesPrice
 
                 if (MRRP!!.equals("")) {
                     MRRP = "0"
@@ -200,12 +228,12 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
 
 
                 if ((MRRP.toFloat() != "0".toFloat()) && (offer.toFloat() > MRRP.toFloat())) {
-                    Log.e(TAG,"209991   "+modelLeadCorrectionDetails[i].Product)
+                    Log.e(TAG,"209991   "+modelLeadCorrectionDetails[i].ProdName)
                     Config.showCustomToast1("Offer Price Should be less than or Equal to MRP",context)
                     break
                 }
                 else{
-                    Log.e(TAG,"209992   "+modelLeadCorrectionDetails[i].Product)
+                    Log.e(TAG,"209992   "+modelLeadCorrectionDetails[i].ProdName)
                 }
 
 
