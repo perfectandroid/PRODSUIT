@@ -11,6 +11,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -36,6 +37,8 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
     internal var recyAprrove: RecyclerView? = null
     internal var imv_nodata: ImageView? = null
     var approveCount = 0
+
+    private var tv_listCount: TextView?          = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,11 +84,15 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
                                         Log.e(TAG, "approvalArray   999101   " + approvalArrayList)
 
                                         if (approvalArrayList.length()> 0){
+
+                                            tv_listCount!!.setText(""+approvalArrayList.length())
+
+
                                             val lLayout = GridLayoutManager(this@ApproveActivity, 1)
                                             recyAprrove!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                             val adapter = ApproveAdapter(this@ApproveActivity, approvalArrayList)
                                             recyAprrove!!.adapter = adapter
-                                             adapter.setClickListener(this@ApproveActivity)
+                                            adapter.setClickListener(this@ApproveActivity)
                                         }
 //                                        else if (approvalArray.equals("")){
 //
@@ -137,6 +144,8 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
     }
 
     private fun setRegViews() {
+
+        tv_listCount = findViewById(R.id.tv_listCount)
 
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
