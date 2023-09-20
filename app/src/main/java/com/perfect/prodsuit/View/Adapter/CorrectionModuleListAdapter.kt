@@ -1,13 +1,22 @@
 package com.perfect.prodsuit.View.Adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.auth.AuthUI.getApplicationContext
+import com.google.firebase.messaging.Constants.MessageNotificationKeys.IMAGE_URL
+import com.perfect.nbfcmscore.Helper.PicassoTrustAll
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
@@ -29,6 +38,7 @@ class CorrectionModuleListAdapter (internal var context: Context, internal var j
         return vh
     }
 
+    @SuppressLint("ResourceType")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
             if (holder is MainViewHolder) {
@@ -36,21 +46,42 @@ class CorrectionModuleListAdapter (internal var context: Context, internal var j
                 jsonObject = jsonArray.getJSONObject(position)
                 Log.e(TAG,"onBindViewHolder   36   ")
                 val pos = position+1
+                val IMAGE_URLSP = context.getSharedPreferences(Config.SHARED_PREF29, 0)
+               val IMAGE_URL =  IMAGE_URLSP.getString("IMAGE_URL", null)
 
-//                holder.txtEnquiryAbout.text        = jsonObject!!.getString("EnquiryAbout")
-//                holder.txtAction.text        = jsonObject!!.getString("Action")
-//                holder.txtActionType.text        = jsonObject!!.getString("ActionType")
-//                holder.txtActionDate.text        = jsonObject!!.getString("ActionDate")
-//                holder.txtStatus.text        = jsonObject!!.getString("Status")
-//                holder.txtAgentRemarks.text        = jsonObject!!.getString("Agentremarks")
-//                holder.txtFollowedBy.text        = jsonObject!!.getString("FollowedBy")
 
+//                Picasso.with(context).load("https://202.164.150.65:14271/ProdsuiteAPI/Images/Module/Lead.png").into(holder.img_module)
+//                Picasso.with(context).load(IMAGE_URL+jsonObject!!.getString("MobImage")).into(holder.img_module)
+
+                PicassoTrustAll.getInstance(context)!!.load(IMAGE_URL+jsonObject!!.getString("MobImage")).error(R.drawable.svg_trans).into(holder.img_module)
+
+//                val backgroundColor = Color.parseColor((jsonObject!!.getString("MobColor")))
+//               holder.tvv_count!!.setBackgroundTintList(ContextCompat.getColorStateList(context, backgroundColor))
+
+                holder.tvv_count.text        = jsonObject!!.getString("NoofRecords")
+                holder.tvv_text.text        = jsonObject!!.getString("Module_Name")
+                holder.ll_correction_module.setBackgroundColor(Color.parseColor(jsonObject!!.getString("MobColor")))
+//                holder.tvv_count.setBackgroundColor(Color.parseColor(jsonObject!!.getString("MobColor")))
+
+
+
+                holder.tvv_count.setBackgroundResource(R.drawable.bg_module)
+                holder.tvv_count.backgroundTintList = ContextCompat.getColorStateList(getApplicationContext(),Color.parseColor(jsonObject!!.getString("MobColor")))
+
+//               holder.tvv_count!!.setBackgroundTintList(ContextCompat.getColorStateList(context, backgroundColor))
+
+//                Log.e(TAG,"backgroundColor   "+backgroundColor)
+
+//                holder.img_module.setImageBitmap(jsonObject.getString("MobImage"))
+                Log.e(TAG,"IMAGE_URL   "+IMAGE_URL)
+                Log.e(TAG,"IMAGE_URL   "+jsonObject!!.getString("MobImage"))
+                Log.e(TAG,"IMAGE_URL   "+IMAGE_URL+jsonObject!!.getString("MobImage"))
             }
 
 
         } catch (e: Exception) {
             e.printStackTrace()
-            Log.e(TAG,"Exception   105   "+e.toString())
+            Log.e(TAG,"Exception   2233   "+e.toString())
         }
     }
 
@@ -69,9 +100,10 @@ class CorrectionModuleListAdapter (internal var context: Context, internal var j
 //        internal var txtActionType      : TextView
 //        internal var txtActionDate      : TextView
 //        internal var txtStatus          : TextView
-//        internal var txtAgentRemarks    : TextView
-        internal var tvv_text           : TextView
-        internal var img_module         : ImageView
+        internal var tvv_text                     : TextView
+        internal var tvv_count                    : TextView
+        internal var img_module                   : ImageView
+        internal var ll_correction_module         : LinearLayout
 
 
         init {
@@ -81,9 +113,10 @@ class CorrectionModuleListAdapter (internal var context: Context, internal var j
 //            txtActionType        = v.findViewById<View>(R.id.txtActionType) as TextView
 //            txtActionDate        = v.findViewById<View>(R.id.txtActionDate) as TextView
 //            txtStatus            = v.findViewById<View>(R.id.txtStatus) as TextView
-//            txtAgentRemarks      = v.findViewById<View>(R.id.txtAgentRemarks) as TextView
-            tvv_text             = v.findViewById<View>(R.id.tvv_text) as TextView
-            img_module           = v.findViewById<View>(R.id.img_module) as ImageView
+            tvv_text                = v.findViewById<View>(R.id.tvv_text) as TextView
+            tvv_count               = v.findViewById<View>(R.id.tvv_count) as TextView
+            img_module              = v.findViewById<View>(R.id.img_module) as ImageView
+            ll_correction_module    = v.findViewById<View>(R.id.ll_correction_module) as LinearLayout
 
         }
     }

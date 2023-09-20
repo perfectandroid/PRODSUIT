@@ -74,70 +74,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
-            android:id="@+id/lltab"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/colorPrimary"
-            android:orientation="vertical">
-
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabLayout"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="10dp"
-                android:background="@android:color/transparent"
-                android:scrollbars="horizontal"
-                app:tabBackground="@drawable/tab_selector_dash"
-                app:tabGravity="center"
-                app:tabIndicator="@android:color/transparent"
-                app:tabIndicatorColor="@android:color/transparent"
-                app:tabPaddingEnd="15dp"
-                app:tabPaddingStart="15dp"
-                app:tabTextAppearance="@style/customfontstyle2"
-                app:tabTextColor="@color/white" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/dashBoardEmpty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginTop="250dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_weight=".8"
-                    android:gravity="center"
-                    android:text="no data"
-                    android:textAllCaps="true"
-                    android:textColor="@color/black"
-                    android:textSize="18dp" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-
-
-
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/greylight"
@@ -168,9 +104,7 @@
 
                             <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:gravity="center"
+                                android:layout_height="wrap_content"
                                 android:background="@drawable/navbg"
                                 android:orientation="vertical">
 
@@ -179,7 +113,6 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
-                                    android:layout_marginTop="10dp"
                                     android:layout_marginBottom="0dp"
                                     android:gravity="center"
                                     android:orientation="horizontal">
@@ -188,7 +121,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="300dp"
                                         android:padding="0dp"
-                                        android:src="@drawable/applogo"
+                                        android:src="@drawable/correction_page"
                                          />
 <!--                                    android:src="@drawable/correction_page"-->
 
