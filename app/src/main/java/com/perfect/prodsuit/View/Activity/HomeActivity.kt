@@ -1000,8 +1000,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                startActivity(i)
 
 
-                val i = Intent(this@HomeActivity, CorrectionModuleListActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@HomeActivity, CorrectionModuleListActivity::class.java)
+//                startActivity(i)
 
 
 
@@ -2403,7 +2403,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                startActivity(i)
 //                if value=1 go to individual page,
 //                if value>1 and ModuleCount>1 go to Module List (2nd page)
-//                if value>1 and ModuleCount=1 go to splitup (3rd page)
+//                if value>1 and ModuleCount=1 go to splitup (3rd page
 
                 if (jsonObject.getInt("Value") == 1){
 //                    val i = Intent(this@HomeActivity, LeadCorrectionActivity::class.java)
