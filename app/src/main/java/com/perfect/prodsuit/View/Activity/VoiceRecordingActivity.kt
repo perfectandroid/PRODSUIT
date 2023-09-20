@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -25,10 +26,10 @@ class VoiceRecordingActivity : AppCompatActivity() {
     private var audioRecordingPermissionGranted = false
 
     private var fileName: String? = null
-    private var startRecordingButton: Button? = null
-    private  var stopRecordingButton: Button? = null
-    private  var playRecordingButton: Button? = null
-    private  var stopPlayingButton: Button? = null
+    private var startRecordingButton: ImageView? = null
+    private  var stopRecordingButton: ImageView? = null
+    private  var playRecordingButton: ImageView? = null
+    private  var stopPlayingButton: ImageView? = null
     private var recorder: MediaRecorder? = null
     private var player: MediaPlayer? = null
 
@@ -38,13 +39,13 @@ class VoiceRecordingActivity : AppCompatActivity() {
             this, permissions,REQUEST_RECORD_AUDIO_PERMISSION
         )
         setContentView(R.layout.activity_voice_recording)
-        startRecordingButton = findViewById<Button>(R.id.activity_main_record)
+        startRecordingButton = findViewById<ImageView>(R.id.activity_main_record)
         startRecordingButton!!.setOnClickListener(View.OnClickListener { startRecording() })
-        stopRecordingButton = findViewById<Button>(R.id.activity_main_stop)
+        stopRecordingButton = findViewById<ImageView>(R.id.activity_main_stop)
         stopRecordingButton!!.setOnClickListener(View.OnClickListener { stopRecording() })
-        playRecordingButton = findViewById<Button>(R.id.activity_main_play)
+        playRecordingButton = findViewById<ImageView>(R.id.activity_main_play)
         playRecordingButton!!.setOnClickListener(View.OnClickListener { playRecording() })
-        stopPlayingButton = findViewById<Button>(R.id.activity_main_stop_playing)
+        stopPlayingButton = findViewById<ImageView>(R.id.activity_main_stop_playing)
         stopPlayingButton!!.setOnClickListener(View.OnClickListener { stopPlaying() })
     }
 
