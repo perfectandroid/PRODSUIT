@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/gradient_lead"
     tools:context=".View.Activity.VoiceRecordingActivity"
     android:orientation="vertical">
@@ -18,10 +18,21 @@
             android:gravity="center"
             android:orientation="horizontal">
             <ImageView
+                android:id="@+id/imgrec"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/audiorecordingicon"
                 android:padding="70dp"/>
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieImg"
+                android:visibility="visible"
+                app:lottie_autoPlay="false"
+                app:lottie_loop="false"
+                android:layout_width="300dp"
+                android:layout_height="300dp">
+
+            </com.airbnb.lottie.LottieAnimationView>
 
         </LinearLayout>
         <LinearLayout
