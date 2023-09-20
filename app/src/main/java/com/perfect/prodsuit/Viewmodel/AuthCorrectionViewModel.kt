@@ -11,8 +11,8 @@ class AuthCorrectionViewModel : ViewModel() {
 
     var authCorrectionData: MutableLiveData<AuthCorrectionModel>? = null
 
-    fun getAuthCorrection(context: Context, AuthID : String) : LiveData<AuthCorrectionModel>? {
-        authCorrectionData = AuthCorrectionRepository.getServicesApiCall(context,AuthID)
+    fun getAuthCorrection(context: Context, AuthID : String, ID_Reason : String, strReason : String) : LiveData<AuthCorrectionModel>? {
+        authCorrectionData = AuthCorrectionRepository.getServicesApiCall(context,AuthID,ID_Reason,strReason)
         return authCorrectionData
     }
 }
