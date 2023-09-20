@@ -272,7 +272,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
         proddetailMode = 0
         proddetail = 0
-        getProductDetail(ID_Category!!)
+        getProductDetail("0")
 
         prodpriority = 0
         priorityMode = 0

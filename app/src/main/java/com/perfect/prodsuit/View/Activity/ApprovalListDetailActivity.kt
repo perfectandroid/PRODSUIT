@@ -1204,7 +1204,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
                 checkAttendance()
                 if (saveAttendanceMark) {
                     Config.disableClick(v)
-                    rejectBottomSheet()
+                    rejectCorrectonBottomSheet(1)
                 }
 
             }
@@ -1223,7 +1223,8 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
                 checkAttendance()
                 if (saveAttendanceMark) {
                     Config.disableClick(v)
-                    correctionBottomSheet()
+                    //correctionBottomSheet()
+                    rejectCorrectonBottomSheet(2)
                 }
             }
 
@@ -1233,7 +1234,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
 
 
-    private fun rejectBottomSheet() {
+    private fun rejectCorrectonBottomSheet(mode : Int) {
         try {
             val dialog1 = BottomSheetDialog(this,R.style.BottomSheetDialog)
             val view = layoutInflater.inflate(R.layout.authorization_reject, null)
@@ -1242,6 +1243,8 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
             window!!.setBackgroundDrawableResource(android.R.color.transparent);
             window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             dialog1!!.setCanceledOnTouchOutside(false)
+
+            var tv_header = view.findViewById<TextView>(R.id.tv_header)
 
             txtRjtSubmit = view.findViewById<TextView>(R.id.txtRjtSubmit)
             txtRjtCancel = view.findViewById<TextView>(R.id.txtRjtCancel)
@@ -1252,6 +1255,12 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
             til_Reason = view.findViewById<TextInputLayout>(R.id.til_Reason)
             til_Remarks = view.findViewById<TextInputLayout>(R.id.til_Remarks)
 
+            if (mode == 1){
+                tv_header.setText("Reject Reason")
+            }
+            else if (mode == 2){
+                tv_header.setText("Correction Reason")
+            }
 
 
             til_Reason!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
@@ -1301,8 +1310,16 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
                     til_Remarks!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
                     Log.e(TAG,"ID_Reason  696   "+ID_Reason)
 
-                    rejectCount = 0
-                    authorizationReject(tie_Remarks!!.text.toString())
+                    if (mode == 1){
+                        rejectCount = 0
+                        authorizationReject(tie_Remarks!!.text.toString())
+                    }
+                    else if (mode == 2){
+                        correctionCount = 0
+                        authorizationCorrection(tie_Remarks!!.text.toString())
+                    }
+
+
 
                     dialog1.dismiss()
                     ID_Reason = ""
@@ -1341,8 +1358,8 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
             tv_succesmsg.text = "Confirm correction request ?"
             tv_gotit!!.setOnClickListener {
                 dialog1.dismiss()
-                correctionCount = 0
-                authorizationCorrection()
+//                correctionCount = 0
+//                authorizationCorrection()
             }
 
             dialog1!!.setContentView(view)
@@ -1353,7 +1370,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
         }
     }
 
-    private fun authorizationCorrection() {
+    private fun authorizationCorrection(strRemark: String) {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1362,7 +1379,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                authCorrectionViewModel.getAuthCorrection(this,FK_AuthID)!!.observe(
+                authCorrectionViewModel.getAuthCorrection(this,FK_AuthID,ID_Reason,strRemark!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
