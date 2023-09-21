@@ -11,8 +11,6 @@ import com.perfect.prodsuit.Model.CalllogModel
 import com.perfect.prodsuit.R
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 class CallLogListAdapter(internal var mContext: Context, private val catlist: ArrayList<CalllogModel>) :
 	BaseAdapter() {
@@ -73,12 +71,18 @@ class CallLogListAdapter(internal var mContext: Context, private val catlist: Ar
 		holder.textView2!!.text = catlist[position].number
 
 		val millis = catlist[position].duration
-		val duration = millis!!.toDuration(DurationUnit.MILLISECONDS)
-		val timeString =
-			duration.toComponents { minutes, seconds, _ ->
-				String.format("%02d:%02d", minutes, seconds)
-			}
-		holder.textView4!!.text = timeString
+		val calendar = Calendar.getInstance()
+		calendar.timeInMillis = millis!!.toLong()
+
+		val hour = calendar[Calendar.HOUR_OF_DAY]
+		val minute = calendar[Calendar.MINUTE]
+		val seconds: Int = calendar[Calendar.SECOND]
+		val callTime = ((if (hour < 10) "0$hour" else hour)
+			.toString() + " : "
+				+ (if (minute < 10) "0$minute" else minute)
+				+ " : "
+				+ if (seconds < 10) "0$seconds" else seconds)
+		holder.textView4!!.text = callTime
 
 
 		val callDate: String =  catlist[position].date
