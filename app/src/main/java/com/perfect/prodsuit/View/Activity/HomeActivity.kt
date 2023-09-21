@@ -1003,6 +1003,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                val i = Intent(this@HomeActivity, CorrectionModuleListActivity::class.java)
 //                startActivity(i)
 
+//                val i = Intent(this@HomeActivity, DashboradCommonActivity::class.java)
+//                startActivity(i)
+
 
 
 //                val i = Intent(this@HomeActivity, InventoryActivity::class.java)
