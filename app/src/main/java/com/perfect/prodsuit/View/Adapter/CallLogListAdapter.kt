@@ -5,10 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import android.widget.TextView
 import com.perfect.prodsuit.Model.CalllogModel
 import com.perfect.prodsuit.R
-import java.util.Date
+import java.util.*
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -25,7 +26,7 @@ class CallLogListAdapter(internal var mContext: Context, private val catlist: Ar
 		internal var textView2: TextView? = null
 		internal var textView3: TextView? = null
 		internal var textView4: TextView? = null
-		internal var textView5: TextView? = null
+		internal var imgcall: ImageView? = null
 	}
 
 	override fun getCount(): Int {
@@ -50,7 +51,7 @@ class CallLogListAdapter(internal var mContext: Context, private val catlist: Ar
 			holder.textView2 = view!!.findViewById<View>(R.id.textView2) as TextView
 			holder.textView3 = view!!.findViewById<View>(R.id.textView3) as TextView
 			holder.textView4 = view!!.findViewById<View>(R.id.textView4) as TextView
-			holder.textView5 = view!!.findViewById<View>(R.id.textView5) as TextView
+			holder.imgcall = view!!.findViewById<View>(R.id.imgcall) as ImageView
 			view.tag = holder
 		} else {
 			holder = view.tag as ViewHolder
@@ -60,8 +61,15 @@ class CallLogListAdapter(internal var mContext: Context, private val catlist: Ar
 		}else{
 			holder.textView1!!.text = "Unknown"
 		}
+
+		if( catlist[position].type.equals("1")){
+		holder.imgcall!!.setImageResource(R.drawable.incomingcall)
+		}else if( catlist[position].type.equals("2")){
+			holder.imgcall!!.setImageResource(R.drawable.outcomingcall)
+		}else if( catlist[position].type.equals("3")){
+			holder.imgcall!!.setImageResource(R.drawable.missedcall)
+		}
 		holder.textView2!!.text = catlist[position].number
-		holder.textView5!!.text = catlist[position].type
 
 		val millis = catlist[position].duration
 		val duration = millis!!.toDuration(DurationUnit.MILLISECONDS)
