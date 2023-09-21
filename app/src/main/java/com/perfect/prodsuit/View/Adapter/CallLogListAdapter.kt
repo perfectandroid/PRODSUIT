@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.perfect.prodsuit.Model.CalllogModel
 import com.perfect.prodsuit.R
+import org.apache.commons.lang3.time.DurationFormatUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -82,7 +83,9 @@ class CallLogListAdapter(internal var mContext: Context, private val catlist: Ar
 				+ (if (minute < 10) "0$minute" else minute)
 				+ " : "
 				+ if (second < 10) "0$second" else second)
-		holder.textView4!!.text = callTime
+	//	holder.textView4!!.text = callTime
+		holder.textView4!!.text = DurationFormatUtils.formatDuration(millis.toLong(), "**H:mm:ss**", true);
+
 
 
 		val callDate: String =  catlist[position].date
