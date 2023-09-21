@@ -71,6 +71,7 @@ object CompanyLogoRepository {
 
 
                 Log.e(TAG,"requestObject companycode  731   "+requestObject1)
+                Log.i("jhghgghghg","logo====   "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()

@@ -464,7 +464,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                 Config.disableClick(v)
                 proddetailMode = 1
                 proddetail = 0
-                getProductDetail(ID_Category!!)
+                getProductDetail("0")
 //                if (ID_Category.equals("")) {
 //                    Config.snackBars(applicationContext, v, "Select Category")
 //                }else{
