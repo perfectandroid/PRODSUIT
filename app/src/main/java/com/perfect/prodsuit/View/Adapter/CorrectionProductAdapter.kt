@@ -23,7 +23,7 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class CorrectionProductAdapter (internal var context: Context, internal var modelLeadCorrectionDetails: List<ModelLeadCorrectionDetails>):
+class CorrectionProductAdapter (internal var context: Context, internal var modelLeadCorrectionDetails: ArrayList<ModelLeadCorrectionDetails>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG: String = "CorrectionProductAdapter"
@@ -52,10 +52,13 @@ class CorrectionProductAdapter (internal var context: Context, internal var mode
 
                 DecimelFormatters.setDecimelPlace(holder.edt_offerpriz!!)
 
-                holder.tvv_tvCategory.text = ItemsModel.Category
-                holder.tvv_Product.text = ItemsModel.Product
-                holder.tvv_mrp.text = ItemsModel.MRP
-                holder.edt_offerpriz.setText(ItemsModel.OfferPrice)
+                holder.tvv_tvCategory.text = ItemsModel.CategoryName
+                holder.tvv_Product.text = ItemsModel.ProdName
+              //  holder.tvv_mrp.text = ItemsModel.LgpMRP
+
+
+                holder.tvv_mrp.text  = Config.changeTwoDecimel(ItemsModel.LgpMRP)
+                holder.edt_offerpriz.setText(ItemsModel.LgpSalesPrice)
 
                 holder.edt_offerpriz.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
@@ -86,11 +89,11 @@ class CorrectionProductAdapter (internal var context: Context, internal var mode
 
                           //  Toast.makeText(context,"Offer Price Should be less than or Equal to MRP",Toast.LENGTH_SHORT).show()
                               Config.showCustomToast1("Offer Price Should be less than or Equal to MRP",context)
-                            modelLeadCorrectionDetails[position].OfferPrice = Config.changeTwoDecimel(offer)
+                            modelLeadCorrectionDetails[position].LgpSalesPrice = Config.changeTwoDecimel(offer)
                             holder.edt_offerpriz.setBackgroundDrawable(context.resources.getDrawable(R.drawable.shape_bg_red))
                         }
                         else{
-                            modelLeadCorrectionDetails[position].OfferPrice = Config.changeTwoDecimel(offer)
+                            modelLeadCorrectionDetails[position].LgpSalesPrice = Config.changeTwoDecimel(offer)
                             holder.edt_offerpriz.setBackgroundDrawable(context.resources.getDrawable(R.drawable.shape_bg))
                         }
                     }
@@ -106,6 +109,9 @@ class CorrectionProductAdapter (internal var context: Context, internal var mode
 
     override fun getItemCount(): Int {
         return modelLeadCorrectionDetails.size
+    }
+     fun returnlist(): ArrayList<ModelLeadCorrectionDetails> {
+        return modelLeadCorrectionDetails
     }
 
     override fun getItemId(position: Int): Long {

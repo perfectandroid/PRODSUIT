@@ -355,6 +355,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     var btnclick = ""
     var MRRP = ""
     var Offerprice = ""
+    var ID_AuthorizationData = ""
 
     var recyRequest: RecyclerView? = null
 
@@ -5331,10 +5332,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
                     for (k in 0 until prodDetailArrayList.length()) {
                         val jsonObject = prodDetailArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("ProductName").length) {
-                            if (jsonObject.getString("ProductName")!!.toLowerCase().trim()
-                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
-                            ) {
+                        //if (textlength <= jsonObject.getString("ProductName").length) {
+                        if (textlength > 0) {
+                            if (jsonObject.getString("ProductName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim()) ||
+                                jsonObject.getString("ProdBarcode")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())) {
                                 prodDetailSort.put(jsonObject)
                             }
 
@@ -8379,6 +8380,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //                        strExpecteddate,
                         ID_CustomerAssignment!!,
                         ID_CollectedBy!!,
+                        ID_AuthorizationData!!,
                         array_product_lead!!
                     )!!.observe(
                         this,

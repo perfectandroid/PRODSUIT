@@ -239,6 +239,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
     var encode1: String = ""
     var encode2: String = ""
     var Customer_Type: String = ""
+    var ID_AuthorizationData = ""
 
 
     private var array_product_lead = JSONArray()
@@ -272,7 +273,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
         proddetailMode = 0
         proddetail = 0
-        getProductDetail(ID_Category!!)
+        getProductDetail("0")
 
         prodpriority = 0
         priorityMode = 0
@@ -463,7 +464,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                 Config.disableClick(v)
                 proddetailMode = 1
                 proddetail = 0
-                getProductDetail(ID_Category!!)
+                getProductDetail("0")
 //                if (ID_Category.equals("")) {
 //                    Config.snackBars(applicationContext, v, "Select Category")
 //                }else{
@@ -1201,10 +1202,10 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
                     for (k in 0 until prodDetailArrayList.length()) {
                         val jsonObject = prodDetailArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("ProductName").length) {
-                            if (jsonObject.getString("ProductName")!!.toLowerCase().trim()
-                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
-                            ) {
+//                        if (textlength <= jsonObject.getString("ProductName").length) {
+                        if (textlength > 0) {
+                            if (jsonObject.getString("ProductName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim()) ||
+                                jsonObject.getString("ProdBarcode")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())) {
                                 prodDetailSort.put(jsonObject)
                             }
 
@@ -2954,6 +2955,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 //                        strExpecteddate,
                         ID_CustomerAssignment!!,
                         ID_CollectedBy!!,
+                        ID_AuthorizationData,
                         array_product_lead!!
                     )!!.observe(
                         this,

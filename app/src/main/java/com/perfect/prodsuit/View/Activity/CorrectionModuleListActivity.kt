@@ -3,15 +3,19 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.CorrectionModuleListAdapter
 import com.perfect.prodsuit.View.Adapter.ProductPriorityAdapter
@@ -22,16 +26,20 @@ import com.perfect.prodsuit.Viewmodel.ServicePriorityViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
-class CorrectionModuleListActivity : AppCompatActivity() {
+class CorrectionModuleListActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
 
     var recycorrectionmodules: RecyclerView? = null
     val TAG : String = "CorrectionModuleListActivity"
     private var progressDialog: ProgressDialog? = null
+    private var imback: ImageView? = null
     lateinit var context: Context
     lateinit var correctionmodulelistViewModel: CorrectionModuleListViewModel
     lateinit var correctionmodulelistarray : JSONArray
 
+
     var correctionmodulecount = 0
+    var jsonObj: JSONObject? = null
+    var Module_sub = "1"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +48,11 @@ class CorrectionModuleListActivity : AppCompatActivity() {
         context = this@CorrectionModuleListActivity
         correctionmodulelistViewModel = ViewModelProvider(this).get(CorrectionModuleListViewModel::class.java)
 
+
+//        var jsonObject: String? = intent.getStringExtra("jsonObject")
+//        jsonObj = JSONObject(jsonObject)
+//        Module = jsonObj!!.getString("Module")
+        correctionmodulecount = 0
         getCorrectionModuleList()
         setRegViews()
     }
@@ -47,6 +60,9 @@ class CorrectionModuleListActivity : AppCompatActivity() {
     private fun setRegViews(){
 
         recycorrectionmodules = findViewById(R.id.recycorrectionmodules)
+        imback = findViewById(R.id.imback)
+
+        imback!!.setOnClickListener(this)
     }
 
     private fun getCorrectionModuleList() {
@@ -80,7 +96,7 @@ class CorrectionModuleListActivity : AppCompatActivity() {
                                             recycorrectionmodules!!.setHasFixedSize(true)
                                             val adapter = CorrectionModuleListAdapter(this@CorrectionModuleListActivity, correctionmodulelistarray)
                                             recycorrectionmodules!!.adapter = adapter
-//                                            adapter.setClickListener(this@CorrectionModuleListActivity)
+                                            adapter.setClickListener(this@CorrectionModuleListActivity)
 
 
                                         }
@@ -120,6 +136,46 @@ class CorrectionModuleListActivity : AppCompatActivity() {
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
+            }
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.imback -> {
+                finish()
+            }
+        }
+    }
+
+    override fun onClick(position: Int, data: String) {
+        if (data.equals("moduleListClick")) {
+            Log.e(TAG, "14001  " + position)
+
+            val jsonObject = correctionmodulelistarray.getJSONObject(position)
+            Log.e(TAG, "15522  " + correctionmodulelistarray)
+
+            if (jsonObject.getString("Module_Name").equals("Lead")) {
+
+                if (jsonObject.getInt("NoofRecords") == 1){
+
+                    val i = Intent(this@CorrectionModuleListActivity, LeadCorrectionActivity::class.java)
+                    i.putExtra("jsonObject",jsonObject.toString())
+                    i.putExtra("Module_sub",Module_sub)
+                    startActivity(i)
+
+                }else if (jsonObject.getInt("NoofRecords") > 1){
+
+                    val i = Intent(this@CorrectionModuleListActivity, CorrectionSplitupActivity::class.java)
+                    i.putExtra("jsonObject",jsonObject.toString())
+                    i.putExtra("Module_sub",Module_sub)
+                    Log.e(TAG,"Module 4451   "+Module_sub)
+                    Log.e(TAG, "552244  " + jsonObject.getString("FK_TransMaster"))
+                    startActivity(i)
+                }
+
+            }else{
+                Toast.makeText(applicationContext, "Work in Progress", Toast.LENGTH_LONG).show()
             }
         }
     }

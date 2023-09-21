@@ -64,7 +64,7 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
     var jsonObj: JSONObject? = null
     var reasonCount = 0
-
+    private var tv_listCount: TextView?          = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,7 +90,7 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
     }
 
     private fun setRegViews() {
-
+        tv_listCount = findViewById(R.id.tv_listCount)
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
 
@@ -129,13 +129,15 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
                                         Log.e(TAG, "approvalArrayList   999101   " + approvalArrayList)
                                         if (approvalArrayList.length()> 0){
+
+                                            tv_listCount!!.setText(""+approvalArrayList.length())
 //                                            val lLayout = GridLayoutManager(this@ApprovalListActivity, 1)
 //                                            recyAprrove!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //                                            val adapter = ApproveListAdapter(this@ApprovalListActivity, approvalArrayList)
 //                                            recyAprrove!!.adapter = adapter
 //                                            adapter.setClickListener(this@ApprovalListActivity)
                                             for (i in 0 until approvalArrayList.length()) {
-                                               var jsonObject = approvalArrayList.getJSONObject(i)
+                                                var jsonObject = approvalArrayList.getJSONObject(i)
 
                                                 val customFont: Typeface = context.resources.getFont(R.font.myfont)
                                                 val length: Int = jsonObject!!.length()
@@ -245,7 +247,7 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 //                                                textView3!!.setTextColor(Color.parseColor("#FFFFFF"));
                                                 textView3.setCompoundDrawablePadding(2)
 //                                                textView3!!.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.arrow_next, 0);
-                                               // textView3!!.setTypeface(customFont);
+                                                // textView3!!.setTypeface(customFont);
                                                 textView3!!.setTextColor(context.resources.getColor(R.color.more_textcolor))
                                                 textView3!!.setPadding(30, 10, 30, 10)
                                                 textView3!!.textAlignment = View.TEXT_ALIGNMENT_CENTER
@@ -253,7 +255,7 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                                                 val layoutParamMain = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
                                                 layoutParamMain.setMargins(20, 20, 20, 20)
                                                 layoutParamMain.gravity = Gravity.CENTER
-                                             //   textView3.setBackgroundResource(R.drawable.shape_border_round_trans)
+                                                //   textView3.setBackgroundResource(R.drawable.shape_border_round_trans)
                                                 textView3.setBackgroundResource(R.drawable.shape_bg_view1)
                                                 textView3.layoutParams = layoutParamMain
 

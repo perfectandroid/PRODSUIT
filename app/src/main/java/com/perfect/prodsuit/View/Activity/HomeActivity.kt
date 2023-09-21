@@ -187,7 +187,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private lateinit var pendingIntent: PendingIntent
 
     private val CALENDAR_PERMISSION_REQUEST_CODE = 101
-
+    var dashboardcount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -204,6 +204,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         getCalendarId(context)
         checkAndRequestPermissions()
         getLocationTracker()
+        dashboardcount = 0
         getDashBoardCount()
 //        getServiceNotification()
 //        getNotfCount()
@@ -619,7 +620,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
     private fun getDashBoardCount() {
-        var dashboardcount = 0
+
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
 //                progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1000,8 +1001,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                startActivity(i)
 
 
-                val i = Intent(this@HomeActivity, CorrectionModuleListActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@HomeActivity, CorrectionModuleListActivity::class.java)
+//                startActivity(i)
+
+//                val i = Intent(this@HomeActivity, DashboradCommonActivity::class.java)
+//                startActivity(i)
 
 
 
@@ -1614,7 +1618,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
                                     logo = jobjt!!.getString("CompanyLogo")
                                     Log.i("DIL", count)
-                                  //  Log.i("Byte","Checking"+logo);
+                                    Log.i("logo1212","logo======"+logo);
                                     if(type.equals("0"))
                                     {
                                         tv_Status!!.visibility=View.GONE;
@@ -1671,6 +1675,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     override fun onBackPressed() {
 //        quit()
         QuitBottomSheet()
+        getDashBoardCount()
     }
 
 
@@ -2403,16 +2408,20 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                startActivity(i)
 //                if value=1 go to individual page,
 //                if value>1 and ModuleCount>1 go to Module List (2nd page)
-//                if value>1 and ModuleCount=1 go to splitup (3rd page)
+//                if value>1 and ModuleCount=1 go to splitup (3rd page
 
                 if (jsonObject.getInt("Value") == 1){
-//                    val i = Intent(this@HomeActivity, LeadCorrectionActivity::class.java)
+                    val i = Intent(this@HomeActivity, LeadCorrectionActivity::class.java)
+                    i.putExtra("jsonObject",jsonObject.toString())
+                    startActivity(i)
+
+//                    val i = Intent(this@HomeActivity, CorrectionSplitupActivity::class.java)
 //                    i.putExtra("jsonObject",jsonObject.toString())
 //                    startActivity(i)
 
-                    val i = Intent(this@HomeActivity, CorrectionSplitupActivity::class.java)
-                    i.putExtra("jsonObject",jsonObject.toString())
-                    startActivity(i)
+//                    val i = Intent(this@HomeActivity, CorrectionModuleListActivity::class.java)
+//                    i.putExtra("jsonObject",jsonObject.toString())
+//                    startActivity(i)
                 }
                 else if (jsonObject.getInt("Value") > 1 && jsonObject.getInt("ModuleCount") > 1){
                     val i = Intent(this@HomeActivity, CorrectionModuleListActivity::class.java)
@@ -2467,6 +2476,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //        quit.isVisible = false
 //        return true
 //    }
+
 
 }
 

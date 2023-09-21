@@ -26,133 +26,140 @@ object CorrectionLeadRepository {
     val correctionLeadSetterGetter = MutableLiveData<CorrectionLeadModel>()
     val TAG: String = "CorrectionLeadRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<CorrectionLeadModel> {
-        getCorrectionLead(context)
+    fun getServicesApiCall(context: Context,TransMode: String,FK_TransMaster: String,ID_AuthorizationData: String): MutableLiveData<CorrectionLeadModel> {
+        getCorrectionLead(context,TransMode,FK_TransMaster,ID_AuthorizationData)
         return correctionLeadSetterGetter
     }
 
-    private fun getCorrectionLead(context: Context) {
+    private fun getCorrectionLead(context: Context,TransMode: String,FK_TransMaster: String,ID_AuthorizationData: String) {
 
-        try {
-
-            var strValu = "{\n" +
-                    "  \"CorrectionDetails\": {\n" +
-                    "    \"CorrectionDetailList\": [\n" +
-                    "      {\n" +
-                    "        \"ID_Category\": \"1\",\n" +
-                    "        \"Category\": \"Medium Solar Panel\",\n" +
-                    "        \"ID_Product\": \"10\",\n" +
-                    "        \"Product\": \"Amaze\",\n" +
-                    "        \"MRP\": \"200.00\",\n" +
-                    "        \"OfferPrice\": \"150.00\"\n" +
-                    "      },\n" +
-                    "      {\n" +
-                    "        \"ID_Category\": \"2\",\n" +
-                    "        \"Category\": \"Mega Solar Panel\",\n" +
-                    "        \"ID_Product\": \"11\",\n" +
-                    "        \"Product\": \"Product 1\",\n" +
-                    "        \"MRP\": \"0.00\",\n" +
-                    "        \"OfferPrice\": \"210.00\"\n" +
-                    "      },\n" +
-                    "      {\n" +
-                    "        \"ID_Category\": \"10249\",\n" +
-                    "        \"Category\": \"Medium Solar Panel\",\n" +
-                    "        \"ID_Product\": \"12\",\n" +
-                    "        \"Product\": \"Product 2\",\n" +
-                    "        \"MRP\": \"150.22\",\n" +
-                    "        \"OfferPrice\": \"99.25\"\n" +
-                    "      }\n" +
-                    "    ],\n" +
-                    "    \"ResponseCode\": \"0\",\n" +
-                    "    \"ResponseMessage\": \"Transaction Verified\"\n" +
-                    "  },\n" +
-                    "  \"StatusCode\": 0,\n" +
-                    "  \"EXMessage\": \"Transaction Verified\"\n" +
-                    "}"
-
-            correctionLeadSetterGetter.value = CorrectionLeadModel(strValu)
-
-        }catch (e : Exception){
-
-        }
+//        try {
+//
+//            var strValu = "{\n" +
+//                    "  \"CorrectionDetails\": {\n" +
+//                    "    \"CorrectionDetailList\": [\n" +
+//                    "      {\n" +
+//                    "        \"ID_Category\": \"1\",\n" +
+//                    "        \"Category\": \"Medium Solar Panel\",\n" +
+//                    "        \"ID_Product\": \"10\",\n" +
+//                    "        \"Product\": \"Amaze\",\n" +
+//                    "        \"MRP\": \"200.00\",\n" +
+//                    "        \"OfferPrice\": \"150.00\"\n" +
+//                    "      },\n" +
+//                    "      {\n" +
+//                    "        \"ID_Category\": \"2\",\n" +
+//                    "        \"Category\": \"Mega Solar Panel\",\n" +
+//                    "        \"ID_Product\": \"11\",\n" +
+//                    "        \"Product\": \"Product 1\",\n" +
+//                    "        \"MRP\": \"0.00\",\n" +
+//                    "        \"OfferPrice\": \"210.00\"\n" +
+//                    "      },\n" +
+//                    "      {\n" +
+//                    "        \"ID_Category\": \"10249\",\n" +
+//                    "        \"Category\": \"Medium Solar Panel\",\n" +
+//                    "        \"ID_Product\": \"12\",\n" +
+//                    "        \"Product\": \"Product 2\",\n" +
+//                    "        \"MRP\": \"150.22\",\n" +
+//                    "        \"OfferPrice\": \"99.25\"\n" +
+//                    "      }\n" +
+//                    "    ],\n" +
+//                    "    \"ResponseCode\": \"0\",\n" +
+//                    "    \"ResponseMessage\": \"Transaction Verified\"\n" +
+//                    "  },\n" +
+//                    "  \"StatusCode\": 0,\n" +
+//                    "  \"EXMessage\": \"Transaction Verified\"\n" +
+//                    "}"
+//
+//            correctionLeadSetterGetter.value = CorrectionLeadModel(strValu)
+//
+//        }catch (e : Exception){
+//
+//        }
 
 //        Log.e("TAG","getCorrectionLead  ")
-//        try {
-//            correctionLeadSetterGetter.value = CorrectionLeadModel("")
-//            val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
-//            progressDialog = ProgressDialog(context, R.style.Progress)
-//            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//            progressDialog!!.setCancelable(false)
-//            progressDialog!!.setIndeterminate(true)
-//            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-//            progressDialog!!.show()
-//            val client = OkHttpClient.Builder()
-//                .sslSocketFactory(Config.getSSLSocketFactory(context))
-//                .hostnameVerifier(Config.getHostnameVerifier())
-//                .build()
-//            val gson = GsonBuilder()
-//                .setLenient()
-//                .create()
-//            val retrofit = Retrofit.Builder()
-//                .baseUrl(BASE_URLSP.getString("BASE_URL", null))
-//                .addConverterFactory(ScalarsConverterFactory.create())
-//                .addConverterFactory(GsonConverterFactory.create(gson))
-//                .client(client)
-//                .build()
-//            val apiService = retrofit.create(ApiInterface::class.java!!)
-//            val requestObject1 = JSONObject()
-//            try {
-//
-//                val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
-//                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-//                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-//
-//                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
-//                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-//                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("34"))
-//                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-//                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-//                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-//                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
-//
-//                Log.e(TAG,"requestObject1   4568   "+requestObject1)
-//
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
-//            val body = RequestBody.create(
-//                okhttp3.MediaType.parse("application/json; charset=utf-8"),
-//                requestObject1.toString()
-//            )
-//            val call = apiService.getCountryDetails(body)
-//            call.enqueue(object : retrofit2.Callback<String> {
-//                override fun onResponse(
-//                    call: retrofit2.Call<String>, response:
-//                    Response<String>
-//                ) {
-//                    try {
-//                        progressDialog!!.dismiss()
-//                        val jObject = JSONObject(response.body())
-//                        val country = ArrayList<CorrectionLeadModel>()
-//                        country.add(CorrectionLeadModel(response.body()))
-//                        val msg = country[0].message
-//                        correctionLeadSetterGetter.value = CorrectionLeadModel(msg)
-//                    } catch (e: Exception) {
-//                        e.printStackTrace()
-//                        progressDialog!!.dismiss()
-//                        Toast.makeText(context, ""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_LONG).show()
-//                    }
-//                }
-//                override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-//                    progressDialog!!.dismiss()
-//                    Toast.makeText(context, ""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_LONG).show()
-//                }
-//            })
-//        }catch (e : Exception){
-//            e.printStackTrace()
-//            progressDialog!!.dismiss()
-//            Toast.makeText(context, ""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_LONG).show()
-//        }
+        try {
+            correctionLeadSetterGetter.value = CorrectionLeadModel("")
+            val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
+            progressDialog = ProgressDialog(context, R.style.Progress)
+            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+            progressDialog!!.setCancelable(false)
+            progressDialog!!.setIndeterminate(true)
+            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+            progressDialog!!.show()
+            val client = OkHttpClient.Builder()
+                .sslSocketFactory(Config.getSSLSocketFactory(context))
+                .hostnameVerifier(Config.getHostnameVerifier())
+                .build()
+            val gson = GsonBuilder()
+                .setLenient()
+                .create()
+            val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URLSP.getString("BASE_URL", null))
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(client)
+                .build()
+            val apiService = retrofit.create(ApiInterface::class.java!!)
+            val requestObject1 = JSONObject()
+            try {
+
+                val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
+                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                val EnterBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+
+                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EnterBySP.getString("UserCode", null)))
+                requestObject1.put("TransMode", ProdsuitApplication.encryptStart(TransMode))
+                requestObject1.put("ID_LeadGenerate", ProdsuitApplication.encryptStart(FK_TransMaster))
+                requestObject1.put("FK_AuthorizationData", ProdsuitApplication.encryptStart(ID_AuthorizationData))
+                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
+
+
+                Log.e(TAG,"requestObject1   4568   "+requestObject1)
+                Log.e(TAG,"TransMode   4568   "+TransMode)
+                Log.e(TAG,"ID_LeadGenerate   4568   "+FK_TransMaster)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            val body = RequestBody.create(
+                okhttp3.MediaType.parse("application/json; charset=utf-8"),
+                requestObject1.toString()
+            )
+            val call = apiService.getAuthorizationCorrectionLeadDetails(body)
+            call.enqueue(object : retrofit2.Callback<String> {
+                override fun onResponse(
+                    call: retrofit2.Call<String>, response:
+                    Response<String>
+                ) {
+                    try {
+                        progressDialog!!.dismiss()
+                        val jObject = JSONObject(response.body())
+                        val country = ArrayList<CorrectionLeadModel>()
+                        country.add(CorrectionLeadModel(response.body()))
+                        val msg = country[0].message
+                        correctionLeadSetterGetter.value = CorrectionLeadModel(msg)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        progressDialog!!.dismiss()
+                        Toast.makeText(context, ""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_LONG).show()
+                    }
+                }
+                override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
+                    progressDialog!!.dismiss()
+                    Toast.makeText(context, ""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_LONG).show()
+                }
+            })
+        }catch (e : Exception){
+            e.printStackTrace()
+            progressDialog!!.dismiss()
+            Toast.makeText(context, ""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_LONG).show()
+        }
 
     }
 }

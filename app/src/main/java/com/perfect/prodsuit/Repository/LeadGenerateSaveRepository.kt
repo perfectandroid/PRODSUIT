@@ -33,11 +33,11 @@ object LeadGenerateSaveRepository {
                            CusNameTitle :String,Customer_Name :String,Customer_Address1 :String,Customer_Address2 :String,Customer_Mobile :String,Customer_Email :String,
                            strCompanyContact :String,FK_Country :String, FK_States :String,FK_District :String,FK_Post :String,strPincode : String,FK_Area :String,ID_LeadFrom :String,ID_LeadThrough :String,
                            strLeadThrough :String,strWhatsAppNo :String,strLatitude :String,strLongitue :String, encode1 :String, encode2 :String,
-                           Customer_Mode : String,Customer_Type : String,ID_CustomerAssignment : String,ID_CollectedBy : String,array_product_lead : JSONArray
+                           Customer_Mode : String,Customer_Type : String,ID_CustomerAssignment : String,ID_CollectedBy : String,ID_AuthorizationData: String,array_product_lead : JSONArray
     ): MutableLiveData<LeadGenerateSaveModel> {
         saveLeadGenerate(context, saveUpdateMode!!, ID_LeadGenerate!!, strDate, ID_Customer, ID_MediaSubMaster, CusNameTitle,
             Customer_Name, Customer_Address1, Customer_Address2, Customer_Mobile, Customer_Email, strCompanyContact, FK_Country, FK_States, FK_District, FK_Post, strPincode,
-            FK_Area, ID_LeadFrom, ID_LeadThrough, strLeadThrough, strWhatsAppNo, strLatitude, strLongitue, encode1, encode2,Customer_Mode,Customer_Type,ID_CustomerAssignment,ID_CollectedBy,array_product_lead)
+            FK_Area, ID_LeadFrom, ID_LeadThrough, strLeadThrough, strWhatsAppNo, strLatitude, strLongitue, encode1, encode2,Customer_Mode,Customer_Type,ID_CustomerAssignment,ID_CollectedBy,ID_AuthorizationData,array_product_lead)
         Log.e("LeadGenerateSaveRepository"," 226666    ")
         return leadGenSaveSetterGetter
     }
@@ -46,7 +46,7 @@ object LeadGenerateSaveRepository {
                                  CusNameTitle :String,Customer_Name :String,Customer_Address1 :String,Customer_Address2 :String,Customer_Mobile :String,Customer_Email :String,
                                  strCompanyContact :String,FK_Country :String, FK_States :String,FK_District :String,FK_Post :String,strPincode : String,FK_Area :String,ID_LeadFrom :String,ID_LeadThrough :String,
                                  strLeadThrough :String,strWhatsAppNo :String,strLatitude :String,strLongitue :String, encode1 :String, encode2 :String,
-                                 Customer_Mode : String,Customer_Type : String,ID_CustomerAssignment : String,ID_CollectedBy : String,array_product_lead : JSONArray) {
+                                 Customer_Mode : String,Customer_Type : String,ID_CustomerAssignment : String,ID_CollectedBy : String,ID_AuthorizationData: String,array_product_lead : JSONArray) {
 
         Log.e("TAG","saveLeadGenerate  ")
         Log.e(TAG,"LocationValidation  6421232"
@@ -244,6 +244,7 @@ object LeadGenerateSaveRepository {
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
                 requestObject1.put("PreviousID", ProdsuitApplication.encryptStart("0")) // HARD //New
                 requestObject1.put("CusMobileAlternate", ProdsuitApplication.encryptStart(strWhatsAppNo)) //New
+                requestObject1.put("FK_AuthorizationData", ProdsuitApplication.encryptStart(ID_AuthorizationData)) //New
 
 
 
@@ -297,6 +298,7 @@ object LeadGenerateSaveRepository {
 
 
             } catch (e: Exception) {
+                Log.v("hjhvbhk","gghg"+e)
                 e.printStackTrace()
             }
             val body = RequestBody.create(

@@ -26,12 +26,12 @@ object AuthCorrectionRepository {
     val authCorrectionSetterGetter = MutableLiveData<AuthCorrectionModel>()
     val TAG: String = "AuthCorrectionRepository"
 
-    fun getServicesApiCall(context: Context, AuthID : String): MutableLiveData<AuthCorrectionModel> {
-        getAuthorizationCorrection(context, AuthID)
+    fun getServicesApiCall(context: Context, AuthID : String, ID_Reason : String, strReason : String): MutableLiveData<AuthCorrectionModel> {
+        getAuthorizationCorrection(context, AuthID,ID_Reason,strReason)
         return authCorrectionSetterGetter
     }
 
-    private fun getAuthorizationCorrection(context: Context, authID: String) {
+    private fun getAuthorizationCorrection(context: Context, authID: String, ID_Reason : String, strReason : String) {
         try {
             authCorrectionSetterGetter.value = AuthCorrectionModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -59,7 +59,7 @@ object AuthCorrectionRepository {
             val requestObject1 = JSONObject()
             try {
 
-//                {"BankKey":"-500","Token":"CBC45CCD-349B-492B-A513-B97B5AD9B61F","FK_Company":"1","AuthID":"17","EntrBy":"VYSHAKH"}
+//                {"BankKey":"-500","Token":"CBC45CCD-349B-492B-A513-B97B5AD9B61F","FK_Company":"1","AuthID":"17","EntrBy":"VYSHAKH","FK_Reason":"","Reason":""}
 
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
@@ -73,6 +73,8 @@ object AuthCorrectionRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
                 requestObject1.put("AuthID", ProdsuitApplication.encryptStart(authID))
+                requestObject1.put("FK_Reason", ProdsuitApplication.encryptStart(ID_Reason))
+                requestObject1.put("Reason", ProdsuitApplication.encryptStart(strReason))
 
 
                 Log.e(TAG,"requestObject1   8100   "+requestObject1)

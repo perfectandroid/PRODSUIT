@@ -36,6 +36,8 @@ class CorrectionSplitupActivity : AppCompatActivity(), View.OnClickListener, Ite
 
     var jsonObj: JSONObject? = null
     var TransMode = ""
+    private var Module_sub: String? = ""
+//    var Module = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +52,18 @@ class CorrectionSplitupActivity : AppCompatActivity(), View.OnClickListener, Ite
         setRegViews()
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
-        TransMode = jsonObj!!.getString("TransMode")
+        getIntent().hasExtra("Module_sub")
+        Module_sub = intent.getStringExtra("Module_sub")
+
+        Log.e(TAG,"Module 445   "+Module_sub)
+        if (Module_sub.equals("1")){
+
+            TransMode = jsonObj!!.getString("Module")
+        }else{
+            TransMode = jsonObj!!.getString("TransMode")
+            Log.e(TAG,"TransMode 445   "+jsonObj!!.getString("TransMode"))
+        }
+
         correctionCount = 0
         getCorrectionSplitData(TransMode)
     }
@@ -135,12 +148,20 @@ class CorrectionSplitupActivity : AppCompatActivity(), View.OnClickListener, Ite
 
     override fun onClick(position: Int, data: String) {
         if (data.equals("correctsplitClick")){
+
+            val jsonObject = correctionSplitupArrayList.getJSONObject(position)
             Log.e(TAG,"1300  "+position)
 
             val i = Intent(this@CorrectionSplitupActivity, LeadCorrectionActivity::class.java)
+            i.putExtra("jsonObject",jsonObject.toString())
+            Log.e(TAG,"140025  "+jsonObject.getString("FK_TransMaster"))
             startActivity(i)
         }
     }
 
-
+    override fun onBackPressed() {
+//        quit()
+        correctionCount = 0
+        getCorrectionSplitData(TransMode)
+    }
 }
