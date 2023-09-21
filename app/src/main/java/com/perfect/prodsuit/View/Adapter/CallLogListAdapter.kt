@@ -11,7 +11,6 @@ import com.perfect.prodsuit.Model.CalllogModel
 import com.perfect.prodsuit.R
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class CallLogListAdapter(internal var mContext: Context, private val catlist: ArrayList<CalllogModel>) :
 	BaseAdapter() {
@@ -71,23 +70,13 @@ class CallLogListAdapter(internal var mContext: Context, private val catlist: Ar
 		}
 		holder.textView2!!.text = catlist[position].number
 
-		val millis = catlist[position].duration!!.toLong()
-
-		val hms = java.lang.String.format(
-			"%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
-			TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(
-				TimeUnit.MILLISECONDS.toHours(
-					millis
-				)
-			),
-			TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(
-				TimeUnit.MILLISECONDS.toMinutes(
-					millis
-				)
-			)
-		)
-
-		holder.textView4!!.text = hms
+		val millis = catlist[position].duration
+		var second: Int = millis!!.toInt()
+		val hours = second / 3600
+		val minutes = second % 3600 / 60
+		second = second % 60
+		val formattedDuration = String.format("%02d:%02d:%02d", hours, minutes, second)
+		holder.textView4!!.text = formattedDuration
 
 
 
@@ -95,7 +84,7 @@ class CallLogListAdapter(internal var mContext: Context, private val catlist: Ar
 		val callDayTime = Date(java.lang.Long.valueOf(callDate))
 
 		val seconds = callDate.toLong()
-		val formatter = SimpleDateFormat("dd-MM-yy HH:mm")
+		val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm")
 		val dateString: String = formatter.format(Date(seconds))
 		holder.textView3!!.text = dateString
 		return view
