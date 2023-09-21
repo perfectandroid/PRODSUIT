@@ -9,11 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.perfect.prodsuit.Model.CalllogModel
 import com.perfect.prodsuit.R
-import org.apache.commons.lang3.time.DurationFormatUtils
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+import java.util.concurrent.TimeUnit
 
 class CallLogListAdapter(internal var mContext: Context, private val catlist: ArrayList<CalllogModel>) :
 	BaseAdapter() {
@@ -73,14 +71,23 @@ class CallLogListAdapter(internal var mContext: Context, private val catlist: Ar
 		}
 		holder.textView2!!.text = catlist[position].number
 
-		val millis = catlist[position].duration
+		val millis = catlist[position].duration!!.toLong()
 
-		val duration = millis!!.toDuration(DurationUnit.MILLISECONDS)
-		val timeString =
-			duration.toComponents { minutes, seconds, _ ->
-				String.format("%02d:%02d", minutes, seconds)
-			}
-		holder.textView4!!.text = timeString
+		val hms = java.lang.String.format(
+			"%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
+			TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(
+				TimeUnit.MILLISECONDS.toHours(
+					millis
+				)
+			),
+			TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(
+				TimeUnit.MILLISECONDS.toMinutes(
+					millis
+				)
+			)
+		)
+
+		holder.textView4!!.text = hms
 
 
 
