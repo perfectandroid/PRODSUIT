@@ -76,12 +76,12 @@ class CallLogListAdapter(internal var mContext: Context, private val catlist: Ar
 
 		val hour = calendar[Calendar.HOUR_OF_DAY]
 		val minute = calendar[Calendar.MINUTE]
-		val seconds: Int = calendar[Calendar.SECOND]
+		val second: Int = calendar[Calendar.SECOND]
 		val callTime = ((if (hour < 10) "0$hour" else hour)
 			.toString() + " : "
 				+ (if (minute < 10) "0$minute" else minute)
 				+ " : "
-				+ if (seconds < 10) "0$seconds" else seconds)
+				+ if (second < 10) "0$second" else second)
 		holder.textView4!!.text = callTime
 
 
