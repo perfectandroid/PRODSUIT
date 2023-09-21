@@ -1,14 +1,13 @@
 package com.perfect.prodsuit.View.Activity
 
-import android.R.id
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.os.Bundle
-import android.provider.BaseColumns
 import android.provider.CallLog
 import android.text.Editable
 import android.text.TextWatcher
@@ -16,6 +15,7 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -27,8 +27,10 @@ import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Model.CalllogModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.AssignedToAdapter
+import com.perfect.prodsuit.View.Adapter.CallLogListAdapter
 import com.perfect.prodsuit.Viewmodel.AssignedToWalkingViewModel
 import com.perfect.prodsuit.Viewmodel.CreateWalkingCustomerViewModel
 import com.perfect.prodsuit.Viewmodel.WalkExistViewModel
@@ -88,6 +90,11 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
 
     private var array_walkingUpdate = JSONArray()
 
+
+    private var array_sort =ArrayList<CalllogModel>()
+    private var calllogArrayList = ArrayList<CalllogModel>()
+    private var sadapter: CallLogListAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -100,7 +107,6 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
         context = this@WalkingCustomerActivity
         setRegViews()
         defaultLoad()
-
         checkAttendance()
 
         til_Phone!!.setEndIconOnClickListener {
@@ -188,7 +194,11 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
             }
 
             R.id.imcontactlog->{
-                getCustnumber()
+                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_CALL_LOG), 101)
+                }else{
+                    getCustnumber()
+                }
             }
 
             R.id.btnSubmit->{
@@ -213,7 +223,8 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
             lvCustno = layout.findViewById(R.id.lvCustno)
             builder.setView(layout)
             val alertDialog = builder.create()
-            getCallLogDetail(alertDialog, context)
+           // displayLog()
+            getCallLogDetail(alertDialog,context)
             alertDialog.show()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -221,22 +232,50 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
     }
 
     private fun getCallLogDetail(alertDialog: AlertDialog, context: Context) {
-        val projection = arrayOf(BaseColumns._ID, CallLog.Calls.NUMBER, CallLog.Calls.TYPE, CallLog.Calls.DURATION)
+        array_sort = ArrayList<CalllogModel>()
+        calllogArrayList = ArrayList<CalllogModel>()
         val resolver = context.contentResolver
-        val cur: Cursor? = resolver.query(CallLog.Calls.CONTENT_URI, projection, null, null, CallLog.Calls.DEFAULT_SORT_ORDER)
-        if (!cur!!.isAfterLast()) {
-            val numberColumn: Int = cur.getColumnIndex(CallLog.Calls.NUMBER)
-            val typeColumn: Int = cur.getColumnIndex(CallLog.Calls.TYPE)
-            val durationcolumn: Int = cur.getColumnIndex(CallLog.Calls.DURATION)
-            val number: String = cur.getString(numberColumn)
-            val type: String = cur.getString(typeColumn)
-            val duration: String = cur.getString(durationcolumn)
-            cur.moveToNext()
+        val cur: Cursor? = resolver.query(
+            CallLog.Calls.CONTENT_URI, null,
+            null, null, CallLog.Calls.DATE + " DESC"
+        )
+        val name: Int = cur!!.getColumnIndex(CallLog.Calls.CACHED_NAME)
+        val number: Int = cur!!.getColumnIndex(CallLog.Calls.NUMBER)
+        val type: Int = cur.getColumnIndex(CallLog.Calls.TYPE)
+        val date: Int = cur.getColumnIndex(CallLog.Calls.DATE)
+        val duration: Int = cur.getColumnIndex(CallLog.Calls.DURATION)
+        if (cur!!.moveToFirst()) {
+            do {
+                calllogArrayList.add(
+                    CalllogModel(
+                        cur.getString(name),
+                        cur.getString(number),
+                        cur.getString(type),
+                        cur.getString(duration).toInt(),
+                        cur.getString(date)
+                    )
+                )
+                array_sort.add(
+                    CalllogModel(
+                        cur.getString(name),
+                        cur.getString(number),
+                        cur.getString(type),
+                        cur.getString(duration).toInt(),
+                        cur.getString(date)
+                    )
+                )
+            } while (cur.moveToNext())
         }
-
-
-
+        sadapter = CallLogListAdapter(this@WalkingCustomerActivity, array_sort)
+        lvCustno!!.setAdapter(sadapter)
+        lvCustno!!.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
+            Config.Utils.hideSoftKeyBoard(this@WalkingCustomerActivity, view)
+            tie_CustomerName!!.setText(array_sort[position].name)
+            tie_Phone!!.setText(array_sort[position].number)
+            alertDialog.dismiss()
+        })
     }
+
     private fun resetData() {
 
         tie_CustomerName!!.setText("")
@@ -316,7 +355,6 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
 
         dialog.show()
     }
-
 
     private fun getAssignedTo() {
         var ReqMode = "107"
@@ -573,7 +611,6 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
         }
     }
 
-
     private fun getExistingCustomerData() {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -626,5 +663,13 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
             }
         }
     }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode==101 && grantResults[0]==PackageManager.PERMISSION_GRANTED) {
+            getCustnumber()
+        }
+    }
+
 
 }

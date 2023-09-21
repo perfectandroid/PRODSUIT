@@ -32,12 +32,12 @@ class LeadGenerateSaveViewModel : ViewModel()  {
     CusNameTitle :String,Customer_Name :String,Customer_Address1 :String,Customer_Address2 :String,Customer_Mobile :String,Customer_Email :String,
     strCompanyContact :String,FK_Country :String, FK_States :String,FK_District :String,FK_Post :String,strPincode : String,FK_Area :String,ID_LeadFrom :String,ID_LeadThrough :String,
     strLeadThrough :String,strWhatsAppNo :String,strLatitude :String,strLongitue :String, encode1 :String, encode2 :String,Customer_Mode : String,
-                         Customer_Type : String,ID_CustomerAssignment : String,ID_CollectedBy : String,array_product_lead : JSONArray) : LiveData<LeadGenerateSaveModel>? {
+                         Customer_Type : String,ID_CustomerAssignment : String,ID_CollectedBy : String,ID_AuthorizationData: String,array_product_lead : JSONArray) : LiveData<LeadGenerateSaveModel>? {
         Log.e("LeadGenerateSaveViewModel"," 2266661    ")
         LeadGenSaveLiveData = LeadGenerateSaveRepository.getServicesApiCall(context, saveUpdateMode!!, ID_LeadGenerate!!, strDate, ID_Customer, ID_MediaSubMaster, CusNameTitle,
             Customer_Name, Customer_Address1, Customer_Address2, Customer_Mobile, Customer_Email, strCompanyContact, FK_Country, FK_States, FK_District, FK_Post, strPincode,
             FK_Area, ID_LeadFrom, ID_LeadThrough, strLeadThrough, strWhatsAppNo,
-            strLatitude, strLongitue, encode1, encode2,Customer_Mode,Customer_Type,ID_CustomerAssignment,ID_CollectedBy,array_product_lead)
+            strLatitude, strLongitue, encode1, encode2,Customer_Mode,Customer_Type,ID_CustomerAssignment,ID_CollectedBy,ID_AuthorizationData,array_product_lead)
         Log.e("LeadGenerateSaveViewModel"," 2266662    ")
         return LeadGenSaveLiveData
     }

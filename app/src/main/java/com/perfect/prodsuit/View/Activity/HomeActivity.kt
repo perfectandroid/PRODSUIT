@@ -189,7 +189,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private val CALENDAR_PERMISSION_REQUEST_CODE = 101
     var dashboardcount = 0
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -205,7 +204,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         getCalendarId(context)
         checkAndRequestPermissions()
         getLocationTracker()
-
         dashboardcount = 0
         getDashBoardCount()
 //        getServiceNotification()
@@ -514,10 +512,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         Config.setRedirection(context,"")
         getNotfCount()
         updateWidgetHandler.postDelayed(updateWidgetRunnable, UPDATE_INTERVAL)
-
-        dashboardcount = 0
-        getDashBoardCount()
-
     }
 
 
@@ -1015,8 +1009,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
 
-                val i = Intent(this@HomeActivity, InventoryActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@HomeActivity, InventoryActivity::class.java)
+//                startActivity(i)
 
 
 
@@ -2481,6 +2475,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //        quit.isVisible = false
 //        return true
 //    }
+
 
 }
 
