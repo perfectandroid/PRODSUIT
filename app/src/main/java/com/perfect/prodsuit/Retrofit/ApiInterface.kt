@@ -559,6 +559,7 @@ interface ApiInterface {
     @POST("Authorization/AuthorizationCorrectionDetailsList")
     fun getAuthorizationCorrectionDetailsList(@Body body: RequestBody): Call<String>
 
-
+    @POST("Authorization/AuthorizationCorrectionLeadDetails")
+    fun getAuthorizationCorrectionLeadDetails(@Body body: RequestBody): Call<String>
 
 }

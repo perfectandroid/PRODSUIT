@@ -125,9 +125,10 @@
                             android:orientation="vertical">
 
                             <ImageView
+                                android:id="@+id/imgauth"
                                 android:layout_width="25dp"
                                 android:layout_height="25dp"
-                                android:src="@drawable/to_do_02"
+
                                 tools:ignore="UseAppTint" />
 
                         </LinearLayout>
@@ -164,19 +165,30 @@
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:gravity="center"
+                    android:layout_gravity="center"
                     android:orientation="horizontal">
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card"
+                        android:layout_gravity="center"
+                        app:cardCornerRadius="40dp"
 
-                    <TextView
-                        android:id="@+id/tv_counts"
+                        android:foregroundGravity="center"
                         android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:text=""
-                        android:gravity="center"
+                        android:layout_height="40dp">
+                        <TextView
+                            android:id="@+id/tv_counts"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:text=""
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            android:fontFamily="@font/myfont" />
 
-                        android:background="@drawable/counts_color1"
-                        android:textColor="@color/white"
-                        android:textSize="20dp"
-                        android:fontFamily="@font/myfont" />
+                    </androidx.cardview.widget.CardView>
+
+
                 </LinearLayout>
 
 

@@ -142,6 +142,9 @@ dependencies {
 
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'com.github.sheetalkumar105:ZoomImageView-android:1.02'
+    //Lottie
+    def lottieVersion = "4.1.0"
+    implementation "com.airbnb.android:lottie:$lottieVersion"
 
 
 

@@ -1,3 +1,3 @@
 package com.perfect.prodsuit.Model
 
-data class ModelLeadCorrectionDetails (var ID_Category: String, var Category: String, var ID_Product: String, var Product: String, var MRP: String, var OfferPrice: String)
+data class ModelLeadCorrectionDetails (var FK_Category: String, var ID_Product: String, var ProdName: String, var LgpMRP: String, var LgpSalesPrice: String)

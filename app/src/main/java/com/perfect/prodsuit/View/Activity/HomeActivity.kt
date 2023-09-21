@@ -1617,7 +1617,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
                                     logo = jobjt!!.getString("CompanyLogo")
                                     Log.i("DIL", count)
-                                  //  Log.i("Byte","Checking"+logo);
+                                    Log.i("logo1212","logo======"+logo);
                                     if(type.equals("0"))
                                     {
                                         tv_Status!!.visibility=View.GONE;
@@ -2409,13 +2409,17 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                if value>1 and ModuleCount=1 go to splitup (3rd page
 
                 if (jsonObject.getInt("Value") == 1){
-//                    val i = Intent(this@HomeActivity, LeadCorrectionActivity::class.java)
+                    val i = Intent(this@HomeActivity, LeadCorrectionActivity::class.java)
+                    i.putExtra("jsonObject",jsonObject.toString())
+                    startActivity(i)
+
+//                    val i = Intent(this@HomeActivity, CorrectionSplitupActivity::class.java)
 //                    i.putExtra("jsonObject",jsonObject.toString())
 //                    startActivity(i)
 
-                    val i = Intent(this@HomeActivity, CorrectionSplitupActivity::class.java)
-                    i.putExtra("jsonObject",jsonObject.toString())
-                    startActivity(i)
+//                    val i = Intent(this@HomeActivity, CorrectionModuleListActivity::class.java)
+//                    i.putExtra("jsonObject",jsonObject.toString())
+//                    startActivity(i)
                 }
                 else if (jsonObject.getInt("Value") > 1 && jsonObject.getInt("ModuleCount") > 1){
                     val i = Intent(this@HomeActivity, CorrectionModuleListActivity::class.java)
