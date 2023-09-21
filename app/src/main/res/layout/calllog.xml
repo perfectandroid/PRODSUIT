@@ -37,6 +37,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:textSize="17dp"
+                    android:text="ANUSREE S BABU"
                     android:textStyle="bold"
                     android:textAllCaps="true"
                     android:paddingTop="10dp"
@@ -47,6 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
+                    android:text="+919048060983"
                     android:textSize="12dp"
                     android:textAllCaps="true"
                     android:fontFamily="@font/myfont"/>
@@ -56,6 +58,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:textSize="10dp"
+                    android:text="Call Duration : 23:00"
                     android:layout_margin="5dp"
                     android:textAllCaps="true"
                     android:fontFamily="@font/myfont"/>
@@ -72,6 +75,8 @@
                         android:textColor="@color/black"
                         android:textSize="10dp"
                         android:textStyle="bold"
+                        android:layout_marginRight="10dp"
+                        android:text="21-09-2023 12:30:00 "
                         android:textAllCaps="true"
                         android:fontFamily="@font/myfont"/>
                 </LinearLayout>
