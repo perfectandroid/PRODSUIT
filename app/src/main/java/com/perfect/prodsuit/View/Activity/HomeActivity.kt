@@ -187,7 +187,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private lateinit var pendingIntent: PendingIntent
 
     private val CALENDAR_PERMISSION_REQUEST_CODE = 101
-
+    var dashboardcount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -204,6 +204,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         getCalendarId(context)
         checkAndRequestPermissions()
         getLocationTracker()
+        dashboardcount = 0
         getDashBoardCount()
 //        getServiceNotification()
 //        getNotfCount()
@@ -619,7 +620,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
     private fun getDashBoardCount() {
-        var dashboardcount = 0
+
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
 //                progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1671,6 +1672,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     override fun onBackPressed() {
 //        quit()
         QuitBottomSheet()
+        getDashBoardCount()
     }
 
 
@@ -2471,6 +2473,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //        quit.isVisible = false
 //        return true
 //    }
+
 
 }
 

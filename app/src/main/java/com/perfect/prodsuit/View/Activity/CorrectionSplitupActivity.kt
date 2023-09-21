@@ -159,5 +159,9 @@ class CorrectionSplitupActivity : AppCompatActivity(), View.OnClickListener, Ite
         }
     }
 
-
+    override fun onBackPressed() {
+//        quit()
+        correctionCount = 0
+        getCorrectionSplitData(TransMode)
+    }
 }

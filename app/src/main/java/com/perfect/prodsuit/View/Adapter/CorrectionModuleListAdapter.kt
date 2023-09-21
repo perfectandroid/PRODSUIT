@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.auth.AuthUI.getApplicationContext
@@ -61,12 +62,14 @@ class CorrectionModuleListAdapter (internal var context: Context, internal var j
                 holder.tvv_count.text        = jsonObject!!.getString("NoofRecords")
                 holder.tvv_text.text        = jsonObject!!.getString("Module_Name")
                 holder.ll_correction_module.setBackgroundColor(Color.parseColor(jsonObject!!.getString("MobColor")))
+
+                holder.count_card.setCardBackgroundColor(Color.parseColor(jsonObject!!.getString("MobColor")))
 //                holder.tvv_count.setBackgroundColor(Color.parseColor(jsonObject!!.getString("MobColor")))
 
 
 
-                holder.tvv_count.setBackgroundResource(R.drawable.bg_module)
-                holder.tvv_count.backgroundTintList = ContextCompat.getColorStateList(getApplicationContext(),R.color.red)
+//                holder.tvv_count.setBackgroundResource(R.drawable.bg_module)
+//                holder.tvv_count.backgroundTintList = ContextCompat.getColorStateList(getApplicationContext(),R.color.red)
 
 //               holder.tvv_count!!.setBackgroundTintList(ContextCompat.getColorStateList(context, backgroundColor))
 
@@ -113,6 +116,7 @@ class CorrectionModuleListAdapter (internal var context: Context, internal var j
         internal var img_module                   : ImageView
         internal var ll_correction_module         : LinearLayout
         internal var ll_module_list               : LinearLayout
+        internal var count_card                   : CardView
 
 
         init {
@@ -127,6 +131,7 @@ class CorrectionModuleListAdapter (internal var context: Context, internal var j
             img_module              = v.findViewById<View>(R.id.img_module) as ImageView
             ll_correction_module    = v.findViewById<View>(R.id.ll_correction_module) as LinearLayout
             ll_module_list          = v.findViewById<View>(R.id.ll_module_list) as LinearLayout
+            count_card              = v.findViewById<View>(R.id.count_card) as CardView
 
         }
     }

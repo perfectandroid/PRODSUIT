@@ -23,7 +23,7 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class CorrectionProductAdapter (internal var context: Context, internal var modelLeadCorrectionDetails: List<ModelLeadCorrectionDetails>):
+class CorrectionProductAdapter (internal var context: Context, internal var modelLeadCorrectionDetails: ArrayList<ModelLeadCorrectionDetails>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG: String = "CorrectionProductAdapter"
@@ -51,11 +51,13 @@ class CorrectionProductAdapter (internal var context: Context, internal var mode
                 val pos = position + 1
 
                 DecimelFormatters.setDecimelPlace(holder.edt_offerpriz!!)
-//                DecimelFormatters.setDecimelPlace(holder.tvv_mrp)
 
-                holder.tvv_tvCategory.text = ItemsModel.FK_Category
+                holder.tvv_tvCategory.text = ItemsModel.CategoryName
                 holder.tvv_Product.text = ItemsModel.ProdName
-                holder.tvv_mrp.text = ItemsModel.LgpMRP
+              //  holder.tvv_mrp.text = ItemsModel.LgpMRP
+
+
+                holder.tvv_mrp.text  = Config.changeTwoDecimel(ItemsModel.LgpMRP)
                 holder.edt_offerpriz.setText(ItemsModel.LgpSalesPrice)
 
                 holder.edt_offerpriz.addTextChangedListener(object : TextWatcher {
@@ -107,6 +109,9 @@ class CorrectionProductAdapter (internal var context: Context, internal var mode
 
     override fun getItemCount(): Int {
         return modelLeadCorrectionDetails.size
+    }
+     fun returnlist(): ArrayList<ModelLeadCorrectionDetails> {
+        return modelLeadCorrectionDetails
     }
 
     override fun getItemId(position: Int): Long {

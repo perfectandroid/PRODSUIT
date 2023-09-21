@@ -239,6 +239,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
     var encode1: String = ""
     var encode2: String = ""
     var Customer_Type: String = ""
+    var ID_AuthorizationData = ""
 
 
     private var array_product_lead = JSONArray()
@@ -2954,6 +2955,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 //                        strExpecteddate,
                         ID_CustomerAssignment!!,
                         ID_CollectedBy!!,
+                        ID_AuthorizationData,
                         array_product_lead!!
                     )!!.observe(
                         this,

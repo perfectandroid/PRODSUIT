@@ -102,6 +102,16 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/count_card"
+                        android:layout_width="50dp"
+                        app:cardCornerRadius="50dp"
+                        android:foregroundGravity="center"
+                        android:layout_gravity="center"
+                        android:layout_height="50dp">
+
+
+
                     <TextView
                         android:id="@+id/tvv_count"
                         android:layout_width="40dp"
@@ -109,9 +119,12 @@
                         android:background="@drawable/bg_module"
                         android:fontFamily="@font/myfont"
                         android:gravity="center"
+                        android:layout_gravity="center"
                         android:text=""
                         android:textColor="@color/white"
                         android:textSize="20dp" />
+
+                    </androidx.cardview.widget.CardView>
                 </LinearLayout>
 
 

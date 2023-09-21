@@ -116,7 +116,7 @@ object CorrectionLeadRepository {
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EnterBySP.getString("UserCode", null)))
                 requestObject1.put("TransMode", ProdsuitApplication.encryptStart(TransMode))
                 requestObject1.put("ID_LeadGenerate", ProdsuitApplication.encryptStart(FK_TransMaster))
-                requestObject1.put("ID_AuthorizationData", ProdsuitApplication.encryptStart(ID_AuthorizationData))
+                requestObject1.put("FK_AuthorizationData", ProdsuitApplication.encryptStart(ID_AuthorizationData))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
 
 

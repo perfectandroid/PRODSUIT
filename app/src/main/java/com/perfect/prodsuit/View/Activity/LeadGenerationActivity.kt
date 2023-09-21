@@ -355,6 +355,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     var btnclick = ""
     var MRRP = ""
     var Offerprice = ""
+    var ID_AuthorizationData = ""
 
     var recyRequest: RecyclerView? = null
 
@@ -8379,6 +8380,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //                        strExpecteddate,
                         ID_CustomerAssignment!!,
                         ID_CollectedBy!!,
+                        ID_AuthorizationData!!,
                         array_product_lead!!
                     )!!.observe(
                         this,
