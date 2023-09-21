@@ -179,4 +179,11 @@ class CorrectionModuleListActivity : AppCompatActivity(), View.OnClickListener, 
             }
         }
     }
+
+    override fun onRestart() {
+        super.onRestart()
+        correctionmodulecount = 0
+        getCorrectionModuleList()
+//        Config.setRedirection(context,"")
+    }
 }

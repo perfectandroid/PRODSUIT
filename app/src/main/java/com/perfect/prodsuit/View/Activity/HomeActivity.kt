@@ -523,6 +523,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     override fun onRestart() {
         super.onRestart()
+        dashboardcount = 0
+        getDashBoardCount()
         Config.setRedirection(context,"")
     }
 
@@ -1675,6 +1677,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     override fun onBackPressed() {
 //        quit()
         QuitBottomSheet()
+        getDashBoardCount()
     }
 
 

@@ -88,6 +88,7 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
     var ID_CollectedBy: String = ""
     var LgActDate: String = ""
     var LgpExpectDate: String = ""
+    var check_save: String = ""
 
 
 
@@ -328,6 +329,8 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
 //
 //
 //            }
+        check_save = "1"
+
             modelLeadCorrectionDetailsfinal= correctionProductAdapter!!.returnlist()
         if (modelLeadCorrectionDetailsfinal.size > 0){
             for (i in 0 until modelLeadCorrectionDetailsfinal.size) {
@@ -349,6 +352,7 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
                 if ((MRRP.toFloat() != "0".toFloat()) && (offer.toFloat() > MRRP.toFloat())) {
                     Log.e(TAG,"209991   "+modelLeadCorrectionDetailsfinal[i].ProdName)
                     Config.showCustomToast1("Offer Price Should be less than or Equal to MRP",context)
+                    check_save = "0"
                     break
                 }
                 else{
@@ -357,80 +361,78 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
 
 
             }
+
+
+            if (check_save.equals("1")){
+                Log.e(TAG,"11222233  1 ")
+
+                var i=0
+                val jsonproduct = JSONArray()
+                for (myObject in modelLeadCorrectionDetailsfinal) {
+
+
+                    val jsonObject2 = JSONObject()
+                    var jobjt = array_product_lead.getJSONObject(i)
+
+
+
+                    val Next_action_date = jobjt.getString("NextActionDate")
+                    val str_ExpectDate  = jobjt.getString("LgpExpectDate")
+
+                    val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+                    val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+                    val currentDateFormate = inputFormat.parse(Next_action_date)
+                    val currentDateFormate_1 = inputFormat.parse(str_ExpectDate)
+
+                    val Next_actionDate = outputFormat.format(currentDateFormate)
+                    val ExpectDate = outputFormat.format(currentDateFormate_1)
+
+
+                    Log.e(TAG,"eeee  "+Next_actionDate)
+                    Log.e(TAG,"eeee  "+ExpectDate)
+
+//                Log.e(TAG,"eeee112  "+Next_actionDate)
+
+                    jsonObject2.put("ID_Product",jobjt.getString("ID_Product"))
+                    jsonObject2.put("FK_Category",jobjt.getString("FK_Category"))
+                    jsonObject2.put("ProdName",jobjt.getString("ProdName"))
+                    jsonObject2.put("ProjectName",jobjt.getString("ProjectName"))
+                    jsonObject2.put("LgpPQuantity",jobjt.getString("LgpPQuantity"))
+                    jsonObject2.put("LgpDescription",jobjt.getString("LgpDescription"))
+                    jsonObject2.put("ActStatus",jobjt.getString("ActStatus"))
+                    jsonObject2.put("FK_NetAction",jobjt.getString("FK_NetAction"))
+                    jsonObject2.put("BranchID",jobjt.getString("BranchID"))
+                    jsonObject2.put("BranchTypeID",jobjt.getString("BranchTypeID"))
+                    jsonObject2.put("FK_ActionType",jobjt.getString("FK_ActionType"))
+                    jsonObject2.put("NextActionDate",Next_actionDate)
+                    jsonObject2.put("FK_Departement",jobjt.getString("FK_Departement"))
+                    jsonObject2.put("FK_Employee",jobjt.getString("FK_Employee"))
+                    jsonObject2.put("FK_Priority",jobjt.getString("FK_Priority"))
+                    jsonObject2.put("LgpExpectDate",ExpectDate)
+                    jsonObject2.put("LgpMRP",jobjt.getString("LgpMRP"))
+                    jsonObject2.put("LgpSalesPrice", myObject.LgpSalesPrice)
+                    jsonObject2.put("FK_ProductLocation",jobjt.getString("FK_ProductLocation"))
+
+                    jsonproduct.put(jsonObject2)
+                    Log.v("sfdsfds","LgpSalesPrice "+myObject.LgpSalesPrice)
+                    Log.v("sfdsfds","FK_ProductLocation "+jobjt.getString("FK_ProductLocation"))
+                    Log.v("sfdsfds","Next_actionDate "+Next_actionDate)
+                    Log.v("sfdsfds","ExpectDate "+ExpectDate)
+                    i=i+1
+                }
+                Log.v("sfdsfds","dsfdsfd "+jsonproduct)
+                saveLeadGeneration(jsonproduct)
+
+            }else{
+//                Log.e(TAG,"11222233  2 ")
+            }
 //            array_product_lead = JSONArray(modelLeadCorrectionDetailsfinal)
 //
            //  array_product_lead = JSONArray()
           //  array_product_lead.
-            var i=0
-            val jsonproduct = JSONArray()
-            for (myObject in modelLeadCorrectionDetailsfinal) {
-
-
-                val jsonObject2 = JSONObject()
-                var jobjt = array_product_lead.getJSONObject(i)
-
-//                jsonObject2.put("ID_LeadGenerateProduct",jobjt.getString("ID_LeadGenerateProduct"))
-//                jsonObject2.put("FK_LeadGenerate",jobjt.getString("FK_LeadGenerate"))
-//                jsonObject2.put("LgActStatus",jobjt.getString("LgActStatus"))
-//                jsonObject2.put("LgActDate",jobjt.getString("LgActDate"))
-//                jsonObject2.put("LgActCusComment",jobjt.getString("LgActCusComment"))
-//                jsonObject2.put("AssignEmp",jobjt.getString("AssignEmp"))
 
 
 
-                val Next_action_date = jobjt.getString("NextActionDate")
-                val str_ExpectDate  = jobjt.getString("LgpExpectDate")
-
-                val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
-                val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-                val currentDateFormate = inputFormat.parse(Next_action_date)
-                val currentDateFormate_1 = inputFormat.parse(str_ExpectDate)
-
-                val Next_actionDate = outputFormat.format(currentDateFormate)
-                val ExpectDate = outputFormat.format(currentDateFormate_1)
-
-
-//                val currentDateFormate = inputFormat.parse(Next_action_date)
-//                val Next_actionDate = inputFormat.parse(currentDateFormate)
-
-//                val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-//                val Next_actionDate = outputFormat.format(Next_action_date)
-//                val ExpectDate = outputFormat.format(str_ExpectDate)
-
-                Log.e(TAG,"eeee  "+Next_actionDate)
-                Log.e(TAG,"eeee  "+ExpectDate)
-
-//                Log.e(TAG,"eeee112  "+Next_actionDate)
-
-                jsonObject2.put("ID_Product",jobjt.getString("ID_Product"))
-                jsonObject2.put("FK_Category",jobjt.getString("FK_Category"))
-                jsonObject2.put("ProdName",jobjt.getString("ProdName"))
-                jsonObject2.put("ProjectName",jobjt.getString("ProjectName"))
-                jsonObject2.put("LgpPQuantity",jobjt.getString("LgpPQuantity"))
-                jsonObject2.put("LgpDescription",jobjt.getString("LgpDescription"))
-                jsonObject2.put("ActStatus",jobjt.getString("ActStatus"))
-                jsonObject2.put("FK_NetAction",jobjt.getString("FK_NetAction"))
-                jsonObject2.put("BranchID",jobjt.getString("BranchID"))
-                jsonObject2.put("BranchTypeID",jobjt.getString("BranchTypeID"))
-                jsonObject2.put("FK_ActionType",jobjt.getString("FK_ActionType"))
-                jsonObject2.put("NextActionDate",Next_actionDate)
-                jsonObject2.put("FK_Departement",jobjt.getString("FK_Departement"))
-                jsonObject2.put("FK_Employee",jobjt.getString("FK_Employee"))
-                jsonObject2.put("FK_Priority",jobjt.getString("FK_Priority"))
-                jsonObject2.put("LgpExpectDate",ExpectDate)
-                jsonObject2.put("LgpMRP",jobjt.getString("LgpMRP"))
-                jsonObject2.put("LgpSalesPrice", myObject.LgpSalesPrice)
-                jsonObject2.put("FK_ProductLocation",jobjt.getString("FK_ProductLocation"))
-
-                jsonproduct.put(jsonObject2)
-                Log.v("sfdsfds","LgpSalesPrice "+myObject.LgpSalesPrice)
-                Log.v("sfdsfds","FK_ProductLocation "+jobjt.getString("FK_ProductLocation"))
-//                Log.v("sfdsfds","Next_actionDate "+Next_actionDate)
-//                Log.v("sfdsfds","ExpectDate "+ExpectDate)
-                i=i+1
-            }
-            Log.v("sfdsfds","dsfdsfd "+jsonproduct)
-            saveLeadGeneration(jsonproduct)
         }
 
 
@@ -612,7 +614,7 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
                                             )
                                             builder.setMessage(jObject.getString("EXMessage"))
                                             builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                                HomeActivity
+                                                onBackPressed()
                                             }
                                             val alertDialog: AlertDialog = builder.create()
                                             alertDialog.setCancelable(false)
