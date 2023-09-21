@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.perfect.prodsuit.Model.CalllogModel
 import com.perfect.prodsuit.R
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -83,7 +84,10 @@ class CallLogListAdapter(internal var mContext: Context, private val catlist: Ar
 		val callDate: String =  catlist[position].date
 		val callDayTime = Date(java.lang.Long.valueOf(callDate))
 
-		holder.textView3!!.text = callDayTime.toString()
+		val seconds = callDate.toLong()
+		val formatter = SimpleDateFormat("dd-MM-yy HH:mm")
+		val dateString: String = formatter.format(Date(seconds))
+		holder.textView3!!.text = dateString
 		return view
 	}
 
