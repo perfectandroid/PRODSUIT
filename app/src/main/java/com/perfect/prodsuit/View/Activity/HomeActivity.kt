@@ -1677,7 +1677,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     override fun onBackPressed() {
 //        quit()
         QuitBottomSheet()
-//        getDashBoardCount()
+        getDashBoardCount()
     }
 
 
