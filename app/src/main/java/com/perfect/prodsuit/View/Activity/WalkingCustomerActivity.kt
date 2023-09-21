@@ -237,7 +237,7 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
         val resolver = context.contentResolver
         val cur: Cursor? = resolver.query(
             CallLog.Calls.CONTENT_URI, null,
-            null, null, null
+            null, null, CallLog.Calls.DATE + " DESC"
         )
         val name: Int = cur!!.getColumnIndex(CallLog.Calls.CACHED_NAME)
         val number: Int = cur!!.getColumnIndex(CallLog.Calls.NUMBER)
