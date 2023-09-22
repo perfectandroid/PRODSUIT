@@ -257,8 +257,8 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         recyStockDetails = findViewById(R.id.recyStockDetails)
 
         tie_Date!!.setOnClickListener(this)
-        tv_FromClick!!.setOnClickListener(this)
-        tv_ToClick!!.setOnClickListener(this)
+//        tv_FromClick!!.setOnClickListener(this)
+//        tv_ToClick!!.setOnClickListener(this)
 
         tie_FromDepartment!!.setOnClickListener(this)
         tie_FromEmployee!!.setOnClickListener(this)
@@ -945,25 +945,23 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     private fun hideShowFromTo() {
 
-        ll_from!!.visibility = View.GONE
-        ll_to!!.visibility = View.GONE
+//        ll_from!!.visibility = View.GONE
+//        ll_to!!.visibility = View.GONE
 
-//        tv_FromClick!!.setBackgroundColor(resources.getColor(R.color.tab_inactive, null))
-//        tv_ToClick!!.setBackgroundColor(resources.getColor(R.color.tab_inactive, null))
-        tv_FromClick!!.setBackgroundResource(R.drawable.shape_bottom_border1)
-        tv_ToClick!!.setBackgroundResource(R.drawable.shape_bottom_border1)
+
+//        tv_FromClick!!.setBackgroundResource(R.drawable.shape_bottom_border1)
+//        tv_ToClick!!.setBackgroundResource(R.drawable.shape_bottom_border1)
 
         if (showFrom == 1){
             ll_from!!.visibility = View.VISIBLE
-//            tv_FromClick!!.setBackgroundColor(resources.getColor(R.color.tab_active, null))
-            tv_FromClick!!.setBackgroundResource(R.drawable.shape_bottom_border)
+//            tv_FromClick!!.setBackgroundResource(R.drawable.shape_bottom_border)
 
 
         }
         if (showTo == 1){
             ll_to!!.visibility = View.VISIBLE
-//            tv_ToClick!!.setBackgroundColor(resources.getColor(R.color.tab_active, null))
-            tv_ToClick!!.setBackgroundResource(R.drawable.shape_bottom_border)
+
+//            tv_ToClick!!.setBackgroundResource(R.drawable.shape_bottom_border)
         }
     }
 

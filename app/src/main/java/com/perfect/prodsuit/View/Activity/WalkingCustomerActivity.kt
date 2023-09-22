@@ -127,18 +127,18 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
         defaultLoad()
         checkAttendance()
 
-        til_Phone!!.setEndIconOnClickListener {
-            Config.disableClick(it)
-            strPhone = tie_Phone!!.text.toString()
-            Config.Utils.hideSoftKeyBoard(context,it)
-
-            if (strPhone.equals("") || strPhone!!.length < 10 ){
-                Config.snackBars(context,it,"Enter Minimum 10 digit Phone Number")
-            }else{
-                walkExistCount = 0
-                getExistingCustomerData()
-            }
-        }
+//        til_Phone!!.setEndIconOnClickListener {
+//            Config.disableClick(it)
+//            strPhone = tie_Phone!!.text.toString()
+//            Config.Utils.hideSoftKeyBoard(context,it)
+//
+//            if (strPhone.equals("") || strPhone!!.length < 10 ){
+//                Config.snackBars(context,it,"Enter Minimum 10 digit Phone Number")
+//            }else{
+//                walkExistCount = 0
+//                getExistingCustomerData()
+//            }
+//        }
 
 
     }
@@ -234,13 +234,12 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
                 if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_CALL_LOG), 101)
                 }else{
-                    getCustnumber()
+                    getCallLogDetail(context)
+                   // getCustnumber()
                 }
             }
 
             R.id.btnSubmit->{
-
-
                 checkAttendance()
                 if (saveAttendanceMark){
                     array_walkingUpdate = JSONArray()
@@ -312,15 +311,22 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
             lvCustno = layout.findViewById(R.id.lvCustno)
             builder.setView(layout)
             val alertDialog = builder.create()
-           // displayLog()
-            getCallLogDetail(alertDialog,context)
+            sadapter = CallLogListAdapter(this@WalkingCustomerActivity, array_sort)
+            lvCustno!!.setAdapter(sadapter)
+            lvCustno!!.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
+                Config.Utils.hideSoftKeyBoard(this@WalkingCustomerActivity, view)
+                tie_CustomerName!!.setText(array_sort[position].name)
+                tie_Phone!!.setText(array_sort[position].number!!.replace("+91", ""))
+                alertDialog.dismiss()
+            })
+           // getCallLogDetail(alertDialog,context)
             alertDialog.show()
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    private fun getCallLogDetail(alertDialog: AlertDialog, context: Context) {
+    private fun getCallLogDetail(context: Context) {
         array_sort = ArrayList<CalllogModel>()
         calllogArrayList = ArrayList<CalllogModel>()
         val resolver = context.contentResolver
@@ -355,14 +361,28 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
                 )
             } while (cur.moveToNext())
         }
-        sadapter = CallLogListAdapter(this@WalkingCustomerActivity, array_sort)
-        lvCustno!!.setAdapter(sadapter)
-        lvCustno!!.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
-            Config.Utils.hideSoftKeyBoard(this@WalkingCustomerActivity, view)
-            tie_CustomerName!!.setText(array_sort[position].name)
-            tie_Phone!!.setText(array_sort[position].number)
-            alertDialog.dismiss()
-        })
+        if(array_sort.isEmpty()){
+            val builder = AlertDialog.Builder(
+                this@WalkingCustomerActivity,
+                R.style.MyDialogTheme
+            )
+            builder.setMessage("Your phone's call log is empty")
+            builder.setPositiveButton("Ok") { dialogInterface, which ->
+            }
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.setCancelable(false)
+            alertDialog.show()
+        }else {
+         /*   sadapter = CallLogListAdapter(this@WalkingCustomerActivity, array_sort)
+            lvCustno!!.setAdapter(sadapter)
+            lvCustno!!.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
+                Config.Utils.hideSoftKeyBoard(this@WalkingCustomerActivity, view)
+                tie_CustomerName!!.setText(array_sort[position].name)
+                tie_Phone!!.setText(array_sort[position].number)
+                alertDia.dismiss()
+            })*/
+            getCustnumber()
+        }
     }
 
     private fun resetData() {

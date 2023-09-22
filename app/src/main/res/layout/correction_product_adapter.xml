@@ -141,6 +141,8 @@
                         android:fontFamily="@font/myfont"
                         android:gravity="center"
                         android:inputType="numberDecimal"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
                         android:maxLength="10"
                         android:paddingStart="2dp"
                         android:singleLine="true"
@@ -148,7 +150,7 @@
                         android:textColor="@color/textColor"
                         android:textSize="12dp" />
 
-
+                    <requestFocus />
                 </LinearLayout>
 
 

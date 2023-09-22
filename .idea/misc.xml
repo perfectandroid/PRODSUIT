@@ -59,6 +59,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_trans_corner.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_trans_corner1.xml" value="0.202" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shapes_1.xml" value="0.2625" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/stock_inventorybg.xml" value="0.1885" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_auth_arrow.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_auth_rectangle.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_delete.xml" value="0.262" />
@@ -123,7 +124,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_splash.xml" value="0.26944444444444443" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_request.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_rtlist.xml" value="0.22" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_transfer.xml" value="0.22" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_transfer.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_todolist.xml" value="0.26944444444444443" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_upcomingtask.xml" value="0.2574074074074074" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_walking_customer.xml" value="0.2921875" />
@@ -142,6 +143,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_employee_all.xml" value="0.3234375" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_home_grid_count.xml" value="0.28802083333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_lead_by.xml" value="0.3171875" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_lead_request.xml" value="0.29259259259259257" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_more_service_attended.xml" value="0.30462962962962964" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_payment_list.xml" value="0.30462962962962964" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_product_category.xml" value="0.30885416666666665" />
@@ -206,7 +208,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="corretto-1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
