@@ -77,12 +77,8 @@ class CallLogListAdapter(internal var mContext: Context, private val catlist: Ar
 		second = second % 60
 		val formattedDuration = String.format("%02d:%02d:%02d", hours, minutes, second)
 		holder.textView4!!.text = formattedDuration
-
-
-
 		val callDate: String =  catlist[position].date
 		val callDayTime = Date(java.lang.Long.valueOf(callDate))
-
 		val seconds = callDate.toLong()
 		val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm")
 		val dateString: String = formatter.format(Date(seconds))
