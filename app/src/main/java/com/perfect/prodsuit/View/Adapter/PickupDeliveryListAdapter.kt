@@ -54,6 +54,13 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
                 holder.tv_Area.text                =  "Area : "+jsonObject!!.getString("Area")
                 holder.tv_ProductName.text         =  "Product Name : "+jsonObject!!.getString("ProductName")
 
+                if (jsonObject!!.getString("ProductName").equals("")){
+                    holder.tv_ProductName.visibility = View.GONE
+                }else{
+                    holder.tv_ProductName.visibility = View.VISIBLE
+                }
+
+
                 if (SubMode.equals("1")){
 
                     holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_lite_common1))

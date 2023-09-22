@@ -211,6 +211,7 @@
                     android:layout_gravity="left"
                     android:gravity="left|center"
                     android:textSize="10dp"
+                    android:visibility="invisible"
                     android:layout_marginTop="2dp"
                     android:drawableLeft="@drawable/product_svglist"
                     android:drawableTint="@color/greydark"

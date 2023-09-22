@@ -433,7 +433,7 @@ interface ApiInterface {
     @POST("UserValidations/GetGenralSettings")
     fun getGenralSettings(@Body body: RequestBody): Call<String>
 
-    @POST("UserValidations/WalkingCustomerDetailsList")
+    @POST("WalkingCustomer/WalkingCustomerDetailsList")
     fun getWalkingCustomerDetailsList(@Body body: RequestBody): Call<String>
 
     @POST("Service/CustomerDueDetils")

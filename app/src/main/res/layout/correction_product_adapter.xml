@@ -46,7 +46,7 @@
                         android:gravity="center_vertical"
                         android:paddingStart="2dp"
                         android:textSize="12dp"
-                        android:singleLine="true"
+                        android:singleLine="false"
                         android:textColor="@color/textColor"
                         android:text="Category"
                         android:visibility="visible"/>
@@ -86,7 +86,7 @@
                         android:layout_gravity="center"
                         android:gravity="center_vertical"
                         android:paddingStart="2dp"
-                        android:singleLine="true"
+                        android:singleLine="false"
                         android:textSize="12dp"
                         android:textColor="@color/textColor"
                         android:text="Product"/>
@@ -141,6 +141,8 @@
                         android:fontFamily="@font/myfont"
                         android:gravity="center"
                         android:inputType="numberDecimal"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
                         android:maxLength="10"
                         android:paddingStart="2dp"
                         android:singleLine="true"
@@ -148,7 +150,7 @@
                         android:textColor="@color/textColor"
                         android:textSize="12dp" />
 
-
+                    <requestFocus />
                 </LinearLayout>
 
 
