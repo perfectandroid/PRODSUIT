@@ -59,6 +59,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_trans_corner.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_trans_corner1.xml" value="0.202" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shapes_1.xml" value="0.2625" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/stock_inventorybg.xml" value="0.1885" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_auth_arrow.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_auth_rectangle.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_delete.xml" value="0.262" />
@@ -123,7 +124,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_splash.xml" value="0.26944444444444443" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_request.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_rtlist.xml" value="0.22" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_transfer.xml" value="0.22" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_transfer.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_todolist.xml" value="0.26944444444444443" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_upcomingtask.xml" value="0.2574074074074074" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_walking_customer.xml" value="0.2921875" />

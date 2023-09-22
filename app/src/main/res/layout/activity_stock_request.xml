@@ -101,7 +101,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
-                        android:background="#FBFBFB">
+                        android:background="@drawable/stock_inventorybg">
+<!--                        android:background="#FBFBFB"-->
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
@@ -139,7 +140,8 @@
                                     android:textStyle="bold"
                                     android:layout_weight="1"
                                     android:textAllCaps="false"
-                                    android:fontFamily="@font/myfont" />
+                                    android:fontFamily="@font/myfont"
+                                    android:visibility="gone"/>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -242,41 +244,32 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:padding="1dp"
-                                    android:orientation="horizontal">
+                                    android:orientation="vertical">
 
                                     <TextView
                                         android:id="@+id/tv_FromClick"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:text="From"
+                                        android:gravity="start"
+                                        android:text="Sender"
                                         android:padding="5dp"
+                                        android:layout_marginLeft="10dp"
                                         android:textColor="@color/colorPrimaryDark"
-                                        android:textSize="17dp"
+                                        android:textSize="18dp"
                                         android:textStyle="bold"
                                         android:layout_weight="1"
                                         android:textAllCaps="false"
-                                        android:background="@drawable/shape_bottom_border"
                                         android:fontFamily="@font/myfont" />
+<!--                                    android:background="@drawable/shape_bottom_border"-->
                                     <!--                                    android:background="#E8E7E7"-->
 
-                                    <TextView
-                                        android:id="@+id/tv_ToClick"
+                                    <View
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center"
-                                        android:text="To"
-                                        android:padding="5dp"
-                                        android:textColor="@color/colorPrimaryDark"
-                                        android:textSize="17dp"
-                                        android:textStyle="bold"
-                                        android:layout_weight="1"
-                                        android:textAllCaps="false"
-                                        android:background="@drawable/shape_bottom_border1"
-                                        android:fontFamily="@font/myfont" />
-                                    <!--                                    android:background="#B3BEBF"-->
+                                        android:layout_height="0.5dp"
+                                        android:layout_marginTop="5dp"
+                                        android:background="@color/textColor"/>
+
 
                                 </LinearLayout>
 
@@ -391,13 +384,85 @@
 
                                     </LinearLayout>
 
+
+
+
+                                </LinearLayout>
+
+
+
+
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="2dp"
+                            android:layout_marginLeft="4dp"
+                            android:layout_marginRight="4dp"
+                            android:backgroundTint="#FFFFFF"
+                            android:outlineAmbientShadowColor="@color/colorPrimaryDark"
+                            android:outlineSpotShadowColor="@color/colorPrimaryDark"
+                            app:cardElevation="5dp"
+                            app:cardUseCompatPadding="true">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="1dp"
+                                    android:orientation="vertical">
+
+
+
+                                    <TextView
+                                        android:id="@+id/tv_ToClick"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:gravity="start"
+                                        android:text="Receiver"
+                                        android:padding="5dp"
+                                        android:layout_marginLeft="10dp"
+                                        android:textColor="@color/colorPrimaryDark"
+                                        android:textSize="18dp"
+                                        android:textStyle="bold"
+                                        android:layout_weight="1"
+                                        android:textAllCaps="false"
+                                        android:fontFamily="@font/myfont" />
+<!--                                    android:background="@drawable/shape_bottom_border1"-->
+                                    <!--                                    android:background="#B3BEBF"-->
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0.5dp"
+                                        android:layout_marginTop="5dp"
+                                        android:background="@color/textColor"/>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+
+
+
                                     <LinearLayout
                                         android:id="@+id/ll_to"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:padding="15dp"
                                         android:orientation="vertical"
-                                        android:visibility="gone">
+                                        android:visibility="visible">
 
 
                                         <com.google.android.material.textfield.TextInputLayout
@@ -527,22 +592,27 @@
                                 android:orientation="vertical">
 
                                 <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:layout_gravity="center_vertical"
-                                    android:gravity="center_vertical"
-                                    android:text="Details"
-                                    android:paddingTop="5dp"
-                                    android:paddingBottom="5dp"
-                                    android:paddingLeft="15dp"
-                                    android:paddingRight="15dp"
-                                    android:textColor="@color/greydark"
-                                    android:background="#E7EDED"
-                                    android:textSize="18dp"
-                                    android:textStyle="bold"
                                     android:layout_weight="1"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="15dp"
+                                    android:paddingTop="5dp"
+                                    android:paddingRight="15dp"
+                                    android:paddingBottom="5dp"
+                                    android:text="Details"
                                     android:textAllCaps="false"
-                                    android:fontFamily="@font/myfont" />
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0.5dp"
+                                    android:layout_marginTop="5dp"
+                                    android:background="@color/textColor"/>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
