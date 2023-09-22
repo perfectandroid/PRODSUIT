@@ -5,12 +5,10 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
-import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.os.Message
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -35,6 +33,7 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ReasonAuthAdapter
 import com.perfect.prodsuit.Viewmodel.*
+import org.apache.commons.lang3.StringUtils
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -71,6 +70,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
 
     internal var tv_Key1Click: TextView? = null
+    internal var tvv_headtext: TextView? = null
     internal var tv_Key2Click: TextView? = null
     internal var tv_Key3Click: TextView? = null
     internal var tv_Key4Click: TextView? = null
@@ -201,6 +201,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
         tv_Key3Click = findViewById(R.id.tv_Key3Click)
         tv_Key4Click = findViewById(R.id.tv_Key4Click)
         tv_Key5Click = findViewById(R.id.tv_Key5Click)
+        tvv_headtext = findViewById(R.id.tvv_headtext)
 
         btnReject = findViewById(R.id.btnReject)
         btnCorrection = findViewById(R.id.btnCorrection)
@@ -305,6 +306,18 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                         FooterRight =  jobjt.getString("FooterRight")
                                         key4ArrayList = jobjt.getJSONArray("SubDetailsData")
 
+
+//                                        val s = TransactionDetails
+//                                        val requiredString = s.substring(s.indexOf("<strong>") + 1, s.indexOf("<strong>"))
+
+
+
+//                                        var header_name = jobjt.getString("TransactionDetails")
+//                                        val header_name_1 = StringUtils.substringBetween(header_name, "<strong>", "</strong>")
+//                                        val header_name_2 = StringUtils.substringBetween(header_name, "<br />", "<br />")
+//                                        tvv_headtext!!.setText(header_name_1)
+////
+//                                        Log.e(TAG,"rrrrr  "+header_name_2)
 
 
                                         if (jobjt.getString("ActiveCorrectionOption").equals("True")){

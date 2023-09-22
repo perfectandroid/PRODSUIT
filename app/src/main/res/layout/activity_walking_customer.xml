@@ -213,7 +213,7 @@
                                     android:gravity="center"
                                     android:layout_weight="5"
                                     android:src="@drawable/contact_phone"
-                                    android:visibility="gone"/>
+                                    android:visibility="visible"/>
                             </LinearLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
