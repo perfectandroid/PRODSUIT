@@ -109,18 +109,18 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
         defaultLoad()
         checkAttendance()
 
-        til_Phone!!.setEndIconOnClickListener {
-            Config.disableClick(it)
-            strPhone = tie_Phone!!.text.toString()
-            Config.Utils.hideSoftKeyBoard(context,it)
-
-            if (strPhone.equals("") || strPhone!!.length < 10 ){
-                Config.snackBars(context,it,"Enter Minimum 10 digit Phone Number")
-            }else{
-                walkExistCount = 0
-                getExistingCustomerData()
-            }
-        }
+//        til_Phone!!.setEndIconOnClickListener {
+//            Config.disableClick(it)
+//            strPhone = tie_Phone!!.text.toString()
+//            Config.Utils.hideSoftKeyBoard(context,it)
+//
+//            if (strPhone.equals("") || strPhone!!.length < 10 ){
+//                Config.snackBars(context,it,"Enter Minimum 10 digit Phone Number")
+//            }else{
+//                walkExistCount = 0
+//                getExistingCustomerData()
+//            }
+//        }
 
 
     }

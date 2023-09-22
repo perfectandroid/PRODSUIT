@@ -35,6 +35,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.*
@@ -53,6 +54,7 @@ import com.perfect.prodsuit.Receivers.MyAlarmReceiver
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
 import com.perfect.prodsuit.View.Adapter.HomeGridAdapter
 import com.perfect.prodsuit.View.Adapter.HomeGrideCountAdapter
+import com.perfect.prodsuit.View.Adapter.NotificationAdapter
 import com.perfect.prodsuit.View.Service.NotificationLocationService
 import com.perfect.prodsuit.Viewmodel.*
 import com.perfect.prodsuit.fire.FireBaseConfig
@@ -141,6 +143,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     lateinit var dashboardcountViewModel: DashBoardCountViewModel
     val UPDATE_INTERVAL = 1500L
     private val updateWidgetHandler = Handler()
+    var swipe: SwipeRefreshLayout?=null
+    var adapter: NotificationAdapter? = null
 
     // Licencing
 
@@ -242,6 +246,13 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //
 //            }
 //        }
+
+        swipe?.setOnRefreshListener {
+            dashboardcount = 0
+            getDashBoardCount()
+//            adapter?.notifyDataSetChanged()
+            swipe?.isRefreshing=false
+        }
         
     }
 
@@ -646,6 +657,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                     if (dashboardcount == 0){
                                         dashboardcount++
 
+                                        Log.e(TAG,"dashCountArrayList   "+dashCountArrayList)
 
                                         val HorizontalLayout = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
                                         recy_count_home!!.setLayoutManager(HorizontalLayout)
@@ -735,6 +747,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
     private fun setRegViews() {
+        swipe=findViewById(R.id.swipeRefreshLayout)
         drawer_layout = findViewById(R.id.drawer_layout)
         nav_view = findViewById(R.id.nav_view)
         btn_menu = findViewById(R.id.btn_menu)
@@ -2405,7 +2418,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             Log.e(TAG,"2385    "+position)
             val jsonObject = dashCountArrayList.getJSONObject(position)
             // Task is Unique
-            if (jsonObject.getString("Task").equals("Correction")){
+            if (jsonObject.getString("Task").equals("Correction Pending")){
 //                val i = Intent(this@HomeActivity, CorrectionSplitupActivity::class.java)
 //                startActivity(i)
 //                if value=1 go to individual page,
