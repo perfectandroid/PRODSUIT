@@ -1024,8 +1024,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
 
-//                val i = Intent(this@HomeActivity, InventoryActivity::class.java)
-//                startActivity(i)
+                val i = Intent(this@HomeActivity, InventoryActivity::class.java)
+                startActivity(i)
 
 
 

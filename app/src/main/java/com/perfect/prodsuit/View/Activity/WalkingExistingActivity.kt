@@ -674,7 +674,7 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                createWalkingCustomerViewModel.CreateWalkingCustomer(this,strCustomer!!,strPhone!!,ID_AssignedTo!!,strAssignedDate!!,strDescription!!,array_walkingUpdate!!)!!.observe(
+                createWalkingCustomerViewModel.CreateWalkingCustomer(this,strCustomer!!,strPhone!!,ID_AssignedTo!!,strAssignedDate!!," ",strDescription!!,array_walkingUpdate!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message

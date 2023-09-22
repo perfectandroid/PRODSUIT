@@ -7,6 +7,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Bundle
 import android.provider.CallLog
 import android.text.Editable
@@ -36,6 +38,9 @@ import com.perfect.prodsuit.Viewmodel.CreateWalkingCustomerViewModel
 import com.perfect.prodsuit.Viewmodel.WalkExistViewModel
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -58,6 +63,7 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
     private var tie_AssignedTo: TextInputEditText? = null
     private var tie_AssignedDate: TextInputEditText? = null
     private var tie_Attachvoice: TextInputEditText? = null
+    private var tie_Attachvoice1: TextInputEditText? = null
     private var tie_Description: TextInputEditText? = null
 
     private var btnReset: Button? = null
@@ -95,6 +101,9 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
     private var calllogArrayList = ArrayList<CalllogModel>()
     private var sadapter: CallLogListAdapter? = null
 
+    private var RECORD_PLAY: Int? = 1038
+    var voiceData: String? = ""
+    private var voicedataByte : ByteArray? =null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -105,7 +114,16 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
         walkExistViewModel = ViewModelProvider(this).get(WalkExistViewModel::class.java)
 
         context = this@WalkingCustomerActivity
+
+        val intent = intent
+
+        val from = intent.getStringExtra("from")
+
+        Log.i("response1212","from=="+from)
+
+
         setRegViews()
+       // Log.i("response2323","okkkkk")
         defaultLoad()
         checkAttendance()
 
@@ -137,6 +155,7 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
         tie_Phone = findViewById<TextInputEditText>(R.id.tie_Phone)
         tie_AssignedDate = findViewById<TextInputEditText>(R.id.tie_AssignedDate)
         tie_Attachvoice = findViewById<TextInputEditText>(R.id.tie_Attachvoice)
+        tie_Attachvoice1 = findViewById<TextInputEditText>(R.id.tie_Attachvoice1)
         tie_AssignedTo = findViewById<TextInputEditText>(R.id.tie_AssignedTo)
         tie_Description = findViewById<TextInputEditText>(R.id.tie_Description)
 
@@ -155,6 +174,7 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
 
         tie_AssignedDate!!.setOnClickListener(this)
         tie_Attachvoice!!.setOnClickListener(this)
+        tie_Attachvoice1!!.setOnClickListener(this)
         tie_AssignedTo!!.setOnClickListener(this)
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
@@ -172,7 +192,14 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
             }
 
             R.id.imVoice->{
-                startActivity(Intent(this@WalkingCustomerActivity, VoiceRecordingActivity::class.java))
+
+                val intent = Intent(this@WalkingCustomerActivity, VoiceRecordingActivity::class.java)
+                intent.putExtra("name11","uuuuu")
+                startActivity(intent)
+              //  startActivityForResult(intent, RECORD_PLAY!!);
+
+             //   startActivity(Intent(this@WalkingCustomerActivity, VoiceRecordingActivity::class.java))
+
             }
 
             R.id.tie_AssignedTo->{
@@ -186,7 +213,17 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
                 openBottomSheet()
             }
             R.id.tie_Attachvoice->{
-                startActivity(Intent(this@WalkingCustomerActivity, VoiceRecordingActivity::class.java))
+                val intent = Intent(this@WalkingCustomerActivity, VoiceRecordingActivity::class.java)
+                startActivityForResult(intent, RECORD_PLAY!!);
+            }
+            R.id.tie_Attachvoice1->{
+
+
+                  //  voicedataByte=voiceData!!.toByteArray()
+                    playByteArray(voicedataByte!!)
+
+
+
             }
 
             R.id.btnReset->{
@@ -211,6 +248,58 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
 
             }
         }
+    }
+
+    private fun playByteArray(mp3SoundByteArray: ByteArray) {
+        try {
+            val Mytemp = File.createTempFile("TCL", "mp3", cacheDir)
+            Mytemp.deleteOnExit()
+            val fos = FileOutputStream(Mytemp)
+            fos.write(mp3SoundByteArray)
+            fos.close()
+            var mediaPlayer: MediaPlayer? = null
+            //   var mediaPlayer = MediaPlayer()
+            mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.fromFile(Mytemp));
+            mediaPlayer.start();
+
+
+//            val MyFile = FileInputStream(Mytemp)
+//            mediaPlayer.setDataSource(Mytemp.getf)
+//            mediaPlayer.prepare()
+//            mediaPlayer.start()
+        } catch (ex: IOException) {
+            val s = ex.toString()
+            ex.printStackTrace()
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        Log.i("response2323","requestCode:"+requestCode)
+        if (requestCode == RECORD_PLAY)
+        {
+            if (data != null) {
+
+
+
+            try {
+                val random2 = Random().nextInt(10) + 1
+
+                voiceData = data.getStringExtra("voicedata")
+                voicedataByte=data.getByteArrayExtra("voicedatabyte")
+                Log.i("response999222","voiceData:"+voiceData+'\n')
+                Log.i("response999222","voicedataByte:"+voicedataByte+'\n')
+                Log.i("response999222","voicedataByte string:"+voicedataByte.toString()+'\n')
+                tie_Attachvoice!!.setText("voice"+random2+".mp3")
+            }
+            catch (e: Exception) {
+
+            }
+
+
+            }
+        }
+
     }
 
     private fun getCustnumber() {
@@ -302,7 +391,10 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
         tie_Phone!!.setText("")
         tie_AssignedTo!!.setText("")
         tie_Description!!.setText("")
+        tie_Attachvoice!!.setText("")
         ID_AssignedTo = ""
+        voiceData= ""
+        voicedataByte!!.fill(0)
         defaultLoad()
     }
 
@@ -523,6 +615,9 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
             else if(assignDate.equals("")){
                 Config.snackBars(context,v,"Select Assigned Date")
             }
+            else if(voicedataByte!!.equals("")){
+                Config.snackBars(context,v,"Select Voice Data")
+            }
             else{
                 saveCount = 0
                 saveWalkingCustomer()
@@ -544,7 +639,7 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                createWalkingCustomerViewModel.CreateWalkingCustomer(this,strCustomer!!,strPhone!!,ID_AssignedTo!!,strAssignedDate!!,strDescription!!,array_walkingUpdate!!)!!.observe(
+                createWalkingCustomerViewModel.CreateWalkingCustomer(this,strCustomer!!,strPhone!!,ID_AssignedTo!!,strAssignedDate!!,voicedataByte.toString()!!,strDescription!!,array_walkingUpdate!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
