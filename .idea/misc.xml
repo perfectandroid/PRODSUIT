@@ -143,6 +143,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_employee_all.xml" value="0.3234375" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_home_grid_count.xml" value="0.28802083333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_lead_by.xml" value="0.3171875" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_lead_request.xml" value="0.29259259259259257" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_more_service_attended.xml" value="0.30462962962962964" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_payment_list.xml" value="0.30462962962962964" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_product_category.xml" value="0.30885416666666665" />
@@ -207,7 +208,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -43,6 +43,7 @@ class LeadRequestAdapter (internal var context: Context, internal var jsonArray:
                 holder.txtAssignedDate.text         = jsonObject!!.getString("AssignedDate")
 
 
+
                 holder.llRequest!!.setTag(position)
                 holder.llRequest!!.setOnClickListener(View.OnClickListener {
                     Config.disableClick(it)
@@ -82,6 +83,7 @@ class LeadRequestAdapter (internal var context: Context, internal var jsonArray:
             txtDepartment        = v.findViewById<View>(R.id.txtDepartment) as TextView
             txtDescription        = v.findViewById<View>(R.id.txtDescription) as TextView
             txtAssignedDate        = v.findViewById<View>(R.id.txtAssignedDate) as TextView
+
             llRequest    = v.findViewById<View>(R.id.llRequest) as LinearLayout
         }
     }
