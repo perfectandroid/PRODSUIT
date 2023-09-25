@@ -94,6 +94,8 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
     private var array_sort =ArrayList<CalllogModel>()
     private var calllogArrayList = ArrayList<CalllogModel>()
     private var sadapter: CallLogListAdapter? = null
+    private var textlength = 0
+    private var etxtsearch:EditText? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,7 +134,6 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
         imback!!.setOnClickListener(this)
         val imVoice = findViewById<ImageView>(R.id.imVoice)
         imVoice!!.setOnClickListener(this)
-
         tie_CustomerName = findViewById<TextInputEditText>(R.id.tie_CustomerName)
         tie_Phone = findViewById<TextInputEditText>(R.id.tie_Phone)
         tie_AssignedDate = findViewById<TextInputEditText>(R.id.tie_AssignedDate)
@@ -213,30 +214,6 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
         }
     }
 
-    private fun getCustnumber() {
-        try {
-            val builder = AlertDialog.Builder(this@WalkingCustomerActivity)
-            val inflater1 =
-                this@WalkingCustomerActivity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val layout = inflater1.inflate(R.layout.custlog_popup, null)
-            lvCustno = layout.findViewById(R.id.lvCustno)
-            builder.setView(layout)
-            val alertDialog = builder.create()
-            sadapter = CallLogListAdapter(this@WalkingCustomerActivity, array_sort)
-            lvCustno!!.setAdapter(sadapter)
-            lvCustno!!.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
-                Config.Utils.hideSoftKeyBoard(this@WalkingCustomerActivity, view)
-                tie_CustomerName!!.setText(array_sort[position].name)
-                tie_Phone!!.setText(array_sort[position].number!!.replace("+91", ""))
-                alertDialog.dismiss()
-            })
-           // getCallLogDetail(alertDialog,context)
-            alertDialog.show()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
     private fun getCallLogDetail(context: Context) {
         array_sort = ArrayList<CalllogModel>()
         calllogArrayList = ArrayList<CalllogModel>()
@@ -284,15 +261,59 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
             alertDialog.setCancelable(false)
             alertDialog.show()
         }else {
-         /*   sadapter = CallLogListAdapter(this@WalkingCustomerActivity, array_sort)
-            lvCustno!!.setAdapter(sadapter)
-            lvCustno!!.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
-                Config.Utils.hideSoftKeyBoard(this@WalkingCustomerActivity, view)
-                tie_CustomerName!!.setText(array_sort[position].name)
-                tie_Phone!!.setText(array_sort[position].number)
-                alertDia.dismiss()
-            })*/
-            getCustnumber()
+
+           // getCustnumber()
+
+            try {
+                val builder = AlertDialog.Builder(this@WalkingCustomerActivity)
+                val inflater1 =
+                    this@WalkingCustomerActivity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                val layout = inflater1.inflate(R.layout.custlog_popup, null)
+                lvCustno = layout.findViewById(R.id.lvCustno)
+                etxtsearch  = layout.findViewById(R.id.etsearch)
+                builder.setView(layout)
+                val alertDialog = builder.create()
+                sadapter = CallLogListAdapter(this@WalkingCustomerActivity, array_sort)
+                lvCustno!!.setAdapter(sadapter)
+                lvCustno!!.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
+                    Config.Utils.hideSoftKeyBoard(this@WalkingCustomerActivity, view)
+                    array_sort.get(position).number
+                    tie_CustomerName!!.setText(array_sort[position].name)
+                    tie_Phone!!.setText(array_sort[position].number!!.replace("+91", ""))
+                    alertDialog.dismiss()
+                })
+
+                etxtsearch!!.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(p0: Editable?) {
+                    }
+
+                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    }
+
+                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                        //  lvCustno!!.setVisibility(View.VISIBLE)
+                        textlength = etxtsearch!!.text.length
+                        array_sort.clear()
+                        for (i in calllogArrayList.indices) {
+                            if (textlength <= calllogArrayList[i].number!!.length) {
+                                if (calllogArrayList[i].number!!.toLowerCase().trim().contains(
+                                        etxtsearch!!.text.toString().toLowerCase().trim { it <= ' ' })
+                                ) {
+                                    array_sort.add(calllogArrayList[i])
+                                }
+                            }
+                        }
+                        sadapter = CallLogListAdapter(this@WalkingCustomerActivity, array_sort)
+                        lvCustno!!.setAdapter(sadapter)
+                    }
+                })
+
+                // getCallLogDetail(alertDialog,context)
+                alertDialog.show()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -687,7 +708,8 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if(requestCode==101 && grantResults[0]==PackageManager.PERMISSION_GRANTED) {
-            getCustnumber()
+            //getCustnumber()
+            getCallLogDetail(context)
         }
     }
 
