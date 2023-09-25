@@ -40,7 +40,7 @@ class StockRequestAdapter (internal var context: Context, internal var jsonArray
                 holder.tv_date.text        = jsonObject!!.getString("TransDate")
                 holder.tv_department.text        = jsonObject!!.getString("DepartmentName")
                 holder.tv_employee.text        = jsonObject!!.getString("EmployeeName")
-                holder.tv_employeeTo.text        = jsonObject!!.getString("EmployeeName")
+                holder.tv_employeeTo.text        = jsonObject!!.getString("EmployeeNameTo")
 
                 holder.llstockrequest!!.setTag(position)
                 holder.llstockrequest!!.setOnClickListener(View.OnClickListener {
@@ -87,7 +87,7 @@ class StockRequestAdapter (internal var context: Context, internal var jsonArray
             tv_date          = v.findViewById<View>(R.id.tv_date) as TextView
             tv_department          = v.findViewById<View>(R.id.tv_department) as TextView
             tv_employee          = v.findViewById<View>(R.id.tv_employee) as TextView
-            tv_employeeTo          = v.findViewById<View>(R.id.tv_employee) as TextView
+            tv_employeeTo          = v.findViewById<View>(R.id.tv_employeeTo) as TextView
             tv_view          = v.findViewById<View>(R.id.tv_view) as TextView
             llstockrequest           = v.findViewById<View>(R.id.llstockrequest) as LinearLayout
         }

@@ -38,13 +38,15 @@
                 android:gravity="start"
                 android:textSize="15dp"
                 android:drawableTint="@color/black"
-                android:textStyle="normal" />
+                android:textStyle="normal"
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="10dp"
                 android:layout_height="match_parent"
                 android:text=":"
-                android:gravity="start"/>
+                android:gravity="start"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/txtName"
@@ -55,9 +57,9 @@
                 android:fontFamily="@font/myfont"
                 android:singleLine="false"
                 android:textColor="@color/black"
-                android:textSize="15dp"
+                android:textSize="16dp"
                 android:drawableTint="@color/black"
-                android:textStyle="normal" />
+                android:textStyle="bold" />
 
 
         </LinearLayout>
@@ -65,42 +67,100 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="0dp"
+            android:layout_marginTop="-2dp"
             android:orientation="horizontal">
 
-            <TextView
-
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:text="Mobile"
-                android:fontFamily="@font/myfont"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:gravity="start"
-                android:drawableTint="@color/black"
-                android:textStyle="normal" />
-
-            <TextView
-                android:layout_width="10dp"
-                android:layout_height="match_parent"
-                android:text=":"
-                android:gravity="start"/>
-
-            <TextView
-                android:id="@+id/txtDepartment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:layout_weight="1"
-                android:text=""
-                android:fontFamily="@font/myfont"
-                android:singleLine="false"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:drawableTint="@color/black"
-                android:textStyle="normal" />
+                android:padding="0dp"
+                android:orientation="vertical">
+
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Mobile"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="15dp"
+                    android:gravity="start"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:text=":"
+                    android:gravity="start"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/txtDepartment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="-4dp"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="false"
+                    android:textColor="@color/textColor"
+                    android:textSize="14dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_weight="1"
+                android:padding="0dp"
+                android:orientation="vertical">
+
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Assigned Date"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="start"
+                    android:textSize="15dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:layout_width="10dp"
+                    android:layout_height="match_parent"
+                    android:text=":"
+                    android:gravity="start"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/txtAssignedDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:layout_marginTop="-4dp"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="false"
+                    android:textColor="@color/textColor"
+                    android:textSize="14dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -109,20 +169,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:layout_marginTop="-3dp"
+            android:layout_weight="1"
             android:padding="0dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
-                android:text="Assigned Date"
+                android:text="Remarks"
+                android:fontFamily="@font/myfont"
                 android:singleLine="true"
                 android:textColor="@color/black"
-                android:fontFamily="@font/myfont"
-                android:gravity="start"
                 android:textSize="15dp"
+                android:gravity="start"
                 android:drawableTint="@color/black"
                 android:textStyle="normal" />
 
@@ -130,66 +192,27 @@
                 android:layout_width="10dp"
                 android:layout_height="match_parent"
                 android:text=":"
-                android:gravity="start"/>
-
-            <TextView
-                android:id="@+id/txtAssignedDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=""
-                android:fontFamily="@font/myfont"
-                android:singleLine="false"
-                android:textColor="@color/black"
-                android:textSize="15dp"
-                android:drawableTint="@color/black"
-                android:textStyle="normal" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="1dp"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:text="Description"
-                android:singleLine="true"
-                android:textColor="@color/black"
-                android:fontFamily="@font/myfont"
                 android:gravity="start"
-                android:textSize="15dp"
-                android:drawableTint="@color/black"
-                android:textStyle="normal" />
-
-            <TextView
-                android:layout_width="10dp"
-                android:layout_height="match_parent"
-                android:text=":"
-                android:gravity="start"/>
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/txtDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginTop="-4dp"
                 android:text=""
                 android:fontFamily="@font/myfont"
                 android:singleLine="false"
-                android:textColor="@color/black"
-                android:textSize="15dp"
+                android:textColor="@color/textColor"
+                android:textSize="14dp"
                 android:drawableTint="@color/black"
                 android:textStyle="normal" />
 
 
         </LinearLayout>
+
+
 
 
 

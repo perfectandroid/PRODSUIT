@@ -11,8 +11,8 @@ class CreateWalkingCustomerViewModel : ViewModel()  {
 
     var createWalkingCustomerData: MutableLiveData<CreateWalkingCustomerModel>? = null
 
-    fun CreateWalkingCustomer(context: Context,strCustomer : String,strPhone : String,ID_AssignedTo : String,strAssignedDate : String,strDescription : String,leadByMobileNo : JSONArray) : MutableLiveData<CreateWalkingCustomerModel>? {
-        createWalkingCustomerData = CreateWalkingCustomerRepository.getServicesApiCall(context,strCustomer,strPhone,ID_AssignedTo,strAssignedDate,strDescription,leadByMobileNo)
+    fun CreateWalkingCustomer(context: Context,strCustomer : String,strPhone : String,ID_AssignedTo : String,strAssignedDate : String,strVoiceData : String,strDescription : String,leadByMobileNo : JSONArray) : MutableLiveData<CreateWalkingCustomerModel>? {
+        createWalkingCustomerData = CreateWalkingCustomerRepository.getServicesApiCall(context,strCustomer,strPhone,ID_AssignedTo,strAssignedDate,strVoiceData,strDescription,leadByMobileNo)
         return createWalkingCustomerData
     }
 }

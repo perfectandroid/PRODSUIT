@@ -110,6 +110,7 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
 
             R.id.llwalking->{
                 val i = Intent(this@LeadActivity, WalkingCustomerActivity::class.java)
+              //  i.putExtra("from", "lead")
                 startActivity(i)
             }
 

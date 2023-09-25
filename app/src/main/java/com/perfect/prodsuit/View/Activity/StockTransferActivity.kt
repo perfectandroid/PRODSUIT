@@ -531,16 +531,16 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
             R.id.tv_FromClick->{
 
-                showFrom = 1
-                showTo = 0
-                hideShowFromTo()
+//                showFrom = 1
+//                showTo = 0
+//                hideShowFromTo()
             }
 
             R.id.tv_ToClick->{
 
-                showFrom = 0
-                showTo = 1
-                hideShowFromTo()
+//                showFrom = 0
+//                showTo = 1
+//                hideShowFromTo()
             }
 
             R.id.tie_FromDepartment->{
@@ -1008,25 +1008,24 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
     private fun hideShowFromTo() {
 
-        ll_from!!.visibility = View.GONE
-        ll_to!!.visibility = View.GONE
+//        ll_from!!.visibility = View.GONE
+//        ll_to!!.visibility = View.GONE
 
-//        tv_FromClick!!.setBackgroundColor(resources.getColor(R.color.tab_inactive, null))
-//        tv_ToClick!!.setBackgroundColor(resources.getColor(R.color.tab_inactive, null))
-        tv_FromClick!!.setBackgroundResource(R.drawable.shape_bottom_border1)
-        tv_ToClick!!.setBackgroundResource(R.drawable.shape_bottom_border1)
+
+//        tv_FromClick!!.setBackgroundResource(R.drawable.shape_bottom_border1)
+//        tv_ToClick!!.setBackgroundResource(R.drawable.shape_bottom_border1)
 
         if (showFrom == 1){
             ll_from!!.visibility = View.VISIBLE
-//            tv_FromClick!!.setBackgroundColor(resources.getColor(R.color.tab_active, null))
-            tv_FromClick!!.setBackgroundResource(R.drawable.shape_bottom_border)
+//
+        //    tv_FromClick!!.setBackgroundResource(R.drawable.shape_bottom_border)
 
 
         }
         if (showTo == 1){
             ll_to!!.visibility = View.VISIBLE
-//            tv_ToClick!!.setBackgroundColor(resources.getColor(R.color.tab_active, null))
-            tv_ToClick!!.setBackgroundResource(R.drawable.shape_bottom_border)
+//
+         //   tv_ToClick!!.setBackgroundResource(R.drawable.shape_bottom_border)
         }
     }
 
@@ -2519,14 +2518,14 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             tie_FromBranch!!.setText(BranchNameFrom)
 
             FK_BranchTo = jsonObject.getString("BranchIDTo")
-            tie_ToBranch!!.setText(jsonObject.getString("BranchName"))
+            tie_ToBranch!!.setText(jsonObject.getString("BranchNameTo"))
 
             FK_DepartmentFrom = jsonObject.getString("DepartmentID")
             DepartmentFrom = jsonObject.getString("DepartmentName")
             tie_FromDepartment!!.setText(DepartmentFrom)
 
             FK_DepartmentTo = jsonObject.getString("DepartmentIDTo")
-            tie_ToDepartment!!.setText(jsonObject.getString("DepartmentName"))
+            tie_ToDepartment!!.setText(jsonObject.getString("DepartmentNameTo"))
 
             FK_EmployeeFrom = jsonObject.getString("EmployeeID")
             tie_FromEmployee!!.setText(jsonObject.getString("EmployeeName"))
@@ -2541,13 +2540,11 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
             val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
             val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
 
-
             tie_Date!!.setText(""+sdfDate1.format(newDate))
             strDate = sdfDate2.format(newDate)
 
             stockproductCount = 0
             loadStockRequestProductList(FK_StockRequest)
-
 
         }
 

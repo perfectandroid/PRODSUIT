@@ -175,8 +175,9 @@
                                     android:fontFamily="@font/myfont"
                                     app:endIconMode="custom"
                                     app:startIconDrawable="@drawable/svg_walk_phone"
-                                    app:endIconDrawable="@drawable/search_24"
                                     android:hint="Phone">
+<!--                                    app:endIconDrawable="@drawable/search_24"-->
+
                                     <!--                                app:endIconDrawable="@drawable/search_24"-->
 
                                     <com.google.android.material.textfield.TextInputEditText
@@ -211,7 +212,8 @@
                                     android:layout_gravity="center"
                                     android:gravity="center"
                                     android:layout_weight="5"
-                                    android:src="@drawable/contact_phone" />
+                                    android:src="@drawable/contact_phone"
+                                    android:visibility="visible"/>
                             </LinearLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
@@ -284,6 +286,44 @@
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/til_AttachVoice"
+
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Attach Voice Note"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:drawableTint="@color/textColor"
+                                android:fontFamily="@font/myfont"
+                                app:endIconMode="custom"
+                                app:startIconDrawable="@drawable/attach_file"
+                                app:startIconTint="@color/textColor"
+                                app:endIconDrawable="@drawable/ic_voice"
+                                style="@style/Widget.App.TextInputLayout"
+                                android:visibility="gone">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/tie_Attachvoice"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:drawablePadding="-10dp"
+                                    android:drawableTint="@color/textColor"
+                                    android:editable="false"
+
+                                    android:focusableInTouchMode="false"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center_vertical"
+                                    android:paddingTop="1dp"
+                                    android:paddingBottom="1dp"
+                                    android:textColor="@color/greydarks"
+                                    android:textSize="14dp"
+                                    android:textStyle="normal" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/til_AttachVoice1"
+android:visibility="gone"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Attach Voice Note"
@@ -299,12 +339,13 @@
                                 style="@style/Widget.App.TextInputLayout">
 
                                 <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/tie_Attachvoice"
+                                    android:id="@+id/tie_Attachvoice1"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:drawablePadding="-10dp"
                                     android:drawableTint="@color/textColor"
                                     android:editable="false"
+
                                     android:focusableInTouchMode="false"
                                     android:fontFamily="@font/myfont"
                                     android:gravity="center_vertical"
