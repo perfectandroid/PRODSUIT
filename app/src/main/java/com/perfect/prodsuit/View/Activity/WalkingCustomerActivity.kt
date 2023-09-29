@@ -296,8 +296,6 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
 
                 checkAttendance()
                 if (saveAttendanceMark) {
-                Log.e(TAG,"fjjfjf  ")
-                if (saveAttendanceMark){
                     array_walkingUpdate = JSONArray()
                     validation(v)
                 }
@@ -688,10 +686,6 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
                 Config.snackBars(context, v, "Select Voice Data")
             }
             else {
-//            else if(voicedataByte!!.equals("")){
-//                Config.snackBars(context,v,"Select Voice Data")
-//            }
-            else{
                 saveCount = 0
                 saveWalkingCustomer()
             }
