@@ -1,5 +1,6 @@
 package com.perfect.prodsuit.Repository
 
+import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
 import android.util.Log
@@ -39,6 +40,7 @@ object AddQuotationRepository {
         return addquotationSetterGetter
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun getAddQuotation(context: Context) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)

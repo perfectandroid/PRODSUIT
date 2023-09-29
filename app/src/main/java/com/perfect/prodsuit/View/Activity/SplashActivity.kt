@@ -621,6 +621,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                                     ABOUTUSEditer.putString("ABOUTUS", jobj.getString("AboutUs"))
                                     ABOUTUSEditer.commit()
 
+                                    val AUDIOSP = applicationContext.getSharedPreferences(Config.SHARED_PREF67, 0)
+                                    val AUDIOEditer = AUDIOSP.edit()
+                                    AUDIOEditer.putString("AUDIO", jobj.getString("AudioClipEnabled"))
+                                    AUDIOEditer.commit()
+
 
 /*
                                     val TestingURLpref = applicationContext.getSharedPreferences(Config.SHARED_PREF10, 0)

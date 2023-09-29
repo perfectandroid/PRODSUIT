@@ -142,67 +142,67 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_alignParentBottom="true"
-           android:gravity="center"
+            android:gravity="center"
             android:layout_marginBottom="20dp"
             android:paddingBottom="10dp"
             android:foregroundGravity="center"
             android:orientation="vertical">
-        <View
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/grey"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-
-            <ImageView
-
+            <View
+                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:text="Start Recording"
-                android:src="@drawable/record"
-                android:layout_marginRight="-20dp"
-                android:id="@+id/activity_main_record"/>
-
-            <ImageView
+                android:layout_height="1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/grey"/>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="5dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                android:text="Stop Recording"
+
+                <ImageView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:text="Start Recording"
+                    android:src="@drawable/record"
+                    android:layout_marginRight="-20dp"
+                    android:id="@+id/activity_main_record"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+
+                    android:text="Stop Recording"
                     android:layout_marginLeft="-20dp"
-                android:src="@drawable/stoprecord"
-                android:id="@+id/activity_main_stop"/>
+                    android:src="@drawable/stoprecord"
+                    android:id="@+id/activity_main_stop"/>
 
-            <ImageView
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:src="@drawable/playrecording"
-                android:text="Play Recording"
-                android:layout_margin="10dp"
-                android:id="@+id/activity_main_play"/>
+                <ImageView
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/playrecording"
+                    android:text="Play Recording"
+                    android:layout_margin="10dp"
+                    android:id="@+id/activity_main_play"/>
 
-            <ImageView
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Stop Playing"
-                android:layout_margin="10dp"
-                android:src="@drawable/pausebutton"
-                android:id="@+id/activity_main_stop_playing"/>
-        </LinearLayout>
+                <ImageView
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Stop Playing"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/pausebutton"
+                    android:id="@+id/activity_main_stop_playing"/>
+            </LinearLayout>
         </LinearLayout>
 
     </RelativeLayout>

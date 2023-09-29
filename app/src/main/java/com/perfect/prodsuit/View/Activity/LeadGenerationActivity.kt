@@ -14,6 +14,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -36,6 +37,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
@@ -54,8 +56,10 @@ import java.util.*
 import kotlin.math.log
 
 
-class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
-
+class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener,ItemClickListenerValue {
+    var voiceData2: String? = ""
+    private var voicedataByte2: ByteArray? = null
+    private var player1: MediaPlayer? = null
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
     internal var etdis: EditText? = null
@@ -374,7 +378,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private var cursor: Cursor? = null
     private var imvContactbook: ImageView? = null
 //    private var adapter :  ArrayAdapter? = null
-
+private var voicedataByte : ByteArray? =null
+private var voiceString : String? =null
     companion object {
         var LeadFromType: String? = ""   //  0-Text ,  1-Dropdown ,  2-None
         var HasSubMedia: String? = ""   //  0-None ,  1-Has
@@ -501,7 +506,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     var saveAttendanceMark = false
     lateinit var itemSearchListViewModel: ItemSearchListViewModel
     private var barcodeCount = 0
-
+    var mediaPlayer = MediaPlayer()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -2507,6 +2512,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                         )
                                         recyRequest!!.adapter = adapter
                                         adapter.setClickListener(this@LeadGenerationActivity)
+                                        adapter.setClickListener1(this@LeadGenerationActivity)
 
                                         //  leadByPopup(leadByArrayList)
                                     }
@@ -3803,7 +3809,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 }
             }
 
-        } else if (requestCode == CAMERA) {
+        }
+        else if (requestCode == CAMERA) {
 
             try {
                 if (data != null) {
@@ -7184,9 +7191,249 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
         }
 
+
+
     }
 
+    override fun onClick(position: Int, data: String,value:String)
+    {
 
+        if (data.equals("LeadrequestVoiceClick")) {
+          //  val bytes: ByteArray = value.getBytes()
+          //  voicedataByte=value.toByteArray()
+            voiceString=value
+           // Log.e("response999222", "data="+data)
+            Log.e("wewewe", "main    value length ="+value.length)
+        //    Log.e("response999222", "value byte="+voicedataByte)
+
+            val jsonObject = leadRequestArrayList.getJSONObject(position)
+
+            playVoicePopUP(voiceString!!)
+
+
+
+
+
+        }
+
+    }
+
+    private fun playVoicePopUP(value: String)
+    {
+        try {
+
+            var isplaying = false
+            var pausePosition = 0
+            val dialog = Dialog(this@LeadGenerationActivity)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setContentView(R.layout.playrecord_popup1)
+            dialog.setCanceledOnTouchOutside(false);
+//            player1 = MediaPlayer()
+            //  player1!!.setDataSource(fileName)
+            // dialog.setCancelable(false);
+            val playbtn: ImageView = dialog.findViewById<ImageView>(R.id.playbtn)
+            val pausebtn: ImageView = dialog.findViewById<ImageView>(R.id.pausebtn)
+            val lotti_play: LottieAnimationView =
+                dialog.findViewById<LottieAnimationView>(R.id.lotti_play)
+            val backclose: ImageView = dialog.findViewById<ImageView>(R.id.backclose)
+
+
+            lotti_play!!.setAnimation(R.raw.play_wave)
+
+          //  playString(value!!)
+
+            backclose.setOnClickListener(View.OnClickListener {
+                dialog.dismiss()
+                if (player1 != null) {
+                    player1!!.release()
+                    player1 = null
+                    stopPlayerService()
+                }
+            })
+            playbtn.setOnClickListener(View.OnClickListener {
+
+
+                if (!isplaying)
+                {
+
+                    if (pausePosition==0)
+                    {
+                        player1 = MediaPlayer()
+                        try {
+                            val decodedBytes = Base64.getDecoder().decode(value)
+                            Log.i("wewewe", "out main:=$value")
+                            Log.i("wewewe", "out decodedBytes:=" + decodedBytes)
+
+
+                            val  tempAudio=File.createTempFile("TCL","mp3",cacheDir)
+                            Log.i("wewewe", "out tempAudio:=" + tempAudio)
+
+                            tempAudio.writeBytes(decodedBytes)
+
+                            player1!!.setDataSource(tempAudio.absolutePath)
+                            player1!!.setOnCompletionListener {
+                                pausePosition=0
+                                lotti_play!!.pauseAnimation()
+                                isplaying = false
+                                pausebtn!!.visibility = View.GONE
+                                playbtn!!.visibility = View.VISIBLE
+                                stopPlaying()
+                            }
+                            isplaying = true
+                            playbtn!!.visibility = View.GONE
+                            pausebtn!!.visibility = View.VISIBLE
+                            player1!!.prepare()
+                            player1!!.start()
+                            lotti_play!!.loop(true)
+                            lotti_play!!.playAnimation()
+                            startPlayerService()
+                        }
+                        catch (e:IOException)
+                        {
+                            Log.i("wewewe", "IOException:=" + e)
+                        }
+                    }
+                    else
+                    {
+                        player1 = MediaPlayer()
+                        try {
+                            val decodedBytes = Base64.getDecoder().decode(value)
+                            Log.i("wewewe", "out main:=$value")
+                            Log.i("wewewe", "out decodedBytes:=" + decodedBytes)
+
+
+                            val  tempAudio=File.createTempFile("TCL","mp3",cacheDir)
+                            Log.i("wewewe", "out tempAudio:=" + tempAudio)
+                            //   val  tempAudio=File.createTempFile("TCL","mp3",applicationContext.cacheDir)
+                            tempAudio.writeBytes(decodedBytes)
+                            //   val mediaPlayer=MediaPlayer()
+                            player1!!.setDataSource(tempAudio.absolutePath)
+                            player1!!.setOnCompletionListener {
+                                pausePosition=0
+                                lotti_play!!.pauseAnimation()
+                                isplaying = false
+                                pausebtn!!.visibility = View.GONE
+                                playbtn!!.visibility = View.VISIBLE
+                                stopPlaying()
+                            }
+                            isplaying = true
+                            playbtn!!.visibility = View.GONE
+                            pausebtn!!.visibility = View.VISIBLE
+                            player1!!.prepare()
+                            player1!!.start()
+                            player1!!.seekTo(pausePosition)
+                            lotti_play!!.loop(true)
+                            lotti_play!!.playAnimation()
+                            startPlayerService()
+                        }
+                        catch (e:IOException)
+                        {
+                            Log.i("wewewe", "IOException:=" + e)
+                        }
+                    }
+                }
+
+             //   playString(value!!)
+
+
+
+            })
+            pausebtn.setOnClickListener(View.OnClickListener {
+                isplaying = false
+                player1!!.pause()
+
+                pausePosition=player1!!.currentPosition
+                lotti_play!!.pauseAnimation()
+                pausebtn!!.visibility = View.GONE
+                playbtn!!.visibility = View.VISIBLE
+            })
+
+
+            dialog.show()
+
+        } catch (e: Exception) {
+
+            e.printStackTrace()
+        }
+    }
+
+    private fun startPlayerService() {
+        val serviceIntent = Intent(this, PlayerService::class.java)
+        serviceIntent.putExtra("inputExtra", "Playing recording")
+        ContextCompat.startForegroundService(this, serviceIntent)
+    }
+
+    private fun stopPlaying() {
+        if (player1 != null) {
+            player1!!.release()
+            player1 = null
+            stopPlayerService()
+        }
+    }
+
+    private fun stopPlayerService() {
+        val serviceIntent = Intent(this, PlayerService::class.java)
+        stopService(serviceIntent)
+    }
+
+    private fun playString(voiceData: String?) {
+
+            try {
+                val decodedBytes = Base64.getDecoder().decode(voiceData)
+                Log.i("wewewe", "out main:=$voiceData")
+                Log.i("wewewe", "out decodedBytes:=" + decodedBytes)
+
+
+                val  tempAudio=File.createTempFile("TCL","mp3",cacheDir)
+                Log.i("wewewe", "out tempAudio:=" + tempAudio)
+                //   val  tempAudio=File.createTempFile("TCL","mp3",applicationContext.cacheDir)
+                tempAudio.writeBytes(decodedBytes)
+             //   val mediaPlayer=MediaPlayer()
+                player1!!.setDataSource(tempAudio.absolutePath)
+                player1!!.prepare()
+                player1!!.start()
+            }
+            catch (e:IOException)
+            {
+                Log.i("wewewe", "IOException:=" + e)
+            }
+
+
+
+    }
+
+    private fun playByteArray(mp3SoundByteArray: ByteArray) {
+        try {
+            val Mytemp = File.createTempFile("TCL", "mp3", context.cacheDir)
+            Mytemp.deleteOnExit()
+            val fos = FileOutputStream(Mytemp)
+            fos.write(mp3SoundByteArray)
+            fos.close()
+//          var mediaPlayer: MediaPlayer? = null
+//
+//            mediaPlayer = MediaPlayer.create(applicationContext, Uri.fromFile(Mytemp));
+//            mediaPlayer.start();
+
+            val mediaplayer = MediaPlayer.create(context, Uri.fromFile(Mytemp))
+            mediaplayer.start()
+
+
+//            val url = "/data/user/0/com.perfect.prodsuite/files/04317026-78c4-459d-8f98-c3b334ff2711.mp3"
+//            val mediaPlayer = MediaPlayer()
+//            mediaPlayer.setDataSource(url)
+//            mediaPlayer.prepare()
+//            mediaPlayer.start()
+
+
+//            val MyFile = FileInputStream(Mytemp)
+//            mediaPlayer.setDataSource(Mytemp.getf)
+//            mediaPlayer.prepare()
+//            mediaPlayer.start()
+        } catch (ex: IOException) {
+            val s = ex.toString()
+            ex.printStackTrace()
+        }
+    }
     private fun LeadValidations(v: View) {
         Log.e(TAG, "LeadValidations  3732   " + ID_Customer + "  " + ID_Customer!!.length)
         Log.e(
@@ -9472,6 +9719,25 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     .show()
             }
         }
+
+    }
+
+    override fun onBackPressed() {
+        Log.i("response09090","check=")
+        Log.i("response09090","check="+player1)
+        if (player1 != null ) {
+          // stopPlaying()
+            Log.i("response09090","player1")
+            player1!!.stop()
+            player1!!.release()
+            player1 = null
+//            stopPlayerService()
+       //     super.onBackPressed()
+
+        }
+        stopPlayerService()
+            super.onBackPressed()
+
 
     }
 }
