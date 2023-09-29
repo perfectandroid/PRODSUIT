@@ -15,7 +15,56 @@
         android:padding="10dp"
         android:fontFamily="@font/myfont"
         android:text="Call Log"/>
-      <View
+    <LinearLayout
+        android:id="@+id/activity_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/llsearch"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/shape_gradient_pop"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/searchbg"
+                android:layout_weight="0.2">
+                <EditText
+                    android:id="@+id/etsearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:hint="Search for customer number.."
+                    android:lines="1"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="end"
+                    android:inputType="number"
+                    android:textColorHint="@color/grey"
+                    android:paddingLeft="10dp"
+                    android:background="@drawable/searchbg"
+                    android:drawableLeft="@drawable/ic_search"
+                    android:layout_weight="1"
+                    android:drawablePadding="10dp"
+                    android:paddingRight="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
+        <ListView
+            android:id="@+id/list_view"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:divider="#ffffff"
+            android:layout_below="@+id/lv_storeList"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/grey"/>

@@ -103,6 +103,8 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
     private var array_sort = ArrayList<CalllogModel>()
     private var calllogArrayList = ArrayList<CalllogModel>()
     private var sadapter: CallLogListAdapter? = null
+    private var textlength = 0
+    private var etxtsearch:EditText? =null
 
     private var RECORD_PLAY: Int? = 1038
     var voiceData: String? = ""
