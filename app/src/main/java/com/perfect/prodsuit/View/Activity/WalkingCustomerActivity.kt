@@ -241,6 +241,7 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
 
             R.id.btnSubmit->{
                 checkAttendance()
+                Log.e(TAG,"fjjfjf  ")
                 if (saveAttendanceMark){
                     array_walkingUpdate = JSONArray()
                     validation(v)
@@ -393,8 +394,8 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
         tie_Description!!.setText("")
         tie_Attachvoice!!.setText("")
         ID_AssignedTo = ""
-        voiceData= ""
-        voicedataByte!!.fill(0)
+//        voiceData= ""
+//        voicedataByte!!.fill(0)
         defaultLoad()
     }
 
@@ -615,9 +616,9 @@ class WalkingCustomerActivity : AppCompatActivity() , View.OnClickListener, Item
             else if(assignDate.equals("")){
                 Config.snackBars(context,v,"Select Assigned Date")
             }
-            else if(voicedataByte!!.equals("")){
-                Config.snackBars(context,v,"Select Voice Data")
-            }
+//            else if(voicedataByte!!.equals("")){
+//                Config.snackBars(context,v,"Select Voice Data")
+//            }
             else{
                 saveCount = 0
                 saveWalkingCustomer()

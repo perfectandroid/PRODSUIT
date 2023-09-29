@@ -107,6 +107,15 @@ interface ApiInterface {
     @POST("UserValidations/DepartmentDetails")
     fun getDepartment(@Body body: RequestBody): Call<String>
 
+    @POST("Project/LeadList")
+    fun getLeadList(@Body body: RequestBody): Call<String>
+
+    @POST("Project/WorkTypeDetails")
+    fun getWorkTypeDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Project/MeasurementTypeDetails")
+    fun getMeasurementTypeDetails(@Body body: RequestBody): Call<String>
+
     @POST("PickUpDelivery/GetProductComplaintList")
     fun GetProductComplaintList(@Body body: RequestBody): Call<String>
 

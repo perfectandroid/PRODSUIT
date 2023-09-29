@@ -11,7 +11,7 @@
     <!--    app:cardUseCompatPadding="true"-->
 
     <LinearLayout
-        android:id="@+id/llleadNo"
+        android:id="@+id/llWorkType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -26,46 +26,27 @@
             android:fontFamily="@font/myfont"
             android:background="@color/list_si"
             android:text="14"
+            android:layout_weight="1"
             android:textColor="@color/black"
             android:layout_centerVertical="true"
             android:id="@+id/txtsino" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
         <TextView
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@color/list_data"
             android:textSize="15dp"
             android:maxLines="2"
-            android:paddingStart="5dp"
             android:fontFamily="@font/myfont"
             android:text=""
             android:layout_weight="1"
+            android:drawableRight="@drawable/svg_right_arrow"
             android:textColor="@color/black"
             android:layout_centerVertical="true"
-            android:id="@+id/txtName" />
-
-        <TextView
-            android:id="@+id/txtLeadNo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@color/list_data"
-            android:textSize="15dp"
-            android:maxLines="2"
-            android:paddingStart="5dp"
-            android:fontFamily="@font/myfont"
-            android:text=""
-            android:layout_weight="1"
-            android:textColor="@color/black"
-            android:layout_centerVertical="true" />
+            android:id="@+id/txtWorkType" />
         <!--        android:drawableRight="@drawable/arrowright"-->
-    </LinearLayout>
 
     </LinearLayout>
 
@@ -75,7 +56,7 @@
         android:background="@color/list_line"/>
 
     <LinearLayout
-        android:id="@+id/lldepartment1"
+        android:id="@+id/llWorktype1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"

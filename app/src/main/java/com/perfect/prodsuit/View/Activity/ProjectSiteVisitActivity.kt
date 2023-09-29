@@ -134,6 +134,9 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     var leadcount       = 0
     var otherchargecount = 0
     var imagemodecount   = 0
+    var strID_FIELD   = ""
+    var strWorkTypeID   = ""
+    var strID_MeasurementUnit   = ""
 
     lateinit var departmentViewModel: DepartmentViewModel
     lateinit var imagemodeViewModel: ImageModeViewModel
@@ -502,7 +505,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         when(v.id){
             R.id.imback->{
                 finish()
-                overridePendingTransition(R.anim.enter_from_right, R.anim.enter_from_right)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
 
             R.id.tv_SiteVisit->{
@@ -913,8 +916,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   114455   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("DepartmentDetails")
-                                        leadnoArrayList = jobjt.getJSONArray("DepartmentDetailsList")
+                                        val jobjt = jObject.getJSONObject("LeadList")
+                                        leadnoArrayList = jobjt.getJSONArray("LeadListDetails")
                                         if (leadnoArrayList.length()>0){
 
                                             leadNoPopup(leadnoArrayList)
@@ -997,8 +1000,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
                     for (k in 0 until leadnoArrayList.length()) {
                         val jsonObject = leadnoArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("DeptName").length) {
-                            if (jsonObject.getString("DeptName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                        if (textlength <= jsonObject.getString("Name").length) {
+                            if (jsonObject.getString("Name")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
                                 leadnoSort.put(jsonObject)
                             }
 
@@ -1570,8 +1573,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   114455   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("DepartmentDetails")
-                                        worktypeArrayList = jobjt.getJSONArray("DepartmentDetailsList")
+                                        val jobjt = jObject.getJSONObject("WorkTypeList")
+                                        worktypeArrayList = jobjt.getJSONArray("WorkTypeListDetails")
                                         if (worktypeArrayList.length()>0){
 
                                             workTypePopup(worktypeArrayList)
@@ -1654,8 +1657,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
                     for (k in 0 until worktypeArrayList.length()) {
                         val jsonObject = worktypeArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("DeptName").length) {
-                            if (jsonObject.getString("DeptName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                        if (textlength <= jsonObject.getString("WorkType").length) {
+                            if (jsonObject.getString("WorkType")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
                                 worktypeSort.put(jsonObject)
                             }
 
@@ -1700,8 +1703,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   114455   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("DepartmentDetails")
-                                        measurementDetailsArrayList = jobjt.getJSONArray("DepartmentDetailsList")
+                                        val jobjt = jObject.getJSONObject("MeasurementTypeList")
+                                        measurementDetailsArrayList = jobjt.getJSONArray("MeasurementTypeListDetails")
                                         if (measurementDetailsArrayList.length()>0){
 
                                             measurementTypePopup(measurementDetailsArrayList)
@@ -1784,8 +1787,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
                     for (k in 0 until worktypeArrayList.length()) {
                         val jsonObject = worktypeArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("DeptName").length) {
-                            if (jsonObject.getString("DeptName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                        if (textlength <= jsonObject.getString("MeasurementUnit").length) {
+                            if (jsonObject.getString("MeasurementUnit")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
                                 measurementSort.put(jsonObject)
                             }
 
@@ -2307,6 +2310,35 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             ID_EmployeeType = ""
             tie_EmployeeType!!.setText("")
 
+
+        }
+
+        if (data.equals("LeadNumberClick")){
+            dialogLeadNo!!.dismiss()
+            val jsonObject = leadnoSort.getJSONObject(position)
+
+            Log.e(TAG,"LeadNo   "+jsonObject.getString("LeadNo"))
+            tie_LeadNo!!.setText(jsonObject.getString("LeadNo"))
+            strID_FIELD = jsonObject.getString("ID_FIELD")
+
+        }
+
+        if (data.equals("WorkType")){
+            dialogWorkType!!.dismiss()
+            val jsonObject = worktypeSort.getJSONObject(position)
+
+            Log.e(TAG,"WorkType   "+jsonObject.getString("WorkType"))
+            tie_WorkType!!.setText(jsonObject.getString("WorkType"))
+            strWorkTypeID = jsonObject.getString("WorkTypeID")
+
+        }
+        if (data.equals("MeasurementUnitClick")){
+            dialogMeasurement!!.dismiss()
+            val jsonObject = measurementSort.getJSONObject(position)
+
+            Log.e(TAG,"MeasurementUnit   "+jsonObject.getString("MeasurementUnit"))
+            tie_MeasurementType!!.setText(jsonObject.getString("MeasurementUnit"))
+            strID_MeasurementUnit = jsonObject.getString("ID_MeasurementUnit")
 
         }
 

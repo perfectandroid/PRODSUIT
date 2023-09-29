@@ -177,6 +177,7 @@
                                     app:startIconDrawable="@drawable/svg_walk_phone"
                                     android:hint="Phone">
 <!--                                    app:endIconDrawable="@drawable/search_24"-->
+<!--                                    app:endIconDrawable="@drawable/search_24"-->
 
                                     <!--                                app:endIconDrawable="@drawable/search_24"-->
 
@@ -323,7 +324,7 @@
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/til_AttachVoice1"
-android:visibility="gone"
+                                android:visibility="gone"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Attach Voice Note"

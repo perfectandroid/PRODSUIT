@@ -32,6 +32,8 @@ android {
 //        applicationId "com.perfect.prodsuite_demo"
 //        applicationId "com.perfect.prodsuite"  // upload
 //        applicationId "com.perfect.sheetal"
+//        applicationId "com.perfect.asco"
+
         minSdkVersion 26
         targetSdkVersion 31
         versionCode 1

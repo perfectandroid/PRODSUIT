@@ -26,12 +26,12 @@ object AuthCorrectionRepository {
     val authCorrectionSetterGetter = MutableLiveData<AuthCorrectionModel>()
     val TAG: String = "AuthCorrectionRepository"
 
-    fun getServicesApiCall(context: Context, AuthID : String, ID_Reason : String, strReason : String): MutableLiveData<AuthCorrectionModel> {
-        getAuthorizationCorrection(context, AuthID,ID_Reason,strReason)
+    fun getServicesApiCall(context: Context, AuthID : String, ID_Reason : String, strReason : String,ActiveCorrectionOption: String): MutableLiveData<AuthCorrectionModel> {
+        getAuthorizationCorrection(context, AuthID,ID_Reason,strReason,ActiveCorrectionOption)
         return authCorrectionSetterGetter
     }
 
-    private fun getAuthorizationCorrection(context: Context, authID: String, ID_Reason : String, strReason : String) {
+    private fun getAuthorizationCorrection(context: Context, authID: String, ID_Reason : String, strReason : String,ActiveCorrectionOption : String) {
         try {
             authCorrectionSetterGetter.value = AuthCorrectionModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -75,9 +75,11 @@ object AuthCorrectionRepository {
                 requestObject1.put("AuthID", ProdsuitApplication.encryptStart(authID))
                 requestObject1.put("FK_Reason", ProdsuitApplication.encryptStart(ID_Reason))
                 requestObject1.put("Reason", ProdsuitApplication.encryptStart(strReason))
+                requestObject1.put("SkipPrev", ProdsuitApplication.encryptStart(ActiveCorrectionOption))
 
 
                 Log.e(TAG,"requestObject1   8100   "+requestObject1)
+                Log.e(TAG,"requestObject1   8100   "+ActiveCorrectionOption)
 
             } catch (e: Exception) {
                 e.printStackTrace()
