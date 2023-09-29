@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-
+            android:minWidth="100dp"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -103,17 +103,20 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="invisible"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="1dp"
             android:orientation="horizontal"
             android:layout_margin="5dp"
             android:gravity="center">
+
             <Button
-                android:id="@+id/re_record"
+                android:visibility="invisible"
+
                 android:minWidth="200dp"
                 android:textColor="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:textSize="15dp"
@@ -124,9 +127,10 @@
                 android:background="@color/colorPrimary"
                 android:text="Re-recording" />
             <Button
-                android:id="@+id/submitbtn"
+                android:visibility="invisible"
+
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:textSize="15dp"
@@ -137,6 +141,7 @@
                 android:layout_weight="1"
                 android:textAllCaps="false"
                 android:text="Continue" />
+
         </LinearLayout>
 
 

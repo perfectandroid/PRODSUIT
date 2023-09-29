@@ -121,6 +121,7 @@ object Config {
     const val SHARED_PREF64 = "isNotification"  //NotificationBack Preesed
     const val SHARED_PREF65 = "fireBaseToken"  //FireBase User Token
     const val SHARED_PREF66 = "deviceID"  //FireBase User Token
+    const val SHARED_PREF67 = "AUDIO"  //FireBase User Token
 
 
     var width = 0

@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -37,6 +38,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, ItemClickListener {
@@ -96,9 +99,12 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
     var saveAttendanceMark = false
     var saveCount: Int = 0
     lateinit var createWalkingCustomerViewModel: CreateWalkingCustomerViewModel
+    private var tie_Attachvoice: TextInputEditText? = null
 
-
-
+    private var RECORD_PLAY: Int? = 1038
+    var voiceData: String? = ""
+    var   VoiceLabel: String? = ""
+    private var voicedataByte : ByteArray? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -154,7 +160,7 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
-
+        tie_Attachvoice = findViewById<TextInputEditText>(R.id.tie_Attachvoice)
         tie_CustomerName = findViewById<TextInputEditText>(R.id.tie_CustomerName)
         tie_Phone = findViewById<TextInputEditText>(R.id.tie_Phone)
         tie_AssignedDate = findViewById<TextInputEditText>(R.id.tie_AssignedDate)
@@ -175,7 +181,7 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
         tie_AssignedTo!!.setOnClickListener(this)
         btnCancels!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
-
+        tie_Attachvoice!!.setOnClickListener(this)
         til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_AssignedDate!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_AssignedTo!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
@@ -204,13 +210,55 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
                 finish()
             }
             R.id.btnSubmit->{
-               Config.disableClick(v)
+                Config.disableClick(v)
                 checkAttendance()
                 if (saveAttendanceMark){
                     validation(v)
                 }
             }
+
+            R.id.tie_Attachvoice->{
+                val intent = Intent(this@WalkingExistingActivity, VoiceRecordingActivity::class.java)
+                startActivityForResult(intent, RECORD_PLAY!!);
+            }
+
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == RECORD_PLAY)
+        {
+            if (data != null) {
+
+
+
+                try {
+                    val random2 = Random().nextInt(10) + 1
+                    VoiceLabel="Voice_"+getCurrentTimeStamp()
+
+                    voiceData = data.getStringExtra("voicedata")
+                    voicedataByte=data.getByteArrayExtra("voicedatabyte")
+                    Log.i("response8888","voiceData:"+voiceData+'\n')
+                    Log.i("response8888","voicedataByte:"+voicedataByte+'\n')
+                    Log.i("response8888","voicedataByte string:"+voicedataByte.toString()+'\n')
+                    tie_Attachvoice!!.setText(VoiceLabel)
+                }
+                catch (e: Exception) {
+
+                }
+
+
+            }
+        }
+    }
+
+    private fun getCurrentTimeStamp(): String {
+        val  currentDateTime= LocalDateTime.now()
+        val formatter= DateTimeFormatter.ofPattern("yyyMMddHHmmss")
+        return  currentDateTime.format(formatter)
+
     }
 
     private fun validation(v : View) {
@@ -223,7 +271,14 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
             strAssignedDate = sdfDate1.format(newDate1)
             strCustomer = tie_CustomerName!!.text.toString()
             strPhone = tie_Phone!!.text.toString()
-            strDescription = tie_Description!!.text.toString()
+           strDescription = tie_Description!!.text.toString()
+
+
+            Log.i("response232","assignDate="+assignDate)
+           Log.i("response232","strAssignedDate="+strAssignedDate)
+            Log.i("response232","strCustomer="+strCustomer)
+            Log.i("response232","strPhone="+strPhone)
+            Log.i("response232","strDescription="+strDescription)
 
             if (strCustomer.equals("")){
                 Config.snackBars(context,v,"Enter Customer Name")
@@ -234,12 +289,18 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
             else if(assignDate.equals("")){
                 Config.snackBars(context,v,"Select Assigned Date")
             }
+            else if(voicedataByte!!.equals("")){
+                Config.snackBars(context,v,"Select Voice Data")
+            }
+//            else if (voiceData!!.equals("")) {
+//                Config.snackBars(context, v, "Select Voice Data")
+//            }
             else{
 
-                getArraList(v)
+             getArraList(v)
             }
         }catch (e : Exception){
-
+            Log.i("response232","ex="+e)
         }
 
 
@@ -344,7 +405,7 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
             if (timeInMillis1 >= timeInMillis2) {
                 // date1 is greater than or equal to date2
                 // Your code here
-                    Log.e(TAG,"178881   "+currentDate1)
+                Log.e(TAG,"178881   "+currentDate1)
                 tie_UpAssignedDate!!.setText(currentDate1)
                 strUpAssignedDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
             } else {
@@ -405,7 +466,7 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
                 modelWalkingExist[position].FK_Employee =  ID_UpAssignedTo!!
                 walkingExistingAdapter!!.notifyItemChanged(position)
                 //ApprovalListDetailActivity
-             //   successBottomSheet()
+                //   successBottomSheet()
 
             }
             dialog.setCanceledOnTouchOutside(false)
@@ -674,7 +735,7 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                createWalkingCustomerViewModel.CreateWalkingCustomer(this,strCustomer!!,strPhone!!,ID_AssignedTo!!,strAssignedDate!!," ",strDescription!!,array_walkingUpdate!!)!!.observe(
+                createWalkingCustomerViewModel.CreateWalkingCustomer(this,strCustomer!!,strPhone!!,ID_AssignedTo!!,strAssignedDate!!,voiceData!!,VoiceLabel!!,strDescription!!,array_walkingUpdate!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -684,6 +745,9 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
                                 Log.e(TAG,"msg   4060   "+msg)
                                 val jObject = JSONObject(msg)
                                 if (jObject.getString("StatusCode").equals("0")) {
+                                    tie_Attachvoice!!.setText("")
+                                    voiceData= ""
+                                    voicedataByte!!.fill(0)
                                     successPopup(jObject)
                                 }else{
                                     val builder = AlertDialog.Builder(

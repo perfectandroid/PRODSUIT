@@ -26,12 +26,12 @@ object CreateWalkingCustomerRepository {
     val TAG: String = "CreateWalkingCustomerRepository"
     private var progressDialog: ProgressDialog? = null
 
-    fun getServicesApiCall(context: Context,strCustomer : String,strPhone : String,ID_AssignedTo : String,strAssignedDate : String,strVoiceData : String,strDescription : String,leadByMobileNo : JSONArray): MutableLiveData<CreateWalkingCustomerModel> {
-        CreateWalkingCustomer(context, strCustomer,strPhone,ID_AssignedTo,strAssignedDate,strVoiceData,strDescription,leadByMobileNo)
+    fun getServicesApiCall(context: Context,strCustomer : String,strPhone : String,ID_AssignedTo : String,strAssignedDate : String,strVoiceData : String,VoiceLabel:String,strDescription : String,leadByMobileNo : JSONArray): MutableLiveData<CreateWalkingCustomerModel> {
+        CreateWalkingCustomer(context, strCustomer,strPhone,ID_AssignedTo,strAssignedDate,strVoiceData,VoiceLabel,strDescription,leadByMobileNo)
         return createWalkingCustomerSetterGetter
     }
 
-    private fun CreateWalkingCustomer(context: Context,strCustomer : String,strPhone : String,ID_AssignedTo : String,strAssignedDate : String,strVoiceData : String,strDescription : String,leadByMobileNo : JSONArray) {
+    private fun CreateWalkingCustomer(context: Context,strCustomer : String,strPhone : String,ID_AssignedTo : String,strAssignedDate : String,strVoiceData : String,VoiceLabel:String,strDescription : String,leadByMobileNo : JSONArray) {
         try {
             createWalkingCustomerSetterGetter.value =  CreateWalkingCustomerModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -81,13 +81,14 @@ object CreateWalkingCustomerRepository {
                 requestObject1.put("CaDescription", ProdsuitApplication.encryptStart(strDescription))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
-                requestObject1.put("VoiceData", ProdsuitApplication.encryptStart(strVoiceData))
-                requestObject1.put("VoiceLabel", "voice1")
+                requestObject1.put("VoiceData", strVoiceData)
+                requestObject1.put("VoiceLabel", "Voice")
                 requestObject1.put("leadByMobileNo", leadByMobileNo)
 
-
-                Log.e(TAG,"requestObject1   671   "+requestObject1)
-                Log.i("responseWlk","walking body==   "+requestObject1)
+                Log.e("wewewe","sent length==   "+strVoiceData.length)
+             //   Log.e(TAG,"requestObject1   671   "+requestObject1)
+                Log.i("response66666","walking body==   "+requestObject1)
+                Log.i("response66666","walking body11==   "+strVoiceData)
 
             } catch (e: Exception) {
                 e.printStackTrace()

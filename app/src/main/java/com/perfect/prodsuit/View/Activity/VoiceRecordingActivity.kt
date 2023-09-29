@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.AudioFormat
 import android.media.MediaPlayer
 import android.media.MediaPlayer.OnCompletionListener
 import android.media.MediaRecorder
@@ -39,6 +40,7 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.nio.file.Files
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -55,6 +57,7 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
     private var stopPlayingButton: ImageView? = null
     private var recorder: MediaRecorder? = null
     private var player: MediaPlayer? = null
+    private var player1: MediaPlayer? = null
 
     private var lottimic: LottieAnimationView? = null
     private var lotti_play: LottieAnimationView? = null
@@ -64,10 +67,11 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
     private var startTime: Long = 0
     private var isRecording = false
 
+    //  private var isplaying=false
     private var playDialog: Dialog? = null
 
     private var voicedata: String? = null
-    private  var voicedatabyte : ByteArray? =null
+    private var voicedatabyte: ByteArray? = null
     private var RECORD_PLAY: Int? = 1038
 
     private val handler = Handler(Looper.getMainLooper())
@@ -94,7 +98,7 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
             this, permissions, REQUEST_RECORD_AUDIO_PERMISSION
         )
         setContentView(R.layout.activity_voice_recording)
-       // val intent = intent
+        // val intent = intent
 
 //        val from = intent.getStringExtra("name11")
 //
@@ -126,7 +130,7 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 //            recImg!!.visibility=View.GONE
 //            lottimic!!.visibility=View.VISIBLE
             startRecording()
-            isRecording=true
+            isRecording = true
             startRecordingButton!!.isClickable = false
             stopRecordingButton!!.isClickable = true
 
@@ -136,18 +140,15 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 
         stopRecordingButton!!.setOnClickListener(View.OnClickListener {
 
-            if (isRecording)
-            {
+            if (isRecording) {
                 lottimic!!.pauseAnimation()
 
                 stopRecording()
                 playRecordPopUp()
-                recordTime!!.visibility=View.GONE
+                recordTime!!.visibility = View.GONE
                 startRecordingButton!!.isClickable = true
                 stopRecordingButton!!.isClickable = false
             }
-
-
 
 
         })
@@ -202,7 +203,7 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun startRecording() {
-        recordTime!!.visibility=View.VISIBLE
+        recordTime!!.visibility = View.VISIBLE
         recordTime!!.setBase(SystemClock.elapsedRealtime());
         recordTime!!.stop()
         val uuid = UUID.randomUUID().toString()
@@ -221,7 +222,7 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
             recorder!!.start()
 
             recordTime!!.start()
-            isRecording=true
+            isRecording = true
 
         } catch (e: IOException) {
             Log.e(
@@ -235,7 +236,7 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun stopRecording() {
         if (recorder != null) {
-            isRecording=false
+            isRecording = false
 
 
             recordTime!!.setBase(SystemClock.elapsedRealtime());
@@ -257,13 +258,17 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 
         try {
 
-               var isplaying=false
+            var isplaying = false
+            var pausePosition = 0
             val dialog = Dialog(this@VoiceRecordingActivity)
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialog.setContentView(R.layout.playrecord_popup)
             dialog.setCanceledOnTouchOutside(false);
+            player1 = MediaPlayer()
+            //  player1!!.setDataSource(fileName)
             // dialog.setCancelable(false);
             val playbtn: ImageView = dialog.findViewById<ImageView>(R.id.playbtn)
+            val pausebtn: ImageView = dialog.findViewById<ImageView>(R.id.pausebtn)
             val lotti_play: LottieAnimationView =
                 dialog.findViewById<LottieAnimationView>(R.id.lotti_play)
             val backclose: ImageView = dialog.findViewById<ImageView>(R.id.backclose)
@@ -274,9 +279,40 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 
                 Log.i("response999222", "fileName:=" + fileName)
                 val filePath = fileName
-                val audioToByteArray = audioToByteArray(filePath!!)
 
-                Log.i("response999222", "out:=" + audioToByteArray)
+                Log.i("wewewe", "out filePath:=" + filePath)
+
+
+                val fileBytes = Files.readAllBytes(File(filePath).toPath())
+                val base64String = Base64.getEncoder().encodeToString(fileBytes)
+                Log.i("wewewe", "base64String " + base64String)
+                Log.i("wewewe", "out base64String length:=" + base64String.length)
+
+//                val decodedBytes = Base64.getDecoder().decode(base64String)
+//                Log.i("response999222", "out decodedBytes:=" + decodedBytes)
+//
+//                val  tempAudio=File.createTempFile("tempAudio",null,applicationContext.cacheDir)
+//                tempAudio.writeBytes(decodedBytes)
+//                val mediaPlayer=MediaPlayer()
+//                mediaPlayer.setDataSource(tempAudio.absolutePath)
+//                mediaPlayer.prepare()
+//                mediaPlayer.start()
+
+                val audioToByteArray = audioToByteArray(filePath!!)
+                val audiodata=getAudioFileData(filePath)
+
+                if (audiodata!=null)
+                {
+                    Log.i("wewewe", "audiodata length:=" + audiodata.size)
+                }
+
+                val stringByte=Base64.getEncoder().encode(audioToByteArray)
+               val voicedataByte2 = Base64.getDecoder().decode(stringByte)
+              //  val b64 = stringByte.toByteArray().toBase64()
+
+                Log.i("response999222", "outstring:=" + stringByte)
+                Log.i("response999222", "out last:=" + voicedataByte2)
+             //   Log.i("response999222", "out:=" + audioToByteArray)
 //                if (audioToByteArray != null) {
 //                    playByteArray(audioToByteArray)
 //                }
@@ -285,19 +321,16 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 
 
 //                    dialog.dismiss()
-                    voicedatabyte=audioToByteArray
+                    voicedatabyte = audioToByteArray
                     voicedata = audioToByteArray.toString()
-                    if (voicedata !=null)
-                    {
-                     //  val intent = Intent(this@VoiceRecordingActivity, VoiceRecordingActivity::class.java)
+                    if (voicedata != null) {
+                        //  val intent = Intent(this@VoiceRecordingActivity, VoiceRecordingActivity::class.java)
 
-                        intent.putExtra("voicedata", voicedata)
+                        intent.putExtra("voicedata", base64String)
                         intent.putExtra("voicedatabyte", voicedatabyte)
-                        setResult(RECORD_PLAY!!,intent)
+                        setResult(RECORD_PLAY!!, intent)
                         finish()
                     }
-
-
 
 
 //                     playByteArray(audioToByteArray)
@@ -309,31 +342,46 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 
             re_record.setOnClickListener(View.OnClickListener {
                 dialog.dismiss()
+
+                if (player1 != null) {
+                    player1!!.release()
+                    player1 = null
+                    stopPlayerService()
+                }
+
                 lottimic!!.loop(true)
                 lottimic!!.playAnimation()
+//                lottimic!!.speed= 2F
 //                isRecording=true
 //            recImg!!.visibility=View.GONE
 //            lottimic!!.visibility=View.VISIBLE
                 startRecording()
                 startRecordingButton!!.isClickable = false
                 stopRecordingButton!!.isClickable = true
-                startRecordingButton!!.visibility=View.GONE
+                startRecordingButton!!.visibility = View.GONE
 
 
             })
 
             backclose.setOnClickListener(View.OnClickListener {
                 dialog.dismiss()
-                recordTime!!.visibility=View.GONE
+                recordTime!!.visibility = View.GONE
                 stopRecordingButton!!.isClickable = false
                 startRecordingButton!!.isClickable = true
-                startRecordingButton!!.visibility=View.VISIBLE
-                if (player != null) {
-                    player!!.release()
-                    player = null
+                startRecordingButton!!.visibility = View.VISIBLE
+//                if (player != null) {
+//                    player!!.release()
+//                    player = null
+//                    stopPlayerService()
+//
+//
+//                }
+
+
+                if (player1 != null) {
+                    player1!!.release()
+                    player1 = null
                     stopPlayerService()
-
-
                 }
             })
 
@@ -341,40 +389,140 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 
             playbtn.setOnClickListener(View.OnClickListener {
 
-//
-//                if (isplaying)
-//                {
-//
-//                }
-//                else
-//                {
-//
-//                }
 
-                lotti_play!!.loop(true)
-                lotti_play!!.playAnimation()
+                if (!isplaying)
+                {
+                    if (pausePosition==0)
+                    {
+//                        lotti_play!!.loop(true)
+//                        lotti_play!!.playAnimation()
+                        player1 = MediaPlayer()
+                        try {
+                            player1!!.setDataSource(fileName)
+                            player1!!.setOnCompletionListener(OnCompletionListener {
+                                pausePosition=0
+                                lotti_play!!.pauseAnimation()
+                                isplaying = false
+                                pausebtn!!.visibility = View.GONE
+                                playbtn!!.visibility = View.VISIBLE
 
-                //    playRecording()
-
-                player = MediaPlayer()
-                try {
-                    player!!.setDataSource(fileName)
-                    player!!.setOnCompletionListener(OnCompletionListener {
-                        lotti_play!!.pauseAnimation()
-                        stopPlaying()
+                                stopPlaying()
 
 
-                    })
-                    player!!.prepare()
-                    player!!.start()
+                            })
+                            isplaying = true
+                            playbtn!!.visibility = View.GONE
+                            pausebtn!!.visibility = View.VISIBLE
+                            // playbtn.setBackgroundResource(R.drawable.pause_button)
+                            player1!!.prepare()
+                            player1!!.start()
+                            lotti_play!!.loop(true)
+                            lotti_play!!.playAnimation()
+                            startPlayerService()
+                        } catch (e: IOException) {
+                            Log.e(
+                                VoiceRecordingActivity::class.java.getSimpleName() + ":playRecording()",
+                                "prepare() failed"
+                            )
+                        }
+                    }
+                    else
+                    {
 
-                    startPlayerService()
-                } catch (e: IOException) {
-                    Log.e(
-                        VoiceRecordingActivity::class.java.getSimpleName() + ":playRecording()",
-                        "prepare() failed"
-                    )
+//                        lotti_play!!.loop(true)
+//                        lotti_play!!.playAnimation()
+                        player1 = MediaPlayer()
+                        try {
+                            player1!!.setDataSource(fileName)
+
+                            player1!!.setOnCompletionListener(OnCompletionListener {
+                                pausePosition=0
+                                lotti_play!!.pauseAnimation()
+                                isplaying = false
+                                pausebtn!!.visibility = View.GONE
+                                playbtn!!.visibility = View.VISIBLE
+
+                                stopPlaying()
+
+
+                            })
+                            isplaying = true
+                            playbtn!!.visibility = View.GONE
+                            pausebtn!!.visibility = View.VISIBLE
+                            // playbtn.setBackgroundResource(R.drawable.pause_button)
+                            player1?.prepare()
+                            player1!!.start()
+                            player1!!.seekTo(pausePosition)
+                            lotti_play!!.loop(true)
+                            lotti_play!!.playAnimation()
+                            startPlayerService()
+                        } catch (e: IOException) {
+                            Log.e(
+                                VoiceRecordingActivity::class.java.getSimpleName() + ":playRecording()",
+                                "prepare() failed"
+                            )
+                        }
+                    }
                 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//                lotti_play!!.loop(true)
+//                lotti_play!!.playAnimation()
+//                player1 = MediaPlayer()
+//                try {
+//                    player1!!.setDataSource(fileName)
+//                    player1!!.setOnCompletionListener(OnCompletionListener {
+//                        lotti_play!!.pauseAnimation()
+//                        isplaying = false
+//                        pausebtn!!.visibility = View.GONE
+//                        playbtn!!.visibility = View.VISIBLE
+//
+//                        stopPlaying()
+//
+//
+//                    })
+//                    isplaying = true
+//                    playbtn!!.visibility = View.GONE
+//                    pausebtn!!.visibility = View.VISIBLE
+//                    // playbtn.setBackgroundResource(R.drawable.pause_button)
+//                    player1!!.prepare()
+//                    player1!!.start()
+//
+//                    startPlayerService()
+//                } catch (e: IOException) {
+//                    Log.e(
+//                        VoiceRecordingActivity::class.java.getSimpleName() + ":playRecording()",
+//                        "prepare() failed"
+//                    )
+//                }
+
+
+            })
+
+            pausebtn.setOnClickListener(View.OnClickListener {
+                isplaying = false
+                player1!!.pause()
+
+                pausePosition=player1!!.currentPosition
+                lotti_play!!.pauseAnimation()
+                pausebtn!!.visibility = View.GONE
+                playbtn!!.visibility = View.VISIBLE
             })
 
             dialog.show()
@@ -431,6 +579,29 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
             e.printStackTrace()
         }
 
+    }
+
+    private fun getAudioFileData(filePath: String): ByteArray? {
+
+        val file=File(filePath)
+        if (!file.exists())
+        {
+            return null
+        }
+        try {
+            val inputStream =FileInputStream(file)
+            val fileLength =file.length().toInt()
+            val audioData =ByteArray(fileLength)
+
+            inputStream.read(audioData)
+            inputStream.close()
+            return  audioData
+        }
+        catch (e:IOException)
+        {
+            e.printStackTrace()
+        }
+        return  null
     }
 
     private fun playRecording() {
@@ -529,6 +700,28 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
             len = `is`.read(buffer)
         }
         return os.toByteArray()
+    }
+
+    fun audioTobase64(filepath: String) :String?
+    {
+        val audioFile =File(filepath)
+        if (!audioFile.exists()) {
+            return null
+        }
+
+        try {
+            val inputStream =FileInputStream(audioFile)
+            val byte=ByteArray(audioFile.length().toInt())
+            inputStream.read(byte)
+            inputStream.close()
+            return  Base64.getEncoder().encodeToString(byte)
+        }
+        catch (e:IOException)
+        {
+            e.printStackTrace()
+        }
+
+        return null
     }
 
     fun audioToByteArray(filepath: String): ByteArray? {

@@ -179,6 +179,53 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.5"
+                android:text="Voice"
+                android:fontFamily="@font/myfont"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:gravity="start"
+                android:drawableTint="@color/black"
+                android:textStyle="normal" />
+
+
+
+            <TextView
+
+                android:id="@+id/voiceData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="1dp"
+                android:layout_marginTop="-1dp"
+                android:text="voice.mp3"
+                app:endIconMode="custom"
+                android:fontFamily="@font/myfont"
+                android:singleLine="true"
+                android:textColor="@color/textColor"
+                android:textSize="14dp"
+                android:drawablePadding="4dp"
+                android:drawableLeft="@drawable/play_btn"
+                android:drawableTint="@color/grey"
+                android:textStyle="normal" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_marginTop="-3dp"
+            android:layout_weight="1"
+            android:padding="0dp"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
                 android:text="Remarks"
                 android:fontFamily="@font/myfont"
                 android:singleLine="true"
