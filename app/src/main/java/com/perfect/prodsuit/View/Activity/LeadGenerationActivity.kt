@@ -385,7 +385,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //    private var adapter :  ArrayAdapter? = null
 private var voicedataByte : ByteArray? =null
 private var voiceString : String? =null
-private var voiceCheckID : String? =null
+    //314400
+private var voiceCheckID : String? = "0"
 private var custmoerAssignmentID : String? =null
     private var playbtn: ImageView? = null
     private var pausebtn: ImageView? = null
@@ -712,13 +713,13 @@ private var custmoerAssignmentID : String? =null
 
 
     private fun clearData() {
-      //  if (cardVoiceRequest.)
+        cardVoiceRequest!!.visibility=View.GONE
 //        custmoerAssignmentID=""
 //
 //         isplaying1 = false
 //         pausePosition1 =0
         voiceString= ""
-
+        voiceRequestMode="1"
        // lotti_play!!.pauseAnimation()
         if (player1 != null) {
             player1!!.release()
@@ -2271,13 +2272,24 @@ private var custmoerAssignmentID : String? =null
 
             }
             R.id.btnReset -> {
+                lotti_play!!.setAnimation(R.raw.play_wave)
+                Log.i("response1212","voiceCheckID  ="+voiceCheckID)
                 voiceRequestMode = "1"
                 voiceString=""
                 voiceCheckID=""
+                pausePosition1=0
+
+                isplaying1 = false
+                pausebtn!!.visibility = View.GONE
+                playbtn!!.visibility = View.VISIBLE
+                stopPlaying()
+
+                Log.i("response1212","voiceCheckID="+voiceCheckID)
                 Config.disableClick(v)
                 if (player1 != null) {
                     player1!!.release()
-                    // lotti_play!!.pauseAnimation()
+
+                     lotti_play!!.pauseAnimation()
                     player1 = null
                     stopPlayerService()
                 }
@@ -7471,13 +7483,16 @@ private var custmoerAssignmentID : String? =null
             voiceCheckID=jsonObject.getString("blnVoiceData")
 //            custmoerAssignmentID=jsonObject.getString("ID_CustomerAssignment")
         //    voiceString=jsonObject.getString("VoiceData")
-
+            Log.i("response1212","voiceCheckID yes or no="+voiceCheckID)
             if (voiceCheckID.equals("1")){
 
 
                 custmoerAssignmentID=jsonObject.getString("ID_CustomerAssignment")
                 Log.i("response1212","voiceCheckID="+voiceCheckID)
                 Log.i("response1212","custmoerAssignmentID="+custmoerAssignmentID)
+
+
+                lotti_play!!.pauseAnimation()
 
 
 
