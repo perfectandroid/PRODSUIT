@@ -201,7 +201,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
         til_AssignedTo!!.defaultHintTextColor =
             ContextCompat.getColorStateList(this, R.color.color_mandatory)
 
-
+//314400
 
         val AUDIO_SP = context.getSharedPreferences(Config.SHARED_PREF67, 0)
         if (AUDIO_SP.getString("AUDIO", null).equals("true")){
@@ -452,7 +452,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
         tie_Attachvoice!!.setText("")
         ID_AssignedTo = ""
         voiceData = ""
-        voicedataByte!!.fill(0)
+//        voicedataByte!!.fill(0)
         defaultLoad()
     }
 
@@ -682,9 +682,9 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
 //            else if (voicedataByte!!.equals("")) {
 //                Config.snackBars(context, v, "Select Voice Data")
 //            }
-            else if (voiceData!!.equals("")) {
-                Config.snackBars(context, v, "Select Voice Data")
-            }
+//            else if (voiceData!!.equals("")) {
+//                Config.snackBars(context, v, "Select Voice Data")
+//            }
             else {
                 saveCount = 0
                 saveWalkingCustomer()

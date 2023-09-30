@@ -289,12 +289,10 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
             else if(assignDate.equals("")){
                 Config.snackBars(context,v,"Select Assigned Date")
             }
-            else if(voicedataByte!!.equals("")){
-                Config.snackBars(context,v,"Select Voice Data")
-            }
-//            else if (voiceData!!.equals("")) {
-//                Config.snackBars(context, v, "Select Voice Data")
+//            else if(voiceData!!.equals("")){
+//                Config.snackBars(context,v,"Select Voice Data")
 //            }
+
             else{
 
              getArraList(v)
@@ -745,9 +743,11 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
                                 Log.e(TAG,"msg   4060   "+msg)
                                 val jObject = JSONObject(msg)
                                 if (jObject.getString("StatusCode").equals("0")) {
+
+                                    Log.i("response1212","in")
                                     tie_Attachvoice!!.setText("")
                                     voiceData= ""
-                                    voicedataByte!!.fill(0)
+                                  //  voicedataByte!!.fill(0)
                                     successPopup(jObject)
                                 }else{
                                     val builder = AlertDialog.Builder(

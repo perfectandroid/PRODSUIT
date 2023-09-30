@@ -57,6 +57,7 @@ import kotlin.math.log
 
 
 class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener,ItemClickListenerValue {
+    var saveCount: Int = 0
     var voiceData2: String? = ""
     private var voicedataByte2: ByteArray? = null
     private var player1: MediaPlayer? = null
@@ -80,6 +81,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private var FK_ProductLocation: String? = ""
 
     private var cardLeadRequest: CardView? = null
+    private var cardVoiceRequest: CardView? = null
     private var progressDialog: ProgressDialog? = null
     private var chipNavigationBar: ChipNavigationBar? = null
     private var llCustomer: LinearLayout? = null
@@ -89,6 +91,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private var rltvPinCode: RelativeLayout? = null
     private var llProdDetail: LinearLayout? = null
     private var llLeadRequest: LinearLayout? = null
+    private var llVoiceRequest: LinearLayout? = null
     private var llLeadFrom: LinearLayout? = null
     private var llleadthrough: LinearLayout? = null
     private var llleadby: LinearLayout? = null
@@ -272,6 +275,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     lateinit var employeeViewModel: EmployeeViewModel
     lateinit var leadGenerateDefaultvalueViewModel: LeadGenerationDefaultvalueViewModel
     lateinit var leadRequestViewModel: LeadRequestViewModel
+    lateinit var voiceviewModel: VoiceViewModel
     lateinit var getGenralSettingsViewModel: GetGenralSettingsViewModel
 
     lateinit var prodCategoryArrayList: JSONArray
@@ -328,6 +332,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private var tv_LocationClick: TextView? = null
     private var tv_DateClick: TextView? = null
     private var tv_LeadRequestClick: TextView? = null
+    private var tv_voiceRequestClick: TextView? = null
     private var tv_LeadFromClick: TextView? = null
     private var tv_LeadThroughClick: TextView? = null
     private var tv_LeadByClick: TextView? = null
@@ -380,6 +385,14 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //    private var adapter :  ArrayAdapter? = null
 private var voicedataByte : ByteArray? =null
 private var voiceString : String? =null
+private var voiceCheckID : String? =null
+private var custmoerAssignmentID : String? =null
+    private var playbtn: ImageView? = null
+    private var pausebtn: ImageView? = null
+    private var lotti_play: LottieAnimationView? = null
+
+    var isplaying1 = false
+    var pausePosition1 = 0
     companion object {
         var LeadFromType: String? = ""   //  0-Text ,  1-Dropdown ,  2-None
         var HasSubMedia: String? = ""   //  0-None ,  1-Has
@@ -426,6 +439,7 @@ private var voiceString : String? =null
         var custProdlMode: String? = "1" // GONE
         var locationMode: String? = "1" // GONE
         var leadRequestMode: String? = "1" // GONE
+        var voiceRequestMode: String? = "1" // GONE
         var leadfromMode: String? = "1" // GONE
         var leadThroughMode: String? = "1" // GONE
         var leadByMode: String? = "1" // GONE
@@ -528,6 +542,7 @@ private var voiceString : String? =null
         mediaTypeViewModel = ViewModelProvider(this).get(MediaTypeViewModel::class.java)
         customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
         pinCodeSearchViewModel = ViewModelProvider(this).get(PinCodeSearchViewModel::class.java)
+        voiceviewModel = ViewModelProvider(this).get(VoiceViewModel::class.java)
         leadGenerateSaveViewModel =
             ViewModelProvider(this).get(LeadGenerateSaveViewModel::class.java)
         leadEditListViewModel = ViewModelProvider(this).get(LeadEditListViewModel::class.java)
@@ -697,6 +712,21 @@ private var voiceString : String? =null
 
 
     private fun clearData() {
+      //  if (cardVoiceRequest.)
+//        custmoerAssignmentID=""
+//
+//         isplaying1 = false
+//         pausePosition1 =0
+        voiceString= ""
+
+       // lotti_play!!.pauseAnimation()
+        if (player1 != null) {
+            player1!!.release()
+           // lotti_play!!.pauseAnimation()
+            player1 = null
+            stopPlayerService()
+        }
+
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         strLeadFromHint = "Lead From"
@@ -875,9 +905,23 @@ private var voiceString : String? =null
     }
 
     private fun setRegViews() {
+
+        val AUDIO_SP = context.getSharedPreferences(Config.SHARED_PREF67, 0)
+        Log.i("response1212","AUDIO="+AUDIO_SP.getString("AUDIO", null))
+        if (AUDIO_SP.getString("AUDIO", null).equals("true")){
+
+        }else{
+
+        }
+        playbtn = findViewById<ImageView>(R.id.playbtn)
+        pausebtn = findViewById<ImageView>(R.id.pausebtn)
+        lotti_play = findViewById<LottieAnimationView>(R.id.lotti_play)
+
+
         val imback = findViewById<ImageView>(R.id.imback)
         val imLeadedit = findViewById<ImageView>(R.id.imLeadedit)
         cardLeadRequest = findViewById<CardView>(R.id.cardLeadRequest)
+        cardVoiceRequest = findViewById<CardView>(R.id.cardVoiceRequest)
         actv_nammob = findViewById<AutoCompleteTextView>(R.id.actv_nammob)
         actv_namTitle = findViewById<AutoCompleteTextView>(R.id.actv_namTitle)
         img_search = findViewById<ImageView>(R.id.img_search)
@@ -892,6 +936,7 @@ private var voiceString : String? =null
         rltvPinCode = findViewById<RelativeLayout>(R.id.rltvPinCode)
         llProdDetail = findViewById<LinearLayout>(R.id.llProdDetail)
         llLeadRequest = findViewById<LinearLayout>(R.id.llLeadRequest)
+        llVoiceRequest = findViewById<LinearLayout>(R.id.llVoiceRequest)
         llLeadFrom = findViewById<LinearLayout>(R.id.llLeadFrom)
         llleadthrough = findViewById<LinearLayout>(R.id.llleadthrough)
         llleadby = findViewById<LinearLayout>(R.id.llleadby)
@@ -967,6 +1012,7 @@ private var voiceString : String? =null
         tv_LocationClick = findViewById<TextView>(R.id.tv_LocationClick)
         tv_DateClick = findViewById<TextView>(R.id.tv_DateClick)
         tv_LeadRequestClick = findViewById<TextView>(R.id.tv_LeadRequestClick)
+        tv_voiceRequestClick = findViewById<TextView>(R.id.tv_voiceRequestClick)
         tv_LeadFromClick = findViewById<TextView>(R.id.tv_LeadFromClick)
         tv_LeadThroughClick = findViewById<TextView>(R.id.tv_LeadThroughClick)
         tv_LeadByClick = findViewById<TextView>(R.id.tv_LeadByClick)
@@ -990,7 +1036,8 @@ private var voiceString : String? =null
         btnReset = findViewById<Button>(R.id.btnReset)
         btnSubmit = findViewById<Button>(R.id.btnSubmit)
 
-
+        playbtn!!.setOnClickListener(this)
+        pausebtn!!.setOnClickListener(this)
         imback!!.setOnClickListener(this)
         imLeadedit!!.setOnClickListener(this)
         imvContactbook!!.setOnClickListener(this)
@@ -1006,6 +1053,7 @@ private var voiceString : String? =null
         txtok2!!.setOnClickListener(this)
         // llCustomer!!.setOnClickListener(this)
         llLeadRequest!!.setOnClickListener(this)
+        llVoiceRequest!!.setOnClickListener(this)
         llLeadFrom!!.setOnClickListener(this)
         llleadthrough!!.setOnClickListener(this)
         llleadby!!.setOnClickListener(this)
@@ -1040,6 +1088,7 @@ private var voiceString : String? =null
         tv_LocationClick!!.setOnClickListener(this)
         tv_DateClick!!.setOnClickListener(this)
         tv_LeadRequestClick!!.setOnClickListener(this)
+        tv_voiceRequestClick!!.setOnClickListener(this)
         tv_LeadFromClick!!.setOnClickListener(this)
         tv_LeadThroughClick!!.setOnClickListener(this)
         tv_LeadByClick!!.setOnClickListener(this)
@@ -1129,6 +1178,13 @@ private var voiceString : String? =null
     override fun onClick(v: View) {
         when (v.id) {
             R.id.imback -> {
+
+                if (player1 != null) {
+                    player1!!.release()
+                    // lotti_play!!.pauseAnimation()
+                    player1 = null
+                    stopPlayerService()
+                }
                 finish()
             }
             R.id.imLeadedit -> {
@@ -1534,7 +1590,7 @@ private var voiceString : String? =null
                 } else {
                     llLeadRequest!!.visibility = View.VISIBLE
                     //leadfromMode = "0"
-
+                    voiceRequestMode = "1"
                     custDetailMode = "1"
                     companyNameMode = "1"
                     moreCommInfoMode = "1"
@@ -1552,6 +1608,152 @@ private var voiceString : String? =null
                     countRequestCount = 0
                     getRequestDetails(v)
                 }
+            }
+            R.id.tv_voiceRequestClick -> {
+
+             //   Config.disableClick(v)
+                if (voiceRequestMode.equals("0")) {
+                    llVoiceRequest!!.visibility = View.GONE
+                    voiceRequestMode = "1"
+                } else {
+                    llVoiceRequest!!.visibility = View.VISIBLE
+                    voiceRequestMode = "0"
+
+
+                    custDetailMode = "1"
+                    companyNameMode = "1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadRequestMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
+
+                }
+            }
+
+            R.id.playbtn ->
+            {
+                Log.i("wewewe333", " voiceString:=" + voiceString!!.length)
+                if (voiceString!!.length>0)
+                {
+                    lotti_play!!.setAnimation(R.raw.play_wave)
+
+                    if (!isplaying1)
+                    {
+                        if (pausePosition1==0)
+                        {
+                            player1 = MediaPlayer()
+
+                            try {
+                                val decodedBytes = Base64.getDecoder().decode(voiceString)
+
+
+                                val  tempAudio=File.createTempFile("TCL","mp3",cacheDir)
+                                Log.i("wewewe", "out tempAudio:=" + tempAudio)
+
+                                tempAudio.writeBytes(decodedBytes)
+
+                                player1!!.setDataSource(tempAudio.absolutePath)
+                                player1!!.setOnCompletionListener {
+                                    pausePosition1=0
+                                    lotti_play!!.pauseAnimation()
+                                    isplaying1 = false
+                                    pausebtn!!.visibility = View.GONE
+                                    playbtn!!.visibility = View.VISIBLE
+                                    stopPlaying()
+                                }
+                                isplaying1 = true
+                                playbtn!!.visibility = View.GONE
+                                pausebtn!!.visibility = View.VISIBLE
+                                player1!!.prepare()
+                                player1!!.start()
+                                lotti_play!!.loop(true)
+                                lotti_play!!.playAnimation()
+                                startPlayerService()
+
+                            }
+                            catch (e:Exception)
+                            {
+                                e.printStackTrace()
+                            }
+                        }
+                        else
+                        {
+                            player1 = MediaPlayer()
+                            try {
+                                val decodedBytes = Base64.getDecoder().decode(voiceString)
+
+                                Log.i("wewewe", "out decodedBytes:=" + decodedBytes)
+
+
+                                val  tempAudio=File.createTempFile("TCL","mp3",cacheDir)
+                                Log.i("wewewe", "out tempAudio:=" + tempAudio)
+                                //   val  tempAudio=File.createTempFile("TCL","mp3",applicationContext.cacheDir)
+                                tempAudio.writeBytes(decodedBytes)
+                                //   val mediaPlayer=MediaPlayer()
+                                player1!!.setDataSource(tempAudio.absolutePath)
+                                player1!!.setOnCompletionListener {
+                                    pausePosition1=0
+                                    lotti_play!!.pauseAnimation()
+                                    isplaying1 = false
+                                    pausebtn!!.visibility = View.GONE
+                                    playbtn!!.visibility = View.VISIBLE
+                                    stopPlaying()
+                                }
+                                isplaying1 = true
+                                playbtn!!.visibility = View.GONE
+                                pausebtn!!.visibility = View.VISIBLE
+                                player1!!.prepare()
+                                player1!!.start()
+                                player1!!.seekTo(pausePosition1)
+                                lotti_play!!.loop(true)
+                                lotti_play!!.playAnimation()
+                                startPlayerService()
+                            }
+                            catch (e:IOException)
+                            {
+                                Log.i("wewewe", "IOException:=" + e)
+                            }
+                        }
+
+
+                    }
+                }
+                else
+                {
+                    return
+                }
+
+//                getVoiceNote(custmoerAssignmentID)
+
+                Log.i("response55","voice le="+voiceString!!.length)
+           //     playvoiceNote(voiceString!!)
+
+
+                //314400
+
+            }
+
+
+
+
+
+            R.id.pausebtn ->
+            {
+                isplaying1 = false
+                player1!!.pause()
+
+                pausePosition1=player1!!.currentPosition
+                lotti_play!!.pauseAnimation()
+                pausebtn!!.visibility = View.GONE
+                playbtn!!.visibility = View.VISIBLE
             }
 
             R.id.tv_LeadFromClick -> {
@@ -2069,7 +2271,16 @@ private var voiceString : String? =null
 
             }
             R.id.btnReset -> {
+                voiceRequestMode = "1"
+                voiceString=""
+                voiceCheckID=""
                 Config.disableClick(v)
+                if (player1 != null) {
+                    player1!!.release()
+                    // lotti_play!!.pauseAnimation()
+                    player1 = null
+                    stopPlayerService()
+                }
                 clearData()
 //                finish();
 //                startActivity(getIntent());
@@ -2137,6 +2348,83 @@ private var voiceString : String? =null
             }
 
         }
+    }
+
+    private fun getVoiceNote(custmerAssignmentID: String?) {
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                voiceviewModel.getVoice(this,custmerAssignmentID!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        Log.i("response1212","in")
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            if (saveCount == 0) {
+                                saveCount++
+                                Log.i("response1212","in too")
+                                val jObject = JSONObject(msg)
+                                Log.i("response55","code=="+jObject.getString("StatusCode"))
+                                if (jObject.getString("StatusCode").equals("0")) {
+
+
+                                    val jsonObj: JSONObject = jObject.getJSONObject("WalkingCustomerVoiceDetails")
+                                    val voicename = jsonObj.getString("VoiceName")
+                                    voiceString = jsonObj.getString("VoiceData")
+                                    Log.i("response1212","voicename=="+voicename)
+                                    Log.i("response1212","length=="+jsonObj.length())
+                                    Log.i("response1212","VoiceDatale=="+voiceString!!.length)
+
+
+
+
+//                                    val VoiceData = jObject.getString("VoiceData")
+//                                    val VoiceName = jObject.getString("VoiceName")
+//
+//                                    Log.i("response55","VoiceData"+VoiceData.length)
+//                                    Log.i("response55","VoiceName"+VoiceName)
+
+
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@LeadGenerationActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+
+
+
+                            }
+
+
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+    private fun playvoiceNote(voiceString: String) {
+
     }
 
 //    private fun  leadProductPopup(){
@@ -2394,6 +2682,9 @@ private var voiceString : String? =null
         if (leadRequestMode.equals("1")) {
             llLeadRequest!!.visibility = View.GONE
         }
+        if (voiceRequestMode.equals("1")) {
+            llVoiceRequest!!.visibility = View.GONE
+        }
         if (leadfromMode.equals("1")) {
             llLeadFrom!!.visibility = View.GONE
         }
@@ -2486,10 +2777,12 @@ private var voiceString : String? =null
                             val jObject = JSONObject(msg)
                             Log.e(TAG, "msg   19871   " + msg.length)
                             Log.e(TAG, "msg   19872   " + msg)
-                            if (jObject.getString("StatusCode") == "0") {
+                            if (jObject.getString("StatusCode") == "0")
+                            {
                                 val jobjt = jObject.getJSONObject("WalkingCustomerDetailsList")
                                 leadRequestArrayList = jobjt.getJSONArray("WalkingCustomerDetails")
-                                if (leadRequestArrayList.length() > 0) {
+                                if (leadRequestArrayList.length() > 0)
+                                {
                                     if (countRequestCount == 0) {
                                         countRequestCount++
                                         Log.e(TAG, "msg   19873   ")
@@ -2501,7 +2794,7 @@ private var voiceString : String? =null
                                             recyRequest!!.setLayoutParams(params)
                                         }
 
-
+//314400
                                         val lLayout =
                                             GridLayoutManager(this@LeadGenerationActivity, 1)
                                         recyRequest!!.layoutManager =
@@ -2519,7 +2812,8 @@ private var voiceString : String? =null
 
                                 }
 
-                            } else {
+                            }
+                            else {
 
                                 custDetailMode = "1"
                                 companyNameMode = "1"
@@ -7173,6 +7467,32 @@ private var voiceString : String? =null
             edtCustname!!.setText(jsonObject.getString("Customer"))
             edtCustphone!!.setText(jsonObject.getString("Mobile"))
 
+            //314400
+            voiceCheckID=jsonObject.getString("blnVoiceData")
+//            custmoerAssignmentID=jsonObject.getString("ID_CustomerAssignment")
+        //    voiceString=jsonObject.getString("VoiceData")
+
+            if (voiceCheckID.equals("1")){
+
+
+                custmoerAssignmentID=jsonObject.getString("ID_CustomerAssignment")
+                Log.i("response1212","voiceCheckID="+voiceCheckID)
+                Log.i("response1212","custmoerAssignmentID="+custmoerAssignmentID)
+
+
+
+                cardVoiceRequest!!.visibility=View.VISIBLE
+                saveCount=0
+                getVoiceNote(custmoerAssignmentID)
+
+            }else{
+                cardVoiceRequest!!.visibility=View.GONE
+            }
+
+                //      setVoiceData(voiceString!!)
+
+
+
             custDetailMode = "0"
             companyNameMode = "1"
             moreCommInfoMode = "1"
@@ -7192,6 +7512,12 @@ private var voiceString : String? =null
         }
 
 
+
+    }
+
+    private fun setVoiceData(voiceString: String) {
+
+        lotti_play!!.setAnimation(R.raw.play_wave)
 
     }
 
