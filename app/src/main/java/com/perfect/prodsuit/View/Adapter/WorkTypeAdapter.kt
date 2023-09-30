@@ -23,7 +23,7 @@ class WorkTypeAdapter(internal var context: Context, internal var jsonArray: JSO
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_department, parent, false
+            R.layout.adapter_work_type, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -36,11 +36,11 @@ class WorkTypeAdapter(internal var context: Context, internal var jsonArray: JSO
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
-                holder.txtDepartment.text        = jsonObject!!.getString("DeptName")
+                holder.txtWorkType.text        = jsonObject!!.getString("WorkType")
 
-                holder.lldepartment!!.setTag(position)
-                holder.lldepartment!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "department")
+                holder.llWorkType!!.setTag(position)
+                holder.llWorkType!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "WorkType")
                 })
             }
         } catch (e: Exception) {
@@ -63,13 +63,13 @@ class WorkTypeAdapter(internal var context: Context, internal var jsonArray: JSO
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtDepartment   : TextView
+        internal var txtWorkType   : TextView
         internal var txtsino         : TextView
-        internal var lldepartment    : LinearLayout
+        internal var llWorkType    : LinearLayout
         init {
-            txtDepartment          = v.findViewById<View>(R.id.txtDepartment) as TextView
+            txtWorkType          = v.findViewById<View>(R.id.txtWorkType) as TextView
             txtsino                = v.findViewById<View>(R.id.txtsino) as TextView
-            lldepartment           = v.findViewById<View>(R.id.lldepartment) as LinearLayout
+            llWorkType           = v.findViewById<View>(R.id.llWorkType) as LinearLayout
         }
     }
     fun setClickListener(itemClickListener: ItemClickListener?) {

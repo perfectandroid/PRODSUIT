@@ -88,7 +88,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://45.118.163.44:14003/ProdSuiteAPIUnisoft/"
 //    val BANK_KEY = "-512"
 
-    ////   Sunitha` 13.09.2023
+    ////   Sunitha` 26.09.2023
 //    val CERT_NAME = "sunitha.pem"
 //    val BASE_URL = "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/"
@@ -162,9 +162,22 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
     ////    DEVELOPMENT 30.11.2022
     val CERT_NAME = "development.pem"
-    val BASE_URL = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
+    val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
     val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
-    val BANK_KEY = "-500"
+    val BANK_KEY  = "-500"
+
+//  latest Demo  26.9.2023
+//    val CERT_NAME = "demosept.pem"
+//    val BASE_URL  = "https://52.172.2.6:14010/PersuitAPI/api/"
+//    val IMAGE_URL = "https://52.172.2.6:14010/PersuitAPI"
+//    val BANK_KEY  = "-516"
+
+
+    //ASCO ERP 25.9.2023
+//    val CERT_NAME = "ascolive.pem"
+//    val BASE_URL  = "https://45.118.163.44:14005/ProdSuiteAPIASCO/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14005/ProdSuiteAPIASCO"
+//    val BANK_KEY  = "-518"
 
 //    15.9.2023
 //    val CERT_NAME = "latestdemo.pem"

@@ -71,6 +71,10 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
     internal var tv_Key1Click: TextView? = null
     internal var tvv_headtext: TextView? = null
+    internal var tvv_headtext_2: TextView? = null
+    internal var tvv_headtext_3: TextView? = null
+    internal var tvv_headtext_4: TextView? = null
+    internal var tvv_headtext_5: TextView? = null
     internal var tv_Key2Click: TextView? = null
     internal var tv_Key3Click: TextView? = null
     internal var tv_Key4Click: TextView? = null
@@ -141,6 +145,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
     var SubTitleHTML  =  ""
     var FooterLeft =  ""
     var FooterRight =  ""
+    var ActiveCorrectionOption =  ""
 
     var saveAttendanceMark = false
 
@@ -202,6 +207,10 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
         tv_Key4Click = findViewById(R.id.tv_Key4Click)
         tv_Key5Click = findViewById(R.id.tv_Key5Click)
         tvv_headtext = findViewById(R.id.tvv_headtext)
+        tvv_headtext_2 = findViewById(R.id.tvv_headtext_2)
+        tvv_headtext_3 = findViewById(R.id.tvv_headtext_3)
+        tvv_headtext_4 = findViewById(R.id.tvv_headtext_4)
+        tvv_headtext_5 = findViewById(R.id.tvv_headtext_5)
 
         btnReject = findViewById(R.id.btnReject)
         btnCorrection = findViewById(R.id.btnCorrection)
@@ -306,18 +315,49 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                         FooterRight =  jobjt.getString("FooterRight")
                                         key4ArrayList = jobjt.getJSONArray("SubDetailsData")
 
+                                        if (jobjt.getString("ActiveCorrectionOption").equals("True")){
+                                             ActiveCorrectionOption = "1"
+                                        }else{
+                                            ActiveCorrectionOption = "0"
+                                        }
+
 
 //                                        val s = TransactionDetails
 //                                        val requiredString = s.substring(s.indexOf("<strong>") + 1, s.indexOf("<strong>"))
 
 
 
-//                                        var header_name = jobjt.getString("TransactionDetails")
-//                                        val header_name_1 = StringUtils.substringBetween(header_name, "<strong>", "</strong>")
-//                                        val header_name_2 = StringUtils.substringBetween(header_name, "<br />", "<br />")
-//                                        tvv_headtext!!.setText(header_name_1)
+                                        var header_name = jobjt.getString("TransactionDetails")
+                                        var header_partyname = jobjt.getString("PartyDetails")
+                                        var FooterLeft = jobjt.getString("FooterLeft")
+                                        var FooterRight = jobjt.getString("FooterRight")
+                                        var SubTitleHTML = jobjt.getString("SubTitleHTML")
+                                        val header_name_1 = StringUtils.substringBetween(header_name, "<strong>", "</strong>")
+                                        val header_partyname_1 = StringUtils.substringBetween(header_partyname, "<strong>", "</strong>")
+                                        val FooterLeft_1 = StringUtils.substringBetween(FooterLeft, "<strong>", "</strong>")
+                                        val FooterRight_1 = StringUtils.substringBetween(FooterLeft, "<strong>", "</strong>")
+                                        val SubTitleHTML_1 = StringUtils.substringBetween(SubTitleHTML, "<strong>", "</strong>")
+
+//                                        val header_name_2 = StringUtils.substringBetween(header_name, "<br />", ":")
+                                        tvv_headtext!!.setText(header_name_1)
+                                        tvv_headtext_2!!.setText(header_partyname_1)
+                                        tvv_headtext_3!!.setText(FooterLeft_1)
+                                        tvv_headtext_4!!.setText(FooterRight_1)
+                                        tvv_headtext_5!!.setText(SubTitleHTML_1)
 ////
-//                                        Log.e(TAG,"rrrrr  "+header_name_2)
+                                        val parsed = StringUtils.substringAfter(jobjt.getString("TransactionDetails"), "</strong><br/>")
+                                        val parsed_1 = StringUtils.substringAfter(jobjt.getString("PartyDetails"), "</strong><br/>")
+                                        val parsed_2 = StringUtils.substringAfter(jobjt.getString("FooterLeft"), "</strong><br/>")
+                                        val parsed_3 = StringUtils.substringAfter(jobjt.getString("FooterRight"), "</strong><br/>")
+                                        val parsed_4 = StringUtils.substringAfter(jobjt.getString("SubTitleHTML"), "</strong><br/>")
+
+                                        webTransDetail!!.loadDataWithBaseURL(null, parsed, "text/html", "utf-8", null);
+                                        webPartyDetails!!.loadDataWithBaseURL(null, parsed_1, "text/html", "utf-8", null);
+                                        webFooterLeft!!.loadDataWithBaseURL(null, parsed_2, "text/html", "utf-8", null);
+                                        webFooterRight!!.loadDataWithBaseURL(null, parsed_3, "text/html", "utf-8", null);
+                                        webDetails!!.loadDataWithBaseURL(null, parsed_4, "text/html", "utf-8", null);
+
+                                        Log.e(TAG,"rrrrr  "+header_partyname_1)
 
 
                                         if (jobjt.getString("ActiveCorrectionOption").equals("True")){
@@ -326,6 +366,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
 
                                         card_Key1!!.visibility = View.GONE
+
                                         card_Key2!!.visibility = View.GONE
                                         card_Key3!!.visibility = View.GONE
                                         card_Key4!!.visibility = View.GONE
@@ -916,8 +957,8 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
             animator.duration = 900 // Animation duration in milliseconds
             animator.start()
             webTransDetail!!.getSettings().setJavaScriptEnabled(true);
-            webTransDetail!!.setBackgroundColor(context.getColor(R.color.web_color));
-            webTransDetail!!.loadDataWithBaseURL(null, TransactionDetails, "text/html", "utf-8", null);
+            webTransDetail!!.setBackgroundColor(context.getColor(R.color.web_color2));
+           // webTransDetail!!.loadDataWithBaseURL(null, TransactionDetails, "text/html", "utf-8", null);
 
             Handler(Looper.getMainLooper()).postDelayed({
                 //Do something after 100ms
@@ -936,7 +977,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
             animator.start()
             webPartyDetails!!.getSettings().setJavaScriptEnabled(true);
             webPartyDetails!!.setBackgroundColor(context.getColor(R.color.web_color));
-            webPartyDetails!!.loadDataWithBaseURL(null, PartyDetails, "text/html", "utf-8", null);
+//            webPartyDetails!!.loadDataWithBaseURL(null, PartyDetails, "text/html", "utf-8", null);
             Handler(Looper.getMainLooper()).postDelayed({
                 //Do something after 100ms
                 showFooterLeft()
@@ -953,8 +994,8 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
             animator.duration = 900 // Animation duration in milliseconds
             animator.start()
             webFooterLeft!!.getSettings().setJavaScriptEnabled(true);
-            webFooterLeft!!.setBackgroundColor(context.getColor(R.color.web_color));
-            webFooterLeft!!.loadDataWithBaseURL(null, FooterLeft, "text/html", "utf-8", null);
+            webFooterLeft!!.setBackgroundColor(context.getColor(R.color.web_color2));
+//            webFooterLeft!!.loadDataWithBaseURL(null, FooterLeft, "text/html", "utf-8", null);
             Handler(Looper.getMainLooper()).postDelayed({
                 //Do something after 100ms
                 showFooterRight()
@@ -973,7 +1014,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
             animator.start()
             webFooterRight!!.getSettings().setJavaScriptEnabled(true);
             webFooterRight!!.setBackgroundColor(context.getColor(R.color.web_color));
-            webFooterRight!!.loadDataWithBaseURL(null, FooterRight, "text/html", "utf-8", null);
+//            webFooterRight!!.loadDataWithBaseURL(null, FooterRight, "text/html", "utf-8", null);
             Handler(Looper.getMainLooper()).postDelayed({
                 //Do something after 100ms
                 showkey4ArrayList()
@@ -993,7 +1034,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
             animator.start()
             webDetails!!.getSettings().setJavaScriptEnabled(true);
             webDetails!!.setBackgroundColor(context.getColor(R.color.web_color));
-            webDetails!!.loadDataWithBaseURL(null, SubTitleHTML, "text/html", "utf-8", null);
+//            webDetails!!.loadDataWithBaseURL(null, SubTitleHTML, "text/html", "utf-8", null);
 
 //                                            val lLayout = GridLayoutManager(this@ApprovalListDetailActivity, 1)
 //                                            recyAprroveDetails!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -1392,7 +1433,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                authCorrectionViewModel.getAuthCorrection(this,FK_AuthID,ID_Reason,strRemark!!)!!.observe(
+                authCorrectionViewModel.getAuthCorrection(this,FK_AuthID,ID_Reason,strRemark!!,ActiveCorrectionOption)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -1474,7 +1515,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                authRejectViewModel.saveAuthReject(this,FK_AuthID,ID_Reason,strRemark!!)!!.observe(
+                authRejectViewModel.saveAuthReject(this,FK_AuthID,ID_Reason,strRemark!!,ActiveCorrectionOption)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -1622,7 +1663,7 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                authApproveViewModel.saveAuthApprove(this,FK_AuthID)!!.observe(
+                authApproveViewModel.saveAuthApprove(this,FK_AuthID,ActiveCorrectionOption)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 

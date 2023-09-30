@@ -26,12 +26,12 @@ object AuthApproveRepository {
     val authApproveSetterGetter = MutableLiveData<AuthApproveModel>()
     val TAG: String = "AuthApproveRepository"
 
-    fun getServicesApiCall(context: Context, FK_AuthID : String): MutableLiveData<AuthApproveModel> {
-        updateAuthReject(context, FK_AuthID)
+    fun getServicesApiCall(context: Context, FK_AuthID : String,ActiveCorrectionOption : String): MutableLiveData<AuthApproveModel> {
+        updateAuthReject(context, FK_AuthID,ActiveCorrectionOption)
         return authApproveSetterGetter
     }
 
-    private fun updateAuthReject(context: Context, FK_AuthID: String) {
+    private fun updateAuthReject(context: Context, FK_AuthID: String,ActiveCorrectionOption: String) {
         try {
             authApproveSetterGetter.value = AuthApproveModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -73,6 +73,7 @@ object AuthApproveRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("AuthID", ProdsuitApplication.encryptStart(FK_AuthID))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
+                requestObject1.put("SkipPrev", ProdsuitApplication.encryptStart(ActiveCorrectionOption))
 
 
 

@@ -54,6 +54,7 @@ object CommonAppRepository {
                 Log.e(TAG,"requestObject1   53   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
+                Log.e(TAG," ffdd  4"+e)
             }
             val body = RequestBody.create(
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
@@ -74,14 +75,17 @@ object CommonAppRepository {
                         commonAppSetterGetter.value = CommonAppModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
+                        Log.e(TAG," ffdd 1 "+e)
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
+                    Log.e(TAG," ffdd 2 "+t.message)
                 }
             })
         }
         catch (e: Exception) {
             e.printStackTrace()
+            Log.e(TAG," ffdd 3 "+e)
         }
     }
 }

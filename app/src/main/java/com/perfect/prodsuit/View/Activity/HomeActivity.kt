@@ -185,6 +185,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //    var mJobScheduler: JobScheduler? = null
 
     lateinit var dashCountArrayList: JSONArray
+//    lateinit var recy_count_home: RecyclerView
 
 
     private lateinit var alarmManager: AlarmManager
@@ -666,6 +667,16 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                         adapterDash.setClickListener(this@HomeActivity)
 
 
+                                        val handler = Handler()
+                                        val runnable = object : Runnable {
+                                            override fun run() {
+                                                // Scroll to the next card
+                                                recy_count_home!!.smoothScrollToPosition((recy_count_home!!.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition() + 1)
+                                                handler.postDelayed(this, 3000) // Delay in milliseconds
+                                            }
+                                        }
+
+                                        handler.postDelayed(runnable, 3000) // Start auto-sliding after 3 seconds
                                     }
 
                                 }
@@ -997,7 +1008,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 //                val intent = Intent(this, ProductSearchActivity::class.java)
 //                startActivity(intent)
-//
+
 //                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
 //                startActivity(i)
 
@@ -1024,8 +1035,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
 
-                val i = Intent(this@HomeActivity, InventoryActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@HomeActivity, InventoryActivity::class.java)
+//                startActivity(i)
 
 
 

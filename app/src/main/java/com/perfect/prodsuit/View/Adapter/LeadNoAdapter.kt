@@ -36,12 +36,14 @@ class LeadNoAdapter(internal var context: Context, internal var jsonArray: JSONA
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
-                holder.txtsino.text        = pos.toString()
-                holder.txtLeadNo.text        = jsonObject!!.getString("LeadNo")
-//                holder.llleadNo!!.setTag(position)
-//                holder.llleadNo!!.setOnClickListener(View.OnClickListener {
-//                    clickListener!!.onClick(position, "department")
-//                })
+                holder.txtsino.text         = pos.toString()
+                holder.txtLeadNo.text       = jsonObject!!.getString("LeadNo")
+                holder.txtName.text         = jsonObject!!.getString("Name")
+
+                holder.llleadNo!!.setTag(position)
+                holder.llleadNo!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "LeadNumberClick")
+                })
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -64,10 +66,12 @@ class LeadNoAdapter(internal var context: Context, internal var jsonArray: JSONA
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         internal var txtLeadNo   : TextView
         internal var txtsino     : TextView
+        internal var txtName     : TextView
         internal var llleadNo    : LinearLayout
         init {
             txtLeadNo          = v.findViewById<View>(R.id.txtLeadNo) as TextView
             txtsino                = v.findViewById<View>(R.id.txtsino) as TextView
+            txtName                = v.findViewById<View>(R.id.txtName) as TextView
             llleadNo           = v.findViewById<View>(R.id.llleadNo) as LinearLayout
         }
     }

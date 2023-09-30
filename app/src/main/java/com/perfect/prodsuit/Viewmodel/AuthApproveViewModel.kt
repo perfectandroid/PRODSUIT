@@ -12,8 +12,8 @@ class AuthApproveViewModel : ViewModel() {
 
     var authApproveData: MutableLiveData<AuthApproveModel>? = null
 
-    fun saveAuthApprove(context: Context, FK_AuthID : String) : LiveData<AuthApproveModel>? {
-        authApproveData = AuthApproveRepository.getServicesApiCall(context,FK_AuthID)
+    fun saveAuthApprove(context: Context, FK_AuthID : String,ActiveCorrectionOption: String) : LiveData<AuthApproveModel>? {
+        authApproveData = AuthApproveRepository.getServicesApiCall(context,FK_AuthID,ActiveCorrectionOption)
         return authApproveData
     }
 }

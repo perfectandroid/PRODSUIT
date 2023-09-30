@@ -5,9 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.LeadNoModel
-import com.perfect.prodsuit.Model.MeasurementTypeModel
 import com.perfect.prodsuit.Repository.LeadNoRepository
-import com.perfect.prodsuit.Repository.MeasurementTypeRepository
 
 class LeadNoViewModel : ViewModel() {
 

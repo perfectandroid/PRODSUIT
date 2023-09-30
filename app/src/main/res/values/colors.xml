@@ -472,6 +472,8 @@
     <color name="web_color2">#E7EDED</color>
     <color name="web_color3">#DCE1E1</color>
 
+    <color name="web_color4">#B6BAB8</color>
+
     <color name="more_textcolor">#4A7763</color>
 
 </resources>

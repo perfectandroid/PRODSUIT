@@ -212,7 +212,7 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
                                             FK_States = jobjt.getString("StatesID")
                                             FK_District = jobjt.getString("DistrictID")
                                             FK_Post = jobjt.getString("PostID")
-                                            FK_Area = jobjt.getString("Area")
+                                            FK_Area = jobjt.getString("AreaID")
                                             strLeadThrough = jobjt.getString("LeadByName")
                                             strWhatsAppNo = jobjt.getString("CusMobileAlternate")
                                             ID_CollectedBy = jobjt.getString("CollectedBy")

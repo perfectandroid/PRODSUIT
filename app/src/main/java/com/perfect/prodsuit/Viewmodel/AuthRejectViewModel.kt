@@ -11,8 +11,8 @@ class AuthRejectViewModel : ViewModel() {
 
     var authRejectData: MutableLiveData<AuthRejectModel>? = null
 
-    fun saveAuthReject(context: Context, FK_AuthID : String, ID_Reason : String, strReason : String) : LiveData<AuthRejectModel>? {
-        authRejectData = AuthRejectRepository.getServicesApiCall(context,FK_AuthID,ID_Reason,strReason)
+    fun saveAuthReject(context: Context, FK_AuthID : String, ID_Reason : String, strReason : String,ActiveCorrectionOption: String) : LiveData<AuthRejectModel>? {
+        authRejectData = AuthRejectRepository.getServicesApiCall(context,FK_AuthID,ID_Reason,strReason,ActiveCorrectionOption)
         return authRejectData
     }
 }

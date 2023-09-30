@@ -27,12 +27,12 @@ object AuthRejectRepository {
     val authRejectSetterGetter = MutableLiveData<AuthRejectModel>()
     val TAG: String = "AuthRejectRepository"
 
-    fun getServicesApiCall(context: Context, FK_AuthID : String, ID_Reason : String, strReason : String): MutableLiveData<AuthRejectModel> {
-        updateAuthReject(context, FK_AuthID,ID_Reason, strReason)
+    fun getServicesApiCall(context: Context, FK_AuthID : String, ID_Reason : String, strReason : String,ActiveCorrectionOption: String): MutableLiveData<AuthRejectModel> {
+        updateAuthReject(context, FK_AuthID,ID_Reason, strReason,ActiveCorrectionOption)
         return authRejectSetterGetter
     }
 
-    private fun updateAuthReject(context: Context, FK_AuthID: String, ID_Reason : String, strReason: String) {
+    private fun updateAuthReject(context: Context, FK_AuthID: String, ID_Reason : String, strReason: String,ActiveCorrectionOption: String) {
         try {
             authRejectSetterGetter.value = AuthRejectModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -76,6 +76,7 @@ object AuthRejectRepository {
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
                 requestObject1.put("FK_Reason", ProdsuitApplication.encryptStart(ID_Reason))
                 requestObject1.put("Reason", ProdsuitApplication.encryptStart(strReason))
+                requestObject1.put("SkipPrev", ProdsuitApplication.encryptStart(ActiveCorrectionOption))
 
 
 
