@@ -126,8 +126,19 @@
 
 
             </com.airbnb.lottie.LottieAnimationView>
+            <TextView
+                android:id="@+id/tvv_recordiing"
+                android:gravity="center"
+                android:layout_marginStart="35dp"
+                android:layout_marginEnd="35dp"
+                android:text="Recording..."
+                android:layout_marginTop="20dp"
+                android:visibility="gone"
+                android:textSize="18dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
             <Chronometer
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:id="@+id/recordTime"
                 android:textColor="@color/black"
                 android:textSize="25sp"
@@ -148,7 +159,7 @@
             android:foregroundGravity="center"
             android:orientation="vertical">
             <View
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_alignParentBottom="true"
@@ -161,27 +172,38 @@
                 android:orientation="horizontal">
 
 
-                <ImageView
-
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="5dp"
+                    android:padding="12dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/myfont"
                     android:text="Start Recording"
-                    android:src="@drawable/record"
-                    android:layout_marginRight="-20dp"
+                    android:visibility="visible"
+                    android:background="@drawable/btn_bg_record"
+                    android:drawableRight="@drawable/microphone_button_green_icon"
                     android:id="@+id/activity_main_record"/>
+<!--                android:src="@drawable/record"-->
 
-                <ImageView
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="5dp"
-
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:padding="12dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
                     android:text="Stop Recording"
-                    android:layout_marginLeft="-20dp"
-                    android:src="@drawable/stoprecord"
+                    android:visibility="gone"
+                    android:background="@drawable/btn_bg_record"
+                    android:drawableRight="@drawable/stop"
                     android:id="@+id/activity_main_stop"/>
+<!--                android:src="@drawable/stoprecord"-->
 
                 <ImageView
                     android:visibility="gone"
