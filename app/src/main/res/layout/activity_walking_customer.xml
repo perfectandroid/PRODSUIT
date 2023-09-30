@@ -308,7 +308,6 @@
                                     android:drawablePadding="-10dp"
                                     android:drawableTint="@color/textColor"
                                     android:editable="false"
-
                                     android:focusableInTouchMode="false"
                                     android:fontFamily="@font/myfont"
                                     android:gravity="center_vertical"

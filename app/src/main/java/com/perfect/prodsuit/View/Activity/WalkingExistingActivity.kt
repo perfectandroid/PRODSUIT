@@ -242,7 +242,7 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
                     voicedataByte=data.getByteArrayExtra("voicedatabyte")
                     Log.i("response8888","voiceData:"+voiceData+'\n')
                     Log.i("response8888","voicedataByte:"+voicedataByte+'\n')
-                    Log.i("response8888","voicedataByte string:"+voicedataByte.toString()+'\n')
+                  //  Log.i("response8888","voicedataByte string:"+voicedataByte.toString()+'\n')
                     tie_Attachvoice!!.setText(VoiceLabel)
                 }
                 catch (e: Exception) {
@@ -289,8 +289,11 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
             else if(assignDate.equals("")){
                 Config.snackBars(context,v,"Select Assigned Date")
             }
-//            else if(voiceData!!.equals("")){
+//            else if(voicedataByte!!.equals("")){
 //                Config.snackBars(context,v,"Select Voice Data")
+//            }
+//            else if (voiceData!!.equals("")) {
+//                Config.snackBars(context, v, "Select Voice Data")
 //            }
 
             else{
@@ -748,6 +751,7 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
                                     tie_Attachvoice!!.setText("")
                                     voiceData= ""
                                   //  voicedataByte!!.fill(0)
+
                                     successPopup(jObject)
                                 }else{
                                     val builder = AlertDialog.Builder(

@@ -89,6 +89,7 @@ object CreateWalkingCustomerRepository {
              //   Log.e(TAG,"requestObject1   671   "+requestObject1)
                 Log.i("response66666","walking body==   "+requestObject1)
                 Log.i("response66666","walking body11==   "+strVoiceData)
+                Log.e("ee","walking body11==   "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -104,6 +105,7 @@ object CreateWalkingCustomerRepository {
                     call: retrofit2.Call<String>, response:
                     Response<String>
                 ) {
+                    Log.e(TAG,"111121    "+response.body())
                     try {
                         Log.e(TAG,"111121    "+response.body())
                         progressDialog!!.dismiss()

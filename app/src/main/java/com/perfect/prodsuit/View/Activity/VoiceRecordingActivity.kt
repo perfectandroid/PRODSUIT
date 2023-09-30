@@ -51,8 +51,8 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
     private var audioRecordingPermissionGranted = false
 
     private var fileName: String? = null
-    private var startRecordingButton: ImageView? = null
-    private var stopRecordingButton: ImageView? = null
+    private var startRecordingButton: TextView? = null
+    private var stopRecordingButton: TextView? = null
     private var playRecordingButton: ImageView? = null
     private var stopPlayingButton: ImageView? = null
     private var recorder: MediaRecorder? = null
@@ -60,6 +60,7 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
     private var player1: MediaPlayer? = null
 
     private var lottimic: LottieAnimationView? = null
+    private var tvv_recordiing: TextView? = null
     private var lotti_play: LottieAnimationView? = null
 
     private var recImg: ImageView? = null
@@ -73,6 +74,7 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
     private var voicedata: String? = null
     private var voicedatabyte: ByteArray? = null
     private var RECORD_PLAY: Int? = 1038
+    var  checkClick= ""
 
     private val handler = Handler(Looper.getMainLooper())
 //    private val timeRunnable = object : Runnable {
@@ -109,17 +111,17 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
         recordTime!!.stop()
 
         lottimic = findViewById<LottieAnimationView>(R.id.lottieImg)
+        tvv_recordiing = findViewById<TextView>(R.id.tvv_recordiing)
         lottimic!!.setAnimation(R.raw.record)
-        startRecordingButton = findViewById<ImageView>(R.id.activity_main_record)
+        startRecordingButton = findViewById<TextView>(R.id.activity_main_record)
 
-        stopRecordingButton = findViewById<ImageView>(R.id.activity_main_stop)
+        stopRecordingButton = findViewById<TextView>(R.id.activity_main_stop)
 //        stopRecordingButton!!.isClickable = false
 
         playRecordingButton = findViewById<ImageView>(R.id.activity_main_play)
         playRecordingButton!!.setOnClickListener(View.OnClickListener { playRecording() })
         stopPlayingButton = findViewById<ImageView>(R.id.activity_main_stop_playing)
         stopPlayingButton!!.setOnClickListener(View.OnClickListener { stopPlaying() })
-
 
 
 
@@ -134,7 +136,8 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
             startRecordingButton!!.isClickable = false
             stopRecordingButton!!.isClickable = true
 
-
+                startRecordingButton!!.visibility = View.GONE
+                stopRecordingButton!!.visibility = View.VISIBLE
         })
 
 
@@ -146,8 +149,13 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
                 stopRecording()
                 playRecordPopUp()
                 recordTime!!.visibility = View.GONE
+                tvv_recordiing!!.visibility = View.GONE
                 startRecordingButton!!.isClickable = true
                 stopRecordingButton!!.isClickable = false
+
+                startRecordingButton!!.visibility = View.VISIBLE
+                stopRecordingButton!!.visibility = View.GONE
+
             }
 
 
@@ -204,6 +212,7 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun startRecording() {
         recordTime!!.visibility = View.VISIBLE
+        tvv_recordiing!!.visibility = View.VISIBLE
         recordTime!!.setBase(SystemClock.elapsedRealtime());
         recordTime!!.stop()
         val uuid = UUID.randomUUID().toString()
@@ -358,6 +367,7 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
                 startRecording()
                 startRecordingButton!!.isClickable = false
                 stopRecordingButton!!.isClickable = true
+                stopRecordingButton!!.visibility = View.VISIBLE
                 startRecordingButton!!.visibility = View.GONE
 
 
@@ -366,6 +376,7 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
             backclose.setOnClickListener(View.OnClickListener {
                 dialog.dismiss()
                 recordTime!!.visibility = View.GONE
+                tvv_recordiing!!.visibility = View.GONE
                 stopRecordingButton!!.isClickable = false
                 startRecordingButton!!.isClickable = true
                 startRecordingButton!!.visibility = View.VISIBLE
@@ -464,8 +475,6 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
                         }
                     }
                 }
-
-
 
 
 
