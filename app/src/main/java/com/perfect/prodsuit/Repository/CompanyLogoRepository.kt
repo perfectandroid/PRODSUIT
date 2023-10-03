@@ -64,6 +64,7 @@ object CompanyLogoRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("72"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
@@ -93,7 +94,7 @@ object CompanyLogoRepository {
                         val logos = ArrayList<CompanyLogomodel>()
                         logos.add(CompanyLogomodel(response.body()))
                         val msg = logos[0].message
-                        CompanyLogoRepository.addcompanylogoSetterGetter.value = CompanyLogomodel(msg)
+                        addcompanylogoSetterGetter.value = CompanyLogomodel(msg)
 
                      /*
                         val jsonObj: JSONObject = jObject.getJSONObject("CompanyLogDetails")
@@ -101,14 +102,17 @@ object CompanyLogoRepository {
                         Log.i("TAG","Checking"+logo);*/
                       //  Log.i("TAG","LOGO"+logo);
                     } catch (e: Exception) {
+                        Log.e(TAG,"1080   "+e)
                         e.printStackTrace()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
+                    Log.e(TAG,"1081   "+t.message)
                 }
             })
         }
         catch (e: Exception) {
+            Log.e(TAG,"1082   "+e)
             e.printStackTrace()
         }
     }

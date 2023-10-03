@@ -1009,8 +1009,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                val intent = Intent(this, ProductSearchActivity::class.java)
 //                startActivity(intent)
 
-//                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
-//                startActivity(i)
+                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
+                startActivity(i)
 
 
 //                val i = Intent(this@HomeActivity, StockTransferActivity::class.java)

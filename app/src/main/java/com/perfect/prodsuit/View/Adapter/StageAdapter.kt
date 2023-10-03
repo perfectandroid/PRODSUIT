@@ -23,7 +23,7 @@ class StageAdapter(internal var context: Context, internal var jsonArray: JSONAr
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_department, parent, false
+            R.layout.adapter_stage, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -36,11 +36,11 @@ class StageAdapter(internal var context: Context, internal var jsonArray: JSONAr
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
-                holder.txtDepartment.text        = jsonObject!!.getString("DeptName")
+                holder.txtStage.text        = jsonObject!!.getString("StageName")
 
-                holder.lldepartment!!.setTag(position)
-                holder.lldepartment!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "department")
+                holder.llStage!!.setTag(position)
+                holder.llStage!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "stageCliik")
                 })
             }
         } catch (e: Exception) {
@@ -58,17 +58,17 @@ class StageAdapter(internal var context: Context, internal var jsonArray: JSONAr
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position % 2
+        return position
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtDepartment   : TextView
+        internal var txtStage   : TextView
         internal var txtsino         : TextView
-        internal var lldepartment    : LinearLayout
+        internal var llStage    : LinearLayout
         init {
-            txtDepartment          = v.findViewById<View>(R.id.txtDepartment) as TextView
+            txtStage          = v.findViewById<View>(R.id.txtStage) as TextView
             txtsino                = v.findViewById<View>(R.id.txtsino) as TextView
-            lldepartment           = v.findViewById<View>(R.id.lldepartment) as LinearLayout
+            llStage           = v.findViewById<View>(R.id.llStage) as LinearLayout
         }
     }
     fun setClickListener(itemClickListener: ItemClickListener?) {

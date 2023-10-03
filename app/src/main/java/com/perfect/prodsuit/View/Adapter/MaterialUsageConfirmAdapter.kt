@@ -9,21 +9,22 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Model.ModelStockTransferDetails
+import com.perfect.prodsuit.Model.ModelUsageProduct
 import com.perfect.prodsuit.R
-import org.json.JSONArray
-import org.json.JSONObject
 
-class ProjectAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+class MaterialUsageConfirmAdapter(internal var context: Context, internal var mList: List<ModelUsageProduct>,internal var mode : String):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "ProjectAdapter"
-    internal var jsonObject: JSONObject? = null
+
+    internal val TAG : String = "MaterialUsageConfirmAdapter"
+    val data = ArrayList<ModelUsageProduct>()
     private var clickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_project, parent, false
+            R.layout.adapter_confirm_material_usage, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -31,17 +32,20 @@ class ProjectAdapter(internal var context: Context, internal var jsonArray: JSON
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
-            jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
-                val pos = position+1
-                holder.txtsino.text        = pos.toString()
-                holder.txtProject.text        = jsonObject!!.getString("ProjName")
 
-                holder.llProject!!.setTag(position)
-                holder.llProject!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "projectClick")
-                })
+
+
+                val empModel = mList[position]
+                holder.tv_confirm_product.text = empModel.Product
+                holder.tv_confirm_qty.text = empModel.Quantity
+                holder.tv_confirm_mode.text = empModel.Mode
+
+                if (mode.equals("1")){
+                    holder.ll_mode.visibility = View.GONE
+                }
+
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -50,7 +54,7 @@ class ProjectAdapter(internal var context: Context, internal var jsonArray: JSON
     }
 
     override fun getItemCount(): Int {
-        return jsonArray.length()
+        return mList.size
     }
 
     override fun getItemId(position: Int): Long {
@@ -62,17 +66,23 @@ class ProjectAdapter(internal var context: Context, internal var jsonArray: JSON
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtProject   : TextView
-        internal var txtsino         : TextView
-        internal var llProject    : LinearLayout
+        var tv_confirm_product: TextView
+        var tv_confirm_qty: TextView
+        var tv_confirm_mode: TextView
+        var ll_mode: LinearLayout
+
         init {
-            txtProject          = v.findViewById<View>(R.id.txtProject) as TextView
-            txtsino                = v.findViewById<View>(R.id.txtsino) as TextView
-            llProject           = v.findViewById<View>(R.id.llProject) as LinearLayout
+            tv_confirm_product = v.findViewById(R.id.tv_confirm_product) as TextView
+            tv_confirm_qty = v.findViewById(R.id.tv_confirm_qty) as TextView
+            tv_confirm_mode = v.findViewById(R.id.tv_confirm_mode) as TextView
+
+            ll_mode = v.findViewById(R.id.ll_mode) as LinearLayout
+
+
         }
     }
-    fun setClickListener(itemClickListener: ItemClickListener?) {
-        clickListener = itemClickListener
-    }
 
+//    fun setClickListener(itemClickListener: ItemClickListener?) {
+//        clickListener = itemClickListener
+//    }
 }

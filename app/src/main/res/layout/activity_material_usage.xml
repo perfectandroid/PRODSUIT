@@ -292,7 +292,7 @@
                                                 android:background="@color/dropbg_color"
                                                 android:paddingBottom="10dp"
                                                 android:layout_margin="2dp"
-                                                android:visibility="visible">
+                                                android:visibility="gone">
 
 
                                                 <com.google.android.material.textfield.TextInputLayout
@@ -452,16 +452,15 @@
                                                         android:paddingLeft="10dp"
                                                         android:paddingTop="8dp"
                                                         android:paddingBottom="8dp"
-                                                        android:inputType="textMultiLine"
-                                                        android:maxLines="4"
                                                         android:maxLength="150"
                                                         android:gravity="top|start"
+                                                        android:drawableRight="@drawable/arrow_down"
                                                         android:drawableLeft="@drawable/employee"
                                                         android:drawablePadding="5dp"
                                                         android:drawableTint="@color/black"
                                                         android:textSize="14dp"
-                                                        android:focusableInTouchMode="true"
-                                                        android:editable="true"
+                                                        android:focusableInTouchMode="false"
+                                                        android:editable="false"
                                                         android:fontFamily="@font/myfont"
                                                         android:textColor="@color/greydarks"
                                                         android:textStyle="normal"/>
@@ -501,7 +500,7 @@
                                                 android:drawableRight="@drawable/down_arrows"
                                                 android:padding="7dp"
                                                 android:fontFamily="@font/myfont"
-                                                android:text="Material Request"
+                                                android:text="Material Management"
                                                 android:drawableLeft="@drawable/material"
                                                 android:textStyle="bold"
                                                 android:textColor="@color/greydarks"
@@ -516,16 +515,18 @@
                                                 android:background="@color/dropbg_color"
                                                 android:paddingBottom="10dp"
                                                 android:layout_margin="2dp"
-                                                android:visibility="gone">
+                                                android:visibility="visible">
 
 
                                                 <LinearLayout
+                                                    android:id="@+id/ll_usage_product"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_margin="5dp"
                                                     android:background="@drawable/shape_bg"
                                                     android:padding="1dp"
-                                                    android:orientation="vertical">
+                                                    android:orientation="vertical"
+                                                    android:visibility="gone">
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
@@ -534,50 +535,64 @@
                                                         android:background="#DFDDDD"
                                                         android:orientation="horizontal">
 
-                                                        <TextView
-                                                            android:id="@+id/tv_category"
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:layout_weight="1"
-                                                            android:padding="2dp"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:textColor="@color/black"
-                                                            android:textStyle="bold"
-                                                            android:textSize="14dp"
-                                                            android:text="Product"
-                                                            android:visibility="visible"/>
-
                                                         <LinearLayout
                                                             android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
+                                                            android:layout_height="match_parent"
                                                             android:layout_weight="1"
+
                                                             android:orientation="horizontal">
 
                                                             <TextView
-                                                                android:id="@+id/tv_employee"
-                                                                android:layout_width="wrap_content"
-                                                                android:layout_height="wrap_content"
+                                                                android:id="@+id/tv_category"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="match_parent"
+                                                                android:layout_weight="1"
                                                                 android:padding="2dp"
+                                                                android:gravity="center_vertical"
                                                                 android:fontFamily="@font/myfont"
                                                                 android:textColor="@color/black"
                                                                 android:textStyle="bold"
                                                                 android:textSize="14dp"
-                                                                android:text="Quantity"
+                                                                android:text="Product"
                                                                 android:visibility="visible"/>
 
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_weight="1.9"
+                                                                android:orientation="horizontal">
+
+                                                                <TextView
+                                                                    android:id="@+id/tv_employee"
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="match_parent"
+                                                                    android:padding="2dp"
+                                                                    android:gravity="center_vertical"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:textColor="@color/black"
+                                                                    android:textStyle="bold"
+                                                                    android:textSize="14dp"
+                                                                    android:text="Quantity"
+                                                                    android:visibility="visible"/>
+
+                                                            </LinearLayout>
+
                                                         </LinearLayout>
+
+
 
                                                         <LinearLayout
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
-                                                            android:layout_weight="1"
+                                                            android:layout_weight="1.6"
                                                             android:orientation="vertical">
 
 
                                                             <TextView
-                                                                android:layout_width="wrap_content"
-                                                                android:layout_height="wrap_content"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="match_parent"
                                                                 android:padding="2dp"
+                                                                android:gravity="center_vertical"
                                                                 android:fontFamily="@font/myfont"
                                                                 android:textColor="@color/black"
                                                                 android:textStyle="bold"
@@ -585,6 +600,15 @@
                                                                 android:text="Mode"
                                                                 android:visibility="visible"/>
 
+
+                                                        </LinearLayout>
+
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_weight="1.7"
+                                                            android:gravity="center"
+                                                            android:orientation="horizontal">
 
                                                         </LinearLayout>
 

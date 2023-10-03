@@ -26,12 +26,12 @@ object MaterialUsageTeamRepository {
     val MaterialUsageteamSetterGetter = MutableLiveData<MaterialUsageTeamModel>()
     val TAG: String = "MaterialUsageTeamRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<MaterialUsageTeamModel> {
-        getMaterialUsage(context)
+    fun getServicesApiCall(context: Context,ID_Project : String,ID_Stage : String): MutableLiveData<MaterialUsageTeamModel> {
+        getMaterialUsage(context,ID_Project,ID_Stage)
         return MaterialUsageteamSetterGetter
     }
 
-    private fun getMaterialUsage(context: Context) {
+    private fun getMaterialUsage(context: Context,ID_Project : String,ID_Stage : String) {
         try {
             MaterialUsageteamSetterGetter.value = MaterialUsageTeamModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -59,16 +59,21 @@ object MaterialUsageTeamRepository {
             val requestObject1 = JSONObject()
 
             try {
+
+//                {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","ReqMode":"4","FK_Company":"1","Critrea1":"1","Critrea2":"111"}
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("20"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("4"))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("Critrea1", ProdsuitApplication.encryptStart(ID_Project))
+                requestObject1.put("Critrea2", ProdsuitApplication.encryptStart(ID_Stage))
+
                 Log.e(TAG,"getDepartment  78   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -77,7 +82,7 @@ object MaterialUsageTeamRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getDepartment(body)
+            val call = apiService.getProjectTeam(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:

@@ -26,12 +26,12 @@ object MaterialUsagestageRepository {
     val MaterialUsagestageSetterGetter = MutableLiveData<MetarialUsageStageModel>()
     val TAG: String = "MaterialUsagestageRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<MetarialUsageStageModel> {
-        getMaterialUsage(context)
+    fun getServicesApiCall(context: Context,ID_Project : String): MutableLiveData<MetarialUsageStageModel> {
+        getMaterialUsage(context,ID_Project)
         return MaterialUsagestageSetterGetter
     }
 
-    private fun getMaterialUsage(context: Context) {
+    private fun getMaterialUsage(context: Context,ID_Project : String) {
         try {
             MaterialUsagestageSetterGetter.value = MetarialUsageStageModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -64,11 +64,14 @@ object MaterialUsagestageRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("20"))
+//                {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","ReqMode":"3","FK_Company":"1","Critrea1":"1"}
+
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("3"))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("Critrea1", ProdsuitApplication.encryptStart(ID_Project))
+
                 Log.e(TAG,"getDepartment  78   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -77,7 +80,7 @@ object MaterialUsagestageRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getDepartment(body)
+            val call = apiService.getProjectStages(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:

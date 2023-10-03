@@ -138,7 +138,6 @@
                     </RelativeLayout>
 
 
-
                     <LinearLayout
                         android:id="@+id/lllogoimage"
                         android:layout_width="match_parent"

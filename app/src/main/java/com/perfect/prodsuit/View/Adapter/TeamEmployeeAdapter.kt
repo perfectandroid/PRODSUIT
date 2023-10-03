@@ -13,22 +13,21 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ProjectAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+class TeamEmployeeAdapter (internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "ProjectAdapter"
+    internal val TAG : String = "TeamEmployeeAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_project, parent, false
+            R.layout.adapter_team_employee, parent, false
         )
         vh = MainViewHolder(v)
         return vh
     }
-
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
             jsonObject = jsonArray.getJSONObject(position)
@@ -36,11 +35,11 @@ class ProjectAdapter(internal var context: Context, internal var jsonArray: JSON
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
-                holder.txtProject.text        = jsonObject!!.getString("ProjName")
+                holder.txtemployee.text        = jsonObject!!.getString("Name")
 
-                holder.llProject!!.setTag(position)
-                holder.llProject!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "projectClick")
+                holder.llemployee!!.setTag(position)
+                holder.llemployee!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "teamEmpClick")
                 })
             }
         } catch (e: Exception) {
@@ -62,13 +61,13 @@ class ProjectAdapter(internal var context: Context, internal var jsonArray: JSON
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtProject   : TextView
+        internal var txtemployee   : TextView
         internal var txtsino         : TextView
-        internal var llProject    : LinearLayout
+        internal var llemployee    : LinearLayout
         init {
-            txtProject          = v.findViewById<View>(R.id.txtProject) as TextView
+            txtemployee          = v.findViewById<View>(R.id.txtemployee) as TextView
             txtsino                = v.findViewById<View>(R.id.txtsino) as TextView
-            llProject           = v.findViewById<View>(R.id.llProject) as LinearLayout
+            llemployee           = v.findViewById<View>(R.id.llemployee) as LinearLayout
         }
     }
     fun setClickListener(itemClickListener: ItemClickListener?) {

@@ -13,17 +13,17 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ProjectAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+class TeamAdapter (internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "ProjectAdapter"
+    internal val TAG : String = "TeamAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_project, parent, false
+            R.layout.adapter_team, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -36,11 +36,11 @@ class ProjectAdapter(internal var context: Context, internal var jsonArray: JSON
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
-                holder.txtProject.text        = jsonObject!!.getString("ProjName")
+                holder.txtTeam.text        = jsonObject!!.getString("TeamName")
 
-                holder.llProject!!.setTag(position)
-                holder.llProject!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "projectClick")
+                holder.llTeam!!.setTag(position)
+                holder.llTeam!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "teamClick")
                 })
             }
         } catch (e: Exception) {
@@ -62,17 +62,16 @@ class ProjectAdapter(internal var context: Context, internal var jsonArray: JSON
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtProject   : TextView
+        internal var txtTeam   : TextView
         internal var txtsino         : TextView
-        internal var llProject    : LinearLayout
+        internal var llTeam    : LinearLayout
         init {
-            txtProject          = v.findViewById<View>(R.id.txtProject) as TextView
+            txtTeam          = v.findViewById<View>(R.id.txtTeam) as TextView
             txtsino                = v.findViewById<View>(R.id.txtsino) as TextView
-            llProject           = v.findViewById<View>(R.id.llProject) as LinearLayout
+            llTeam           = v.findViewById<View>(R.id.llTeam) as LinearLayout
         }
     }
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
-
 }

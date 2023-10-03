@@ -8,22 +8,23 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ProjectAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+class ProjectProductAdapter(internal var context: Context, internal var jsonArray: JSONArray, internal var mode : String):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "ProjectAdapter"
+    internal val TAG : String = "ProjectProductAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_project, parent, false
+            R.layout.adapter_project_product, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -35,12 +36,24 @@ class ProjectAdapter(internal var context: Context, internal var jsonArray: JSON
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
-                holder.txtsino.text        = pos.toString()
-                holder.txtProject.text        = jsonObject!!.getString("ProjName")
 
-                holder.llProject!!.setTag(position)
-                holder.llProject!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "projectClick")
+
+                holder.txtsino.text        = pos.toString()
+                holder.txtProduct.text        = jsonObject!!.getString("Name")
+                holder.txtSalesPrice.text        = jsonObject!!.getString("SalesPrice")
+
+                if (mode.equals("0")){
+                    holder.tv_labelStock.text        = "Available Stock"
+                    holder.txtAvailableStock.text        = jsonObject!!.getString("AvailableStock")
+                }
+                if (mode.equals("1")){
+                    holder.tv_labelStock.text        = "Current Stock"
+                    holder.txtAvailableStock.text        = jsonObject!!.getString("CurrentStock")
+                }
+
+                holder.llProduct!!.setTag(position)
+                holder.llProduct!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "productClick")
                 })
             }
         } catch (e: Exception) {
@@ -48,6 +61,7 @@ class ProjectAdapter(internal var context: Context, internal var jsonArray: JSON
             Log.e(TAG,"Exception   105   "+e.toString())
         }
     }
+
 
     override fun getItemCount(): Int {
         return jsonArray.length()
@@ -62,17 +76,24 @@ class ProjectAdapter(internal var context: Context, internal var jsonArray: JSON
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtProject   : TextView
+        internal var txtProduct   : TextView
         internal var txtsino         : TextView
-        internal var llProject    : LinearLayout
+        internal var txtAvailableStock         : TextView
+        internal var txtSalesPrice         : TextView
+        internal var tv_labelStock         : TextView
+        internal var llProduct    : LinearLayout
         init {
-            txtProject          = v.findViewById<View>(R.id.txtProject) as TextView
+            txtProduct          = v.findViewById<View>(R.id.txtProduct) as TextView
             txtsino                = v.findViewById<View>(R.id.txtsino) as TextView
-            llProject           = v.findViewById<View>(R.id.llProject) as LinearLayout
+            txtAvailableStock                = v.findViewById<View>(R.id.txtAvailableStock) as TextView
+            txtSalesPrice                = v.findViewById<View>(R.id.txtSalesPrice) as TextView
+            tv_labelStock                = v.findViewById<View>(R.id.tv_labelStock) as TextView
+            llProduct           = v.findViewById<View>(R.id.llProduct) as LinearLayout
         }
     }
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 
 }

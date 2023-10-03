@@ -575,4 +575,34 @@ interface ApiInterface {
     @POST("WalkingCustomer/WalkingCustomerVoiceDetails")
     fun getVoiceNote(@Body body: RequestBody): Call<String>
 
+    @POST("Project/ProjectList")
+    fun getProjectList(@Body body: RequestBody): Call<String>
+
+    @POST("Project/ProjectStages")
+    fun getProjectStages(@Body body: RequestBody): Call<String>
+
+    @POST("Project/ProjectTeam")
+    fun getProjectTeam(@Body body: RequestBody): Call<String>
+
+    @POST("Project/EmployeeListforProject")
+    fun getEmployeeListforProject(@Body body: RequestBody): Call<String>
+
+    @POST("Project/ModeList")
+    fun getModeList(@Body body: RequestBody): Call<String>
+
+    @POST("Project/ProductList")
+    fun getProductList(@Body body: RequestBody): Call<String>
+
+    @POST("Project/UpdateMaterialUsage")
+    fun getUpdateMaterialUsage(@Body body: RequestBody): Call<String>
+
+    @POST("Project/MaterialRequestProductList")
+    fun getMaterialRequestProductList(@Body body: RequestBody): Call<String>
+
+    @POST("Project/UpdateMaterialRequest")
+    fun getUpdateMaterialRequest(@Body body: RequestBody): Call<String>
+
+
+
+
 }

@@ -432,7 +432,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                materialusageStageViewModel.getMaterialUsageStageModel(this)!!.observe(
+                materialusageStageViewModel.getMaterialUsageStageModel(this,"")!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 

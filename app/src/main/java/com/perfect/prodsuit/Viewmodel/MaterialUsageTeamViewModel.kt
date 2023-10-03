@@ -11,8 +11,8 @@ class MaterialUsageTeamViewModel : ViewModel()  {
 
     var materialusageTeamtData: MutableLiveData<MaterialUsageTeamModel>? = null
 
-    fun getMaterialUsageTeamModel(context: Context) : LiveData<MaterialUsageTeamModel>? {
-        materialusageTeamtData = MaterialUsageTeamRepository.getServicesApiCall(context)
+    fun getMaterialUsageTeamModel(context: Context,ID_Project : String,ID_Stage : String) : LiveData<MaterialUsageTeamModel>? {
+        materialusageTeamtData = MaterialUsageTeamRepository.getServicesApiCall(context,ID_Project,ID_Stage)
         return materialusageTeamtData
     }
 

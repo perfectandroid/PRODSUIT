@@ -23,17 +23,18 @@ import java.util.ArrayList
 object MaterialProductRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val StageSetterGetter = MutableLiveData<MaterialProductModel>()
-    val TAG: String = "StageRepository"
+    val materialProductSetterGetter = MutableLiveData<MaterialProductModel>()
+    val TAG: String = "MaterialProductRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<MaterialProductModel> {
-        getStage(context)
-        return StageSetterGetter
+    fun getServicesApiCall(context: Context,ID_Project : String,ID_Stage : String,ID_Team : String): MutableLiveData<MaterialProductModel> {
+        getStage(context,ID_Project,ID_Stage,ID_Team)
+        return materialProductSetterGetter
     }
 
-    private fun getStage(context: Context) {
+    private fun getStage(context: Context,ID_Project : String,ID_Stage : String,ID_Team : String) {
+
         try {
-            StageSetterGetter.value = MaterialProductModel("")
+            materialProductSetterGetter.value = MaterialProductModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -59,17 +60,26 @@ object MaterialProductRepository {
             val requestObject1 = JSONObject()
 
             try {
+
+//
+//                {"BankKey":"-500,"Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","ReqMode":"57","FK_Company":"1","Critrea1":"12","Critrea2":"2",
+//                    "Critrea3":"10017"}
+
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("20"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                Log.e(TAG,"getStage  78   "+requestObject1)
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("57"))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("Critrea1", ProdsuitApplication.encryptStart(ID_Project))
+                requestObject1.put("Critrea2", ProdsuitApplication.encryptStart(ID_Stage))
+                requestObject1.put("Critrea3", ProdsuitApplication.encryptStart(ID_Team))
+
+                Log.e(TAG,"ProductList  78   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -77,7 +87,7 @@ object MaterialProductRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getDepartment(body)
+            val call = apiService.getProductList(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -89,7 +99,7 @@ object MaterialProductRepository {
                         val leads = ArrayList<MaterialProductModel>()
                         leads.add(MaterialProductModel(response.body()))
                         val msg = leads[0].message
-                        StageSetterGetter.value = MaterialProductModel(msg)
+                        materialProductSetterGetter.value = MaterialProductModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                         Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()

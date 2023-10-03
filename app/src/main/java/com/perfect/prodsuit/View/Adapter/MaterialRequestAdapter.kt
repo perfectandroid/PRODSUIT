@@ -5,25 +5,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Model.ModelUsageProduct
 import com.perfect.prodsuit.R
-import org.json.JSONArray
-import org.json.JSONObject
 
-class ProjectAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+class MaterialRequestAdapter (internal var context: Context, internal var mList: List<ModelUsageProduct>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "ProjectAdapter"
-    internal var jsonObject: JSONObject? = null
+    internal val TAG : String = "MaterialRequestAdapter"
     private var clickListener: ItemClickListener? = null
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_project, parent, false
+            R.layout.adapter_material_request, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -31,17 +29,28 @@ class ProjectAdapter(internal var context: Context, internal var jsonArray: JSON
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
-            jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
-                val pos = position+1
-                holder.txtsino.text        = pos.toString()
-                holder.txtProject.text        = jsonObject!!.getString("ProjName")
 
-                holder.llProject!!.setTag(position)
-                holder.llProject!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "projectClick")
+                val empModel = mList[position]
+                holder.tv_Product.text = empModel.Product
+                holder.tv_qty.text = empModel.Quantity
+
+
+                holder.im_delete!!.setTag(position)
+                holder.im_delete!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "deleteStocks")
+
                 })
+
+                holder.im_edit!!.setTag(position)
+                holder.im_edit!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "editStocks")
+
+                })
+
+
+
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -50,7 +59,7 @@ class ProjectAdapter(internal var context: Context, internal var jsonArray: JSON
     }
 
     override fun getItemCount(): Int {
-        return jsonArray.length()
+        return mList.size
     }
 
     override fun getItemId(position: Int): Long {
@@ -62,17 +71,26 @@ class ProjectAdapter(internal var context: Context, internal var jsonArray: JSON
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtProject   : TextView
-        internal var txtsino         : TextView
-        internal var llProject    : LinearLayout
+        var tv_Product: TextView
+        var tv_qty: TextView
+        var ll_main: LinearLayout
+        var im_delete: ImageView
+        var im_edit: ImageView
+//        var tv_emp_type: TextView
+
+
         init {
-            txtProject          = v.findViewById<View>(R.id.txtProject) as TextView
-            txtsino                = v.findViewById<View>(R.id.txtsino) as TextView
-            llProject           = v.findViewById<View>(R.id.llProject) as LinearLayout
+            tv_Product = v.findViewById(R.id.tv_Product) as TextView
+            tv_qty = v.findViewById(R.id.tv_qty) as TextView
+            ll_main = v.findViewById(R.id.ll_main) as LinearLayout
+            im_delete = v.findViewById(R.id.im_delete) as ImageView
+            im_edit = v.findViewById(R.id.im_edit) as ImageView
+//            tv_emp_type = v.findViewById(R.id.tv_emp_type) as TextView
+
         }
     }
+
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
-
 }

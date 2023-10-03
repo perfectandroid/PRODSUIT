@@ -31,6 +31,8 @@ import java.security.NoSuchAlgorithmException
 import java.security.cert.CertificateException
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.net.ssl.*
 
 
@@ -1146,6 +1148,24 @@ object Config {
         isNotificationEditer.putString("isNotification", redirection)
         isNotificationEditer.commit()
 
+    }
+
+    fun convertDate(strDate : String): String {
+        var result =""
+        try {
+
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            val newDate: Date = sdf.parse(strDate)
+//            val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
+            val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
+
+            result = sdfDate2.format(newDate)
+
+        }catch (e :  Exception){
+            result = ""
+        }
+
+        return result
     }
 
 }
