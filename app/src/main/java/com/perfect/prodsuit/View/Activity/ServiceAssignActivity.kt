@@ -50,12 +50,15 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     private var tv_ServiceClick: TextView? = null
     private var tv_ProductClick: TextView? = null
     private var tv_ListClick: TextView? = null
+    private var txtv_head: TextView? = null
+
 
     private var rltv_allViews: RelativeLayout? = null
     private var lnrHead_Ticket: LinearLayout? = null
     private var lnrHead_Service: LinearLayout? = null
     private var lnrHead_Product: LinearLayout? = null
     private var lnrHead_List: LinearLayout? = null
+    private var ll_lstclick: LinearLayout? = null
 
 
    // Ticket Information
@@ -153,6 +156,9 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     var arrProducts = JSONArray()
     var adapterService : ServiceAssignListAdapter? = null
     var ID_CustomerServiceRegister: String? = ""
+    var FK_CustomerserviceregisterProductDetails: String? = ""
+    var TicketStatus: String? = ""
+
 
     var strTicket: String? = ""
     var strLandmark: String? = ""
@@ -189,12 +195,14 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
         setRegViews()
         ID_CustomerServiceRegister = intent.getStringExtra("ID_CustomerServiceRegister")
-        Log.e(TAG,"ID_CustomerServiceRegister  163   "+ID_CustomerServiceRegister)
+        FK_CustomerserviceregisterProductDetails = intent.getStringExtra("FK_CustomerserviceregisterProductDetails")
+        TicketStatus = intent.getStringExtra("TicketStatus")
+        Log.e(TAG,"ID_CustomerServiceRegister  163   "+ID_CustomerServiceRegister+"\n"+FK_CustomerserviceregisterProductDetails+"\n"+TicketStatus)
 //        ticketMode = "0"
 //        hideViews()
         checkAttendance()
         getCurrentdateTime()
-        getServiceAssignDetails()
+        getServiceAssignDetails(TicketStatus)
 
 
 
@@ -263,6 +271,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         tv_ServiceClick = findViewById<TextView>(R.id.tv_ServiceClick)
         tv_ProductClick = findViewById<TextView>(R.id.tv_ProductClick)
         tv_ListClick = findViewById<TextView>(R.id.tv_ListClick)
+        txtv_head= findViewById<TextView>(R.id.txtv_head)
 
         tv_TicketClick!!.setOnClickListener(this)
         tv_ServiceClick!!.setOnClickListener(this)
@@ -274,6 +283,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         lnrHead_Service = findViewById<LinearLayout>(R.id.lnrHead_Service)
         lnrHead_Product = findViewById<LinearLayout>(R.id.lnrHead_Product)
         lnrHead_List = findViewById<LinearLayout>(R.id.lnrHead_List)
+        ll_lstclick= findViewById<LinearLayout>(R.id.ll_lstclick)
 
         // Ticket Information
 
@@ -341,7 +351,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
     }
 
-    private fun getServiceAssignDetails() {
+    private fun getServiceAssignDetails(TicketStatus: String?) {
         var ReqMode = "76"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -351,7 +361,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceAssignDetailViewModel.getServiceAssignDetail(this,ReqMode,ID_CustomerServiceRegister!!)!!.observe(
+                serviceAssignDetailViewModel.getServiceAssignDetail(this,ReqMode,ID_CustomerServiceRegister!!,FK_CustomerserviceregisterProductDetails!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -374,41 +384,233 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
                                       //  rrrrrrrr
 
-                                        strTicket = jobjt.getString("Ticket")
-                                        strLandmark = jobjt.getString("Landmark")
-                                        strCustomer = jobjt.getString("Customer")
-                                        strContactNo = jobjt.getString("OtherMobile")
-                                        strAddress = jobjt.getString("Address")
-                                        strMobile = jobjt.getString("Mobile")
-                                        strReqDate = jobjt.getString("FromDate")+" - "+jobjt.getString("ToDate")
-                                        strReqTime = jobjt.getString("FromTime")+" - "+jobjt.getString("ToTime")
-                                        strProductname = jobjt.getString("Productname")
-                                        strProductComplaint = jobjt.getString("ProductComplaint")
-                                        strProductDescription = jobjt.getString("ProductDescription")
-                                        strPriorityName = jobjt.getString("PriorityName")
+                                            strTicket = jobjt.getString("Ticket")
+                                            strLandmark = jobjt.getString("Landmark")
+                                            strCustomer = jobjt.getString("Customer")
+                                            strContactNo = jobjt.getString("OtherMobile")
+                                            strAddress = jobjt.getString("Address")
+                                            strMobile = jobjt.getString("Mobile")
+                                            strReqDate = jobjt.getString("FromDate")+" - "+jobjt.getString("ToDate")
+                                            strReqTime = jobjt.getString("FromTime")+" - "+jobjt.getString("ToTime")
+                                            strProductname = jobjt.getString("Productname")
+                                            strProductComplaint = jobjt.getString("ProductComplaint")
+                                            strProductDescription = jobjt.getString("ProductDescription")
+                                            strPriorityName = jobjt.getString("PriorityName")
 
 
-                                        tv_Ticket!!.setText(""+strTicket)
-                                        tv_LandMark!!.setText(""+strLandmark)
-                                        tv_Customer!!.setText(""+strCustomer)
-                                        tv_ContactNo!!.setText(""+strContactNo)
-                                        tv_Address!!.setText(""+strAddress)
-                                        tv_Mobile!!.setText(""+strMobile)
 
-                                        // Service Information
+                                        if (TicketStatus.equals("2"))
+                                        {
 
-                                        tv_RequestedDate!!.setText(""+strReqDate)
-                                        tv_RequestedTime!!.setText(""+strReqTime)
+                                                tv_ServiceClick!!.setText("Service Information")
+                                                tv_ProductClick!!.setText("Product Details")
+                                                ll_lstclick!!.visibility=View.GONE
 
-                                        // Product Details
-                                        tv_ProductName!!.setText(""+strProductname)
-                                        tv_ProductComplaint!!.setText(""+strProductComplaint)
-                                        tv_Description!!.setText(""+strProductDescription)
+                                                tv_Ticket!!.setText(""+strTicket)
+                                                tv_LandMark!!.setText(""+strLandmark)
+                                                tv_Customer!!.setText(""+strCustomer)
+                                                tv_ContactNo!!.setText(""+strContactNo)
+                                                tv_Address!!.setText(""+strAddress)
+                                                tv_Mobile!!.setText(""+strMobile)
+                                                txtv_head!!.setText("Service Assign")
 
-                                        ID_Priority = jobjt.getString("Priority")
-                                        tie_Priority!!.setText(""+strPriorityName)
+                                                // Service Information
+
+                                                tv_RequestedDate!!.setText(""+strReqDate)
+                                                tv_RequestedTime!!.setText(""+strReqTime)
+
+                                                // Product Details
+                                                tv_ProductName!!.setText(""+strProductname)
+                                                tv_ProductComplaint!!.setText(""+strProductComplaint)
+                                                tv_Description!!.setText(""+strProductDescription)
+
+                                                ID_Priority = jobjt.getString("Priority")
+                                                tie_Priority!!.setText(""+strPriorityName)
+                                                btnSave!!.setText("Save")
+
+                                        }
+                                        else if (TicketStatus.equals("3"))
+                                        {
+                                            tv_ServiceClick!!.setText("Service Information")
+                                            tv_ProductClick!!.setText("Product Details")
+                                            ll_lstclick!!.visibility=View.GONE
+
+                                            tv_Ticket!!.setText(""+strTicket)
+                                            tv_LandMark!!.setText(""+strLandmark)
+                                            tv_Customer!!.setText(""+strCustomer)
+                                            tv_ContactNo!!.setText(""+strContactNo)
+                                            tv_Address!!.setText(""+strAddress)
+                                            tv_Mobile!!.setText(""+strMobile)
+                                            txtv_head!!.setText("Service Assign")
 
 
+                                            // Service Information
+
+                                            tv_RequestedDate!!.setText(""+strReqDate)
+                                            tv_RequestedTime!!.setText(""+strReqTime)
+
+                                            // Product Details
+                                            tv_ProductName!!.setText(""+strProductname)
+                                            tv_ProductComplaint!!.setText(""+strProductComplaint)
+                                            tv_Description!!.setText(""+strProductDescription)
+
+                                            ID_Priority = jobjt.getString("Priority")
+                                            tie_Priority!!.setText(""+strPriorityName)
+                                            btnSave!!.setText("Update")
+
+                                        }
+                                       else if (TicketStatus.equals("4"))
+                                        {
+                                            tv_ServiceClick!!.setText("Service Information")
+                                            tv_ProductClick!!.setText("Product Details")
+                                            ll_lstclick!!.visibility=View.GONE
+
+                                            tv_Ticket!!.setText(""+strTicket)
+                                            tv_LandMark!!.setText(""+strLandmark)
+                                            tv_Customer!!.setText(""+strCustomer)
+                                            tv_ContactNo!!.setText(""+strContactNo)
+                                            tv_Address!!.setText(""+strAddress)
+                                            tv_Mobile!!.setText(""+strMobile)
+                                            txtv_head!!.setText("Service Assign")
+
+
+                                            // Service Information
+
+                                            tv_RequestedDate!!.setText(""+strReqDate)
+                                            tv_RequestedTime!!.setText(""+strReqTime)
+
+                                            // Product Details
+                                            tv_ProductName!!.setText(""+strProductname)
+                                            tv_ProductComplaint!!.setText(""+strProductComplaint)
+                                            tv_Description!!.setText(""+strProductDescription)
+
+                                            ID_Priority = jobjt.getString("Priority")
+                                            tie_Priority!!.setText(""+strPriorityName)
+                                            btnSave!!.setText("Update")
+
+                                        }
+                                        else if (TicketStatus.equals("5"))
+                                        {
+                                            tv_ServiceClick!!.setText("Followup Details")
+                                            tv_ProductClick!!.setText("Product Details")
+                                            ll_lstclick!!.visibility=View.VISIBLE
+
+                                            tv_Ticket!!.setText(""+strTicket)
+                                            tv_LandMark!!.setText(""+strLandmark)
+                                            tv_Customer!!.setText(""+strCustomer)
+                                            tv_ContactNo!!.setText(""+strContactNo)
+                                            tv_Address!!.setText(""+strAddress)
+                                            tv_Mobile!!.setText(""+strMobile)
+                                            txtv_head!!.setText("PickUp Assign")
+
+
+                                            // Service Information
+
+                                            tv_RequestedDate!!.setText(""+strReqDate)
+                                            tv_RequestedTime!!.setText(""+strReqTime)
+
+                                            // Product Details
+                                            tv_ProductName!!.setText(""+strProductname)
+                                            tv_ProductComplaint!!.setText(""+strProductComplaint)
+                                            tv_Description!!.setText(""+strProductDescription)
+
+                                            ID_Priority = jobjt.getString("Priority")
+                                            tie_Priority!!.setText(""+strPriorityName)
+                                            tv_ListClick!!.setText("PickUp Information")
+                                            btnSave!!.setText("Update")
+
+                                        }
+
+                                        else if (TicketStatus.equals("6"))
+                                        {
+                                            tv_ServiceClick!!.setText("Followup Details")
+                                            tv_ProductClick!!.setText("Product Details")
+                                            ll_lstclick!!.visibility=View.GONE
+                                            txtv_head!!.setText("Replacement Request")
+
+
+                                            tv_Ticket!!.setText(""+strTicket)
+                                            tv_LandMark!!.setText(""+strLandmark)
+                                            tv_Customer!!.setText(""+strCustomer)
+                                            tv_ContactNo!!.setText(""+strContactNo)
+                                            tv_Address!!.setText(""+strAddress)
+                                            tv_Mobile!!.setText(""+strMobile)
+
+                                            // Service Information
+
+                                            tv_RequestedDate!!.setText(""+strReqDate)
+                                            tv_RequestedTime!!.setText(""+strReqTime)
+
+                                            // Product Details
+                                            tv_ProductName!!.setText(""+strProductname)
+                                            tv_ProductComplaint!!.setText(""+strProductComplaint)
+                                            tv_Description!!.setText(""+strProductDescription)
+
+                                            ID_Priority = jobjt.getString("Priority")
+                                            tie_Priority!!.setText(""+strPriorityName)
+                                            btnSave!!.setText("Update")
+
+                                        }
+                                        else if (TicketStatus.equals("7"))
+                                        {
+                                            tv_ServiceClick!!.setText("Followup Details")
+                                            tv_ProductClick!!.setText("Product Details")
+                                            ll_lstclick!!.visibility=View.VISIBLE
+                                            txtv_head!!.setText("Delivery Assign")
+
+                                            tv_Ticket!!.setText(""+strTicket)
+                                            tv_LandMark!!.setText(""+strLandmark)
+                                            tv_Customer!!.setText(""+strCustomer)
+                                            tv_ContactNo!!.setText(""+strContactNo)
+                                            tv_Address!!.setText(""+strAddress)
+                                            tv_Mobile!!.setText(""+strMobile)
+
+                                            // Service Information
+
+                                            tv_RequestedDate!!.setText(""+strReqDate)
+                                            tv_RequestedTime!!.setText(""+strReqTime)
+
+                                            // Product Details
+                                            tv_ProductName!!.setText(""+strProductname)
+                                            tv_ProductComplaint!!.setText(""+strProductComplaint)
+                                            tv_Description!!.setText(""+strProductDescription)
+
+                                            ID_Priority = jobjt.getString("Priority")
+                                            tie_Priority!!.setText(""+strPriorityName)
+                                            tv_ListClick!!.setText("Delivery Information")
+                                            btnSave!!.setText("Assign Delivery")
+
+                                        }
+                                        else if (TicketStatus.equals("8"))
+                                        {
+                                            tv_ServiceClick!!.setText("Followup Details")
+                                            tv_ProductClick!!.setText("Product Details")
+                                            ll_lstclick!!.visibility=View.VISIBLE
+                                            txtv_head!!.setText("Delivery Assign")
+
+                                            tv_Ticket!!.setText(""+strTicket)
+                                            tv_LandMark!!.setText(""+strLandmark)
+                                            tv_Customer!!.setText(""+strCustomer)
+                                            tv_ContactNo!!.setText(""+strContactNo)
+                                            tv_Address!!.setText(""+strAddress)
+                                            tv_Mobile!!.setText(""+strMobile)
+
+                                            // Service Information
+
+                                            tv_RequestedDate!!.setText(""+strReqDate)
+                                            tv_RequestedTime!!.setText(""+strReqTime)
+
+                                            // Product Details
+                                            tv_ProductName!!.setText(""+strProductname)
+                                            tv_ProductComplaint!!.setText(""+strProductComplaint)
+                                            tv_Description!!.setText(""+strProductDescription)
+
+                                            ID_Priority = jobjt.getString("Priority")
+                                            tie_Priority!!.setText(""+strPriorityName)
+                                            tv_ListClick!!.setText("Delivery Information")
+                                            btnSave!!.setText("Assign Delivery")
+
+                                        }
 //                                        tv_Ticket!!.setText(""+jobjt.getString("Ticket"))
 //                                        tv_LandMark!!.setText(""+jobjt.getString("Landmark"))
 //                                        tv_Customer!!.setText(""+jobjt.getString("Customer"))

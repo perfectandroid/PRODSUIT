@@ -25,9 +25,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.AreaDetailAdapter
-import com.perfect.prodsuit.View.Adapter.BranchAdapter
-import com.perfect.prodsuit.View.Adapter.EmployeeAllAdapter
+import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.AreaViewModel
 import com.perfect.prodsuit.Viewmodel.BranchViewModel
 import com.perfect.prodsuit.Viewmodel.EmpByBranchViewModel
@@ -44,14 +42,14 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
     var TAG  ="ServiceAssignTabActivity"
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
-
+    lateinit var countlistSort: JSONArray
     private var card_new: CardView? = null
     private var card_ongoing: CardView? = null
     private var ll_onGoing: LinearLayout? = null
     private var ll_new: LinearLayout? = null
     private var tv_newCount: TextView? = null
     private var tv_OnGoingCount: TextView? = null
-
+    var recyclervw_serviceassign: RecyclerView? = null
     private var imgv_filter: ImageView? = null
 
     private var ll_StafAdmin: LinearLayout? = null
@@ -131,7 +129,7 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        setContentView(R.layout.activity_service_assign_tab)
+        setContentView(R.layout.activity_service_assign_tab1)
         context = this@ServiceAssignTabActivity
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
         empByBranchViewModel = ViewModelProvider(this).get(EmpByBranchViewModel::class.java)
@@ -159,11 +157,14 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
         tv_newCount = findViewById<TextView>(R.id.tv_newCount)
         tv_OnGoingCount = findViewById<TextView>(R.id.tv_OnGoingCount)
 
-        card_new!!.setOnClickListener(this)
-        card_ongoing!!.setOnClickListener(this)
-        ll_new!!.setOnClickListener(this)
-        ll_onGoing!!.setOnClickListener(this)
-        imgv_filter!!.setOnClickListener(this)
+
+        recyclervw_serviceassign = findViewById<RecyclerView>(R.id.recyclervw_serviceassign)
+
+      //  card_new!!.setOnClickListener(this)
+      //  card_ongoing!!.setOnClickListener(this)
+    //    ll_new!!.setOnClickListener(this)
+     //   ll_onGoing!!.setOnClickListener(this)
+       // imgv_filter!!.setOnClickListener(this)
 
 
     }
@@ -301,16 +302,28 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("ServiceCountDetails")
 
-                                        tv_newCount!!.setText(""+jobjt.getString("New"))
-                                        tv_OnGoingCount!!.setText(""+jobjt.getString("OnGoing"))
-//                                        branchArrayList = jobjt.getJSONArray("BranchDetailsList")
-//                                        if (branchArrayList.length() > 0) {
-//                                            if (branchCount == 0) {
-//                                                branchCount++
-//                                                branchPopup(branchArrayList)
-//                                            }
-//
-//                                        }
+                                       /* tv_newCount!!.setText(""+jobjt.getString("New"))
+                                        tv_OnGoingCount!!.setText(""+jobjt.getString("OnGoing"))*/
+                                        branchArrayList = jobjt.getJSONArray("ServiceCountList")
+                                        if (branchArrayList.length() > 0) {
+
+                                         //   imgv_filter!!.visibility  =View.VISIBLE
+
+                                            countlistSort = JSONArray()
+                                            for (k in 0 until branchArrayList.length()) {
+                                                val jsonObject = branchArrayList.getJSONObject(k)
+                                                // reportNamesort.put(k,jsonObject)
+                                                countlistSort.put(jsonObject)
+                                            }
+
+                                          //  tv_listCount!!.setText(""+serviceListSort.length())
+                                            val lLayout = GridLayoutManager(this@ServiceAssignTabActivity, 1)
+                                            recyclervw_serviceassign!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            //  val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
+                                            val adapter = ServiceCountAdapter(this@ServiceAssignTabActivity, countlistSort,ID_Branch,FK_Area,ID_Employee,strFromDate,strToDate,strCustomer,strMobile,strTicketNo,strDueDays)
+                                            recyclervw_serviceassign!!.adapter = adapter
+                                            adapter.setClickListener(this@ServiceAssignTabActivity)
+                                        }
                                     } else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceAssignTabActivity,

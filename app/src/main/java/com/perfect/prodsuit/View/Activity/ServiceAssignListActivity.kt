@@ -44,10 +44,11 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
     lateinit var serviceListSort: JSONArray
     var recyServiceList: RecyclerView? = null
     private var tv_listCount: TextView? = null
+    private var txtv_headlabel: TextView? = null
     private var imgv_filter: ImageView? = null
 
     var serviceList = 0
-
+    var label : String?= ""
     var SubMode : String?= ""
     var ID_Branch : String?= ""
     var FK_Area : String?= ""
@@ -111,6 +112,9 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
     var serAssignCount = 0
     lateinit var serviceAssignDetailViewModel: ServiceAssignDetailsViewModel
     var ID_CustomerServiceRegister: String? = ""
+    var FK_CustomerserviceregisterProductDetails: String? = ""
+    var TicketStatus: String? = ""
+
     var ID_Priority: String? = ""
 
 
@@ -139,6 +143,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 
         setRegViews()
 
+        label   = intent.getStringExtra("label")
         SubMode   = intent.getStringExtra("SubMode")
         ID_Branch   = intent.getStringExtra("ID_Branch")
         FK_Area     = intent.getStringExtra("FK_Area")
@@ -149,6 +154,8 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
         strMobile   = intent.getStringExtra("strMobile")
         strTicketNo = intent.getStringExtra("strTicketNo")
         strDueDays  = intent.getStringExtra("strDueDays")
+
+        txtv_headlabel!!.setText(label)
 
 
         serviceList = 0
@@ -164,6 +171,8 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 
         imgv_filter = findViewById<ImageView>(R.id.imgv_filter)
         imgv_filter!!.setOnClickListener(this)
+
+        txtv_headlabel= findViewById<TextView>(R.id.txtv_headlabel)
 
         recyServiceList = findViewById<RecyclerView>(R.id.recyServiceList)
         recyServiceList!!.adapter = null
@@ -380,8 +389,14 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
         if (data.equals("ServiceList")) {
             val jsonObject = serviceListArrayList.getJSONObject(position)
             ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
+            FK_CustomerserviceregisterProductDetails = jsonObject.getString("ID_CustomerServiceRegisterProductDetails")
+            TicketStatus = jsonObject.getString("TicketStatus")
+
+            Log.i("FKK",FK_CustomerserviceregisterProductDetails.toString())
             val i = Intent(this@ServiceAssignListActivity, ServiceAssignActivity::class.java)
             i.putExtra("ID_CustomerServiceRegister",ID_CustomerServiceRegister)
+            i.putExtra("FK_CustomerserviceregisterProductDetails",FK_CustomerserviceregisterProductDetails)
+            i.putExtra("TicketStatus",TicketStatus)
             startActivity(i)
         }
         if (data.equals("ServiceEdit")) {
@@ -454,7 +469,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceAssignDetailViewModel.getServiceAssignDetail(this,ReqMode,ID_CustomerServiceRegister!!)!!.observe(
+                serviceAssignDetailViewModel.getServiceAssignDetail(this,ReqMode,ID_CustomerServiceRegister!!,FK_CustomerserviceregisterProductDetails!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -483,6 +498,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                                         strEditCustomer = jobjt.getString("Customer")
                                         strEditProductname = jobjt.getString("Productname")
                                         strEditProductComplaint = jobjt.getString("ProductComplaint")
+                                        strEditProductComplaint
                                         serviceEditBottom()
 
 //                                        tv_Ticket!!.setText(""+jobjt.getString("Ticket"))
