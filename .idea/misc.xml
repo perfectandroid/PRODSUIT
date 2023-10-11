@@ -14,6 +14,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/arrow_next.xml" value="0.2265" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/background_shape.xml" value="0.2625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/bg_auth.xml" value="0.263" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/btn_bg3.xml" value="0.2465" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/btn_bgcolour.xml" value="0.307" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/btn_shape_reset.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/btn_shape_submit.xml" value="0.263" />
@@ -29,6 +30,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_approve.xml" value="0.26" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_approve_list.xml" value="0.1685" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg.xml" value="0.1875" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg3.xml" value="0.2465" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg_delete.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg_red.xml" value="0.1885" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bg_view.xml" value="0.263" />
@@ -90,6 +92,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_customer_service.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_customer_service_sales.xml" value="0.2520833333333333" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_customer_service_warranty.xml" value="0.35989583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_dashborad_common.xml" value="0.1890625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_emi.xml" value="0.26944444444444443" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_emi_collection.xml" value="0.30462962962962964" />
@@ -111,6 +114,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_material_usage.xml" value="0.3229166666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_mylead.xml" value="0.2574074074074074" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_notification.xml" value="0.30520833333333336" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_otp.xml" value="0.35989583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_overdue.xml" value="0.2574074074074074" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_product_enquiry_detail.xml" value="0.17742908871454435" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_product_search.xml" value="0.30462962962962964" />
@@ -121,6 +125,8 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_assign.xml" value="0.3569230769230769" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_assign_list.xml" value="0.27447916666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_assign_tab.xml" value="0.27447916666666666" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_follow_up_list.xml" value="0.20677083333333332" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_follow_up_new.xml" value="0.27239583333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_services.xml" value="0.31979166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_site_visit.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_splash.xml" value="0.26944444444444443" />
@@ -189,6 +195,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/correction_product_adapter.xml" value="0.24583333333333332" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/cs_add_new_user_sheet.xml" value="0.26944444444444443" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/cs_detail_bottom_sheet.xml" value="0.2328125" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/cs_more_service_attended_sheet.xml" value="0.27239583333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/custom_snackbar.xml" value="0.22864583333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/custom_toast.xml" value="0.3380208333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/custome_toast1.xml" value="0.26145833333333335" />
@@ -217,13 +224,15 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/success_popup_new.xml" value="0.28020833333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/team_employee_popup.xml" value="0.34427083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/test.xml" value="0.3" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/test_new2.xml" value="0.35989583333333336" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/testnew.xml" value="0.35989583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/testnew1.xml" value="0.18697916666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/walking_edit_bottomsheet.xml" value="0.25364583333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/menu/main_drawer.xml" value="0.309375" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="corretto-1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="corretto-1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
