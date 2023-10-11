@@ -118,6 +118,8 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
     var serAssignCount = 0
     lateinit var serviceAssignDetailViewModel: ServiceAssignDetailsViewModel
     var ID_CustomerServiceRegister: String? = ""
+    var FK_CustomerserviceregisterProductDetails: String? = ""
+
     var ID_Priority: String? = ""
 
     lateinit var serviceEditUpdateViewModel: ServiceEditUpdateViewModel
@@ -480,7 +482,7 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceAssignDetailViewModel.getServiceAssignDetail(this,ReqMode,ID_CustomerServiceRegister!!)!!.observe(
+                serviceAssignDetailViewModel.getServiceAssignDetail(this,ReqMode,ID_CustomerServiceRegister!!,FK_CustomerserviceregisterProductDetails!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 

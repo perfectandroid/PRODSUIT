@@ -107,7 +107,7 @@ class DeliveryAssignActivity : AppCompatActivity()  , View.OnClickListener, Item
     var serAssignCount = 0
     lateinit var serviceAssignDetailViewModel: ServiceAssignDetailsViewModel
     var ID_CustomerServiceRegister: String? = ""
-
+    var FK_CustomerserviceregisterProductDetails: String? = ""
     var ID_Priority : String?= ""
     var ID_Employee : String?= ""
 
@@ -324,7 +324,7 @@ class DeliveryAssignActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceAssignDetailViewModel.getServiceAssignDetail(this,ReqMode,ID_CustomerServiceRegister!!)!!.observe(
+                serviceAssignDetailViewModel.getServiceAssignDetail(this,ReqMode,ID_CustomerServiceRegister!!,FK_CustomerserviceregisterProductDetails!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 

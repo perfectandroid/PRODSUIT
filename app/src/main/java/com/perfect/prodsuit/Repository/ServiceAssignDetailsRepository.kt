@@ -28,12 +28,12 @@ object ServiceAssignDetailsRepository {
     val serviceAssignDetailsSetterGetter = MutableLiveData<ServiceAssignDetailsModel>()
     val TAG: String = "ServiceAssignDetailsRepository"
 
-    fun getServicesApiCall(context: Context,ReqMode : String,ID_CustomerServiceRegister : String): MutableLiveData<ServiceAssignDetailsModel> {
-        getServiceAssignDetail(context,ReqMode,ID_CustomerServiceRegister)
+    fun getServicesApiCall(context: Context,ReqMode : String,ID_CustomerServiceRegister : String,FK_CustomerserviceregisterProductDetails:String): MutableLiveData<ServiceAssignDetailsModel> {
+        getServiceAssignDetail(context,ReqMode,ID_CustomerServiceRegister,FK_CustomerserviceregisterProductDetails)
         return serviceAssignDetailsSetterGetter
     }
 
-    private fun getServiceAssignDetail(context: Context,ReqMode : String,ID_CustomerServiceRegister : String) {
+    private fun getServiceAssignDetail(context: Context,ReqMode : String,ID_CustomerServiceRegister : String,FK_CustomerserviceregisterProductDetails:String) {
 
         try {
             serviceAssignDetailsSetterGetter.value = ServiceAssignDetailsModel("")
@@ -76,7 +76,7 @@ object ServiceAssignDetailsRepository {
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
                 requestObject1.put("FK_Customerserviceregister", ProdsuitApplication.encryptStart(ID_CustomerServiceRegister))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-
+                requestObject1.put("FK_CustomerserviceregisterProductDetails", ProdsuitApplication.encryptStart(FK_CustomerserviceregisterProductDetails))
 
 
 
