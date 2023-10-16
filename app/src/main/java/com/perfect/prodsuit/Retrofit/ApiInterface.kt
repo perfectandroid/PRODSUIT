@@ -602,6 +602,9 @@ interface ApiInterface {
     @POST("Project/UpdateMaterialRequest")
     fun getUpdateMaterialRequest(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/AuthorizationDetails")
+    fun getAuthorizationDashDetails(@Body body: RequestBody): Call<String>
+
 
 
 
