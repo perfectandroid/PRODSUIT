@@ -20,14 +20,12 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Service.NotificationLocationService
+import okhttp3.OkHttpClient
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
-import java.security.KeyManagementException
-import java.security.KeyStore
-import java.security.KeyStoreException
-import java.security.NoSuchAlgorithmException
+import java.security.*
 import java.security.cert.CertificateException
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
@@ -188,6 +186,47 @@ object Config {
         val sslContext = SSLContext.getInstance("TLS")
         sslContext.init(null, wrappedTrustManagers, null)
         return sslContext.socketFactory
+    }
+
+
+    fun getUnsafeOkHttpClient(): OkHttpClient.Builder? {
+        return try {
+            // Create a trust manager that does not validate certificate chains
+            val trustAllCerts = arrayOf<TrustManager>(
+                object : X509TrustManager {
+                    @Throws(CertificateException::class)
+                    override fun checkClientTrusted(
+                        chain: Array<X509Certificate?>?,
+                        authType: String?
+                    ) {
+                    }
+
+                    @Throws(CertificateException::class)
+                    override fun checkServerTrusted(
+                        chain: Array<X509Certificate?>?,
+                        authType: String?
+                    ) {
+                    }
+
+                    override fun getAcceptedIssuers(): Array<X509Certificate?>? {
+                        return arrayOf()
+                    }
+                }
+            )
+
+            // Install the all-trusting trust manager
+            val sslContext = SSLContext.getInstance("SSL")
+            sslContext.init(null, trustAllCerts, SecureRandom())
+
+            // Create an ssl socket factory with our all-trusting manager
+            val sslSocketFactory = sslContext.socketFactory
+            val builder =  OkHttpClient.Builder()
+            builder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
+            builder.hostnameVerifier(HostnameVerifier { hostname, session -> true })
+            builder
+        } catch (e: java.lang.Exception) {
+            throw RuntimeException(e)
+        }
     }
 
     object Utils {

@@ -604,6 +604,9 @@ interface ApiInterface {
 
     @POST("ServiceAssign/CustomerBalanceDetails")
     fun getCustomerBalance(@Body body: RequestBody): Call<String>
+    @POST("UserValidations/AuthorizationDetails")
+    fun getAuthorizationDashDetails(@Body body: RequestBody): Call<String>
+
 
     @POST("ServiceFollowUp/ServiceHistoryDetails")
     fun getServiceHist(@Body body: RequestBody): Call<String>
