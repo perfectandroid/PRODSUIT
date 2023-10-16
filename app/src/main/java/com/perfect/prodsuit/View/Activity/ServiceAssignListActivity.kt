@@ -114,6 +114,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
     var ID_CustomerServiceRegister: String? = ""
     var FK_CustomerserviceregisterProductDetails: String? = ""
     var TicketStatus: String? = ""
+    var TicketDate: String? = ""
 
     var ID_Priority: String? = ""
 
@@ -390,6 +391,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
             val jsonObject = serviceListArrayList.getJSONObject(position)
             ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
             FK_CustomerserviceregisterProductDetails = jsonObject.getString("ID_CustomerServiceRegisterProductDetails")
+            TicketDate = jsonObject.getString("TicketDate")
             TicketStatus = jsonObject.getString("TicketStatus")
 
             Log.i("FKK",FK_CustomerserviceregisterProductDetails.toString())
@@ -397,6 +399,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
             i.putExtra("ID_CustomerServiceRegister",ID_CustomerServiceRegister)
             i.putExtra("FK_CustomerserviceregisterProductDetails",FK_CustomerserviceregisterProductDetails)
             i.putExtra("TicketStatus",TicketStatus)
+            i.putExtra("TicketDate",TicketDate)
             startActivity(i)
         }
         if (data.equals("ServiceEdit")) {
