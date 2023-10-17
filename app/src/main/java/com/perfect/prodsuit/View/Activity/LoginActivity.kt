@@ -28,6 +28,7 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.GoogleApiClient
 import com.perfect.nbfcmscore.Helper.PicassoTrustAll
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.DBHelper
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.LoginActivityViewModel
 import org.json.JSONObject
@@ -54,6 +55,8 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
     var img_logo: ImageView? = null
     var img_technology: ImageView? = null
 
+    var db : DBHelper? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -67,6 +70,9 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
         img_technology = findViewById(R.id.img_technology)
         setTechnologyPartner()
         checkLocationPermission()
+        db = DBHelper(this, null)
+
+        deleteChatData()
 
         Log.e(TAG,"99991   Start")
         Config.deleteFcmToken(context)
@@ -99,6 +105,32 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
             val intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
             startActivityForResult(intent, RC_SIGN_IN)
         }
+    }
+
+    private fun deleteChatData() {
+
+        try {
+            db!!.deleteChatdb()
+
+            val Fbase_NameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF68, 0)
+            val Fbase_NameEditer = Fbase_NameSP.edit()
+            Fbase_NameEditer.putString("Fbase_Name","")
+            Fbase_NameEditer.commit()
+
+            val Fbase_MobileSP = applicationContext.getSharedPreferences(Config.SHARED_PREF69, 0)
+            val Fbase_MobileEditer = Fbase_MobileSP.edit()
+            Fbase_MobileEditer.putString("Fbase_Mobile","")
+            Fbase_MobileEditer.commit()
+
+            var timestampSP = applicationContext.getSharedPreferences(Config.SHARED_PREF70, 0)
+            var timestampEditer = timestampSP.edit()
+            timestampEditer.putString("timestamp","")
+            timestampEditer.commit()
+
+        }catch (e: Exception){
+
+        }
+
     }
 
     private fun setTechnologyPartner() {

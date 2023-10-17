@@ -1009,8 +1009,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                val intent = Intent(this, ProductSearchActivity::class.java)
 //                startActivity(intent)
 
-                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
+//                startActivity(i)
 
 
 //                val i = Intent(this@HomeActivity, StockTransferActivity::class.java)
@@ -1041,6 +1041,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
 //                val i = Intent(this@HomeActivity, StockRequestActivity::class.java)
+//                startActivity(i)
+
+//                val i = Intent(this@HomeActivity, ChatRegisterActivity::class.java)
 //                startActivity(i)
 
             }
@@ -1112,6 +1115,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 //                val i = Intent(this@HomeActivity, ApprovalListDetailActivity::class.java)
 //                startActivity(i)
+
+
 
             }
         }

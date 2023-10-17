@@ -476,4 +476,7 @@
 
     <color name="more_textcolor">#4A7763</color>
 
+    <color name="color_chat_my">#2e666a</color>
+    <color name="color_chat_op">#565B75</color>
+
 </resources>

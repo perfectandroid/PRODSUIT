@@ -22,8 +22,11 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/btn_shape_submit1.xml" value="0.2675" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/gradient_lead.xml" value="0.151" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/gradient_list.xml" value="0.151" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/ic_send_24.xml" value="0.2465" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/invalid_user.xml" value="0.1685" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/leadfrom_color.xml" value="0.1" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/message_box.xml" value="0.2465" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/my_msg_back.xml" value="0.2465" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/noproduct_svg.xml" value="0.2625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/profile_home_1.xml" value="0.2675" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/search_24.xml" value="0.2675" />
@@ -42,6 +45,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bottom_shadow.xml" value="0.1725" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bottom_shadow_trans.xml" value="0.1725" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_bottomleft.xml" value="0.2595" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_chat_letter.xml" value="0.2465" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_confirm_detail.xml" value="0.2625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient1.xml" value="0.2765" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shape_gradient2.xml" value="0.2765" />
@@ -90,6 +94,9 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_approval_list_detail.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_approve.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_authorization_mini_dashboard.xml" value="0.328125" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_chat1.xml" value="0.27760416666666665" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_chat_register.xml" value="0.30052083333333335" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_chat_user_list.xml" value="0.28854166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_common_search.xml" value="0.5" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_correction_splitup.xml" value="0.19166666666666668" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.346875" />
@@ -151,6 +158,9 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_authdash.xml" value="0.27447916666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_authdash_single.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_branch.xml" value="0.2708333333333333" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_chat1.xml" value="0.27760416666666665" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_chat_alluser.xml" value="0.27760416666666665" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_chat_user.xml" value="0.2838541666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_common_searchlist.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_confirm_material_usage.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_correction_splitup.xml" value="0.33" />
@@ -178,6 +188,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_search_module.xml" value="0.31354166666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service.xml" value="0.31354166666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_assign.xml" value="0.3625" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_assign_list.xml" value="0.2984375" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_stage.xml" value="0.34427083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_stock_details.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_stock_mode.xml" value="0.2708333333333333" />
@@ -195,6 +206,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/alert_invalid_user.xml" value="0.2869791666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/authorization_reject.xml" value="0.3260416666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/branch_popup.xml" value="0.2140625" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/chat_alluser_popup.xml" value="0.234375" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/company_test1.xml" value="0.26944444444444443" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirm_material_usage.xml" value="0.35989583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirm_stock_transfer.xml" value="0.33" />
