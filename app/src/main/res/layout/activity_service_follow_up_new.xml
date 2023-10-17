@@ -1083,7 +1083,122 @@
 
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="0dp"
+                                app:cardElevation="2dp"
+                                app:cardMaxElevation="1dp">
 
+                                <LinearLayout
+                                    android:id="@+id/ll_servicehist"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tv_ServiceHistory"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:drawableLeft="@drawable/svg_action_taken"
+                                        android:drawableRight="@drawable/down_arrows"
+                                        android:drawablePadding="10dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:padding="7dp"
+                                        android:text="Service History"
+                                        android:textColor="@color/greydarks"
+                                        android:textSize="16dp" />
+
+                                    <ScrollView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <LinearLayout
+                                            android:id="@+id/lin_ServceHist"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@color/white"
+                                            android:gravity="bottom"
+                                            android:orientation="vertical"
+                                            android:visibility="gone"
+                                            tools:ignore="MissingConstraints">
+
+
+
+
+
+                                        </LinearLayout>
+
+                                    </ScrollView>
+
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="0dp"
+                                app:cardElevation="2dp"
+                                app:cardMaxElevation="1dp">
+
+                                <LinearLayout
+                                    android:id="@+id/ll_WarantyAMC"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tv_WarantyAMC"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:drawableLeft="@drawable/svg_action_taken"
+                                        android:drawableRight="@drawable/down_arrows"
+                                        android:drawablePadding="10dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:padding="7dp"
+                                        android:text="Warranty/AMC Details"
+                                        android:textColor="@color/greydarks"
+                                        android:textSize="16dp" />
+
+                                    <ScrollView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <LinearLayout
+                                            android:id="@+id/lin_WarrantyAMC"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@color/white"
+                                            android:gravity="bottom"
+                                            android:orientation="vertical"
+                                            android:visibility="gone"
+                                            tools:ignore="MissingConstraints">
+
+
+
+
+
+                                        </LinearLayout>
+
+                                    </ScrollView>
+
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
 
                         </LinearLayout>
 
