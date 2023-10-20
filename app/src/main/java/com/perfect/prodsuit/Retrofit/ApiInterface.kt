@@ -602,7 +602,16 @@ interface ApiInterface {
     @POST("Project/UpdateMaterialRequest")
     fun getUpdateMaterialRequest(@Body body: RequestBody): Call<String>
 
+    @POST("ServiceAssign/CustomerBalanceDetails")
+    fun getCustomerBalance(@Body body: RequestBody): Call<String>
+    @POST("UserValidations/AuthorizationDetails")
+    fun getAuthorizationDashDetails(@Body body: RequestBody): Call<String>
 
 
+    @POST("ServiceFollowUp/ServiceHistoryDetails")
+    fun getServiceHist(@Body body: RequestBody): Call<String>
+
+    @POST("ServiceFollowUp/WarrantyAMCDetails")
+    fun getWarrantyAMC(@Body body: RequestBody): Call<String>
 
 }

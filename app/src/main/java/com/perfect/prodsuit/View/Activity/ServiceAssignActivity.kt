@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -39,7 +40,16 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     internal var llNew: LinearLayout? = null
     internal var llOnGoing: LinearLayout? = null
 
+    internal var ll_prdcomplnt: LinearLayout? = null
+    internal var ll_prddescrptn: LinearLayout? = null
+    internal var ll_prdnamepick: LinearLayout? = null
+
     internal var card_details: CardView? = null
+    internal var crdvw_tkt: CardView? = null
+    internal var crdvw_srvce: CardView? = null
+    internal var crdvw_product: CardView? = null
+    internal var crdvw_pickup: CardView? = null
+
     internal var recyServiceAssign: RecyclerView? = null
 
     lateinit var serviceAssignViewModel: ServiceAssignViewModel
@@ -51,6 +61,17 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     private var tv_ProductClick: TextView? = null
     private var tv_ListClick: TextView? = null
     private var txtv_head: TextView? = null
+    private var txtv_reqtimetitle: TextView? = null
+    private var txtv_remrkk: TextView? = null
+    private var tv_PickupClick: TextView? = null
+
+    private var tv_ProductNamePick: TextView? = null
+    private var tv_ProductComplaintPick: TextView? = null
+    private var tv_DescriptionPick: TextView? = null
+
+
+
+
 
 
     private var rltv_allViews: RelativeLayout? = null
@@ -59,6 +80,11 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     private var lnrHead_Product: LinearLayout? = null
     private var lnrHead_List: LinearLayout? = null
     private var ll_lstclick: LinearLayout? = null
+    private var lnrHead_Pickup: LinearLayout? = null
+
+    private var ll_productname: LinearLayout? = null
+    private var ll_productcomplnt: LinearLayout? = null
+    private var ll_productdescrptn: LinearLayout? = null
 
 
    // Ticket Information
@@ -68,6 +94,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     private var tv_ContactNo: TextView? = null
     private var tv_Address: TextView? = null
     private var tv_Mobile: TextView? = null
+    private var txtv_reqdatetitle: TextView? = null
+
 
    // Service Information
    private var tv_RequestedDate: TextView? = null
@@ -87,6 +115,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     private var tie_Department: TextInputEditText? = null
     private var tie_Employee: TextInputEditText? = null
     private var tie_Role: TextInputEditText? = null
+    private var til_Remarks: TextInputLayout? = null
+
 
     private var til_VisitDate: TextInputLayout? = null
     private var til_VisitTime: TextInputLayout? = null
@@ -94,6 +124,10 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     private var til_Department: TextInputLayout? = null
     private var til_Employee: TextInputLayout? = null
     private var til_Role: TextInputLayout? = null
+    private var til_vehicleDetail: TextInputLayout? = null
+    private var txtv_custbalnce: TextView? = null
+
+
 
     private var btnClear: Button? = null
     private var btnAdd: Button? = null
@@ -149,6 +183,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     var serviceMode: String? = "1"
     var productMode: String? = "1"
     var listMode: String? = "1"
+    var pickupMode: String? = "1"
 
     var arrSaveUpdate: String? = "0"
     var arrIndexUpdate: Int? = 0
@@ -172,6 +207,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     var strProductComplaint: String? = ""
     var strProductDescription: String? = ""
     var strPriorityName: String? = ""
+    var TicketDate: String? = ""
 //    var str: String? = ""
 
     var serUpdateCount = 0
@@ -190,19 +226,19 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
         serviceRoleViewModel = ViewModelProvider(this).get(ServiceRoleViewModel::class.java)
-
         serviceAssignViewModel = ViewModelProvider(this).get(ServiceAssignViewModel::class.java)
 
         setRegViews()
         ID_CustomerServiceRegister = intent.getStringExtra("ID_CustomerServiceRegister")
         FK_CustomerserviceregisterProductDetails = intent.getStringExtra("FK_CustomerserviceregisterProductDetails")
         TicketStatus = intent.getStringExtra("TicketStatus")
-        Log.e(TAG,"ID_CustomerServiceRegister  163   "+ID_CustomerServiceRegister+"\n"+FK_CustomerserviceregisterProductDetails+"\n"+TicketStatus)
+        TicketDate = intent.getStringExtra("TicketDate")
+        Log.e(TAG,"ID_CustomerServiceRegister  163   "+ID_CustomerServiceRegister+"\n"+FK_CustomerserviceregisterProductDetails+"\n"+TicketDate)
 //        ticketMode = "0"
 //        hideViews()
         checkAttendance()
         getCurrentdateTime()
-        getServiceAssignDetails(TicketStatus)
+        getServiceAssignDetails(TicketStatus,TicketDate)
 
 
 
@@ -265,18 +301,39 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         arrProducts = JSONArray()
 
         recyServiceAssign = findViewById<RecyclerView>(R.id.recyServiceAssign)
+        crdvw_tkt = findViewById<CardView>(R.id.crdvw_tkt)
+        crdvw_pickup= findViewById<CardView>(R.id.crdvw_pickup)
+        crdvw_srvce = findViewById<CardView>(R.id.crdvw_srvce)
+        crdvw_product = findViewById<CardView>(R.id.crdvw_product)
         card_details = findViewById<CardView>(R.id.card_details)
+        txtv_reqdatetitle= findViewById<TextView>(R.id.txtv_reqdatetitle)
+        txtv_reqtimetitle= findViewById<TextView>(R.id.txtv_reqtimetitle)
 
         tv_TicketClick = findViewById<TextView>(R.id.tv_TicketClick)
         tv_ServiceClick = findViewById<TextView>(R.id.tv_ServiceClick)
         tv_ProductClick = findViewById<TextView>(R.id.tv_ProductClick)
         tv_ListClick = findViewById<TextView>(R.id.tv_ListClick)
         txtv_head= findViewById<TextView>(R.id.txtv_head)
+        txtv_remrkk= findViewById<TextView>(R.id.txtv_remrkk)
+        tv_PickupClick= findViewById<TextView>(R.id.tv_PickupClick)
+        til_Remarks= findViewById(R.id.til_Remarks)as TextInputLayout
+
+        tv_ProductNamePick= findViewById<TextView>(R.id.tv_ProductNamePick)
+        tv_ProductComplaintPick= findViewById<TextView>(R.id.tv_ProductComplaintPick)
+        tv_DescriptionPick= findViewById<TextView>(R.id.tv_DescriptionPick)
+
+        txtv_custbalnce= findViewById(R.id.txtv_custbalnce)as TextView
+
+
+
 
         tv_TicketClick!!.setOnClickListener(this)
         tv_ServiceClick!!.setOnClickListener(this)
         tv_ProductClick!!.setOnClickListener(this)
+        tv_PickupClick!!.setOnClickListener(this)
         tv_ListClick!!.setOnClickListener(this)
+        txtv_custbalnce!!.setOnClickListener(this)
+
 
         rltv_allViews = findViewById<RelativeLayout>(R.id.rltv_allViews)
         lnrHead_Ticket = findViewById<LinearLayout>(R.id.lnrHead_Ticket)
@@ -284,6 +341,18 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         lnrHead_Product = findViewById<LinearLayout>(R.id.lnrHead_Product)
         lnrHead_List = findViewById<LinearLayout>(R.id.lnrHead_List)
         ll_lstclick= findViewById<LinearLayout>(R.id.ll_lstclick)
+        lnrHead_Pickup= findViewById<LinearLayout>(R.id.lnrHead_Pickup)
+       // ll_vehicledetail= findViewById<LinearLayout>(R.id.ll_vehicledetail)
+
+        ll_productname= findViewById<LinearLayout>(R.id.ll_productname)
+        ll_productdescrptn= findViewById<LinearLayout>(R.id.ll_productdescrptn)
+        ll_productcomplnt= findViewById<LinearLayout>(R.id.ll_productcomplnt)
+
+        ll_prdcomplnt= findViewById<LinearLayout>(R.id.ll_prdcomplnt)
+        ll_prddescrptn= findViewById<LinearLayout>(R.id.ll_prddescrptn)
+        ll_prdnamepick= findViewById<LinearLayout>(R.id.ll_prdnamepick)
+
+
 
         // Ticket Information
 
@@ -318,9 +387,11 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         til_VisitDate = findViewById<TextInputLayout>(R.id.til_VisitDate)
         til_VisitTime = findViewById<TextInputLayout>(R.id.til_VisitTime)
         til_Priority = findViewById<TextInputLayout>(R.id.til_Priority)
-        til_Department = findViewById<TextInputLayout>(R.id.til_Department)
+        til_Department = findViewById(R.id.til_Department)as TextInputLayout
         til_Employee = findViewById<TextInputLayout>(R.id.til_Employee)
-        til_Role = findViewById<TextInputLayout>(R.id.til_Role)
+        til_Role = findViewById(R.id.til_Role)as TextInputLayout
+        til_vehicleDetail= findViewById(R.id.til_vehicleDetail)as TextInputLayout
+
 
         btnSave = findViewById<Button>(R.id.btnSave)
 
@@ -351,7 +422,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
     }
 
-    private fun getServiceAssignDetails(TicketStatus: String?) {
+    private fun getServiceAssignDetails(TicketStatus: String?, TicketDate: String?) {
         var ReqMode = "76"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -406,6 +477,12 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                                 tv_ProductClick!!.setText("Product Details")
                                                 ll_lstclick!!.visibility=View.GONE
 
+
+                                                crdvw_tkt !!.visibility=View.VISIBLE
+                                                crdvw_srvce !!.visibility=View.VISIBLE
+                                                crdvw_product !!.visibility=View.VISIBLE
+                                                crdvw_pickup!!.visibility=View.GONE
+
                                                 tv_Ticket!!.setText(""+strTicket)
                                                 tv_LandMark!!.setText(""+strLandmark)
                                                 tv_Customer!!.setText(""+strCustomer)
@@ -414,9 +491,14 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                                 tv_Mobile!!.setText(""+strMobile)
                                                 txtv_head!!.setText("Service Assign")
 
+                                             //  til_Remarks!!.visibility=View.VISIBLE
+                                              // til_vehicleDetail!!.visibility=View.GONE
+
+                                             /*
+                                                til_Department!!.visibility=View.VISIBLE*/
                                                 // Service Information
 
-                                                tv_RequestedDate!!.setText(""+strReqDate)
+                                               tv_RequestedDate!!.setText(""+strReqDate)
                                                 tv_RequestedTime!!.setText(""+strReqTime)
 
                                                 // Product Details
@@ -434,6 +516,11 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             tv_ServiceClick!!.setText("Service Information")
                                             tv_ProductClick!!.setText("Product Details")
                                             ll_lstclick!!.visibility=View.GONE
+
+                                            crdvw_tkt !!.visibility=View.VISIBLE
+                                            crdvw_srvce !!.visibility=View.VISIBLE
+                                            crdvw_product !!.visibility=View.VISIBLE
+
 
                                             tv_Ticket!!.setText(""+strTicket)
                                             tv_LandMark!!.setText(""+strLandmark)
@@ -465,6 +552,18 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             tv_ProductClick!!.setText("Product Details")
                                             ll_lstclick!!.visibility=View.GONE
 
+                                            crdvw_tkt !!.visibility=View.VISIBLE
+                                            crdvw_srvce !!.visibility=View.VISIBLE
+                                            crdvw_product !!.visibility=View.VISIBLE
+
+
+                                         /*   til_Remarks!!.visibility=View.VISIBLE
+                                            til_vehicleDetail!!.visibility=View.GONE
+                                            til_Department!!.visibility=View.VISIBLE*/
+
+
+                                           // til_Remarks!!.visibility=View.GONE
+
                                             tv_Ticket!!.setText(""+strTicket)
                                             tv_LandMark!!.setText(""+strLandmark)
                                             tv_Customer!!.setText(""+strCustomer)
@@ -492,8 +591,34 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                         else if (TicketStatus.equals("5"))
                                         {
                                             tv_ServiceClick!!.setText("Followup Details")
-                                            tv_ProductClick!!.setText("Product Details")
+                                            tv_ProductClick!!.setText("Pickup Information")
                                             ll_lstclick!!.visibility=View.VISIBLE
+
+                                            txtv_reqdatetitle!!.setText("Follow Up Date")
+                                            txtv_remrkk!!.visibility=View.VISIBLE
+                                            txtv_reqtimetitle!!.visibility=View.GONE
+
+
+
+
+                                            tv_PickupClick!!.setText("Product Details")
+
+                                            crdvw_pickup!!.visibility=View.VISIBLE
+                                            crdvw_tkt !!.visibility=View.VISIBLE
+                                            crdvw_srvce !!.visibility=View.VISIBLE
+                                            crdvw_product !!.visibility=View.VISIBLE
+
+                                           ll_productname!!.visibility=View.GONE
+                                            ll_productcomplnt!!.visibility=View.GONE
+                                            ll_productdescrptn!!.visibility=View.GONE
+
+                                            ll_prdcomplnt!!.visibility=View.VISIBLE
+                                            ll_prddescrptn!!.visibility=View.VISIBLE
+                                            ll_prdnamepick!!.visibility=View.VISIBLE
+                                            til_Remarks!!.visibility=View.GONE
+                                            til_Department !!.visibility=View.GONE
+                                            til_Role!!.visibility=View.GONE
+                                            til_vehicleDetail!!.visibility=View.VISIBLE
 
                                             tv_Ticket!!.setText(""+strTicket)
                                             tv_LandMark!!.setText(""+strLandmark)
@@ -502,6 +627,9 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             tv_Address!!.setText(""+strAddress)
                                             tv_Mobile!!.setText(""+strMobile)
                                             txtv_head!!.setText("PickUp Assign")
+                                            til_VisitDate!!.hint="PickUp Date"
+                                            til_VisitTime!!.hint = "PickUp Time"
+
 
 
                                             // Service Information
@@ -510,9 +638,14 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             tv_RequestedTime!!.setText(""+strReqTime)
 
                                             // Product Details
-                                            tv_ProductName!!.setText(""+strProductname)
-                                            tv_ProductComplaint!!.setText(""+strProductComplaint)
-                                            tv_Description!!.setText(""+strProductDescription)
+                                            tv_ProductNamePick!!.setText(""+strProductname)
+                                            tv_ProductComplaintPick!!.setText(""+strProductComplaint)
+                                            tv_DescriptionPick!!.setText(""+strProductDescription)
+
+
+
+
+
 
                                             ID_Priority = jobjt.getString("Priority")
                                             tie_Priority!!.setText(""+strPriorityName)
@@ -528,6 +661,9 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             ll_lstclick!!.visibility=View.GONE
                                             txtv_head!!.setText("Replacement Request")
 
+                                            crdvw_tkt !!.visibility=View.VISIBLE
+                                            crdvw_srvce !!.visibility=View.VISIBLE
+                                            crdvw_product !!.visibility=View.VISIBLE
 
                                             tv_Ticket!!.setText(""+strTicket)
                                             tv_LandMark!!.setText(""+strLandmark)
@@ -558,6 +694,12 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             ll_lstclick!!.visibility=View.VISIBLE
                                             txtv_head!!.setText("Delivery Assign")
 
+
+                                            crdvw_tkt !!.visibility=View.VISIBLE
+                                            crdvw_srvce !!.visibility=View.VISIBLE
+                                            crdvw_product !!.visibility=View.VISIBLE
+
+
                                             tv_Ticket!!.setText(""+strTicket)
                                             tv_LandMark!!.setText(""+strLandmark)
                                             tv_Customer!!.setText(""+strCustomer)
@@ -587,6 +729,10 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             tv_ProductClick!!.setText("Product Details")
                                             ll_lstclick!!.visibility=View.VISIBLE
                                             txtv_head!!.setText("Delivery Assign")
+
+                                            crdvw_tkt !!.visibility=View.VISIBLE
+                                            crdvw_srvce !!.visibility=View.VISIBLE
+                                            crdvw_product !!.visibility=View.VISIBLE
 
                                             tv_Ticket!!.setText(""+strTicket)
                                             tv_LandMark!!.setText(""+strLandmark)
@@ -748,6 +894,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 serviceMode  = "1"
                 productMode = "1"
                 listMode = "1"
+                pickupMode="1"
                 hideViews()
             }
 
@@ -756,6 +903,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 serviceMode  = "0"
                 productMode = "1"
                 listMode = "1"
+                pickupMode="1"
                 hideViews()
             }
 
@@ -764,6 +912,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 serviceMode  = "1"
                 productMode = "0"
                 listMode = "1"
+                pickupMode="1"
                 hideViews()
             }
 
@@ -772,9 +921,18 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 serviceMode  = "1"
                 productMode = "1"
                 listMode = "0"
+                pickupMode="1"
                 hideViews()
             }
 
+            R.id.tv_PickupClick->{
+                ticketMode = "1"
+                serviceMode  = "1"
+                productMode = "1"
+                listMode = "1"
+                pickupMode="0"
+                hideViews()
+            }
 
 
             R.id.tie_VisitDate->{
@@ -797,15 +955,25 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 getDepartment()
             }
             R.id.tie_Employee->{
-                if (ID_Department.equals("")){
+                if(til_Department!!.visibility==View.VISIBLE)
+                {
+                    if (ID_Department.equals("")){
 
-                    Config.snackBars(context,v,"Select Department")
+                        Config.snackBars(context,v,"Select Department")
 
-                }else{
+                    }else{
+                        Config.disableClick(v)
+                        employee = 0
+                        getEmployee()
+                    }
+                }
+                else if(til_Department!!.visibility==View.GONE)
+                {
                     Config.disableClick(v)
                     employee = 0
                     getEmployee()
                 }
+
             }
             R.id.tie_Role->{
                 Config.disableClick(v)
@@ -830,6 +998,11 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
             }
 
+            R.id.txtv_custbalnce->{
+                val i = Intent(this@ServiceAssignActivity, CustomerBalanceActivity::class.java)
+                i.putExtra("TicketDate",TicketDate)
+                startActivity(i)
+            }
 
         }
     }
@@ -883,38 +1056,75 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     }
 
     private fun addValidation() {
-//        strVisitDate = tie_VisitDate!!.text.toString()
-//        strVisitTime = tie_VisitTime!!.text.toString()
-        strRemark = tie_Remarks!!.text.toString()
+      //  try {
 
-        if (strVisitDate.equals("")){
-            til_VisitDate!!.setError("Select Visit Date");
-            til_VisitDate!!.setErrorIconDrawable(null)
-        }
-        else if (strVisitTime.equals("")){
-            til_VisitTime!!.setError("Select Visit Time");
-            til_VisitTime!!.setErrorIconDrawable(null)
-        }
-        else if (ID_Priority.equals("")){
-            til_Priority!!.setError("Select Priority");
-            til_Priority!!.setErrorIconDrawable(null)
-        }
+            if(tie_Remarks!!.visibility==View.GONE)
+            {
+                strRemark = txtv_remrkk!!.text.toString()
+            }
+            else if(tie_Remarks!!.visibility==View.VISIBLE)
+            {
+                strRemark = tie_Remarks!!.text.toString()
+            }
 
-        else if (ID_Department.equals("")){
-            til_Department!!.setError("Select Department");
-            til_Department!!.setErrorIconDrawable(null)
-        }
-        else if (ID_Employee.equals("")){
-            til_Employee!!.setError("Select Employee");
-            til_Employee!!.setErrorIconDrawable(null)
-        }
-        else if (ID_Role.equals("")){
-            til_Role!!.setError("Select Role");
-            til_Role!!.setErrorIconDrawable(null)
-        }
-        else{
 
-            val jObject = JSONObject()
+            //Log.i("Remarks", strRemark!!)
+
+            if (strVisitDate.equals("")){
+                til_VisitDate!!.setError("Select Visit Date");
+                til_VisitDate!!.setErrorIconDrawable(null)
+            }
+            else if (strVisitTime.equals("")){
+                til_VisitTime!!.setError("Select Visit Time");
+                til_VisitTime!!.setErrorIconDrawable(null)
+            }
+            else if (ID_Priority.equals("")){
+                til_Priority!!.setError("Select Priority");
+                til_Priority!!.setErrorIconDrawable(null)
+            }
+
+            else if (ID_Department.equals("")){
+
+                if(til_Department!!.isShown)
+                {
+                    til_Department!!.setError("Select Department");
+                    til_Department!!.setErrorIconDrawable(null)
+                }
+                else if(!til_Department!!.isShown){
+
+                }
+
+
+
+
+            }
+            else if (ID_Employee.equals("")){
+
+                til_Employee!!.setError("Select Employee");
+                til_Employee!!.setErrorIconDrawable(null)
+
+
+            }
+
+
+            else if (ID_Role.equals("")){
+
+
+                til_Role!!.setError("Select Role");
+                til_Role!!.setErrorIconDrawable(null)
+
+
+
+
+
+            }
+
+
+
+            else
+            {
+
+                val jObject = JSONObject()
 //            jObject.put("visit_date", strVisitDate)
 //            jObject.put("visit_time", strVisitTime)
 //            jObject.put("id_priority",ID_Priority )
@@ -927,68 +1137,94 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 //            jObject.put("id_role", ID_Role)
 //            jObject.put("role", tie_Role!!.text.toString())
 
-            jObject.put("DepartmentID",ID_Department)
-            jObject.put("Department",tie_Department!!.text.toString())
 
-            jObject.put("ID_Employee", ID_Employee)
-            jObject.put("Employee", tie_Employee!!.text.toString())
-
-            jObject.put("ID_CSAEmployeeType",ID_Role) // Role
-            jObject.put("EmployeeType",tie_Role!!.text.toString()) // Role
-
-
-
-            if (arrSaveUpdate.equals("0")){
-             //   jObject.put("ExistType","1") // ExistType = 0 Exist ,1 = Not
-                var hasId = hasEmployee(arrProducts,"ID_Employee",ID_Employee!!)
-                Log.e(TAG,"367122    "+hasId)
-                if (hasId == true){
-                    card_details!!.visibility = View.VISIBLE
-                    arrProducts.put(jObject)
-                    viewList(arrProducts)
-                    resetData("1")
-
-                    ticketMode = "1"
-                    serviceMode  = "1"
-                    productMode = "1"
-                    listMode = "0"
-                    hideViews()
-                }else{
-                    til_Employee!!.setError(" Employee already exists.");
-                    til_Employee!!.setErrorIconDrawable(null)
+                if(til_Department!!.isShown)
+                {
+                    jObject.put("Department",tie_Department!!.text.toString())
+                    jObject.put("DepartmentID",ID_Department)
                 }
+                else if(!til_Department!!.isShown)
+                {
+                    jObject.put("Department","")
+                    jObject.put("DepartmentID","")
+                }
+
+
+                jObject.put("ID_Employee", ID_Employee)
+                jObject.put("Employee", tie_Employee!!.text.toString())
+                if(til_Role!!.visibility==View.VISIBLE){
+                    jObject.put("ID_CSAEmployeeType",ID_Role) // Role
+                    jObject.put("EmployeeType",tie_Role!!.text.toString())
+                }
+                else   if(til_Role!!.visibility==View.GONE){
+                    jObject.put("ID_CSAEmployeeType","") // Role
+                    jObject.put("EmployeeType","")
+                }
+                // Role
+
+
+
+                if (arrSaveUpdate.equals("0")){
+                    //   jObject.put("ExistType","1") // ExistType = 0 Exist ,1 = Not
+                    var hasId = hasEmployee(arrProducts,"ID_Employee",ID_Employee!!)
+                    Log.e(TAG,"367122    "+hasId)
+                    if (hasId == true){
+                        card_details!!.visibility = View.VISIBLE
+                        arrProducts.put(jObject)
+                        viewList(arrProducts)
+                        resetData("1")
+
+                        ticketMode = "1"
+                        serviceMode  = "1"
+                        productMode = "1"
+                        listMode = "0"
+                        hideViews()
+                    }else{
+                        til_Employee!!.setError(" Employee already exists.");
+                        til_Employee!!.setErrorIconDrawable(null)
+                    }
+                }
+                if (arrSaveUpdate.equals("1")){
+                    //    jObject.put("ExistType","0") // ExistType = 0 Exist ,1 = Not
+
+                    var hasId = hasEmployee(arrProducts,"ID_Employee",ID_Employee!!)
+                    Log.e(TAG,"367122    "+hasId)
+                    if (hasId == true){
+                        card_details!!.visibility = View.VISIBLE
+
+                        Log.e(TAG,"arrProducts  6091  "+arrProducts)
+                        arrProducts.remove(arrIndexUpdate!!)
+                        Log.e(TAG,"arrProducts  6092  "+arrProducts)
+                        arrProducts.put(arrIndexUpdate!!,jObject)
+                        Log.e(TAG,"arrProducts  6093  "+arrProducts)
+                        viewList(arrProducts)
+                        resetData("1")
+
+                        ticketMode = "1"
+                        serviceMode  = "1"
+                        productMode = "1"
+                        listMode = "0"
+                        hideViews()
+                    }
+                    else{
+                        til_Employee!!.setError(" Employee already exists.");
+                        til_Employee!!.setErrorIconDrawable(null)
+                    }
+
+                }
+
+                Log.e(TAG,"  3671221     "+arrProducts)
             }
-            if (arrSaveUpdate.equals("1")){
-            //    jObject.put("ExistType","0") // ExistType = 0 Exist ,1 = Not
 
-                var hasId = hasEmployee(arrProducts,"ID_Employee",ID_Employee!!)
-                Log.e(TAG,"367122    "+hasId)
-                if (hasId == true){
-                    card_details!!.visibility = View.VISIBLE
+    /*    }
+        catch (e:Exception)
+        {
+            Log.e(TAG,"Exception   validation   "+e.toString())
+        }*/
+//        strVisitDate = tie_VisitDate!!.text.toString()
+//        strVisitTime = tie_VisitTime!!.text.toString()
 
-                    Log.e(TAG,"arrProducts  6091  "+arrProducts)
-                    arrProducts.remove(arrIndexUpdate!!)
-                    Log.e(TAG,"arrProducts  6092  "+arrProducts)
-                    arrProducts.put(arrIndexUpdate!!,jObject)
-                    Log.e(TAG,"arrProducts  6093  "+arrProducts)
-                    viewList(arrProducts)
-                    resetData("1")
 
-                    ticketMode = "1"
-                    serviceMode  = "1"
-                    productMode = "1"
-                    listMode = "0"
-                    hideViews()
-                }
-                else{
-                    til_Employee!!.setError(" Employee already exists.");
-                    til_Employee!!.setErrorIconDrawable(null)
-                }
-
-            }
-
-            Log.e(TAG,"  3671221     "+arrProducts)
-        }
     }
 
     fun hasEmployee(json: JSONArray, key: String, value: String): Boolean {
@@ -1736,6 +1972,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         lnrHead_Service!!.visibility = View.VISIBLE
         lnrHead_Product!!.visibility = View.VISIBLE
         lnrHead_List!!.visibility = View.VISIBLE
+        lnrHead_Pickup!!.visibility = View.VISIBLE
 
         if (arrProducts.length() > 0){
             tv_no_record!!.visibility =View.GONE
@@ -1754,6 +1991,9 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         }
         if (listMode.equals("1")) {
             lnrHead_List!!.visibility = View.GONE
+        }
+        if (pickupMode.equals("1")) {
+            lnrHead_Pickup!!.visibility = View.GONE
         }
     }
 

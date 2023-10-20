@@ -69,6 +69,10 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     private var lin_replacePoductCost: LinearLayout? = null
     private var lin_attendance: LinearLayout? = null
     private var lin_Action_Taken: LinearLayout? = null
+    private var ll_servicehist: LinearLayout? = null
+    private var ll_WarantyAMC: LinearLayout? = null
+
+
 
     private var lin_add_service: LinearLayout? = null
     private var lin_add_replaced_product: LinearLayout? = null
@@ -364,6 +368,8 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         lin_replacePoductCost = findViewById<LinearLayout>(R.id.lin_replacePoductCost)
         lin_attendance = findViewById<LinearLayout>(R.id.lin_attendance)
         lin_Action_Taken = findViewById<LinearLayout>(R.id.lin_Action_Taken)
+        ll_servicehist = findViewById<LinearLayout>(R.id.ll_servicehist)
+        ll_WarantyAMC= findViewById<LinearLayout>(R.id.ll_WarantyAMC)
 
         lin_add_service = findViewById<LinearLayout>(R.id.lin_add_service)
         lin_add_replaced_product = findViewById<LinearLayout>(R.id.lin_add_replaced_product)
@@ -448,6 +454,13 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
         lin_add_service!!.setOnClickListener(this)
         lin_add_replaced_product!!.setOnClickListener(this)
+
+        ll_servicehist!!.setOnClickListener(this)
+        ll_WarantyAMC!!.setOnClickListener(this)
+
+
+
+
 
 //        tie_Visited_Date!!.addTextChangedListener(watcher);
 //        tie_Action!!.addTextChangedListener(watcher);
@@ -817,7 +830,16 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
                cancelBottom()
             }
+            R.id.ll_WarantyAMC -> {
 
+
+
+            }
+            R.id.ll_servicehist -> {
+
+                val i = Intent(this@ServiceFollowUpNewActivity, ServiceHistoryActivity::class.java)
+                startActivity(i)
+            }
         }
     }
 
