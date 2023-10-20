@@ -614,4 +614,11 @@ interface ApiInterface {
     @POST("ServiceFollowUp/WarrantyAMCDetails")
     fun getWarrantyAMC(@Body body: RequestBody): Call<String>
 
+    @POST("ServiceFollowUp/ServiceInvoiceDetails")
+    fun getClosedTicketList(@Body body: RequestBody): Call<String>
+
+    @POST("ServiceAssign/ServiceAssignedWork")
+    fun getAssignedTicketList(@Body body: RequestBody): Call<String>
+
+
 }

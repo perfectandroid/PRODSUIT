@@ -212,7 +212,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         dashboardcount = 0
         getDashBoardCount()
 //        getServiceNotification()
-//        getNotfCount()
+        getNotfCount()
         SubMode = "2"
 
 //        if (hasCalendarPermission()) {
@@ -251,6 +251,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         swipe?.setOnRefreshListener {
             dashboardcount = 0
             getDashBoardCount()
+            getNotfCount()
 //            adapter?.notifyDataSetChanged()
             swipe?.isRefreshing=false
         }
@@ -513,7 +514,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             //Update UI
             // Re-run it after the update interval
 
-            getNotfCount()
+//            getNotfCount()
             updateWidgetHandler.postDelayed(updateWidgetRunnable, UPDATE_INTERVAL)
         }
 
@@ -522,7 +523,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     override fun onResume() {
         super.onResume()
         Config.setRedirection(context,"")
-        getNotfCount()
+//        getNotfCount()
         updateWidgetHandler.postDelayed(updateWidgetRunnable, UPDATE_INTERVAL)
     }
 
@@ -1009,8 +1010,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                val intent = Intent(this, ProductSearchActivity::class.java)
 //                startActivity(intent)
 
-                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
+//                startActivity(i)
 
 
 //                val i = Intent(this@HomeActivity, StockTransferActivity::class.java)
@@ -1041,6 +1042,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
 //                val i = Intent(this@HomeActivity, StockRequestActivity::class.java)
+//                startActivity(i)
+
+//                val i = Intent(this@HomeActivity, ChatRegisterActivity::class.java)
 //                startActivity(i)
 
             }
@@ -1112,6 +1116,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 //                val i = Intent(this@HomeActivity, ApprovalListDetailActivity::class.java)
 //                startActivity(i)
+
+
 
             }
         }

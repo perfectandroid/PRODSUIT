@@ -1084,6 +1084,7 @@
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
                             <androidx.cardview.widget.CardView
+                                android:id="@+id/crdv_Service"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
@@ -1142,6 +1143,7 @@
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
                             <androidx.cardview.widget.CardView
+                                android:id="@+id/crdv_warrantyamc"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="5dp"
@@ -1180,6 +1182,64 @@
 
                                         <LinearLayout
                                             android:id="@+id/lin_WarrantyAMC"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@color/white"
+                                            android:gravity="bottom"
+                                            android:orientation="vertical"
+                                            android:visibility="gone"
+                                            tools:ignore="MissingConstraints">
+
+
+
+
+
+                                        </LinearLayout>
+
+                                    </ScrollView>
+
+
+                                </LinearLayout>
+                            </androidx.cardview.widget.CardView>
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="1dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginBottom="10dp"
+                                android:visibility="visible"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="0dp"
+                                app:cardElevation="2dp"
+                                app:cardMaxElevation="1dp">
+
+                                <LinearLayout
+                                    android:id="@+id/ll_ClosedTicket"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/tv_Closed_Tkt"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_margin="5dp"
+                                        android:drawableLeft="@drawable/svg_action_taken"
+                                        android:drawableRight="@drawable/down_arrows"
+                                        android:drawablePadding="10dp"
+                                        android:fontFamily="@font/myfont"
+                                        android:padding="7dp"
+                                        android:text="Closed Ticket list"
+                                        android:textColor="@color/greydarks"
+                                        android:textSize="16dp" />
+
+                                    <ScrollView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+
+                                        <LinearLayout
+                                            android:id="@+id/lin_clsd"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:background="@color/white"
