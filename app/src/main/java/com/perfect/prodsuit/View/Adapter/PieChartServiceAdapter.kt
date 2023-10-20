@@ -35,7 +35,7 @@ class PieChartServiceAdapter (internal var context: Context, internal var jsonAr
                 Log.e(TAG,"onBindViewHolder   1051   "+jsonObject!!.getString("Fileds"))
                 val pos = position+1
                 holder.tv_lineBox.setBackgroundResource(color[position])
-                holder.tv_lineName.text        = jsonObject!!.getString("Fileds")+" ( "+jsonObject!!.getString("Count")+"% )"
+                holder.tv_lineName.text        = jsonObject!!.getString("Fileds")+" - "+jsonObject!!.getString("Count")
 
 
             }
