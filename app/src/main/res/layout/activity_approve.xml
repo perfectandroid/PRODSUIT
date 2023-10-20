@@ -120,14 +120,14 @@
                         android:layout_height="wrap_content"
                         android:padding="0dp"
                         android:src="@drawable/authorization"
-                        android:visibility="visible"/>
+                        android:visibility="gone"/>
                     <!--                        leadmangmnticon-->
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyDahborad"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
                 </LinearLayout>
 

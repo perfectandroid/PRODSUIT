@@ -11,13 +11,13 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class BarChartServiceAdapter (internal var context: Context, internal var jsonArray: JSONArray):
+class EnlargeBarChartAdapter(internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
 
-    internal val TAG : String = "BarChartServiceAdapter"
+    internal val TAG : String = "LineChartAdapter"
     internal var jsonObject: JSONObject? = null
 
-    val color = intArrayOf(R.color.leadstatus_color1, R.color.leadstatus_color2, R.color.leadstatus_color3, R.color.leadstatus_color4)
+    val color = intArrayOf(R.color.leadstatus_color1, R.color.leadstatus_color2, R.color.leadstatus_color3,R.color.leadstatus_color4)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
@@ -35,7 +35,8 @@ class BarChartServiceAdapter (internal var context: Context, internal var jsonAr
                 Log.e(TAG,"onBindViewHolder   1051   "+jsonObject!!.getString("Fileds"))
                 val pos = position+1
                 holder.tv_BarBox.setBackgroundResource(color[position])
-                holder.tv_BarName.text        = jsonObject!!.getString("Fileds")+" - "+jsonObject!!.getString("Count")
+          //      holder.tv_BarName.text        = jsonObject!!.getString("Fileds")+" ( "+jsonObject!!.getString("Count")+"% )"
+                holder.tv_BarName.text        = jsonObject!!.getString("Fileds")+" - "+jsonObject!!.getString("Count")+" ( "+jsonObject!!.getString("Value")+"% ) "
 
 
             }

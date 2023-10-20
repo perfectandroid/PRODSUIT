@@ -184,7 +184,7 @@ class LeadRequestAdapter (internal var context: Context, internal var jsonArray:
         internal var txtDescription        : TextView
         internal var txtAssignedDate        : TextView
         internal var llRequest    : LinearLayout
-        internal var llVoice    : LinearLayout
+//        internal var llVoice    : LinearLayout
         internal var voiceData        : TextView
         init {
             txtName         = v.findViewById<View>(R.id.txtName) as TextView
@@ -194,7 +194,7 @@ class LeadRequestAdapter (internal var context: Context, internal var jsonArray:
             voiceData        = v.findViewById<View>(R.id.voiceData) as TextView
 
             llRequest    = v.findViewById<View>(R.id.llRequest) as LinearLayout
-            llVoice    = v.findViewById<View>(R.id.llVoice) as LinearLayout
+//            llVoice    = v.findViewById<View>(R.id.llVoice) as LinearLayout
         }
     }
 

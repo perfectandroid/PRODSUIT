@@ -52,6 +52,7 @@ object CommonAppRepository {
 //                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("1"))
 
                 Log.e(TAG,"requestObject1   53   "+requestObject1)
+                Log.i("response44","body common   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
                 Log.e(TAG," ffdd  4"+e)

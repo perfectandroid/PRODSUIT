@@ -69,6 +69,7 @@ object ProductDetailRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_Category", ProdsuitApplication.encryptStart(ID_Category))
                 Log.e(TAG,"requestObject1   80   "+requestObject1)
+                Log.i("resp23234","product body=   "+requestObject1)
                 Log.e(TAG,"ID_Category   80   "+ID_Category)
             } catch (e: Exception) {
                 e.printStackTrace()

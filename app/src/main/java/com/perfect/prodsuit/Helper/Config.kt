@@ -123,6 +123,10 @@ object Config {
     const val SHARED_PREF66 = "deviceID"  //FireBase User Token
     const val SHARED_PREF67 = "AUDIO"  //FireBase User Token
 
+    const val SHARED_PREF68 = "Fbase_Name"
+    const val SHARED_PREF69 = "Fbase_Mobile"
+    const val SHARED_PREF70 = "timestamp"
+
 
     var width = 0
     var height = 0
