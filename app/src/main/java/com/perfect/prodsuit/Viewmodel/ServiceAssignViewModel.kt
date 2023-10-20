@@ -11,8 +11,18 @@ import org.json.JSONArray
 class ServiceAssignViewModel  : ViewModel(){
 
     var serviceAssignLiveData: MutableLiveData<ServiceAssignModel>? = null
-    fun getServiceAssign(context: Context, ReqMode : String, ID_CustomerServiceRegister : String, strAssignees : JSONArray, strVisitDate : String, strVisitTime : String, ID_Priority : String, strRemark : String) : LiveData<ServiceAssignModel>? {
-        serviceAssignLiveData = ServiceAssignRepository.getServicesApiCall(context,ReqMode,ID_CustomerServiceRegister,strAssignees,strVisitDate,strVisitTime,ID_Priority,strRemark)
+    fun getServiceAssign(
+        context: Context,
+        ReqMode: String,
+        ID_CustomerServiceRegister: String,
+        strAssignees: JSONArray,
+        strVisitDate: String,
+        strVisitTime: String,
+        ID_Priority: String,
+        strRemark: String,
+        FK_CustomerserviceregisterProductDetails: String?
+    ) : LiveData<ServiceAssignModel>? {
+        serviceAssignLiveData = ServiceAssignRepository.getServicesApiCall(context,ReqMode,ID_CustomerServiceRegister,strAssignees,strVisitDate,strVisitTime,ID_Priority,strRemark,FK_CustomerserviceregisterProductDetails)
         return serviceAssignLiveData
     }
 }

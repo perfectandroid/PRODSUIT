@@ -2490,7 +2490,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceAssignViewModel.getServiceAssign(this,ReqMode,ID_CustomerServiceRegister!!,arrAssignees!!,strVisitDate!!,strVisitTime!!,ID_Priority!!,strRemark!!)!!.observe(
+                serviceAssignViewModel.getServiceAssign(this,ReqMode,ID_CustomerServiceRegister!!,arrAssignees!!,strVisitDate!!,strVisitTime!!,ID_Priority!!,strRemark!!,FK_CustomerserviceregisterProductDetails!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 

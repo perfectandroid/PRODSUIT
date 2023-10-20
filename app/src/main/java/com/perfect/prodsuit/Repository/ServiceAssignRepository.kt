@@ -9,7 +9,6 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.ServiceAssignDetailsModel
 import com.perfect.prodsuit.Model.ServiceAssignModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
@@ -28,12 +27,22 @@ object ServiceAssignRepository {
     val serviceAssignSetterGetter = MutableLiveData<ServiceAssignModel>()
     val TAG: String = "ServiceAssignRepository"
 
-    fun getServicesApiCall(context: Context, ReqMode : String, ID_CustomerServiceRegister : String, strAssignees : JSONArray, strVisitDate : String, strVisitTime : String, ID_Priority : String, strRemark : String): MutableLiveData<ServiceAssignModel> {
-        getServiceAssign(context,ReqMode,ID_CustomerServiceRegister,strAssignees,strVisitDate,strVisitTime,ID_Priority,strRemark)
+    fun getServicesApiCall(
+        context: Context,
+        ReqMode: String,
+        ID_CustomerServiceRegister: String,
+        strAssignees: JSONArray,
+        strVisitDate: String,
+        strVisitTime: String,
+        ID_Priority: String,
+        strRemark: String,
+        FK_CustomerserviceregisterProductDetails: String?
+    ): MutableLiveData<ServiceAssignModel> {
+        getServiceAssign(context,ReqMode,ID_CustomerServiceRegister,strAssignees,strVisitDate,strVisitTime,ID_Priority,strRemark,FK_CustomerserviceregisterProductDetails!!)
         return serviceAssignSetterGetter
     }
 
-    private fun getServiceAssign(context: Context,ReqMode : String,ID_CustomerServiceRegister : String,strAssignees : JSONArray,strVisitDate : String,strVisitTime : String,ID_Priority : String,strRemark : String) {
+    private fun getServiceAssign(context: Context,ReqMode : String,ID_CustomerServiceRegister : String,strAssignees : JSONArray,strVisitDate : String,strVisitTime : String,ID_Priority : String,strRemark : String,FK_CustomerserviceregisterProductDetails:String) {
 //
 //        val msg ="{\"ServiceAssignDetails\": {\"ServiceAssignDetailsList\": [{\"TicketNo\":\"TKT101\",\"TicketDate\": \"06/06/2022\",\"Branch\": \"Head Office Chalappuram\",\"Customer\": \"Yousaf\",\"Mobile\": \"9876543210\",\"Area\": \"Chalappuram\",\"Priority\": \"LOW\",\"Status\": \"Pending\",\"TimeDue\": \"1 Week Ago\"},{\"TicketNo\":\"TKT101\",\"TicketDate\": \"07/06/2022\",\"Branch\": \"Head Office Chalappuram\",\"Customer\": \"Yousaf\",\"Mobile\": \"9876543211\",\"Area\": \"Chalappuram\",\"Priority\": \"HIGH\",\"Status\": \"Completed\",\"TimeDue\": \"10 Days Ago\"},{\"TicketNo\":\"TKT101\",\"TicketDate\": \"08/06/2022\",\"Branch\": \"Head Office Chalappuram\",\"Customer\": \"Yousaf\",\"Mobile\": \"9876543212\",\"Area\": \"Chalappuram\",\"Priority\": \"MEDIUM\",\"Status\": \"Pending\",\"TimeDue\": \"1 Month Ago\"},{\"TicketNo\":\"TKT101\",\"TicketDate\": \"09/06/2022\",\"Branch\": \"Head Office Chalappuram\",\"Customer\": \"Yousaf\",\"Mobile\": \"9876543213\",\"Area\": \"Chalappuram\",\"Priority\": \"LOW\",\"Status\": \"Completed\",\"TimeDue\": \"5 Days Ago\"}],\"ResponseCode\": \"0\",\"ResponseMessage\": \"Transaction Verified\"},\"StatusCode\": 0,\"EXMessage\": \"Transaction Verified\"}"
 //        serviceAssignSetterGetter.value = ServiceAssignModel(msg)
@@ -83,6 +92,7 @@ object ServiceAssignRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Customerserviceregister", ProdsuitApplication.encryptStart(ID_CustomerServiceRegister))
+                requestObject1.put("FK_CustomerserviceregisterProductDetails", ProdsuitApplication.encryptStart(FK_CustomerserviceregisterProductDetails))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart("0"))
                 requestObject1.put("Visitdate", ProdsuitApplication.encryptStart(strVisitDate))
                 requestObject1.put("Visittime", ProdsuitApplication.encryptStart(strVisitTime))
