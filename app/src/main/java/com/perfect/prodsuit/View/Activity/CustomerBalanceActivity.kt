@@ -40,7 +40,7 @@ class CustomerBalanceActivity : AppCompatActivity(), View.OnClickListener,ItemCl
 
         TicketDate = intent.getStringExtra("TicketDate")
         setRegViews()
-//        getCustomerBalance(TicketDate)
+        //getCustomerBalance(TicketDate)
 
     }
 
