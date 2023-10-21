@@ -6,6 +6,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.telecom.VideoProfile
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -13,6 +14,7 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.core.view.updatePaddingRelative
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -639,6 +641,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
 
 
+
+
                                             // Service Information
 
                                             tv_RequestedDate!!.setText(""+strReqDate)
@@ -1005,6 +1009,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             R.id.txtv_custbalnce->{
                 val i = Intent(this@ServiceAssignActivity, CustomerBalanceActivity::class.java)
                 i.putExtra("TicketDate",TicketDate)
+                i.putExtra("Id_Cust",ID_CustomerServiceRegister)
+
                 startActivity(i)
             }
 
@@ -1093,13 +1099,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
 
             }
-            else if (ID_Employee.equals("")){
 
-                til_Employee!!.setError("Select Employee");
-                til_Employee!!.setErrorIconDrawable(null)
-
-
-            }
 
 
             else if (ID_Role.equals("")){
@@ -1126,7 +1126,13 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         {
             strRemark = tie_vehicle!!.text.toString()
         }
+        if (ID_Employee.equals("")){
 
+            til_Employee!!.setError("Select Employee");
+            til_Employee!!.setErrorIconDrawable(null)
+
+
+        }
 
             else
             {

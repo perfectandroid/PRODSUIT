@@ -474,7 +474,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
         ll_WarantyAMC!!.visibility=View.GONE
         ll_ClosedTicket!!.visibility=View.GONE
-
+        ll_servicehist!!.visibility=View.GONE
 
 //        tie_Visited_Date!!.addTextChangedListener(watcher);
 //        tie_Action!!.addTextChangedListener(watcher);

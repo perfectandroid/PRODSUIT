@@ -395,12 +395,16 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
             TicketStatus = jsonObject.getString("TicketStatus")
 
             Log.i("FKK",FK_CustomerserviceregisterProductDetails.toString())
-            val i = Intent(this@ServiceAssignListActivity, ServiceAssignActivity::class.java)
-            i.putExtra("ID_CustomerServiceRegister",ID_CustomerServiceRegister)
-            i.putExtra("FK_CustomerserviceregisterProductDetails",FK_CustomerserviceregisterProductDetails)
-            i.putExtra("TicketStatus",TicketStatus)
-            i.putExtra("TicketDate",TicketDate)
-            startActivity(i)
+            if(!TicketStatus.equals("3"))
+            {
+                val i = Intent(this@ServiceAssignListActivity, ServiceAssignActivity::class.java)
+                i.putExtra("ID_CustomerServiceRegister",ID_CustomerServiceRegister)
+                i.putExtra("FK_CustomerserviceregisterProductDetails",FK_CustomerserviceregisterProductDetails)
+                i.putExtra("TicketStatus",TicketStatus)
+                i.putExtra("TicketDate",TicketDate)
+                startActivity(i)
+            }
+
         }
         if (data.equals("ServiceEdit")) {
 
