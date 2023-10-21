@@ -276,6 +276,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
             BANK_KEYEditer.putString("BANK_KEY", BANK_KEY)
             BANK_KEYEditer.commit()
 
+//            Log.e(TAG,"SHARED_PREF9  1  "+BANK_KEYESP.getString("BANK_KEY"))
 
             when(Config.ConnectivityUtils.isConnected(this)) {
                 true -> {
@@ -318,6 +319,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                                                 BANK_KEYEditer.putString("BANK_KEY", BANK_KEY)
                                                 BANK_KEYEditer.commit()
 
+
                                                 val commonAppSP = applicationContext.getSharedPreferences(Config.SHARED_PREF18, 0)
                                                 val commonAppEditer = commonAppSP.edit()
                                                 commonAppEditer.putString("commonApp", jObject.getString("Mode"))
@@ -339,7 +341,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //                            ).show()
                                 }
                             }catch (e: Exception){
-                                Log.e(TAG,"Exception  419   "+e.toString())
+                                Log.e(TAG,"Exception  419 2  "+e.toString())
                             }
 
                         })
@@ -510,7 +512,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //                            ).show()
                                 }
                             }catch (e: Exception){
-                                Log.e(TAG,"Exception  419   "+e.toString())
+                                Log.e(TAG,"Exception  419 3  "+e.toString())
                             }
 
                         })
@@ -858,7 +860,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //                            ).show()
                             }
                         }catch (e: Exception){
-                            Log.e(TAG,"Exception  419   "+e.toString())
+                            Log.e(TAG,"Exception  419 1  "+e.toString())
                         }
 
                     })

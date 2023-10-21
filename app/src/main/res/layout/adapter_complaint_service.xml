@@ -40,7 +40,7 @@
             android:textSize="15dp"
             android:maxLines="2"
             android:fontFamily="@font/myfont"
-            android:text=""
+            android:text="dddddddddddddddddddddd"
             android:layout_weight="1"
             android:drawableRight="@drawable/svg_right_arrow"
             android:textColor="@color/black"

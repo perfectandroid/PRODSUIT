@@ -431,9 +431,11 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
             Config.disableClick(view)
             var jsonObject: JSONObject? = pickup_and_deliverysort.getJSONObject(position)
             ID_ProductDelivery = jsonObject!!.getString("ID_ProductDelivery")
+            TransMode = jsonObject!!.getString("TransMode")
             val i = Intent(this@PickUpAndDeliveryListActivity, PickUpAndDeliveryUpdateActivity::class.java)
             i.putExtra("SubMode",SubMode)
             i.putExtra("ID_ProductDelivery",ID_ProductDelivery)
+            i.putExtra("TransMode",TransMode)
             Log.e(TAG, "ID_ProductDelivery   55412222   " + ID_ProductDelivery)
             startActivity(i)
         }
@@ -548,7 +550,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun updateLocation() {
-        TransMode = "CUSA"
+//        TransMode = "CUSA"
         when (Config.ConnectivityUtils.isConnected(this)) {
 
             true -> {

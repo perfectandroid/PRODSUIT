@@ -80,7 +80,7 @@ object ServiceFollowUpServiceTypeRepository {
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
 
-                Log.v("sdasd22efvvv","requestObject1 "+requestObject1)
+                Log.e(TAG,"requestObject1 ww "+requestObject1)
                 Log.v("sdasd22efvvv","requestObject2 "+requestObject1.toString())
 
 

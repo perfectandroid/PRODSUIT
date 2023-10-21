@@ -103,7 +103,7 @@ object OverDueRepository {
                 requestObject1.put("ID_TodoListLeadDetails", ProdsuitApplication.encryptStart(ID_Lead_Details))
 
                 Log.e("TAG","requestObject1   741     "+name+"  :  "+date+"  :  "+criteria+"  :  "+submode)
-                Log.e("TAG","requestObject1   7412     "+requestObject1)
+                Log.e(TAG,"requestObject1   741288     "+requestObject1)
                 Log.e("TAG","requestObject1   8023     "+formateDate+"   :    "+date)
                 Log.e("TAG","requestObject1   8023     "+formateDate+"   :    "+date)
 
@@ -125,7 +125,7 @@ object OverDueRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        Log.e(TAG,"108  response  "+response.body())
+                        Log.e(TAG,"1115  response  "+response.body())
                         val users = ArrayList<OverDueModel>()
                         users.add(OverDueModel(response.body()))
                         val msg = users[0].message

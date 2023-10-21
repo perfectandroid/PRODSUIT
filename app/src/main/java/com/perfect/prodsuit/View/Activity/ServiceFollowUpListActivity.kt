@@ -359,18 +359,22 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 //            startActivity(intent)
 
             val customer_service_register = jsonObject!!.getString("ID_Customerserviceregister")
-            val intent = Intent(this, ServiceFollowUpNewActivity::class.java)
+            val ID_CustomerserviceregisterProductDetails = jsonObject!!.getString("ID_CustomerserviceregisterProductDetails")
+//            val intent = Intent(this, ServiceFollowUpNewActivity::class.java)
+            val intent = Intent(this, ServiceFollowUPActiivty::class.java)
             intent.putExtra("jsonObject", jsonObject!!.toString())
 //            val runningStatus = 0
             intent.putExtra("runningStatus", jsonObject!!.getString("FK_Status"))
             intent.putExtra("customer_service_register", customer_service_register)
+            intent.putExtra("ID_CustomerserviceregisterProductDetails", ID_CustomerserviceregisterProductDetails)
             startActivity(intent)
         }
         if (data.equals("info")) {
             serviceFollowUpInfo=0;
             val customer_service_register = jsonObject!!.getString("ID_Customerserviceregister")
+            val ID_CustomerserviceregisterProductDetails = jsonObject!!.getString("ID_CustomerserviceregisterProductDetails")
             Log.v("dsfdfdfddd", "customer_service_register  " + customer_service_register)
-            loadInfo(customer_service_register)
+            loadInfo(customer_service_register,ID_CustomerserviceregisterProductDetails)
             // openAlertDialogForMoreInfo()
         }
         if (data.equals("Product")) {
@@ -457,7 +461,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
     }
 
-    private fun loadInfo(customerServiceRegister: String) {
+    private fun loadInfo(customerServiceRegister: String,ID_CustomerserviceregisterProductDetails: String) {
         context = this@ServiceFollowUpListActivity
         serviceFollowUpInfoViewModel =
             ViewModelProvider(this).get(ServiceFollowUpInfoViewModel::class.java)
@@ -470,7 +474,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 serviceFollowUpInfoViewModel.getServiceFollowUpInfo(
-                    this, customerServiceRegister,
+                    this, customerServiceRegister,ID_CustomerserviceregisterProductDetails,
                     ID_Branch,
                     ID_Employee
                 )!!.observe(

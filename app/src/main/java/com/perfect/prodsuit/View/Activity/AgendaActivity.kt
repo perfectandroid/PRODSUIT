@@ -4499,8 +4499,9 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         if (data.equals("info")) {
             serviceFollowUpInfo = 0;
             val customer_service_register = jsonObject!!.getString("ID_Customerserviceregister")
+            val ID_CustomerserviceregisterProductDetails = jsonObject!!.getString("ID_CustomerserviceregisterProductDetails")
             Log.v("dsfdfdfddd", "customer_service_register  " + customer_service_register)
-            loadInfo(customer_service_register)
+            loadInfo(customer_service_register,ID_CustomerserviceregisterProductDetails)
             // openAlertDialogForMoreInfo()
         }
         if (data.equals("call")) {
@@ -4545,7 +4546,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
     }
 
-    private fun loadInfo(customerServiceRegister: String) {
+    private fun loadInfo(customerServiceRegister: String,ID_CustomerserviceregisterProductDetails: String) {
         context = this@AgendaActivity
         serviceFollowUpInfoViewModel =
             ViewModelProvider(this).get(ServiceFollowUpInfoViewModel::class.java)
@@ -4558,7 +4559,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 serviceFollowUpInfoViewModel.getServiceFollowUpInfo(
-                    this, customerServiceRegister,
+                    this, customerServiceRegister,ID_CustomerserviceregisterProductDetails,
                     ID_Branch,
                     ID_Employee
                 )!!.observe(

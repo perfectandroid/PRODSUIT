@@ -4,9 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.perfect.prodsuit.Model.ServiceHistModel
 import com.perfect.prodsuit.Model.ServiceListModel
-import com.perfect.prodsuit.Repository.ServiceHistoryRepository
 import com.perfect.prodsuit.Repository.ServiceListRepository
 
 class ServiceListViewModel : ViewModel() {

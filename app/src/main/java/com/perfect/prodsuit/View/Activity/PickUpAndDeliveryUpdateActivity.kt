@@ -48,6 +48,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.*
@@ -74,6 +75,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
     private var tv_header: TextView? = null
     private var SubMode: String? = ""
+    private var TransMode: String? = ""
     private var productName: String? = ""
     private var productId: String? = ""
     private var pos: Int = 0
@@ -317,6 +319,10 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
         if (getIntent().hasExtra("SubMode")) {
             SubMode = intent.getStringExtra("SubMode")
+        }
+        if (getIntent().hasExtra("SubMode")) {
+            TransMode = intent.getStringExtra("TransMode")
+            Log.e(TAG, "000111222255  " + TransMode)
         }
         ID_ProductDelivery = intent.getStringExtra("ID_ProductDelivery")
         Log.e(TAG, "000111222255  " + ID_ProductDelivery)
@@ -669,6 +675,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
         }
         if (SubMode.equals("2")) {
+
+            if (TransMode!!.equals("INDA")){
             tv_header!!.text = "Delivery"
             tv_PickDeliveryInformationClick!!.text = "Delivery Note"
             til_PickDeliveryDate!!.hint            = "Delivery Date *"
@@ -690,6 +698,28 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             ll_deliveryDetailslist!!.visibility    = View.VISIBLE
             ll_prodDetail_pickup!!.visibility      = View.GONE
 //            tvv_productname!!.text = "Vehicle No"
+
+
+            }else if(TransMode!!.equals("CUSA")){
+
+                tv_header!!.text = "Delivery"
+                tv_PickDeliveryInformationClick!!.text = "Delivery Note"
+                til_PickDeliveryDate!!.hint       = "Delivery Date *"
+                til_PickDeliveryTime!!.hint       = "Delivery Time *"
+                tv_ProductInformationClick!!.text = "Delivery Information"
+                llreference!!.visibility          = View.GONE
+                ll_Customername!!.visibility      = View.GONE
+                ll_mobileno!!.visibility          = View.GONE
+                view_mobile!!.visibility          = View.GONE
+                customer_view!!.visibility        = View.GONE
+                reference_view!!.visibility       = View.GONE
+                llregistration!!.visibility       = View.VISIBLE
+                registration_view!!.visibility    = View.VISIBLE
+                ll_ticket!!.visibility            = View.VISIBLE
+                ticket_view!!.visibility          = View.VISIBLE
+                ll_prodDetail_pickup!!.visibility = View.VISIBLE
+                ll_deliveryDetailslist!!.visibility  = View.GONE
+            }
         }
     }
 
@@ -1301,6 +1331,12 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                 }
             }else if (SubMode!!.equals("2")) {
+
+//                if (TransMode!!.equals("INDA")){
+//
+//                }else if (TransMode!!.equals("CUSA")){
+//
+//                }
                 tv_header1!!.text = "Delivery Information"
 
 
@@ -3105,15 +3141,21 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     }
 
     private fun Validation(view: View) {
-
+        Log.e(TAG, "11111111 " + SubMode)
         try {
             Productdetails = JSONArray()
 //        prodInformationArrayList2 = JSONArray()
 
 //        val jsonObject3 = prodInformationArrayList2.getJSONObject(pos)
-            if (prodInformationArrayList2.length() > 0) {
+
+            if (status_id.equals("")){
+                Config.snackBarWarning(context, view, "Please Select Status")
+            }
+
+            else if (prodInformationArrayList2.length() > 0) {
 
 //            Log.e(TAG, "kkkkkkkkkkkkkkk  " + jsonObject3.getString("isSelected"))
+                var isvalid = true
 
                 for (i in 0 until prodInformationArrayList2.length()) {
                     var jsonObject = prodInformationArrayList2.getJSONObject(i)
@@ -3128,80 +3170,99 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                         Log.e(TAG, "rrttt  " + jsonObject.getString("isSelected"))
 
                         if (jsonObject.getString("isSelected").equals("1")) {
+                            Log.e(TAG, "ffffffffffff  " + jsonObject.getString("isSelected"))
+                            if (!jsonObject.getString("Quantity").equals("0")&&jsonObject.getString("ProvideStandBy").equals("1")) {
+                                Log.e(TAG, "ProvideStandBy  " + jsonObject.getString("isSelected"))
+//                                if (jsonObject.getString("ProvideStandBy").equals("1")) {
+
+                                    if (jsonObject.getString("Product").equals("")) {
+
+                                        isvalid = false
+                                        Config.snackBarWarning(context, view, "StandByProduct is emplty")
+                                    } else if (jsonObject.getString("SPQuantity").equals("")) {
+
+                                        isvalid = false
+                                        Config.snackBarWarning(context, view, "StandByQuantity is emplty")
+
+                                    } else if (jsonObject.getString("SPAmount").equals("")) {
+                                        isvalid = false
+                                        Config.snackBarWarning(context, view, "StandByAmount is emplty")
+
+                                    } else if (FK_BillType!!.equals("")) {
+                                        isvalid = false
+                                        Config.snackBarWarning(context, view, "Please Select Bill Type")
+
+                                    } else if (llpaymentmethodCount!!.equals("")) {
+                                        isvalid = false
+                                        Config.snackBarWarning(context, view, "Please Select Payment Method")
+
+                                    } else {
+                                        passvalue()
+                                        Log.e(TAG, "yyyyyyyyyyyyy  ")
+                                    }
+
+//                                }
 
 
-                            if (jsonObject.getString("ProvideStandBy").equals("1")) {
 
-                                if (status_id.equals("")) {
-                                    Config.snackBarWarning(context, view, "Please Select Status")
-
-                                } else if (jsonObject.getString("Product").equals("")) {
-                                    Config.snackBarWarning(context, view, "StandByProduct is emplty")
-
-                                } else if (jsonObject.getString("SPQuantity").equals("")) {
-
-                                    Config.snackBarWarning(context, view, "StandByQuantity is emplty")
-
-                                } else if (jsonObject.getString("SPAmount").equals("")) {
-                                    Config.snackBarWarning(context, view, "StandByAmount is emplty")
-
-                                } else if (FK_BillType!!.equals("")) {
-                                    Config.snackBarWarning(context, view, "Please Select Bill Type")
-
-                                } else if (llpaymentmethodCount!!.equals("")) {
-                                    Config.snackBarWarning(context, view, "Please Select Payment Method")
-
-                                } else {
-                                    passvalue()
-                                    Log.e(TAG, "yyyyyyyyyyyyy  ")
-                                }
-
-                            }else{
-                                validatestatus(view)
+                        }else if (!jsonObject.getString("Quantity").equals("0")){
+                                isvalid = false
+                                Config.snackBarWarning(context, view, "Quantity is emplty")
                             }
 
-                        }
+                            }
+
+
+//                        else{
+//                            validatestatus(view)
+//                        }
                     }
 
 
 
                     if (jsonObject.getString("SubMode").equals("2")) {
 
-                        if (prodInformationArrayList2.length() > 0) {
+                        if (prodInformationArrayList2.length() > 0)
+                        {
 
                             Log.e(TAG, "prodInformationArrayList2 1234  " +prodInformationArrayList2 )
 //                            if (jsonObject.getString("isSelected").equals("1")) {
                             if (jsonObject.getString("isSelectedDelivery").equals("1")) {
 
                                 Log.e(TAG, "nnnnnnnnn  " + jsonObject.getString("isSelectedDelivery"))
-                                if (status_id!!.equals("")) {
+//                                if (status_id!!.equals("")) {
+//
+//                                    isvalid = false
+//                                    Log.e(TAG, "12  " + status_id)
+//                                    Config.snackBarWarning(context, view, "Please Select Status")
+//
+//                                }
+                                if (jsonObject.getString("ID_Priority").equals("")){
 
-                                    Log.e(TAG, "12  " + status_id)
-                                    Config.snackBarWarning(context, view, "Please Select Status")
-
-                                }else if (jsonObject.getString("ID_Priority").equals("")){
-
+                                    isvalid = false
                                     Log.e(TAG, "123  " + jsonObject.getString("ID_Priority"))
                                     Config.snackBarWarning(context, view, "Please Select Priority")
 
                                 }else if (jsonObject.getString("ComplaintQty").equals("")){
 
+                                    isvalid = false
                                     Log.e(TAG, "1234  " + jsonObject.getString("ComplaintQty"))
                                     Config.snackBarWarning(context, view, "Please Enter Complaint Qty")
 
                                 }else if (jsonObject.getString("ID_ComplaintList").equals("")){
 
+                                    isvalid = false
                                     Log.e(TAG, "1234  " + jsonObject.getString("ID_ComplaintList"))
                                     Config.snackBarWarning(context, view, "Please Select Complaint Type")
                                 }
 
                                 else {
                                     Log.e(TAG, "bfbbfbbffb  " + status_id)
-                                    passvalue()
+                                  //  passvalue()
 
                                 }
                             }else {
-                                validatestatus(view)
+//                                validatestatus(view)
                         }
                       }
                     }
@@ -3215,9 +3276,17 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //                    validatestatus(view)
 //                }
 
+                if (isvalid){
+//                    passvalue()
+                    Log.e(TAG,"12345")
+                }
+                else{
+                    Log.e(TAG,"12345  2")
+                }
+
 
             } else {
-                validatestatus(view)
+              //  validatestatus(view)
             }
         }
         catch (e: Exception) {

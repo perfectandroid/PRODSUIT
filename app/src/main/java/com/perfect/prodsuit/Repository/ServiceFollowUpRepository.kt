@@ -24,7 +24,7 @@ import java.util.*
 
 object ServiceFollowUpRepository {
 
-    var TAG = "OverDueRepository"
+    var TAG = "ServiceFollowUpRepository"
     val serviceFollowUpSetterGetter = MutableLiveData<ServiceFollowUpModel>()
     private var progressDialog: ProgressDialog? = null
     fun getServicesApiCall(context: Context,ID_Branch : String , ID_Employee : String): MutableLiveData<ServiceFollowUpModel> {
@@ -80,7 +80,7 @@ object ServiceFollowUpRepository {
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
 
-                Log.e("dfsdfsdfdf","requestObject1 "+requestObject1)
+                Log.e(TAG,"requestObject1 "+requestObject1)
                 Log.v("dfsdfsdfdf","requestObject2 "+requestObject1.toString())
                 Log.i("response123456","body="+requestObject1)
 

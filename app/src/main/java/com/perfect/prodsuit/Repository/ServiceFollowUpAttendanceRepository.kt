@@ -85,6 +85,7 @@ object ServiceFollowUpAttendanceRepository {
                 )
 
                 Log.v("asdasdad33fff","requestObject1 "+requestObject1)
+                Log.e(TAG,"requestObject1 "+requestObject1)
                 Log.v("asdasdad33fff","requestObject2 "+requestObject1.toString())
 
 

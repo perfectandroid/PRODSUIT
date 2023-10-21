@@ -25,17 +25,12 @@ import java.util.*
 
 object ServiceFollowUpInfoRepository {
 
-    var TAG = "OverDueRepository"
+    var TAG = "ServiceFollowUpInfoRepository"
     val serviceFollowUpInfoSetterGetter = MutableLiveData<ServiceFollowUpInfoModel>()
     private var progressDialog: ProgressDialog? = null
-    fun getServicesApiCall(
-        context: Context,
-        customerServiceRegister: String,
-        ID_Branch: String,
-        ID_Employee: String
-    ): MutableLiveData<ServiceFollowUpInfoModel> {
+    fun getServicesApiCall(context: Context, customerServiceRegister: String,ID_CustomerserviceregisterProductDetails: String, ID_Branch: String, ID_Employee: String): MutableLiveData<ServiceFollowUpInfoModel> {
         Log.v("fsfsfds", "branch3 " + ID_Branch)
-        getServiceFollowUp(context, ID_Branch, customerServiceRegister, ID_Employee)
+        getServiceFollowUp(context, ID_Branch, customerServiceRegister,ID_CustomerserviceregisterProductDetails, ID_Employee)
         return serviceFollowUpInfoSetterGetter
     }
 
@@ -43,6 +38,7 @@ object ServiceFollowUpInfoRepository {
         context: Context,
         ID_Branch: String,
         customerServiceRegister: String,
+        ID_CustomerserviceregisterProductDetails: String,
         ID_Employee: String
     ) {
         try {
@@ -87,31 +83,18 @@ object ServiceFollowUpInfoRepository {
                 Log.v("dsfdfd33fdf", "BranchCode " + ID_Branch)
                 Log.v("dsfdfd33fdf", "EntrBy " + UserCodeSP.getString("UserCode", null))
                 Log.v("dsfdfd33fdf", "FK_Employee " + ID_Employee)
-                requestObject1.put(
-                    "BankKey",
-                    ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null))
-                )
-                requestObject1.put(
-                    "Token",
-                    ProdsuitApplication.encryptStart(TokenSP.getString("Token", null))
-                )
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("81"))
-                requestObject1.put(
-                    "FK_Company",
-                    ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null))
-                )
-                requestObject1.put("BranchCode", ProdsuitApplication.encryptStart(ID_Branch))
-                requestObject1.put(
-                    "EntrBy",
-                    ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null))
-                )
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
-                requestObject1.put(
-                    "FK_Customerserviceregister",
-                    ProdsuitApplication.encryptStart(customerServiceRegister)
-                )
 
-                Log.v("dfsdfsdfdf", "requestObject1 " + requestObject1)
+                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("81"))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("BranchCode", ProdsuitApplication.encryptStart(ID_Branch))
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
+                requestObject1.put("FK_CustomerserviceregisterProductDetails", ProdsuitApplication.encryptStart(ID_CustomerserviceregisterProductDetails))
+                requestObject1.put("FK_Customerserviceregister", ProdsuitApplication.encryptStart(customerServiceRegister))
+
+                Log.e(TAG, "requestObject1 555 " + requestObject1)
                 Log.v("dfsdfsdfdf", "requestObject2 " + requestObject1.toString())
 
 

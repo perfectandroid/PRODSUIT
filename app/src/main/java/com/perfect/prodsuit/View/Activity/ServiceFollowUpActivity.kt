@@ -74,6 +74,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
     var FK_CustomerOthers: String = ""
     var FK_Product: String = ""
     var customer_service_register: String = ""
+    var ID_CustomerserviceregisterProductDetails: String = ""
     private var tabLayout: TabLayout? = null
     var jsonArray2: JSONArray = JSONArray()
     var jsonArrayMappedServiceAttended: JSONArray = JSONArray()
@@ -145,6 +146,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         getSupportActionBar()?.setDisplayShowCustomEnabled(true)
         runningStatus = intent.getStringExtra("runningStatus")
         customer_service_register = intent.getStringExtra("customer_service_register").toString()
+        ID_CustomerserviceregisterProductDetails = intent.getStringExtra("ID_CustomerserviceregisterProductDetails").toString()
         val FK_BranchCodeUserSP = this.getSharedPreferences(Config.SHARED_PREF40, 0)
         val FK_EmployeeSP = this.getSharedPreferences(Config.SHARED_PREF1, 0)
         ID_Branch = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
@@ -189,7 +191,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         loadMoreReplacedProducts()
         loadServiceType()
         loadChangeMode();
-        loadInfo(customer_service_register)
+        loadInfo(customer_service_register,ID_CustomerserviceregisterProductDetails)
         // loadHistory()
         adapter = ServiceCostAdapter(this, jsonArray2, serviceCostArrayList, jsonArrayServiceType)
         recycler_service_cost!!.adapter = adapter
@@ -2022,7 +2024,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun loadInfo(customerServiceRegister: String) {
+    private fun loadInfo(customerServiceRegister: String,ID_CustomerserviceregisterProductDetails: String) {
         serviceFollowUpInfoViewModel =
             ViewModelProvider(this).get(ServiceFollowUpInfoViewModel::class.java)
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -2034,7 +2036,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 serviceFollowUpInfoViewModel.getServiceFollowUpInfo(
-                    this, customerServiceRegister,
+                    this, customerServiceRegister,ID_CustomerserviceregisterProductDetails,
                     ID_Branch,
                     ID_Employee
                 )!!.observe(

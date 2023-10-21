@@ -373,6 +373,9 @@ interface ApiInterface {
     @POST("Service/GetServiceDetails")
     fun getServiceDetails(@Body body: RequestBody): Call<String>
 
+    @POST("ServiceFollowUp/ServiceDetails")
+    fun getServiceFollowUpServiceDetails(@Body body: RequestBody): Call<String>
+
     // Complaint  ReqMode 70
     @POST("Service/GetComplaints")
     fun getComplaints(@Body body: RequestBody): Call<String>
@@ -613,5 +616,8 @@ interface ApiInterface {
 
     @POST("ServiceFollowUp/WarrantyAMCDetails")
     fun getWarrantyAMC(@Body body: RequestBody): Call<String>
+
+    @POST("ServiceFollowUp/ComplaintListDetails")
+    fun getComplaintListDetails(@Body body: RequestBody): Call<String>
 
 }
