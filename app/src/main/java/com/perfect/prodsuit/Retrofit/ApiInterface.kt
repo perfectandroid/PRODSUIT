@@ -620,4 +620,15 @@ interface ApiInterface {
     @POST("ServiceFollowUp/ComplaintListDetails")
     fun getComplaintListDetails(@Body body: RequestBody): Call<String>
 
+    @POST("ServiceFollowUp/ServiceInvoiceDetails")
+    fun getClosedTicketList(@Body body: RequestBody): Call<String>
+
+    @POST("ServiceAssign/ServiceAssignedWork")
+    fun getAssignedTicketList(@Body body: RequestBody): Call<String>
+
+
+
+
+
+
 }

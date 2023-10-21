@@ -54,6 +54,7 @@ object SplashresellerActivityRepository {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+            Log.i("SplashresellerActivityRepository","request   "+requestObject1)
             val body = RequestBody.create(
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()

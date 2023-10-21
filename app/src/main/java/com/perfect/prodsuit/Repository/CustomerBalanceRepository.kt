@@ -20,8 +20,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 object CustomerBalanceRepository {
@@ -30,12 +28,12 @@ object CustomerBalanceRepository {
     val custbalSetterGetter = MutableLiveData<CustomerBalanceModel>()
     val TAG: String = "CustomerBalanceRepository"
     var result:String?=null
-    fun getServicesApiCall(context: Context,TicketDate : String): MutableLiveData<CustomerBalanceModel> {
-        getCustomerBalance(context,TicketDate)
+    fun getServicesApiCall(context: Context,TicketDate : String,FK_Cust:String): MutableLiveData<CustomerBalanceModel> {
+        getCustomerBalance(context,TicketDate,FK_Cust)
         return custbalSetterGetter
     }
 
-    private fun getCustomerBalance(context: Context, TicketDate: String) {
+    private fun getCustomerBalance(context: Context, TicketDate: String, FK_Cust: String) {
 
         try {
 
@@ -88,7 +86,8 @@ object CustomerBalanceRepository {
                // requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("62"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("8"))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart("1"))
+                requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart(FK_Cust))
                 requestObject1.put("TransDate", ProdsuitApplication.encryptStart(result))
 
 

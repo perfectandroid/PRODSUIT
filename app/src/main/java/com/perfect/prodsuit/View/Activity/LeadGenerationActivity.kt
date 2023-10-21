@@ -395,6 +395,8 @@ private var custmoerAssignmentID : String? =null
     var isplaying1 = false
     var pausePosition1 = 0
     companion object {
+        var checkProject: String = "1"
+
         var LeadFromType: String? = ""   //  0-Text ,  1-Dropdown ,  2-None
         var HasSubMedia: String? = ""   //  0-None ,  1-Has
 
@@ -446,7 +448,7 @@ private var custmoerAssignmentID : String? =null
         var leadByMode: String? = "1" // GONE
         var mediaTypeMode: String? = "1" // GONE
         var uploadImageMode: String? = "1" // GONE
-        var ID_Category: String? = ""
+        var ID_Category: String? = "0"
         var ID_Product: String? = ""
         var ID_Status: String? = ""
         var ID_Priority: String? = ""
@@ -731,7 +733,7 @@ private var custmoerAssignmentID : String? =null
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         strLeadFromHint = "Lead From"
-
+        checkProject="1"
         Customer_Mode = "0"
         ID_CustomerAssignment = ""
         ID_Customer = ""
@@ -772,7 +774,7 @@ private var custmoerAssignmentID : String? =null
         edtWhatsApp!!.setText("")
         edtCompanyContact!!.setText("")
 
-        ID_Category = ""
+        ID_Category = "0"
         ID_Product = ""
         strProdName = ""
         strQty = ""
@@ -2070,38 +2072,45 @@ private var custmoerAssignmentID : String? =null
             }
             R.id.edtProdproduct -> {
                 // strProdName = edtProdproduct!!.text.toString()
+                Log.i("resp2323","id category="+ID_Category)
+                Config.disableClick(v)
+                proddetail = 0
+                getProductDetail(ID_Category!!)
 
-                if (ID_Category.equals("")) {
-//                    val snackbar: Snackbar = Snackbar.make(v, "Select Category", Snackbar.LENGTH_LONG)
-//                    snackbar.setActionTextColor(Color.WHITE)
-//                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
-//                    snackbar.show()
-                    Config.snackBars(applicationContext, v, "Select Category")
+                //..................................
 
-                    llProdDetail!!.visibility = View.VISIBLE
-                    // custProdlMode = "0"
-
-                    custDetailMode = "1"
-                    companyNameMode = "1"
-                    moreCommInfoMode = "1"
-                    custProdlMode = "0"
-                    locationMode = "1"
-                    dateMode = "1"
-                    leadRequestMode = "1"
-                    leadfromMode = "1"
-                    leadThroughMode = "1"
-                    leadByMode = "1"
-                    mediaTypeMode = "1"
-                    uploadImageMode = "1"
-
-                    hideViews()
-
-
-                } else {
-                    Config.disableClick(v)
-                    proddetail = 0
-                    getProductDetail(ID_Category!!)
-                }
+//                if (ID_Category.equals("")) {
+////                    val snackbar: Snackbar = Snackbar.make(v, "Select Category", Snackbar.LENGTH_LONG)
+////                    snackbar.setActionTextColor(Color.WHITE)
+////                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+////                    snackbar.show()
+//                    Config.snackBars(applicationContext, v, "Select Category")   //---314400
+//
+//                    llProdDetail!!.visibility = View.VISIBLE
+//                    // custProdlMode = "0"
+//
+//                    custDetailMode = "1"
+//                    companyNameMode = "1"
+//                    moreCommInfoMode = "1"
+//                    custProdlMode = "0"
+//                    locationMode = "1"
+//                    dateMode = "1"
+//                    leadRequestMode = "1"
+//                    leadfromMode = "1"
+//                    leadThroughMode = "1"
+//                    leadByMode = "1"
+//                    mediaTypeMode = "1"
+//                    uploadImageMode = "1"
+//
+//                    hideViews()
+//
+//
+//                } else {
+//                    Config.disableClick(v)
+//                    proddetail = 0
+//                    getProductDetail(ID_Category!!)
+//                }
+                //......................
             }
 
             R.id.edtFloor -> {
@@ -2204,9 +2213,10 @@ private var custmoerAssignmentID : String? =null
 
             R.id.add_product_btn -> {
 //                clickMode = "1"
+             //   checkProject="1"
                 var clickmode = multipleProductValidation(v)
 
-
+                Log.i("resperr","clickMode="+clickMode)
                 if (clickMode!!.equals("1")) {
 
                     if (arrupdateedit!!.equals("0")) {
@@ -2237,7 +2247,7 @@ private var custmoerAssignmentID : String? =null
                 edtProjectName!!.visibility = View.GONE
                 edtProdpriority!!.visibility = View.VISIBLE
                 strQty = ""
-                ID_Category = ""
+                ID_Category = "0"
                 CompanyCategory = ""
                 strExpecteddate = ""
                 strFeedback = ""
@@ -5533,6 +5543,7 @@ private var custmoerAssignmentID : String? =null
 
     private fun getProductDetail(ID_Category: String) {
 //         var proddetail = 0
+
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -6921,6 +6932,7 @@ private var custmoerAssignmentID : String? =null
             btnYes.setOnClickListener {
 //                finish()
                 editProdcutListarray.remove(position)
+                Log.e(TAG, "1212122    " +editProdcutListarray)
                 viewList(editProdcutListarray)
                 dialog.dismiss()
 
@@ -7133,12 +7145,18 @@ private var custmoerAssignmentID : String? =null
             edtAmount!!.setText("")
             tv_Mrp!!.setText("")
 
+            Log.i("resperr","check data side="+checkProject)
             if (jsonObject.getString("Project").equals("0")) {
                 ll_product_qty!!.visibility = View.VISIBLE
                 edtProjectName!!.visibility = View.GONE
+                checkProject="1"  // <--gone
+
             } else if (jsonObject.getString("Project").equals("1")) {
                 ll_product_qty!!.visibility = View.GONE
                 edtProjectName!!.visibility = View.VISIBLE
+
+                checkProject="0"  // <-- visible
+
             }
         }
         if (data.equals("proddetails")) {
@@ -7146,6 +7164,7 @@ private var custmoerAssignmentID : String? =null
 //             val jsonObject = prodDetailArrayList.getJSONObject(position)
             val jsonObject = prodDetailSort.getJSONObject(position)
             Log.e(TAG, "ID_Product   " + jsonObject.getString("ID_Product"))
+            ID_Category = jsonObject.getString("FK_Category")
             ID_Product = jsonObject.getString("ID_Product")
             edtProdproduct!!.setText(jsonObject.getString("ProductName"))
             MRP = jsonObject.getString("MRP")
@@ -7480,29 +7499,29 @@ private var custmoerAssignmentID : String? =null
             edtCustphone!!.setText(jsonObject.getString("Mobile"))
 
             //314400
-            voiceCheckID=jsonObject.getString("blnVoiceData")
+//            voiceCheckID=jsonObject.getString("blnVoiceData")
 //            custmoerAssignmentID=jsonObject.getString("ID_CustomerAssignment")
         //    voiceString=jsonObject.getString("VoiceData")
             Log.i("response1212","voiceCheckID yes or no="+voiceCheckID)
-            if (voiceCheckID.equals("1")){
-
-
-                custmoerAssignmentID=jsonObject.getString("ID_CustomerAssignment")
-                Log.i("response1212","voiceCheckID="+voiceCheckID)
-                Log.i("response1212","custmoerAssignmentID="+custmoerAssignmentID)
-
-
-                lotti_play!!.pauseAnimation()
-
-
-
-                cardVoiceRequest!!.visibility=View.VISIBLE
-                saveCount=0
-                getVoiceNote(custmoerAssignmentID)
-
-            }else{
-                cardVoiceRequest!!.visibility=View.GONE
-            }
+//            if (voiceCheckID.equals("1")){
+//
+//
+//                custmoerAssignmentID=jsonObject.getString("ID_CustomerAssignment")
+//                Log.i("response1212","voiceCheckID="+voiceCheckID)
+//                Log.i("response1212","custmoerAssignmentID="+custmoerAssignmentID)
+//
+//
+//                lotti_play!!.pauseAnimation()
+//
+//
+//
+//                cardVoiceRequest!!.visibility=View.VISIBLE
+//                saveCount=0
+//                getVoiceNote(custmoerAssignmentID)
+//
+//            }else{
+//                cardVoiceRequest!!.visibility=View.GONE
+//            }
 
                 //      setVoiceData(voiceString!!)
 
@@ -7843,7 +7862,8 @@ private var custmoerAssignmentID : String? =null
 
                 hideViews()
 
-            } else if (Customer_Name.equals("")) {
+            } else if (Customer_Name.equals(""))
+            {
                 Config.snackBars(context, v, "Enter Customer Name")
 
                 llCustomerDetail!!.visibility = View.VISIBLE
@@ -7883,7 +7903,8 @@ private var custmoerAssignmentID : String? =null
             else {
                 MoreValidations(v)
             }
-        } else {
+        } else
+        {
             Customer_Mode = "1"
             CusNameTitle = actv_namTitle!!.text.toString()
             Customer_Name = edtCustname!!.text.toString()
@@ -8009,7 +8030,12 @@ private var custmoerAssignmentID : String? =null
 
         if (array_product_lead.length() == 0) {
 
+
+
             var check = multipleProductValidation(v)
+
+            Log.i("resp2323","check="+check)
+            Log.i("resp2323","product validation")
             if (check!!.equals("0")) {
                 Config.snackBars(context, v, "Add Product")
             } else {
@@ -9591,10 +9617,31 @@ private var custmoerAssignmentID : String? =null
         Log.e(TAG, "   stramount        " + stramount + "===" + MRRP)
 
         Log.e("", "tttttt" + strQty)
-        if (ID_Category.equals("")) {
-            Config.snackBars(context, v, "Select Category")
+        Log.i("resperr","p="+strProduct)
+        Log.i("resperr","checkProject="+checkProject)
 
-        }else if (strQty.equals("") || fQty == 0) {
+        if (checkProject.equals("0") && strProject.equals(""))
+        {
+            Log.i("resperr","checkProject="+checkProject)
+            Config.snackBars(context, v, "Enter Model")
+
+        }
+
+
+       else if (checkProject.equals("1") && strProduct.equals(""))
+        {
+            Log.i("resperr","checkProject="+checkProject)
+            Config.snackBars(context, v, "Select Product")
+
+        }
+
+//        if (checkProject.equals("1")) {
+//            Log.i("resperr","checkProject="+checkProject)
+//            Config.snackBars(context, v, "Select Product")
+//
+//
+//        }
+       else if (strQty.equals("") || fQty == 0) {
             if (CompanyCategory.equals("0") || CompanyCategory.equals("1")) {
                 Config.snackBars(context, v, "Enter Quantity")
             } else if (CompanyCategory.equals("2")) {
@@ -9785,7 +9832,7 @@ private var custmoerAssignmentID : String? =null
         edtAmount!!.setText("")
 
         strQty = ""
-        ID_Category = ""
+        ID_Category = "0"
         CompanyCategory = ""
         strExpecteddate = ""
         strFeedback = ""

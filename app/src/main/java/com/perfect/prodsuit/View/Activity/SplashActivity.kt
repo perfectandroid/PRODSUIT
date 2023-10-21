@@ -58,6 +58,12 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://112.133.227.123:14020/ProdsuiteAPI/"
 //    val BANK_KEY = "-500"
 
+    ////    QA 12.10.2023
+//    val CERT_NAME = "certificate_qa.pem"
+//    val BASE_URL = "https://112.133.227.123:14020/QAPersuiteAPI/api/"
+//    val IMAGE_URL = "https://112.133.227.123:14020/QAPersuiteAPI/"
+//    val BANK_KEY = "-500"
+
     ////    DEMO 21.02.2023
 //    val CERT_NAME = "demos.pem"
 //    val BASE_URL = "https://202.164.150.65:14271/PerfectprodsuiteAPI/api/"
@@ -88,7 +94,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://45.118.163.44:14003/ProdSuiteAPIUnisoft/"
 //    val BANK_KEY = "-512"
 
-    ////   Sunitha` 26.09.2023
+    ////   Sunitha` 12.10.2023
 //    val CERT_NAME = "sunitha.pem"
 //    val BASE_URL = "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14004/ProdSuiteAPISunithaFurniture/"
@@ -240,11 +246,13 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
         if(chkstatus.equals("") || mpinStatus.equals(""))
         {
+            Log.i("response44","bod   ")
             checkCommonApp = 0
             commonAppChecking()
         }
         else if(chkstatus.equals("1")||chkstatus.equals("0"))
         {
+            Log.i("response44","b.............  ")
            showMaintanace()
         }
 
@@ -642,10 +650,10 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                                     ABOUTUSEditer.putString("ABOUTUS", jobj.getString("AboutUs"))
                                     ABOUTUSEditer.commit()
 
-                                    val AUDIOSP = applicationContext.getSharedPreferences(Config.SHARED_PREF67, 0)
-                                    val AUDIOEditer = AUDIOSP.edit()
-                                    AUDIOEditer.putString("AUDIO", jobj.getString("AudioClipEnabled"))
-                                    AUDIOEditer.commit()
+//                                    val AUDIOSP = applicationContext.getSharedPreferences(Config.SHARED_PREF67, 0)
+//                                    val AUDIOEditer = AUDIOSP.edit()
+//                                    AUDIOEditer.putString("AUDIO", jobj.getString("AudioClipEnabled"))
+//                                    AUDIOEditer.commit()
 
 
 /*

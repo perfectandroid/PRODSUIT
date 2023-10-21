@@ -572,7 +572,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                     this,
                     Observer { notificationSetterGetter ->
                         val msg = notificationSetterGetter.message
+                        Log.e(TAG,"5766660  ")
                         if (msg!!.length > 0) {
+                            Log.e(TAG,"5766661  ")
                             val jObject = JSONObject(msg)
                             if (jObject.getString("StatusCode") == "0") {
                                 val jobjt = jObject.getJSONObject("NotificationDetails")
