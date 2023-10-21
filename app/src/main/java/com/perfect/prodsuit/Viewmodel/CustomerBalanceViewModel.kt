@@ -11,8 +11,8 @@ class CustomerBalanceViewModel : ViewModel(){
 
     var customerbalancelistdata: MutableLiveData<CustomerBalanceModel>? = null
 
-    fun getCustombal(context: Context,TicketDate : String) : LiveData<CustomerBalanceModel>? {
-        customerbalancelistdata = CustomerBalanceRepository.getServicesApiCall(context,TicketDate)
+    fun getCustombal(context: Context,TicketDate : String,FK_Cust:String) : LiveData<CustomerBalanceModel>? {
+        customerbalancelistdata = CustomerBalanceRepository.getServicesApiCall(context,TicketDate,FK_Cust)
         return customerbalancelistdata
     }
 

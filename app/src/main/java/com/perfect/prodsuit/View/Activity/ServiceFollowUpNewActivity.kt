@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.location.LocationManager
+import android.nfc.cardemulation.CardEmulation
 import android.os.Bundle
 import android.provider.Settings
 import android.text.Editable
@@ -58,6 +59,8 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     private var card_hold: CardView? = null
     private var card_stop: CardView? = null
     private var card_restart: CardView? = null
+    private var crdv_Service: CardView? = null
+    private var crdv_warrantyamc: CardView? = null
 
     private var tv_ServiceCost: TextView? = null
     private var tv_replaced_product_cost: TextView? = null
@@ -71,6 +74,8 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     private var lin_Action_Taken: LinearLayout? = null
     private var ll_servicehist: LinearLayout? = null
     private var ll_WarantyAMC: LinearLayout? = null
+    private var ll_ClosedTicket: LinearLayout? = null
+
 
 
 
@@ -356,6 +361,11 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         card_stop = findViewById<CardView>(R.id.card_stop)
         card_restart = findViewById<CardView>(R.id.card_restart)
 
+        crdv_Service = findViewById<CardView>(R.id.crdv_Service)
+        crdv_warrantyamc = findViewById<CardView>(R.id.crdv_warrantyamc)
+
+
+
         tv_ServiceCost = findViewById<TextView>(R.id.tv_ServiceCost)
         tv_replaced_product_cost = findViewById<TextView>(R.id.tv_replaced_product_cost)
         tv_attendance = findViewById<TextView>(R.id.tv_attendance)
@@ -370,6 +380,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         lin_Action_Taken = findViewById<LinearLayout>(R.id.lin_Action_Taken)
         ll_servicehist = findViewById<LinearLayout>(R.id.ll_servicehist)
         ll_WarantyAMC= findViewById<LinearLayout>(R.id.ll_WarantyAMC)
+        ll_ClosedTicket= findViewById<LinearLayout>(R.id.ll_ClosedTicket)
 
         lin_add_service = findViewById<LinearLayout>(R.id.lin_add_service)
         lin_add_replaced_product = findViewById<LinearLayout>(R.id.lin_add_replaced_product)
@@ -401,6 +412,8 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         til_Follow_Date!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
 
         linear_afa = findViewById<LinearLayout>(R.id.linear_afa)
+
+
 
         recycler_service_cost = findViewById<FullLenghRecyclertview>(R.id.recycler_service_cost)
         recycleView_replaceproduct = findViewById<FullLenghRecyclertview>(R.id.recycleView_replaceproduct)
@@ -457,10 +470,11 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
 
         ll_servicehist!!.setOnClickListener(this)
         ll_WarantyAMC!!.setOnClickListener(this)
+        ll_ClosedTicket!!.setOnClickListener(this)
 
-
-
-
+        ll_WarantyAMC!!.visibility=View.GONE
+        ll_ClosedTicket!!.visibility=View.GONE
+        ll_servicehist!!.visibility=View.GONE
 
 //        tie_Visited_Date!!.addTextChangedListener(watcher);
 //        tie_Action!!.addTextChangedListener(watcher);
@@ -832,13 +846,20 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
             }
             R.id.ll_WarantyAMC -> {
 
-
+                val i = Intent(this@ServiceFollowUpNewActivity, WarrantyAMCActivity::class.java)
+                startActivity(i)
 
             }
             R.id.ll_servicehist -> {
 
 //                val i = Intent(this@ServiceFollowUpNewActivity, ServiceHistoryActivity::class.java)
 //                startActivity(i)
+            }
+            R.id.ll_ClosedTicket -> {
+
+                val i = Intent(this@ServiceFollowUpNewActivity, ClosedTicketActivity::class.java)
+                startActivity(i)
+
             }
         }
     }

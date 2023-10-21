@@ -520,8 +520,19 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.WarrantyAMCActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="com.perfect.prodsuit.View.Activity.LocationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.ClosedTicketActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
@@ -531,11 +542,17 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
-<!--        <activity-->
-<!--            android:name="com.perfect.prodsuit.View.Activity.ServiceHistoryActivity"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            android:theme="@style/AppTheme.NoActionBar"-->
-<!--            android:windowSoftInputMode="stateHidden|adjustPan" />-->
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.AssignedTicketsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.ServiceHistoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <activity
             android:name="com.perfect.prodsuit.View.Activity.NotificationActivity"

@@ -859,7 +859,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             Log.v("asdasdssss", "size2  " + jsonObject.getString("Count"))
             Log.e(TAG, "422  Count   " + jsonObject.getString("Count"))
             Log.i("response1122", "count=" + jsonObject.getString("Count"))
-            scoreListPieServices.add(ScorePieSevice("", jsonObject.getString("Count").toFloat()))
+            scoreListPieServices.add(ScorePieSevice("", jsonObject.getString("Value").toFloat()))
         }
 
         return scoreListPieServices
@@ -1345,7 +1345,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             recyceChart!!.layoutManager =
                 lLayout as RecyclerView.LayoutManager?
             val adapter =
-                LineChartAdapter(this@DashBoardActivity, serviceDashArrayList)
+                EnlargeLineChartAdapter(this@DashBoardActivity, serviceDashArrayList)
             recyceChart!!.adapter = adapter
         } else if (graphType == 2) {
             heading.text = "SERVICE STAGES"
@@ -1380,7 +1380,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
             recyceChart!!.layoutManager =
                 lLayout as RecyclerView.LayoutManager?
-            val adapter = BarChartAdapter(
+            val adapter = EnlargeBarChartAdapter(
                 this@DashBoardActivity,
                 serviceStatusDashArrayList
             )
@@ -1437,7 +1437,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             recyceChart!!.layoutManager =
                 lLayout as RecyclerView.LayoutManager?
             val adapter =
-                LineChartAdapter(this@DashBoardActivity, leadDashArrayList)
+                EnlargeLineChartAdapter(this@DashBoardActivity, leadDashArrayList)
             recyceChart!!.adapter = adapter
         } else if (graphType == 2) {
             heading.text = "LEAD STATUS"
@@ -1471,7 +1471,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             val lLayout = GridLayoutManager(this@DashBoardActivity, 1)
             recyceChart!!.layoutManager =
                 lLayout as RecyclerView.LayoutManager?
-            val adapter = BarChartAdapter(
+            val adapter = EnlargeBarChartAdapter(
                 this@DashBoardActivity,
                 leadStatusDashArrayList
             )
@@ -1597,7 +1597,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             Log.v("dsfsdfd333", "ss  " + score.Piescore)
             Log.e(TAG, "Piescore  594   " + score.Piescore.toFloat())
             typeAmountMap[""] = score.Piescore
-            pieEntries.add(PieEntry(score.Piescore.toFloat(), "%"))
+            pieEntries.add(PieEntry(score.Piescore.toFloat(), label))
 
         }
 
@@ -1633,7 +1633,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             //apply your logic
             var jsonObject = leadStatusDashArrayList.getJSONObject(i)
             Log.e(TAG, "422  Count   " + jsonObject.getString("Count"))
-            scoreListPie.add(ScorePie("", jsonObject.getString("Count").toFloat()))
+            scoreListPie.add(ScorePie("", jsonObject.getString("Value").toFloat()))
         }
 
         return scoreListPie
@@ -1646,7 +1646,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             var jsonObject = leadDashArrayList.getJSONObject(i)
             Log.v("asdasdssss", "size2  " + jsonObject.getString("Count"))
             Log.e(TAG, "422  Count   " + jsonObject.getString("Count"))
-            scoreListPieLead.add(ScorePie("", jsonObject.getString("Count").toFloat()))
+            scoreListPieLead.add(ScorePie("", jsonObject.getString("Value").toFloat()))
         }
 
         return scoreListPieLead
@@ -1714,7 +1714,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
             //apply your logic
             var jsonObject = serviceStatusDashArrayList.getJSONObject(i)
             Log.e(TAG, "422  Count   " + jsonObject.getString("Count"))
-            scoreListPieProject.add(ScorePieProject("", jsonObject.getString("Count").toFloat()))
+            scoreListPieProject.add(ScorePieProject("", jsonObject.getString("Value").toFloat()))
         }
 
         return scoreListPieProject

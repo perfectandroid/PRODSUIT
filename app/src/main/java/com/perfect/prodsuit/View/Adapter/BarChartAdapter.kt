@@ -35,7 +35,7 @@ class BarChartAdapter(internal var context: Context, internal var jsonArray: JSO
                 Log.e(TAG,"onBindViewHolder   1051   "+jsonObject!!.getString("Fileds"))
                 val pos = position+1
                 holder.tv_BarBox.setBackgroundResource(color[position])
-                holder.tv_BarName.text        = jsonObject!!.getString("Fileds")+" ( "+jsonObject!!.getString("Count")+"% )"
+                holder.tv_BarName.text        = jsonObject!!.getString("Fileds")+" - "+jsonObject!!.getString("Count")
 
 
             }

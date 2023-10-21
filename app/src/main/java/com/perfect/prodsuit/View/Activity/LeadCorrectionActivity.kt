@@ -33,28 +33,29 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemClickListener {
+class LeadCorrectionActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
 
     var TAG = "LeadCorrectionActivity"
-    var recycle_productlist                : RecyclerView? = null
-    private var imback                     : ImageView? = null
-    private var tvv_leadno_1               : TextView? = null
-    private var tvv_leadNo_2               : TextView? = null
-    private var tvv_leadname_1             : TextView? = null
-    private var tvv_leadName_2             : TextView? = null
-    private var tvv_leadremark_1           : TextView? = null
-    private var tvv_leadremark_2           : TextView? = null
-    private var tvv_correctionPerson_1     : TextView? = null
-    private var tvv_correctionPerson_2     : TextView? = null
-    private var progressDialog             : ProgressDialog? = null
-    lateinit var context                   : Context
-    lateinit var correctionLeadViewModel   : CorrectionLeadViewModel
+    var recycle_productlist: RecyclerView? = null
+    private var imback: ImageView? = null
+    private var tvv_leadno_1: TextView? = null
+    private var tvv_leadNo_2: TextView? = null
+    private var tvv_leadname_1: TextView? = null
+    private var tvv_leadName_2: TextView? = null
+    private var tvv_leadremark_1: TextView? = null
+    private var tvv_leadremark_2: TextView? = null
+    private var tvv_correctionPerson_1: TextView? = null
+    private var tvv_correctionPerson_2: TextView? = null
+    private var progressDialog: ProgressDialog? = null
+    lateinit var context: Context
+    lateinit var correctionLeadViewModel: CorrectionLeadViewModel
 
     lateinit var leadGenerateSaveViewModel: LeadGenerateSaveViewModel
-    lateinit var array_product_lead   : JSONArray
-    var array_product_lead_final   : JSONArray? = null
-    lateinit var correctionsenderArrayList   : JSONArray
-//    private var array_product_lead = JSONArray()
+    lateinit var array_product_lead: JSONArray
+    var array_product_lead_final: JSONArray? = null
+    lateinit var correctionsenderArrayList: JSONArray
+
+    //    private var array_product_lead = JSONArray()
     var saveUpdateMode: String? = "2"
 
     var ID_LeadGenerate: String = "0"
@@ -91,7 +92,6 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
     var check_save: String = ""
 
 
-
     var saveLeadGenDet = 0
     val modelLeadCorrectionDetails = ArrayList<ModelLeadCorrectionDetails>()
     var modelLeadCorrectionDetailsfinal = ArrayList<ModelLeadCorrectionDetails>()
@@ -114,7 +114,8 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
 
 
         correctionLeadViewModel = ViewModelProvider(this).get(CorrectionLeadViewModel::class.java)
-        leadGenerateSaveViewModel = ViewModelProvider(this).get(LeadGenerateSaveViewModel::class.java)
+        leadGenerateSaveViewModel =
+            ViewModelProvider(this).get(LeadGenerateSaveViewModel::class.java)
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
@@ -123,36 +124,36 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
         FK_TransMaster = jsonObj!!.getString("FK_TransMaster")
         ID_AuthorizationData = jsonObj!!.getString("ID_AuthorizationData")
 
-        Log.e(TAG,"FK_TransMaster 445   "+FK_TransMaster)
-        Log.e(TAG,"Module 445   "+Module_sub)
-        Log.e(TAG," ID_AuthorizationData   "+ID_AuthorizationData)
+        Log.e(TAG, "FK_TransMaster 445   " + FK_TransMaster)
+        Log.e(TAG, "Module 445   " + Module_sub)
+        Log.e(TAG, " ID_AuthorizationData   " + ID_AuthorizationData)
 
-        if (Module_sub.equals("1")){
+        if (Module_sub.equals("1")) {
 
             TransMode = jsonObj!!.getString("Module")
-        }else{
+        } else {
             TransMode = jsonObj!!.getString("TransMode")
-            Log.e(TAG,"TransMode 445   "+jsonObj!!.getString("TransMode"))
+            Log.e(TAG, "TransMode 445   " + jsonObj!!.getString("TransMode"))
         }
         setRegViews()
 
         correctioncount = 0
-        getCorrectionDetails(TransMode,FK_TransMaster!!,ID_AuthorizationData!!)
+        getCorrectionDetails(TransMode, FK_TransMaster!!, ID_AuthorizationData!!)
 
     }
 
-    private fun setRegViews(){
+    private fun setRegViews() {
 
-        imback                    = findViewById(R.id.imback)
-        tvv_leadno_1              = findViewById(R.id.tvv_leadno_1)
-        tvv_leadNo_2              = findViewById(R.id.tvv_leadNo_2)
-        tvv_leadname_1            = findViewById(R.id.tvv_leadname_1)
-        tvv_leadName_2            = findViewById(R.id.tvv_leadName_2)
-        tvv_leadremark_1          = findViewById(R.id.tvv_leadremark_1)
-        tvv_leadremark_2          = findViewById(R.id.tvv_leadremark_2)
-        tvv_correctionPerson_1    = findViewById(R.id.tvv_correctionPerson_1)
-        tvv_correctionPerson_2    = findViewById(R.id.tvv_correctionPerson_2)
-        recycle_productlist       = findViewById(R.id.recycle_productlist)
+        imback = findViewById(R.id.imback)
+        tvv_leadno_1 = findViewById(R.id.tvv_leadno_1)
+        tvv_leadNo_2 = findViewById(R.id.tvv_leadNo_2)
+        tvv_leadname_1 = findViewById(R.id.tvv_leadname_1)
+        tvv_leadName_2 = findViewById(R.id.tvv_leadName_2)
+        tvv_leadremark_1 = findViewById(R.id.tvv_leadremark_1)
+        tvv_leadremark_2 = findViewById(R.id.tvv_leadremark_2)
+        tvv_correctionPerson_1 = findViewById(R.id.tvv_correctionPerson_1)
+        tvv_correctionPerson_2 = findViewById(R.id.tvv_correctionPerson_2)
+        recycle_productlist = findViewById(R.id.recycle_productlist)
 
         btnCancel = findViewById<Button>(R.id.btnCancel)
         btnSubmit = findViewById<Button>(R.id.btnSubmit)
@@ -163,7 +164,11 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
 
     }
 
-    private fun getCorrectionDetails(TransMode : String,FK_TransMaster: String,ID_AuthorizationData: String) {
+    private fun getCorrectionDetails(
+        TransMode: String,
+        FK_TransMaster: String,
+        ID_AuthorizationData: String
+    ) {
 
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -173,22 +178,28 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                correctionLeadViewModel.getCorrectionLead(this,TransMode,FK_TransMaster,ID_AuthorizationData)!!.observe(
+                correctionLeadViewModel.getCorrectionLead(
+                    this,
+                    TransMode,
+                    FK_TransMaster,
+                    ID_AuthorizationData
+                )!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
                             val jObject = JSONObject(msg)
-                            Log.e(TAG,"msg   353   "+msg)
+                            Log.e(TAG, "msg   353   " + msg)
                             if (jObject.getString("StatusCode") == "0") {
-                                val jobjt = jObject.getJSONObject("AuthorizationCorrectionLeadDetails")
+                                val jobjt =
+                                    jObject.getJSONObject("AuthorizationCorrectionLeadDetails")
                                 array_product_lead = jobjt.getJSONArray("ProductDetails")
 
-                                Log.e(TAG,"array_product_lead  889 "+array_product_lead)
+                                Log.e(TAG, "array_product_lead  889 " + array_product_lead)
 
                                 correctionsenderArrayList = jobjt.getJSONArray("SenderDetails")
-                                if (array_product_lead.length()>0){
-                                    if (correctioncount == 0){
+                                if (array_product_lead.length() > 0) {
+                                    if (correctioncount == 0) {
                                         correctioncount++
 
                                         modelLeadCorrectionDetails.clear()
@@ -224,19 +235,37 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
 //                                            Log.e(TAG,"NextActionDate     "+LgActDate)
 //                                            Log.e(TAG,"LgpExpectDate     "+LgpExpectDate)
 
-                                            modelLeadCorrectionDetails!!.add(ModelLeadCorrectionDetails(jsonObject.getString("FK_Category"),jsonObject.getString("CategoryName")
-                                                ,jsonObject.getString("ID_Product"),jsonObject.getString("ProdName"),jsonObject.getString("LgpMRP"),jsonObject.getString("LgpSalesPrice")))
+                                            modelLeadCorrectionDetails!!.add(
+                                                ModelLeadCorrectionDetails(
+                                                    jsonObject.getString("FK_Category"),
+                                                    jsonObject.getString("CategoryName"),
+                                                    jsonObject.getString("ID_Product"),
+                                                    jsonObject.getString("ProdName"),
+                                                    jsonObject.getString("LgpMRP"),
+                                                    jsonObject.getString("LgpSalesPrice")
+                                                )
+                                            )
                                         }
 
                                         for (i in 0 until correctionsenderArrayList.length()) {
-                                            var jsonObject = correctionsenderArrayList.getJSONObject(i)
+                                            var jsonObject =
+                                                correctionsenderArrayList.getJSONObject(i)
                                             tvv_leadremark_2!!.setText(jsonObject.getString("Remark"))
                                             tvv_correctionPerson_2!!.setText(jsonObject.getString("Sender"))
                                         }
 
-                                        if (modelLeadCorrectionDetails.size>0){
-                                            recycle_productlist!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
-                                            correctionProductAdapter = CorrectionProductAdapter(this@LeadCorrectionActivity, modelLeadCorrectionDetails)
+                                        if (modelLeadCorrectionDetails.size > 0) {
+                                            recycle_productlist!!.setLayoutManager(
+                                                LinearLayoutManager(
+                                                    this,
+                                                    LinearLayoutManager.VERTICAL,
+                                                    false
+                                                )
+                                            )
+                                            correctionProductAdapter = CorrectionProductAdapter(
+                                                this@LeadCorrectionActivity,
+                                                modelLeadCorrectionDetails
+                                            )
                                             recycle_productlist!!.adapter = correctionProductAdapter
                                             correctionProductAdapter!!.setClickListener(this@LeadCorrectionActivity)
                                         }
@@ -273,6 +302,7 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
                     })
                 progressDialog!!.dismiss()
             }
+
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
@@ -281,26 +311,26 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
     }
 
 
-
-
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.imback -> {
                 finish()
             }
+
             R.id.btnCancel -> {
                 finish()
             }
 
             R.id.btnSubmit -> {
-               Config.disableClick(v)
-               validation()
+                Config.disableClick(v)
+                Log.i("respCorrection", "validation ")
+                validation()
             }
         }
     }
 
     private fun validation() {
-        Log.e(TAG,"modelLeadCorrectionDetails     "+modelLeadCorrectionDetails.size)
+        Log.e(TAG, "modelLeadCorrectionDetails     " + modelLeadCorrectionDetails.size)
 //        if (modelLeadCorrectionDetails.size > 0){
 //            for (i in 0 until modelLeadCorrectionDetails.size) {
 //                var MRRP = modelLeadCorrectionDetails[i].LgpMRP
@@ -331,8 +361,8 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
 //            }
         check_save = "1"
 
-            modelLeadCorrectionDetailsfinal= correctionProductAdapter!!.returnlist()
-        if (modelLeadCorrectionDetailsfinal.size > 0){
+        modelLeadCorrectionDetailsfinal = correctionProductAdapter!!.returnlist()
+        if (modelLeadCorrectionDetailsfinal.size > 0) {
             for (i in 0 until modelLeadCorrectionDetailsfinal.size) {
                 var MRRP = modelLeadCorrectionDetailsfinal[i].LgpMRP
                 var offer = modelLeadCorrectionDetailsfinal[i].LgpSalesPrice
@@ -345,28 +375,30 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
                     offer = "0"
                 }
 
-                Log.e(TAG,"209990  MRRP      "+MRRP+"  :  "+MRRP.toFloat())
-                Log.e(TAG,"209990  offer     "+offer)
+                Log.e(TAG, "209990  MRRP      " + MRRP + "  :  " + MRRP.toFloat())
+                Log.e(TAG, "209990  offer     " + offer)
 
 
                 if ((MRRP.toFloat() != "0".toFloat()) && (offer.toFloat() > MRRP.toFloat())) {
-                    Log.e(TAG,"209991   "+modelLeadCorrectionDetailsfinal[i].ProdName)
-                    Config.showCustomToast1("Offer Price Should be less than or Equal to MRP",context)
+                    Log.e(TAG, "209991   " + modelLeadCorrectionDetailsfinal[i].ProdName)
+                    Config.showCustomToast1(
+                        "Offer Price Should be less than or Equal to MRP",
+                        context
+                    )
                     check_save = "0"
                     break
-                }
-                else{
-                    Log.e(TAG,"209992   "+modelLeadCorrectionDetailsfinal[i].ProdName)
+                } else {
+                    Log.e(TAG, "209992   " + modelLeadCorrectionDetailsfinal[i].ProdName)
                 }
 
 
             }
 
 
-            if (check_save.equals("1")){
-                Log.e(TAG,"11222233  1 ")
+            if (check_save.equals("1")) {
+                Log.e(TAG, "11222233  1 ")
 
-                var i=0
+                var i = 0
                 val jsonproduct = JSONArray()
                 for (myObject in modelLeadCorrectionDetailsfinal) {
 
@@ -374,63 +406,94 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
                     val jsonObject2 = JSONObject()
                     var jobjt = array_product_lead.getJSONObject(i)
 
-
+//                    val strrfollowup = jsonObject.getString("NextActionDate")
+//                    var folloupdate = ""
+//                    if (!strrfollowup.equals("")){
+//                        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+//                        val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+//                        val currentDateFormate = inputFormat.parse(strrfollowup)
+//                        folloupdate = outputFormat.format(currentDateFormate)
+//                    }
 
                     val Next_action_date = jobjt.getString("NextActionDate")
-                    val str_ExpectDate  = jobjt.getString("LgpExpectDate")
-
+                    val str_ExpectDate = jobjt.getString("LgpExpectDate")
+                    //   val Next_action_date = "01-12-2200"
+                    //  val str_ExpectDate  = "01-05-1900"
                     val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
                     val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-                    val currentDateFormate = inputFormat.parse(Next_action_date)
-                    val currentDateFormate_1 = inputFormat.parse(str_ExpectDate)
+                    Log.i("respdate", "next act date ==  " + Next_action_date)
+                    Log.i("respdate", "expect date ==  " + str_ExpectDate)
+                    var NxtActiondate = ""
+                    var ExpDate = ""
+                    if (!Next_action_date.equals("null") && !Next_action_date.equals("")) {
+                        Log.i(
+                            "respdate",
+                            "inside...next...................................... === "
+                        )
+                        val currentDateFormate = inputFormat.parse(Next_action_date)
+                        NxtActiondate = outputFormat.format(currentDateFormate)
+                    }
 
-                    val Next_actionDate = outputFormat.format(currentDateFormate)
-                    val ExpectDate = outputFormat.format(currentDateFormate_1)
+                    if (!str_ExpectDate.equals("") && !str_ExpectDate.equals("null")) {
+                        Log.i(
+                            "respdate",
+                            "inside...except...................................... === "
+                        )
+                        val currentDateFormate_1 = inputFormat.parse(str_ExpectDate)
+                        ExpDate = outputFormat.format(currentDateFormate_1)
+                    }
+                    Log.i("respdate", "NxtActiondate=" + NxtActiondate)
+                    Log.i("respdate", "ExpDate=" + ExpDate)
+
+//                    val currentDateFormate = inputFormat.parse(Next_action_date)
+                    //      val currentDateFormate_1 = inputFormat.parse(str_ExpectDate)
+
+                    //        val Next_actionDate = outputFormat.format(currentDateFormate)
+                    //     val ExpectDate = outputFormat.format(currentDateFormate_1)
 
 
-                    Log.e(TAG,"eeee  "+Next_actionDate)
-                    Log.e(TAG,"eeee  "+ExpectDate)
+//                    Log.e(TAG,"eeee  "+Next_actionDate)
+//                    Log.e(TAG,"eeee  "+ExpectDate)
 
 //                Log.e(TAG,"eeee112  "+Next_actionDate)
 
-                    jsonObject2.put("ID_Product",jobjt.getString("ID_Product"))
-                    jsonObject2.put("FK_Category",jobjt.getString("FK_Category"))
-                    jsonObject2.put("ProdName",jobjt.getString("ProdName"))
-                    jsonObject2.put("ProjectName",jobjt.getString("ProjectName"))
-                    jsonObject2.put("LgpPQuantity",jobjt.getString("LgpPQuantity"))
-                    jsonObject2.put("LgpDescription",jobjt.getString("LgpDescription"))
-                    jsonObject2.put("ActStatus",jobjt.getString("ActStatus"))
-                    jsonObject2.put("FK_NetAction",jobjt.getString("FK_NetAction"))
-                    jsonObject2.put("BranchID",jobjt.getString("BranchID"))
-                    jsonObject2.put("BranchTypeID",jobjt.getString("BranchTypeID"))
-                    jsonObject2.put("FK_ActionType",jobjt.getString("FK_ActionType"))
-                    jsonObject2.put("NextActionDate",Next_actionDate)
-                    jsonObject2.put("FK_Departement",jobjt.getString("FK_Departement"))
-                    jsonObject2.put("FK_Employee",jobjt.getString("FK_Employee"))
-                    jsonObject2.put("FK_Priority",jobjt.getString("FK_Priority"))
-                    jsonObject2.put("LgpExpectDate",ExpectDate)
-                    jsonObject2.put("LgpMRP",jobjt.getString("LgpMRP"))
+                    jsonObject2.put("ID_Product", jobjt.getString("ID_Product"))
+                    jsonObject2.put("FK_Category", jobjt.getString("FK_Category"))
+                    jsonObject2.put("ProdName", jobjt.getString("ProdName"))
+                    jsonObject2.put("ProjectName", jobjt.getString("ProjectName"))
+                    jsonObject2.put("LgpPQuantity", jobjt.getString("LgpPQuantity"))
+                    jsonObject2.put("LgpDescription", jobjt.getString("LgpDescription"))
+                    jsonObject2.put("ActStatus", jobjt.getString("ActStatus"))
+                    jsonObject2.put("FK_NetAction", jobjt.getString("FK_NetAction"))
+                    jsonObject2.put("BranchID", jobjt.getString("BranchID"))
+                    jsonObject2.put("BranchTypeID", jobjt.getString("BranchTypeID"))
+                    jsonObject2.put("FK_ActionType", jobjt.getString("FK_ActionType"))
+                    jsonObject2.put("NextActionDate", NxtActiondate)
+                    jsonObject2.put("FK_Departement", jobjt.getString("FK_Departement"))
+                    jsonObject2.put("FK_Employee", jobjt.getString("FK_Employee"))
+                    jsonObject2.put("FK_Priority", jobjt.getString("FK_Priority"))
+                    jsonObject2.put("LgpExpectDate", ExpDate)
+                    jsonObject2.put("LgpMRP", jobjt.getString("LgpMRP"))
                     jsonObject2.put("LgpSalesPrice", myObject.LgpSalesPrice)
-                    jsonObject2.put("FK_ProductLocation",jobjt.getString("FK_ProductLocation"))
+                    jsonObject2.put("FK_ProductLocation", jobjt.getString("FK_ProductLocation"))
 
                     jsonproduct.put(jsonObject2)
-                    Log.v("sfdsfds","LgpSalesPrice "+myObject.LgpSalesPrice)
-                    Log.v("sfdsfds","FK_ProductLocation "+jobjt.getString("FK_ProductLocation"))
-                    Log.v("sfdsfds","Next_actionDate "+Next_actionDate)
-                    Log.v("sfdsfds","ExpectDate "+ExpectDate)
-                    i=i+1
+                    Log.v("sfdsfds", "LgpSalesPrice " + myObject.LgpSalesPrice)
+                    Log.v("sfdsfds", "FK_ProductLocation " + jobjt.getString("FK_ProductLocation"))
+//                    Log.v("sfdsfds","Next_actionDate "+Next_actionDate)
+//                    Log.v("sfdsfds","ExpectDate "+ExpectDate)
+                    i = i + 1
                 }
-                Log.v("sfdsfds","dsfdsfd "+jsonproduct)
-                saveLeadGeneration(jsonproduct)
+                Log.v("sfdsfds", "dsfdsfd " + jsonproduct)
+                  saveLeadGeneration(jsonproduct)
 
-            }else{
+            } else {
 //                Log.e(TAG,"11222233  2 ")
             }
 //            array_product_lead = JSONArray(modelLeadCorrectionDetailsfinal)
 //
-           //  array_product_lead = JSONArray()
-          //  array_product_lead.
-
+            //  array_product_lead = JSONArray()
+            //  array_product_lead.
 
 
         }
@@ -443,10 +506,10 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
         try {
 
             Log.e(TAG, "encode1   4759   " + LeadGenerationActivity.encode1)
-            Log.e(TAG, "strDate   4759   " + LeadGenerationActivity.strDate + "   " + LeadGenerationActivity.strFollowupdate)
-
-
-
+            Log.e(
+                TAG,
+                "strDate   4759   " + LeadGenerationActivity.strDate + "   " + LeadGenerationActivity.strFollowupdate
+            )
 
 
 //            val sdf = SimpleDateFormat("dd-MM-yyyy")
@@ -650,6 +713,7 @@ class LeadCorrectionActivity : AppCompatActivity(),View.OnClickListener, ItemCli
                         })
                     progressDialog!!.dismiss()
                 }
+
                 false -> {
                     Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                         .show()
