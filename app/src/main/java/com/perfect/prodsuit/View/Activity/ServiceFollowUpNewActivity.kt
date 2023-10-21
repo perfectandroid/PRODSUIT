@@ -837,8 +837,8 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
             }
             R.id.ll_servicehist -> {
 
-                val i = Intent(this@ServiceFollowUpNewActivity, ServiceHistoryActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@ServiceFollowUpNewActivity, ServiceHistoryActivity::class.java)
+//                startActivity(i)
             }
         }
     }
