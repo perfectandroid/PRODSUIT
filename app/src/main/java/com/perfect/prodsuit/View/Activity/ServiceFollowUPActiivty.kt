@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -13,8 +12,10 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,8 +23,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.gson.Gson
-import com.perfect.prodsuit.Helper.ClickListener
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DBHelper
 import com.perfect.prodsuit.Helper.ItemClickListener
@@ -36,7 +35,6 @@ import com.perfect.prodsuit.Viewmodel.ServiceFollowUpInfoViewModel
 import com.perfect.prodsuit.Viewmodel.ServiceFollowUpMoreServiceViewModel
 import org.json.JSONArray
 import org.json.JSONObject
-import java.util.ArrayList
 
 class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemClickListener {
 
@@ -54,7 +52,10 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     private var imv_filterfollowup                    : ImageView?      = null
     private var imv_scannerfollowup                   : ImageView?      = null
     private var rcyler_followup                       : RecyclerView?   = null
+    private var rcyler_service3                       : RecyclerView?   = null
     private var recyCompService                       : RecyclerView?   = null
+    private var ll_service_Attended                   : LinearLayout?   = null
+    private var ll_Service3                           : LinearLayout?   = null
     private var progressDialog                        : ProgressDialog? = null
     private var add_Product                           : FloatingActionButton?= null
     private var dialogMoreServiceAttendeSheet         : Dialog?         = null
@@ -85,6 +86,8 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     val modelServicesListDetails                                        = ArrayList<ServiceDetailsFullListModel>()
     val modelServicesSubListDetails                                     = ArrayList<ServiceDetailsSubListModel>()
     val modelMoreServicesTemp                                           = ArrayList<ModelMoreServicesTemp>()
+    val serviceTab3MainModel                                            = ArrayList<ServiceTab3MainModel>()
+    val serviceTab3SubModel                                             = ArrayList<ServiceTab3SubModel>()
     var serviceFollowUpServiceType                                      = 0
     var serviceFollowUpInfo                                             = 0
     var serviceFollowUpMoreService                                      = 0
@@ -95,6 +98,12 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var servDetadapter : ServiceDetailsAdapter? = null
     var modEditPosition = 0
     var modChanged = 0
+
+
+    // 24-10-2023 Ranjith
+    var modeTab = 0  // 0 - Service Attended , 1 = Part Replaced ,2 = Service , 3 =Attendance , 4 = Action taken
+    var serviceTab3Adapter : ServiceTab3Adapter? = null
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -119,14 +128,29 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         }catch (e : Exception){
 
         }
+        modeTab = 0
+        loadlayout()
         leadShow = "1"
         setRegviews()
         serviceFollowUpInfo = 0
         loadInfo(ID_Customerserviceregister,ID_CustomerserviceregisterProductDetails)
     }
 
+    private fun loadlayout() {
+       ll_service_Attended!!.visibility = View.GONE
+        ll_Service3!!.visibility = View.GONE
+
+        if (modeTab == 0){
+            ll_service_Attended!!.visibility = View.VISIBLE
+        }
+        if (modeTab == 2){
+            ll_Service3!!.visibility = View.VISIBLE
+        }
+    }
+
     private fun setRegviews() {
         rcyler_followup      = findViewById(R.id.rcyler_followup)
+        rcyler_service3      = findViewById(R.id.rcyler_service3)
         imv_filterfollowup   = findViewById(R.id.imv_filterfollowup)
         imv_scannerfollowup  = findViewById(R.id.imv_scannerfollowup)
         imv_infofollowup     = findViewById(R.id.imv_infofollowup)
@@ -136,12 +160,16 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         imback               = findViewById(R.id.imback)
         recyCompService               = findViewById(R.id.recyCompService)
 
+        ll_service_Attended      = findViewById(R.id.ll_service_Attended)
+        ll_Service3      = findViewById(R.id.ll_Service3)
+
         imv_infofollowup!!.setOnClickListener(this)
         imv_scannerfollowup!!.setOnClickListener(this)
         imv_filterfollowup!!.setOnClickListener(this)
         add_Product!!.setOnClickListener(this)
         imback!!.setOnClickListener(this)
         txt_next!!.setOnClickListener(this)
+
 
     }
 
@@ -875,7 +903,18 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
             }
             R.id.txt_next -> {
                valiadateServiceAttended()
+                modeTab = modeTab+1
+                loadlayout()
             }
+
+            R.id.txt_previous -> {
+                modeTab = modeTab-1
+                loadlayout()
+                ll_service_Attended!!.visibility = View.VISIBLE
+                ll_Service3!!.visibility = View.GONE
+            }
+
+
 
 
 
@@ -1005,10 +1044,36 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         Log.e(TAG,"1016661     "+hasId)
         if (hasId){
             Log.e(TAG,"10000666666   Checked Box MArked")
+            ll_service_Attended!!.visibility = View.GONE
+            ll_Service3!!.visibility = View.VISIBLE
+
+
+            // 24-10-2023 Ranjith
+            serviceTab3MainModel.clear()
+            Log.e(TAG,"1034441     "+modelServicesListDetails.size)
+            Log.e(TAG,"1034442     "+serviceTab3MainModel.size)
+            for (i in 0 until modelServicesListDetails.size) {
+                var empModel = modelServicesListDetails[i]
+                if (empModel.isChekecd){
+                    serviceTab3MainModel!!.add(ServiceTab3MainModel(empModel.FK_Product,empModel.Product,"1","",
+                        "","","","","","","",""))
+                }
+
+            }
+
+            Log.e(TAG,"1034443     "+serviceTab3MainModel.size)
+            if (serviceTab3MainModel.size > 0){
+                val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+                rcyler_service3!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                serviceTab3Adapter = ServiceTab3Adapter(this@ServiceFollowUPActiivty, serviceTab3MainModel)
+                rcyler_service3!!.adapter = serviceTab3Adapter
+                serviceTab3Adapter!!.setClickListener(this@ServiceFollowUPActiivty)
+
+            }
+            // 24-10-2023 Ranjith
         }else{
             Log.e(TAG,"10000666666   No Checked Box MArked")
         }
-
 
     }
 
