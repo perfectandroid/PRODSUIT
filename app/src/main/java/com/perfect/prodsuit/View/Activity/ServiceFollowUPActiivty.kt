@@ -128,22 +128,25 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         }catch (e : Exception){
 
         }
+        setRegviews()
         modeTab = 0
         loadlayout()
         leadShow = "1"
-        setRegviews()
+
         serviceFollowUpInfo = 0
         loadInfo(ID_Customerserviceregister,ID_CustomerserviceregisterProductDetails)
     }
 
     private fun loadlayout() {
-       ll_service_Attended!!.visibility = View.GONE
+        ll_service_Attended!!.visibility = View.GONE
         ll_Service3!!.visibility = View.GONE
+
+//        0 - Service Attended , 1 = Part Replaced ,2 = Service , 3 =Attendance , 4 = Action taken
 
         if (modeTab == 0){
             ll_service_Attended!!.visibility = View.VISIBLE
         }
-        if (modeTab == 2){
+        if (modeTab == 1){
             ll_Service3!!.visibility = View.VISIBLE
         }
     }
@@ -910,13 +913,9 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
             R.id.txt_previous -> {
                 modeTab = modeTab-1
                 loadlayout()
-                ll_service_Attended!!.visibility = View.VISIBLE
-                ll_Service3!!.visibility = View.GONE
+//                ll_service_Attended!!.visibility = View.VISIBLE
+//                ll_Service3!!.visibility = View.GONE
             }
-
-
-
-
 
         }
     }
@@ -1044,8 +1043,8 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         Log.e(TAG,"1016661     "+hasId)
         if (hasId){
             Log.e(TAG,"10000666666   Checked Box MArked")
-            ll_service_Attended!!.visibility = View.GONE
-            ll_Service3!!.visibility = View.VISIBLE
+//            ll_service_Attended!!.visibility = View.GONE
+//            ll_Service3!!.visibility = View.VISIBLE
 
 
             // 24-10-2023 Ranjith
