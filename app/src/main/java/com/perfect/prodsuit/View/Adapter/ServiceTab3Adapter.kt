@@ -8,13 +8,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
-import com.perfect.prodsuit.Model.ServiceDetailsFullListModel
 import com.perfect.prodsuit.Model.ServiceTab3MainModel
 import com.perfect.prodsuit.R
 
@@ -45,84 +43,231 @@ class ServiceTab3Adapter (internal var context: Context, internal var mList: Lis
 //                holder.txtSino.text        = pos.toString()
                 val empModel = mList[position]
 
+                DecimelFormatters.setDecimelPlace(holder.edt_serviceCost)
                 Log.e(TAG,"533..... "+ empModel.main+" "+position)
-                if (empModel.main.equals("1")){
+                if (empModel.main.equals("1") && empModel.sub.equals("1")){
+                    holder.ll_tab.visibility = View.GONE
+                    holder.ll_serviceDetails.visibility = View.VISIBLE
+//                    holder.ll_tab.setBackgroundColor(context.getColor(R.color.colorPrimary))
+                }else{
                     holder.ll_tab.visibility = View.VISIBLE
                     holder.ll_serviceDetails.visibility = View.GONE
 
-                    holder.ll_tab.setBackgroundColor(context.getColor(R.color.colorPrimary))
+//                    holder.ll_tab.setBackgroundColor(context.getColor(R.color.colorPrimarylite1))
+                }
+
+                if (empModel.ID_ServiceType.equals("1")){
+                    holder.edt_serviceCost.isEnabled = true
                 }else{
-                    holder.ll_tab.visibility = View.GONE
-                    holder.ll_serviceDetails.visibility = View.VISIBLE
-                    holder.ll_tab.setBackgroundColor(context.getColor(R.color.colorPrimarylite1))
+                    holder.edt_serviceCost.isEnabled = false
+                }
+
+                if (empModel.isChecked){
+                    holder.chk_box.isChecked = true
+                }else{
+                    holder.chk_box.isChecked = false
                 }
 
                 holder.tv_product.text           = empModel.Product
-////                holder.til_item_name.text               = empModel.Product
-//                holder.til_warranty.text                = empModel.Warranty
-//                holder.til_warranty_date.text           = empModel.ServiceWarrantyExpireDate
-//                holder.til_replacement_date.text        = empModel.ReplacementWarrantyExpireDate
-//
-//
-//                holder.til_productwise_cmplt.setText(empModel.ComplaintName)
-//                holder.til_servicedescrption.setText(empModel.Description)
-//
-//                if (empModel.isChekecd == true){
-//                    holder.chk_box.isChecked = true
-//                    holder.til_servicedescrption.isEnabled = true
-//                    holder.til_productwise_cmplt.isEnabled = true
-//                }else{
-//                    holder.chk_box.isChecked = false
-//                    holder.til_servicedescrption.isEnabled = false
-//                    holder.til_productwise_cmplt.isEnabled = false
-//                }
-//
-//
-//                Log.e(TAG,"onBindViewHolder   105100   "+empModel.ComplaintName)
-//
-//                holder.til_servicedescrption.addTextChangedListener(object : TextWatcher {
+                holder.tv_service.text           = empModel.Service
+                holder.tv_serviceType.text           = empModel.ServiceType
+                holder.tv_taxAmount.text           = empModel.TaxAmount
+                holder.tv_netAmount.text           = empModel.NetAmount
+
+                holder.edt_serviceCost.setText(empModel.ServiceCost)
+                holder.edt_remark.setText(empModel.Remarks)
+
+                holder.img_addService!!.setTag(position)
+                holder.img_addService!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "addService3Click")
+                })
+
+
+
+
+                val answerWatcher = object : TextWatcher {
+                    override fun beforeTextChanged(value: CharSequence, start: Int, count: Int, after: Int) {
+
+                    }
+
+                    override fun onTextChanged(value: CharSequence, start: Int, before: Int, count: Int) {
+                        var TaxAmount   =  0.0F
+                        var NetAmount   =  0.0F
+                        ///   TaxableAmount  == serviceCost
+                        var TaxableAmount =  holder.edt_serviceCost.text.toString()
+                        var FK_TaxGroup =  empModel.FK_TaxGroup
+                        var IncludeTax  =  empModel.ServiceChargeIncludeTax
+                        var TaxPercentage   =  empModel.TaxPercentage
+
+                        if (TaxableAmount.equals("") || TaxableAmount.equals(".")){
+                            TaxableAmount = "0.00"
+                        }
+
+
+
+                        if (empModel.ServiceChargeIncludeTax == true){
+                            // [((Service.TaxPercentage) * TaxableAmount)/((Service.TaxPercentage)+100)]
+                            TaxAmount = (TaxPercentage.toFloat()*TaxableAmount.toFloat())/(TaxPercentage.toFloat()+100)
+                            NetAmount = TaxableAmount.toFloat()
+
+                            empModel.TaxAmount = Config.changeTwoDecimel(TaxAmount.toString())
+                            empModel.NetAmount = Config.changeTwoDecimel(NetAmount.toString())
+                          //  notifyItemChanged(position)
+
+                            holder.tv_taxAmount.text           = empModel.TaxAmount
+                            holder.tv_netAmount.text           = empModel.NetAmount
+
+                        }else{
+                            //(Service.TaxPercentage*TaxableAmount)/100
+                            // TaxableAmount+TaxAmount
+                            TaxAmount = (TaxPercentage.toFloat()*TaxableAmount.toFloat())/100
+                            NetAmount = TaxableAmount.toFloat()+TaxAmount
+
+                            empModel.TaxAmount = Config.changeTwoDecimel(TaxAmount.toString())
+                            empModel.NetAmount = Config.changeTwoDecimel(NetAmount.toString())
+                          //  notifyItemChanged(position)
+
+                            holder.tv_taxAmount.text           = empModel.TaxAmount
+                            holder.tv_netAmount.text           = empModel.NetAmount
+                        }
+                    }
+
+                    override fun afterTextChanged(s: Editable) {
+
+                    }
+                }
+//                holder.edt_serviceCost.removeTextChangedListener(answerWatcher);
+                holder.edt_serviceCost.addTextChangedListener(answerWatcher);
+
+
+
+
+//                holder.edt_serviceCost.addTextChangedListener(object : TextWatcher {
 //                    override fun afterTextChanged(s: Editable?) {
+//
+//                        var TaxAmount   =  0.0F
+//                        var NetAmount   =  0.0F
+//                        ///   TaxableAmount  == serviceCost
+//                        var TaxableAmount =  holder.edt_serviceCost.text.toString()
+//                        var FK_TaxGroup =  empModel.FK_TaxGroup
+//                        var IncludeTax  =  empModel.ServiceChargeIncludeTax
+//                        var TaxPercentage   =  empModel.TaxPercentage
+//
+//                        if (TaxableAmount.equals("") || TaxableAmount.equals(".")){
+//                            TaxableAmount = "0.00"
+//                        }
+//
+//
+//
+//                        if (empModel.ServiceChargeIncludeTax == true){
+//                            // [((Service.TaxPercentage) * TaxableAmount)/((Service.TaxPercentage)+100)]
+//                            TaxAmount = (TaxPercentage.toFloat()*TaxableAmount.toFloat())/(TaxPercentage.toFloat()+100)
+//                            NetAmount = TaxableAmount.toFloat()
+//
+//                            empModel.TaxAmount = TaxAmount.toString()
+//                            empModel.NetAmount = NetAmount.toString()
+//                            notifyItemChanged(position)
+//                        }else{
+//                            //(Service.TaxPercentage*TaxableAmount)/100
+//                            // TaxableAmount+TaxAmount
+//                            TaxAmount = (TaxPercentage.toFloat()*TaxableAmount.toFloat())/100
+//                            NetAmount = TaxableAmount.toFloat()+TaxAmount
+//
+//                            empModel.TaxAmount = TaxAmount.toString()
+//                            empModel.NetAmount = NetAmount.toString()
+//                            notifyItemChanged(position)
+//                        }
 //                    }
 //
 //                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//
+//                        var TaxAmount   =  0.0F
+//                        var NetAmount   =  0.0F
+//                        ///   TaxableAmount  == serviceCost
+//                        var TaxableAmount =  holder.edt_serviceCost.text.toString()
+//                        var FK_TaxGroup =  empModel.FK_TaxGroup
+//                        var IncludeTax  =  empModel.ServiceChargeIncludeTax
+//                        var TaxPercentage   =  empModel.TaxPercentage
+//
+//                        if (TaxableAmount.equals("") || TaxableAmount.equals(".")){
+//                            TaxableAmount = "0.00"
+//                        }
+//
+//
+//
+//                        if (empModel.ServiceChargeIncludeTax == true){
+//                            // [((Service.TaxPercentage) * TaxableAmount)/((Service.TaxPercentage)+100)]
+//                            TaxAmount = (TaxPercentage.toFloat()*TaxableAmount.toFloat())/(TaxPercentage.toFloat()+100)
+//                            NetAmount = TaxableAmount.toFloat()
+//
+//                            empModel.TaxAmount = TaxAmount.toString()
+//                            empModel.NetAmount = NetAmount.toString()
+//                            notifyItemChanged(position)
+//                        }else{
+//                            //(Service.TaxPercentage*TaxableAmount)/100
+//                            // TaxableAmount+TaxAmount
+//                            TaxAmount = (TaxPercentage.toFloat()*TaxableAmount.toFloat())/100
+//                            NetAmount = TaxableAmount.toFloat()+TaxAmount
+//
+//                            empModel.TaxAmount = TaxAmount.toString()
+//                            empModel.NetAmount = NetAmount.toString()
+//                            notifyItemChanged(position)
+//                        }
 //                    }
 //
 //                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                        mList[position].Description = holder.til_servicedescrption.text.toString()
+//
+////
+////                        var TaxAmount   =  0.0F
+////                        var NetAmount   =  0.0F
+////                      ///   TaxableAmount  == serviceCost
+////                        var TaxableAmount =  holder.edt_serviceCost.text.toString()
+////                        var FK_TaxGroup =  empModel.FK_TaxGroup
+////                        var IncludeTax  =  empModel.ServiceChargeIncludeTax
+////                        var TaxPercentage   =  empModel.TaxPercentage
+////
+////                        if (TaxableAmount.equals("") || TaxableAmount.equals(".")){
+////                            TaxableAmount = "0.00"
+////                        }
+////
+////
+////
+////                        if (empModel.ServiceChargeIncludeTax == true){
+////                            // [((Service.TaxPercentage) * TaxableAmount)/((Service.TaxPercentage)+100)]
+////                            TaxAmount = (TaxPercentage.toFloat()*TaxableAmount.toFloat())/(TaxPercentage.toFloat()+100)
+////                            NetAmount = TaxableAmount.toFloat()
+////
+////                            empModel.TaxAmount = TaxAmount.toString()
+////                            empModel.NetAmount = NetAmount.toString()
+////                            notifyItemChanged(position)
+////                        }else{
+////                            //(Service.TaxPercentage*TaxableAmount)/100
+////                           // TaxableAmount+TaxAmount
+////                            TaxAmount = (TaxPercentage.toFloat()*TaxableAmount.toFloat())/100
+////                            NetAmount = TaxableAmount.toFloat()+TaxAmount
+////
+////                            empModel.TaxAmount = TaxAmount.toString()
+////                            empModel.NetAmount = NetAmount.toString()
+////                            notifyItemChanged(position)
+////                        }
 //                    }
 //                })
-//
-//                holder.ll_serviceDetails!!.setTag(position)
-//                holder.ll_serviceDetails!!.setOnClickListener(View.OnClickListener {
-////                    clickListener!!.onClick(position, "areadetail")
-//                })
-//
-//                holder.til_productwise_cmplt!!.setTag(position)
-//                holder.til_productwise_cmplt!!.setOnClickListener(View.OnClickListener {
-//                    clickListener!!.onClick(position, "productwise_cmplt")
-//                })
-//
-//                holder.chk_box!!.setTag(position)
-//                holder.chk_box!!.setOnClickListener(View.OnClickListener {
-//                    if (holder.chk_box!!.isChecked){
-//                        holder.til_servicedescrption.isEnabled = true
-//                        holder.til_productwise_cmplt.isEnabled = true
-//                        empModel.isChekecd = true
-//                        holder.til_servicedescrption.setText(  mList[position].Description)
-//                        holder.til_productwise_cmplt.setText(  mList[position].ComplaintName)
-//                        clickListener!!.onClick(position, "chkproductwise_cmplt")
-//                    }else{
-//                        holder.til_servicedescrption.isEnabled = false
-//                        holder.til_productwise_cmplt.isEnabled = false
-//                        empModel.isChekecd = false
-//                        holder.til_servicedescrption.setText("")
-//                        mList[position].Description = ""
-//                        holder.til_productwise_cmplt.setText("")
-//                        mList[position].ComplaintName = ""
-//                        mList[position].ID_ComplaintList = "0"
-//                    }
-//
-//                })
+
+                holder.tv_serviceType!!.setTag(position)
+                holder.tv_serviceType!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "addServiceType3Click")
+                })
+
+                holder.chk_box!!.setTag(position)
+                holder.chk_box!!.setOnClickListener(View.OnClickListener {
+                   if (holder.chk_box.isChecked){
+                       mList[position].isChecked = true
+                   }else{
+                       mList[position].isChecked = false
+                   }
+                })
+
+
             }
 
 
@@ -148,32 +293,40 @@ class ServiceTab3Adapter (internal var context: Context, internal var mList: Lis
 
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var til_item_name                 : TextView
-        internal var til_warranty                  : TextView
-        internal var til_warranty_date             : TextView
-        internal var til_replacement_date          : TextView
+
         internal var tv_product             : TextView
-        internal var til_productwise_cmplt         : TextView
-        internal var til_servicedescrption         : EditText
-        internal var ll_serviceDetails             : LinearLayout
-        internal var ll_subproduct                 : LinearLayout
-        internal var ll_tab                        : LinearLayout
-        internal var chk_box                       : CheckBox
+        internal var img_addService         : ImageView
+
+        internal var chk_box                : CheckBox
+        internal var tv_service             : TextView
+        internal var tv_serviceType         : TextView
+        internal var tv_taxAmount           : TextView
+        internal var tv_netAmount           : TextView
+
+        internal var edt_serviceCost        : EditText
+        internal var edt_remark             : EditText
+
+        internal var ll_tab                 : LinearLayout
+        internal var ll_serviceDetails      : LinearLayout
+
 
         init {
-            til_item_name              = v.findViewById<View>(R.id.til_item_name)          as TextView
-            til_warranty               = v.findViewById<View>(R.id.til_warranty)           as TextView
-            til_warranty_date          = v.findViewById<View>(R.id.til_warranty_date)      as TextView
-            til_replacement_date       = v.findViewById<View>(R.id.til_replacement_date)   as TextView
 
-            tv_product          = v.findViewById<View>(R.id.tv_product)      as TextView
+            tv_product              = v.findViewById<View>(R.id.tv_product)      as TextView
+            img_addService          = v.findViewById<View>(R.id.img_addService)      as ImageView
 
-            til_productwise_cmplt      = v.findViewById<View>(R.id.til_productwise_cmplt)  as TextView
-            til_servicedescrption      = v.findViewById<View>(R.id.til_servicedescrption)  as EditText
-            ll_serviceDetails          = v.findViewById<View>(R.id.ll_serviceDetails)      as LinearLayout
-            ll_subproduct          = v.findViewById<View>(R.id.ll_subproduct)      as LinearLayout
-            ll_tab          = v.findViewById<View>(R.id.ll_tab)      as LinearLayout
-            chk_box          = v.findViewById<View>(R.id.chk_box)      as CheckBox
+            chk_box                 = v.findViewById<View>(R.id.chk_box)      as CheckBox
+            tv_service              = v.findViewById<View>(R.id.tv_service)          as TextView
+            tv_serviceType          = v.findViewById<View>(R.id.tv_serviceType)          as TextView
+            tv_taxAmount            = v.findViewById<View>(R.id.tv_taxAmount)          as TextView
+            tv_netAmount            = v.findViewById<View>(R.id.tv_netAmount)          as TextView
+
+            edt_serviceCost         = v.findViewById<View>(R.id.edt_serviceCost)          as EditText
+            edt_remark              = v.findViewById<View>(R.id.edt_remark)          as EditText
+
+            ll_serviceDetails       = v.findViewById<View>(R.id.ll_serviceDetails)      as LinearLayout
+            ll_tab                  = v.findViewById<View>(R.id.ll_tab)      as LinearLayout
+
 
         }
     }
@@ -181,4 +334,5 @@ class ServiceTab3Adapter (internal var context: Context, internal var mList: Lis
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 }

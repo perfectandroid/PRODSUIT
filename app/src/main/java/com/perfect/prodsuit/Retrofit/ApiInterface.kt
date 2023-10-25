@@ -280,6 +280,7 @@ interface ApiInterface {
 
     @POST("ServiceFollowUp/ServiceType")
     fun getServiceFollowUpServiceType(@Body body: RequestBody): Call<String>
+
     @POST("ServiceFollowUp/ChangemodeDetailse")
     fun getServiceFollowUpChangeMode(@Body body: RequestBody): Call<String>
     @POST("ServiceFollowUp/PopUpProductdetails")
@@ -625,6 +626,9 @@ interface ApiInterface {
 
     @POST("ServiceAssign/ServiceAssignedWork")
     fun getAssignedTicketList(@Body body: RequestBody): Call<String>
+
+    @POST("ServiceFollowUp/AddedService")
+    fun getAddedServiceList(@Body body: RequestBody): Call<String>
 
 
 

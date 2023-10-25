@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -29,10 +31,7 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
-import com.perfect.prodsuit.Viewmodel.ProductWiseComplaintViewModel
-import com.perfect.prodsuit.Viewmodel.ServiceDetailsViewModel
-import com.perfect.prodsuit.Viewmodel.ServiceFollowUpInfoViewModel
-import com.perfect.prodsuit.Viewmodel.ServiceFollowUpMoreServiceViewModel
+import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -44,9 +43,12 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     lateinit var productwisecomplaintViewModel        : ProductWiseComplaintViewModel
     lateinit var serviceFollowUpInfoViewModel         : ServiceFollowUpInfoViewModel
     lateinit var serviceFollowUpMoreServiceViewModel  : ServiceFollowUpMoreServiceViewModel
+    lateinit var addServiceViewModel                  : AddServiceViewModel
     internal var jsonObjectList                       : JSONObject?     = null
     private var tv_followupticket                     : TextView?       = null
     private var txt_next                              : TextView?       = null
+    private var txt_previous                          : TextView?       = null
+    private var vw_previous                           : View?       = null
     private var imv_infofollowup                      : ImageView?      = null
     private var imback                                : ImageView?      = null
     private var imv_filterfollowup                    : ImageView?      = null
@@ -103,7 +105,18 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     // 24-10-2023 Ranjith
     var modeTab = 0  // 0 - Service Attended , 1 = Part Replaced ,2 = Service , 3 =Attendance , 4 = Action taken
     var serviceTab3Adapter : ServiceTab3Adapter? = null
+    var FK_Product_Pos : Int?         = 0
+    var FK_Product_ID : String?         = ""
+    var addserviceMode              = 0
+    lateinit var addserviceArrayList: JSONArray
+    private var dialogAddserviceSheet : Dialog? = null
+    val addServiceDetailMode        = ArrayList<AddServiceDetailMode>()
+    lateinit var serviceFollowUpServiceTypeViewModel: ServiceFollowUpServiceTypeViewModel
 
+    private var dialogServType : Dialog? = null
+
+    private var serviceDetailsArray = JSONArray()
+    private var serviceIncentiveArray = JSONArray()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,6 +128,9 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         serviceFollowUpInfoViewModel = ViewModelProvider(this).get(ServiceFollowUpInfoViewModel::class.java)
         serviceFollowUpMoreServiceViewModel = ViewModelProvider(this).get(ServiceFollowUpMoreServiceViewModel::class.java)
         productwisecomplaintViewModel = ViewModelProvider(this).get(ProductWiseComplaintViewModel::class.java)
+        addServiceViewModel = ViewModelProvider(this).get(AddServiceViewModel::class.java)
+        serviceFollowUpServiceTypeViewModel = ViewModelProvider(this).get(ServiceFollowUpServiceTypeViewModel::class.java)
+
 
         db_helper = DBHelper(this,null)
         try {
@@ -145,9 +161,15 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 
         if (modeTab == 0){
             ll_service_Attended!!.visibility = View.VISIBLE
+            txt_previous!!.visibility = View.GONE
+            vw_previous!!.visibility = View.GONE
+            txt_next!!.visibility = View.VISIBLE
         }
         if (modeTab == 1){
             ll_Service3!!.visibility = View.VISIBLE
+            txt_previous!!.visibility = View.VISIBLE
+            vw_previous!!.visibility = View.VISIBLE
+            txt_next!!.visibility = View.VISIBLE
         }
     }
 
@@ -159,6 +181,8 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         imv_infofollowup     = findViewById(R.id.imv_infofollowup)
         tv_followupticket    = findViewById(R.id.tv_followupticket)
         txt_next    = findViewById(R.id.txt_next)
+        txt_previous    = findViewById(R.id.txt_previous)
+        vw_previous    = findViewById(R.id.vw_previous)
         add_Product          = findViewById(R.id.add_Product)
         imback               = findViewById(R.id.imback)
         recyCompService               = findViewById(R.id.recyCompService)
@@ -172,6 +196,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         add_Product!!.setOnClickListener(this)
         imback!!.setOnClickListener(this)
         txt_next!!.setOnClickListener(this)
+        txt_previous!!.setOnClickListener(this)
 
 
     }
@@ -905,9 +930,15 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
                 loadMoreServiceAttended()
             }
             R.id.txt_next -> {
-               valiadateServiceAttended()
-                modeTab = modeTab+1
-                loadlayout()
+
+                if (modeTab == 0){
+                    valiadateServiceAttended()
+                }
+                if (modeTab == 1){
+                   validateService3()
+                }
+
+
             }
 
             R.id.txt_previous -> {
@@ -919,6 +950,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 
         }
     }
+
 
 
 
@@ -1033,7 +1065,328 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         }
 
 
+//        24-10-2023 Ranjith
+        if (data.equals("addService3Click")){
+
+            FK_Product_Pos  =  position
+            FK_Product_ID  =  serviceTab3MainModel[position].FK_Product
+            Log.e(TAG,"10491   "+FK_Product_ID)
+            addserviceMode = 0
+            loadServiceList()
+
+        }
+
+        if (data.equals("addServiceType3Click")){
+
+            modEditPosition = position
+            serviceFollowUpServiceType = 0
+            loadServiceType()
+//            FK_Product_Pos  =  position
+//            FK_Product_ID  =  serviceTab3MainModel[position].FK_Product
+//            Log.e(TAG,"10491   "+FK_Product_ID)
+//            addserviceMode = 0
+//            loadServiceList()
+
+        }
+
+        if (data.equals("serviceTypeClick")){
+
+            dialogServType!!.dismiss()
+            var jsonObj = jsonArrayServiceType.getJSONObject(position)
+            var empModel = serviceTab3MainModel[modEditPosition]
+
+            empModel.ID_ServiceType = jsonObj.getString("ServiceTypeId")
+            empModel.ServiceType = jsonObj.getString("ServiceTypeName")
+
+            serviceTab3Adapter!!.notifyItemChanged(modEditPosition)
+
+        }
+
+//        24-10-2023 Ranjith
+
     }
+
+    private fun loadServiceType() {
+        val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
+        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+        var ID_Branch =  FK_BranchSP.getString("FK_Branch", "0")
+        var ID_Employee = FK_EmployeeSP.getString("FK_Employee", "0")
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+//                progressDialog = ProgressDialog(this, R.style.Progress)
+//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//                progressDialog!!.setCancelable(false)
+//                progressDialog!!.setIndeterminate(true)
+//                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+//                progressDialog!!.show()
+                serviceFollowUpServiceTypeViewModel.getServiceFollowUpServiceType(
+                    this,
+                    "0",
+                    ID_Branch!!,
+                    ID_Employee!!
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (serviceFollowUpServiceType == 0) {
+                                    serviceFollowUpServiceType++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg  580   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt =
+                                            jObject.getJSONObject("ServiceType")
+                                        jsonArrayServiceType =
+                                            jobjt.getJSONArray("ServiceTypeList")
+                                        
+                                        if (jsonArrayServiceType.length()>0){
+                                            serviceTypePop(jsonArrayServiceType)
+                                        }
+                                    }
+                                }
+                            } else {
+
+                            }
+                        } catch (e: Exception) {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "" + Config.SOME_TECHNICAL_ISSUES,
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+
+                    })
+                //  progressDialog!!.dismiss()
+            }
+            false -> {
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
+            }
+        }
+    }
+
+    private fun serviceTypePop(jsonArrayServiceType: JSONArray) {
+
+        try {
+            dialogServType = Dialog(context)
+            dialogServType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogServType!!.setContentView(R.layout.pop_service_type)
+            dialogServType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+
+            val recycServiceType = dialogServType!!.findViewById(R.id.recycServiceType) as RecyclerView
+
+            val lLayout = GridLayoutManager(context, 1)
+            recycServiceType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+
+            val adapter = ServiceTypeAdapter(context, jsonArrayServiceType)
+            recycServiceType!!.adapter = adapter
+            adapter!!.setClickListener(this@ServiceFollowUPActiivty)
+
+            dialogServType!!.show()
+            dialogServType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogServType!!.getWindow()!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        }catch (e: Exception){
+
+        }
+
+    }
+
+
+    private fun loadServiceList() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                addServiceViewModel.getAddService(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                Log.e("10701    ", "msg")
+                                if (addserviceMode == 0) {
+                                    addserviceMode++
+                                    val jObject = JSONObject(msg)
+                                    Log.e("10702    ", ""+jObject)
+                                    Log.e(TAG, "st code " + jObject.getString("StatusCode"))
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("AddedService")
+                                        addserviceArrayList= jobjt.getJSONArray("AddedServiceList")
+                                        addServiceDetailMode.clear()
+                                        if (addserviceArrayList.length() > 0){
+                                            for (i in 0 until addserviceArrayList.length()) {
+                                               var  jsonObject = addserviceArrayList.getJSONObject(i)
+                                                addServiceDetailMode.add(AddServiceDetailMode(jsonObject.getString("ID_Services"),jsonObject.getString("Service"),
+                                                    jsonObject.getString("FK_TaxGroup"),jsonObject.getString("TaxPercentage"),(jsonObject.getString("ServiceChargeIncludeTax").toBoolean()),false))
+                                            }
+
+                                        }
+
+                                        if (addServiceDetailMode.size > 0){
+                                            addServicePopup()
+                                        }
+
+                                    } else {
+
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+
+                                }
+
+
+                            } else {
+                                //  swipeRefreshLayout.isRefreshing = false
+                            }
+                        } catch (e: Exception) {
+
+                            Log.v("fsfsfds", "ex3 " + e)
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun addServicePopup() {
+        try {
+
+            dialogAddserviceSheet = Dialog(this)
+            dialogAddserviceSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogAddserviceSheet!! .setContentView(R.layout.servicelist_popup)
+            dialogAddserviceSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+            dialogAddserviceSheet!!.setCancelable(false)
+
+            var recycAdpService = dialogAddserviceSheet!! .findViewById(R.id.recycAdpService) as RecyclerView
+            var tv_cancel = dialogAddserviceSheet!! .findViewById(R.id.tv_cancel) as TextView
+            var tv_apply = dialogAddserviceSheet!! .findViewById(R.id.tv_apply) as TextView
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+            recycAdpService!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapter = ServiceDetailAdapter(this@ServiceFollowUPActiivty, addServiceDetailMode!!)
+            recycAdpService!!.adapter = adapter
+            adapter.setClickListener(this@ServiceFollowUPActiivty)
+
+            val window: Window? = dialogAddserviceSheet!!.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+            tv_cancel!!.setOnClickListener {
+                dialogAddserviceSheet!!.dismiss()
+            }
+
+            tv_apply!!.setOnClickListener {
+                var hasId =  hasServiceTrue(addServiceDetailMode!!)
+                if (hasId){
+
+//                    var hasIds1 = hasServiceTrue1(addServiceDetailMode!!)
+//
+//                    if (hasIds1){
+//                        Log.e(TAG,"1308   "+"True")
+//
+//                    }else{
+//                        Log.e(TAG,"1308   "+"Fasle")
+//                    }
+
+                    var posAdd = 0
+                    for (i in 0 until serviceTab3MainModel.size) {
+                        var empModel = serviceTab3MainModel[i]
+                        if (empModel.FK_Product.equals(FK_Product_ID)){
+                            posAdd = i+1
+                        }
+                    }
+
+                    for (i in 0 until addServiceDetailMode.size) {
+                        if (addServiceDetailMode[i].isChecked){
+                            Log.e(TAG,"10492   "+FK_Product_Pos)
+                            var empModel = serviceTab3MainModel[FK_Product_Pos!!]
+                            var empModelSub = addServiceDetailMode[i]
+
+                            Log.e(TAG,"117111   "+addServiceDetailMode[i].Service)
+                            serviceTab3MainModel!!.add(posAdd,ServiceTab3MainModel(empModel.FK_Product,empModel.Product,"1","1",
+                                empModelSub.ID_Services,empModelSub.Service,"0","","0.00","0.00",
+                                "0.00","",false,empModelSub.FK_TaxGroup,empModelSub.TaxPercentage,empModelSub.ServiceChargeIncludeTax))
+                            serviceTab3Adapter!!.notifyItemInserted(posAdd)
+                            posAdd++
+
+                        }
+                    }
+                    dialogAddserviceSheet!!.dismiss()
+
+
+
+                }
+
+
+
+//                rcyler_service3!!.adapter = serviceTab3Adapter
+
+            }
+
+            dialogAddserviceSheet!!.show()
+
+        }catch (e : Exception){
+
+        }
+
+    }
+
+    private fun hasServiceTrue(addServiceDetailMode: ArrayList<AddServiceDetailMode>): Boolean {
+
+        var isChecked = false
+        for (i in 0 until addServiceDetailMode.size) {  // iterate through the JsonArray
+            Log.e(TAG,"101666     "+addServiceDetailMode.get(i).isChecked)
+
+            if (addServiceDetailMode.get(i).isChecked){
+                isChecked = true
+            }
+
+        }
+        return isChecked
+    }
+
+    private fun hasServiceTrue1(addServiceDetailMode: ArrayList<AddServiceDetailMode>): Boolean {
+
+        var isChecked = true
+        for (i in 0 until serviceTab3MainModel.size) {  // iterate through the JsonArray
+            Log.e(TAG,"12344    "+FK_Product_ID)
+            Log.e(TAG,"12344    "+serviceTab3MainModel.get(i).FK_Product)
+            for (j in 0 until addServiceDetailMode.size) {
+                if (serviceTab3MainModel.get(i).FK_Product.equals(FK_Product_ID) && serviceTab3MainModel.get(i).ID_Service.equals(addServiceDetailMode.get(j).ID_Services)){
+                    isChecked = false
+                }
+            }
+
+        }
+        return isChecked
+    }
+
 
 
     private fun valiadateServiceAttended() {
@@ -1046,6 +1399,8 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 //            ll_service_Attended!!.visibility = View.GONE
 //            ll_Service3!!.visibility = View.VISIBLE
 
+            modeTab = modeTab+1
+            loadlayout()
 
             // 24-10-2023 Ranjith
             serviceTab3MainModel.clear()
@@ -1055,10 +1410,32 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
                 var empModel = modelServicesListDetails[i]
                 if (empModel.isChekecd){
                     serviceTab3MainModel!!.add(ServiceTab3MainModel(empModel.FK_Product,empModel.Product,"1","",
-                        "","","","","","","",""))
+                        "0","","0","","0.00","0.00","0.00","",false,"0","0",false))
                 }
 
             }
+
+            serviceDetailsArray = JSONArray()
+            for (i in 0 until modelServicesListDetails.size) {
+
+                if (modelServicesListDetails[i].isChekecd){
+                    Log.e(TAG,"1416661  FK_Product                    "+modelServicesListDetails[i].FK_Product)
+                    Log.e(TAG,"1416662  Product                       "+modelServicesListDetails[i].Product)
+                    Log.e(TAG,"1416663  ID_ComplaintList              "+modelServicesListDetails[i].ID_ComplaintList)
+                    Log.e(TAG,"1416664  ID_CustomerWiseProductDetails "+modelServicesListDetails[i].ID_CustomerWiseProductDetails)
+
+                    val jObject = JSONObject()
+                    jObject.put("ID_Product", (modelServicesListDetails[i].FK_Product))
+                    jObject.put("Product", (modelServicesListDetails[i].Product))
+                    jObject.put("ID_ComplaintList", (modelServicesListDetails[i].ID_ComplaintList))
+                    jObject.put("Description", (modelServicesListDetails[i].Description))
+                    jObject.put("ID_CustomerWiseProductDetails", (modelServicesListDetails[i].ID_CustomerWiseProductDetails))
+                    jObject.put("FK_ProductNumberingDetails", ("0"))
+
+                    serviceDetailsArray.put(jObject)
+                }
+            }
+            Log.e(TAG,"143777771     "+serviceDetailsArray)
 
             Log.e(TAG,"1034443     "+serviceTab3MainModel.size)
             if (serviceTab3MainModel.size > 0){
@@ -1072,8 +1449,54 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
             // 24-10-2023 Ranjith
         }else{
             Log.e(TAG,"10000666666   No Checked Box MArked")
+            Toast.makeText(applicationContext,"No Check box marked",Toast.LENGTH_SHORT).show()
         }
 
+    }
+
+    private fun validateService3() {
+
+        var hasId =  hasTrue3(serviceTab3MainModel!!)
+        if (hasId){
+            Log.e(TAG,"145888   Checked Box MArked")
+            serviceIncentiveArray = JSONArray()
+            for (i in 0 until serviceTab3MainModel.size) {
+
+                if (serviceTab3MainModel[i].isChecked){
+
+
+                    val jObject = JSONObject()
+                    jObject.put("ID_Service", (serviceTab3MainModel[i].ID_Service))
+                    jObject.put("ID_MasterProduct", (serviceTab3MainModel[i].FK_Product))
+                    jObject.put("ServiceMod", (serviceTab3MainModel[i].ID_ServiceType))
+                    jObject.put("ServiceCost", (serviceTab3MainModel[i].ServiceCost))
+                    jObject.put("ServiceTax", (serviceTab3MainModel[i].TaxAmount))
+                    jObject.put("ServiceNetAmount", (serviceTab3MainModel[i].NetAmount))
+
+                    serviceIncentiveArray.put(jObject)
+
+                }
+            }
+            Log.e(TAG,"143777772     "+serviceIncentiveArray)
+        }else{
+            Log.e(TAG,"145888   No Checked Box MArked")
+        }
+
+    }
+
+    private fun hasTrue3(serviceTab3MainModel: ArrayList<ServiceTab3MainModel>): Boolean {
+        var isChecked = true
+        for (i in 0 until serviceTab3MainModel.size) {
+            if (serviceTab3MainModel.get(i).isChecked){
+                isChecked = true
+                if (serviceTab3MainModel.get(i).ID_ServiceType.equals("0") || serviceTab3MainModel.get(i).ID_ServiceType.equals("")){
+                    isChecked = false
+                    Toast.makeText(applicationContext,"Select Service Type",Toast.LENGTH_SHORT).show()
+                    break
+                }
+            }
+        }
+        return isChecked
     }
 
     private fun hasTrue(modelServicesListDetails: ArrayList<ServiceDetailsFullListModel>): Boolean {
@@ -1086,6 +1509,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
                 isChecked = true
                 if (modelServicesListDetails.get(i).ID_ComplaintList.equals("0")){
                     isChecked = false
+//                    Toast.makeText(applicationContext,"No Check box marked",Toast.LENGTH_SHORT).show()
                     break
                 }
             }
@@ -1094,5 +1518,12 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         return isChecked
     }
 
-
+    override fun onBackPressed() {
+        if (modeTab == 0){
+            finish()
+        }else{
+            modeTab = modeTab-1
+            loadlayout()
+        }
+    }
 }

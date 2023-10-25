@@ -84,11 +84,7 @@ object WarrantyAMCRepository {
                 requestObject1.put("Critrea1", ProdsuitApplication.encryptStart("0"))
 
 
-
-
                 Log.e(TAG,"requestObject1   warranty   "+requestObject1)
-
-
 
 
 
