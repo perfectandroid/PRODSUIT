@@ -97,7 +97,10 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="com.perfect.prodsuit.View.Activity.ServiceFollowupGroupByActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name="com.perfect.prodsuit.View.Activity.ServiceFollowUPActiivty"
             android:exported="false"
@@ -750,7 +753,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.perfect.prodsuite.fileprovider"
+            android:authorities="com.perfect.sheetal.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

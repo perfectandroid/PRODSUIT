@@ -30,6 +30,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.*
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.ServiceFollowUpMainProductAdapter
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -61,8 +62,12 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     private var progressDialog                        : ProgressDialog? = null
     private var add_Product                           : FloatingActionButton?= null
     private var dialogMoreServiceAttendeSheet         : Dialog?         = null
+    private var dialogReplacedMode                    : Dialog?         = null
+    private var dialogWarrantydMode                   : Dialog?         = null
     private var recyclr_Product                       : RecyclerView?   = null
     private var recyFollowupAttended                  : RecyclerView?   = null
+    var servDetadapter                                : ServiceDetailsAdapter? = null
+    var compAdapter                                   : complaint_service_followup? = null
     var adapterServiceAttended                        : ServiceAttendedAdapter? = null
     var serviceFollowUpInfoObjectList                 : JSONObject      = JSONObject()
     var serviceFollowUpInfoObjectList_2               : JSONObject      = JSONObject()
@@ -90,6 +95,8 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     val modelMoreServicesTemp                                           = ArrayList<ModelMoreServicesTemp>()
     val serviceTab3MainModel                                            = ArrayList<ServiceTab3MainModel>()
     val serviceTab3SubModel                                             = ArrayList<ServiceTab3SubModel>()
+    val servicepartsReplacedModel                                       = ArrayList<ServicePartsReplacedModel>()
+    val labelpartsreplaceModel                                          = ArrayList<LabelPartsreplaceModel>()
     var serviceFollowUpServiceType                                      = 0
     var serviceFollowUpInfo                                             = 0
     var serviceFollowUpMoreService                                      = 0
@@ -100,7 +107,6 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     lateinit var pickupdelibilltypeviewmodel: PickupDeliBillTypeViewModel
     lateinit var paymentMethodeViewModel: PaymentMethodViewModel
     private var rcyler_actionTaken: RecyclerView? = null
-    private var ll_action_taken: LinearLayout? = null
     var actionTypeActionList: JSONArray = JSONArray()
     var leadActionList: JSONArray = JSONArray()
     var otherChargeList: JSONArray = JSONArray()
@@ -109,16 +115,41 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var actionTakenActioncouny = 0
 
     var db_helper: DBHelper? = null
-    var compAdapter: complaint_service_followup? = null
+    var replacemodeAdapter:  ServiceReplacedModeAdaper? = null
+    var servicewarrantyModeAdapter:  ServiceWarrantyModeAdapter? = null
     var actionTakeActionFilter: ActionTakeActionFilter? = null
     var leadActionAdapter: LeadActionAdapter? = null
-    var servDetadapter: ServiceDetailsAdapter? = null
     var actionTakenAdapter: ActionTakenAdapter? = null
     var modEditPosition = 0
+    var warrantyEditPosition = 0
     var modChanged = 0
     var billTypecount = 0
     var paymentCount = 0
     var billtype=""
+
+    //................................
+    private var recy_main_product_topbar                : RecyclerView?       = null
+    private var recy_parts_replaced                     : RecyclerView?       = null
+    private var recyreplacedmode                        : RecyclerView?       = null
+    private var recywarrantymode                        : RecyclerView?       = null
+    private var ll_top_bar                              : LinearLayout?       = null
+    private var ll_part_repaced2                              : LinearLayout?       = null
+    private var ll_ProdWarrantyAmc                      : LinearLayout?       = null
+    private var ll_partsReplaced                        : LinearLayout?       = null
+    private var ll_service                              : LinearLayout?       = null
+    lateinit var subProductViewModel                    : SubProductViewModel
+    lateinit var serviceReplacedModeViewModel           : ServiceReplacedModeViewModel
+    lateinit var warrantymodeViewModel                  : WarrantyModeViewModel
+    lateinit var SubproductDetailsList                  : JSONArray
+    lateinit var WarrantyArrayList                      : JSONArray
+    lateinit var ReplaceArrayList                       : JSONArray
+    var SubproductDetails                               : JSONObject          = JSONObject()
+    var ProductSubDetails                               = JSONArray()
+    var mainProductInfo                                 = 0
+    var warrantycount                                   = 0
+    var replacedcount                                   = 0
+    var ReplceMode                                      = ""
+    //................................
 
 
     // 24-10-2023 Ranjith
@@ -136,6 +167,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 
     private var serviceDetailsArray = JSONArray()
     private var serviceIncentiveArray = JSONArray()
+    private var getProductSubDetailsArray = JSONArray()
 
     private var DateType: Int = 0
     private var tie_DateAttended: TextInputEditText? = null
@@ -168,6 +200,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var arrOtherChargeFinal = JSONArray()
     internal var recyPaymentList: RecyclerView? = null
     internal var ll_paymentlist: LinearLayout? = null
+    internal var ll_action_taken: LinearLayout? = null
     var adapterPaymentList: PaymentListAdapter? = null
     var arrAddUpdate: String? = "0"
     var applyMode = 0
@@ -200,6 +233,10 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         serviceFollowUpServiceTypeViewModel = ViewModelProvider(this).get(ServiceFollowUpServiceTypeViewModel::class.java)
 
 
+        subProductViewModel = ViewModelProvider(this).get(SubProductViewModel::class.java)
+        serviceReplacedModeViewModel = ViewModelProvider(this).get(ServiceReplacedModeViewModel::class.java)
+        warrantymodeViewModel = ViewModelProvider(this).get(WarrantyModeViewModel::class.java)
+
         db_helper = DBHelper(this,null)
         try {
             runningStatus = intent.getStringExtra("runningStatus")
@@ -223,6 +260,9 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 
     private fun loadlayout() {
         ll_service_Attended!!.visibility = View.GONE
+        ll_part_repaced2!!.visibility = View.GONE
+//        ll_top_bar!!.visibility = View.GONE
+//        ll_Service3!!.visibility = View.GONE
         ll_Service3!!.visibility = View.GONE
         ll_action_taken!!.visibility = View.GONE
 
@@ -236,6 +276,15 @@ Log.v("adasdasds","modeTab "+modeTab)
             txt_next!!.visibility = View.VISIBLE
         }
         if (modeTab == 1){
+            ll_part_repaced2!!.visibility = View.VISIBLE
+
+            txt_previous!!.visibility = View.VISIBLE
+            vw_previous!!.visibility = View.VISIBLE
+            txt_next!!.visibility = View.VISIBLE
+
+        }
+        if (modeTab == 2){
+            ll_top_bar!!.visibility = View.VISIBLE
 
             Log.v("adasdasds","modeTab1 ")
             ll_Service3!!.visibility = View.VISIBLE
@@ -243,6 +292,9 @@ Log.v("adasdasds","modeTab "+modeTab)
             vw_previous!!.visibility = View.VISIBLE
             txt_next!!.visibility = View.VISIBLE
         }
+//        if (modeTab == 2){
+//            ll_Service3!!.visibility = View.VISIBLE
+//        }
         if (modeTab == 4) {
 
             Log.v("adasdasds","modeTab4 ")
@@ -293,20 +345,31 @@ Log.v("adasdasds","modeTab "+modeTab)
 
     private fun setRegviews() {
         rcyler_followup      = findViewById(R.id.rcyler_followup)
-        rcyler_service3      = findViewById(R.id.rcyler_service3)
+//        rcyler_service3      = findViewById(R.id.rcyler_service3)
         imv_filterfollowup   = findViewById(R.id.imv_filterfollowup)
         imv_scannerfollowup  = findViewById(R.id.imv_scannerfollowup)
         imv_infofollowup     = findViewById(R.id.imv_infofollowup)
         tv_followupticket    = findViewById(R.id.tv_followupticket)
+        txt_next             = findViewById(R.id.txt_next)
         txt_next    = findViewById(R.id.txt_next)
         txt_previous    = findViewById(R.id.txt_previous)
         vw_previous    = findViewById(R.id.vw_previous)
         add_Product          = findViewById(R.id.add_Product)
         imback               = findViewById(R.id.imback)
-        recyCompService               = findViewById(R.id.recyCompService)
+        recyCompService      = findViewById(R.id.recyCompService)
+
+
+        recy_main_product_topbar      = findViewById(R.id.recy_main_product_topbar)
+        ll_ProdWarrantyAmc     = findViewById(R.id.ll_ProdWarrantyAmc)
+        ll_partsReplaced       = findViewById(R.id.ll_partsReplaced)
+        ll_action_taken        = findViewById(R.id.ll_action_taken)
+        ll_service             = findViewById(R.id.ll_service)
+        ll_top_bar             = findViewById(R.id.ll_top_bar)
+        ll_part_repaced2             = findViewById(R.id.ll_part_repaced2)
+        recy_parts_replaced    = findViewById(R.id.recy_parts_replaced)
 
         ll_service_Attended      = findViewById(R.id.ll_service_Attended)
-        ll_Service3      = findViewById(R.id.ll_Service3)
+//        ll_Service3      = findViewById(R.id.ll_Service3)
 
         tie_Selectbilltype = findViewById(R.id.tie_Selectbilltype) as AutoCompleteTextView
         tv_payment_type = findViewById(R.id.tv_payment_type)
@@ -584,78 +647,6 @@ Log.v("adasdasds","modeTab "+modeTab)
         dialogView.show()
     }
 
-//    private fun getServiceDetails(FK_Product: String, NameCriteria: String) {
-//
-//        when (Config.ConnectivityUtils.isConnected(this)) {
-//            true -> {
-//                progressDialog = ProgressDialog(context, R.style.Progress)
-//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//                progressDialog!!.setCancelable(false)
-//                progressDialog!!.setIndeterminate(true)
-//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-//                progressDialog!!.show()
-//                servicedetailsViewModel.getServiceDetails(
-//                    this,FK_Product,NameCriteria)!!.observe(
-//                    this,
-//                    Observer { serviceSetterGetter ->
-//                        val msg = serviceSetterGetter.message
-//                        if (msg!!.length > 0) {
-//                            val jObject = JSONObject(msg)
-//                            Log.e(TAG,"msg   353   "+msg)
-//                            if (jObject.getString("StatusCode") == "0") {
-//                                val jobjt = jObject.getJSONObject("ServiceDetails")
-//                                jsonArrayServiceType = jobjt.getJSONArray("ServiceAttendedList")
-//
-//                                Log.e(TAG,"jsonArrayServiceType  889 "+jsonArrayServiceType)
-//
-////                                jsonsubproductArrayServiceType = jobjt.getJSONArray("ServiceAttendedListDet")
-////                                Log.e(TAG,"jsonsubproductArrayServiceType  8888 "+jsonsubproductArrayServiceType)
-//
-//                                if (jsonArrayServiceType.length()>0){
-//                                    if (serviceFollowUpServiceType == 0){
-//                                        serviceFollowUpServiceType++
-//
-//                                        modelServicesListDetails.clear()
-//                                        for (i in 0 until jsonArrayServiceType.length()) {
-//                                            var jsonObject = jsonArrayServiceType.getJSONObject(i)
-//
-//                                            jsonsubproductArrayServiceType = jsonArrayServiceType!!.getJSONObject(i).getJSONArray("ServiceAttendedListDet")
-//                                            Log.e(TAG,"jsonsubproductArrayServiceType  8888 "+jsonsubproductArrayServiceType)
-////                                            modelServicesListDetails!!.add(ServiceDetailsFullListModel((0),jsonObject.getString("FK_Product"),jsonObject.getString("Product"),jsonObject.getString("BindProduct")))
-//                                        }
-//
-//                                    }
-//
-//                                }
-//
-//                            } else {
-//                                val builder = AlertDialog.Builder(
-//                                    this@ServiceFollowUPActiivty,
-//                                    R.style.MyDialogTheme
-//                                )
-//                                builder.setMessage(jObject.getString("EXMessage"))
-//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                }
-//                                val alertDialog: AlertDialog = builder.create()
-//                                alertDialog.setCancelable(false)
-//                                alertDialog.show()
-//                            }
-//                        } else {
-////                            Toast.makeText(
-////                                applicationContext,
-////                                "Some Technical Issues.",
-////                                Toast.LENGTH_LONG
-////                            ).show()
-//                        }
-//                    })
-//                progressDialog!!.dismiss()
-//            }
-//            false -> {
-//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-//                    .show()
-//            }
-//        }
-//    }
 
 
     private fun getServiceDetails(FK_Product: String, NameCriteria: String) {
@@ -763,8 +754,6 @@ Log.v("adasdasds","modeTab "+modeTab)
                                             Log.e(TAG,"447..1   "+""+j+"  "+modelServicesListDetails.get(j).Product)
                                         }
 
-
-
 ////                                                jsonsubproductArrayServiceType = jsonArrayServiceType!!.getJSONObject(i).getJSONArray("ServiceAttendedListDet")
 ////
 ////                                                Log.e(TAG, "vvvvvvvvvv  1" +jsonsubproductArrayServiceType)
@@ -780,9 +769,6 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                 rcyler_followup!!.adapter = servDetadapter
                                                 servDetadapter!!.setClickListener(this@ServiceFollowUPActiivty)
 
-
-//
-//
 ////                                                val gson = Gson()
 ////                                                val myList: List<ServiceDetailsFullListModel> = gson.fromJson(jsonArrayServiceType, List::class.java)
 //                                            }
@@ -1462,12 +1448,6 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
 
-//                                            Log.e(TAG, "dssadd  2" )
-//                                            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
-//                                            recyCompService!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                            val adapter = complaint_service_followup(this@ServiceFollowUPActiivty, complaintfollowup!!)
-//                                            recyCompService!!.adapter = adapter
-////                                            adapter.setClickListener(this@ServiceFollowUPActiivty)
                                         }
 
                                     }else{
@@ -1970,10 +1950,33 @@ Log.v("adasdasds","modeTab "+modeTab)
             }
             R.id.txt_next -> {
 
+//                var jObject = JSONObject()
+//
+//                jObject.put("FK_Product",  "557")
+//                jObject.put("ReplacementWarrantyExpireDate",  "")
+//
+//
+//                ProductSubDetails.put(jObject)
+//
+//                jObject = JSONObject()
+//
+//                jObject.put("FK_Product",  "591")
+//                jObject.put("ReplacementWarrantyExpireDate",  "")
+//                ProductSubDetails.put(jObject)
+//
+//                loadMainProduct()
+//               valiadateServiceAttended()
+//                modeTab = modeTab+1
+//                loadlayout()
+
                 if (modeTab == 0){
                     valiadateServiceAttended()
                 }
                 else if (modeTab == 1){
+
+                   validatetab2()
+                }
+                else if (modeTab == 2){
                    validateService3()
                 }
 
@@ -1990,6 +1993,11 @@ Log.v("adasdasds","modeTab "+modeTab)
         }
     }
 
+    private fun validatetab2() {
+
+        modeTab = modeTab+1
+        loadlayout()
+    }
 
 
     private fun productWisePopup() {
@@ -2378,6 +2386,67 @@ Log.v("adasdasds","modeTab "+modeTab)
 
         }
 
+        if (data.equals("MainProductList")){
+
+            Log.e(TAG,"hhhhhhhhhhhhhhh  "+position)
+
+            var ID_labelMaster = labelpartsreplaceModel.get(position).ID_MasterProduct
+
+
+            val adapter1 = ServiceParts_replacedAdapter(this@ServiceFollowUPActiivty, servicepartsReplacedModel!!,ID_labelMaster)
+            recy_parts_replaced!!.adapter = adapter1
+            adapter1.notifyDataSetChanged()
+
+            Log.e(TAG,"hhhhhhhhhhhhhhh  "+ID_labelMaster)
+        }
+
+        if (data.equals("WarrantyModeList")){
+
+            modEditPosition = position
+//            warrantyEditPosition = position
+            Log.e(TAG,"1004 check     "+position)
+            warrantycount = 0
+            getWarrantyMode()
+//            dialogWarrantydMode!!.dismiss()
+        }
+
+        if (data.equals("ReplacedModeList")){
+            modEditPosition = position
+
+            Log.e(TAG,"1018 check     "+position)
+            replacedcount = 0
+            getReplaceMode()
+//            dialogReplacedMode!!.dismiss()
+        }
+
+        if (data.equals("ReplaceService")){
+
+            dialogReplacedMode!!.dismiss()
+
+            val jsonObject = ReplaceArrayList.getJSONObject(position)
+            var empModel = servicepartsReplacedModel[modEditPosition]
+
+            empModel.ReplceName = jsonObject.getString("ServiceTypeName")
+            empModel.ReplceMode = jsonObject.getString("ServiceTypeId")
+            recy_parts_replaced!!.adapter!!.notifyItemChanged(modEditPosition)
+
+
+        }
+        if (data.equals("warrantyservice")){
+
+            dialogWarrantydMode!!.dismiss()
+
+            val jsonObject = WarrantyArrayList.getJSONObject(position)
+            var empModel = servicepartsReplacedModel[modEditPosition]
+
+            empModel.WarrantyName = jsonObject.getString("ServiceTypeName")
+            empModel.WarrantyMode = jsonObject.getString("ServiceTypeId")
+            recy_parts_replaced!!.adapter!!.notifyItemChanged(modEditPosition)
+
+
+        }
+
+
 
 //        24-10-2023 Ranjith
 
@@ -2499,7 +2568,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                                         addServiceDetailMode.clear()
                                         if (addserviceArrayList.length() > 0){
                                             for (i in 0 until addserviceArrayList.length()) {
-                                               var  jsonObject = addserviceArrayList.getJSONObject(i)
+                                                var  jsonObject = addserviceArrayList.getJSONObject(i)
                                                 addServiceDetailMode.add(AddServiceDetailMode(jsonObject.getString("ID_Services"),jsonObject.getString("Service"),
                                                     jsonObject.getString("FK_TaxGroup"),jsonObject.getString("TaxPercentage"),(jsonObject.getString("ServiceChargeIncludeTax").toBoolean()),false))
                                             }
@@ -2694,6 +2763,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             }
 
             serviceDetailsArray = JSONArray()
+            ProductSubDetails  = JSONArray()
             for (i in 0 until modelServicesListDetails.size) {
 
                 if (modelServicesListDetails[i].isChekecd){
@@ -2703,6 +2773,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                     Log.e(TAG,"1416664  ID_CustomerWiseProductDetails "+modelServicesListDetails[i].ID_CustomerWiseProductDetails)
 
                     val jObject = JSONObject()
+                    val jObject1 = JSONObject()
                     jObject.put("ID_Product", (modelServicesListDetails[i].FK_Product))
                     jObject.put("Product", (modelServicesListDetails[i].Product))
                     jObject.put("ID_ComplaintList", (modelServicesListDetails[i].ID_ComplaintList))
@@ -2710,7 +2781,18 @@ Log.v("adasdasds","modeTab "+modeTab)
                     jObject.put("ID_CustomerWiseProductDetails", (modelServicesListDetails[i].ID_CustomerWiseProductDetails))
                     jObject.put("FK_ProductNumberingDetails", ("0"))
 
+
+
+                    jObject1.put("FK_Product",modelServicesListDetails[i].FK_Product)
+                    if (modelServicesListDetails[i].ReplacementWarrantyExpireDate.equals("")){
+                        jObject1.put("ReplacementWarrantyExpireDate",modelServicesListDetails[i].ReplacementWarrantyExpireDate)
+                    }else{
+                       var date = Config.convertDate(modelServicesListDetails[i].ReplacementWarrantyExpireDate)
+                        jObject1.put("ReplacementWarrantyExpireDate",date)
+                    }
                     serviceDetailsArray.put(jObject)
+
+                    ProductSubDetails.put(jObject1)
                 }
             }
 
@@ -2723,12 +2805,35 @@ Log.v("adasdasds","modeTab "+modeTab)
                 serviceTab3Adapter!!.setClickListener(this@ServiceFollowUPActiivty)
 
             }
+
+            loadtab2()
             // 24-10-2023 Ranjith
         }else{
             Log.e(TAG,"10000666666   No Checked Box MArked")
             Toast.makeText(applicationContext,"No Check box marked",Toast.LENGTH_SHORT).show()
         }
 
+    }
+
+    private fun loadtab2() {
+//        var jObject = JSONObject()
+
+//        jObject.put("FK_Product",  "557")
+//        jObject.put("ReplacementWarrantyExpireDate",  "")
+//
+//
+//        ProductSubDetails.put(jObject)
+//
+//        jObject = JSONObject()
+//
+//        jObject.put("FK_Product",  "591")
+//        jObject.put("ReplacementWarrantyExpireDate",  "")
+//        ProductSubDetails.put(jObject)
+
+        Log.e(TAG,"27666   "+ProductSubDetails)
+        mainProductInfo = 0
+        loadMainProduct()
+//        valiadateServiceAttended()
     }
 
     private fun validateService3() {
@@ -2778,6 +2883,21 @@ Log.v("adasdasds","modeTab "+modeTab)
         return isChecked
     }
 
+
+    private fun hasTrueMast(labelpartsreplaceModel: ArrayList<LabelPartsreplaceModel>, ID_Master: String): Boolean {
+        var isChecked = true
+        for (i in 0 until labelpartsreplaceModel.size) {  // iterate through the JsonArray
+
+
+            if (labelpartsreplaceModel.get(i).ID_MasterProduct.equals(ID_Master)){
+                isChecked = false
+                break
+            }
+
+        }
+        return isChecked
+    }
+
     private fun hasTrue(modelServicesListDetails: ArrayList<ServiceDetailsFullListModel>): Boolean {
 
         var isChecked = false
@@ -2794,6 +2914,383 @@ Log.v("adasdasds","modeTab "+modeTab)
 
         }
         return isChecked
+    }
+
+
+    private fun loadMainProduct() {
+        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+        val ID_Employee   = FK_EmployeeSP.getString("FK_Employee",null)
+        Log.i("resp900","ID_Employee==   "+ID_Employee)
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                subProductViewModel.getSubProduct(this,ID_Employee!!,ProductSubDetails)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                Log.e("resp900","msg=="+msg)
+                                Log.e(TAG,"msg "+msg)
+
+                                if (mainProductInfo == 0) {
+                                    mainProductInfo++
+
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        //  SubproductDetails=jObject.getJSONObject("SubproductDetails")
+                                        val jobjt = jObject.getJSONObject("SubproductDetails")
+                                        SubproductDetailsList = jobjt.getJSONArray("SubproductDetailsList")
+
+//                                        Log.e(TAG,"SubproductDetailsList==  "+SubproductDetailsList)
+//                                        Log.i("resp900","SubproductDetailsList=="+SubproductDetailsList)
+
+                                        servicepartsReplacedModel.clear()
+                                        labelpartsreplaceModel.clear()
+
+                                        for (i in 0 until SubproductDetailsList.length()) {
+
+                                            Log.e(TAG, "position  3681112 " + i)
+                                            var jsonObject = SubproductDetailsList.getJSONObject(i)
+                                            val jObject = JSONObject()
+
+                                            var hasId =  hasTrueMast(labelpartsreplaceModel!!,jsonObject.getString("ID_MasterProduct"))
+                                            if (hasId){
+                                                labelpartsreplaceModel!!.add(LabelPartsreplaceModel(jsonObject.getString("ID_MasterProduct"),jsonObject.getString("MainProduct")))
+                                            }
+
+                                            ReplceMode = jsonObject.getString("ReplceMode")
+                                            Log.e(TAG, "ReplceMode " + ReplceMode)
+
+
+
+                                            servicepartsReplacedModel!!.add(ServicePartsReplacedModel(jsonObject.getString("ID_MasterProduct"),jsonObject.getString("MainProduct"),
+                                                jsonObject.getString("ID_Product"),jsonObject.getString("Componant"),"",jsonObject.getString("WarrantyMode"),"",
+                                                jsonObject.getString("ProductAmount"),jsonObject.getString("ReplceMode"),"",jsonObject.getString("FK_Stock"),"0",))
+
+                                            Log.e(TAG, "servicepartsReplacedModel " + servicepartsReplacedModel)
+
+                                        }
+
+                                        val lLayout = LinearLayoutManager(this@ServiceFollowUPActiivty, LinearLayoutManager.HORIZONTAL, false)
+                                        recy_main_product_topbar!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = ServiceFollowUpMainProductAdapter(this@ServiceFollowUPActiivty, labelpartsreplaceModel!!)
+                                        recy_main_product_topbar!!.adapter = adapter
+                                        adapter.setClickListener(this@ServiceFollowUPActiivty)
+
+                                        if (servicepartsReplacedModel.size > 0){
+                                            var Id = labelpartsreplaceModel.get(0).ID_MasterProduct
+                                            val lLayout1 = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+                                            recy_parts_replaced!!.layoutManager = lLayout1 as RecyclerView.LayoutManager?
+                                            val adapter1 = ServiceParts_replacedAdapter(this@ServiceFollowUPActiivty, servicepartsReplacedModel!!,Id)
+                                            recy_parts_replaced!!.adapter = adapter1
+                                            adapter1.setClickListener(this@ServiceFollowUPActiivty)
+                                        }
+
+
+                                    }
+                                    else
+                                    {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+
+                                }
+
+
+                            } else {
+
+                            }
+                        } catch (e: Exception) {
+
+                            Log.e(TAG, "888888888555    " + e)
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+
+    private fun getReplaceMode() {
+        Log.i("resp900","ID_Employee==   ")
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceReplacedModeViewModel.getServiceReplacedModeViewModel(this,ReplceMode!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                Log.i("resp900","msg=="+msg)
+                                Log.e(TAG,"msg "+msg)
+
+                                if (replacedcount == 0) {
+                                    replacedcount++
+
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        //  SubproductDetails=jObject.getJSONObject("SubproductDetails")
+                                        val jobjt = jObject.getJSONObject("ServiceType")
+                                        ReplaceArrayList = jobjt.getJSONArray("ServiceTypeList")
+
+                                        if (ReplaceArrayList.length() > 0) {
+
+                                            replaceModePopup(ReplaceArrayList)
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+
+                                }
+
+
+                            } else {
+
+                            }
+                        } catch (e: Exception) {
+
+                            Log.e(TAG, "888888888555    " + e)
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+
+    private fun replaceModePopup(ReplaceArrayList: JSONArray) {
+        Log.e(TAG,"ReplaceArrayList864  "+ReplaceArrayList)
+        try {
+            dialogReplacedMode = Dialog(this)
+            dialogReplacedMode!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogReplacedMode!! .setContentView(R.layout.replcede_mode_popup)
+            dialogReplacedMode!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            dialogReplacedMode!!.setCancelable(false)
+
+            recyreplacedmode = dialogReplacedMode!! .findViewById(R.id.recyreplacedmode) as RecyclerView
+//            var tv_cancel = dialogReplacedMode!! .findViewById(R.id.tv_cancel) as TextView
+//            var tv_submit = dialogReplacedMode!! .findViewById(R.id.tv_submit) as TextView
+
+            val window: Window? = dialogReplacedMode!!.getWindow()
+//            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+//            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+            recyreplacedmode!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            replacemodeAdapter = ServiceReplacedModeAdaper(this@ServiceFollowUPActiivty,ReplaceArrayList)
+            recyreplacedmode!!.adapter = replacemodeAdapter
+            replacemodeAdapter!!.setClickListener(this@ServiceFollowUPActiivty)
+
+//            tv_cancel!!.setOnClickListener {
+//                selectMoreServiceAttended = JSONArray()
+//                dialogReplacedMode!!.dismiss()
+//            }
+//            tv_submit!!.setOnClickListener {
+//                dialogReplacedMode!!.dismiss()
+//                Log.e(TAG,"20269  s")
+//                Log.e(TAG,"610  selectMoreServiceAttended   "+selectMoreServiceAttended)
+//
+//                addDataServiceAttended()
+//            }
+
+
+            dialogReplacedMode!!.show()
+            // dialogDetailSheet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getWarrantyMode() {
+        Log.i("resp900","ID_Employee==   ")
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                warrantymodeViewModel.getWarrantyMode(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                Log.i("resp900","msg=="+msg)
+                                Log.e(TAG,"msg "+msg)
+
+                                if (warrantycount == 0) {
+                                    warrantycount++
+
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("ServiceType")
+                                        WarrantyArrayList = jobjt.getJSONArray("ServiceTypeList")
+
+                                        if (WarrantyArrayList.length() > 0) {
+
+                                            warrantyModePopup(WarrantyArrayList)
+
+//                                            val jsonObject = WarrantyArrayList.getJSONObject(0)
+//                                            Log.e(TAG,"95444     "+jsonObject)
+//
+//                                            var empModel = servicepartsReplacedModel[warrantyEditPosition]
+//                                            empModel.WarrantyName = jsonObject.getString("ServiceTypeName")
+                                        }
+
+
+                                    }
+                                    else
+                                    {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+
+                                }
+
+
+                            } else {
+
+                            }
+                        } catch (e: Exception) {
+
+                            Log.e(TAG, "888888888555    " + e)
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+
+    private fun warrantyModePopup(WarrantyArrayList: JSONArray) {
+        Log.e(TAG,"WarrantyArrayList864  "+WarrantyArrayList)
+        try {
+            dialogWarrantydMode = Dialog(this)
+            dialogWarrantydMode!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogWarrantydMode!! .setContentView(R.layout.warranty_mode_popup)
+            dialogWarrantydMode!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            dialogWarrantydMode!!.setCancelable(false)
+
+            recywarrantymode = dialogWarrantydMode!! .findViewById(R.id.recywarrantymode) as RecyclerView
+//            var tv_cancel = dialogWarrantydMode!! .findViewById(R.id.tv_cancel) as TextView
+//            var tv_submit = dialogWarrantydMode!! .findViewById(R.id.tv_submit) as TextView
+
+            val window: Window? = dialogWarrantydMode!!.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+//            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+            recywarrantymode!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            servicewarrantyModeAdapter = ServiceWarrantyModeAdapter(this@ServiceFollowUPActiivty,WarrantyArrayList)
+            recywarrantymode!!.adapter = servicewarrantyModeAdapter
+            servicewarrantyModeAdapter!!.setClickListener(this@ServiceFollowUPActiivty)
+
+//            tv_cancel!!.setOnClickListener {
+//                selectMoreServiceAttended = JSONArray()
+//                dialogWarrantydMode!!.dismiss()
+//            }
+//            tv_submit!!.setOnClickListener {
+//                dialogWarrantydMode!!.dismiss()
+//                Log.e(TAG,"20269  s")
+//                Log.e(TAG,"610  selectMoreServiceAttended   "+selectMoreServiceAttended)
+//
+//                addDataServiceAttended()
+//            }
+
+            dialogWarrantydMode!!.show()
+            // dialogDetailSheet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onBackPressed() {

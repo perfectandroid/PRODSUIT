@@ -9,10 +9,8 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.OverDueModel
-import com.perfect.prodsuit.Model.ServiceFollowUpAttendanceModel
-import com.perfect.prodsuit.Model.ServiceFollowUpMappedServiceModel
-import com.perfect.prodsuit.Model.ServiceFollowUpModel
+import com.perfect.prodsuit.Model.ServiceProductModel
+import com.perfect.prodsuit.Model.ServiceReplacedModeModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -21,24 +19,23 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.text.SimpleDateFormat
-import java.util.*
+import java.util.ArrayList
 
-object ServiceFollowUpMappedServiceRepository {
+object ServiceReplacedModeRepository {
 
-    var TAG = "ServiceFollowUpMappedServiceRepository"
-    val serviceFollowUpSetterGetter = MutableLiveData<ServiceFollowUpMappedServiceModel>()
     private var progressDialog: ProgressDialog? = null
-    fun getServicesApiCall(context: Context,customer_service_register:String,ID_Branch : String , ID_Employee : String): MutableLiveData<ServiceFollowUpMappedServiceModel> {
-        Log.v("fsfsfds","branch3 "+ID_Branch)
-        getServiceFollowUp(context,customer_service_register,ID_Branch,ID_Employee)
-        return serviceFollowUpSetterGetter
-    }
-    private fun getServiceFollowUp(context: Context,customer_service_register:String,ID_Branch : String , ID_Employee : String) {
-        try {
+    val servicereplacedModeSetterGetter = MutableLiveData<ServiceReplacedModeModel>()
+    val TAG: String = "ServiceReplacedModeRepository"
 
-            Log.v("fsfsfds","branch2 "+ID_Branch)
-            serviceFollowUpSetterGetter.value = ServiceFollowUpMappedServiceModel("")
+    fun getServicesApiCall(context: Context, SubMode: String): MutableLiveData<ServiceReplacedModeModel> {
+        getServiceProductSetterGetter(context,SubMode)
+        return servicereplacedModeSetterGetter
+    }
+
+    private fun getServiceProductSetterGetter(context: Context,SubMode: String) {
+
+        try {
+            servicereplacedModeSetterGetter.value = ServiceReplacedModeModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -63,31 +60,26 @@ object ServiceFollowUpMappedServiceRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+
+
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
+                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
-                val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
-                Log.v("dfdsf33fvv","BankKey "+BankKeySP.getString("BANK_KEY", null))
-                Log.v("dfdsf33fvv","Token "+TokenSP.getString("Token", null))
-                Log.v("dfdsf33fvv","ReqMode "+84)
-                Log.v("dfdsf33fvv","FK_Company "+FK_CompanySP.getString("FK_Company", null))
-                Log.v("dfdsf33fvv","FK_BranchCodeUser "+ID_Branch)
-                Log.v("dfdsf33fvv","EntrBy "+UserCodeSP.getString("UserCode", null))
-                Log.v("dfdsf33fvv","FK_Employee "+ID_Employee)
-                Log.v("dfdsf33fvv","customer_service_register "+customer_service_register)
-                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("84"))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(ID_Branch))
-                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
-                requestObject1.put("FK_Customerserviceregister",ProdsuitApplication.encryptStart(customer_service_register)
-                )
+                val FK_BranchCodeUserSP= context.getSharedPreferences(Config.SHARED_PREF40, 0)
 
-                Log.v("dfdsf33fvv","requestObject1 "+requestObject1)
-                Log.e(TAG,"requestObject1   891    "+requestObject1)
-                Log.v("dfdsf33fvv","requestObject2 "+requestObject1.toString())
+
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("114"))
+                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser",null)))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
+                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(SubMode))
+
+
+                Log.e(TAG,"requestObject1   971   "+requestObject1)
 
 
             } catch (e: Exception) {
@@ -97,38 +89,36 @@ object ServiceFollowUpMappedServiceRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getServiceFollowUpMappedServiceAttendedList(body)
+            val call = apiService.getServiceFollowUpServiceType(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
                     Response<String>
                 ) {
                     try {
+
+                        Log.e(TAG," 973 "+response.body())
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        Log.e(TAG,"108  response  "+response.body())
-                        val users = ArrayList<OverDueModel>()
-                        users.add(OverDueModel(response.body()))
-                        val msg = users[0].message
-                        serviceFollowUpSetterGetter.value = ServiceFollowUpMappedServiceModel(msg)
+                        val leads = ArrayList<ServiceReplacedModeModel  >()
+                        leads.add(ServiceReplacedModeModel(response.body()))
+                        val msg = leads[0].message
+                        servicereplacedModeSetterGetter.value = ServiceReplacedModeModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
-                        Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
-                    Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                 }
             })
-         }
-        catch (e: Exception) {
+        }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
-            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
         }
+
     }
-
 }
-

@@ -159,7 +159,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY  = "-517"
 
 
-//    sheetalLive 11.8.2023
+//    sheetalLive 21.10.2023
 //    val CERT_NAME = "sheetallive.pem"
 //    val BASE_URL  = "https://59.96.61.232:14001/PerSuiteAPISHEETAL/api/"
 //    val IMAGE_URL = "https://59.96.61.232:14001/PerSuiteAPISHEETAL/"
@@ -283,8 +283,6 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
             val BANK_KEYEditer = BANK_KEYESP.edit()
             BANK_KEYEditer.putString("BANK_KEY", BANK_KEY)
             BANK_KEYEditer.commit()
-
-//            Log.e(TAG,"SHARED_PREF9  1  "+BANK_KEYESP.getString("BANK_KEY"))
 
             when(Config.ConnectivityUtils.isConnected(this)) {
                 true -> {

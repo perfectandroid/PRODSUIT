@@ -102,9 +102,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
+                        android:layout_marginTop="5dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:orientation="vertical">
 
                         <androidx.cardview.widget.CardView
@@ -133,9 +133,10 @@
 
 
                                     <androidx.recyclerview.widget.RecyclerView
-                                        android:id="@+id/recy_count_home"
+                                        android:id="@+id/recy_main_product"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
                                         android:layout_above="@+id/img_techpartner"
                                         android:layout_centerInParent="true"
                                         android:visibility="visible" />
@@ -157,7 +158,6 @@
                                         android:textStyle="bold" />
 
                                     <TextView
-                                        android:id="@+id/tv_followupticket"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:layout_weight="1"
@@ -176,6 +176,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/ll_ProdWarrantyAmc"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center"
@@ -230,6 +231,40 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/ll_partsReplaced"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:layout_marginTop="15dp"
+                                    android:layout_gravity="center"
+                                    android:orientation="vertical">
+
+
+                                    <TextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight=".7"
+                                        android:text="Parts Replaced"
+                                        android:padding="15dp"
+                                        android:paddingRight="10dp"
+                                        android:background="@color/service_head"
+                                        android:fontFamily="@font/myfont"
+                                        android:textColor="@color/colorPrimary"
+                                        android:textSize="@dimen/header_text"
+                                        android:textStyle="bold" />
+
+                                    <androidx.recyclerview.widget.RecyclerView
+                                        android:id="@+id/recy_parts_replaced"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_above="@+id/img_techpartner"
+                                        android:layout_centerInParent="true"
+                                        android:visibility="gone" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/ll_service"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center"
@@ -262,6 +297,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/ll_action_taken"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:gravity="center"
@@ -320,6 +356,7 @@
         android:layout_marginBottom="16dp"
         android:src="@drawable/ic_adding"
         app:fabSize="normal"
+        android:visibility="gone"
         android:backgroundTint="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

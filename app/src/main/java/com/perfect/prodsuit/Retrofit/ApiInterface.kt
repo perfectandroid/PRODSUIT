@@ -637,8 +637,7 @@ interface ApiInterface {
     fun getOtherCharges(@Body body: RequestBody): Call<String>
 
 
-
-
-
+    @POST("ServiceFollowUp/GetSubProductDetails")
+    fun getSubProductDetails(@Body body: RequestBody): Call<String>
 
 }
