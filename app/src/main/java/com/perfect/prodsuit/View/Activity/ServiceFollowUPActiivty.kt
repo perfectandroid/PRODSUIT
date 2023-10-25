@@ -7,27 +7,27 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.SCROLL_STATE_IDLE
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.Helper.DBHelper
-import com.perfect.prodsuit.Helper.ItemClickListener
+import com.google.android.material.textfield.TextInputEditText
+import com.perfect.prodsuit.Helper.*
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
@@ -94,12 +94,31 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var serviceFollowUpInfo                                             = 0
     var serviceFollowUpMoreService                                      = 0
     var productwisecomplaintcouny                                       = 0
+    lateinit var actionTakenViewModel: ActionTakenViewModel
+    lateinit var leadActionViewModel: LeadActionViewModel
+    lateinit var otherChargesViewViewModel: OtherChargesViewViewModel
+    lateinit var pickupdelibilltypeviewmodel: PickupDeliBillTypeViewModel
+    lateinit var paymentMethodeViewModel: PaymentMethodViewModel
+    private var rcyler_actionTaken: RecyclerView? = null
+    private var ll_action_taken: LinearLayout? = null
+    var actionTypeActionList: JSONArray = JSONArray()
+    var leadActionList: JSONArray = JSONArray()
+    var otherChargeList: JSONArray = JSONArray()
+    val actionTakenSelected = ArrayList<ActionTakenMainModel>()
+    var otherChargesFinalList = ArrayList<OtherChargesMainModel>()
+    var actionTakenActioncouny = 0
 
     var db_helper: DBHelper? = null
-    var compAdapter:  complaint_service_followup? = null
-    var servDetadapter : ServiceDetailsAdapter? = null
+    var compAdapter: complaint_service_followup? = null
+    var actionTakeActionFilter: ActionTakeActionFilter? = null
+    var leadActionAdapter: LeadActionAdapter? = null
+    var servDetadapter: ServiceDetailsAdapter? = null
+    var actionTakenAdapter: ActionTakenAdapter? = null
     var modEditPosition = 0
     var modChanged = 0
+    var billTypecount = 0
+    var paymentCount = 0
+    var billtype=""
 
 
     // 24-10-2023 Ranjith
@@ -118,6 +137,42 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     private var serviceDetailsArray = JSONArray()
     private var serviceIncentiveArray = JSONArray()
 
+    private var DateType: Int = 0
+    private var tie_DateAttended: TextInputEditText? = null
+    private var edttotalSecurityAmount: TextInputEditText? = null
+    private var edtcomponentCharge: TextInputEditText? = null
+    private var edttotalServiceCost: TextInputEditText? = null
+    private var edtdiscountAmount: TextInputEditText? = null
+    private var tie_Selectbilltype: AutoCompleteTextView? = null
+    private var edt_other_charges: TextView? = null
+    private var tv_payment_type: TextView? = null
+    var otherChargesAdapterAdapter: OtherChargesAdapterAdapter? = null
+    lateinit var billtypeArrayList: JSONArray
+    var pickupdeliStatusCount = 0
+    lateinit var paymentMethodeArrayList: JSONArray
+    private var dialogPaymentMethod: Dialog? = null
+    var recyPaymentMethod: RecyclerView? = null
+    private var dialogPaymentSheet: Dialog? = null
+    private var edtPayMethod: EditText? = null
+    private var edtPayRefNo: EditText? = null
+    private var edtPayAmount: EditText? = null
+    private var txt_pay_method: TextView? = null
+    private var txt_pay_Amount: TextView? = null
+    private var txt_bal_Amount: TextView? = null
+    private var txtPayBalAmount: TextView? = null
+    private var img_PayAdd: ImageView? = null
+    private var img_PayRefresh: ImageView? = null
+    private var btnApply: Button? = null
+    var arrPayment = JSONArray()
+    var arrPaymentFinal = JSONArray()
+    var arrOtherChargeFinal = JSONArray()
+    internal var recyPaymentList: RecyclerView? = null
+    internal var ll_paymentlist: LinearLayout? = null
+    var adapterPaymentList: PaymentListAdapter? = null
+    var arrAddUpdate: String? = "0"
+    var applyMode = 0
+    var ID_PaymentMethod: String? = ""
+    var arrPosition: Int? = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,6 +180,19 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         context = this@ServiceFollowUPActiivty
 
         servicedetailsViewModel = ViewModelProvider(this).get(ServiceDetailsViewModel::class.java)
+        serviceFollowUpInfoViewModel =
+            ViewModelProvider(this).get(ServiceFollowUpInfoViewModel::class.java)
+        serviceFollowUpMoreServiceViewModel =
+            ViewModelProvider(this).get(ServiceFollowUpMoreServiceViewModel::class.java)
+        productwisecomplaintViewModel =
+            ViewModelProvider(this).get(ProductWiseComplaintViewModel::class.java)
+        actionTakenViewModel = ViewModelProvider(this).get(ActionTakenViewModel::class.java)
+        leadActionViewModel = ViewModelProvider(this).get(LeadActionViewModel::class.java)
+        otherChargesViewViewModel =
+            ViewModelProvider(this).get(OtherChargesViewViewModel::class.java)
+        pickupdelibilltypeviewmodel =
+            ViewModelProvider(this).get(PickupDeliBillTypeViewModel::class.java)
+        paymentMethodeViewModel = ViewModelProvider(this).get(PaymentMethodViewModel::class.java)
         serviceFollowUpInfoViewModel = ViewModelProvider(this).get(ServiceFollowUpInfoViewModel::class.java)
         serviceFollowUpMoreServiceViewModel = ViewModelProvider(this).get(ServiceFollowUpMoreServiceViewModel::class.java)
         productwisecomplaintViewModel = ViewModelProvider(this).get(ProductWiseComplaintViewModel::class.java)
@@ -156,21 +224,71 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     private fun loadlayout() {
         ll_service_Attended!!.visibility = View.GONE
         ll_Service3!!.visibility = View.GONE
+        ll_action_taken!!.visibility = View.GONE
 
 //        0 - Service Attended , 1 = Part Replaced ,2 = Service , 3 =Attendance , 4 = Action taken
-
+Log.v("adasdasds","modeTab "+modeTab)
         if (modeTab == 0){
+            Log.v("adasdasds","modeTab0 ")
             ll_service_Attended!!.visibility = View.VISIBLE
             txt_previous!!.visibility = View.GONE
             vw_previous!!.visibility = View.GONE
             txt_next!!.visibility = View.VISIBLE
         }
         if (modeTab == 1){
+
+            Log.v("adasdasds","modeTab1 ")
             ll_Service3!!.visibility = View.VISIBLE
             txt_previous!!.visibility = View.VISIBLE
             vw_previous!!.visibility = View.VISIBLE
             txt_next!!.visibility = View.VISIBLE
         }
+        if (modeTab == 4) {
+
+            Log.v("adasdasds","modeTab4 ")
+            ll_action_taken!!.visibility = View.VISIBLE
+            loadActionTaken()
+        }
+        if (modeTab == 5) {
+
+            Log.v("adasdasds","modeTab5 ")
+            finalSave()
+        }
+    }
+
+    private fun finalSave() {
+        val Actionproductdetails = JSONArray()
+        for (obj in actionTakenSelected) {
+            val jsonObject = JSONObject()
+            jsonObject.put("ID_Product", obj.FK_Product)
+            jsonObject.put("ID_NextAction", obj.actionStatus)
+            jsonObject.put("ID_NextActionLead", obj.leadActionStatus)
+            jsonObject.put("FK_ActionType", "")
+            jsonObject.put("FK_EmployeeAssign", "")
+            jsonObject.put("NextActionDate", "")
+            jsonObject.put("ProvideStandBy", obj.ProvideStandBy)
+            jsonObject.put("CustomerNote", obj.Customer_note)
+            jsonObject.put("EmployeeNote", obj.Employee_note)
+            jsonObject.put("SecurityAmount", obj.securityAmount)
+            jsonObject.put("OfferPrice", obj.buyBackAmount)
+            jsonObject.put("ID_CustomerWiseProductDetails", obj.ID_CustomerWiseProductDetails)
+            jsonObject.put("FK_ProductNumberingDetails", "0")
+            Actionproductdetails.put(jsonObject)
+        }
+        Log.v("sdfsdfsd","Actionproductdetails "+Actionproductdetails.toString())
+        Log.v("sdfsdfsd", "payment  " + arrPaymentFinal.toString())
+        Log.v("sdfsdfsd", "other  " + arrOtherChargeFinal.toString())
+
+        var attendedDate=tie_DateAttended!!.text
+        var totalSecurityAmount=edttotalSecurityAmount!!.text
+        var componentCharge=edtcomponentCharge!!.text
+        var totalServiceCost=edttotalServiceCost!!.text
+        var discountAmount=edtdiscountAmount!!.text
+        var edtnetAmount=tie_DateAttended!!.text
+
+
+
+
     }
 
     private fun setRegviews() {
@@ -190,6 +308,28 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         ll_service_Attended      = findViewById(R.id.ll_service_Attended)
         ll_Service3      = findViewById(R.id.ll_Service3)
 
+        tie_Selectbilltype = findViewById(R.id.tie_Selectbilltype) as AutoCompleteTextView
+        tv_payment_type = findViewById(R.id.tv_payment_type)
+        edttotalSecurityAmount = findViewById(R.id.edttotalSecurityAmount)
+        edtcomponentCharge = findViewById(R.id.edtcomponentCharge)
+        edttotalServiceCost = findViewById(R.id.edttotalServiceCost)
+        edtdiscountAmount = findViewById(R.id.edtdiscountAmount)
+        tie_DateAttended = findViewById(R.id.tie_DateAttended)
+        edt_other_charges = findViewById(R.id.edt_other_charges)
+        rcyler_followup = findViewById(R.id.rcyler_followup)
+        rcyler_actionTaken = findViewById(R.id.rcyler_actionTaken)
+        rcyler_service3 = findViewById(R.id.rcyler_service3)
+        imv_filterfollowup = findViewById(R.id.imv_filterfollowup)
+        imv_scannerfollowup = findViewById(R.id.imv_scannerfollowup)
+        imv_infofollowup = findViewById(R.id.imv_infofollowup)
+        tv_followupticket = findViewById(R.id.tv_followupticket)
+        txt_next = findViewById(R.id.txt_next)
+        add_Product = findViewById(R.id.add_Product)
+        imback = findViewById(R.id.imback)
+        recyCompService = findViewById(R.id.recyCompService)
+        ll_action_taken = findViewById(R.id.ll_action_taken)
+        ll_service_Attended = findViewById(R.id.ll_service_Attended)
+        ll_Service3 = findViewById(R.id.ll_Service3)
         imv_infofollowup!!.setOnClickListener(this)
         imv_scannerfollowup!!.setOnClickListener(this)
         imv_filterfollowup!!.setOnClickListener(this)
@@ -201,8 +341,119 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 
     }
 
+    private fun getBillType() {
+//         var proddetail = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                pickupdelibilltypeviewmodel.getPickupDeliBillType(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
 
-    private fun loadInfo(customerServiceRegister: String,ID_CustomerserviceregisterProductDetails: String) {
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (billTypecount == 0) {
+                                    billTypecount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   227   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("BillType")
+                                        billtypeArrayList = jobjt.getJSONArray("BillTypeList")
+                                        if (billtypeArrayList.length() > 0) {
+//                                             if (proddetail == 0){
+//                                                 proddetail++
+                                            showbilltype(billtypeArrayList)
+
+//                                             }
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+                                progressDialog!!.dismiss()
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                            Log.e(TAG, "catch   " + e)
+                        }
+                        progressDialog!!.dismiss()
+                    })
+
+            }
+
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+    private fun showbilltype(billtypeArrayList: JSONArray) {
+
+        var searchType = Array<String>(billtypeArrayList.length()) { "" }
+        for (i in 0 until billtypeArrayList.length()) {
+            val objects: JSONObject = billtypeArrayList.getJSONObject(i)
+            searchType[i] = objects.getString("BTName");
+            var FK_BillType = objects.getString("ID_BillType")
+
+            Log.e(TAG, "00000111   " + FK_BillType)
+            Log.e(TAG, "85456214   " + searchType)
+
+            if (pickupdeliStatusCount == 0) {
+                pickupdeliStatusCount++
+
+                val adapter =
+                    ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, searchType)
+                tie_Selectbilltype!!.setAdapter(adapter)
+                tie_Selectbilltype!!.showDropDown()
+                //   tie_Selectstatus!!.setText(searchType.get(0), false)
+//            tie_Selectstatus!!.setOnClickListener {
+                pickupdeliStatusCount = 0
+                tie_Selectbilltype!!.showDropDown()
+                Log.e(TAG, "7778889999   " + pickupdeliStatusCount)
+//            }
+                tie_Selectbilltype!!.setOnItemClickListener { parent, view, position, id ->
+                    billtype = searchType[position]
+                }
+            }
+        }
+    }
+
+
+    private fun loadInfo(
+        customerServiceRegister: String,
+        ID_CustomerserviceregisterProductDetails: String
+    ) {
         val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
         val FK_BranchSP   = context.getSharedPreferences(Config.SHARED_PREF37, 0)
         val ID_Employee   = FK_EmployeeSP.getString("FK_Employee",null)
@@ -242,7 +493,6 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 
                                             serviceFollowUpServiceType = 0
                                             getServiceDetails(FK_Product!!,NameCriteria!!)
-
 
 
                                     } else {
@@ -291,7 +541,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 
         var dialogView = Dialog(this)
         dialogView!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogView!! .setContentView(R.layout.alert_more_info)
+        dialogView!!.setContentView(R.layout.alert_more_info)
         dialogView!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
 
 
@@ -315,16 +565,19 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         tv_cancel.setOnClickListener(View.OnClickListener {
             dialogView.dismiss()
         })
-        tv_ticket.text=jobjt.getString("Ticket")
-        tv_prod_regOn.text=jobjt.getString("RegisterdOn")
-        tv_visit_on.text=jobjt.getString("VisitOn")
-        tv_CustomerName.text=jobjt.getString("CustomerName")
-        tv_phone.text=jobjt.getString("Mobile")
-        tv_address.text=jobjt.getString("Address1")+","+jobjt.getString("Address2")+","+jobjt.getString("Address3")
-        tv_product_name.text=jobjt.getString("ProductName")
-        tv_category.text=jobjt.getString("Category")
-        tv_service.text=jobjt.getString("Service")
-        tv_description.text=jobjt.getString("Description")
+        tv_ticket.text = jobjt.getString("Ticket")
+        tv_prod_regOn.text = jobjt.getString("RegisterdOn")
+        tv_visit_on.text = jobjt.getString("VisitOn")
+        tv_CustomerName.text = jobjt.getString("CustomerName")
+        tv_phone.text = jobjt.getString("Mobile")
+        tv_address.text =
+            jobjt.getString("Address1") + "," + jobjt.getString("Address2") + "," + jobjt.getString(
+                "Address3"
+            )
+        tv_product_name.text = jobjt.getString("ProductName")
+        tv_category.text = jobjt.getString("Category")
+        tv_service.text = jobjt.getString("Service")
+        tv_description.text = jobjt.getString("Description")
 
 
         // alertDialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
@@ -415,7 +668,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 servicedetailsViewModel.getServiceDetails(
-                    this,FK_Product,NameCriteria
+                    this, FK_Product, NameCriteria
                 )!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -427,7 +680,8 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
                                     val jObject = JSONObject(msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("ServiceDetails")
-                                        jsonArrayServiceType = jobjt.getJSONArray("ServiceAttendedList")
+                                        jsonArrayServiceType =
+                                            jobjt.getJSONArray("ServiceAttendedList")
 
 //                                       db_helper!!.insertServiceDetails(jsonArrayServiceType)
 
@@ -564,6 +818,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
                     })
                 progressDialog!!.dismiss()
             }
+
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
@@ -571,7 +826,600 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         }
     }
 
-    private fun getProductWiseComplaint(FK_Category: String,FK_Product: String) {
+    private fun loadActionTaken() {
+        Log.v("sdfsdfds","modelServicesListDetails "+modelServicesListDetails.toString())
+        actionTakenSelected.clear()
+        for (i in 0 until modelServicesListDetails.size) {
+            var empModel = modelServicesListDetails[i]
+            if (empModel.isChekecd) {
+                actionTakenSelected!!.add(
+                    ActionTakenMainModel(
+                        empModel.FK_Product, empModel.Product, "", "",
+                        "", "", "false", "", "", "", "",empModel.ID_CustomerWiseProductDetails
+                    )
+                )
+            }
+
+        }
+        Log.v("sfsdfdfd", "act size  " + actionTakenSelected.size)
+        val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+        rcyler_actionTaken!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//        actionTakenAdapter = ActionTakenAdapter(this@ServiceFollowUPActiivty, actionTakenSelected)
+        actionTakenAdapter = ActionTakenAdapter(
+            this@ServiceFollowUPActiivty,
+            actionTakenSelected,
+            object : ActionTakenAdapter.TextChangedListener {
+                override fun onTextChanged(position: Int, field: String, newText: String) {
+                    Log.v("sfsdfdfd", "position  " + position)
+                    Log.v("sfsdfdfd", "field  " + field)
+                    Log.v("sfsdfdfd", "newText  " + newText)
+                    if (field.equals("customer_note")) {
+                        var empModel = actionTakenSelected[position]
+                        empModel.Customer_note = newText
+                       // actionTakenAdapter!!.notifyItemChanged(position)
+                    } else if (field.equals("employee_note")) {
+                        var empModel = actionTakenSelected[position]
+                        empModel.Employee_note = newText
+                       // actionTakenAdapter!!.notifyItemChanged(position)
+                    } else if (field.equals("security_amount")) {
+                        var empModel = actionTakenSelected[position]
+                        empModel.securityAmount = newText
+                       // actionTakenAdapter!!.notifyItemChanged(position)
+                    } else if (field.equals("buy_back")) {
+                        var empModel = actionTakenSelected[position]
+                        empModel.buyBackAmount = newText
+                        //actionTakenAdapter!!.notifyItemChanged(position)
+                    }
+
+
+                }
+            })
+        rcyler_actionTaken!!.adapter = actionTakenAdapter
+        actionTakenAdapter!!.setClickListener(this@ServiceFollowUPActiivty)
+
+        tie_DateAttended!!.setOnClickListener(View.OnClickListener {
+            DateType = 0
+            openBottomSheet()
+        })
+        edt_other_charges!!.setOnClickListener(View.OnClickListener {
+            DateType = 0
+            actionTakenActioncouny = 0
+            getOtherCharges()
+        })
+        tie_Selectbilltype!!.setOnClickListener(View.OnClickListener {
+            billTypecount = 0
+            getBillType()
+        })
+
+        tv_payment_type!!.setOnClickListener(View.OnClickListener {
+            paymentMethodPopup()
+        })
+
+
+    }
+
+    private fun getPaymentList() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                paymentMethodeViewModel.getPaymentMethod(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (paymentCount == 0) {
+                                    paymentCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   1224   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("FollowUpPaymentMethod")
+                                        paymentMethodeArrayList =
+                                            jobjt.getJSONArray("FollowUpPaymentMethodList")
+                                        if (paymentMethodeArrayList.length() > 0) {
+
+                                            payMethodPopup(paymentMethodeArrayList)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun payMethodPopup(paymentMethodeArrayList: JSONArray) {
+        try {
+
+            dialogPaymentMethod = Dialog(this)
+            dialogPaymentMethod!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogPaymentMethod!!.setContentView(R.layout.payment_method_popup)
+            dialogPaymentMethod!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyPaymentMethod =
+                dialogPaymentMethod!!.findViewById(R.id.recyPaymentMethod) as RecyclerView
+            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+            recyPaymentMethod!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//             val adapter = EmployeeAdapter(this@LeadGenerationActivity, employeeArrayList)
+            val adapter = PayMethodAdapter(this@ServiceFollowUPActiivty, paymentMethodeArrayList)
+            recyPaymentMethod!!.adapter = adapter
+            adapter.setClickListener(this@ServiceFollowUPActiivty)
+            dialogPaymentMethod!!.show()
+            dialogPaymentMethod!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun paymentMethodPopup() {
+        try {
+
+            dialogPaymentSheet = Dialog(this)
+            dialogPaymentSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogPaymentSheet!!.setContentView(R.layout.emi_payment_bottom_sheet)
+            dialogPaymentSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+
+            val window: Window? = dialogPaymentSheet!!.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            //  dialogPaymentSheet!!.setCancelable(false)
+
+            edtPayMethod = dialogPaymentSheet!!.findViewById(R.id.edtPayMethod) as EditText
+            edtPayRefNo = dialogPaymentSheet!!.findViewById(R.id.edtPayRefNo) as EditText
+            edtPayAmount = dialogPaymentSheet!!.findViewById(R.id.edtPayAmount) as EditText
+
+            txtPayBalAmount = dialogPaymentSheet!!.findViewById(R.id.txtPayBalAmount) as TextView
+
+            txt_pay_method = dialogPaymentSheet!!.findViewById(R.id.txt_pay_method) as TextView
+            txt_pay_Amount = dialogPaymentSheet!!.findViewById(R.id.txt_pay_Amount) as TextView
+            txt_bal_Amount = dialogPaymentSheet!!.findViewById(R.id.txt_bal_Amount) as TextView
+
+            edtPayMethod!!.addTextChangedListener(watcher)
+            edtPayAmount!!.addTextChangedListener(watcher)
+            txtPayBalAmount!!.addTextChangedListener(watcher)
+
+//            edtPayMethod = dialogPaymentSheet!! .findViewById(R.id.edtPayMethod) as EditText
+//            edtPayRefNo = dialogPaymentSheet!! .findViewById(R.id.edtPayRefNo) as EditText
+//            edtPayAmount = dialogPaymentSheet!! .findViewById(R.id.edtPayAmount) as EditText
+
+
+            DecimelFormatters.setDecimelPlace(edtPayAmount!!)
+
+
+//            txt_pay_method!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
+//            txt_pay_Amount!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
+
+
+            img_PayAdd = dialogPaymentSheet!!.findViewById(R.id.img_PayAdd) as ImageView
+            img_PayRefresh = dialogPaymentSheet!!.findViewById(R.id.img_PayRefresh) as ImageView
+            btnApply = dialogPaymentSheet!!.findViewById(R.id.btnApply) as Button
+
+            ll_paymentlist = dialogPaymentSheet!!.findViewById(R.id.ll_paymentlist) as LinearLayout
+            recyPaymentList =
+                dialogPaymentSheet!!.findViewById(R.id.recyPaymentList) as RecyclerView
+
+
+            // txtPayBalAmount!!.setText(""+tv_NetAmount!!.text.toString())
+
+            if (arrPayment.length() > 0) {
+                ll_paymentlist!!.visibility = View.VISIBLE
+                viewList(arrPayment)
+                var payAmnt = 0.00
+                for (i in 0 until arrPayment.length()) {
+                    //apply your logic
+                    val jsonObject = arrPayment.getJSONObject(i)
+                    Log.e(TAG, "9451  ")
+                    payAmnt = (payAmnt + (jsonObject.getString("Amount")).toFloat())
+                }
+                Log.e(TAG, "9452  ")
+                val pay = DecimelFormatters.set2DecimelPlace(payAmnt.toFloat())
+                //  payAmnt = (DecimelFormatters.set2DecimelPlace(payAmnt.toFloat()))
+                Log.e(TAG, "9453  ")
+                Log.e(TAG, "payAmnt         475    " + payAmnt)
+                //  txtPayBalAmount!!.setText(""+DecimelFormatters.set2DecimelPlace((tv_NetAmount!!.text.toString().toFloat()) - pay.toFloat()))
+                ///////////////////////////////////////////          /     txtPayBalAmount!!.setText(""+ DecimelFormatters.set2DecimelPlace((DecimalToWordsConverter.commaRemover(tv_NetAmount!!.text.toString()).toFloat()) - pay.toFloat()))
+                Log.e(TAG, "9454  ")
+            } else {
+                Log.e(TAG, "9455  ")
+                ll_paymentlist!!.visibility = View.GONE
+                recyPaymentList!!.adapter = null
+                ///////////////////////////////////////             txtPayBalAmount!!.setText(""+tv_NetAmount!!.text.toString())
+                Log.e(TAG, "9456  ")
+            }
+
+            edtPayMethod!!.setOnClickListener {
+                Config.disableClick(it)
+                paymentCount = 0
+                getPaymentList()
+
+            }
+
+            img_PayAdd!!.setOnClickListener {
+                validateAddPayment(it)
+            }
+
+            img_PayRefresh!!.setOnClickListener {
+                arrAddUpdate = "0"
+                edtPayMethod!!.setText("")
+                edtPayRefNo!!.setText("")
+                edtPayAmount!!.setText("")
+
+                if (arrPayment.length() > 0) {
+                    var payAmnt = 0.00
+                    for (i in 0 until arrPayment.length()) {
+                        //apply your logic
+                        val jsonObject = arrPayment.getJSONObject(i)
+                        payAmnt = (payAmnt + (jsonObject.getString("Amount")).toFloat())
+                    }
+                    /////////////////////////                 txtPayBalAmount!!.setText(""+ DecimelFormatters.set2DecimelPlace((tv_NetAmount!!.text.toString().toFloat()) - payAmnt.toFloat()))
+                } else {
+                    /////////////////////////////                  txtPayBalAmount!!.setText(""+tv_NetAmount!!.text.toString())
+                }
+            }
+
+            btnApply!!.setOnClickListener {
+                val payAmnt =
+                    DecimelFormatters.set2DecimelPlace(txtPayBalAmount!!.text.toString().toFloat())
+                if ((payAmnt.toFloat()).equals("0.00".toFloat())) {
+                    Log.e(TAG, "801 payAmnt  0.00  " + payAmnt.toFloat())
+                    applyMode = 1
+                    dialogPaymentSheet!!.dismiss()
+                    for (i in 0 until arrPayment.length()) {
+                        var empModel = arrPayment.getJSONObject(i)
+                        val jsonObject = JSONObject()
+                        jsonObject.put("PaymentMethod", empModel.getString("MethodID"))
+                        jsonObject.put("PAmount", empModel.getString("Method"))
+                        jsonObject.put("Refno", empModel.getString("RefNo"))
+                        arrPaymentFinal.put(jsonObject)
+                    }
+                    Log.v("sdfsdfsdfds", "arr  " + arrPaymentFinal.toString())
+                } else {
+                    Log.e(TAG, "801 payAmnt  0.0clhghfoij    " + payAmnt.toFloat())
+                    Config.snackBarWarning(context, it, "Balance Amount should be zero")
+                }
+            }
+
+
+            dialogPaymentSheet!!.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG, "1012 Exception  " + e.toString())
+        }
+    }
+
+    var watcher: TextWatcher = object : TextWatcher {
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            //YOUR CODE
+            val outputedText = s.toString()
+            Log.e(TAG, "28301    " + outputedText)
+
+        }
+
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            //YOUR CODE
+        }
+
+        override fun afterTextChanged(editable: Editable) {
+            Log.e(TAG, "28302    ")
+
+            when {
+                editable === edtPayMethod!!.editableText -> {
+                    Log.e(TAG, "283021    ")
+                    if (edtPayMethod!!.text.toString().equals("")) {
+//                        txt_pay_method!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
+                    } else {
+                        //   til_DeliveryDate!!.isErrorEnabled = false
+                        txt_pay_method!!.setTextColor(
+                            ContextCompat.getColorStateList(
+                                context,
+                                R.color.black
+                            )
+                        )
+                    }
+
+
+                }
+
+                editable === edtPayAmount!!.editableText -> {
+
+                    try {
+                        var strAmnt = ""
+                        Log.e(TAG, "283021    " + edtPayAmount!!.text.toString())
+                        edtPayAmount!!.removeTextChangedListener(this)
+                        if (edtPayAmount!!.text.toString().equals(".")) {
+                            strAmnt = "0.00"
+                        } else if (edtPayAmount!!.text.toString().equals("")) {
+                            strAmnt = "0.00"
+                        } else {
+                            strAmnt =
+                                DecimalToWordsConverter.commaRemover(edtPayAmount!!.text.toString())
+                        }
+
+                        val edtAmt = DecimelFormatters.set2DecimelPlace(strAmnt!!.toFloat())
+                        var txt = edtPayAmount!!.text.toString()
+                        // Log.e(TAG,"2830213    "+  DecimalToWordsConverter.getDecimelFormateForEditText(txt))
+
+                        //  edtPayAmount!!.setText(DecimalToWordsConverter.getDecimelFormateForEditText(txt))
+                        if (edtPayAmount!!.text.toString().equals("")) {
+//                        txt_pay_method!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
+                        } else {
+                            //   til_DeliveryDate!!.isErrorEnabled = false
+                            edtPayAmount!!.setText(
+                                DecimalToWordsConverter.getDecimelFormateForEditText(
+                                    strAmnt!!
+                                )
+                            )
+                            txt_pay_Amount!!.setTextColor(
+                                ContextCompat.getColorStateList(
+                                    context,
+                                    R.color.black
+                                )
+                            )
+                        }
+                        edtPayAmount!!.setSelection(edtPayAmount!!.length())
+                        edtPayAmount!!.addTextChangedListener(this)
+                    } catch (e: Exception) {
+                        Log.e(TAG, "283021 dtrg   " + e.toString())
+                    }
+
+
+                }
+
+                editable === txtPayBalAmount!!.editableText -> {
+                    Log.e(TAG, "283021    ")
+                    val payAmnt = DecimelFormatters.set2DecimelPlace(
+                        DecimalToWordsConverter.commaRemover(txtPayBalAmount!!.text.toString())
+                            .toFloat()
+                    )
+                    if ((payAmnt.toFloat()).equals("0.00".toFloat())) {
+                        Log.e(TAG, "801 payAmnt  0.00  " + payAmnt.toFloat())
+                        txt_bal_Amount!!.setTextColor(
+                            ContextCompat.getColorStateList(
+                                context,
+                                R.color.black
+                            )
+                        )
+                    } else {
+                        Log.e(TAG, "801 payAmnt  0.0clhghfoij    " + payAmnt.toFloat())
+                        txt_bal_Amount!!.setTextColor(
+                            ContextCompat.getColorStateList(
+                                context,
+                                R.color.color_mandatory
+                            )
+                        )
+
+                    }
+
+                }
+
+
+            }
+
+        }
+    }
+
+    private fun validateAddPayment(view: View) {
+        var balAmount =
+            (DecimalToWordsConverter.commaRemover(txtPayBalAmount!!.text.toString())).toFloat()
+        //  var payAmount = edtPayAmount!!.text.toString()
+        var payAmount = DecimalToWordsConverter.commaRemover(edtPayAmount!!.text.toString())
+
+
+        Log.e(TAG, "110   balAmount   : " + balAmount)
+        Log.e(TAG, "110   payAmount   : " + payAmount)
+        var hasId = hasPayMethod(arrPayment, "MethodID", ID_PaymentMethod!!)
+
+        if (ID_PaymentMethod.equals("")) {
+            Log.e(TAG, "110   Valid   : Select Payment Method")
+            edtPayMethod!!.setError("Select Payment Method", null)
+            txt_pay_method!!.setTextColor(
+                ContextCompat.getColorStateList(
+                    context,
+                    R.color.color_mandatory
+                )
+            )
+            Config.snackBarWarning(context, view, "Select Payment Method")
+        } else if (hasId == false && arrAddUpdate.equals("0")) {
+            txt_pay_method!!.setTextColor(
+                ContextCompat.getColorStateList(
+                    context,
+                    R.color.color_mandatory
+                )
+            )
+            Config.snackBarWarning(context, view, "PaymentMethod Already exits")
+        } else if (payAmount.equals("")) {
+//            else if (edtPayAmount!!.text.toString().equals("")){
+            txt_pay_Amount!!.setTextColor(
+                ContextCompat.getColorStateList(
+                    context,
+                    R.color.color_mandatory
+                )
+            )
+            Log.e(TAG, "110   Valid   : Enter Amount")
+            Config.snackBarWarning(context, view, "Enter Amount")
+
+        } else if (balAmount < payAmount.toFloat()) {
+            Log.e(TAG, "110   Valid   : Enter Amount DD")
+            txt_pay_Amount!!.setTextColor(
+                ContextCompat.getColorStateList(
+                    context,
+                    R.color.color_mandatory
+                )
+            )
+            Config.snackBarWarning(
+                context,
+                view,
+                "Amount should be less than or equal to Bal. Amount"
+            )
+        } else {
+
+            if (arrAddUpdate.equals("0")) {
+
+                val payAmnt = DecimelFormatters.set2DecimelPlace(balAmount - payAmount.toFloat())
+                // txtPayBalAmount!!.text = (balAmount- payAmount.toFloat()).toString()
+                txtPayBalAmount!!.text = payAmnt
+                val jObject = JSONObject()
+                jObject.put("MethodID", ID_PaymentMethod)
+                jObject.put("Method", edtPayMethod!!.text.toString())
+                jObject.put("RefNo", edtPayRefNo!!.text.toString())
+                // jObject.put("Amount",DecimelFormatters.set2DecimelPlace((edtPayAmount!!.text.toString()).toFloat()))
+                jObject.put("Amount", DecimelFormatters.set2DecimelPlace((payAmount).toFloat()))
+                arrPayment!!.put(jObject)
+            }
+            if (arrAddUpdate.equals("1")) {
+
+                val payAmnt = DecimelFormatters.set2DecimelPlace(balAmount - payAmount.toFloat())
+                // txtPayBalAmount!!.text = (balAmount- payAmount.toFloat()).toString()
+                txtPayBalAmount!!.text = payAmnt
+
+                val jsonObject = arrPayment.getJSONObject(arrPosition!!)
+                jsonObject.put("MethodID", ID_PaymentMethod)
+                jsonObject.put("Method", edtPayMethod!!.text.toString())
+                jsonObject.put("RefNo", edtPayRefNo!!.text.toString())
+                //   jsonObject.put("Amount",DecimelFormatters.set2DecimelPlace((edtPayAmount!!.text.toString()).toFloat()))
+                jsonObject.put("Amount", DecimelFormatters.set2DecimelPlace((payAmount).toFloat()))
+
+                arrAddUpdate = "0"
+
+
+            }
+
+            applyMode = 0
+            ID_PaymentMethod = ""
+            edtPayMethod!!.setText("")
+            edtPayRefNo!!.setText("")
+            edtPayAmount!!.setText("")
+
+            if (arrPayment.length() > 0) {
+                ll_paymentlist!!.visibility = View.VISIBLE
+                viewList(arrPayment)
+            } else {
+                ll_paymentlist!!.visibility = View.GONE
+                recyPaymentList!!.adapter = null
+            }
+
+
+        }
+
+        Log.e(TAG, "110  arrPayment  :  " + arrPayment)
+    }
+
+    fun hasPayMethod(json: JSONArray, key: String, value: String): Boolean {
+        for (i in 0 until json.length()) {  // iterate through the JsonArray
+            // first I get the 'i' JsonElement as a JsonObject, then I get the key as a string and I compare it with the value
+            if (json.getJSONObject(i).getString(key) == value) return false
+        }
+        return true
+    }
+
+    private fun viewList(arrPayment: JSONArray) {
+
+        val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+        recyPaymentList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+        adapterPaymentList = PaymentListAdapter(this@ServiceFollowUPActiivty, arrPayment)
+        recyPaymentList!!.adapter = adapterPaymentList
+        adapterPaymentList!!.setClickListener(this@ServiceFollowUPActiivty)
+    }
+
+    private fun loadOtherCharge() {
+        TODO("Not yet implemented")
+    }
+
+    private fun openBottomSheet() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_remark, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val date_Picker = view.findViewById<DatePicker>(R.id.date_Picker1)
+
+        date_Picker.maxDate = System.currentTimeMillis()
+
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker!!.getDayOfMonth()
+                val mon: Int = date_Picker!!.getMonth()
+                val month: Int = mon + 1
+                val year: Int = date_Picker!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1) {
+                    strDay = "0" + day
+                }
+                if (strMonth.length == 1) {
+                    strMonth = "0" + strMonth
+                }
+
+
+                if (DateType == 0) {
+                    tie_DateAttended!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                }
+
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Exception   428   " + e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+
+    private fun getProductWiseComplaint(FK_Category: String, FK_Product: String) {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(this, R.style.Progress)
@@ -659,6 +1507,197 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     }
 
 
+    private fun getActionTakenAction(FK_Category: String, FK_Product: String) {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                actionTakenViewModel.getActionTakenAction(
+                    this, FK_Product, FK_Category
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (actionTakenActioncouny == 0) {
+                                    actionTakenActioncouny++
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("FollowUpActionDetails")
+                                        actionTypeActionList =
+                                            jobjt.getJSONArray("FollowUpActionDetailsList")
+                                        Log.e(TAG, "dssadd  1" + msg)
+                                        if (actionTypeActionList.length() > 0) {
+
+                                            actionTakenActionPopUp()
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty, R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+                            } else {
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun getLeadAction(FK_Category: String, FK_Product: String) {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                leadActionViewModel.getActionTakenAction(
+                    this, FK_Product, FK_Category
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (actionTakenActioncouny == 0) {
+                                    actionTakenActioncouny++
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("FollowUpActionDetails")
+                                        leadActionList =
+                                            jobjt.getJSONArray("FollowUpActionDetailsList")
+                                        Log.e(TAG, "dssadd  1" + msg)
+                                        if (leadActionList.length() > 0) {
+
+                                            LeadActionPopup()
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty, R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+                            } else {
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun getOtherCharges() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                otherChargesViewViewModel.getActionTakenAction(
+                    this
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (actionTakenActioncouny == 0) {
+                                    actionTakenActioncouny++
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("OtherChargeDetails")
+                                        otherChargeList =
+                                            jobjt.getJSONArray("OtherChargeDetailsList")
+                                        Log.e(TAG, "dssadd  1" + msg)
+                                        if (otherChargeList.length() > 0) {
+
+                                            otherChargesPopup()
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty, R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+                            } else {
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
 
     private fun loadMoreServiceAttended() {
         val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
@@ -934,7 +1973,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
                 if (modeTab == 0){
                     valiadateServiceAttended()
                 }
-                if (modeTab == 1){
+                else if (modeTab == 1){
                    validateService3()
                 }
 
@@ -950,7 +1989,6 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 
         }
     }
-
 
 
 
@@ -999,7 +2037,150 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 //            })
 
 
+            dialogMoreServiceAttendeSheet!!.show()
+            // dialogDetailSheet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
+    private fun actionTakenActionPopUp() {
+        Log.e(TAG, "864  ")
+        try {
+            dialogMoreServiceAttendeSheet = Dialog(this)
+            dialogMoreServiceAttendeSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogMoreServiceAttendeSheet!!.setContentView(R.layout.action_taken_action_sheet)
+            dialogMoreServiceAttendeSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            dialogMoreServiceAttendeSheet!!.setCancelable(false)
+
+            recyFollowupAttended =
+                dialogMoreServiceAttendeSheet!!.findViewById(R.id.recyFollowupAttended) as RecyclerView
+            var tv_cancel = dialogMoreServiceAttendeSheet!!.findViewById(R.id.tv_cancel) as TextView
+
+            val window: Window? = dialogMoreServiceAttendeSheet!!.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+            recyFollowupAttended!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            actionTakeActionFilter =
+                ActionTakeActionFilter(this@ServiceFollowUPActiivty, actionTypeActionList!!)
+            recyFollowupAttended!!.adapter = actionTakeActionFilter
+            actionTakeActionFilter!!.setClickListener(this@ServiceFollowUPActiivty)
+
+            tv_cancel!!.setOnClickListener {
+                dialogMoreServiceAttendeSheet!!.dismiss()
+            }
+            dialogMoreServiceAttendeSheet!!.show()
+            // dialogDetailSheet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun LeadActionPopup() {
+        Log.e(TAG, "864  ")
+        try {
+            dialogMoreServiceAttendeSheet = Dialog(this)
+            dialogMoreServiceAttendeSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogMoreServiceAttendeSheet!!.setContentView(R.layout.action_taken_action_sheet)
+            dialogMoreServiceAttendeSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            dialogMoreServiceAttendeSheet!!.setCancelable(false)
+
+            recyFollowupAttended =
+                dialogMoreServiceAttendeSheet!!.findViewById(R.id.recyFollowupAttended) as RecyclerView
+            var tv_cancel = dialogMoreServiceAttendeSheet!!.findViewById(R.id.tv_cancel) as TextView
+
+            val window: Window? = dialogMoreServiceAttendeSheet!!.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+            recyFollowupAttended!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            leadActionAdapter = LeadActionAdapter(this@ServiceFollowUPActiivty, leadActionList!!)
+            recyFollowupAttended!!.adapter = leadActionAdapter
+            leadActionAdapter!!.setClickListener(this@ServiceFollowUPActiivty)
+
+            tv_cancel!!.setOnClickListener {
+                dialogMoreServiceAttendeSheet!!.dismiss()
+            }
+            dialogMoreServiceAttendeSheet!!.show()
+            // dialogDetailSheet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun otherChargesPopup() {
+        Log.e(TAG, "864  ")
+        try {
+            otherChargesFinalList.clear()
+            for (i in 0 until otherChargeList.length()) {
+                var empModel = otherChargeList.getJSONObject(i)
+                otherChargesFinalList!!.add(
+                    OtherChargesMainModel(
+                        empModel.getString("ID_OtherChargeType"),
+                        empModel.getString("OctyName"),
+                        empModel.getString("OctyTransType"),
+                        ""
+                    )
+                )
+            }
+            dialogMoreServiceAttendeSheet = Dialog(this)
+            dialogMoreServiceAttendeSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogMoreServiceAttendeSheet!!.setContentView(R.layout.other_charges_sheet)
+            dialogMoreServiceAttendeSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            dialogMoreServiceAttendeSheet!!.setCancelable(false)
+            recyFollowupAttended =
+                dialogMoreServiceAttendeSheet!!.findViewById(R.id.recyFollowupAttended) as RecyclerView
+            var tv_cancel = dialogMoreServiceAttendeSheet!!.findViewById(R.id.tv_cancel) as TextView
+            var tv_submit = dialogMoreServiceAttendeSheet!!.findViewById(R.id.tv_submit) as TextView
+
+            val window: Window? = dialogMoreServiceAttendeSheet!!.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+            recyFollowupAttended!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            otherChargesAdapterAdapter =
+                OtherChargesAdapterAdapter(this@ServiceFollowUPActiivty, otherChargesFinalList!!)
+            recyFollowupAttended!!.adapter = otherChargesAdapterAdapter
+            otherChargesAdapterAdapter!!.setClickListener(this@ServiceFollowUPActiivty)
+
+            tv_cancel!!.setOnClickListener {
+                dialogMoreServiceAttendeSheet!!.dismiss()
+            }
+            tv_submit!!.setOnClickListener {
+                dialogMoreServiceAttendeSheet!!.dismiss()
+                otherChargesFinalList = otherChargesAdapterAdapter!!.mList
+                var totalAmount=0
+                for (i in 0 until otherChargesFinalList.size) {
+                    val empModel = otherChargesFinalList[i]
+                    val jsonObject = JSONObject()
+                    jsonObject.put("ID_OtherChargeType", empModel.ID_OtherChargeType)
+                    jsonObject.put("OctyTransType", empModel.OctyTransType)
+                    if (empModel.OctyAmount.equals("")) {
+                        jsonObject.put("OctyAmount", "0")
+                    } else {
+                        jsonObject.put("OctyAmount", empModel.OctyAmount)
+                    }
+                    jsonObject.put("TransTypeID", empModel.OctyTransType)
+                    arrOtherChargeFinal.put(jsonObject)
+                }
+                Log.v("sfsdfsdfsd", "list" + arrOtherChargeFinal.toString())
+            }
             dialogMoreServiceAttendeSheet!!.show()
             // dialogDetailSheet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         } catch (e: Exception) {
@@ -1024,6 +2205,14 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
             productwisecomplaintcouny = 0
             getProductWiseComplaint(FK_Category!!,FK_Product!!)
         }
+        if (data.equals("action_taken_action")) {
+            modEditPosition = position
+            var FK_Category = modelServicesListDetails.get(position).FK_Category
+            var FK_Product = modelServicesListDetails.get(position).FK_Product
+            actionTakenActioncouny = 0
+            getActionTakenAction(FK_Category!!, FK_Product!!)
+        }
+
 
         if (data.equals("chkproductwise_cmplt")){
 
@@ -1064,7 +2253,94 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 //            servDetadapter!!.notifyItemChanged(position)
         }
 
+        if (data.equals("actionTakenActionFilter")) {
+            dialogMoreServiceAttendeSheet!!.dismiss()
+            val jsonObject = actionTypeActionList.getJSONObject(position)
+            var empModel = actionTakenSelected[modEditPosition]
+            empModel.actionName = jsonObject.getString("NxtActnName")
+            empModel.actionStatus = jsonObject.getString("Status")
+            if (!rcyler_actionTaken!!.isComputingLayout && rcyler_actionTaken!!.scrollState == SCROLL_STATE_IDLE) {
+                actionTakenAdapter!!.notifyItemChanged(modEditPosition)
+            }
 
+        }
+        if (data.equals("leadActionAdapterClick")) {
+            dialogMoreServiceAttendeSheet!!.dismiss()
+            val jsonObject = leadActionList.getJSONObject(position)
+            var empModel = actionTakenSelected[modEditPosition]
+            empModel.leadAction = jsonObject.getString("NxtActnName")
+            empModel.leadActionStatus = jsonObject.getString("Status")
+            actionTakenAdapter!!.notifyItemChanged(modEditPosition)
+        }
+        if (data.equals("check_click")) {
+            var empModel = actionTakenSelected[position]
+            Log.v("sdfsdfdsfds","check value1 "+empModel.ProvideStandBy)
+            if (empModel.ProvideStandBy.equals("true")) {
+                empModel.ProvideStandBy = "false"
+            } else {
+                empModel.ProvideStandBy = "true"
+            }
+        }
+
+
+        if (data.equals("lead_action")) {
+            modEditPosition = position
+            var FK_Category = modelServicesListDetails.get(position).FK_Category
+            var FK_Product = modelServicesListDetails.get(position).FK_Product
+            actionTakenActioncouny = 0
+            getLeadAction(FK_Category!!, FK_Product!!)
+        }
+        if (data.equals("paymentMethod")) {
+            dialogPaymentMethod!!.dismiss()
+            val jsonObject = paymentMethodeArrayList.getJSONObject(position)
+            ID_PaymentMethod = jsonObject.getString("ID_PaymentMethod")
+            edtPayMethod!!.setText(jsonObject.getString("PaymentName"))
+        }
+        if (data.equals("deleteArrayList")) {
+
+
+            val jsonObject = arrPayment.getJSONObject(position)
+            var balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
+            var Amount = (jsonObject!!.getString("Amount")).toFloat()
+
+            arrPayment.remove(position)
+            adapterPaymentList!!.notifyItemRemoved(position)
+
+            if (arrPayment.length() > 0) {
+                ll_paymentlist!!.visibility = View.VISIBLE
+            } else {
+                ll_paymentlist!!.visibility = View.GONE
+            }
+            applyMode = 0
+            txtPayBalAmount!!.text = (balAmount + Amount).toString()
+        }
+        if (data.equals("editArrayList")) {
+            try {
+                arrAddUpdate = "1"
+                arrPosition = position
+                val jsonObject = arrPayment.getJSONObject(position)
+                ID_PaymentMethod = jsonObject!!.getString("MethodID")
+                edtPayMethod!!.setText("" + jsonObject!!.getString("Method"))
+                edtPayRefNo!!.setText("" + jsonObject!!.getString("RefNo"))
+                edtPayAmount!!.setText("" + jsonObject!!.getString("Amount"))
+
+
+                var payAmnt = 0.00
+                for (i in 0 until arrPayment.length()) {
+                    //apply your logic
+                    val jsonObject = arrPayment.getJSONObject(i)
+                    payAmnt = (payAmnt + (jsonObject.getString("Amount")).toFloat())
+                }
+                val pay = DecimelFormatters.set2DecimelPlace(payAmnt.toFloat())
+                //  payAmnt = (DecimelFormatters.set2DecimelPlace(payAmnt.toFloat()))
+                Log.e(TAG, "payAmnt         475    " + payAmnt)
+                //////////////               txtPayBalAmount!!.setText(""+DecimelFormatters.set2DecimelPlace((tv_NetAmount!!.text.toString().toFloat()) - pay.toFloat() + (jsonObject!!.getString("Amount").toFloat())))
+
+            }
+            catch (e:Exception)
+            {
+            }
+        }
 //        24-10-2023 Ranjith
         if (data.equals("addService3Click")){
 
@@ -1101,6 +2377,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
             serviceTab3Adapter!!.notifyItemChanged(modEditPosition)
 
         }
+
 
 //        24-10-2023 Ranjith
 
@@ -1139,7 +2416,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
                                             jObject.getJSONObject("ServiceType")
                                         jsonArrayServiceType =
                                             jobjt.getJSONArray("ServiceTypeList")
-                                        
+
                                         if (jsonArrayServiceType.length()>0){
                                             serviceTypePop(jsonArrayServiceType)
                                         }
@@ -1400,6 +2677,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 //            ll_Service3!!.visibility = View.VISIBLE
 
             modeTab = modeTab+1
+            Log.e(TAG,"1016661     modeTab "+modeTab)
             loadlayout()
 
             // 24-10-2023 Ranjith
@@ -1435,7 +2713,6 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
                     serviceDetailsArray.put(jObject)
                 }
             }
-            Log.e(TAG,"143777771     "+serviceDetailsArray)
 
             Log.e(TAG,"1034443     "+serviceTab3MainModel.size)
             if (serviceTab3MainModel.size > 0){
@@ -1477,6 +2754,8 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 
                 }
             }
+            modeTab=4
+            loadlayout()
             Log.e(TAG,"143777772     "+serviceIncentiveArray)
         }else{
             Log.e(TAG,"145888   No Checked Box MArked")
@@ -1509,7 +2788,6 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
                 isChecked = true
                 if (modelServicesListDetails.get(i).ID_ComplaintList.equals("0")){
                     isChecked = false
-//                    Toast.makeText(applicationContext,"No Check box marked",Toast.LENGTH_SHORT).show()
                     break
                 }
             }

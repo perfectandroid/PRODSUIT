@@ -621,6 +621,9 @@ interface ApiInterface {
     @POST("ServiceFollowUp/ComplaintListDetails")
     fun getComplaintListDetails(@Body body: RequestBody): Call<String>
 
+    @POST("ServiceFollowUp/FollowUpActionDetails")
+    fun getActionTakenAction(@Body body: RequestBody): Call<String>
+
     @POST("ServiceFollowUp/ServiceInvoiceDetails")
     fun getClosedTicketList(@Body body: RequestBody): Call<String>
 
@@ -629,6 +632,9 @@ interface ApiInterface {
 
     @POST("ServiceFollowUp/AddedService")
     fun getAddedServiceList(@Body body: RequestBody): Call<String>
+
+    @POST("ServiceFollowUp/OtherChargeDetails")
+    fun getOtherCharges(@Body body: RequestBody): Call<String>
 
 
 
