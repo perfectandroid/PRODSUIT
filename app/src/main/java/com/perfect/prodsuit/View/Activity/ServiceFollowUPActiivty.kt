@@ -35,6 +35,9 @@ import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemClickListener {
 
@@ -172,6 +175,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     private var DateType: Int = 0
     private var tie_DateAttended: TextInputEditText? = null
     private var edttotalSecurityAmount: TextInputEditText? = null
+    private var edtnetAmount: TextInputEditText? = null
     private var edtcomponentCharge: TextInputEditText? = null
     private var edttotalServiceCost: TextInputEditText? = null
     private var edtdiscountAmount: TextInputEditText? = null
@@ -179,6 +183,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     private var edt_other_charges: TextView? = null
     private var tv_payment_type: TextView? = null
     var otherChargesAdapterAdapter: OtherChargesAdapterAdapter? = null
+    var serviceFollowAttendanceAdapter: ServiceFollowAttendanceAdapter? = null
     lateinit var billtypeArrayList: JSONArray
     var pickupdeliStatusCount = 0
     lateinit var paymentMethodeArrayList: JSONArray
@@ -204,8 +209,17 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var adapterPaymentList: PaymentListAdapter? = null
     var arrAddUpdate: String? = "0"
     var applyMode = 0
+    var netAmount = 0.0
     var ID_PaymentMethod: String? = ""
     var arrPosition: Int? = 0
+    var totalServiceCost = 0.0
+    lateinit var serviceFollowUpAttendanceListViewModel: ServiceFollowUpAttendanceListViewModel
+    var serviceFollowUpAttendance = 0
+    var serviceFollowUpAttendanceArrayList: JSONArray = JSONArray()
+    val modelFollowUpAttendance = java.util.ArrayList<ModelFollowUpAttendance>()
+    val AttendedEmployeeDetails= JSONArray()
+    var saveLeadGenDet = 0
+    lateinit var serviceFollowUpSaveModel: ServiceFollowUpSaveViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -232,10 +246,11 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         addServiceViewModel = ViewModelProvider(this).get(AddServiceViewModel::class.java)
         serviceFollowUpServiceTypeViewModel = ViewModelProvider(this).get(ServiceFollowUpServiceTypeViewModel::class.java)
 
-
         subProductViewModel = ViewModelProvider(this).get(SubProductViewModel::class.java)
         serviceReplacedModeViewModel = ViewModelProvider(this).get(ServiceReplacedModeViewModel::class.java)
         warrantymodeViewModel = ViewModelProvider(this).get(WarrantyModeViewModel::class.java)
+        serviceFollowUpAttendanceListViewModel = ViewModelProvider(this).get(ServiceFollowUpAttendanceListViewModel::class.java)
+        serviceFollowUpSaveModel = ViewModelProvider(this).get(ServiceFollowUpSaveViewModel::class.java)
 
         db_helper = DBHelper(this,null)
         try {
@@ -301,7 +316,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             ll_action_taken!!.visibility = View.VISIBLE
             loadActionTaken()
         }
-        if (modeTab == 4) {
+        if (modeTab == 5) {
 
             Log.v("adasdasds","modeTab5 ")
             finalSave()
@@ -331,17 +346,208 @@ Log.v("adasdasds","modeTab "+modeTab)
         Log.v("sdfsdfsd", "payment  " + arrPaymentFinal.toString())
         Log.v("sdfsdfsd", "other  " + arrOtherChargeFinal.toString())
 
-        var attendedDate=tie_DateAttended!!.text
-        var totalSecurityAmount=edttotalSecurityAmount!!.text
-        var componentCharge=edtcomponentCharge!!.text
-        var totalServiceCost=edttotalServiceCost!!.text
-        var discountAmount=edtdiscountAmount!!.text
-        var edtnetAmount=tie_DateAttended!!.text
+        var attendedDate = tie_DateAttended!!.text
+        var totalSecurityAmount = edttotalSecurityAmount!!.text
+        var componentCharge = edtcomponentCharge!!.text
+        var totalServiceCost = edttotalServiceCost!!.text
+        var discountAmount = edtdiscountAmount!!.text
+        var edtnetAmount = tie_DateAttended!!.text
 
-
+        saveLeadGenDet=0
+        saveDetails(Actionproductdetails)
 
 
     }
+
+    private fun saveDetails(Actionproductdetails: JSONArray) {
+        var StartingDate= tie_DateAttended!!.text.toString()
+        var totalSecurityAmount = edttotalSecurityAmount!!.text.toString()
+        var componentCharge = edtcomponentCharge!!.text.toString()
+        var totalServiceCost = edttotalServiceCost!!.text.toString()
+        var discountAmount = edtdiscountAmount!!.text.toString()
+        var netAmount = edtnetAmount!!.text.toString()
+        var otherCharge = edt_other_charges!!.text.toString()
+
+        val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+        val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+        val EnterBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+
+        var fk_company=FK_CompanySP.getString("FK_Company", null)
+        var FK_BranchCodeUser=FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)
+        var UserCode=EnterBySP.getString("UserCode", null)
+
+        try {
+
+            Log.e(TAG, "ID_Customerserviceregister   " + ID_Customerserviceregister)
+            Log.e(TAG, "ID_CustomerserviceregisterProductDetails   " + ID_CustomerserviceregisterProductDetails)
+            Log.e(TAG, "StartingDate   " + StartingDate)
+            Log.e(TAG, "componentCharge   " + componentCharge)
+            Log.e(TAG, "totalServiceCost   " + totalServiceCost)
+            Log.e(TAG, "otherCharge   " + otherCharge)
+            Log.e(TAG, "totalSecurityAmount   " + totalSecurityAmount)
+            Log.e(TAG, "netAmount   " + netAmount)
+            Log.e(TAG, "discountAmount   " + discountAmount)
+            Log.e(TAG, "fk_company   " + fk_company)
+            Log.e(TAG, "FK_BranchCodeUser   " + FK_BranchCodeUser)
+            Log.e(TAG, "UserCode   " + UserCode)
+            Log.e(TAG, "billtype   " + billtype)
+            Log.e(TAG, "serviceDetailsArray   " + serviceDetailsArray)
+            Log.e(TAG, "ProductSubDetails   " + ProductSubDetails)
+            Log.e(TAG, "Actionproductdetails   " + Actionproductdetails)
+            Log.e(TAG, "AttendedEmployeeDetails   " + AttendedEmployeeDetails)
+            Log.e(TAG, "serviceIncentiveArray   " + serviceIncentiveArray)
+            Log.e(TAG, "arrOtherChargeFinal   " + arrOtherChargeFinal)
+            Log.e(TAG, "arrPaymentFinal   " + arrPaymentFinal)
+
+
+            when (Config.ConnectivityUtils.isConnected(this)) {
+
+                true -> {
+                    progressDialog = ProgressDialog(context, R.style.Progress)
+                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                    progressDialog!!.setCancelable(false)
+                    progressDialog!!.setIndeterminate(true)
+                    progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                    progressDialog!!.show()
+                    serviceFollowUpSaveModel.saveFollowUp(
+                        this,
+                        "1",
+                        ID_Customerserviceregister,
+                        ID_CustomerserviceregisterProductDetails,
+                        StartingDate,
+                        componentCharge,
+                        totalServiceCost,
+                        otherCharge,
+                        totalSecurityAmount,
+                        netAmount,
+                        discountAmount,
+                        fk_company!!,
+                        FK_BranchCodeUser!!,
+                        UserCode!!,
+                        billtype,
+                        "",
+                        "'CUSF'",
+                        serviceDetailsArray,
+                        ProductSubDetails,
+                        Actionproductdetails,
+                        AttendedEmployeeDetails,
+                        serviceIncentiveArray,
+                        arrOtherChargeFinal,
+                        arrPaymentFinal
+                    )!!.observe(
+                        this,
+                        Observer { serviceSetterGetter ->
+                            val msg = serviceSetterGetter.message
+
+
+                            try {
+
+                                if (msg!!.length > 0) {
+                                    if (saveLeadGenDet == 0) {
+                                        saveLeadGenDet++
+                                        val jObject = JSONObject(msg)
+                                        Log.e(TAG, "msg   4120   " + msg)
+                                        if (jObject.getString("StatusCode") == "0") {
+                                            val jobjt =
+                                                jObject.getJSONObject("UpdateServiceFollowUp")
+                                            try {
+
+                                                val suceessDialog = Dialog(this)
+                                                suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                                suceessDialog!!.setCancelable(false)
+                                                suceessDialog!!.setContentView(R.layout.success_popup_service)
+                                                suceessDialog!!.window!!.attributes.gravity =
+                                                    Gravity.CENTER_VERTICAL;
+
+                                                val tv_succesmsg =
+                                                    suceessDialog!!.findViewById(R.id.tv_succesmsg) as TextView
+
+                                                val tv_succesok =
+                                                    suceessDialog!!.findViewById(R.id.tv_succesok) as TextView
+                                                //LeadNumber
+                                                tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
+                                                tv_succesok!!.setOnClickListener {
+                                                    suceessDialog!!.dismiss()
+//                                                    val i = Intent(this@LeadGenerationActivity, LeadActivity::class.java)
+//                                                    startActivity(i)
+                                                    finish()
+
+                                                }
+
+                                                suceessDialog!!.show()
+                                                suceessDialog!!.getWindow()!!.setLayout(
+                                                    ViewGroup.LayoutParams.MATCH_PARENT,
+                                                    ViewGroup.LayoutParams.WRAP_CONTENT
+                                                );
+                                            } catch (e: Exception) {
+                                                e.printStackTrace()
+                                                val builder = AlertDialog.Builder(
+                                                    this@ServiceFollowUPActiivty,
+                                                    R.style.MyDialogTheme
+                                                )
+                                                builder.setMessage(e.toString())
+                                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                                    onBackPressed()
+                                                }
+                                                val alertDialog: AlertDialog = builder.create()
+                                                alertDialog.setCancelable(false)
+                                                alertDialog.show()
+
+                                            }
+
+
+
+                                        } else {
+                                            val builder = AlertDialog.Builder(
+                                                this@ServiceFollowUPActiivty,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage(jObject.getString("EXMessage"))
+                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                                onBackPressed()
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
+                                        }
+                                    }
+
+                                } else {
+
+                                }
+
+
+                            } catch (e: Exception) {
+
+                                Log.e(TAG, "Exception  4133    " + e.toString())
+                                val builder = AlertDialog.Builder(
+                                    this@ServiceFollowUPActiivty,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(e.toString())
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+
+                            }
+
+                        })
+                    progressDialog!!.dismiss()
+                }
+                false -> {
+                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Exception  226666    " + e.toString())
+        }
+
+
+    }
+
 
     private fun setRegviews() {
         rcyler_followup      = findViewById(R.id.rcyler_followup)
@@ -374,6 +580,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         tie_Selectbilltype = findViewById(R.id.tie_Selectbilltype) as AutoCompleteTextView
         tv_payment_type = findViewById(R.id.tv_payment_type)
         edttotalSecurityAmount = findViewById(R.id.edttotalSecurityAmount)
+        edtnetAmount = findViewById(R.id.edtnetAmount)
         edtcomponentCharge = findViewById(R.id.edtcomponentCharge)
         edttotalServiceCost = findViewById(R.id.edttotalServiceCost)
         edtdiscountAmount = findViewById(R.id.edtdiscountAmount)
@@ -484,9 +691,11 @@ Log.v("adasdasds","modeTab "+modeTab)
     private fun showbilltype(billtypeArrayList: JSONArray) {
 
         var searchType = Array<String>(billtypeArrayList.length()) { "" }
+        var searchTypeID = Array<String>(billtypeArrayList.length()) { "" }
         for (i in 0 until billtypeArrayList.length()) {
             val objects: JSONObject = billtypeArrayList.getJSONObject(i)
             searchType[i] = objects.getString("BTName");
+            searchTypeID[i] = objects.getString("ID_BillType");
             var FK_BillType = objects.getString("ID_BillType")
 
             Log.e(TAG, "00000111   " + FK_BillType)
@@ -506,7 +715,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                 Log.e(TAG, "7778889999   " + pickupdeliStatusCount)
 //            }
                 tie_Selectbilltype!!.setOnItemClickListener { parent, view, position, id ->
-                    billtype = searchType[position]
+                    billtype = searchTypeID[position]
                 }
             }
         }
@@ -754,6 +963,8 @@ Log.v("adasdasds","modeTab "+modeTab)
                                             Log.e(TAG,"447..1   "+""+j+"  "+modelServicesListDetails.get(j).Product)
                                         }
 
+
+
 ////                                                jsonsubproductArrayServiceType = jsonArrayServiceType!!.getJSONObject(i).getJSONArray("ServiceAttendedListDet")
 ////
 ////                                                Log.e(TAG, "vvvvvvvvvv  1" +jsonsubproductArrayServiceType)
@@ -769,6 +980,9 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                 rcyler_followup!!.adapter = servDetadapter
                                                 servDetadapter!!.setClickListener(this@ServiceFollowUPActiivty)
 
+
+//
+//
 ////                                                val gson = Gson()
 ////                                                val myList: List<ServiceDetailsFullListModel> = gson.fromJson(jsonArrayServiceType, List::class.java)
 //                                            }
@@ -812,8 +1026,159 @@ Log.v("adasdasds","modeTab "+modeTab)
         }
     }
 
+    private fun loadNetAmount()
+    {
+
+        var totalsecurityamount=0.0
+        var componentCharge=0.0
+        var totalSetviceCost=0.0
+        var otherCharge=0.0
+        var discount=0.0
+        try {
+            totalsecurityamount=edttotalSecurityAmount!!.text.toString().toDouble()
+        } catch (e: Exception) {
+            totalsecurityamount=0.0
+        }
+
+        try {
+            componentCharge=edtcomponentCharge!!.text.toString().toDouble()
+        } catch (e: Exception) {
+            componentCharge=0.0
+        }
+
+        try {
+            totalSetviceCost=edttotalServiceCost!!.text.toString().toDouble()
+        } catch (e: Exception) {
+            totalSetviceCost=0.0
+        }
+
+        try {
+            otherCharge=edt_other_charges!!.text.toString().toDouble()
+        } catch (e: Exception) {
+            otherCharge=0.0
+        }
+
+        try {
+            discount=edtdiscountAmount!!.text.toString().toDouble()
+        } catch (e: Exception) {
+            discount=0.0
+        }
+
+        netAmount =(totalsecurityamount+componentCharge+totalSetviceCost+otherCharge)-discount
+        edtnetAmount!!.setText(DecimelFormatters.set2DecimelPlace(netAmount.toFloat()))
+    }
+
+    private fun loadAttendance() {
+        val FK_BranchCodeUserSP = this.getSharedPreferences(Config.SHARED_PREF40, 0)
+        val FK_EmployeeSP = this.getSharedPreferences(Config.SHARED_PREF1, 0)
+        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+        var ID_Branch = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
+        var ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                serviceFollowUpAttendanceListViewModel.getServiceFollowUpAttendance(
+                    this,
+                    ID_Customerserviceregister,
+                    ID_Branch,
+                    ID_Employee
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (serviceFollowUpAttendance == 0) {
+                                    serviceFollowUpAttendance++
+                                    val jObject = JSONObject(msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("Attendancedetails")
+                                        serviceFollowUpAttendanceArrayList = jobjt.getJSONArray("AttendancedetailsList")
+                                        Log.e(TAG,"1337  "+serviceFollowUpAttendanceArrayList)
+                                        //  setAttendancetRecycler(serviceFollowUpAttendanceArrayList)
+
+                                        if (serviceFollowUpAttendanceArrayList.length()>0){
+
+                                            for (i in 0 until serviceFollowUpAttendanceArrayList.length()) {
+                                                var jsonObject = serviceFollowUpAttendanceArrayList.getJSONObject(i)
+                                                modelFollowUpAttendance!!.add(ModelFollowUpAttendance("1",jsonObject.getString("ID_Employee"),
+                                                    jsonObject.getString("EmployeeName"),jsonObject.getString("ID_CSAEmployeeType"),jsonObject.getString("Attend"),
+                                                    jsonObject.getString("DepartmentID"),jsonObject.getString("Department"),jsonObject.getString("Role"),
+                                                    jsonObject.getString("Designation")))
+                                            }
+
+
+                                        }
+
+                                        if (modelFollowUpAttendance.size>0){
+
+                                            attendancePopUp(modelFollowUpAttendance)
+
+
+
+                                        }
+
+
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+
+                                }
+
+
+                            } else {
+                                //swipeRefreshLayout.isRefreshing = false
+                            }
+                        } catch (e: Exception) {
+//                            swipeRefreshLayout.visibility = View.GONE
+//                            swipeRefreshLayout.isRefreshing = false
+//                            tv_nodata.visibility = View.VISIBLE
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
     private fun loadActionTaken() {
-        Log.v("sdfsdfds","modelServicesListDetails "+modelServicesListDetails.toString())
+
+        edttotalServiceCost!!.setText(totalServiceCost.toString())
+        edttotalSecurityAmount!!.setText("0.00")
+        edtcomponentCharge!!.setText("0.00")
+        edtdiscountAmount!!.setText("0.00")
+        edt_other_charges!!.setText("0.00")
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val currentDate = sdf.format(Date())
+        tie_DateAttended!!.setText(currentDate)
+        loadNetAmount()
+
+        Log.v("sdfsdfds", "modelServicesListDetails " + modelServicesListDetails.toString())
         actionTakenSelected.clear()
         for (i in 0 until modelServicesListDetails.size) {
             var empModel = modelServicesListDetails[i]
@@ -821,7 +1186,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                 actionTakenSelected!!.add(
                     ActionTakenMainModel(
                         empModel.FK_Product, empModel.Product, "", "",
-                        "", "", "false", "", "", "", "",empModel.ID_CustomerWiseProductDetails
+                        "", "", "false", "", "", "", "", empModel.ID_CustomerWiseProductDetails
                     )
                 )
             }
@@ -842,15 +1207,16 @@ Log.v("adasdasds","modeTab "+modeTab)
                     if (field.equals("customer_note")) {
                         var empModel = actionTakenSelected[position]
                         empModel.Customer_note = newText
-                       // actionTakenAdapter!!.notifyItemChanged(position)
+                        // actionTakenAdapter!!.notifyItemChanged(position)
                     } else if (field.equals("employee_note")) {
                         var empModel = actionTakenSelected[position]
                         empModel.Employee_note = newText
-                       // actionTakenAdapter!!.notifyItemChanged(position)
+                        // actionTakenAdapter!!.notifyItemChanged(position)
                     } else if (field.equals("security_amount")) {
                         var empModel = actionTakenSelected[position]
                         empModel.securityAmount = newText
-                       // actionTakenAdapter!!.notifyItemChanged(position)
+                        loadSecurityAmount()
+                        // actionTakenAdapter!!.notifyItemChanged(position)
                     } else if (field.equals("buy_back")) {
                         var empModel = actionTakenSelected[position]
                         empModel.buyBackAmount = newText
@@ -868,6 +1234,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             openBottomSheet()
         })
         edt_other_charges!!.setOnClickListener(View.OnClickListener {
+            edt_other_charges!!.setText("0.00")
             DateType = 0
             actionTakenActioncouny = 0
             getOtherCharges()
@@ -882,6 +1249,65 @@ Log.v("adasdasds","modeTab "+modeTab)
         })
 
 
+        edtdiscountAmount!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                loadNetAmount()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+        edttotalServiceCost!!.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                loadNetAmount()
+            }
+
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+
+    }
+
+    private fun loadSecurityAmount() {
+        var securityAmount = 0.0
+        for (obj in actionTakenSelected) {
+            var amount = 0.0
+            try {
+                amount = obj.securityAmount.toDouble()
+
+            } catch (e: Exception) {
+                amount=0.0
+            }
+            securityAmount = securityAmount + amount
+        }
+        DecimelFormatters.set2DecimelPlace(securityAmount.toFloat())
+        edttotalSecurityAmount!!.setText(DecimelFormatters.set2DecimelPlace(securityAmount.toFloat()))
+        loadNetAmount()
     }
 
     private fun getPaymentList() {
@@ -1029,7 +1455,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                 dialogPaymentSheet!!.findViewById(R.id.recyPaymentList) as RecyclerView
 
 
-            // txtPayBalAmount!!.setText(""+tv_NetAmount!!.text.toString())
+             txtPayBalAmount!!.setText(""+edtnetAmount!!.text.toString())
 
             if (arrPayment.length() > 0) {
                 ll_paymentlist!!.visibility = View.VISIBLE
@@ -1047,13 +1473,13 @@ Log.v("adasdasds","modeTab "+modeTab)
                 Log.e(TAG, "9453  ")
                 Log.e(TAG, "payAmnt         475    " + payAmnt)
                 //  txtPayBalAmount!!.setText(""+DecimelFormatters.set2DecimelPlace((tv_NetAmount!!.text.toString().toFloat()) - pay.toFloat()))
-                ///////////////////////////////////////////          /     txtPayBalAmount!!.setText(""+ DecimelFormatters.set2DecimelPlace((DecimalToWordsConverter.commaRemover(tv_NetAmount!!.text.toString()).toFloat()) - pay.toFloat()))
+                 txtPayBalAmount!!.setText(""+ DecimelFormatters.set2DecimelPlace((DecimalToWordsConverter.commaRemover(edtnetAmount!!.text.toString()).toFloat()) - pay.toFloat()))
                 Log.e(TAG, "9454  ")
             } else {
                 Log.e(TAG, "9455  ")
                 ll_paymentlist!!.visibility = View.GONE
                 recyPaymentList!!.adapter = null
-                ///////////////////////////////////////             txtPayBalAmount!!.setText(""+tv_NetAmount!!.text.toString())
+                txtPayBalAmount!!.setText(""+edtnetAmount!!.text.toString())
                 Log.e(TAG, "9456  ")
             }
 
@@ -1081,9 +1507,9 @@ Log.v("adasdasds","modeTab "+modeTab)
                         val jsonObject = arrPayment.getJSONObject(i)
                         payAmnt = (payAmnt + (jsonObject.getString("Amount")).toFloat())
                     }
-                    /////////////////////////                 txtPayBalAmount!!.setText(""+ DecimelFormatters.set2DecimelPlace((tv_NetAmount!!.text.toString().toFloat()) - payAmnt.toFloat()))
+                    txtPayBalAmount!!.setText(""+ DecimelFormatters.set2DecimelPlace((edtnetAmount!!.text.toString().toFloat()) - payAmnt.toFloat()))
                 } else {
-                    /////////////////////////////                  txtPayBalAmount!!.setText(""+tv_NetAmount!!.text.toString())
+                    txtPayBalAmount!!.setText(""+edtnetAmount!!.text.toString())
                 }
             }
 
@@ -1098,7 +1524,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                         var empModel = arrPayment.getJSONObject(i)
                         val jsonObject = JSONObject()
                         jsonObject.put("PaymentMethod", empModel.getString("MethodID"))
-                        jsonObject.put("PAmount", empModel.getString("Method"))
+                        jsonObject.put("PAmount", empModel.getString("Amount"))
                         jsonObject.put("Refno", empModel.getString("RefNo"))
                         arrPaymentFinal.put(jsonObject)
                     }
@@ -1391,7 +1817,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
                 if (DateType == 0) {
-                    tie_DateAttended!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                    tie_DateAttended!!.setText("" + strYear + "-" + strMonth + "-" + strDay)
                 }
 
 
@@ -1448,6 +1874,12 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
 
+//                                            Log.e(TAG, "dssadd  2" )
+//                                            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+//                                            recyCompService!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                            val adapter = complaint_service_followup(this@ServiceFollowUPActiivty, complaintfollowup!!)
+//                                            recyCompService!!.adapter = adapter
+////                                            adapter.setClickListener(this@ServiceFollowUPActiivty)
                                         }
 
                                     }else{
@@ -1979,6 +2411,11 @@ Log.v("adasdasds","modeTab "+modeTab)
                 else if (modeTab == 2){
                    validateService3()
                 }
+                else if(modeTab==3)
+                {
+                    serviceFollowUpAttendance=0
+                    loadAttendance()
+                }
 
 
             }
@@ -1995,11 +2432,35 @@ Log.v("adasdasds","modeTab "+modeTab)
 
     private fun validatetab2() {
 
-        modeTab = modeTab+1
-        loadlayout()
+
+        var hasId =  hasPartReplaced(servicepartsReplacedModel!!)
+        Log.e(TAG,"20131  "+hasId)
+        if (hasId){
+            modeTab = modeTab+1
+            loadlayout()
+        }
     }
 
+    private fun hasPartReplaced(servicepartsReplacedModel: ArrayList<ServicePartsReplacedModel>): Boolean {
 
+        var isChecked = true
+        for (i in 0 until servicepartsReplacedModel.size) {  // iterate through the JsonArray
+
+            Log.e(TAG,"20132       "+servicepartsReplacedModel.get(i).WarrantyMode+"   R:   "+servicepartsReplacedModel.get(i).ReplceMode+"" +
+                    "   Q:  "+servicepartsReplacedModel.get(i).Quantity+"  C:  "+servicepartsReplacedModel.get(i).isChecked)
+            if (servicepartsReplacedModel.get(i).isChecked.equals("1")){
+                isChecked = true
+                if (servicepartsReplacedModel.get(i).WarrantyMode.equals("0") || servicepartsReplacedModel.get(i).ReplceMode.equals("0")  ||
+                    servicepartsReplacedModel.get(i).Quantity.equals("") || servicepartsReplacedModel.get(i).Quantity.equals(".")){
+                    isChecked = false
+                    break
+                }
+            }
+
+        }
+        return isChecked
+
+    }
     private fun productWisePopup() {
         Log.e(TAG,"864  ")
         try {
@@ -2173,20 +2634,26 @@ Log.v("adasdasds","modeTab "+modeTab)
             tv_submit!!.setOnClickListener {
                 dialogMoreServiceAttendeSheet!!.dismiss()
                 otherChargesFinalList = otherChargesAdapterAdapter!!.mList
-                var totalAmount=0
+                var totalAmount = 0.0
                 for (i in 0 until otherChargesFinalList.size) {
                     val empModel = otherChargesFinalList[i]
                     val jsonObject = JSONObject()
                     jsonObject.put("ID_OtherChargeType", empModel.ID_OtherChargeType)
                     jsonObject.put("OctyTransType", empModel.OctyTransType)
+                    var amount = 0.0
                     if (empModel.OctyAmount.equals("")) {
                         jsonObject.put("OctyAmount", "0")
                     } else {
+                        amount = empModel.OctyAmount.toDouble()
                         jsonObject.put("OctyAmount", empModel.OctyAmount)
                     }
                     jsonObject.put("TransTypeID", empModel.OctyTransType)
                     arrOtherChargeFinal.put(jsonObject)
+                    totalAmount = totalAmount + amount
                 }
+
+                edt_other_charges!!.setText("" + totalAmount)
+                loadNetAmount()
                 Log.v("sfsdfsdfsd", "list" + arrOtherChargeFinal.toString())
             }
             dialogMoreServiceAttendeSheet!!.show()
@@ -2195,23 +2662,103 @@ Log.v("adasdasds","modeTab "+modeTab)
             e.printStackTrace()
         }
     }
+    private fun attendancePopUp(modelFollowUpAttendance: java.util.ArrayList<ModelFollowUpAttendance>) {
+        Log.e(TAG, "864  ")
+        try {
+            otherChargesFinalList.clear()
+            for (i in 0 until otherChargeList.length()) {
+                var empModel = otherChargeList.getJSONObject(i)
+                otherChargesFinalList!!.add(
+                    OtherChargesMainModel(
+                        empModel.getString("ID_OtherChargeType"),
+                        empModel.getString("OctyName"),
+                        empModel.getString("OctyTransType"),
+                        ""
+                    )
+                )
+            }
+            dialogMoreServiceAttendeSheet = Dialog(this)
+            dialogMoreServiceAttendeSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogMoreServiceAttendeSheet!!.setContentView(R.layout.other_attendance_sheet)
+            dialogMoreServiceAttendeSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            dialogMoreServiceAttendeSheet!!.setCancelable(false)
+            recyFollowupAttended =
+                dialogMoreServiceAttendeSheet!!.findViewById(R.id.recyFollowupAttended) as RecyclerView
+            var tv_cancel = dialogMoreServiceAttendeSheet!!.findViewById(R.id.tv_cancel) as TextView
+            var tv_submit = dialogMoreServiceAttendeSheet!!.findViewById(R.id.tv_submit) as TextView
 
+            val window: Window? = dialogMoreServiceAttendeSheet!!.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+            recyFollowupAttended!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
+            serviceFollowAttendanceAdapter = ServiceFollowAttendanceAdapter(this@ServiceFollowUPActiivty, modelFollowUpAttendance)
+            recyFollowupAttended!!.adapter = serviceFollowAttendanceAdapter
+
+
+
+            tv_cancel!!.setOnClickListener {
+                dialogMoreServiceAttendeSheet!!.dismiss()
+            }
+            tv_submit!!.setOnClickListener {
+              //  dialogMoreServiceAttendeSheet!!.dismiss()
+
+
+//                for (i in 0 until modelFollowUpAttendance.size) {
+//                    var empModel = modelFollowUpAttendance[i]
+//                    if (empModel.isChecked.equals("1")) {
+//                        var jsonObject=new Js
+//                    }
+//                }
+                Log.v("sfsdfsdfsd","modelFollowUpAttendance "+modelFollowUpAttendance.toString())
+                for (obj in modelFollowUpAttendance) {
+                    val jsonObject = JSONObject()
+                    jsonObject.put("ID_Employee", obj.ID_Employee)
+                    jsonObject.put("EmployeeType", obj.ID_CSAEmployeeType)
+                    AttendedEmployeeDetails.put(jsonObject)
+                }
+                if(AttendedEmployeeDetails.length()==0)
+                {
+                    Toast.makeText(
+                        applicationContext,
+                        "Please choose atlest one employee",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+                else
+                {
+                    dialogMoreServiceAttendeSheet!!.dismiss()
+                    Log.v("sfsdfsdfdsfs","sdfsddddd "+AttendedEmployeeDetails.toString())
+                    finalSave()
+                }
+
+            }
+            dialogMoreServiceAttendeSheet!!.show()
+            // dialogDetailSheet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
     override fun onClick(position: Int, data: String) {
-        Log.e(TAG,"864  ")
-        if (data.equals("productwise_cmplt")){
+        Log.e(TAG, "864  ")
+        if (data.equals("productwise_cmplt")) {
 
             modEditPosition = position
             modChanged = 1
 
 //            val jsonObject = complaintfollowup.getJSONObject(position)
-            Log.e(TAG,"test entered   ")
+            Log.e(TAG, "test entered   ")
 
             var FK_Category = modelServicesListDetails.get(position).FK_Category
             var FK_Product = modelServicesListDetails.get(position).FK_Product
 
             productwisecomplaintcouny = 0
-            getProductWiseComplaint(FK_Category!!,FK_Product!!)
+            getProductWiseComplaint(FK_Category!!, FK_Product!!)
         }
         if (data.equals("action_taken_action")) {
             modEditPosition = position
@@ -2222,29 +2769,29 @@ Log.v("adasdasds","modeTab "+modeTab)
         }
 
 
-        if (data.equals("chkproductwise_cmplt")){
+        if (data.equals("chkproductwise_cmplt")) {
 
             modEditPosition = position
             modChanged = 0
 
 //            val jsonObject = complaintfollowup.getJSONObject(position)
-            Log.e(TAG,"test entered   ")
+            Log.e(TAG, "test entered   ")
 
             var FK_Category = modelServicesListDetails.get(position).FK_Category
             var FK_Product = modelServicesListDetails.get(position).FK_Product
 
             productwisecomplaintcouny = 0
-            getProductWiseComplaint(FK_Category!!,FK_Product!!)
+            getProductWiseComplaint(FK_Category!!, FK_Product!!)
         }
 
 
 
 
-        if (data.equals("CompServiceFollowUp")){
-            Log.e(TAG,"95444     "+position)
+        if (data.equals("CompServiceFollowUp")) {
+            Log.e(TAG, "95444     " + position)
             dialogMoreServiceAttendeSheet!!.dismiss()
             val jsonObject = complaintfollowup.getJSONObject(position)
-            Log.e(TAG,"95444     "+jsonObject)
+            Log.e(TAG, "95444     " + jsonObject)
 
             var empModel = modelServicesListDetails[modEditPosition]
 
@@ -2253,7 +2800,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 //            modelServicesListDetails.get(position).ID_ComplaintList =jsonObject.getString("ID_ComplaintList")
 //            modelServicesListDetails.get(position).ComplaintName=jsonObject.getString("ComplaintName")
-            Log.e(TAG,"954441     "+ empModel.ComplaintName)
+            Log.e(TAG, "954441     " + empModel.ComplaintName)
 
             servDetadapter!!.notifyItemChanged(modEditPosition)
 
@@ -2282,7 +2829,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         }
         if (data.equals("check_click")) {
             var empModel = actionTakenSelected[position]
-            Log.v("sdfsdfdsfds","check value1 "+empModel.ProvideStandBy)
+            Log.v("sdfsdfdsfds", "check value1 " + empModel.ProvideStandBy)
             if (empModel.ProvideStandBy.equals("true")) {
                 empModel.ProvideStandBy = "false"
             } else {
@@ -2344,13 +2891,11 @@ Log.v("adasdasds","modeTab "+modeTab)
                 Log.e(TAG, "payAmnt         475    " + payAmnt)
                 //////////////               txtPayBalAmount!!.setText(""+DecimelFormatters.set2DecimelPlace((tv_NetAmount!!.text.toString().toFloat()) - pay.toFloat() + (jsonObject!!.getString("Amount").toFloat())))
 
-            }
-            catch (e:Exception)
-            {
+            } catch (e: Exception) {
             }
         }
 //        24-10-2023 Ranjith
-        if (data.equals("addService3Click")){
+        if (data.equals("addService3Click")) {
 
             FK_Product_Pos  =  position
             FK_Product_ID  =  serviceTab3MainModel[position].FK_Product

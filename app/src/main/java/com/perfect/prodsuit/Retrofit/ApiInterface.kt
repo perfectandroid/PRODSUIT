@@ -182,6 +182,9 @@ interface ApiInterface {
     @POST("UserValidations/UpdateLeadGeneration")
     fun saveUpdateLeadGeneration(@Body body: RequestBody): Call<String>
 
+    @POST("ServiceFollowUp/UpdateServiceFollowUp")
+    fun updateServiceFollowUp(@Body body: RequestBody): Call<String>
+
     @POST("UserValidations/AddNextAction")
     fun saveAddNextAction(@Body body: RequestBody): Call<String>
 

@@ -853,7 +853,6 @@
                                                         android:layout_height="wrap_content"
                                                         android:backgroundTint="@color/colorPrimary"
                                                         android:layout_centerVertical="true"
-                                                        android:layout_marginRight="5dp"
                                                         android:layout_weight="1"
                                                         android:background="@drawable/border_shadow_service"
                                                         android:drawableEnd="@drawable/down_arrows"
