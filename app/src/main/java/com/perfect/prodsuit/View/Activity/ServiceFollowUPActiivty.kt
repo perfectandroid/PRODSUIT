@@ -295,13 +295,13 @@ Log.v("adasdasds","modeTab "+modeTab)
 //        if (modeTab == 2){
 //            ll_Service3!!.visibility = View.VISIBLE
 //        }
-        if (modeTab == 4) {
+        if (modeTab == 3) {
 
             Log.v("adasdasds","modeTab4 ")
             ll_action_taken!!.visibility = View.VISIBLE
             loadActionTaken()
         }
-        if (modeTab == 5) {
+        if (modeTab == 4) {
 
             Log.v("adasdasds","modeTab5 ")
             finalSave()
@@ -2859,7 +2859,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 
                 }
             }
-            modeTab=4
+            modeTab = modeTab +1
             loadlayout()
             Log.e(TAG,"143777772     "+serviceIncentiveArray)
         }else{
