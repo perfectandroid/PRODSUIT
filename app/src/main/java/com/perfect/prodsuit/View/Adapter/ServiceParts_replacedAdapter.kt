@@ -7,11 +7,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Model.ModelMoreServices
 import com.perfect.prodsuit.Model.ServicePartsReplacedModel
@@ -45,12 +43,28 @@ class ServiceParts_replacedAdapter (internal var context: Context, internal var 
             if (holder is MainViewHolder) {
                 val pos = position+1
 
-                if (!ItemsModel.ID_MasterProduct.equals(ID_mastr)){
-                    holder.llProduct.visibility = View.GONE
+//                if (!ItemsModel.ID_MasterProduct.equals(ID_mastr)){
+//                    holder.llProduct.visibility = View.GONE
+//                }else{
+//                    holder.llProduct.visibility = View.VISIBLE
+//                }
+
+                if (ItemsModel.is_Master.equals("1")){
+                    holder.ll_main_product.visibility = View.VISIBLE
+                    holder.ll_serviceDetails.visibility = View.GONE
                 }else{
-                    holder.llProduct.visibility = View.VISIBLE
+                    holder.ll_main_product.visibility = View.GONE
+                    holder.ll_serviceDetails.visibility = View.VISIBLE
                 }
 
+                Log.e(TAG,"  1111   "+ItemsModel.isChecked)
+                if (ItemsModel.isChecked.equals("1")){
+                    holder.check_partsreplaced.isChecked = true
+                }else{
+                    holder.check_partsreplaced.isChecked = false
+                }
+
+                holder.tv_mainProdname.text        = ItemsModel.MainProduct
                 holder.tvv_mainProductName.text        = ItemsModel.MainProduct
                 holder.tvv_component.text              = ItemsModel.Componant
                 holder.tvv_warrantyMode.text           = ItemsModel.WarrantyName
@@ -70,14 +84,29 @@ class ServiceParts_replacedAdapter (internal var context: Context, internal var 
                 holder.tvv_replacedMode!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "ReplacedModeList")
                 })
+
+
+                holder.imv_addProduct!!.setTag(position)
+                holder.imv_addProduct!!.setOnClickListener(View.OnClickListener {
+                    try {
+                        clickListener!!.onClick(position, "partAddService2Click")
+                    }catch (e:Exception){
+                        Log.e(TAG,"93333   "+e)
+                    }
+
+                })
+
                 holder.check_partsreplaced!!.setTag(position)
                 holder.check_partsreplaced!!.setOnClickListener(View.OnClickListener {
-                    if (holder.check_partsreplaced!!.isChecked){
+                    if (holder.check_partsreplaced.isChecked){
                         ItemsModel.isChecked = "1"
                     }else{
                         ItemsModel.isChecked = "0"
                     }
+                    notifyItemChanged(position)
                 })
+
+
 
                 holder.edt_quantity.addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
@@ -120,8 +149,12 @@ class ServiceParts_replacedAdapter (internal var context: Context, internal var 
         internal var tvv_warrantyMode       : TextView
         internal var edt_quantity           : EditText
         internal var tvv_replacedMode       : TextView
+        internal var tv_mainProdname       : TextView
         internal var check_partsreplaced    : CheckBox
         internal var llProduct         : LinearLayout
+        internal var ll_main_product         : LinearLayout
+        internal var ll_serviceDetails         : LinearLayout
+        internal var imv_addProduct         : ImageView
 
         init {
 
@@ -130,9 +163,13 @@ class ServiceParts_replacedAdapter (internal var context: Context, internal var 
             tvv_warrantyMode              = v.findViewById<View>(R.id.tvv_warrantyMode)      as TextView
             edt_quantity                  = v.findViewById<View>(R.id.edt_quantity)          as EditText
             tvv_replacedMode              = v.findViewById<View>(R.id.tvv_replacedMode)      as TextView
-//            llProduct_Main                = v.findViewById<View>(R.id.llProduct_Main)        as LinearLayout
-            llProduct                = v.findViewById<View>(R.id.llProduct)        as LinearLayout
+            tv_mainProdname               = v.findViewById<View>(R.id.tv_mainProdname)      as TextView
+//            llProduct_Main              = v.findViewById<View>(R.id.llProduct_Main)        as LinearLayout
+            llProduct                     = v.findViewById<View>(R.id.llProduct)        as LinearLayout
+            ll_main_product                     = v.findViewById<View>(R.id.ll_main_product)        as LinearLayout
+            ll_serviceDetails                     = v.findViewById<View>(R.id.ll_serviceDetails)        as LinearLayout
             check_partsreplaced           = v.findViewById<View>(R.id.check_partsreplaced)   as CheckBox
+            imv_addProduct           = v.findViewById<View>(R.id.imv_addProduct)   as ImageView
 
         }
     }
@@ -140,6 +177,7 @@ class ServiceParts_replacedAdapter (internal var context: Context, internal var 
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 
 
 }

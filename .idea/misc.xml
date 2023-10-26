@@ -178,6 +178,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_material_request.xml" value="0.23229166666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_material_usage.xml" value="0.34427083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_more_service_attended.xml" value="0.30462962962962964" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_parts_replaced.xml" value="0.30052083333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_payment_list.xml" value="0.30462962962962964" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_pincode_details.xml" value="0.28125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_product_category.xml" value="0.30885416666666665" />
@@ -195,6 +196,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_assign.xml" value="0.3625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_assign_list.xml" value="0.2984375" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_comp.xml" value="0.36666666666666664" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_companant.xml" value="0.25052083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_detail.xml" value="0.28125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_sales.xml" value="0.22291666666666668" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_tab3.xml" value="0.33" />
