@@ -20,9 +20,11 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_main_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            android:background="@color/colorPrimary"
             android:orientation="horizontal">
 
             <ImageView
@@ -31,29 +33,36 @@
                 android:src="@drawable/phone_green"
                 android:layout_gravity="center"
                 app:buttonTint="@color/white"
-                android:layout_weight="4"/>
+                android:layout_weight="4"
+                android:visibility="gone"/>
 
             <TextView
-                android:id="@+id/tv_followupticket"
+                android:id="@+id/tv_mainProdname"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Parts Replaced"
+                android:layout_height="match_parent"
+                android:text=""
                 android:layout_weight="1"
+                android:paddingRight="10dp"
                 android:fontFamily="@font/myfont"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/white"
                 android:textSize="@dimen/header_text"
                 android:textStyle="bold" />
 
+
+
+
             <ImageView
                 android:id="@+id/imv_addProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginLeft="20dp"
-                android:src="@drawable/plus_solid"
-                android:layout_gravity="end"
-                app:buttonTint="@color/white"
-                android:layout_weight="4"/>
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:fontFamily="@font/myfont"
+                android:textColor="@color/white"
+                android:textSize="@dimen/header_text"
+                android:src="@drawable/svg_add_square"
+                android:textStyle="bold"
+                app:tint="@color/white"/>
+
+
 
 
         </LinearLayout>
@@ -63,7 +72,7 @@
             android:layout_height="1dp"
             android:layout_marginBottom="10dp"
             android:background="@color/colorPrimary"
-            android:visibility="visible"/>
+            android:visibility="gone"/>
 
 
         <LinearLayout
@@ -93,19 +102,22 @@
                         android:layout_height="match_parent"
                         android:padding="10dp"
                         android:src="@drawable/productfollowup"
-                        app:tint="@color/colorPrimary" />
+                        app:tint="@color/colorPrimary"
+                        android:visibility="gone"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_weight="1"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:layout_gravity="center_vertical"
                         android:orientation="vertical">
 
 
                         <TextView
-                            android:id="@+id/tie_item_name"
+                            android:id="@+id/tvv_component"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:textSize="14dp"
                             android:layout_weight="1"
@@ -127,7 +139,8 @@
                             android:text=""
                             android:textStyle="normal"
                             android:textColor="@color/black"
-                            android:layout_centerVertical="true" />
+                            android:layout_centerVertical="true"
+                            android:visibility="gone"/>
 
                     </LinearLayout>
 
@@ -175,7 +188,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -200,8 +214,9 @@
 
                             </LinearLayout>
 
+
                             <TextView
-                                android:id="@+id/tvv_component"
+                                android:id="@+id/tie_item_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
@@ -338,6 +353,7 @@
                                 android:fontFamily="@font/myfont"
                                 android:background="@drawable/border_shadow_service"
                                 android:text=""
+                                android:inputType="number"
                                 android:textStyle="normal"
                                 android:textColor="@color/black"
                                 android:layout_centerVertical="true" />
