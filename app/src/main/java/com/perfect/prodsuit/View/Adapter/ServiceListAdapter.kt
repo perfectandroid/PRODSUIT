@@ -41,8 +41,9 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
             jsonObject = jsonArray.getJSONObject(position)
+
             if (holder is MainViewHolder) {
-                Log.e(TAG,"onBindViewHolder   1051   ")
+                Log.e(TAG,"onBindViewHolder   idcustomerservice and    "+jsonArray.getJSONObject(position).toString())
                 val pos = position+1
 
 //                if (position % 2 == 0){
@@ -61,6 +62,26 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
                 holder.tv_Area.text        = jsonObject!!.getString("Area")
                 holder.tv_Employee.text        = jsonObject!!.getString("Employee")
                 holder.tv_TimeDue.text        = "Time Due : "+jsonObject!!.getString("Due")
+
+
+                val FK_IDCustserviceregist =
+                    context.getSharedPreferences(Config.SHARED_PREF72, 0)
+                val FK_idcustsrvceregistEditer = FK_IDCustserviceregist.edit()
+                FK_idcustsrvceregistEditer.putString(
+                    "idcustsrvceregist",
+                    jsonObject!!.getString("ID_CustomerServiceRegister")
+                )
+                FK_idcustsrvceregistEditer.commit()
+
+
+                val FK_idcustsrvceregistproductdetail =
+                    context.getSharedPreferences(Config.SHARED_PREF73, 0)
+                val FK_idcustsrvceregistproductdetailEditer = FK_idcustsrvceregistproductdetail.edit()
+                FK_idcustsrvceregistproductdetailEditer.putString(
+                    "idcustsrvceregistproductdetail",
+                    jsonObject!!.getString("ID_CustomerServiceRegisterProductDetails")
+                )
+                FK_idcustsrvceregistproductdetailEditer.commit()
 
                 holder.tv_Channel.text        = jsonObject!!.getString("Channel")
                 if (jsonObject!!.getString("Channel").equals("Portal")){

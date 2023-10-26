@@ -215,6 +215,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     var strPriorityName: String? = ""
     var TicketDate: String? = ""
     var dateattend: String? = ""
+    var stridCustomer: String? = ""
 //    var str: String? = ""
 
     var serUpdateCount = 0
@@ -240,13 +241,15 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         FK_CustomerserviceregisterProductDetails = intent.getStringExtra("FK_CustomerserviceregisterProductDetails")
         TicketStatus = intent.getStringExtra("TicketStatus")
         TicketDate = intent.getStringExtra("TicketDate")
-        Log.e(TAG,"ID_CustomerServiceRegister  163   "+ID_CustomerServiceRegister+"\n"+FK_CustomerserviceregisterProductDetails+"\n"+TicketDate)
+
 //        ticketMode = "0"
 //        hideViews()
         checkAttendance()
         getCurrentdateTime()
         getServiceAssignDetails(TicketStatus,TicketDate)
-
+        val custbalidSP = context.getSharedPreferences(Config.SHARED_PREF71, 0)
+        stridCustomer = custbalidSP.getString("custbalid","")
+        Log.e(TAG,"ID_CustomerServiceRegister  163   "+ID_CustomerServiceRegister+"\n"+FK_CustomerserviceregisterProductDetails+"\n"+stridCustomer)
 
 
     }
@@ -476,6 +479,16 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             strProductComplaint = jobjt.getString("ProductComplaint")
                                             strProductDescription = jobjt.getString("ProductDescription")
                                             strPriorityName = jobjt.getString("PriorityName")
+                                            stridCustomer= jobjt.getString("ID_Customer")
+
+                                        val FK_IDCustbalSP =
+                                            applicationContext.getSharedPreferences(Config.SHARED_PREF71, 0)
+                                        val FK_CustbalidEditer = FK_IDCustbalSP.edit()
+                                        FK_CustbalidEditer.putString(
+                                            "custbalid",
+                                            stridCustomer
+                                        )
+                                        FK_CustbalidEditer.commit()
 
 
 
@@ -1007,9 +1020,10 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             }
 
             R.id.txtv_custbalnce->{
+
                 val i = Intent(this@ServiceAssignActivity, CustomerBalanceActivity::class.java)
                 i.putExtra("TicketDate",TicketDate)
-                i.putExtra("Id_Cust",ID_CustomerServiceRegister)
+                i.putExtra("Id_Cust",stridCustomer)
 
                 startActivity(i)
             }

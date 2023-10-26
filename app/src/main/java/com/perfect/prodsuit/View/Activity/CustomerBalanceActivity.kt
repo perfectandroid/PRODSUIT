@@ -29,6 +29,7 @@ class CustomerBalanceActivity : AppCompatActivity(), View.OnClickListener,ItemCl
     var rv_custombal: RecyclerView? = null
     var imback :ImageView? = null
     var TicketDate: String? = ""
+    var ID_Cust: String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -39,8 +40,9 @@ class CustomerBalanceActivity : AppCompatActivity(), View.OnClickListener,ItemCl
         customerBalanceViewModel = ViewModelProvider(this).get(CustomerBalanceViewModel::class.java)
 
         TicketDate = intent.getStringExtra("TicketDate")
+        ID_Cust = intent.getStringExtra("Id_Cust")
         setRegViews()
-        //getCustomerBalance(TicketDate)
+        getCustomerBalance(TicketDate,ID_Cust)
 
     }
 
@@ -72,87 +74,87 @@ class CustomerBalanceActivity : AppCompatActivity(), View.OnClickListener,ItemCl
     override fun onClick(position: Int, data: String) {
 
     }
-//    private fun getCustomerBalance(Ticketdate: String?) {
-////        recyServiceList!!.adapter = null
-////        tv_listCount!!.setText("0")
-//        when (Config.ConnectivityUtils.isConnected(this)) {
-//            true -> {
-//                progressDialog = ProgressDialog(context, R.style.Progress)
-//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//                progressDialog!!.setCancelable(false)
-//                progressDialog!!.setIndeterminate(true)
-//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-//                progressDialog!!.show()
-//
-//                customerBalanceViewModel.getCustombal(this, Ticketdate!!)!!.observe(
-//                    this,
-//                    Observer { serviceSetterGetter ->
-//
-//                        try {
-//                            val msg = serviceSetterGetter.message
-//                            if (msg!!.length > 0) {
-//
-//
-//                                    val jObject = JSONObject(msg)
-//                                    Log.e(TAG, "msg   custbal   " + msg)
-//                                    if (jObject.getString("StatusCode") == "0") {
-//                                        val jobjt = jObject.getJSONObject("CustomerBalanceDetails")
-//                                        customerbalArrayList = jobjt.getJSONArray("CustomerBalanceList")
-//                                        if (customerbalArrayList.length() > 0) {
-//
-//
-//                                            customerbalSort = JSONArray()
-//                                            for (k in 0 until customerbalArrayList.length()) {
-//                                                val jsonObject = customerbalArrayList.getJSONObject(k)
-//                                                // reportNamesort.put(k,jsonObject)
-//                                                customerbalSort.put(jsonObject)
-//                                            }
-//
-//                                          //  tv_listCount!!.setText(""+serviceListSort.length())
-//                                            val lLayout = GridLayoutManager(this@CustomerBalanceActivity, 1)
-//                                            rv_custombal!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                            //  val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
-//                                            val adapter = CusbalListAdapter(this@CustomerBalanceActivity, customerbalArrayList)
-//                                            rv_custombal!!.adapter = adapter
-//                                            adapter.setClickListener(this@CustomerBalanceActivity)
-//
-//                                        }
-//                                    } else {
-//                                        val builder = AlertDialog.Builder(
-//                                            this@CustomerBalanceActivity,
-//                                            R.style.MyDialogTheme
-//                                        )
-//                                        builder.setMessage(jObject.getString("EXMessage"))
-//                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                        }
-//                                        val alertDialog: AlertDialog = builder.create()
-//                                        alertDialog.setCancelable(false)
-//                                        alertDialog.show()
-//                                    }
-//
-//
-//                            } else {
-////                                 Toast.makeText(
-////                                     applicationContext,
-////                                     "Some Technical Issues.",
-////                                     Toast.LENGTH_LONG
-////                                 ).show()
-//                            }
-//                        } catch (e: Exception) {
-//                            Toast.makeText(
-//                                applicationContext,
-//                                "" + Config.SOME_TECHNICAL_ISSUES,
-//                                Toast.LENGTH_LONG
-//                            ).show()
-//                        }
-//
-//                    })
-//                progressDialog!!.dismiss()
-//            }
-//            false -> {
-//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-//                    .show()
-//            }
-//        }
-//    }
+    private fun getCustomerBalance(Ticketdate: String?, ID_Cust: String?) {
+//        recyServiceList!!.adapter = null
+//        tv_listCount!!.setText("0")
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+
+                customerBalanceViewModel.getCustombal(this, Ticketdate!!,ID_Cust!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   custbal   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("CustomerBalanceDetails")
+                                        customerbalArrayList = jobjt.getJSONArray("CustomerBalanceList")
+                                        if (customerbalArrayList.length() > 0) {
+
+
+                                            customerbalSort = JSONArray()
+                                            for (k in 0 until customerbalArrayList.length()) {
+                                                val jsonObject = customerbalArrayList.getJSONObject(k)
+                                                // reportNamesort.put(k,jsonObject)
+                                                customerbalSort.put(jsonObject)
+                                            }
+
+                                          //  tv_listCount!!.setText(""+serviceListSort.length())
+                                            val lLayout = GridLayoutManager(this@CustomerBalanceActivity, 1)
+                                            rv_custombal!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            //  val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
+                                            val adapter = CusbalListAdapter(this@CustomerBalanceActivity, customerbalArrayList)
+                                            rv_custombal!!.adapter = adapter
+                                            adapter.setClickListener(this@CustomerBalanceActivity)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@CustomerBalanceActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
 }

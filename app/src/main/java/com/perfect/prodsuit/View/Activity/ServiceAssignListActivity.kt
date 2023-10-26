@@ -162,6 +162,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
         serviceList = 0
         getServiceNewList()
 
+
     }
 
 
@@ -389,14 +390,22 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 
         if (data.equals("ServiceList")) {
             val jsonObject = serviceListArrayList.getJSONObject(position)
-            ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
-            FK_CustomerserviceregisterProductDetails = jsonObject.getString("ID_CustomerServiceRegisterProductDetails")
+         //   ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
+          //  FK_CustomerserviceregisterProductDetails = jsonObject.getString("ID_CustomerServiceRegisterProductDetails")
             TicketDate = jsonObject.getString("TicketDate")
             TicketStatus = jsonObject.getString("TicketStatus")
 
-            Log.i("FKK",FK_CustomerserviceregisterProductDetails.toString())
+
             if(!TicketStatus.equals("3"))
             {
+                val idcustservceregstSP = context.getSharedPreferences(Config.SHARED_PREF72, 0)
+                ID_CustomerServiceRegister = idcustservceregstSP.getString("idcustsrvceregist","")
+
+                val idcustservceregstprdctdetlSP = context.getSharedPreferences(Config.SHARED_PREF73, 0)
+                FK_CustomerserviceregisterProductDetails = idcustservceregstprdctdetlSP.getString("idcustsrvceregistproductdetail","")
+
+
+                Log.i("FKK",FK_CustomerserviceregisterProductDetails.toString()+"\n"+ID_CustomerServiceRegister)
                 val i = Intent(this@ServiceAssignListActivity, ServiceAssignActivity::class.java)
                 i.putExtra("ID_CustomerServiceRegister",ID_CustomerServiceRegister)
                 i.putExtra("FK_CustomerserviceregisterProductDetails",FK_CustomerserviceregisterProductDetails)

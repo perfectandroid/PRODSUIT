@@ -126,6 +126,9 @@ object Config {
     const val SHARED_PREF68 = "Fbase_Name"
     const val SHARED_PREF69 = "Fbase_Mobile"
     const val SHARED_PREF70 = "timestamp"
+    const val SHARED_PREF71 = "custbalid"
+    const val SHARED_PREF72 = "idcustsrvceregist"
+    const val SHARED_PREF73 = "idcustsrvceregistproductdetail"
 
 
     var width = 0

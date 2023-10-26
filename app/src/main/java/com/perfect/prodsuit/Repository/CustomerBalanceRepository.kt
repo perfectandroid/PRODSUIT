@@ -86,7 +86,7 @@ object CustomerBalanceRepository {
                // requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("62"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart("1"))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
                 requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart(FK_Cust))
                 requestObject1.put("TransDate", ProdsuitApplication.encryptStart(result))
 

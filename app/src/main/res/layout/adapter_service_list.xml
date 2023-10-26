@@ -64,7 +64,7 @@
                         <ImageView
                             android:id="@+id/im_Channel"
                             android:layout_width="25dp"
-                            android:layout_height="25dp"
+                            android:layout_height="16dp"
                             android:layout_alignParentLeft="true"
                             android:visibility="visible" />
 
