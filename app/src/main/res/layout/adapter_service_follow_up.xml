@@ -127,6 +127,7 @@
                         android:drawableTint="@color/white"
                         android:fontFamily="@font/myfont"
                         android:textAllCaps="true"
+
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         android:textStyle="bold" />
