@@ -862,7 +862,7 @@
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:layout_weight="1.8"
+                                                    android:layout_weight="1"
                                                     android:orientation="horizontal">
 
 
@@ -876,7 +876,7 @@
                                                         android:gravity="center_vertical"
                                                         android:text="Advance Amount"
                                                         android:textColor="@color/list_label"
-                                                        android:textSize="12dp" />
+                                                        android:textSize="13dp" />
                                                 </LinearLayout>
 
                                                 <TextView
@@ -890,6 +890,7 @@
                                                     android:textSize="12dp" />
 
                                                 <LinearLayout
+
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight="1"
@@ -901,11 +902,14 @@
                                                         android:layout_height="wrap_content"
                                                         android:layout_centerVertical="true"
                                                         android:fontFamily="@font/myfont"
-                                                        android:gravity="center_vertical"
-                                                        android:paddingLeft="2dp"
+                                                        android:gravity="right"
+                                                        android:paddingLeft="7dp"
+                                                        android:paddingRight="7dp"
+                                                        android:textSize="13dp"
                                                         android:text=""
                                                         android:textColor="@color/black"
-                                                        android:textSize="12dp"
+
+
                                                         android:textStyle="normal" />
 
                                                 </LinearLayout>
@@ -922,7 +926,7 @@
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:layout_weight="1.8"
+                                                    android:layout_weight="1"
                                                     android:orientation="horizontal">
 
 
@@ -936,7 +940,7 @@
                                                         android:gravity="center_vertical"
                                                         android:text="Service Charge"
                                                         android:textColor="@color/list_label"
-                                                        android:textSize="12dp" />
+                                                        android:textSize="13dp" />
                                                 </LinearLayout>
 
                                                 <TextView
@@ -947,7 +951,7 @@
                                                     android:gravity="start"
                                                     android:text=":"
                                                     android:textColor="@color/black"
-                                                    android:textSize="12dp" />
+                                                    android:textSize="13dp" />
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -961,11 +965,12 @@
                                                         android:layout_height="wrap_content"
                                                         android:layout_centerVertical="true"
                                                         android:fontFamily="@font/myfont"
-                                                        android:gravity="center_vertical"
-                                                        android:paddingLeft="2dp"
+                                                        android:gravity="right"
+                                                        android:paddingRight="7dp"
                                                         android:text=""
                                                         android:textColor="@color/black"
-                                                        android:textSize="12dp"
+                                                        android:paddingLeft="7dp"
+                                                        android:textSize="13dp"
                                                         android:textStyle="normal" />
 
                                                 </LinearLayout>
@@ -982,7 +987,7 @@
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:layout_weight="1.8"
+                                                    android:layout_weight="1"
                                                     android:orientation="horizontal">
 
 
@@ -996,7 +1001,7 @@
                                                         android:gravity="center_vertical"
                                                         android:text="Product Charge"
                                                         android:textColor="@color/list_label"
-                                                        android:textSize="12dp" />
+                                                        android:textSize="13dp" />
                                                 </LinearLayout>
 
                                                 <TextView
@@ -1007,7 +1012,7 @@
                                                     android:gravity="start"
                                                     android:text=":"
                                                     android:textColor="@color/black"
-                                                    android:textSize="12dp" />
+                                                    android:textSize="13dp" />
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -1021,11 +1026,12 @@
                                                         android:layout_height="wrap_content"
                                                         android:layout_centerVertical="true"
                                                         android:fontFamily="@font/myfont"
-                                                        android:gravity="center_vertical"
-                                                        android:paddingLeft="2dp"
+                                                        android:gravity="right"
+                                                        android:paddingLeft="7dp"
+                                                        android:textSize="13dp"
                                                         android:text=""
                                                         android:textColor="@color/black"
-                                                        android:textSize="12dp"
+                                                        android:paddingRight="7dp"
                                                         android:textStyle="normal" />
 
                                                 </LinearLayout>
@@ -1058,7 +1064,7 @@
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:layout_weight="1.8"
+                                                    android:layout_weight="1"
                                                     android:orientation="horizontal">
 
 
@@ -1072,7 +1078,7 @@
                                                         android:gravity="center_vertical"
                                                         android:text="Security Amount"
                                                         android:textColor="@color/list_label"
-                                                        android:textSize="12dp" />
+                                                        android:textSize="13dp" />
                                                 </LinearLayout>
 
                                                 <TextView
@@ -1083,7 +1089,7 @@
                                                     android:gravity="start"
                                                     android:text=":"
                                                     android:textColor="@color/black"
-                                                    android:textSize="12dp" />
+                                                    android:textSize="13dp" />
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -1097,11 +1103,12 @@
                                                         android:layout_height="wrap_content"
                                                         android:layout_centerVertical="true"
                                                         android:fontFamily="@font/myfont"
-                                                        android:gravity="center_vertical"
-                                                        android:paddingLeft="2dp"
+                                                        android:gravity="right"
+                                                        android:paddingRight="7dp"
                                                         android:text=""
                                                         android:textColor="@color/black"
-                                                        android:textSize="12dp"
+                                                        android:paddingLeft="7dp"
+                                                        android:textSize="13dp"
                                                         android:textStyle="normal" />
 
                                                 </LinearLayout>
@@ -1119,7 +1126,7 @@
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:layout_weight="1.8"
+                                                    android:layout_weight="1"
                                                     android:orientation="horizontal">
 
 
@@ -1133,7 +1140,7 @@
                                                         android:gravity="center_vertical"
                                                         android:text="Discount Amount"
                                                         android:textColor="@color/list_label"
-                                                        android:textSize="12dp" />
+                                                        android:textSize="13dp" />
                                                 </LinearLayout>
 
                                                 <TextView
@@ -1144,7 +1151,7 @@
                                                     android:gravity="start"
                                                     android:text=":"
                                                     android:textColor="@color/black"
-                                                    android:textSize="12dp" />
+                                                    android:textSize="13dp" />
 
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
@@ -1158,11 +1165,12 @@
                                                         android:layout_height="wrap_content"
                                                         android:layout_centerVertical="true"
                                                         android:fontFamily="@font/myfont"
-                                                        android:gravity="center_vertical"
-                                                        android:paddingLeft="2dp"
+                                                        android:gravity="right"
+                                                        android:paddingRight="7dp"
                                                         android:text=""
                                                         android:textColor="@color/black"
-                                                        android:textSize="12dp"
+                                                        android:paddingLeft="7dp"
+                                                        android:textSize="13dp"
                                                         android:textStyle="normal" />
 
                                                 </LinearLayout>
@@ -1179,7 +1187,7 @@
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:layout_weight="1.8"
+                                                    android:layout_weight="1"
                                                     android:orientation="horizontal">
 
 
@@ -1193,7 +1201,7 @@
                                                         android:gravity="center_vertical"
                                                         android:text="Net Amount"
                                                         android:textColor="@color/list_label"
-                                                        android:textSize="12dp" />
+                                                        android:textSize="13dp" />
                                                 </LinearLayout>
 
                                                 <TextView
@@ -1218,11 +1226,12 @@
                                                         android:layout_height="wrap_content"
                                                         android:layout_centerVertical="true"
                                                         android:fontFamily="@font/myfont"
-                                                        android:gravity="center_vertical"
-                                                        android:paddingLeft="2dp"
+                                                        android:gravity="right"
+                                                        android:paddingRight="7dp"
                                                         android:text=""
                                                         android:textColor="@color/black"
-                                                        android:textSize="12dp"
+                                                        android:paddingLeft="7dp"
+                                                        android:textSize="13dp"
                                                         android:textStyle="normal" />
 
                                                 </LinearLayout>

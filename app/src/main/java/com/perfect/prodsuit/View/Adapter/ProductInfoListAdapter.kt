@@ -28,7 +28,7 @@ class ProductInfoListAdapter (internal var context: Context, internal var jsonAr
     internal val TAG : String = "ProductInfoListAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListenerData? = null
-
+    val rupee='\u20B9'
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
@@ -51,11 +51,11 @@ class ProductInfoListAdapter (internal var context: Context, internal var jsonAr
               //  holder.txt_Qty.text        = jsonObject!!.getString("Quantity")
                 holder.txt_Qty.text        = Config.changeTwoDecimel(jsonObject!!.getString("Quantity"))
              //   holder.txt_mrp.text        = jsonObject!!.getString("MRP")
-                holder.txt_mrp.text        = Config.changeTwoDecimel(jsonObject!!.getString("MRP"))
+                holder.txt_mrp.text        = rupee+Config.changeTwoDecimel(jsonObject!!.getString("MRP"))
             //    holder.txt_sprice.text        = jsonObject!!.getString("SalePrice")
-                holder.txt_sprice.text        = Config.changeTwoDecimel(jsonObject!!.getString("SalePrice"))
+                holder.txt_sprice.text        = rupee+Config.changeTwoDecimel(jsonObject!!.getString("SalePrice"))
               //  holder.txt_netamt.text        = jsonObject!!.getString("NetAmount")
-                holder.txt_netamt.text        = Config.changeTwoDecimel(jsonObject!!.getString("NetAmount"))
+                holder.txt_netamt.text        = rupee+Config.changeTwoDecimel(jsonObject!!.getString("NetAmount"))
 
 
             }

@@ -28,6 +28,7 @@ class ServiceInfoListAdapter (internal var context: Context, internal var jsonAr
     internal val TAG : String = "ServiceInfoListAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListenerData? = null
+    val rupee='\u20B9'
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -50,11 +51,11 @@ class ServiceInfoListAdapter (internal var context: Context, internal var jsonAr
                 holder.slno.text        = pos.toString()
                 holder.txt_product.text        = jsonObject!!.getString("Service")
               //  holder.txt_scost.text        = jsonObject!!.getString("ServiceCost")
-                holder.txt_scost.text        = Config.changeTwoDecimel(jsonObject!!.getString("ServiceCost"))
+                holder.txt_scost.text        = rupee+Config.changeTwoDecimel(jsonObject!!.getString("ServiceCost"))
               //  holder.txt_taxamt.text        = jsonObject!!.getString("TaxAmount")
-                holder.txt_taxamt.text        = Config.changeTwoDecimel(jsonObject!!.getString("TaxAmount"))
+                holder.txt_taxamt.text        = rupee+" "+Config.changeTwoDecimel(jsonObject!!.getString("TaxAmount"))
              //   holder.txt_netamt.text        = jsonObject!!.getString("NetAmount")
-                holder.txt_netamt.text        = Config.changeTwoDecimel(jsonObject!!.getString("NetAmount"))
+                holder.txt_netamt.text        = rupee+" "+Config.changeTwoDecimel(jsonObject!!.getString("NetAmount"))
 
             }
         } catch (e: Exception) {
