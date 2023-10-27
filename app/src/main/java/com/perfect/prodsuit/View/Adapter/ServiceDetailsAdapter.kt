@@ -50,7 +50,7 @@ class ServiceDetailsAdapter(internal var context: Context, internal var mList: L
 
                 Log.e(TAG,"533..... "+ empModel.isMaster+" "+position)
                 if (empModel.isMaster.equals("0")){
-                    holder.ll_subproduct.visibility = View.VISIBLE
+                    holder.ll_subproduct.visibility = View.GONE
                     holder.ll_tab.setBackgroundColor(context.getColor(R.color.colorPrimary))
                 }else{
                     holder.ll_tab.setBackgroundColor(context.getColor(R.color.colorPrimarylite1))

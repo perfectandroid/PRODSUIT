@@ -166,7 +166,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY  = "-517"
 
 
-    ////    DEVELOPMENT 30.11.2022
+//    ////    DEVELOPMENT 30.11.2022
     val CERT_NAME = "development.pem"
     val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
     val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
@@ -203,6 +203,12 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BASE_URL  = "https://45.118.163.44:14001/ProdSuiteAPIPerfectDemo/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14001/ProdSuiteAPIPerfectDemo"
 //    val BANK_KEY  = "-510"
+
+//    ////    DEMO 27.10.2023
+//    val CERT_NAME = "perfectd.pem"
+//    val BASE_URL  = "https://45.118.163.44:14001/ProdSuiteAPISupportDemo/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14001/ProdSuiteAPISupportDemo"
+//    val BANK_KEY  = "-521"
 
     var TAG = "SplashActivity"
     lateinit var splashresellerActivityViewModel: SplashresellerActivityViewModel
