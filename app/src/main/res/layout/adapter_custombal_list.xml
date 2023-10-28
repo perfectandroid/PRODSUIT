@@ -46,6 +46,32 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.8"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:padding="2dp"
+                        android:src="@drawable/svg_invoce_no"
+                        app:tint="@color/colorPrimary" />
+                    <!--                            app:tint="@color/list_icon"-->
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/myfont"
+                        android:text="Customer Due"
+                        android:textColor="@color/list_label"
+                        android:layout_centerVertical="true" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -54,39 +80,13 @@
                     android:orientation="horizontal">
 
 
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1.8"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
 
-                            <ImageView
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:padding="2dp"
-                                android:src="@drawable/svg_invoce_no"
-                                app:tint="@color/colorPrimary" />
-                            <!--                            app:tint="@color/list_icon"-->
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:textSize="15dp"
-                                android:textStyle="bold"
-                                android:fontFamily="@font/myfont"
-                                android:text="Customer Due"
-                                android:textColor="@color/list_label"
-                                android:layout_centerVertical="true" />
-                        </LinearLayout>
 
                         <TextView
                             android:layout_width="5dp"

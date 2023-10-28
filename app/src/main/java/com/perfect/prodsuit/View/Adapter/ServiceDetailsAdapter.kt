@@ -14,14 +14,16 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
-import com.perfect.prodsuit.Helper.ServiceConstants
 import com.perfect.prodsuit.Model.ModelStockTransferDetails
 import com.perfect.prodsuit.Model.ServiceDetailsFullListModel
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ServiceDetailsAdapter(internal var context: Context, internal var mList: List<ServiceDetailsFullListModel>):
+class ServiceDetailsAdapter(
+    internal var context: Context,
+    internal var mList: List<ServiceDetailsFullListModel>
+):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG : String = "ServiceDetailsAdapter"
@@ -48,10 +50,15 @@ class ServiceDetailsAdapter(internal var context: Context, internal var mList: L
 //                holder.txtSino.text        = pos.toString()
                 val empModel = mList[position]
 
-                Log.e(TAG,"533..... "+ empModel.isMaster+" "+position)
+                Log.e(TAG,"533..... "+ empModel)
                 if (empModel.isMaster.equals("0")){
                     holder.ll_subproduct.visibility = View.GONE
                     holder.ll_tab.setBackgroundColor(context.getColor(R.color.colorPrimary))
+                    if(empModel.SearchSerialNo.equals("1"))
+                    {
+                        holder.ll_tab.setBackgroundColor(context.getColor(R.color.colorPrimarylite1))
+                    }
+
                 }else{
                     holder.ll_tab.setBackgroundColor(context.getColor(R.color.colorPrimarylite1))
                 }

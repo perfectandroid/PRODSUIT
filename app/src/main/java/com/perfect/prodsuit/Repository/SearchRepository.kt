@@ -3,13 +3,12 @@ package com.perfect.prodsuit.Repository
 import android.app.ProgressDialog
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.ServiceDetailsModel
+import com.perfect.prodsuit.Model.SearchModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -20,20 +19,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object ServiceDetailsRepository {
-
+object SearchRepository {
     private var progressDialog: ProgressDialog? = null
-    val servicedetailsSetterGetter = MutableLiveData<ServiceDetailsModel>()
-    val TAG: String = "ServiceDetailsRepository"
-
-    fun getServicesApiCall(context: Context,FK_Product: String, NameCriteria: String,subMode: String): MutableLiveData<ServiceDetailsModel> {
-        getServiceDashboard(context,FK_Product,NameCriteria,subMode)
-        return servicedetailsSetterGetter
+    val searchSetterGetter = MutableLiveData<SearchModel>()
+    val TAG: String = "SearchRepository"
+    fun getServicesApiCall(context: Context,id_search: String): MutableLiveData<SearchModel> {
+        getSearch(context,id_search)
+        return searchSetterGetter
     }
 
-    private fun getServiceDashboard(context: Context,FK_Product: String, NameCriteria: String,subMode: String) {
+    private fun getSearch(
+        context: Context, id_search: String) {
         try {
-            servicedetailsSetterGetter.value = ServiceDetailsModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -60,27 +57,28 @@ object ServiceDetailsRepository {
             try {
 
 
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_Employee = context.getSharedPreferences(Config.SHARED_PREF1, 0)
 
-                //.....................
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("114"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("111"))
-                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(subMode))
-                requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(FK_Product))
-                requestObject1.put("NameCriteria", ProdsuitApplication.encryptStart(NameCriteria))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+
+                requestObject1.put("NameCriteria", ProdsuitApplication.encryptStart(id_search))
+                //  requestObject1.put("Criteria3", ProdsuitApplication.encryptStart(""))
+                //  requestObject1.put("Criteria4", ProdsuitApplication.encryptStart(""))
+                Log.e(TAG,"requestObject1   Search   "+requestObject1)
 
 
-                Log.e(TAG,"requestObject1   request   "+requestObject1)
-                Log.e(TAG,"requestObject1   80   "+subMode)
-             //   Log.e(TAG,"requestObject1   80   "+FK_Product)
+
+
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -89,39 +87,32 @@ object ServiceDetailsRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            Log.v("dsfsdd333","body "+requestObject1.toString())
-            Log.i("response1122","body==="+requestObject1.toString())
-            //     val call = apiService.getLeadsDashBoardDetails(body)
-            val call = apiService.getServiceFollowUpServiceDetails(body)
+            val call = apiService.getServiceFollowUpDetailsList(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
                     Response<String>
                 ) {
                     try {
-                        Log.e(TAG,"response  94   "+response.body())
-                        Log.i("response1122","responseBody==="+response.body())
                         progressDialog!!.dismiss()
+                        Log.e("ServiceHistory Respose  123   ",response.body())
                         val jObject = JSONObject(response.body())
-                        val service = ArrayList<ServiceDetailsModel>()
-                        service.add(ServiceDetailsModel(response.body()))
-                        val msg = service[0].message
-                        Log.i("response1122","msg==="+msg)
-                        servicedetailsSetterGetter.value = ServiceDetailsModel(msg)
+                        val leads = ArrayList<SearchModel>()
+                        leads.add(SearchModel(response.body()))
+                        val msg = leads[0].message
+                        searchSetterGetter.value = SearchModel(msg)
                     } catch (e: Exception) {
+                        e.printStackTrace()
                         progressDialog!!.dismiss()
-                        Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
-                    Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
-            Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 }
