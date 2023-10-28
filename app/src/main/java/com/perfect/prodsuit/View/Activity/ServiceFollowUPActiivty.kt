@@ -226,6 +226,8 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var servCompanantArray = JSONArray()
     var servicePartsAdapter: ServiceParts_replacedAdapter? = null
 
+    var strActiontakenStatusMessage = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -866,6 +868,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
     private fun getServiceDetails(FK_Product: String, NameCriteria: String) {
+        var SubMode =  "2"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(this, R.style.Progress)
@@ -875,7 +878,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 servicedetailsViewModel.getServiceDetails(
-                    this, FK_Product, NameCriteria
+                    this, FK_Product, NameCriteria,SubMode
                 )!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -916,7 +919,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                 jsonObject.getString("BindProduct"),jsonObject.getString("ComplaintProduct"),jsonObject.getString("Warranty"),
                                                 jsonObject.getString("ServiceWarrantyExpireDate"),jsonObject.getString("ReplacementWarrantyExpireDate"),
                                                 jsonObject.getString("ID_CustomerWiseProductDetails"),jsonObject.getString("ServiceWarrantyExpired"),
-                                                jsonObject.getString("ReplacementWarrantyExpired"),"0","","",false))
+                                                jsonObject.getString("ReplacementWarrantyExpired"),"0","","",false,""))
 
                                             var ServiceAttendedListDet = jsonObject.getJSONArray("ServiceAttendedListDet")
 
@@ -929,7 +932,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                     jsonObjectSub.getString("BindProduct"),jsonObjectSub.getString("ComplaintProduct"),jsonObjectSub.getString("Warranty"),
                                                     jsonObjectSub.getString("ServiceWarrantyExpireDate"),jsonObjectSub.getString("ReplacementWarrantyExpireDate"),
                                                     jsonObjectSub.getString("ID_CustomerWiseProductDetails"),jsonObjectSub.getString("ServiceWarrantyExpired"),
-                                                    jsonObjectSub.getString("ReplacementWarrantyExpired"),"0","","",false))
+                                                    jsonObjectSub.getString("ReplacementWarrantyExpired"),"0","","",false,""))
 
 
 //                                                jObject.put("FK_Category",jsonObjectSub.getString("FK_Category"))
@@ -1195,8 +1198,8 @@ Log.v("adasdasds","modeTab "+modeTab)
                 actionTakenSelected!!.add(
                     ActionTakenMainModel(
                         empModel.FK_Product, empModel.Product, "", "",
-                        "", "", "false", "", "", "", "", empModel.ID_CustomerWiseProductDetails
-                    )
+                        "", "", "false", "", "", "", "", empModel.ID_CustomerWiseProductDetails,
+                    "")
                 )
             }
 
@@ -3056,7 +3059,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 
             servicepartsReplacedModel!!.add(posAdd,ServicePartsReplacedModel("0","1",empModel.ID_MasterProduct,empModel.MainProduct,
                 jsonObject.getString("ID_Product"),jsonObject.getString("Name"),"","0","",
-                jsonObject.getString("ProductAmount"),"0","","0","0",))
+                jsonObject.getString("ProductAmount"),"0","","0","0",empModel.ID_CustomerWiseProductDetails))
 
          //   recy_parts_replaced!!.adapter = servicePartsAdapter
             servicePartsAdapter!!.notifyItemInserted(posAdd)
@@ -3783,7 +3786,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 //                                                Changes 26.10.2023
                                                 servicepartsReplacedModel!!.add(ServicePartsReplacedModel("1","0",jsonObject.getString("ID_MasterProduct"),jsonObject.getString("MainProduct"),
                                                     jsonObject.getString("ID_Product"),jsonObject.getString("Componant"),"",jsonObject.getString("WarrantyMode"),"",
-                                                    jsonObject.getString("ProductAmount"),jsonObject.getString("ReplceMode"),"",jsonObject.getString("FK_Stock"),"0",))
+                                                    jsonObject.getString("ProductAmount"),jsonObject.getString("ReplceMode"),"",jsonObject.getString("FK_Stock"),"0",jsonObject.getString("ID_CustomerWiseProductDetails")))
 
 //                                                Changes 26.10.2023
                                             }
@@ -3797,7 +3800,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                         Log.e(TAG,"29772   "+i+"  :  "+j+"  "+jsonObject1.getString("ID_MasterProduct"))
                                                         servicepartsReplacedModel!!.add(ServicePartsReplacedModel("0","1",jsonObject1.getString("ID_MasterProduct"),jsonObject1.getString("MainProduct"),
                                                             jsonObject1.getString("ID_Product"),jsonObject1.getString("Componant"),"",jsonObject1.getString("WarrantyMode"),"",
-                                                            jsonObject1.getString("ProductAmount"),jsonObject1.getString("ReplceMode"),"",jsonObject1.getString("FK_Stock"),"0",))
+                                                            jsonObject1.getString("ProductAmount"),jsonObject1.getString("ReplceMode"),"",jsonObject1.getString("FK_Stock"),"0",jsonObject.getString("ID_CustomerWiseProductDetails")))
                                                     }
                                                 }
 
