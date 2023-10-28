@@ -22,6 +22,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/btn_shape_submit1.xml" value="0.2675" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/gradient_lead.xml" value="0.151" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/gradient_list.xml" value="0.151" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/ic_completed.xml" value="0.1055" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/ic_send_24.xml" value="0.2465" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/invalid_user.xml" value="0.1685" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/leadfrom_color.xml" value="0.1" />
@@ -79,6 +80,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_lead_gen_sub.xml" value="0.16" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_ser_cs.xml" value="0.2625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_ser_sf.xml" value="0.1725" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_stat_pending.xml" value="0.1055" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_warning.xml" value="0.2675" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/top_round_shape.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/top_rounded_white.xml" value="0.263" />
@@ -200,10 +202,11 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_comp.xml" value="0.36666666666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_companant.xml" value="0.25052083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_detail.xml" value="0.28125" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_list.xml" value="0.3307291666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_sales.xml" value="0.22291666666666668" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_tab3.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_type.xml" value="0.22291666666666668" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_servicefollowup_productdeatail.xml" value="0.22135416666666666" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_servicefollowup_productdeatail.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_stage.xml" value="0.34427083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_stock_details.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_stock_mode.xml" value="0.2708333333333333" />
@@ -274,7 +277,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="corretto-1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="corretto-1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

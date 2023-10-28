@@ -3639,8 +3639,10 @@ Log.v("adasdasds","modeTab "+modeTab)
 
             tv_apply!!.setOnClickListener {
                 var hasId =  hasServiceTrue(addServiceDetailMode!!)
-                if (hasId){
 
+                if (hasId){
+                    var hasId2 =  hasServiceCompTrue(serviceTab3MainModel!!)
+                    Log.e(TAG,"3645    hasId2   :  "+hasId2)
 //                    var hasIds1 = hasServiceTrue1(addServiceDetailMode!!)
 //
 //                    if (hasIds1){
@@ -3650,33 +3652,37 @@ Log.v("adasdasds","modeTab "+modeTab)
 //                        Log.e(TAG,"1308   "+"Fasle")
 //                    }
 
-                    var posAdd = 0
-                    for (i in 0 until serviceTab3MainModel.size) {
-                        var empModel = serviceTab3MainModel[i]
-                        if (empModel.FK_Product.equals(FK_Product_ID)){
-                            posAdd = i+1
+                    if (hasId2){
+                        var posAdd = 0
+                        for (i in 0 until serviceTab3MainModel.size) {
+                            var empModel = serviceTab3MainModel[i]
+                            if (empModel.FK_Product.equals(FK_Product_ID)){
+                                posAdd = i+1
+                            }
                         }
+
+                        for (i in 0 until addServiceDetailMode.size) {
+                            if (addServiceDetailMode[i].isChecked){
+                                Log.e(TAG,"10492   "+FK_Product_Pos)
+                                var empModel = serviceTab3MainModel[FK_Product_Pos!!]
+                                var empModelSub = addServiceDetailMode[i]
+
+                                Log.e(TAG,"117111   "+addServiceDetailMode[i].Service)
+                                serviceTab3MainModel!!.add(posAdd,ServiceTab3MainModel(empModel.FK_Product,empModel.Product,"1","1",
+                                    empModelSub.ID_Services,empModelSub.Service,"0","","0.00","0.00",
+                                    "0.00","",false,empModelSub.FK_TaxGroup,empModelSub.TaxPercentage,empModelSub.ServiceChargeIncludeTax))
+                                serviceTab3Adapter!!.notifyItemInserted(posAdd)
+                                posAdd++
+
+                            }
+                        }
+                        dialogAddserviceSheet!!.dismiss()
+                    }else{
+                        Toast.makeText(applicationContext,strActiontakenStatusMessage+" Already exist",Toast.LENGTH_SHORT).show()
                     }
 
-                    for (i in 0 until addServiceDetailMode.size) {
-                        if (addServiceDetailMode[i].isChecked){
-                            Log.e(TAG,"10492   "+FK_Product_Pos)
-                            var empModel = serviceTab3MainModel[FK_Product_Pos!!]
-                            var empModelSub = addServiceDetailMode[i]
-
-                            Log.e(TAG,"117111   "+addServiceDetailMode[i].Service)
-                            serviceTab3MainModel!!.add(posAdd,ServiceTab3MainModel(empModel.FK_Product,empModel.Product,"1","1",
-                                empModelSub.ID_Services,empModelSub.Service,"0","","0.00","0.00",
-                                "0.00","",false,empModelSub.FK_TaxGroup,empModelSub.TaxPercentage,empModelSub.ServiceChargeIncludeTax))
-                            serviceTab3Adapter!!.notifyItemInserted(posAdd)
-                            posAdd++
-
-                        }
-                    }
-                    dialogAddserviceSheet!!.dismiss()
-
-
-
+                }else{
+                    Toast.makeText(applicationContext,"Select atleast one companant",Toast.LENGTH_SHORT).show()
                 }
 
 
@@ -3693,6 +3699,8 @@ Log.v("adasdasds","modeTab "+modeTab)
 
     }
 
+
+
     private fun hasServiceTrue(addServiceDetailMode: ArrayList<AddServiceDetailMode>): Boolean {
 
         var isChecked = false
@@ -3701,6 +3709,26 @@ Log.v("adasdasds","modeTab "+modeTab)
 
             if (addServiceDetailMode.get(i).isChecked){
                 isChecked = true
+            }
+
+        }
+        return isChecked
+    }
+
+    private fun hasServiceCompTrue(serviceTab3MainModel: ArrayList<ServiceTab3MainModel>): Boolean {
+        var isChecked = true
+        strActiontakenStatusMessage = ""
+        for (i in 0 until serviceTab3MainModel.size) {  // iterate through the JsonArray
+            Log.e(TAG,"101666     "+serviceTab3MainModel.get(i).isChecked)
+            for (j in 0 until addServiceDetailMode.size) {
+
+                if (addServiceDetailMode.get(j).isChecked && (addServiceDetailMode.get(j).ID_Services.equals(serviceTab3MainModel.get(i).ID_Service)) &&
+                    serviceTab3MainModel.get(i).FK_Product.equals(FK_Product_ID)){
+                    strActiontakenStatusMessage = addServiceDetailMode.get(j).Service
+                    isChecked = false
+                    break
+
+                }
             }
 
         }

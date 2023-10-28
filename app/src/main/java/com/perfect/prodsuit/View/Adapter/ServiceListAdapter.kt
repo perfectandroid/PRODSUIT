@@ -114,15 +114,23 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
                     holder.im_Priority.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_low))
                 }
 
+
                 if (SubMode.equals("3")){
                     holder.ll_status!!.visibility = View.VISIBLE
                     holder.ll_employee!!.visibility = View.VISIBLE
                     holder.ll_tracker!!.visibility = View.VISIBLE
+                    Log.e(TAG,"1117772   "+SubMode  +"  : "+jsonObject!!.getString("Status"))
                     if (jsonObject!!.getString("Status").equals("On-Hold")){
                         holder.im_Status.setImageDrawable(context.resources.getDrawable(R.drawable.svg_stat_hold))
                     }
-                    if (jsonObject!!.getString("Status").equals("Pending")){
+                    else if (jsonObject!!.getString("Status").equals("Pending")){
                         holder.im_Status.setImageDrawable(context.resources.getDrawable(R.drawable.svg_stat_pending))
+                    }
+                    else if (jsonObject!!.getString("Status").equals("Completed")){
+
+                        holder.im_Status.setImageDrawable(context.resources.getDrawable(R.drawable.ic_completed))
+                    }else{
+                        Log.e(TAG,"1117773   "+SubMode  +"  : "+jsonObject!!.getString("Status"))
                     }
 
                 }
