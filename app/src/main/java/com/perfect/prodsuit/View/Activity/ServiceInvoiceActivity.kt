@@ -40,6 +40,7 @@ import java.io.IOException
 
 
 class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
+    val rupee='\u20B9'
     lateinit var file: File
     var uri: Uri? = null
     var bitmapt: Bitmap? = null
@@ -222,9 +223,9 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
 
 
                                        // tv_advamt!!.text=AmountDetails.getJSONObject(0).getString("AdvanceAmount")
-                                        tv_advamt!!.text=Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("AdvanceAmount"))
+                                        tv_advamt!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("AdvanceAmount"))
                                       //  tv_servicecharge!!.text=AmountDetails.getJSONObject(0).getString("ServiceCharge")
-                                        tv_servicecharge!!.text=Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("ServiceCharge"))
+                                        tv_servicecharge!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("ServiceCharge"))
                                       //  tv_servicecharge!!.text=AmountDetails.getJSONObject(0).getString("ServiceCharge")
 
 //                                        if (AmountDetails.getJSONObject(0).getString("SecurityAmount").equals("0.0"))
@@ -234,13 +235,13 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
                                         securityamont=AmountDetails.getJSONObject(0).getString("SecurityAmount").toDouble()
 
                                //         tv_securityamnt!!.text=AmountDetails.getJSONObject(0).getString("SecurityAmount")
-                                        tv_securityamnt!!.text=Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("SecurityAmount"))
+                                        tv_securityamnt!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("SecurityAmount"))
                                       //  tv_productcharge!!.text=AmountDetails.getJSONObject(0).getString("ProductCharge")
-                                        tv_productcharge!!.text=Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("ProductCharge"))
+                                        tv_productcharge!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("ProductCharge"))
                                        // tv_discountamnt!!.text=AmountDetails.getJSONObject(0).getString("DiscountAmount")
-                                        tv_discountamnt!!.text=Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("DiscountAmount"))
+                                        tv_discountamnt!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("DiscountAmount"))
                                   //      tv_netamnt!!.text=AmountDetails.getJSONObject(0).getString("NetAmount")
-                                        tv_netamnt!!.text=Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("NetAmount"))
+                                        tv_netamnt!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("NetAmount"))
 
                                         AdvanceAmount=AmountDetails.getJSONObject(0).getString("AdvanceAmount").toDouble()
                                         SecurityAmount=AmountDetails.getJSONObject(0).getString("SecurityAmount").toDouble()
@@ -399,22 +400,29 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
         tv_customeraddress.text=customer_address
 
 
-        tv_advanceamnt.text=AdvanceAmount.toString()
-        tv_advanceamnt.text=Config.changeTwoDecimel(AdvanceAmount.toString())
+     //   tv_advanceamnt.text=rupee+" "+AdvanceAmount.toString()
+        tv_advanceamnt.text=rupee+" "+Config.changeTwoDecimel(AdvanceAmount.toString())
       //  tv_securityamnt.text=SecurityAmount.toString()
-        tv_securityamnt.text=Config.changeTwoDecimel(SecurityAmount.toString())
+        tv_securityamnt.text=rupee+" "+Config.changeTwoDecimel(SecurityAmount.toString())
       //  tv_servicecharge.text=ServiceCharge.toString()
-        tv_servicecharge.text=Config.changeTwoDecimel(ServiceCharge.toString())
+        tv_servicecharge.text=rupee+" "+Config.changeTwoDecimel(ServiceCharge.toString())
 
 
 //        tv_discountamnt.text=DiscountAmount.toString()
-        tv_discountamnt.text=Config.changeTwoDecimel(DiscountAmount.toString())
+        tv_discountamnt.text=rupee+" "+Config.changeTwoDecimel(DiscountAmount.toString())
      //   tv_productcharge.text=ProductCharge.toString()
-        tv_productcharge.text=Config.changeTwoDecimel(ProductCharge.toString())
+        tv_productcharge.text=rupee+" "+Config.changeTwoDecimel(ProductCharge.toString())
      //   tv_netamount.text=NetAmount.toString()
-        tv_netamount.text=Config.changeTwoDecimel(NetAmount.toString())
+        tv_netamount.text=rupee+" "+Config.changeTwoDecimel(NetAmount.toString())
 
         sharelayout(dialogView)   //share layout
+
+
+
+
+
+        val alertDialog = dialogBuilder.create()
+
         btnShare.setOnClickListener {
 //            Log.e(TAG, "share")
 //
@@ -494,12 +502,9 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
                 )
             )
             startActivity(Intent.createChooser(sendIntent, "Share "))
+            alertDialog.dismiss()
         }
 
-
-
-
-        val alertDialog = dialogBuilder.create()
         alertDialog.setCancelable(true)
         alertDialog .show()
     }

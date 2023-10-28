@@ -2,662 +2,672 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:id="@+id/lnr_success"
+
     android:background="@color/white"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/lnr_success"
+        android:background="@color/white"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="18dp"
-                android:fontFamily="@font/myfont"
-                android:text="INVOICE"
-                android:textColor="@color/list_label"
-                android:layout_centerVertical="true">
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="18dp"
+                    android:fontFamily="@font/myfont"
+                    android:text="INVOICE"
+                    android:textColor="@color/list_label"
+                    android:layout_centerVertical="true">
 
-            </TextView>
+                </TextView>
 
-        </LinearLayout>
-
-
-    </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
-        android:background="@color/grey"/>
-
-    <LinearLayout
-        android:paddingLeft="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-        <LinearLayout
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:layout_weight="1"
-
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:text="Customer"
-                android:textColor="@color/list_label"
-                android:textSize="12dp" />
-
-
+            </LinearLayout>
 
 
         </LinearLayout>
-        <TextView
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/myfont"
-            android:gravity="start"
-            android:text=":"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:background="@color/grey"/>
 
-        <LinearLayout
-
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
-            <TextView
-                android:id="@+id/tv_customer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:paddingLeft="2dp"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="12dp"
-                android:textStyle="normal" />
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:paddingLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-        <LinearLayout
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:layout_weight="1"
-
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:text="Ticket Number"
-                android:textColor="@color/list_label"
-                android:textSize="12dp" />
-
-
-
-
-        </LinearLayout>
-        <TextView
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/myfont"
-            android:gravity="start"
-            android:text=":"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
-
-        <LinearLayout
-
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
-            <TextView
-                android:id="@+id/tv_ticketnumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:paddingLeft="2dp"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="12dp"
-                android:textStyle="normal" />
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:paddingLeft="5dp"
-        android:id="@+id/lladdress"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-        <LinearLayout
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:layout_weight="1"
-
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:text="Customer Address"
-                android:textColor="@color/list_label"
-                android:textSize="12dp" />
-
-
-
-
-        </LinearLayout>
-        <TextView
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/myfont"
-            android:gravity="start"
-            android:text=":"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
-
-        <LinearLayout
-
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
-            <TextView
-                android:id="@+id/tv_customeraddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:paddingLeft="2dp"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="12dp"
-                android:textStyle="normal" />
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:paddingLeft="5dp"
-        android:id="@+id/lladvanceamnt"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-        <LinearLayout
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:layout_weight="1"
-
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:text="Advance Amount"
-                android:textColor="@color/list_label"
-                android:textSize="12dp" />
-
-
-
-
-        </LinearLayout>
-        <TextView
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/myfont"
-            android:gravity="start"
-            android:text=":"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
-
-        <LinearLayout
-
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
-            <TextView
-                android:id="@+id/tv_advanceamnt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:paddingLeft="2dp"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="12dp"
-                android:textStyle="normal" />
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:paddingLeft="5dp"
-        android:id="@+id/llsecurityamnt"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-        <LinearLayout
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:layout_weight="1"
-
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:text="Security Amount"
-                android:textColor="@color/list_label"
-                android:textSize="12dp" />
-
-
-
-
-        </LinearLayout>
-        <TextView
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/myfont"
-            android:gravity="start"
-            android:text=":"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
-
-        <LinearLayout
-
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
-            <TextView
-                android:id="@+id/tv_securityamnt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:paddingLeft="2dp"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="12dp"
-                android:textStyle="normal" />
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:paddingLeft="5dp"
-        android:id="@+id/llservicecharge"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-        <LinearLayout
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:layout_weight="1"
-
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:text="Service Charge"
-                android:textColor="@color/list_label"
-                android:textSize="12dp" />
-
-
-
-
-        </LinearLayout>
-        <TextView
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/myfont"
-            android:gravity="start"
-            android:text=":"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
-
-        <LinearLayout
-
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
-            <TextView
-                android:id="@+id/tv_servicecharge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:paddingLeft="2dp"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="12dp"
-                android:textStyle="normal" />
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lldiscountamnt"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
         <LinearLayout
             android:paddingLeft="5dp"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <LinearLayout
 
-            android:layout_weight="1"
-
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:text="Customer"
+                    android:textColor="@color/list_label"
+                    android:textSize="12dp" />
+
+
+
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:text="Discount Amount"
-                android:textColor="@color/list_label"
+                android:gravity="start"
+                android:text=":"
+                android:textColor="@color/black"
                 android:textSize="12dp" />
 
+            <LinearLayout
 
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+                <TextView
+                    android:id="@+id/tv_customer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="2dp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
-        <TextView
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/myfont"
-            android:gravity="start"
-            android:text=":"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
+
 
         <LinearLayout
+            android:paddingLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <LinearLayout
 
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
-            <TextView
-                android:id="@+id/tv_discountamnt"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:text="Ticket Number"
+                    android:textColor="@color/list_label"
+                    android:textSize="12dp" />
+
+
+
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:paddingLeft="2dp"
-                android:text=""
+                android:gravity="start"
+                android:text=":"
                 android:textColor="@color/black"
-                android:textSize="12dp"
-                android:textStyle="normal" />
+                android:textSize="12dp" />
+
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+                <TextView
+                    android:id="@+id/tv_ticketnumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="2dp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
 
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:id="@+id/lladdress"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:text="Customer Address"
+                    android:textColor="@color/list_label"
+                    android:textSize="12dp" />
+
+
+
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/myfont"
+                android:gravity="start"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+                <TextView
+                    android:id="@+id/tv_customeraddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="2dp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:id="@+id/lladvanceamnt"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:text="Advance Amount"
+                    android:textColor="@color/list_label"
+                    android:textSize="12dp" />
+
+
+
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/myfont"
+                android:gravity="start"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+                <TextView
+                    android:id="@+id/tv_advanceamnt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="2dp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:id="@+id/llsecurityamnt"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:text="Security Amount"
+                    android:textColor="@color/list_label"
+                    android:textSize="12dp" />
+
+
+
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/myfont"
+                android:gravity="start"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+                <TextView
+                    android:id="@+id/tv_securityamnt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="2dp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:id="@+id/llservicecharge"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:text="Service Charge"
+                    android:textColor="@color/list_label"
+                    android:textSize="12dp" />
+
+
+
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/myfont"
+                android:gravity="start"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+                <TextView
+                    android:id="@+id/tv_servicecharge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="2dp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lldiscountamnt"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <LinearLayout
+                android:paddingLeft="5dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:text="Discount Amount"
+                    android:textColor="@color/list_label"
+                    android:textSize="12dp" />
+
+
+
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/myfont"
+                android:gravity="start"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+                <TextView
+                    android:id="@+id/tv_discountamnt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="2dp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:text="Product Charge"
+                    android:textColor="@color/list_label"
+                    android:textSize="12dp" />
+
+
+
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/myfont"
+                android:gravity="start"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+                <TextView
+                    android:id="@+id/tv_productcharge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="2dp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:paddingLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:text="Net Amount"
+                    android:textColor="@color/list_label"
+                    android:textSize="12dp" />
+
+
+
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="5dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/myfont"
+                android:gravity="start"
+                android:text=":"
+                android:textColor="@color/black"
+                android:textSize="12dp" />
+
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+                <TextView
+                    android:id="@+id/tv_netamount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="2dp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:paddingLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-        <LinearLayout
 
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:layout_weight="1"
-
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:text="Product Charge"
-                android:textColor="@color/list_label"
-                android:textSize="12dp" />
-
-
-
-
-        </LinearLayout>
-        <TextView
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/myfont"
-            android:gravity="start"
-            android:text=":"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
-
-        <LinearLayout
-
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
-            <TextView
-                android:id="@+id/tv_productcharge"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:paddingLeft="2dp"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="12dp"
-                android:textStyle="normal" />
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:paddingLeft="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="2">
-        <LinearLayout
-
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            android:layout_weight="1"
-
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:text="Net Amount"
-                android:textColor="@color/list_label"
-                android:textSize="12dp" />
-
-
-
-
-        </LinearLayout>
-        <TextView
-            android:layout_width="5dp"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:fontFamily="@font/myfont"
-            android:gravity="start"
-            android:text=":"
-            android:textColor="@color/black"
-            android:textSize="12dp" />
-
-        <LinearLayout
-
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp">
-            <TextView
-                android:id="@+id/tv_netamount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/myfont"
-                android:gravity="center_vertical"
-                android:paddingLeft="2dp"
-                android:text=""
-                android:textColor="@color/black"
-                android:textSize="12dp"
-                android:textStyle="normal" />
-
-
-        </LinearLayout>
-
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_marginTop="5dp"

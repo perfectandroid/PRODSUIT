@@ -55,6 +55,7 @@ object MaintanaceMessageRepository {
                 Log.e(TAG,"541  requestObject1   "+BASE_URLSP.getString("BASE_URL", null))
                 Log.e(TAG,"541  requestObject1   "+requestObject1)
                 Log.e(TAG,"541  requestObject1   "+requestObject1)
+                Log.i("response44","maintance body.............  "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()
