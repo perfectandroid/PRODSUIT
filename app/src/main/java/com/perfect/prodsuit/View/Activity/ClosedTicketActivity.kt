@@ -23,6 +23,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.ItemClickListenerData
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -30,7 +31,7 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ClosedTicketActivity : AppCompatActivity() , View.OnClickListener, ItemClickListener {
+class ClosedTicketActivity : AppCompatActivity() , View.OnClickListener, ItemClickListenerData {
 
     var TAG  ="ClosedTicketActivity"
     lateinit var context: Context
@@ -180,29 +181,41 @@ class ClosedTicketActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         }
     }
 
-    override fun onClick(position: Int, data: String) {
-
-        if (data.equals("ServiceList")) {
-          /*  val jsonObject = serviceListArrayList.getJSONObject(position)
-            ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
-            FK_CustomerserviceregisterProductDetails = jsonObject.getString("ID_CustomerServiceRegisterProductDetails")
-            TicketDate = jsonObject.getString("TicketDate")
-            TicketStatus = jsonObject.getString("TicketStatus")
-
-            Log.i("FKK",FK_CustomerserviceregisterProductDetails.toString())
-            val i = Intent(this@ServiceHistoryActivity, ServiceAssignActivity::class.java)
-            i.putExtra("ID_CustomerServiceRegister",ID_CustomerServiceRegister)
-            i.putExtra("FK_CustomerserviceregisterProductDetails",FK_CustomerserviceregisterProductDetails)
-            i.putExtra("TicketStatus",TicketStatus)
-            i.putExtra("TicketDate",TicketDate)
-            startActivity(i)*/
-        }
-
-
-
-
-
-    }
+//    override fun onClick(position: Int, data: String) {
+//
+//        if (data.equals("ServiceList")) {
+//          /*  val jsonObject = serviceListArrayList.getJSONObject(position)
+//            ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
+//            FK_CustomerserviceregisterProductDetails = jsonObject.getString("ID_CustomerServiceRegisterProductDetails")
+//            TicketDate = jsonObject.getString("TicketDate")
+//            TicketStatus = jsonObject.getString("TicketStatus")
+//
+//            Log.i("FKK",FK_CustomerserviceregisterProductDetails.toString())
+//            val i = Intent(this@ServiceHistoryActivity, ServiceAssignActivity::class.java)
+//            i.putExtra("ID_CustomerServiceRegister",ID_CustomerServiceRegister)
+//            i.putExtra("FK_CustomerserviceregisterProductDetails",FK_CustomerserviceregisterProductDetails)
+//            i.putExtra("TicketStatus",TicketStatus)
+//            i.putExtra("TicketDate",TicketDate)
+//            startActivity(i)*/
+//        }
+//
+//        if (data.equals("ShareInvoice")) {
+//
+//            val customer_service_register = jsonObject!!.getString("ID_Customerserviceregister")
+//
+//            Log.e(TAG, "shareInvoice===="+data)
+//            val intent = Intent(this@ClosedTicketActivity, ServiceInvoiceActivity::class.java)
+//          //  intent.putExtra("customer_service_register", customer_service_register)
+//
+//            startActivity(intent)
+//
+//        }
+//
+//
+//
+//
+//
+//    }
 
 
 
@@ -210,6 +223,52 @@ class ClosedTicketActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         super.onRestart()
         //serviceList = 0
         getClosedTicketList()
+    }
+
+    override fun onClick(position: Int, data: String, jsonObject: JSONObject) {
+        if (data.equals("ShareInvoice")) {
+
+            Log.e(TAG, "onclick   " + data)
+
+            val customer_name = jsonObject!!.getString("Customer")
+            val TicketNo = jsonObject!!.getString("TicketNo")
+
+
+            val CusAddress = jsonObject!!.getString("CusAddress")
+            val RegDate = jsonObject!!.getString("RegDate")
+
+
+
+            val intent = Intent(this@ClosedTicketActivity, ServiceInvoiceActivity::class.java)
+            intent.putExtra("customer_name", customer_name)
+            intent.putExtra("TicketNo", TicketNo)
+            intent.putExtra("CusAddress", CusAddress)
+            intent.putExtra("RegDate", RegDate)
+
+
+
+//            if (CusAddress.equals(""))
+//            {
+//                intent.putExtra("CusAddress", "")
+//            }
+//            else
+//            {
+//                intent.putExtra("CusAddress", CusAddress)
+//            }
+//            if (RegDate.equals(""))
+//            {
+//                intent.putExtra("RegDate", "")
+//            }
+//            else
+//            {
+//                intent.putExtra("RegDate", RegDate)
+//            }
+
+
+
+            startActivity(intent)
+
+        }
     }
 
 

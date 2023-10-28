@@ -151,6 +151,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_upcomingtask.xml" value="0.2574074074074074" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_walking_customer.xml" value="0.2921875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_walking_existing.xml" value="0.24739583333333334" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_action_taken.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_approe_list.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_approve.xml" value="0.24583333333333332" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_approve1.xml" value="0.33" />
@@ -178,6 +179,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_material_request.xml" value="0.23229166666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_material_usage.xml" value="0.34427083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_more_service_attended.xml" value="0.30462962962962964" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_other_charges.xml" value="0.28072916666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_parts_replaced.xml" value="0.30052083333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_payment_list.xml" value="0.30462962962962964" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_pincode_details.xml" value="0.28125" />

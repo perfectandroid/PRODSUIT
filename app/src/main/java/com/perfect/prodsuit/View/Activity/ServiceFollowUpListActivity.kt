@@ -66,6 +66,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 //    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var imageView: ImageView
     private lateinit var img_search: ImageView
+    private lateinit var closedTicket: ImageView
     private lateinit var imback: ImageView
     private lateinit var lin_map: LinearLayout
     private lateinit var tv_address: TextView
@@ -153,6 +154,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 ////            }, 2000)
 //        })
         img_search.setOnClickListener(this)
+        closedTicket.setOnClickListener(this)
         imback.setOnClickListener(this)
     }
 
@@ -164,6 +166,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
         tv_cancel = findViewById(R.id.tv_cancel)
         cons_location = findViewById(R.id.cons_location)
         img_search = findViewById<ImageView>(R.id.img_filter)
+        closedTicket = findViewById<ImageView>(R.id.closedTicket)
         imback = findViewById<ImageView>(R.id.imback)
         imageView = findViewById<ImageView>(R.id.img_filter)
         recyclerView = findViewById(R.id.recycler)
@@ -674,6 +677,14 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
             }
             R.id.img_filter -> {
                 showFilterAlert()
+            }
+            R.id.closedTicket -> {
+
+
+                val intent = Intent(this@ServiceFollowUpListActivity, ClosedTicketActivity::class.java)
+
+                startActivity(intent)
+
             }
             R.id.imback -> {
                 onBackPressed()

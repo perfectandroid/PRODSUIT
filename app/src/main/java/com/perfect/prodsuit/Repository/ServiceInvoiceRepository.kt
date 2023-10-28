@@ -9,10 +9,14 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.ProductWiseComplaintModel
+import com.perfect.prodsuit.Model.ServiceAssignDetailsModel
+import com.perfect.prodsuit.Model.ServiceAssignModel
+import com.perfect.prodsuit.Model.ServiceInvoiceModel
+
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -20,21 +24,24 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object ProductWiseComplaintRepository {
+object ServiceInvoiceRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val productWiseComplaintSetterGetter = MutableLiveData<ProductWiseComplaintModel>()
-    val TAG: String = "ProductWiseComplaintRepository"
+    val subProductSetterGetter = MutableLiveData<ServiceInvoiceModel>()
+    val TAG: String = "SubProductRepository"
 
-    fun getServicesApiCall(context: Context,ID_Product: String,ID_Category: String): MutableLiveData<ProductWiseComplaintModel> {
-        getProductEnquiry(context,ID_Product,ID_Category)
-        return productWiseComplaintSetterGetter
+    fun getServicesApiCall(context: Context, FkEmployee : String,
+
+                           productDetails : JSONArray): MutableLiveData<ServiceInvoiceModel> {
+        getSubProduct(context,FkEmployee,productDetails)
+        return subProductSetterGetter
     }
 
-    private fun getProductEnquiry(context: Context,ID_Product: String,ID_Category: String) {
-
+    private fun getSubProduct(context: Context,FkEmployee : String,productDetails : JSONArray)
+    {
+       // Log.i("resp900","array==   "+productDetails)
         try {
-            productWiseComplaintSetterGetter.value = ProductWiseComplaintModel("")
+            subProductSetterGetter.value = ServiceInvoiceModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -59,26 +66,22 @@ object ProductWiseComplaintRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
-
-
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
-                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
 
 
-                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("7"))
+//                {"BankKey":"\/mXqmq3ZMvs=\n","Token":"0KjNuKHR16rDwHCS09BASBwyc4DHIeNqEVyN8kfrQtASybLeZjOwwA==\n","FK_Customerserviceregister":"1",
+//                    "FK_Employee":"1","Visitdate":"2023-02-01","Visittime":"02:05","FK_Priority":"2","Remark":"Test","FK_Company":"1","FK_BranchCodeUser":"3",
+//                    "EntrBy":"APP","FK_Branch":"3",Assignees{["FK_Employee":"1","EmployeeType":"3"]}
+
+
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("Critrea5", ProdsuitApplication.encryptStart(ID_Category))
-                requestObject1.put("Critrea6", ProdsuitApplication.encryptStart(ID_Product))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FkEmployee))
+                requestObject1.put("ProductSubDetails", productDetails)
 
 
-                Log.e(TAG,"requestObject1   80   "+requestObject1)
-                Log.e(TAG,"ID_Category   80   "+ID_Category)
+                Log.e(TAG,"requestObject1   7812   "+requestObject1)
+                Log.i("resp900","body main==   "+requestObject1)
 
-                Log.e(TAG,"requestObject1   7511   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -86,8 +89,7 @@ object ProductWiseComplaintRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-//            val call = apiService.getProductDetail(body)
-            val call = apiService.getComplaintListDetails(body)
+            val call = apiService.getClosedTicketList(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -95,19 +97,21 @@ object ProductWiseComplaintRepository {
                 ) {
                     try {
                         progressDialog!!.dismiss()
+                        Log.e(TAG,"response  111     "+response.body())
+                     //   Log.i("resp900","response==   "+response.body())
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<ProductWiseComplaintModel>()
-                        leads.add(ProductWiseComplaintModel(response.body()))
+                        val leads = ArrayList<ServiceInvoiceModel>()
+                        leads.add(ServiceInvoiceModel(response.body()))
                         val msg = leads[0].message
-                        productWiseComplaintSetterGetter.value = ProductWiseComplaintModel(msg)
+                        subProductSetterGetter.value = ServiceInvoiceModel(msg)
                     } catch (e: Exception) {
+                        e.printStackTrace()
                         progressDialog!!.dismiss()
                         Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
-                    Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
@@ -115,5 +119,7 @@ object ProductWiseComplaintRepository {
             progressDialog!!.dismiss()
             Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
         }
+
     }
+
 }

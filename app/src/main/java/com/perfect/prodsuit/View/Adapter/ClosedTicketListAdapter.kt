@@ -16,6 +16,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.ItemClickListenerData
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
@@ -24,9 +25,9 @@ import org.json.JSONObject
 class ClosedTicketListAdapter (internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "ServiceListAHistdapter"
+    internal val TAG : String = "ClosedTicketListAdapter"
     internal var jsonObject: JSONObject? = null
-    private var clickListener: ItemClickListener? = null
+    private var clickListener: ItemClickListenerData? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -41,6 +42,8 @@ class ClosedTicketListAdapter (internal var context: Context, internal var jsonA
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
             jsonObject = jsonArray.getJSONObject(position)
+
+           // Log.e(TAG,"date 1232==  "+jsonObject!!.getString("RegDate"))
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
@@ -51,6 +54,25 @@ class ClosedTicketListAdapter (internal var context: Context, internal var jsonA
                 holder.txtv_ticketno.text        = jsonObject!!.getString("TicketNo")
                 holder.txtv_customer.text        = jsonObject!!.getString("Customer")
                 holder.txtv_Address.text        = jsonObject!!.getString("CusAddress")
+                holder.txt_date.text        = jsonObject!!.getString("RegDate")
+//                Log.e(TAG,"date 1232==  "+jsonObject!!.getString("RegDate"))
+//
+//                if (jsonObject!!.getString("RegDate").equals(""))
+//                {
+//                    holder.txt_date.text= ""
+//                }
+//                else
+//                {
+//                    holder.txt_date.text        = jsonObject!!.getString("RegDate")
+//                }
+//
+
+
+                holder.img_share!!.setOnClickListener(View.OnClickListener {
+                    Log.e(TAG, "msg   closedticket   ")
+                    clickListener!!.onClick(position, "ShareInvoice",jsonObject!!)
+
+                })
 
 
 
@@ -106,18 +128,22 @@ class ClosedTicketListAdapter (internal var context: Context, internal var jsonA
         internal var txtv_ticketno          : TextView
         internal var txtv_customer          : TextView
         internal var txtv_Address          : TextView
+        internal var txt_date          : TextView
+        internal var img_share          : ImageView
 
 
         init {
             txtv_ticketno        = v.findViewById<View>(R.id.txtv_ticketno) as TextView
             txtv_customer        = v.findViewById<View>(R.id.txtv_customer) as TextView
             txtv_Address        = v.findViewById<View>(R.id.txtv_Address) as TextView
+            txt_date        = v.findViewById<View>(R.id.txt_date) as TextView
+            img_share        = v.findViewById<View>(R.id.img_share) as ImageView
 
 
         }
     }
 
-    fun setClickListener(itemClickListener: ItemClickListener?) {
+    fun setClickListener(itemClickListener: ItemClickListenerData?) {
         clickListener = itemClickListener
     }
 }

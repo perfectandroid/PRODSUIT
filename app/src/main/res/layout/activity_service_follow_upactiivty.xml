@@ -48,6 +48,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_main_header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -214,7 +215,8 @@
                                         android:src="@drawable/scannerservicefollowup"
                                         android:textColor="@color/black"
                                         android:textSize="@dimen/header_text"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"
+                                        android:visibility="gone"/>
                                 </LinearLayout>
 
 
@@ -253,7 +255,7 @@
                             android:orientation="vertical"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/rcyler_service3"
@@ -615,7 +617,7 @@
                                                         android:drawableLeft="@drawable/rupees"
                                                         android:paddingLeft="2dp"
                                                         android:paddingRight="10dp"
-                                                        android:text=""
+                                                        android:text="0.00"
                                                         android:textColor="@color/black"
                                                         android:textSize="14dp"
                                                         android:textStyle="normal" />

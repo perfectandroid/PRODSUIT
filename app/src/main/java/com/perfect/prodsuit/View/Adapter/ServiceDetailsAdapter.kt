@@ -52,7 +52,7 @@ class ServiceDetailsAdapter(
 
                 Log.e(TAG,"533..... "+ empModel)
                 if (empModel.isMaster.equals("0")){
-                    holder.ll_subproduct.visibility = View.VISIBLE
+                    holder.ll_subproduct.visibility = View.GONE
                     holder.ll_tab.setBackgroundColor(context.getColor(R.color.colorPrimary))
                     if(empModel.SearchSerialNo.equals("1"))
                     {

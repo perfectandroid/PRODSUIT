@@ -127,6 +127,7 @@
                         android:drawableTint="@color/white"
                         android:fontFamily="@font/myfont"
                         android:textAllCaps="true"
+
                         android:textColor="@color/black"
                         android:textSize="15dp"
                         android:textStyle="bold" />
@@ -401,7 +402,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
-                        android:gravity="left|center_vertical"
+                        android:gravity="right|center_vertical"
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp">
 
@@ -452,10 +453,11 @@
                             android:layout_marginLeft="10dp"
                             android:scaleType="fitXY"
                             android:src="@drawable/ic_track_changes"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             app:tint="@color/colorPrimary" />
 
                         <LinearLayout
+                            android:visibility="gone"
                             android:id="@+id/lin_time"
                             android:layout_width="30dp"
                             android:layout_height="30dp"

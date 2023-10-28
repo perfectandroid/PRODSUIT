@@ -184,6 +184,7 @@ class ServiceFollowUpActivity : AppCompatActivity(), View.OnClickListener {
         // addTabItem()
         //loadServiceCost()
         //loadReplacedProductCost()
+        serviceFollowUpAttendance = 0
         loadAttendance()
         loadMappedeServiceAttended()
         loadMoreServiceAttended()

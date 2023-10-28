@@ -49,7 +49,6 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     lateinit var addServiceViewModel                  : AddServiceViewModel
     internal var jsonObjectList                       : JSONObject?     = null
     private var tv_followupticket                     : TextView?       = null
-    private var tie_Selectarea                          : TextInputEditText? = null
     private var txt_next                              : TextView?       = null
     private var txt_previous                          : TextView?       = null
     private var vw_previous                           : View?       = null
@@ -129,8 +128,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var billTypecount = 0
     var paymentCount = 0
     var billtype=""
-    var servicesearchcount= 0
-    var id_search                                     : String          = ""
+
     //................................
     private var recy_main_product_topbar                : RecyclerView?       = null
     private var recy_parts_replaced                     : RecyclerView?       = null
@@ -161,7 +159,6 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var serviceTab3Adapter : ServiceTab3Adapter? = null
     var FK_Product_Pos : Int?         = 0
     var FK_Product_ID : String?         = ""
-    var subMode : String?         = "2"
     var addserviceMode              = 0
     lateinit var addserviceArrayList: JSONArray
     private var dialogAddserviceSheet : Dialog? = null
@@ -869,7 +866,6 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
     private fun getServiceDetails(FK_Product: String, NameCriteria: String) {
-
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(this, R.style.Progress)
@@ -879,7 +875,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 servicedetailsViewModel.getServiceDetails(
-                    this, FK_Product, NameCriteria, subMode!!
+                    this, FK_Product, NameCriteria
                 )!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -920,7 +916,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                 jsonObject.getString("BindProduct"),jsonObject.getString("ComplaintProduct"),jsonObject.getString("Warranty"),
                                                 jsonObject.getString("ServiceWarrantyExpireDate"),jsonObject.getString("ReplacementWarrantyExpireDate"),
                                                 jsonObject.getString("ID_CustomerWiseProductDetails"),jsonObject.getString("ServiceWarrantyExpired"),
-                                                jsonObject.getString("ReplacementWarrantyExpired"),"0","","",false,jsonObject.getString("SerchSerialNo")))
+                                                jsonObject.getString("ReplacementWarrantyExpired"),"0","","",false))
 
                                             var ServiceAttendedListDet = jsonObject.getJSONArray("ServiceAttendedListDet")
 
@@ -933,7 +929,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                     jsonObjectSub.getString("BindProduct"),jsonObjectSub.getString("ComplaintProduct"),jsonObjectSub.getString("Warranty"),
                                                     jsonObjectSub.getString("ServiceWarrantyExpireDate"),jsonObjectSub.getString("ReplacementWarrantyExpireDate"),
                                                     jsonObjectSub.getString("ID_CustomerWiseProductDetails"),jsonObjectSub.getString("ServiceWarrantyExpired"),
-                                                    jsonObjectSub.getString("ReplacementWarrantyExpired"),"0","","",false,jsonObject.getString("SerchSerialNo")))
+                                                    jsonObjectSub.getString("ReplacementWarrantyExpired"),"0","","",false))
 
 
 //                                                jObject.put("FK_Category",jsonObjectSub.getString("FK_Category"))
@@ -989,11 +985,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 ////                                                Log.e(TAG, "ddddddddd  2")
                                                 val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
                                                 rcyler_followup!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                                servDetadapter = ServiceDetailsAdapter(
-                                                    this@ServiceFollowUPActiivty,
-                                                    modelServicesListDetails,
-
-                                                )
+                                                servDetadapter = ServiceDetailsAdapter(this@ServiceFollowUPActiivty, modelServicesListDetails)
                                                 rcyler_followup!!.adapter = servDetadapter
                                                 servDetadapter!!.setClickListener(this@ServiceFollowUPActiivty)
 
@@ -2373,7 +2365,6 @@ Log.v("adasdasds","modeTab "+modeTab)
 
             val txtCancel       = view.findViewById(R.id.txtReset) as TextView
             val txtSubmit       = view.findViewById(R.id.txtSearch) as TextView
-            tie_Selectarea      = view.findViewById(R.id.tie_Selectarea) as TextInputEditText
 
             val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
             var isAdmin   = IsAdminSP.getString("IsAdmin", null)
@@ -2387,11 +2378,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             }
 
             txtSubmit.setOnClickListener {
-                id_search = tie_Selectarea!!.text.toString()
-                Log.e(TAG,"ffffffffff  "+ id_search)
-                servicesearchcount = 0
-                getSearch(id_search!!)
-                dialog1.dismiss()
+
 //                validateData(dialog1)
 
             }
@@ -4149,117 +4136,4 @@ Log.v("adasdasds","modeTab "+modeTab)
             loadlayout()
         }
     }
-
-    private fun getSearch(id_search: String) {
-
-        if(!id_search.equals(""))
-        {
-            subMode="0"
-        }
-        jsonArrayServiceType = JSONArray()
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(this, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                servicedetailsViewModel.getServiceDetails(
-                    this, FK_Product!!,id_search, subMode!!
-                )!!.observe(
-                    this,
-                    Observer { serviceSetterGetter ->
-                        try {
-                            val msg = serviceSetterGetter.message
-                            if (msg!!.length > 0) {
-                                if (servicesearchcount == 0) {
-                                    servicesearchcount++
-                                    val jObject = JSONObject(msg)
-                                    if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("ServiceDetails")
-                                        jsonArrayServiceType = jobjt.getJSONArray("ServiceAttendedList")
-                                        modelServicesListDetails.clear()
-                                        Log.e(TAG," 388...0  ")
-                                        for (i in 0 until jsonArrayServiceType.length()) {
-                                            var jsonObject = jsonArrayServiceType.getJSONObject(i)
-                                            Log.e(TAG," 388...1  "+jsonObject.getString("Product"))
-
-                                        //    modelServicesListDetails.clear()
-
-
-                                            modelServicesListDetails!!.add(ServiceDetailsFullListModel("0",jsonObject.getString("FK_Category"),jsonObject.getString("MasterProduct"),
-                                                jsonObject.getString("FK_Product"),jsonObject.getString("Product"),"-2",
-                                                jsonObject.getString("BindProduct"),jsonObject.getString("ComplaintProduct"),jsonObject.getString("Warranty"),
-                                                jsonObject.getString("ServiceWarrantyExpireDate"),jsonObject.getString("ReplacementWarrantyExpireDate"),
-                                                jsonObject.getString("ID_CustomerWiseProductDetails"),jsonObject.getString("ServiceWarrantyExpired"),
-                                                jsonObject.getString("ReplacementWarrantyExpired"),"0","","",false,jsonObject.getString("SerchSerialNo")))
-
-                                            var ServiceAttendedListDet = jsonObject.getJSONArray("ServiceAttendedListDet")
-
-                                            for (j in 0 until ServiceAttendedListDet.length()) {
-                                                var jsonObjectSub = ServiceAttendedListDet.getJSONObject(j)
-                                                Log.e(TAG," 388...2  "+jsonObjectSub.getString("Product"))
-
-                                                modelServicesListDetails!!.add(ServiceDetailsFullListModel("1",jsonObjectSub.getString("FK_Category"),jsonObjectSub.getString("MasterProduct"),
-                                                    jsonObjectSub.getString("FK_Product"),jsonObjectSub.getString("Product"),jsonObjectSub.getString("SLNo"),
-                                                    jsonObjectSub.getString("BindProduct"),jsonObjectSub.getString("ComplaintProduct"),jsonObjectSub.getString("Warranty"),
-                                                    jsonObjectSub.getString("ServiceWarrantyExpireDate"),jsonObjectSub.getString("ReplacementWarrantyExpireDate"),
-                                                    jsonObjectSub.getString("ID_CustomerWiseProductDetails"),jsonObjectSub.getString("ServiceWarrantyExpired"),
-                                                    jsonObjectSub.getString("ReplacementWarrantyExpired"),"0","","",false,jsonObject.getString("SerchSerialNo")))
-
-
-                                            }
-                                        }
-
-                                        for (j in 0 until modelServicesListDetails.size) {
-                                            Log.e(TAG,"447..1   "+""+j+"  "+modelServicesListDetails.get(j).Product)
-                                        }
-
-                                        val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
-                                        rcyler_followup!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        servDetadapter = ServiceDetailsAdapter(this@ServiceFollowUPActiivty, modelServicesListDetails)
-                                        rcyler_followup!!.adapter = servDetadapter
-                                        servDetadapter!!.setClickListener(this@ServiceFollowUPActiivty)
-
-
-                                    }else{
-                                        val builder = AlertDialog.Builder(
-                                            this@ServiceFollowUPActiivty, R.style.MyDialogTheme)
-                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                        }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()
-                                    }
-                                }
-                            } else {
-//                                Toast.makeText(
-//                                     applicationContext,
-//                                     "Some Technical Issues.",
-//                                     Toast.LENGTH_LONG
-//                                 ).show()
-                            }
-                        } catch (e: Exception) {
-                            Log.e(TAG,"392002 +"+e)
-                            Toast.makeText(
-                                applicationContext,
-                                "" + Config.SOME_TECHNICAL_ISSUES,
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-
-                    })
-                progressDialog!!.dismiss()
-            }
-
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-    }
-
-
 }
