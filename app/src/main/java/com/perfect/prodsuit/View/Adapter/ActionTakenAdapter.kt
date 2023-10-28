@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
+import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Model.ActionTakenMainModel
 import com.perfect.prodsuit.R
@@ -60,6 +61,80 @@ class ActionTakenAdapter(
                 holder.edt_customer_note.setText(empModel.Customer_note)
                 Log.v("sdfsdfdsfds","check value2 "+empModel.ProvideStandBy)
                 Log.v("sdfsdfdsfds","check action "+empModel.actionStatus)
+                Log.e(TAG,"633331  actionStatus   "+empModel.actionStatus)
+                Log.e(TAG,"633332  Status         "+empModel.Status)
+
+                DecimelFormatters.setDecimelPlace(holder.edit_security_amount!!)
+                DecimelFormatters.setDecimelPlace(holder.edit_buy_back_amount!!)
+
+                if (empModel.Status.equals("5")){
+                    //Pick up Request
+                    holder.ll_checkbox.visibility = View.VISIBLE
+                    holder.ll_security_amount.visibility = View.GONE
+                    holder.ll_buy_back_amount.visibility = View.GONE
+
+                    if (holder.check.isChecked){
+                        holder.ll_security_amount.visibility = View.VISIBLE
+                    }else{
+                        mList[position].securityAmount =  "0.00"
+                        holder.edit_security_amount.setText("0.00")
+
+                    }
+
+                }
+                else if (empModel.Status.equals("9")){
+                    //By Back Lead
+                    holder.ll_checkbox.visibility = View.GONE
+                    holder.ll_security_amount.visibility = View.GONE
+                    holder.ll_buy_back_amount.visibility = View.GONE
+
+                    mList[position].securityAmount =  "0.00"
+                    holder.edit_security_amount.setText("0.00")
+                }
+                else if (empModel.Status.equals("6")){
+                    //Stand By
+                    holder.ll_checkbox.visibility = View.GONE
+                    holder.ll_security_amount.visibility = View.VISIBLE
+                    holder.ll_buy_back_amount.visibility = View.GONE
+
+                    mList[position].securityAmount =  "0.00"
+                    holder.edit_security_amount.setText("0.00")
+
+
+                }
+                else if (empModel.Status.equals("10")){
+                    //Buy Back Order
+                    holder.ll_checkbox.visibility = View.GONE
+                    holder.ll_security_amount.visibility = View.GONE
+                    holder.ll_buy_back_amount.visibility = View.VISIBLE
+
+                    mList[position].securityAmount =  "0.00"
+                    holder.edit_security_amount.setText("0.00")
+
+                }else{
+                    holder.ll_checkbox.visibility = View.GONE
+                    holder.ll_security_amount.visibility = View.GONE
+                    holder.ll_buy_back_amount.visibility = View.GONE
+
+                    mList[position].securityAmount =  "0.00"
+                }
+
+
+//                Action Taken >> Missing Fields are given below
+////
+////                1. Action -> Pick up Request(FK_Action Status = 5)  >>Provide Stand By (Check Box) is missing
+////                -> Security Amount
+////
+////                        2. Action -> By Back Lead (FK_Action Status =  9 )
+////                -> Lead Action >> Select *Follow up *
+////                a).  Action Type
+////                b).  Follow Up Date
+////                c).  Assigned To
+////                -> BuyBack Amount
+////
+////                        3. Action ->Stand By>>Security Amount field is missing  (FK_Action Status =  6)
+////                4. Action -> Buy Back Order(FK_Action Status =  10 >> BuyBack Amount field is missing
+
 
                 holder.tv_action_action_taken!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "action_taken_action")
@@ -67,16 +142,16 @@ class ActionTakenAdapter(
                 holder.tv_lead_action!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "lead_action")
                 })
-                if (empModel.actionStatus.equals("5")) {
-                    holder.ll_checkbox.visibility = View.VISIBLE
-                } else if (empModel.actionStatus.equals("9")) {
-                    holder.ll_leadAction.visibility = View.VISIBLE
-                    holder.ll_buy_back_amount.visibility = View.VISIBLE
-                } else if (empModel.actionStatus.equals("6")) {
-                    holder.ll_security_amount.visibility = View.VISIBLE
-                } else if (empModel.actionStatus.equals("10")) {
-                    holder.ll_buy_back_amount.visibility = View.VISIBLE
-                }
+//                if (empModel.actionStatus.equals("5")) {
+//                    holder.ll_checkbox.visibility = View.VISIBLE
+//                } else if (empModel.actionStatus.equals("9")) {
+//                    holder.ll_leadAction.visibility = View.VISIBLE
+//                    holder.ll_buy_back_amount.visibility = View.VISIBLE
+//                } else if (empModel.actionStatus.equals("6")) {
+//                    holder.ll_security_amount.visibility = View.VISIBLE
+//                } else if (empModel.actionStatus.equals("10")) {
+//                    holder.ll_buy_back_amount.visibility = View.VISIBLE
+//                }
 
 
 
@@ -141,7 +216,13 @@ class ActionTakenAdapter(
                         count: Int
                     ) {
                         holder.edit_security_amount.setSelection(holder.edit_security_amount.text!!.length)
-                        textChangedListener.onTextChanged(position, "security_amount", s.toString())
+//                        textChangedListener.onTextChanged(position, "security_amount", s.toString())
+                        var secAmount = holder.edit_security_amount.text.toString()
+                        if (secAmount.equals("") || secAmount.equals(".")){
+                            secAmount = "0.00"
+                        }
+                        mList[position].securityAmount =  secAmount
+                        clickListener!!.onClick(position, "securityAmountChanged")
                     }
 
                     override fun afterTextChanged(s: Editable?) {}
@@ -164,6 +245,11 @@ class ActionTakenAdapter(
                     ) {
                         holder.edit_buy_back_amount.setSelection(holder.edit_buy_back_amount.text!!.length)
                         textChangedListener.onTextChanged(position, "buy_back", s.toString())
+                        var byAmount = holder.edit_buy_back_amount.text.toString()
+                        if (byAmount.equals("") || byAmount.equals(".")){
+                            byAmount = "0.00"
+                        }
+                        mList[position].buyBackAmount =  byAmount
                     }
 
                     override fun afterTextChanged(s: Editable?) {}

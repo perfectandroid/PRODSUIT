@@ -14,6 +14,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
+import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.ServiceConstants
 import com.perfect.prodsuit.Model.*
@@ -52,6 +53,9 @@ class OtherChargesAdapterAdapter(
                 Log.e(TAG, "onBindViewHolder   105100   ")
                 val empModel = mList[position]
                 holder.chargename.text = empModel.OctyName
+                holder.edt_charge.setText(empModel.OctyAmount)
+
+                DecimelFormatters.setDecimelPlace(holder.edt_charge!!)
                 holder.edt_charge.addTextChangedListener(object : TextWatcher {
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                         // This method is called before the text changes.

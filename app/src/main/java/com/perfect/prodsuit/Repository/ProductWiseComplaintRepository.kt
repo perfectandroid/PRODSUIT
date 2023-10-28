@@ -71,8 +71,8 @@ object ProductWiseComplaintRepository {
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("7"))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
-                requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
+                requestObject1.put("Critrea5", ProdsuitApplication.encryptStart(ID_Category))
+                requestObject1.put("Critrea6", ProdsuitApplication.encryptStart(ID_Product))
 
 
                 Log.e(TAG,"requestObject1   80   "+requestObject1)

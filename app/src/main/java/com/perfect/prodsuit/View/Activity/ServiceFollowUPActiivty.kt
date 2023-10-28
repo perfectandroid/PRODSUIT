@@ -215,7 +215,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var netAmount = 0.0
     var ID_PaymentMethod: String? = ""
     var arrPosition: Int? = 0
-    var totalServiceCost = 0.0
+
     lateinit var serviceFollowUpAttendanceListViewModel: ServiceFollowUpAttendanceListViewModel
     var serviceFollowUpAttendance = 0
     var serviceFollowUpAttendanceArrayList: JSONArray = JSONArray()
@@ -229,6 +229,13 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     lateinit var servCompanantViewModel: ServCompanantViewModel
     var servCompanantArray = JSONArray()
     var servicePartsAdapter: ServiceParts_replacedAdapter? = null
+
+    var companantCharge : String? = "0"
+    var discountAmount : String? = "0"
+    var totalServiceCost : String? = "0"
+    var strActiontakenStatusMessage                                      = ""
+    var strSumPayMethode = "0"
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -282,6 +289,11 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 
         serviceFollowUpInfo = 0
         loadInfo(ID_Customerserviceregister,ID_CustomerserviceregisterProductDetails)
+        clearData()
+    }
+
+    private fun clearData() {
+        otherChargesFinalList.clear()
     }
 
     private fun loadlayout() {
@@ -367,12 +379,12 @@ Log.v("adasdasds","modeTab "+modeTab)
         Log.v("sdfsdfsd", "payment  " + arrPaymentFinal.toString())
         Log.v("sdfsdfsd", "other  " + arrOtherChargeFinal.toString())
 
-        var attendedDate = tie_DateAttended!!.text
-        var totalSecurityAmount = edttotalSecurityAmount!!.text
-        var componentCharge = edtcomponentCharge!!.text
-        var totalServiceCost = edttotalServiceCost!!.text
-        var discountAmount = edtdiscountAmount!!.text
-        var edtnetAmount = tie_DateAttended!!.text
+//        var attendedDate = tie_DateAttended!!.text
+//        var totalSecurityAmount = edttotalSecurityAmount!!.text
+//        var componentCharge = edtcomponentCharge!!.text
+//        var totalServiceCost = edttotalServiceCost!!.text
+//        var discountAmount = edtdiscountAmount!!.text
+//        var edtnetAmount = tie_DateAttended!!.text
 
         Log.e(TAG, "ID_Customerserviceregister   " + ID_Customerserviceregister)
         Log.e(TAG, "ID_CustomerserviceregisterProductDetails   " + ID_CustomerserviceregisterProductDetails)
@@ -386,9 +398,9 @@ Log.v("adasdasds","modeTab "+modeTab)
     private fun saveDetails(Actionproductdetails: JSONArray) {
         var StartingDate= tie_DateAttended!!.text.toString()
         var totalSecurityAmount = edttotalSecurityAmount!!.text.toString()
-        var componentCharge = edtcomponentCharge!!.text.toString()
-        var totalServiceCost = edttotalServiceCost!!.text.toString()
-        var discountAmount = edtdiscountAmount!!.text.toString()
+//        var componentCharge = edtcomponentCharge!!.text.toString()
+//        var totalServiceCost = edttotalServiceCost!!.text.toString()
+       // var discountAmount = edtdiscountAmount!!.text.toString()
         var netAmount = edtnetAmount!!.text.toString()
         var otherCharge = edt_other_charges!!.text.toString()
 
@@ -405,7 +417,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             Log.e(TAG, "ID_Customerserviceregister   " + ID_Customerserviceregister)
             Log.e(TAG, "ID_CustomerserviceregisterProductDetails   " + ID_CustomerserviceregisterProductDetails)
             Log.e(TAG, "StartingDate   " + StartingDate)
-            Log.e(TAG, "componentCharge   " + componentCharge)
+            Log.e(TAG, "componentCharge   " + companantCharge)
             Log.e(TAG, "totalServiceCost   " + totalServiceCost)
             Log.e(TAG, "otherCharge   " + otherCharge)
             Log.e(TAG, "totalSecurityAmount   " + totalSecurityAmount)
@@ -439,12 +451,12 @@ Log.v("adasdasds","modeTab "+modeTab)
                         ID_Customerserviceregister,
                         ID_CustomerserviceregisterProductDetails,
                         StartingDate,
-                        componentCharge,
-                        totalServiceCost,
+                        companantCharge!!,
+                        totalServiceCost!!,
                         otherCharge,
                         totalSecurityAmount,
                         netAmount,
-                        discountAmount,
+                        discountAmount!!,
                         fk_company!!,
                         FK_BranchCodeUser!!,
                         UserCode!!,
@@ -632,6 +644,10 @@ Log.v("adasdasds","modeTab "+modeTab)
         imback!!.setOnClickListener(this)
         txt_next!!.setOnClickListener(this)
         txt_previous!!.setOnClickListener(this)
+
+        DecimelFormatters.setDecimelPlace(edtdiscountAmount!!)
+
+
 
 
     }
@@ -1061,6 +1077,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         var totalSetviceCost=0.0
         var otherCharge=0.0
         var discount=0.0
+
         try {
             totalsecurityamount=edttotalSecurityAmount!!.text.toString().toDouble()
         } catch (e: Exception) {
@@ -1092,6 +1109,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         }
 
         netAmount =(totalsecurityamount+componentCharge+totalSetviceCost+otherCharge)-discount
+
         edtnetAmount!!.setText(DecimelFormatters.set2DecimelPlace(netAmount.toFloat()))
     }
 
@@ -1195,11 +1213,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 
     private fun loadActionTaken() {
 
-        edttotalServiceCost!!.setText(totalServiceCost.toString())
-        edttotalSecurityAmount!!.setText("0.00")
-        edtcomponentCharge!!.setText("0.00")
-        edtdiscountAmount!!.setText("0.00")
-        edt_other_charges!!.setText("0.00")
+        edttotalServiceCost!!.setText(Config.changeTwoDecimel(totalServiceCost!!))
+        edttotalSecurityAmount!!.setText((Config.changeTwoDecimel("0.00")))
+        edtcomponentCharge!!.setText(Config.changeTwoDecimel(companantCharge!!))
+        edtdiscountAmount!!.setText(Config.changeTwoDecimel(discountAmount!!))
+       // edt_other_charges!!.setText("0.00")
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         val currentDate = sdf.format(Date())
         tie_DateAttended!!.setText(currentDate)
@@ -1213,7 +1231,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                 actionTakenSelected!!.add(
                     ActionTakenMainModel(
                         empModel.FK_Product, empModel.Product, "", "",
-                        "", "", "false", "", "", "", "", empModel.ID_CustomerWiseProductDetails
+                        "", "", "false", "0.00", "", "0.00", "", empModel.ID_CustomerWiseProductDetails,""
                     )
                 )
             }
@@ -1241,8 +1259,8 @@ Log.v("adasdasds","modeTab "+modeTab)
                         // actionTakenAdapter!!.notifyItemChanged(position)
                     } else if (field.equals("security_amount")) {
                         var empModel = actionTakenSelected[position]
-                        empModel.securityAmount = newText
-                        loadSecurityAmount()
+//                        empModel.securityAmount = newText
+//                        loadSecurityAmount()
                         // actionTakenAdapter!!.notifyItemChanged(position)
                     } else if (field.equals("buy_back")) {
                         var empModel = actionTakenSelected[position]
@@ -1261,7 +1279,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             openBottomSheet()
         })
         edt_other_charges!!.setOnClickListener(View.OnClickListener {
-            edt_other_charges!!.setText("0.00")
+          //  edt_other_charges!!.setText("0.00")
             DateType = 0
             actionTakenActioncouny = 0
             getOtherCharges()
@@ -1291,7 +1309,23 @@ Log.v("adasdasds","modeTab "+modeTab)
                 before: Int,
                 count: Int
             ) {
-                loadNetAmount()
+
+                var strNetAmount = edtnetAmount!!.text.toString()
+                var discAmount = edtdiscountAmount!!.text.toString()
+
+                if (discAmount.equals("") || discAmount.equals(".")){
+                    discAmount =" 0.00"
+                }
+
+                if (strNetAmount.equals("") || strNetAmount.equals(".")){
+                    strNetAmount =" 0.00"
+                }
+                if (discAmount.toFloat() <= strNetAmount.toFloat()){
+                    loadNetAmount()
+                }else{
+                    Toast.makeText(applicationContext,"Discount Amount should be less than or equals to Net Amount",Toast.LENGTH_SHORT).show()
+                }
+
             }
 
             override fun afterTextChanged(s: Editable?) {}
@@ -1543,8 +1577,31 @@ Log.v("adasdasds","modeTab "+modeTab)
             btnApply!!.setOnClickListener {
                 val payAmnt =
                     DecimelFormatters.set2DecimelPlace(txtPayBalAmount!!.text.toString().toFloat())
-                if ((payAmnt.toFloat()).equals("0.00".toFloat())) {
-                    Log.e(TAG, "801 payAmnt  0.00  " + payAmnt.toFloat())
+                strSumPayMethode = "0.00"
+                arrPaymentFinal = JSONArray()
+                var hasId1 =  haspaymentMandtory(actionTakenSelected!!)
+                if (hasId1){
+                    if ((payAmnt.toFloat()).equals("0.00".toFloat())) {
+                        Log.e(TAG, "801 payAmnt  0.00  " + payAmnt.toFloat())
+                        applyMode = 1
+                        dialogPaymentSheet!!.dismiss()
+                        for (i in 0 until arrPayment.length()) {
+                            var empModel = arrPayment.getJSONObject(i)
+                            val jsonObject = JSONObject()
+                            jsonObject.put("PaymentMethod", empModel.getString("MethodID"))
+                            jsonObject.put("PAmount", empModel.getString("Amount"))
+                            jsonObject.put("Refno", empModel.getString("RefNo"))
+                            arrPaymentFinal.put(jsonObject)
+
+                            strSumPayMethode =(strSumPayMethode.toFloat()+(empModel.getString("Amount").toFloat())).toString()
+                        }
+                        Log.v("sdfsdfsdfds", "arr  " + arrPaymentFinal.toString())
+                    } else {
+                        Log.e(TAG, "801 payAmnt  0.0clhghfoij    " + payAmnt.toFloat())
+                        Config.snackBarWarning(context, it, "Balance Amount should be zero")
+
+                    }
+                }else{
                     applyMode = 1
                     dialogPaymentSheet!!.dismiss()
                     for (i in 0 until arrPayment.length()) {
@@ -1554,12 +1611,12 @@ Log.v("adasdasds","modeTab "+modeTab)
                         jsonObject.put("PAmount", empModel.getString("Amount"))
                         jsonObject.put("Refno", empModel.getString("RefNo"))
                         arrPaymentFinal.put(jsonObject)
+
+                        strSumPayMethode =(strSumPayMethode.toFloat()+(empModel.getString("Amount").toFloat())).toString()
                     }
                     Log.v("sdfsdfsdfds", "arr  " + arrPaymentFinal.toString())
-                } else {
-                    Log.e(TAG, "801 payAmnt  0.0clhghfoij    " + payAmnt.toFloat())
-                    Config.snackBarWarning(context, it, "Balance Amount should be zero")
                 }
+
             }
 
 
@@ -2466,8 +2523,9 @@ Log.v("adasdasds","modeTab "+modeTab)
                 }
                 else if(modeTab==3)
                 {
-                    serviceFollowUpAttendance=0
-                    loadAttendance()
+                    Config.disableClick(v)
+                    validateActiontaken4()
+
                 }
 
 
@@ -2483,6 +2541,83 @@ Log.v("adasdasds","modeTab "+modeTab)
         }
     }
 
+    private fun validateActiontaken4() {
+
+        var hasId =  hasactionTakenSelected(actionTakenSelected!!)
+
+        if (hasId){
+
+            if (billtype.equals("") || billtype.equals("0")){
+                Toast.makeText(applicationContext,"Select BillType",Toast.LENGTH_SHORT).show()
+            }
+            else{
+                var hasId1 =  haspaymentMandtory(actionTakenSelected!!)
+                Log.e(TAG,"  25585  "+hasId1)
+                if (hasId1){
+                    // Payment Validation
+                        var netAmntt= edtnetAmount!!.text.toString()
+                        if (arrPaymentFinal.length() == 0){
+                            Toast.makeText(applicationContext,"Select payment Methode ",Toast.LENGTH_SHORT).show()
+                        }else if (strSumPayMethode.toFloat() != netAmntt.toFloat()){
+                            Toast.makeText(applicationContext,"Net Amount & Payment Amount should be equal",Toast.LENGTH_SHORT).show()
+                        }else{
+                            serviceFollowUpAttendance=0
+                            loadAttendance()
+                        }
+
+                    Log.e(TAG,"  252222    Select payment methode   ")
+                }else{
+                    Log.e(TAG,"  252223    Select payment methode   ")
+                        serviceFollowUpAttendance=0
+                        loadAttendance()
+                }
+            }
+        }else{
+            Toast.makeText(applicationContext,"Select Action for "+strActiontakenStatusMessage,Toast.LENGTH_SHORT).show()
+        }
+
+
+    }
+
+    private fun haspaymentMandtory(actionTakenSelected: ArrayList<ActionTakenMainModel>): Boolean {
+        var isChecked = true
+        for (i in 0 until actionTakenSelected.size) {  // iterate through the JsonArray
+
+            Log.e(TAG,"252224   haspaymentMandtory   "+actionTakenSelected.get(i).Status)
+            if (!actionTakenSelected.get(i).Status.equals("4")){
+                Log.e(TAG,"25581   haspaymentMandtory   "+actionTakenSelected.get(i).Status)
+                if (!actionTakenSelected.get(i).Status.equals("11")){
+                    Log.e(TAG,"25582   haspaymentMandtory   "+actionTakenSelected.get(i).Status)
+                    isChecked = false
+                    break
+                }
+            }else if (!actionTakenSelected.get(i).Status.equals("11")){
+                Log.e(TAG,"25583   haspaymentMandtory   "+actionTakenSelected.get(i).Status)
+                if (!actionTakenSelected.get(i).Status.equals("4")){
+                    Log.e(TAG,"25584   haspaymentMandtory   "+actionTakenSelected.get(i).Status)
+                    isChecked = false
+                    break
+                }
+            }
+
+        }
+        return isChecked
+    }
+
+    private fun hasactionTakenSelected(actionTakenSelected: ArrayList<ActionTakenMainModel>): Boolean {
+        var isChecked = true
+        strActiontakenStatusMessage = ""
+        for (i in 0 until actionTakenSelected.size) {  // iterate through the JsonArray
+
+            if (actionTakenSelected.get(i).actionStatus.equals("")){
+                strActiontakenStatusMessage = actionTakenSelected.get(i).Product
+                isChecked = false
+            }
+
+        }
+        return isChecked
+    }
+
     private fun validatetab2() {
 
 //        "ProductDetails"":
@@ -2494,7 +2629,8 @@ Log.v("adasdasds","modeTab "+modeTab)
         if (hasId){
 
 
-//            rrrrrrr
+
+            companantCharge = "0"
             servicePartsArray  = JSONArray()
             for (i in 0 until servicepartsReplacedModel.size) {
 
@@ -2522,8 +2658,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 
                     servicePartsArray.put(jObject)
 
+                    companantCharge = (companantCharge!!.toFloat() + ((servicepartsReplacedModel[i].Quantity.toFloat() * (servicepartsReplacedModel[i].ProductAmount).toFloat() ))).toString()
                 }
             }
+
+            Log.e(TAG,"companantCharge  2534   "+companantCharge)
 
             modeTab = modeTab+1
             loadlayout()
@@ -2682,18 +2821,22 @@ Log.v("adasdasds","modeTab "+modeTab)
     private fun otherChargesPopup() {
         Log.e(TAG, "864  ")
         try {
-            otherChargesFinalList.clear()
-            for (i in 0 until otherChargeList.length()) {
-                var empModel = otherChargeList.getJSONObject(i)
-                otherChargesFinalList!!.add(
-                    OtherChargesMainModel(
-                        empModel.getString("ID_OtherChargeType"),
-                        empModel.getString("OctyName"),
-                        empModel.getString("OctyTransType"),
-                        ""
-                    )
-                )
-            }
+         //   otherChargesFinalList.clear()
+
+             if (otherChargesFinalList.size == 0){
+                 for (i in 0 until otherChargeList.length()) {
+                     var empModel = otherChargeList.getJSONObject(i)
+                     otherChargesFinalList!!.add(
+                         OtherChargesMainModel(
+                             empModel.getString("ID_OtherChargeType"),
+                             empModel.getString("OctyName"),
+                             empModel.getString("OctyTransType"),
+                             "0.00"
+                         )
+                     )
+                 }
+             }
+
             dialogMoreServiceAttendeSheet = Dialog(this)
             dialogMoreServiceAttendeSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogMoreServiceAttendeSheet!!.setContentView(R.layout.other_charges_sheet)
@@ -2743,7 +2886,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                     totalAmount = totalAmount + amount
                 }
 
-                edt_other_charges!!.setText("" + totalAmount)
+                edt_other_charges!!.setText("" + Config.changeTwoDecimel(totalAmount.toString()))
                 loadNetAmount()
                 Log.v("sfsdfsdfsd", "list" + arrOtherChargeFinal.toString())
             }
@@ -2861,6 +3004,23 @@ Log.v("adasdasds","modeTab "+modeTab)
             getActionTakenAction(FK_Category!!, FK_Product!!)
         }
 
+        if (data.equals("securityAmountChanged")) {
+
+
+            var securityAmount = "0.00"
+            for (i in 0 until actionTakenSelected.size) {
+                val empModel = actionTakenSelected[i]
+                securityAmount = (securityAmount.toFloat()+(empModel.securityAmount.toFloat())).toString()
+            }
+            Log.e(TAG,"2944     securityAmount  :  "+securityAmount)
+
+
+            DecimelFormatters.set2DecimelPlace(securityAmount.toFloat())
+            edttotalSecurityAmount!!.setText(DecimelFormatters.set2DecimelPlace(securityAmount.toFloat()))
+            loadNetAmount()
+
+        }
+
 
         if (data.equals("chkproductwise_cmplt")) {
 
@@ -2902,11 +3062,14 @@ Log.v("adasdasds","modeTab "+modeTab)
         }
 
         if (data.equals("actionTakenActionFilter")) {
+
+
             dialogMoreServiceAttendeSheet!!.dismiss()
             val jsonObject = actionTypeActionList.getJSONObject(position)
             var empModel = actionTakenSelected[modEditPosition]
             empModel.actionName = jsonObject.getString("NxtActnName")
             empModel.actionStatus = jsonObject.getString("ID_NextAction")
+            empModel.Status = jsonObject.getString("Status")
             if (!rcyler_actionTaken!!.isComputingLayout && rcyler_actionTaken!!.scrollState == SCROLL_STATE_IDLE) {
                 actionTakenAdapter!!.notifyItemChanged(modEditPosition)
             }
@@ -3184,7 +3347,6 @@ Log.v("adasdasds","modeTab "+modeTab)
 
     private fun serviceCompnantListPop(servCompanantArray: JSONArray) {
 
-//        rrrrrr
         try {
 
             dialogAddserviceSheet = Dialog(this)
@@ -3617,6 +3779,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                        var date = Config.convertDate(modelServicesListDetails[i].ReplacementWarrantyExpireDate)
                         jObject1.put("ReplacementWarrantyExpireDate",date)
                     }
+                    jObject1.put("ID_CustomerWiseProductDetails",modelServicesListDetails[i].ID_CustomerWiseProductDetails)
                     serviceDetailsArray.put(jObject)
 
                     ProductSubDetails.put(jObject1)
@@ -3669,6 +3832,8 @@ Log.v("adasdasds","modeTab "+modeTab)
         if (hasId){
             Log.e(TAG,"145888   Checked Box MArked")
             serviceIncentiveArray = JSONArray()
+            //discountAmount = "0"
+            totalServiceCost = "0"
             for (i in 0 until serviceTab3MainModel.size) {
 
                 if (serviceTab3MainModel[i].isChecked){
@@ -3685,7 +3850,9 @@ Log.v("adasdasds","modeTab "+modeTab)
                     serviceIncentiveArray.put(jObject)
 
                     var amount=serviceTab3MainModel[i].NetAmount.toDouble()
-                    totalServiceCost=totalServiceCost+amount
+                    totalServiceCost =(totalServiceCost!!.toDouble()+amount).toString()
+
+//                    discountAmount = (discountAmount!!.toFloat() +(serviceTab3MainModel[i].NetAmount).toFloat()).toString()
 
                 }
             }
@@ -3814,7 +3981,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 //                                                    if (modelServicesListDetails[i].isChekecd && modelServicesListDetails[i].FK_Product.equals(jsonObject.getString("ID_MasterProduct"))){
                                                         servicepartsReplacedModel!!.add(ServicePartsReplacedModel("1","0",jsonObject.getString("ID_MasterProduct"),jsonObject.getString("MainProduct"),
                                                             jsonObject.getString("ID_Product"),jsonObject.getString("Componant"),"",jsonObject.getString("WarrantyMode"),"",
-                                                            jsonObject.getString("ProductAmount"),jsonObject.getString("ReplceMode"),"",jsonObject.getString("FK_Stock"),"0",i.toString()))
+                                                            jsonObject.getString("ProductAmount"),jsonObject.getString("ReplceMode"),"",jsonObject.getString("FK_Stock"),"0",jsonObject.getString("ID_CustomerWiseProductDetails")))
 //                                                    }
 //                                                }
 
@@ -3833,7 +4000,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 //                                                            if (modelServicesListDetails[i].isChekecd && modelServicesListDetails[i].FK_Product.equals(jsonObject.getString("ID_MasterProduct"))){
                                                                 servicepartsReplacedModel!!.add(ServicePartsReplacedModel("0","1",jsonObject1.getString("ID_MasterProduct"),jsonObject1.getString("MainProduct"),
                                                                     jsonObject1.getString("ID_Product"),jsonObject1.getString("Componant"),"",jsonObject1.getString("WarrantyMode"),"",
-                                                                    jsonObject1.getString("ProductAmount"),jsonObject1.getString("ReplceMode"),"",jsonObject1.getString("FK_Stock"),"0",i.toString()))
+                                                                    jsonObject1.getString("ProductAmount"),jsonObject1.getString("ReplceMode"),"",jsonObject1.getString("FK_Stock"),"0",jsonObject1.getString("ID_CustomerWiseProductDetails")))
 //                                                        modelServicesListDetails[k].ID_CustomerWiseProductDetails
 //                                                            }
 //                                                        }
