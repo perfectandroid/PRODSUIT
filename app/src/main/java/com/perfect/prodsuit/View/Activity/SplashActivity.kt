@@ -38,8 +38,12 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BASE_URL = "https://202.164.150.65:14262/ProdSuitAPI/api/"
 //    val IMAGE_URL = "https://202.164.150.65:14262/ProdSuitAPI/"
 //    val BANK_KEY = "-500"
+   // DEVELOPMENT OCTOBER 2023
 
-
+    val CERT_NAME = "development.pem"
+    val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
+    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
+    val BANK_KEY  = "-500"
     ////    DEMO 15.02.2023
 //    val CERT_NAME = "democert.pem"
 //    val BASE_URL = "https://45.118.163.44:14001/ProdSuiteAPIDemo/api/"
@@ -59,10 +63,12 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY = "-500"
 
     ////    QA 12.10.2023
+/*
     val CERT_NAME = "certificate_qa.pem"
     val BASE_URL = "https://112.133.227.123:14020/QAPersuiteAPI/api/"
     val IMAGE_URL = "https://112.133.227.123:14020/QAPersuiteAPI/"
     val BANK_KEY = "-500"
+*/
 
     ////    DEMO 21.02.2023
 //    val CERT_NAME = "demos.pem"
