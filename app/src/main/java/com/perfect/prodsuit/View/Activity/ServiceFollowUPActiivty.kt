@@ -2291,14 +2291,40 @@ Log.v("adasdasds","modeTab "+modeTab)
                     "  IDCP:  "+servicepartsReplacedModel.get(i).ID_CustomerWiseProductDetails)
             if (servicepartsReplacedModel.get(i).isChecked.equals("1")){
                 isChecked = true
-                if (servicepartsReplacedModel.get(i).WarrantyMode.equals("0") || servicepartsReplacedModel.get(i).ReplceMode.equals("0")  ||
-                    servicepartsReplacedModel.get(i).Quantity.equals("") || servicepartsReplacedModel.get(i).Quantity.equals(".")){
+                var Qty = servicepartsReplacedModel.get(i).Quantity
+                if (Qty.equals("") || Qty.equals(".")){
+                    Qty = "0"
+                }
+
+                Log.e(TAG,"2999   "+Qty.toFloat()+  " > 0")
+
+                if (servicepartsReplacedModel.get(i).WarrantyMode.equals("0") || servicepartsReplacedModel.get(i).WarrantyMode.equals("")) {
+                    strActiontakenStatusMessage = "Select Waranty Mode for "+servicepartsReplacedModel.get(i).MainProduct
                     isChecked = false
                     break
                 }
+                else if ( servicepartsReplacedModel.get(i).ReplceMode.equals("0") ||  servicepartsReplacedModel.get(i).ReplceMode.equals("")){
+                    strActiontakenStatusMessage = "Select Replace Mode for "+servicepartsReplacedModel.get(i).MainProduct
+                    isChecked = false
+                    break
+                }
+                else if (Qty.toFloat() <= 0){
+                    strActiontakenStatusMessage = "Enter Valid Quantity "+servicepartsReplacedModel.get(i).MainProduct
+                    isChecked = false
+                    break
+                }
+
+//                if (servicepartsReplacedModel.get(i).WarrantyMode.equals("0") || servicepartsReplacedModel.get(i).ReplceMode.equals("0")  ||
+//                    servicepartsReplacedModel.get(i).Quantity.equals("") || servicepartsReplacedModel.get(i).Quantity.equals(".")  || Qty.toFloat() > 0){
+//                        rrrrrr
+//                    isChecked = false
+//                    break
+//                }
             }
 
         }
+
+        strActiontakenStatusMessage
         return isChecked
 
     }
@@ -2835,6 +2861,8 @@ Log.v("adasdasds","modeTab "+modeTab)
 
             modeTab = modeTab+1
             loadlayout()
+        }else{
+            Toast.makeText(applicationContext,""+strActiontakenStatusMessage,Toast.LENGTH_SHORT).show()
         }
     }
 
