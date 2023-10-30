@@ -76,10 +76,9 @@ object ServiceReplacedModeRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser",null)))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
-                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(SubMode))
 
 
-                Log.e(TAG,"requestObject1   971   "+requestObject1)
+                Log.e(TAG,"requestObject1   9711   "+requestObject1)
 
 
             } catch (e: Exception) {

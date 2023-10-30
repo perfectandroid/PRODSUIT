@@ -9,9 +9,9 @@ import com.perfect.prodsuit.Repository.WarrantyModeRepository
 class WarrantyModeViewModel : ViewModel() {
 
     var warrantymodeListtData: MutableLiveData<WarrantyModeModel>? = null
-    fun getWarrantyMode(context: Context) : MutableLiveData<WarrantyModeModel>? {
+    fun getWarrantyMode(context: Context,WarrantyMode: String) : MutableLiveData<WarrantyModeModel>? {
 
-        warrantymodeListtData = WarrantyModeRepository.getServicesApiCall(context)
+        warrantymodeListtData = WarrantyModeRepository.getServicesApiCall(context,WarrantyMode)
         return warrantymodeListtData
     }
 }

@@ -26,12 +26,12 @@ object WarrantyModeRepository {
     val warrantymodeSetterGetter = MutableLiveData<WarrantyModeModel>()
     val TAG: String = "WarrantyModeRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<WarrantyModeModel> {
-        getWarrantyMode(context)
+    fun getServicesApiCall(context: Context,SubMode: String): MutableLiveData<WarrantyModeModel> {
+        getWarrantyMode(context,SubMode)
         return warrantymodeSetterGetter
     }
 
-    private fun getWarrantyMode(context: Context) {
+    private fun getWarrantyMode(context: Context,SubMode: String) {
         try {
             warrantymodeSetterGetter.value = WarrantyModeModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -63,14 +63,17 @@ object WarrantyModeRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_BranchCodeUserSP= context.getSharedPreferences(Config.SHARED_PREF40, 0)
+
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("85"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                Log.e(TAG,"getDepartment  78   "+requestObject1)
+                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser",null)))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
+
+                Log.e(TAG,"getDepartment  788   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

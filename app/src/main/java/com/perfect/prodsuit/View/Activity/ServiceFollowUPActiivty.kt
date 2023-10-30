@@ -154,7 +154,8 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var mainProductInfo                                 = 0
     var warrantycount                                   = 0
     var replacedcount                                   = 0
-    var ReplceMode                                      = ""
+    var ReplceModeSub                                   = ""
+    var WarrantyMode                                    = ""
     //................................
 
 
@@ -3371,6 +3372,10 @@ Log.v("adasdasds","modeTab "+modeTab)
 
         if (data.equals("WarrantyModeList")){
 
+            var empModel = servicepartsReplacedModel[position]
+            WarrantyMode = empModel.WarrantyMode
+            ReplceModeSub = empModel.ReplceMode
+
             modEditPosition = position
 //            warrantyEditPosition = position
             Log.e(TAG,"1004 check     "+position)
@@ -3381,6 +3386,10 @@ Log.v("adasdasds","modeTab "+modeTab)
 
         if (data.equals("ReplacedModeList")){
             modEditPosition = position
+
+            var empModel = servicepartsReplacedModel[position]
+            WarrantyMode = empModel.WarrantyMode
+            ReplceModeSub = empModel.ReplceMode
 
             Log.e(TAG,"1018 check     "+position)
             replacedcount = 0
@@ -4166,6 +4175,9 @@ Log.v("adasdasds","modeTab "+modeTab)
                                             var jsonObject = SubproductDetailsList.getJSONObject(i)
                                             val jObject = JSONObject()
 
+//                                            ReplceModeSub = jsonObject.getString("ReplceMode")
+//                                            WarrantyMode = jsonObject.getString("WarrantyMode")
+
                                             var master_id  =jsonObject.getString("ID_MasterProduct")
 
                                             var hasId =  hasTrueMast(labelpartsreplaceModel!!,jsonObject.getString("ID_MasterProduct"))
@@ -4187,6 +4199,10 @@ Log.v("adasdasds","modeTab "+modeTab)
 
                                             for (j in 0 until SubproductDetailsList.length()) {
                                                 var jsonObject1 = SubproductDetailsList.getJSONObject(j)
+
+//                                                ReplceModeSub = jsonObject1.getString("ReplceMode")
+//                                                WarrantyMode = jsonObject1.getString("WarrantyMode")
+
                                                 if(jsonObject1.getString("ID_MasterProduct").equals(master_id)){
                                                     Log.e(TAG,"29892  "+"    M: "+jsonObject1.getString("ID_MasterProduct")+"    S: "+jsonObject1.getString("ID_Product"))
                                                     var hasId1 =  hasTrueMast1(servicepartsReplacedModel!!,jsonObject1.getString("ID_MasterProduct"),jsonObject1.getString("ID_Product"))
@@ -4317,7 +4333,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceReplacedModeViewModel.getServiceReplacedModeViewModel(this,ReplceMode!!)!!.observe(
+                serviceReplacedModeViewModel.getServiceReplacedModeViewModel(this,ReplceModeSub!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -4393,7 +4409,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             dialogReplacedMode!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogReplacedMode!! .setContentView(R.layout.replcede_mode_popup)
             dialogReplacedMode!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-            dialogReplacedMode!!.setCancelable(false)
+            dialogReplacedMode!!.setCancelable(true)
 
             recyreplacedmode = dialogReplacedMode!! .findViewById(R.id.recyreplacedmode) as RecyclerView
 //            var tv_cancel = dialogReplacedMode!! .findViewById(R.id.tv_cancel) as TextView
@@ -4441,7 +4457,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                warrantymodeViewModel.getWarrantyMode(this)!!.observe(
+                warrantymodeViewModel.getWarrantyMode(this,WarrantyMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -4523,7 +4539,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             dialogWarrantydMode!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogWarrantydMode!! .setContentView(R.layout.warranty_mode_popup)
             dialogWarrantydMode!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-            dialogWarrantydMode!!.setCancelable(false)
+            dialogWarrantydMode!!.setCancelable(true)
 
             recywarrantymode = dialogWarrantydMode!! .findViewById(R.id.recywarrantymode) as RecyclerView
 //            var tv_cancel = dialogWarrantydMode!! .findViewById(R.id.tv_cancel) as TextView
