@@ -1742,15 +1742,24 @@ Log.v("adasdasds","modeTab "+modeTab)
     }
 
     private fun validateAddPayment(view: View) {
-        var balAmount =
-            (DecimalToWordsConverter.commaRemover(txtPayBalAmount!!.text.toString())).toFloat()
+//        var balAmount =
+//            (DecimalToWordsConverter.commaRemover(txtPayBalAmount!!.text.toString())).toFloat()
         //  var payAmount = edtPayAmount!!.text.toString()
+        var balAmount = 0.0F
+        if (arrAddUpdate.equals("1")){
+            balAmount = (DecimalToWordsConverter.commaRemover(txtPayBalAmount!!.text.toString())).toFloat() + (DecimalToWordsConverter.commaRemover(arrPayment.getJSONObject(arrPosition!!).getString("Amount")).toFloat())
+        }else{
+            balAmount = (DecimalToWordsConverter.commaRemover(txtPayBalAmount!!.text.toString())).toFloat()
+        }
+
         var payAmount = DecimalToWordsConverter.commaRemover(edtPayAmount!!.text.toString())
 
 
-        Log.e(TAG, "110   balAmount   : " + balAmount)
-        Log.e(TAG, "110   payAmount   : " + payAmount)
+        Log.e(TAG, "1751   balAmount   : " + balAmount)
+        Log.e(TAG, "1751   payAmount   : " + payAmount)
         var hasId = hasPayMethod(arrPayment, "MethodID", ID_PaymentMethod!!)
+
+
 
         if (ID_PaymentMethod.equals("")) {
             Log.e(TAG, "110   Valid   : Select Payment Method")
@@ -3332,6 +3341,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         }
         if (data.equals("editArrayList")) {
             try {
+                Log.e(TAG,"3335")
                 arrAddUpdate = "1"
                 arrPosition = position
                 val jsonObject = arrPayment.getJSONObject(position)
