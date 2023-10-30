@@ -2461,8 +2461,16 @@ Log.v("adasdasds","modeTab "+modeTab)
                 id_search = tie_Selectarea!!.text.toString()
                 Log.e(TAG,"ffffffffff  "+ id_search)
                 servicesearchcount = 0
-                getSearch(id_search!!)
-                dialog1.dismiss()
+                if(id_search.equals(""))
+                {
+                    tie_Selectarea!!.setError("Please Enter a Valid Input");
+
+                }
+                else{
+                    getSearch(id_search!!)
+                    dialog1.dismiss()
+                }
+
 
             }
 

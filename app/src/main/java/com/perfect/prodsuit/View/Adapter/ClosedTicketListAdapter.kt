@@ -66,8 +66,8 @@ class ClosedTicketListAdapter (internal var context: Context, internal var jsonA
 //                    holder.txt_date.text        = jsonObject!!.getString("RegDate")
 //                }
 //
-
-
+                jsonObject = jsonArray.getJSONObject(position)
+                holder.img_share!!.setTag(position-1)
                 holder.img_share!!.setOnClickListener(View.OnClickListener {
                     Log.e(TAG, "msg   closedticket   ")
                     clickListener!!.onClick(position, "ShareInvoice",jsonObject!!)

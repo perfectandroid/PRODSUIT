@@ -8,10 +8,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.ActionListTicketReportModel
 import com.perfect.prodsuit.Model.ClosedTicketModel
-import com.perfect.prodsuit.Model.ServiceFollowUpMappedReplacedProductModel
-import com.perfect.prodsuit.Model.ServiceHistModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -27,12 +24,12 @@ object ClosedTicketRepository {
     private var progressDialog: ProgressDialog? = null
     val TAG: String = "ClosedTicketRepository"
     val closedTicketSetterGetter = MutableLiveData<ClosedTicketModel>()
-    fun getServicesApiCall(context: Context): MutableLiveData<ClosedTicketModel> {
-        getClosedticket(context)
+    fun getServicesApiCall(context: Context,Idcudtomerregisterdetails: String?): MutableLiveData<ClosedTicketModel> {
+        getClosedticket(context,Idcudtomerregisterdetails)
         return closedTicketSetterGetter
     }
 
-    private fun getClosedticket(context: Context) {
+    private fun getClosedticket(context: Context, Idcudtomerregisterdetails: String?) {
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -72,7 +69,7 @@ object ClosedTicketRepository {
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("112"))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("Criteria", "1")
+                requestObject1.put("Criteria", Idcudtomerregisterdetails)
 
 
 

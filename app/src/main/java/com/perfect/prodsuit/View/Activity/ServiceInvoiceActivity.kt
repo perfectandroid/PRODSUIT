@@ -47,7 +47,7 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
     var TAG = "ServiceInvoiceActivity"
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
-
+    var Idcudtomerregisterdetails: String? = ""
     var tv_customer: TextView? = null
     var tv_address: TextView? = null
     var tv_ticketno: TextView? = null
@@ -108,6 +108,7 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
             customer_address = intent.getStringExtra("CusAddress").toString()
             TicketNo = intent.getStringExtra("TicketNo").toString()
             date_invoice = intent.getStringExtra("RegDate").toString()
+            Idcudtomerregisterdetails = intent.getStringExtra("Idcudtomerregisterdetails").toString()
 
         }catch (e : Exception){
 
@@ -115,6 +116,7 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
         Log.e(TAG, "customer_name===="+customer_name)
         Log.e(TAG, "TicketNo===="+TicketNo)
         Log.e(TAG, "CusAddress===="+customer_address)
+        Log.e(TAG, "Idcust===="+Idcudtomerregisterdetails)
         setRegViews()
     }
 
@@ -170,7 +172,7 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                closedTicketViewModel.getclosedTicket(this)!!.observe(
+                closedTicketViewModel.getclosedTicket(this,Idcudtomerregisterdetails)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
