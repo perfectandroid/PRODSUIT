@@ -3328,9 +3328,14 @@ Log.v("adasdasds","modeTab "+modeTab)
             var balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
             var Amount = (jsonObject!!.getString("Amount")).toFloat()
 
+            ID_PaymentMethod = ""
+            edtPayMethod!!.setText("")
+            edtPayRefNo!!.setText("")
+            edtPayAmount!!.setText("")
+
             arrPayment.remove(position)
             adapterPaymentList!!.notifyItemRemoved(position)
-
+            arrAddUpdate = "0"
             if (arrPayment.length() > 0) {
                 ll_paymentlist!!.visibility = View.VISIBLE
             } else {
