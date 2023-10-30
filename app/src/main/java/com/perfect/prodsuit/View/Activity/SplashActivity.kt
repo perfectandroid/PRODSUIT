@@ -176,6 +176,8 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
     val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
     val BANK_KEY  = "-500"
 
+
+
     ///verminatorERP 30.9.2023
 //    val CERT_NAME = "verminator.pem"
 //    val BASE_URL  = "https://45.118.163.44:14006/ProdSuiteAPIVerminator/api/"
@@ -212,6 +214,25 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BASE_URL  = "https://45.118.163.44:14001/ProdSuiteAPIMarketingDemo/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14001/ProdSuiteAPIMarketingDemo"
 //    val BANK_KEY  = "-520"
+
+//  sheetal 30.10.2023
+//    val CERT_NAME = "sheetal_latest.pem"
+//    val BASE_URL  = "https://59.96.61.232:14001/PerSuiteAPISHEETAL/api/"
+//    val IMAGE_URL = "https://59.96.61.232:14001/PerSuiteAPISHEETAL/"
+//    val BANK_KEY  = "-517"
+
+//    Marketing 30.10.2023
+//    val CERT_NAME = "maketting_demo.pem"
+//    val BASE_URL  = "https://45.118.163.44:14008/ProdSuiteAPIMarketingDemo/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14008/ProdSuiteAPISupportDemo/"
+//    val BANK_KEY  = "-520"
+
+
+//  support_demo 30.10.2023
+//    val CERT_NAME = "support_demo.pem"
+//    val BASE_URL  = "https://45.118.163.44:14008/ProdSuiteAPISupportDemo/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14008/ProdSuiteAPISupportDemo/"
+//    val BANK_KEY  = "-521"
 
     var TAG = "SplashActivity"
     lateinit var splashresellerActivityViewModel: SplashresellerActivityViewModel
