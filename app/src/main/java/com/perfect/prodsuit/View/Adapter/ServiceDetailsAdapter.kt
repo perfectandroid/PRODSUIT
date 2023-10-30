@@ -59,8 +59,12 @@ class ServiceDetailsAdapter(
                         holder.ll_tab.setBackgroundColor(context.getColor(R.color.colorPrimarylite1))
                     }
 
-                }else{
-                    holder.ll_tab.setBackgroundColor(context.getColor(R.color.colorPrimarylite1))
+                }else if (empModel.isMaster.equals("1")){
+                    if(empModel.SearchSerialNo.equals("0"))
+                    {
+                        holder.ll_tab.setBackgroundColor(context.getColor(R.color.colorPrimarylite1))
+                    }
+                  //  holder.ll_tab.setBackgroundColor(context.getColor(R.color.colorPrimarylite1))
                 }
 
                 holder.tv_followupticket.text           = empModel.Product
