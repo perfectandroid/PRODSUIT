@@ -1742,15 +1742,24 @@ Log.v("adasdasds","modeTab "+modeTab)
     }
 
     private fun validateAddPayment(view: View) {
-        var balAmount =
-            (DecimalToWordsConverter.commaRemover(txtPayBalAmount!!.text.toString())).toFloat()
+//        var balAmount =
+//            (DecimalToWordsConverter.commaRemover(txtPayBalAmount!!.text.toString())).toFloat()
         //  var payAmount = edtPayAmount!!.text.toString()
+        var balAmount = 0.0F
+        if (arrAddUpdate.equals("1")){
+            balAmount = (DecimalToWordsConverter.commaRemover(txtPayBalAmount!!.text.toString())).toFloat() + (DecimalToWordsConverter.commaRemover(arrPayment.getJSONObject(arrPosition!!).getString("Amount")).toFloat())
+        }else{
+            balAmount = (DecimalToWordsConverter.commaRemover(txtPayBalAmount!!.text.toString())).toFloat()
+        }
+
         var payAmount = DecimalToWordsConverter.commaRemover(edtPayAmount!!.text.toString())
 
 
-        Log.e(TAG, "110   balAmount   : " + balAmount)
-        Log.e(TAG, "110   payAmount   : " + payAmount)
+        Log.e(TAG, "1751   balAmount   : " + balAmount)
+        Log.e(TAG, "1751   payAmount   : " + payAmount)
         var hasId = hasPayMethod(arrPayment, "MethodID", ID_PaymentMethod!!)
+
+
 
         if (ID_PaymentMethod.equals("")) {
             Log.e(TAG, "110   Valid   : Select Payment Method")
@@ -2291,14 +2300,40 @@ Log.v("adasdasds","modeTab "+modeTab)
                     "  IDCP:  "+servicepartsReplacedModel.get(i).ID_CustomerWiseProductDetails)
             if (servicepartsReplacedModel.get(i).isChecked.equals("1")){
                 isChecked = true
-                if (servicepartsReplacedModel.get(i).WarrantyMode.equals("0") || servicepartsReplacedModel.get(i).ReplceMode.equals("0")  ||
-                    servicepartsReplacedModel.get(i).Quantity.equals("") || servicepartsReplacedModel.get(i).Quantity.equals(".")){
+                var Qty = servicepartsReplacedModel.get(i).Quantity
+                if (Qty.equals("") || Qty.equals(".")){
+                    Qty = "0"
+                }
+
+                Log.e(TAG,"2999   "+Qty.toFloat()+  " > 0")
+
+                if (servicepartsReplacedModel.get(i).WarrantyMode.equals("0") || servicepartsReplacedModel.get(i).WarrantyMode.equals("")) {
+                    strActiontakenStatusMessage = "Select Waranty Mode for "+servicepartsReplacedModel.get(i).MainProduct
                     isChecked = false
                     break
                 }
+                else if ( servicepartsReplacedModel.get(i).ReplceMode.equals("0") ||  servicepartsReplacedModel.get(i).ReplceMode.equals("")){
+                    strActiontakenStatusMessage = "Select Replace Mode for "+servicepartsReplacedModel.get(i).MainProduct
+                    isChecked = false
+                    break
+                }
+                else if (Qty.toFloat() <= 0){
+                    strActiontakenStatusMessage = "Enter Valid Quantity "+servicepartsReplacedModel.get(i).MainProduct
+                    isChecked = false
+                    break
+                }
+
+//                if (servicepartsReplacedModel.get(i).WarrantyMode.equals("0") || servicepartsReplacedModel.get(i).ReplceMode.equals("0")  ||
+//                    servicepartsReplacedModel.get(i).Quantity.equals("") || servicepartsReplacedModel.get(i).Quantity.equals(".")  || Qty.toFloat() > 0){
+//                        rrrrrr
+//                    isChecked = false
+//                    break
+//                }
             }
 
         }
+
+        strActiontakenStatusMessage
         return isChecked
 
     }
@@ -2843,6 +2878,8 @@ Log.v("adasdasds","modeTab "+modeTab)
 
             modeTab = modeTab+1
             loadlayout()
+        }else{
+            Toast.makeText(applicationContext,""+strActiontakenStatusMessage,Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -3291,9 +3328,14 @@ Log.v("adasdasds","modeTab "+modeTab)
             var balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
             var Amount = (jsonObject!!.getString("Amount")).toFloat()
 
+            ID_PaymentMethod = ""
+            edtPayMethod!!.setText("")
+            edtPayRefNo!!.setText("")
+            edtPayAmount!!.setText("")
+
             arrPayment.remove(position)
             adapterPaymentList!!.notifyItemRemoved(position)
-
+            arrAddUpdate = "0"
             if (arrPayment.length() > 0) {
                 ll_paymentlist!!.visibility = View.VISIBLE
             } else {
@@ -3304,6 +3346,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         }
         if (data.equals("editArrayList")) {
             try {
+                Log.e(TAG,"3335")
                 arrAddUpdate = "1"
                 arrPosition = position
                 val jsonObject = arrPayment.getJSONObject(position)

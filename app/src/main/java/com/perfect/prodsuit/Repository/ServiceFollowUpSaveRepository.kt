@@ -25,7 +25,7 @@ object ServiceFollowUpSaveRepository {
 
     private var progressDialog: ProgressDialog? = null
     val leadGenSaveSetterGetter = MutableLiveData<ServiceFollowUpSaveModel>()
-    val TAG: String = "LeadGenerateSaveRepository"
+    val TAG: String = "ServiceFollowUpSaveRepository"
 
     fun getServicesApiCall(
         context: Context,

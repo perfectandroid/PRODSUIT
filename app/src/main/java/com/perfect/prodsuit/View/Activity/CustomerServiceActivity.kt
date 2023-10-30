@@ -495,6 +495,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         hideViews()
         checkAttendance()
 
+        priorityDet = 0
+        getProductPriority("0")
+
         til_CustomerName!!.setEndIconOnClickListener {
            // finish()
             Config.disableClick(it)
@@ -870,7 +873,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             R.id.tie_Priority->{
                 Config.disableClick(v)
                 priorityDet = 0
-                getProductPriority()
+                getProductPriority("1")
 
             }
 
@@ -2522,7 +2525,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         }
     }
 
-    private fun getProductPriority() {
+    private fun getProductPriority(modes : String) {
 //        var prodpriority = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -2549,8 +2552,14 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                         servPriorityArrayList = jobjt.getJSONArray("CommonPopupList")
                                         if (servPriorityArrayList.length()>0){
 
-                                            productPriorityPopup(servPriorityArrayList)
+                                            if (modes.equals("0")){
+                                                var jsonObject1 = servPriorityArrayList.getJSONObject(2)
+                                                tie_Priority!!.setText(jsonObject1.getString("Description"))
+                                                ID_Priority = jsonObject1.getString("Code")
 
+                                            }else{
+                                                productPriorityPopup(servPriorityArrayList)
+                                            }
 
                                         }
 
