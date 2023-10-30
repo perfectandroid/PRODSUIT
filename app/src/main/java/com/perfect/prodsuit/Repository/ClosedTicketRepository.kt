@@ -9,6 +9,7 @@ import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.ClosedTicketModel
+import com.perfect.prodsuit.Model.ServiceFollowUpInfoModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -31,6 +32,7 @@ object ClosedTicketRepository {
 
     private fun getClosedticket(context: Context, Idcudtomerregisterdetails: String?) {
         try {
+            closedTicketSetterGetter.value = ClosedTicketModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)

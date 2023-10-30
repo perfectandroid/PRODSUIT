@@ -6,8 +6,6 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -15,11 +13,7 @@ import android.os.Environment
 import android.os.StrictMode
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.lifecycle.Observer
@@ -69,13 +63,14 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
     var lldisamnt: LinearLayout? = null
     var llnetamnt: LinearLayout? = null
     var lladvamnt: LinearLayout? = null
-
+    lateinit var serviceInfoListSort: JSONArray
 
 
 
     private var recyler_service                       : RecyclerView?   = null
     private var recycler_product                       : RecyclerView?   = null
-    lateinit var serviceInfoArrayList: JSONArray
+
+    var serviceInfoArrayList = JSONArray()
     lateinit var productInfooArrayList: JSONArray
     lateinit var AmountDetails: JSONArray
 
@@ -92,6 +87,8 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
     var DiscountAmount: Double? = 0.0
     var ProductCharge: Double? = 0.0
     var NetAmount: Double? = 0.0
+
+    var modeClosed = 0
 
     lateinit var closedTicketViewModel: ClosedTicketViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -156,6 +153,7 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
         btnShare!!.setOnClickListener(this)
         btnCancel!!.setOnClickListener(this)
 
+        modeClosed = 0
         getClosedTicketList()
 
 
@@ -180,117 +178,135 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
 
+                                if (modeClosed == 0) {
 
-                                val jObject = JSONObject(msg)
-                                Log.e(TAG, "msg   closedticket   " + msg)
-                                if (jObject.getString("StatusCode") == "0") {
-
-
-
-
+                                    modeClosed++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   closedticket   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
 
 
-                                    val jobjt = jObject.getJSONObject("ServiceInvoice")
-                                    serviceInfoArrayList = jobjt.getJSONArray("ServiceInformation")
-                                    productInfooArrayList = jobjt.getJSONArray("ProductInformation")
-                                    AmountDetails = jobjt.getJSONArray("AmountDetails")
-                                    if (serviceInfoArrayList.length() > 0) {
 
 
-                                        Log.e(TAG, "service info list size   " + serviceInfoArrayList.length())
-
-                                        val lLayout = GridLayoutManager(this@ServiceInvoiceActivity, 1)
-                                        recyler_service!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        //  val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
-                                        val adapter = ServiceInfoListAdapter(this@ServiceInvoiceActivity,serviceInfoArrayList!!)
-                                       recyler_service!!.adapter = adapter
+                                        /*  serviceInfoArrayList.put("")
+                                          productInfooArrayList.put("")
+                                          AmountDetails.put("")*/
 
 
-                                    }
-
-                                    if (productInfooArrayList.length()>0)
-                                    {
-                                        Log.e(TAG, "product info list size   " + productInfooArrayList.length())
-                                        val lLayout = GridLayoutManager(this@ServiceInvoiceActivity, 1)
-                                        recycler_product!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        //  val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
-                                        val adapter = ProductInfoListAdapter(this@ServiceInvoiceActivity,productInfooArrayList!!)
-                                        recycler_product!!.adapter = adapter
-                                    }
-                                    if (AmountDetails.length()>0)
-                                    {
-                                        Log.e(TAG, "amount info list size   " + AmountDetails.length())
-
-                                    //    holder.txt_mrp.text        = Config.changeTwoDecimel(jsonObject!!.getString("MRP"))
 
 
-                                       // tv_advamt!!.text=AmountDetails.getJSONObject(0).getString("AdvanceAmount")
-                                        tv_advamt!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("AdvanceAmount"))
-                                      //  tv_servicecharge!!.text=AmountDetails.getJSONObject(0).getString("ServiceCharge")
-                                        tv_servicecharge!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("ServiceCharge"))
-                                      //  tv_servicecharge!!.text=AmountDetails.getJSONObject(0).getString("ServiceCharge")
+                                        val jobjt = jObject.getJSONObject("ServiceInvoice")
+
+                                        serviceInfoArrayList = jobjt.getJSONArray("ServiceInformation")
+                                        productInfooArrayList = jobjt.getJSONArray("ProductInformation")
+                                        AmountDetails = jobjt.getJSONArray("AmountDetails")
+
+                                        if (serviceInfoArrayList.length() > 0) {
+
+
+
+                                            Log.e(TAG, "service info list size   " + serviceInfoArrayList.length())
+
+                                            val lLayout = GridLayoutManager(this@ServiceInvoiceActivity, 1)
+                                            recyler_service!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            //  val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
+                                            val adapter = ServiceInfoListAdapter(this@ServiceInvoiceActivity,serviceInfoArrayList!!)
+                                            recyler_service!!.adapter = adapter
+
+                                            adapter!!.notifyDataSetChanged()
+
+                                        }
+
+                                        if (productInfooArrayList.length()>0)
+                                        {
+
+
+
+
+                                            Log.e(TAG, "product info list size   " + productInfooArrayList.length())
+
+                                            val lLayout = GridLayoutManager(this@ServiceInvoiceActivity, 1)
+                                            recycler_product!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            //  val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
+                                            val adapter = ProductInfoListAdapter(this@ServiceInvoiceActivity,productInfooArrayList!!)
+                                            recycler_product!!.adapter = adapter
+                                        }
+                                        if (AmountDetails.length()>0)
+                                        {
+                                            Log.e(TAG, "amount info list size   " + AmountDetails.length())
+
+                                            //    holder.txt_mrp.text        = Config.changeTwoDecimel(jsonObject!!.getString("MRP"))
+
+
+                                            // tv_advamt!!.text=AmountDetails.getJSONObject(0).getString("AdvanceAmount")
+                                            tv_advamt!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("AdvanceAmount"))
+                                            //  tv_servicecharge!!.text=AmountDetails.getJSONObject(0).getString("ServiceCharge")
+                                            tv_servicecharge!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("ServiceCharge"))
+                                            //  tv_servicecharge!!.text=AmountDetails.getJSONObject(0).getString("ServiceCharge")
 
 //                                        if (AmountDetails.getJSONObject(0).getString("SecurityAmount").equals("0.0"))
 
-                                        var securityamont=0.0
-                                        var discountamont=0.0
-                                        securityamont=AmountDetails.getJSONObject(0).getString("SecurityAmount").toDouble()
+                                            var securityamont=0.0
+                                            var discountamont=0.0
+                                            securityamont=AmountDetails.getJSONObject(0).getString("SecurityAmount").toDouble()
 
-                               //         tv_securityamnt!!.text=AmountDetails.getJSONObject(0).getString("SecurityAmount")
-                                        tv_securityamnt!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("SecurityAmount"))
-                                      //  tv_productcharge!!.text=AmountDetails.getJSONObject(0).getString("ProductCharge")
-                                        tv_productcharge!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("ProductCharge"))
-                                       // tv_discountamnt!!.text=AmountDetails.getJSONObject(0).getString("DiscountAmount")
-                                        tv_discountamnt!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("DiscountAmount"))
-                                  //      tv_netamnt!!.text=AmountDetails.getJSONObject(0).getString("NetAmount")
-                                        tv_netamnt!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("NetAmount"))
+                                            //         tv_securityamnt!!.text=AmountDetails.getJSONObject(0).getString("SecurityAmount")
+                                            tv_securityamnt!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("SecurityAmount"))
+                                            //  tv_productcharge!!.text=AmountDetails.getJSONObject(0).getString("ProductCharge")
+                                            tv_productcharge!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("ProductCharge"))
+                                            // tv_discountamnt!!.text=AmountDetails.getJSONObject(0).getString("DiscountAmount")
+                                            tv_discountamnt!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("DiscountAmount"))
+                                            //      tv_netamnt!!.text=AmountDetails.getJSONObject(0).getString("NetAmount")
+                                            tv_netamnt!!.text=rupee+" "+Config.changeTwoDecimel(AmountDetails.getJSONObject(0).getString("NetAmount"))
 
-                                        AdvanceAmount=AmountDetails.getJSONObject(0).getString("AdvanceAmount").toDouble()
-                                        SecurityAmount=AmountDetails.getJSONObject(0).getString("SecurityAmount").toDouble()
-                                        ServiceCharge=AmountDetails.getJSONObject(0).getString("ServiceCharge").toDouble()
-                                        DiscountAmount=AmountDetails.getJSONObject(0).getString("DiscountAmount").toDouble()
-                                        ProductCharge=AmountDetails.getJSONObject(0).getString("ProductCharge").toDouble()
-                                        NetAmount=AmountDetails.getJSONObject(0).getString("NetAmount").toDouble()
+                                            AdvanceAmount=AmountDetails.getJSONObject(0).getString("AdvanceAmount").toDouble()
+                                            SecurityAmount=AmountDetails.getJSONObject(0).getString("SecurityAmount").toDouble()
+                                            ServiceCharge=AmountDetails.getJSONObject(0).getString("ServiceCharge").toDouble()
+                                            DiscountAmount=AmountDetails.getJSONObject(0).getString("DiscountAmount").toDouble()
+                                            ProductCharge=AmountDetails.getJSONObject(0).getString("ProductCharge").toDouble()
+                                            NetAmount=AmountDetails.getJSONObject(0).getString("NetAmount").toDouble()
 
 
-                                        if (AmountDetails.getJSONObject(0).getString("SecurityAmount").toDouble()==0.0)
-                                        {
-                                            llsecurityamt!!.visibility=View.GONE
+                                            if (AmountDetails.getJSONObject(0).getString("SecurityAmount").toDouble()==0.0)
+                                            {
+                                                llsecurityamt!!.visibility=View.GONE
+                                            }
+
+                                            if (AmountDetails.getJSONObject(0).getString("DiscountAmount").toDouble()==0.0)
+                                            {
+                                                lldisamnt!!.visibility=View.GONE
+                                            }
+                                            if (AmountDetails.getJSONObject(0).getString("NetAmount").toDouble()==0.0)
+                                            {
+                                                llnetamnt!!.visibility=View.GONE
+                                            }
+
+                                            if (AmountDetails.getJSONObject(0).getString("AdvanceAmount").toDouble()==0.0)
+                                            {
+                                                lladvamnt!!.visibility=View.GONE
+                                            }
+
+
+
+
+
                                         }
 
-                                        if (AmountDetails.getJSONObject(0).getString("DiscountAmount").toDouble()==0.0)
-                                        {
-                                            lldisamnt!!.visibility=View.GONE
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceInvoiceActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
                                         }
-                                        if (AmountDetails.getJSONObject(0).getString("NetAmount").toDouble()==0.0)
-                                        {
-                                            llnetamnt!!.visibility=View.GONE
-                                        }
-
-                                        if (AmountDetails.getJSONObject(0).getString("AdvanceAmount").toDouble()==0.0)
-                                        {
-                                            lladvamnt!!.visibility=View.GONE
-                                        }
-
-
-
-
-
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
                                     }
-
-
-                                } else {
-                                    val builder = AlertDialog.Builder(
-                                        this@ServiceInvoiceActivity,
-                                        R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
                                 }
+
 
 
                             } else {
@@ -586,4 +602,11 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
         }
         return file
     }
+
+    override fun onRestart() {
+        super.onRestart()
+        //serviceList = 0
+//        getClosedTicketList()
+    }
+
 }

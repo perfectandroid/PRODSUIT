@@ -41,8 +41,10 @@ class ProductInfoListAdapter (internal var context: Context, internal var jsonAr
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
-            jsonObject = jsonArray.getJSONObject(position)
+
             if (holder is MainViewHolder) {
+
+                jsonObject = jsonArray.getJSONObject(position)
                 Log.e(TAG,"onBindViewHolder   1051   "+jsonObject)
           //      holder.txt_scost.text        = Config.changeTwoDecimel(jsonObject!!.getString("ServiceCost"))
                 val pos = position+1

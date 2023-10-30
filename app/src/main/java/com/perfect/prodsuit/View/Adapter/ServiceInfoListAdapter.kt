@@ -42,8 +42,9 @@ class ServiceInfoListAdapter (internal var context: Context, internal var jsonAr
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
-            jsonObject = jsonArray.getJSONObject(position)
+
             if (holder is MainViewHolder) {
+                jsonObject = jsonArray.getJSONObject(position)
                 Log.e(TAG,"onBindViewHolder   1051   "+jsonObject)
 
        //         strBalanceTemp = Config.changeTwoDecimel(jsonObject1.getString("Balance"))
