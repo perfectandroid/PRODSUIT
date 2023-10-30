@@ -449,7 +449,7 @@
                                         android:paddingLeft="2dp"
                                         android:fontFamily="@font/myfont"
                                         android:layout_gravity="center"
-                                        android:text="Remark"
+                                        android:text="Remarks"
                                         android:textStyle="normal"
                                         android:textColor="@color/black"
                                         android:layout_centerVertical="true" />
