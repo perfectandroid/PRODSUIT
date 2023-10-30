@@ -44,7 +44,7 @@ class ClosedTicketActivity : AppCompatActivity() , View.OnClickListener, ItemCli
     var imgv_filter: ImageView? = null
     var txtv_headlabel: TextView? = null
     var tv_listCount: TextView? = null
-
+    var Idcudtomerregisterdetails: String? = "0"
 
 
 
@@ -54,7 +54,7 @@ class ClosedTicketActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_closed_ticket)
         context = this@ClosedTicketActivity
-        closedTicketViewModel = ViewModelProvider(this).get(ClosedTicketViewModel::class.java)
+        closedTicketViewModel = ViewModelProvider(this,).get(ClosedTicketViewModel::class.java)
 
 
         setRegViews()
@@ -109,7 +109,7 @@ class ClosedTicketActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                closedTicketViewModel.getclosedTicket(this)!!.observe(
+                closedTicketViewModel.getclosedTicket(this,Idcudtomerregisterdetails)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -227,23 +227,25 @@ class ClosedTicketActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
     override fun onClick(position: Int, data: String, jsonObject: JSONObject) {
         if (data.equals("ShareInvoice")) {
+            val jsonObject1 = closedTicketArrayList.getJSONObject(position)
+            Log.e(TAG,"ID_Priority   "+jsonObject1.getString("ID_CustomerServiceRegister"))
+            //Log.e(TAG, "onclick   " + data)
 
-            Log.e(TAG, "onclick   " + data)
-
-            val customer_name = jsonObject!!.getString("Customer")
-            val TicketNo = jsonObject!!.getString("TicketNo")
-
-
-            val CusAddress = jsonObject!!.getString("CusAddress")
-            val RegDate = jsonObject!!.getString("RegDate")
+            val customer_name = jsonObject1!!.getString("Customer")
+            val TicketNo = jsonObject1!!.getString("TicketNo")
 
 
+            val CusAddress = jsonObject1!!.getString("CusAddress")
+            val RegDate = jsonObject1!!.getString("RegDate")
 
+            Idcudtomerregisterdetails= jsonObject1!!.getString("ID_CustomerServiceRegister")
+          //  jsonObject = jsonArray.getJSONObject(position)
             val intent = Intent(this@ClosedTicketActivity, ServiceInvoiceActivity::class.java)
             intent.putExtra("customer_name", customer_name)
             intent.putExtra("TicketNo", TicketNo)
             intent.putExtra("CusAddress", CusAddress)
             intent.putExtra("RegDate", RegDate)
+            intent.putExtra("Idcudtomerregisterdetails", Idcudtomerregisterdetails)
 
 
 
