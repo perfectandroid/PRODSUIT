@@ -7486,6 +7486,66 @@ private var custmoerAssignmentID : String? =null
 
         }
 
+//        if (data.equals("LeadrequestClick")) {
+//            Log.e(TAG, "6266  LeadrequestClick")
+//
+//            val jsonObject = leadRequestArrayList.getJSONObject(position)
+//
+//            llCustomerDetail!!.visibility = View.VISIBLE
+//            ID_Customer = ""
+//            edt_customer!!.setText("")
+//            ID_CustomerAssignment = jsonObject.getString("ID_CustomerAssignment")
+//            edtCustname!!.setText(jsonObject.getString("Customer"))
+//            edtCustphone!!.setText(jsonObject.getString("Mobile"))
+//
+//            //314400
+////            voiceCheckID=jsonObject.getString("blnVoiceData")
+////            custmoerAssignmentID=jsonObject.getString("ID_CustomerAssignment")
+//        //    voiceString=jsonObject.getString("VoiceData")
+//            Log.i("response1212","voiceCheckID yes or no="+voiceCheckID)
+////            if (voiceCheckID.equals("1")){
+////
+////
+////                custmoerAssignmentID=jsonObject.getString("ID_CustomerAssignment")
+////                Log.i("response1212","voiceCheckID="+voiceCheckID)
+////                Log.i("response1212","custmoerAssignmentID="+custmoerAssignmentID)
+////
+////
+////                lotti_play!!.pauseAnimation()
+////
+////
+////
+////                cardVoiceRequest!!.visibility=View.VISIBLE
+////                saveCount=0
+////                getVoiceNote(custmoerAssignmentID)
+////
+////            }else{
+////                cardVoiceRequest!!.visibility=View.GONE
+////            }
+//
+//                //      setVoiceData(voiceString!!)
+//
+//
+//
+//            custDetailMode = "0"
+//            companyNameMode = "1"
+//            moreCommInfoMode = "1"
+//            custProdlMode = "1"
+//            locationMode = "1"
+//            dateMode = "1"
+//            leadRequestMode = "1"
+//            leadfromMode = "1"
+//            leadThroughMode = "1"
+//            leadByMode = "1"
+//            mediaTypeMode = "1"
+//            uploadImageMode = "1"
+//
+//            hideViews()
+//
+//
+//        }
+
+
         if (data.equals("LeadrequestClick")) {
             Log.e(TAG, "6266  LeadrequestClick")
 
@@ -7499,31 +7559,27 @@ private var custmoerAssignmentID : String? =null
             edtCustphone!!.setText(jsonObject.getString("Mobile"))
 
             //314400
-//            voiceCheckID=jsonObject.getString("blnVoiceData")
-//            custmoerAssignmentID=jsonObject.getString("ID_CustomerAssignment")
-        //    voiceString=jsonObject.getString("VoiceData")
-            Log.i("response1212","voiceCheckID yes or no="+voiceCheckID)
-//            if (voiceCheckID.equals("1")){
-//
-//
-//                custmoerAssignmentID=jsonObject.getString("ID_CustomerAssignment")
-//                Log.i("response1212","voiceCheckID="+voiceCheckID)
-//                Log.i("response1212","custmoerAssignmentID="+custmoerAssignmentID)
-//
-//
-//                lotti_play!!.pauseAnimation()
-//
-//
-//
-//                cardVoiceRequest!!.visibility=View.VISIBLE
-//                saveCount=0
-//                getVoiceNote(custmoerAssignmentID)
-//
-//            }else{
-//                cardVoiceRequest!!.visibility=View.GONE
-//            }
+            voiceCheckID=jsonObject.getString("blnVoiceData")
 
-                //      setVoiceData(voiceString!!)
+
+            if (voiceCheckID.equals("1")){
+
+
+                custmoerAssignmentID=jsonObject.getString("ID_CustomerAssignment")
+                Log.i("response1212","voiceCheckID="+voiceCheckID)
+                Log.i("response1212","custmoerAssignmentID="+custmoerAssignmentID)
+
+
+
+                cardVoiceRequest!!.visibility=View.VISIBLE
+                saveCount=0
+                getVoiceNote(custmoerAssignmentID)
+
+            }else{
+                cardVoiceRequest!!.visibility=View.GONE
+            }
+
+            //      setVoiceData(voiceString!!)
 
 
 
@@ -7544,8 +7600,6 @@ private var custmoerAssignmentID : String? =null
 
 
         }
-
-
 
     }
 
