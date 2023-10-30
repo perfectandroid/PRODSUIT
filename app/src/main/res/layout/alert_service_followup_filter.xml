@@ -117,14 +117,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:weightSum="2">
+                    android:weightSum="1">
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.App.TextInputLayout"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginRight="10dp"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
                         android:drawableTint="@color/textColor"
@@ -160,7 +160,8 @@
                         android:layout_weight="1"
                         android:drawableTint="@color/textColor"
                         android:fontFamily="@font/myfont"
-                        android:hint="Status">
+                        android:hint="Status"
+                        android:visibility="gone">
                     <AutoCompleteTextView
                         android:id="@+id/edt_status"
                         android:layout_width="match_parent"

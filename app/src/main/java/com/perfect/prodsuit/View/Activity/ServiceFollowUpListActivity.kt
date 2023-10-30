@@ -338,6 +338,8 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
     private fun setServiceFollowRecycler(jsonArray2: JSONArray) {
 //        swipeRefreshLayout.isRefreshing = false
+
+        Log.e(TAG,"34222   "+jsonArray2.length())
         recyclerView.visibility = View.VISIBLE
         recyclerView!!.setLayoutManager(
             LinearLayoutManager(
@@ -349,6 +351,20 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
         var adapter = ServiceFollowUpListAdapter(this, jsonArray2)
         recyclerView!!.adapter = adapter
         adapter.addItemClickListener(this)
+
+        if (jsonArray2.length() == 0){
+            val builder = AlertDialog.Builder(
+                this@ServiceFollowUpListActivity,
+                R.style.MyDialogTheme
+            )
+            builder.setMessage("No Data Found")
+            builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+            }
+            val alertDialog: AlertDialog = builder.create()
+            alertDialog.setCancelable(false)
+            alertDialog.show()
+        }
     }
 
     override fun onClick(position: Int, data: String, jsonObject: JSONObject) {
@@ -842,6 +858,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
             strToDate = ""
         }
         btnYes.setOnClickListener {
+            dialog.dismiss()
             var jsonArrayFilterd: JSONArray = JSONArray()
             var ticketNumber: String = ""
             var product: String = ""
@@ -859,6 +876,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
             {
                 status=""
             }
+
             var x = 0
             for (i in 0 until serviceFollowUpArrayList.length()) {
                 val item = serviceFollowUpArrayList.getJSONObject(i)
