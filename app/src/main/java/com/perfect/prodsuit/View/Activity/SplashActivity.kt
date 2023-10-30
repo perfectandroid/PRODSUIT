@@ -39,10 +39,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://202.164.150.65:14262/ProdSuitAPI/"
 //    val BANK_KEY = "-500"
 
-    val CERT_NAME = "development.pem"
-    val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
-    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
-    val BANK_KEY  = "-500"
+//    val CERT_NAME = "development.pem"
+//    val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
+//    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
+//    val BANK_KEY  = "-500"
+
     ////    DEMO 15.02.2023
 //    val CERT_NAME = "democert.pem"
 //    val BASE_URL = "https://45.118.163.44:14001/ProdSuiteAPIDemo/api/"
@@ -170,10 +171,10 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
 
     ////    DEVELOPMENT 30.11.2022
-//    val CERT_NAME = "development.pem"
-//    val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
-//    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
-//    val BANK_KEY  = "-500"
+    val CERT_NAME = "development.pem"
+    val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
+    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
+    val BANK_KEY  = "-500"
 
     ///verminatorERP 30.9.2023
 //    val CERT_NAME = "verminator.pem"
@@ -206,6 +207,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BASE_URL  = "https://45.118.163.44:14001/ProdSuiteAPIPerfectDemo/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14001/ProdSuiteAPIPerfectDemo"
 //    val BANK_KEY  = "-510"
+
+//    val CERT_NAME = "marketDemo.pem"
+//    val BASE_URL  = "https://45.118.163.44:14001/ProdSuiteAPIMarketingDemo/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14001/ProdSuiteAPIMarketingDemo"
+//    val BANK_KEY  = "-520"
 
     var TAG = "SplashActivity"
     lateinit var splashresellerActivityViewModel: SplashresellerActivityViewModel

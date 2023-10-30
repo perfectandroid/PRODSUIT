@@ -353,17 +353,18 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
         adapter.addItemClickListener(this)
 
         if (jsonArray2.length() == 0){
-            val builder = AlertDialog.Builder(
-                this@ServiceFollowUpListActivity,
-                R.style.MyDialogTheme
-            )
-            builder.setMessage("No Data Found")
-            builder.setPositiveButton("Ok") { dialogInterface, which ->
 
-            }
-            val alertDialog: AlertDialog = builder.create()
-            alertDialog.setCancelable(false)
-            alertDialog.show()
+            val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+            val dialog: AlertDialog = builder.setMessage("No data found")
+                .setPositiveButton("OK") {
+                        dialog, which -> dialog.dismiss()
+                }
+
+                .create()
+            dialog.show()
+
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK)
+
         }
     }
 
