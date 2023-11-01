@@ -26,7 +26,6 @@
             android:id="@+id/llProduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/border_4"
             android:layout_margin="1dp"
             android:orientation="vertical">
 
@@ -165,8 +164,7 @@
                             android:layout_height="match_parent"
                             android:padding="10dp"
                             android:src="@drawable/warrantyfollowup"
-                            app:tint="@color/colorPrimary"
-                            android:visibility="gone"/>
+                            app:tint="@color/colorPrimary" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -179,18 +177,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:textSize="12dp"
+                                android:textSize="14dp"
                                 android:layout_weight="1"
                                 android:paddingLeft="2dp"
                                 android:fontFamily="@font/myfont"
                                 android:text="Warranty"
-                                android:layout_marginLeft="10dp"
                                 android:textStyle="normal"
                                 android:textColor="@color/black"
                                 android:layout_centerVertical="true" />
-
-<!--                            android:drawableLeft="@drawable/warrantyfollowup"-->
-<!--                            android:drawablePadding="5dp"-->
 
                             <TextView
                                 android:id="@+id/til_warranty"
@@ -200,8 +194,7 @@
                                 android:textSize="14dp"
                                 android:layout_weight="1"
                                 android:fontFamily="@font/myfont"
-                                android:text="12-20-2023"
-                                android:layout_marginLeft="10dp"
+                                android:text=""
                                 android:textStyle="normal"
                                 android:textColor="@color/black"
                                 android:layout_centerVertical="true" />
@@ -228,88 +221,129 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/tie_warranty_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:textSize="12dp"
-                            android:layout_weight="1"
-                            android:paddingLeft="2dp"
-                            android:layout_marginLeft="10dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Service Wty Exp Dt"
-                            android:drawableTint="@color/colorPrimary"
-                            android:textStyle="normal"
-                            android:textColor="@color/black"
-                            android:layout_centerVertical="true" />
-<!--                        android:drawableLeft="@drawable/icon_svg_fromdate"-->
-<!--                        android:drawablePadding="5dp"-->
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:src="@drawable/servicedate"
+                            app:tint="@color/colorPrimary" />
 
-                        <TextView
-                            android:id="@+id/tie_replacement_date"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:textSize="12dp"
-                            android:layout_weight="1"
-                            android:paddingLeft="2dp"
-                            android:layout_marginLeft="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="Replacement WtyExpDt"
-                            android:drawableTint="@color/colorPrimary"
-                            android:textStyle="normal"
-                            android:textColor="@color/black"
-                            android:layout_centerVertical="true" />
-<!--                        android:drawableLeft="@drawable/icon_svg_todate"-->
-<!--                        android:drawablePadding="5dp"-->
+                            android:orientation="vertical">
+
+
+                            <TextView
+                                android:id="@+id/tie_warranty_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:textSize="14dp"
+                                android:layout_weight="1"
+                                android:paddingLeft="2dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Service Wty Exp Dt"
+                                android:textStyle="normal"
+                                android:textColor="@color/black"
+                                android:layout_centerVertical="true" />
+
+                            <TextView
+                                android:id="@+id/til_warranty_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:textSize="14dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/myfont"
+                                android:text=""
+                                android:textStyle="normal"
+                                android:textColor="@color/black"
+                                android:layout_centerVertical="true" />
+
+                        </LinearLayout>
+
+
+
+
+                        <View
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/color_background1"
+                            android:visibility="gone"/>
+
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:padding="10dp"
+                            android:src="@drawable/servicedate"
+                            app:tint="@color/colorPrimary" />
 
-                        <TextView
-                            android:id="@+id/til_warranty_date"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:textSize="14dp"
-                            android:layout_weight="1"
-                            android:layout_marginLeft="10dp"
-                            android:fontFamily="@font/myfont"
-                            android:text="20-10-2023"
-                            android:textStyle="normal"
-                            android:textColor="@color/black"
-                            android:layout_centerVertical="true" />
+                            android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/til_replacement_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:textSize="14dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/myfont"
-                            android:text="20-10-2023"
-                            android:layout_marginLeft="5dp"
-                            android:textStyle="normal"
-                            android:textColor="@color/black"
-                            android:layout_centerVertical="true" />
+
+                            <TextView
+                                android:id="@+id/tie_replacement_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:textSize="14dp"
+                                android:layout_weight="1"
+                                android:paddingLeft="2dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Replacement WtyExpDt"
+                                android:textStyle="normal"
+                                android:textColor="@color/black"
+                                android:layout_centerVertical="true" />
+
+                            <TextView
+                                android:id="@+id/til_replacement_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:textSize="14dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/myfont"
+                                android:text=""
+                                android:textStyle="normal"
+                                android:textColor="@color/black"
+                                android:layout_centerVertical="true" />
+
+                        </LinearLayout>
+
+
+
+
+                        <View
+                            android:layout_width="0.5dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/color_background1"
+                            android:visibility="gone"/>
+
 
                     </LinearLayout>
-
-
 
 
                 </LinearLayout>
@@ -328,7 +362,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="10dp"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -394,7 +428,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginTop="5dp"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -405,10 +438,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
+                                android:layout_marginLeft="5dp"
                                 android:textSize="14dp"
                                 android:layout_weight="1"
                                 android:paddingLeft="2dp"
-                                android:layout_marginLeft="10dp"
                                 android:fontFamily="@font/myfont"
                                 android:text="Description"
                                 android:textStyle="normal"
@@ -428,12 +461,12 @@
                             android:paddingLeft="2dp"
                             android:padding="5dp"
                             android:paddingRight="10dp"
-                            android:layout_marginRight="5dp"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="5dp"
                             android:fontFamily="@font/myfont"
                             android:background="@drawable/border_service"
                             android:text=""
-                            android:enabled="true"
+                            android:enabled="false"
                             android:textStyle="normal"
                             android:textColor="@color/black"/>
 
