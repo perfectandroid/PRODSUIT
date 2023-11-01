@@ -399,7 +399,7 @@ Log.v("adasdasds","modeTab "+modeTab)
     }
 
     private fun saveDetails(Actionproductdetails: JSONArray) {
-        var StartingDate= tie_DateAttended!!.text.toString()
+        var StartingDate= Config.convertDate(tie_DateAttended!!.text.toString())
         var totalSecurityAmount = edttotalSecurityAmount!!.text.toString()
 //        var componentCharge = edtcomponentCharge!!.text.toString()
 //        var totalServiceCost = edttotalServiceCost!!.text.toString()
@@ -439,147 +439,147 @@ Log.v("adasdasds","modeTab "+modeTab)
             Log.e(TAG, "arrPaymentFinal   " + arrPaymentFinal)
 
 
-            when (Config.ConnectivityUtils.isConnected(this)) {
-
-                true -> {
-                    progressDialog = ProgressDialog(context, R.style.Progress)
-                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                    progressDialog!!.setCancelable(false)
-                    progressDialog!!.setIndeterminate(true)
-                    progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                    progressDialog!!.show()
-                    serviceFollowUpSaveModel.saveFollowUp(
-                        this,
-                        "1",
-                        ID_Customerserviceregister,
-                        ID_CustomerserviceregisterProductDetails,
-                        StartingDate,
-                        companantCharge!!,
-                        totalServiceCost!!,
-                        otherCharge,
-                        totalSecurityAmount,
-                        netAmount,
-                        discountAmount!!,
-                        fk_company!!,
-                        FK_BranchCodeUser!!,
-                        UserCode!!,
-                        billtype,
-                        "",
-                        "'CUSF'",
-                        serviceDetailsArray,
-                        servicePartsArray,
-                        Actionproductdetails,
-                        AttendedEmployeeDetails,
-                        serviceIncentiveArray,
-                        arrOtherChargeFinal,
-                        arrPaymentFinal
-                    )!!.observe(
-                        this,
-                        Observer { serviceSetterGetter ->
-                            val msg = serviceSetterGetter.message
-
-
-                            try {
-
-                                if (msg!!.length > 0) {
-                                    if (saveLeadGenDet == 0) {
-                                        saveLeadGenDet++
-                                        val jObject = JSONObject(msg)
-                                        Log.e(TAG, "msg   4120   " + msg)
-                                        if (jObject.getString("StatusCode") == "0") {
-                                            val jobjt =
-                                                jObject.getJSONObject("UpdateServiceFollowUp")
-                                            try {
-
-                                                val suceessDialog = Dialog(this)
-                                                suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                                                suceessDialog!!.setCancelable(false)
-                                                suceessDialog!!.setContentView(R.layout.success_popup_service)
-                                                suceessDialog!!.window!!.attributes.gravity =
-                                                    Gravity.CENTER_VERTICAL;
-
-                                                val tv_succesmsg =
-                                                    suceessDialog!!.findViewById(R.id.tv_succesmsg) as TextView
-
-                                                val tv_succesok =
-                                                    suceessDialog!!.findViewById(R.id.tv_succesok) as TextView
-                                                //LeadNumber
-                                                tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
-                                                tv_succesok!!.setOnClickListener {
-                                                    suceessDialog!!.dismiss()
-//                                                    val i = Intent(this@LeadGenerationActivity, LeadActivity::class.java)
-//                                                    startActivity(i)
-                                                    finish()
-
-                                                }
-
-                                                suceessDialog!!.show()
-                                                suceessDialog!!.getWindow()!!.setLayout(
-                                                    ViewGroup.LayoutParams.MATCH_PARENT,
-                                                    ViewGroup.LayoutParams.WRAP_CONTENT
-                                                );
-                                            } catch (e: Exception) {
-                                                e.printStackTrace()
-                                                val builder = AlertDialog.Builder(
-                                                    this@ServiceFollowUPActiivty,
-                                                    R.style.MyDialogTheme
-                                                )
-                                                builder.setMessage(e.toString())
-                                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                                    onBackPressed()
-                                                }
-                                                val alertDialog: AlertDialog = builder.create()
-                                                alertDialog.setCancelable(false)
-                                                alertDialog.show()
-
-                                            }
-
-
-
-                                        } else {
-                                            val builder = AlertDialog.Builder(
-                                                this@ServiceFollowUPActiivty,
-                                                R.style.MyDialogTheme
-                                            )
-                                            builder.setMessage(jObject.getString("EXMessage"))
-                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                                onBackPressed()
-                                            }
-                                            val alertDialog: AlertDialog = builder.create()
-                                            alertDialog.setCancelable(false)
-                                            alertDialog.show()
-                                        }
-                                    }
-
-                                } else {
-
-                                }
-
-
-                            } catch (e: Exception) {
-
-                                Log.e(TAG, "Exception  4133    " + e.toString())
-                                val builder = AlertDialog.Builder(
-                                    this@ServiceFollowUPActiivty,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(e.toString())
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
-
-                            }
-
-                        })
-                    progressDialog!!.dismiss()
-                }
-                false -> {
-                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                        .show()
-                }
-            }
+//            when (Config.ConnectivityUtils.isConnected(this)) {
+//
+//                true -> {
+//                    progressDialog = ProgressDialog(context, R.style.Progress)
+//                    progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//                    progressDialog!!.setCancelable(false)
+//                    progressDialog!!.setIndeterminate(true)
+//                    progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+//                    progressDialog!!.show()
+//                    serviceFollowUpSaveModel.saveFollowUp(
+//                        this,
+//                        "1",
+//                        ID_Customerserviceregister,
+//                        ID_CustomerserviceregisterProductDetails,
+//                        StartingDate,
+//                        companantCharge!!,
+//                        totalServiceCost!!,
+//                        otherCharge,
+//                        totalSecurityAmount,
+//                        netAmount,
+//                        discountAmount!!,
+//                        fk_company!!,
+//                        FK_BranchCodeUser!!,
+//                        UserCode!!,
+//                        billtype,
+//                        "",
+//                        "'CUSF'",
+//                        serviceDetailsArray,
+//                        servicePartsArray,
+//                        Actionproductdetails,
+//                        AttendedEmployeeDetails,
+//                        serviceIncentiveArray,
+//                        arrOtherChargeFinal,
+//                        arrPaymentFinal
+//                    )!!.observe(
+//                        this,
+//                        Observer { serviceSetterGetter ->
+//                            val msg = serviceSetterGetter.message
+//
+//
+//                            try {
+//
+//                                if (msg!!.length > 0) {
+//                                    if (saveLeadGenDet == 0) {
+//                                        saveLeadGenDet++
+//                                        val jObject = JSONObject(msg)
+//                                        Log.e(TAG, "msg   4120   " + msg)
+//                                        if (jObject.getString("StatusCode") == "0") {
+//                                            val jobjt =
+//                                                jObject.getJSONObject("UpdateServiceFollowUp")
+//                                            try {
+//
+//                                                val suceessDialog = Dialog(this)
+//                                                suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//                                                suceessDialog!!.setCancelable(false)
+//                                                suceessDialog!!.setContentView(R.layout.success_popup_service)
+//                                                suceessDialog!!.window!!.attributes.gravity =
+//                                                    Gravity.CENTER_VERTICAL;
+//
+//                                                val tv_succesmsg =
+//                                                    suceessDialog!!.findViewById(R.id.tv_succesmsg) as TextView
+//
+//                                                val tv_succesok =
+//                                                    suceessDialog!!.findViewById(R.id.tv_succesok) as TextView
+//                                                //LeadNumber
+//                                                tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
+//                                                tv_succesok!!.setOnClickListener {
+//                                                    suceessDialog!!.dismiss()
+////                                                    val i = Intent(this@LeadGenerationActivity, LeadActivity::class.java)
+////                                                    startActivity(i)
+//                                                    finish()
+//
+//                                                }
+//
+//                                                suceessDialog!!.show()
+//                                                suceessDialog!!.getWindow()!!.setLayout(
+//                                                    ViewGroup.LayoutParams.MATCH_PARENT,
+//                                                    ViewGroup.LayoutParams.WRAP_CONTENT
+//                                                );
+//                                            } catch (e: Exception) {
+//                                                e.printStackTrace()
+//                                                val builder = AlertDialog.Builder(
+//                                                    this@ServiceFollowUPActiivty,
+//                                                    R.style.MyDialogTheme
+//                                                )
+//                                                builder.setMessage(e.toString())
+//                                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                                    onBackPressed()
+//                                                }
+//                                                val alertDialog: AlertDialog = builder.create()
+//                                                alertDialog.setCancelable(false)
+//                                                alertDialog.show()
+//
+//                                            }
+//
+//
+//
+//                                        } else {
+//                                            val builder = AlertDialog.Builder(
+//                                                this@ServiceFollowUPActiivty,
+//                                                R.style.MyDialogTheme
+//                                            )
+//                                            builder.setMessage(jObject.getString("EXMessage"))
+//                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                                onBackPressed()
+//                                            }
+//                                            val alertDialog: AlertDialog = builder.create()
+//                                            alertDialog.setCancelable(false)
+//                                            alertDialog.show()
+//                                        }
+//                                    }
+//
+//                                } else {
+//
+//                                }
+//
+//
+//                            } catch (e: Exception) {
+//
+//                                Log.e(TAG, "Exception  4133    " + e.toString())
+//                                val builder = AlertDialog.Builder(
+//                                    this@ServiceFollowUPActiivty,
+//                                    R.style.MyDialogTheme
+//                                )
+//                                builder.setMessage(e.toString())
+//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                }
+//                                val alertDialog: AlertDialog = builder.create()
+//                                alertDialog.setCancelable(false)
+//                                alertDialog.show()
+//
+//                            }
+//
+//                        })
+//                    progressDialog!!.dismiss()
+//                }
+//                false -> {
+//                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                        .show()
+//                }
+//            }
         } catch (e: Exception) {
             Log.e(TAG, "Exception  226666    " + e.toString())
         }
@@ -1221,7 +1221,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         edtcomponentCharge!!.setText(Config.changeTwoDecimel(companantCharge!!))
         edtdiscountAmount!!.setText(Config.changeTwoDecimel(discountAmount!!))
        // edt_other_charges!!.setText("0.00")
-        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         tie_DateAttended!!.setText(currentDate)
         loadNetAmount()
@@ -1913,7 +1913,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
                 if (DateType == 0) {
-                    tie_DateAttended!!.setText("" + strYear + "-" + strMonth + "-" + strDay)
+                    tie_DateAttended!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
                 }
 
 
