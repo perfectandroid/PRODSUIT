@@ -270,7 +270,8 @@
                             android:id="@+id/ll_action_taken"
                             android:layout_width="match_parent"
                             android:orientation="vertical"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:visibility="gone">
                             <ScrollView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
@@ -1059,7 +1060,8 @@
                                             android:layout_gravity="center"
                                             android:layout_marginTop="15dp"
                                             android:gravity="center"
-                                            android:orientation="vertical">
+                                            android:orientation="vertical"
+                                            android:visibility="visible">
 
 
                                             <TextView
@@ -1073,7 +1075,8 @@
                                                 android:text="Parts Replaced"
                                                 android:textColor="@color/colorPrimary"
                                                 android:textSize="@dimen/header_text"
-                                                android:textStyle="bold" />
+                                                android:textStyle="bold"
+                                                android:visibility="gone"/>
 
                                             <androidx.recyclerview.widget.RecyclerView
                                                 android:id="@+id/recy_parts_replaced"
