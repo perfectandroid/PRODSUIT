@@ -2917,12 +2917,13 @@ Log.v("adasdasds","modeTab "+modeTab)
             recyFollowupAttended = dialogMoreServiceAttendeSheet!! .findViewById(R.id.recyFollowupAttended) as RecyclerView
             var tv_cancel = dialogMoreServiceAttendeSheet!! .findViewById(R.id.tv_cancel) as TextView
             var tv_submit = dialogMoreServiceAttendeSheet!! .findViewById(R.id.tv_submit) as TextView
+            var tv_main_header = dialogMoreServiceAttendeSheet!! .findViewById(R.id.tv_main_header) as TextView
 
             val window: Window? = dialogMoreServiceAttendeSheet!!.getWindow()
             window!!.setBackgroundDrawableResource(android.R.color.transparent);
             window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
-
+            tv_main_header.setText("Product Wise Complaints")
             val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
             recyFollowupAttended!!.layoutManager = lLayout as RecyclerView.LayoutManager?
             compAdapter = complaint_service_followup(this@ServiceFollowUPActiivty, complaintfollowup!!)

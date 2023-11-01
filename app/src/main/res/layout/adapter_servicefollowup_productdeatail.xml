@@ -313,7 +313,7 @@
                                 android:layout_weight="1"
                                 android:paddingLeft="2dp"
                                 android:fontFamily="@font/myfont"
-                                android:text="Replacement WtyExpDt"
+                                android:text="Replacement Wty Exp Dt"
                                 android:textStyle="normal"
                                 android:textColor="@color/black"
                                 android:layout_centerVertical="true" />
