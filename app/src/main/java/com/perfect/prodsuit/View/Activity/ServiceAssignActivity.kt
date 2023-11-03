@@ -53,7 +53,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     internal var crdvw_pickup: CardView? = null
     var recyServiceAssign: RecyclerView? = null
 
-
+    lateinit var departListSort: JSONArray
 
     lateinit var serviceAssignViewModel: ServiceAssignViewModel
     lateinit var serviceAssignArrayList : JSONArray
@@ -188,7 +188,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     var productMode: String? = "1"
     var listMode: String? = "1"
     var pickupMode: String? = "1"
-
+    var dep_id: String?=""
     var arrSaveUpdate: String? = "0"
     var arrIndexUpdate: Int? = 0
 
@@ -250,7 +250,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         val custbalidSP = context.getSharedPreferences(Config.SHARED_PREF71, 0)
         stridCustomer = custbalidSP.getString("custbalid","")
         Log.e(TAG,"ID_CustomerServiceRegister  163   "+ID_CustomerServiceRegister+"\n"+FK_CustomerserviceregisterProductDetails+"\n"+stridCustomer)
-
+      //  getDepartment()
 
     }
 
@@ -430,6 +430,9 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
         arrSaveUpdate ="0"
         btnAdd!!.setText("Add")
+
+
+
 
 
     }
@@ -972,6 +975,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             R.id.tie_Department->{
                 Config.disableClick(v)
                 department = 0
+                tie_Department!!.setText("")
                 getDepartment()
             }
             R.id.tie_Employee->{
@@ -1082,8 +1086,22 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     private fun addValidation() {
       //  try {
 
+        if(til_vehicleDetail!!.visibility==View.VISIBLE)
+        {
+            strRemark = tie_vehicle!!.text.toString()
+        }
+         if(tie_Remarks!!.visibility==View.GONE)
+        {
+            strRemark = txtv_remrkk!!.text.toString()
+        }
+         if(tie_Remarks!!.visibility==View.VISIBLE)
+        {
+            strRemark = tie_Remarks!!.text.toString()
+        }
 
-            //Log.i("Remarks", strRemark!!)
+
+
+        //Log.i("Remarks", strRemark!!)
 
             if (strVisitDate.equals("")){
                 til_VisitDate!!.setError("Select Visit Date");
@@ -1114,39 +1132,37 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
             }
 
-
-
-            else if (ID_Role.equals("")){
-
-
-                til_Role!!.setError("Select Role");
-                til_Role!!.setErrorIconDrawable(null)
-
-
-
-
-
-            }
-
-        else if(tie_Remarks!!.visibility==View.GONE)
-        {
-            strRemark = txtv_remrkk!!.text.toString()
-        }
-        else if(tie_Remarks!!.visibility==View.VISIBLE)
-        {
-            strRemark = tie_Remarks!!.text.toString()
-        }
-        if(til_vehicleDetail!!.visibility==View.VISIBLE)
-        {
-            strRemark = tie_vehicle!!.text.toString()
-        }
-        if (ID_Employee.equals("")){
+       else if (ID_Employee.equals("")){
 
             til_Employee!!.setError("Select Employee");
             til_Employee!!.setErrorIconDrawable(null)
 
 
         }
+
+            else if (ID_Role.equals("")){
+
+                if(til_Role!!.isShown) {
+                    til_Role!!.setError("Select Role");
+                    til_Role!!.setErrorIconDrawable(null)
+
+                }
+                else if(!til_Role!!.isShown){
+
+                }
+
+
+            }
+
+
+
+     /*   if (ID_Role!!.equals("")){
+
+            til_Role!!.setError("Select Role");
+            til_Role!!.setErrorIconDrawable(null)
+
+
+        }*/
 
             else
             {
@@ -1238,7 +1254,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
                     var hasId = hasEmployee(arrProducts,"ID_Employee",ID_Employee!!)
                     Log.e(TAG,"arrSaveUpdate 1   "+hasId)
-                    if (hasId==true){
+                    if (hasId==false){
                         card_details!!.visibility = View.VISIBLE
                         lnrHead_List!!.visibility = View.VISIBLE
 
@@ -1276,8 +1292,43 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                         hideViews()
                     }
                     else{
-                        til_Employee!!.setError(" Employee already exists.")
-                        til_Employee!!.setErrorIconDrawable(null)
+                        card_details!!.visibility = View.VISIBLE
+                        lnrHead_List!!.visibility = View.VISIBLE
+
+                        Log.e(TAG,"arrProducts  6091  "+arrProducts)
+                        arrProducts.remove(arrIndexUpdate!!)
+                        Log.e(TAG,"arrProducts  6092  "+arrProducts)
+                        arrProducts.put(arrIndexUpdate!!,jObject)
+                        Log.e(TAG,"arrProducts  6093  "+arrProducts)
+                        //   viewList(arrProducts)
+
+
+
+                        if (arrProducts.length() > 0) {
+                            arrproductSort = JSONArray()
+                            for (k in 0 until arrProducts.length()) {
+                                val jsonObject = arrProducts.getJSONObject(k)
+                                // reportNamesort.put(k,jsonObject)
+                                arrproductSort.put(jsonObject)
+                            }
+                            viewList(arrProducts, dateattend!!)
+                        }
+
+                        /*  val lLayout = GridLayoutManager(this@ServiceAssignActivity, 1)
+                          recyServiceAssign!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                          //  val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
+                          val adapter = ServiceAssignListAdapter(this@ServiceAssignActivity,arrProducts!!)
+                          recyServiceAssign!!.adapter = adapter
+                          adapter.setClickListener(this@ServiceAssignActivity)*/
+                        resetData("1")
+
+                        ticketMode = "1"
+                        serviceMode  = "1"
+                        productMode = "1"
+                        listMode = "0"
+                        hideViews()
+                      /*  til_Employee!!.setError("Employee already exists.")
+                        til_Employee!!.setErrorIconDrawable(null)*/
                     }
 
                 }
@@ -1659,7 +1710,6 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         }
 
     }
-
     private fun getDepartment() {
 //        var department = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -1687,8 +1737,116 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                         val jobjt = jObject.getJSONObject("DepartmentDetails")
                                         departmentArrayList = jobjt.getJSONArray("DepartmentDetailsList")
                                         if (departmentArrayList.length()>0){
+                                          /*  if(tie_Department!!.text.toString()!!.equals(""))
+                                            {
+                                                for (k in 0 until departmentArrayList.length()) {
+                                                    val jsonObject = departmentArrayList.getJSONObject(k)
+                                                    //   departListSort.put(k,jsonObject)
+                                                    dep_id = jsonObject.getString("DeptName")
+                                                    if(k==0)
+                                                    {
+                                                        tie_Department!!.setText(dep_id)
+                                                    }
+                                                }
 
-                                            departmentPopup(departmentArrayList)
+
+
+                                            }
+                                            else  if(!tie_Department!!.text.toString()!!.equals(""))
+                                            {*/
+                                                departmentPopup(departmentArrayList)
+                                           // }
+
+
+
+
+                                            ID_Employee = ""
+                                            tie_Employee!!.setText("")
+
+
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceAssignActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+    private fun getDepartment1() {
+//        var department = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                departmentViewModel.getDepartment(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (department == 0){
+                                    department++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1142   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("DepartmentDetails")
+                                        departmentArrayList = jobjt.getJSONArray("DepartmentDetailsList")
+                                        if (departmentArrayList.length()>0){
+
+                                         //   departmentPopup(departmentArrayList)
+
+                                            for (k in 0 until departmentArrayList.length()) {
+                                                val jsonObject = departmentArrayList.getJSONObject(k)
+                                                //   departListSort.put(k,jsonObject)
+                                                 dep_id = jsonObject.getString("DeptName")
+                                            }
+
+                                            tie_Department!!.setText(dep_id)
+
+
+                                            ID_Employee = ""
+                                            tie_Employee!!.setText("")
+
+
 
                                         }
                                     } else {
@@ -2109,15 +2267,16 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             dialogDepartment!!.dismiss()
 //            val jsonObject = departmentArrayList.getJSONObject(position)
             val jsonObject = departmentSort.getJSONObject(position)
-            Log.e(TAG,"ID_Department   "+jsonObject.getString("ID_Department"))
+            Log.e(TAG,"ID_Department   "+jsonObject.getString("ID_Department")+"\n"+departmentSort.getJSONObject(position))
             ID_Department = jsonObject.getString("ID_Department")
             tie_Department!!.setText(jsonObject.getString("DeptName"))
 
-            ID_Employee = ""
-            tie_Employee!!.setText("")
+        /*    ID_Employee = ""
+            tie_Employee!!.setText("")*/
 
 
         }
+
 
         if (data.equals("employee")){
             dialogEmployee!!.dismiss()
