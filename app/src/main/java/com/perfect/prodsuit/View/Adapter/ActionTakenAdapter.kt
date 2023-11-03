@@ -59,64 +59,121 @@ class ActionTakenAdapter(
                 holder.tv_action_action_taken.text = empModel.actionName
                 holder.tv_lead_action.text = empModel.leadAction
                 holder.edt_customer_note.setText(empModel.Customer_note)
+                holder.tv_lead_FollowupDate.setText(empModel.FollowupDate)
+                holder.tv_lead_ActionType.setText(empModel.ActionType)
+                holder.tv_lead_AssignedTo.setText(empModel.EmplloyeeName)
+
                 Log.v("sdfsdfdsfds","check value2 "+empModel.ProvideStandBy)
-                Log.v("sdfsdfdsfds","check action "+empModel.actionStatus)
-                Log.e(TAG,"633331  actionStatus   "+empModel.actionStatus)
-                Log.e(TAG,"633332  Status         "+empModel.Status)
+                Log.v("sdfsdfdsfds","check action "+empModel.ID_Action)
+                Log.e(TAG,"633331  actionStatus   "+empModel.ID_Action)
+                Log.e(TAG,"633332  Status         "+empModel.actionStatus)
 
                 DecimelFormatters.setDecimelPlace(holder.edit_security_amount!!)
                 DecimelFormatters.setDecimelPlace(holder.edit_buy_back_amount!!)
 
-                if (empModel.Status.equals("5")){
+                if (empModel.actionStatus.equals("5")){
                     //Pick up Request
+                    holder.ll_leadAction.visibility = View.GONE
+                    holder.ll_leadAction_sub.visibility = View.GONE
                     holder.ll_checkbox.visibility = View.VISIBLE
                     holder.ll_security_amount.visibility = View.GONE
                     holder.ll_buy_back_amount.visibility = View.GONE
 
+
                     if (holder.check.isChecked){
                         holder.ll_security_amount.visibility = View.VISIBLE
                     }else{
-                        mList[position].securityAmount =  "0.00"
+                        empModel.securityAmount =  "0.00"
                         holder.edit_security_amount.setText("0.00")
 
                     }
+                    holder.edit_buy_back_amount.setText("0.00")
+
+                    if (empModel.ProvideStandBy){
+                        holder.ll_security_amount.visibility = View.VISIBLE
+                        holder.check.isChecked=true
+                    }else{
+                        holder.check.isChecked=false
+                        holder.ll_security_amount.visibility = View.GONE
+                    }
+
+                    if (empModel.leadActionStatus.equals("1")){
+                        holder.ll_leadAction_sub.visibility = View.VISIBLE
+                    }else{
+                        holder.ll_leadAction_sub.visibility = View.GONE
+                    }
+
+
+
 
                 }
-                else if (empModel.Status.equals("9")){
+                else if (empModel.actionStatus.equals("9")){
                     //By Back Lead
+
+                    holder.ll_leadAction.visibility = View.VISIBLE
+                    holder.ll_leadAction_sub.visibility = View.GONE
+                    holder.ll_buy_back_amount.visibility = View.VISIBLE
+
                     holder.ll_checkbox.visibility = View.GONE
                     holder.ll_security_amount.visibility = View.GONE
-                    holder.ll_buy_back_amount.visibility = View.GONE
+//                    holder.ll_buy_back_amount.visibility = View.GONE
 
                     mList[position].securityAmount =  "0.00"
                     holder.edit_security_amount.setText("0.00")
+                    holder.edit_buy_back_amount.setText("0.00")
+
+                    if (empModel.leadActionStatus.equals("1")){
+                        holder.ll_leadAction_sub.visibility = View.VISIBLE
+                    }else{
+                        holder.ll_leadAction_sub.visibility = View.GONE
+                    }
+
+                    empModel.ProvideStandBy =  false
                 }
-                else if (empModel.Status.equals("6")){
+                else if (empModel.actionStatus.equals("6")){
                     //Stand By
+                    holder.ll_leadAction.visibility = View.GONE
+                    holder.ll_leadAction_sub.visibility = View.GONE
                     holder.ll_checkbox.visibility = View.GONE
                     holder.ll_security_amount.visibility = View.VISIBLE
                     holder.ll_buy_back_amount.visibility = View.GONE
+                    holder.ll_leadAction_sub.visibility = View.GONE
 
-                    mList[position].securityAmount =  "0.00"
+
+                    empModel.securityAmount =  "0.00"
                     holder.edit_security_amount.setText("0.00")
+                    holder.edit_buy_back_amount.setText("0.00")
+
+                    empModel.ProvideStandBy =  false
 
 
                 }
-                else if (empModel.Status.equals("10")){
+                else if (empModel.actionStatus.equals("10")){
                     //Buy Back Order
+                    holder.ll_leadAction.visibility = View.GONE
+                    holder.ll_leadAction_sub.visibility = View.GONE
                     holder.ll_checkbox.visibility = View.GONE
                     holder.ll_security_amount.visibility = View.GONE
                     holder.ll_buy_back_amount.visibility = View.VISIBLE
+                    holder.ll_leadAction_sub.visibility = View.GONE
 
-                    mList[position].securityAmount =  "0.00"
+
+                    empModel.securityAmount =  "0.00"
                     holder.edit_security_amount.setText("0.00")
+                    holder.edit_buy_back_amount.setText("0.00")
+
+                    mList[position].ProvideStandBy =  false
 
                 }else{
                     holder.ll_checkbox.visibility = View.GONE
                     holder.ll_security_amount.visibility = View.GONE
                     holder.ll_buy_back_amount.visibility = View.GONE
+                    holder.ll_leadAction_sub.visibility = View.GONE
 
-                    mList[position].securityAmount =  "0.00"
+                    empModel.securityAmount =  "0.00"
+                    holder.edit_buy_back_amount.setText("0.00")
+
+                    empModel.ProvideStandBy =  false
                 }
 
 
@@ -141,6 +198,17 @@ class ActionTakenAdapter(
                 })
                 holder.tv_lead_action!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(position, "lead_action")
+                })
+                holder.tv_lead_FollowupDate!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "lead_FollowupDateClick")
+                })
+
+                holder.tv_lead_ActionType!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "lead_ActionTypeClick")
+                })
+
+                holder.tv_lead_AssignedTo!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "lead_AssignedToClick")
                 })
 //                if (empModel.actionStatus.equals("5")) {
 //                    holder.ll_checkbox.visibility = View.VISIBLE
@@ -317,17 +385,22 @@ class ActionTakenAdapter(
 
 
                 holder.check!!.setOnClickListener(View.OnClickListener {
-                    if(empModel.ProvideStandBy.equals("false"))
-                    {
-                        holder.check.isChecked=true
-                        holder.ll_security_amount.visibility = View.VISIBLE
-                        holder.edit_security_amount.setText("")
-                    }
-                    else
-                    {
-                        holder.check.isChecked=false
-                        holder.ll_security_amount.visibility = View.GONE
-                        holder.edit_security_amount.setText("")
+//                    if(empModel.ProvideStandBy.equals("false"))
+//                    {
+//                        holder.check.isChecked=true
+//                        holder.ll_security_amount.visibility = View.VISIBLE
+//                        holder.edit_security_amount.setText("")
+//                    }
+//                    else
+//                    {
+//                        holder.check.isChecked=false
+//                        holder.ll_security_amount.visibility = View.GONE
+//                        holder.edit_security_amount.setText("")
+//                    }
+                    if (holder.check!!.isChecked){
+                        mList[position].ProvideStandBy =  true
+                    }else{
+                        mList[position].ProvideStandBy =  false
                     }
                    clickListener!!.onClick(position, "check_click")
                 })
@@ -361,9 +434,13 @@ class ActionTakenAdapter(
         internal var tv_product: TextView
         internal var tv_action_action_taken: TextView
         internal var tv_lead_action: TextView
+        internal var tv_lead_FollowupDate: TextView
+        internal var tv_lead_ActionType: TextView
+        internal var tv_lead_AssignedTo: TextView
         internal var ll_checkbox: LinearLayout
         internal var ll_security_amount: LinearLayout
         internal var ll_leadAction: LinearLayout
+        internal var ll_leadAction_sub: LinearLayout
         internal var ll_buy_back_amount: LinearLayout
         internal var edit_security_amount: TextInputEditText
         internal var check: CheckBox
@@ -376,9 +453,13 @@ class ActionTakenAdapter(
             tv_product = v.findViewById<View>(R.id.tv_product) as TextView
             tv_action_action_taken = v.findViewById<View>(R.id.tv_action_action_taken) as TextView
             tv_lead_action = v.findViewById<View>(R.id.tv_lead_action) as TextView
+            tv_lead_FollowupDate = v.findViewById<View>(R.id.tv_lead_FollowupDate) as TextView
+            tv_lead_ActionType = v.findViewById<View>(R.id.tv_lead_ActionType) as TextView
+            tv_lead_AssignedTo = v.findViewById<View>(R.id.tv_lead_AssignedTo) as TextView
             ll_checkbox = v.findViewById<View>(R.id.ll_checkbox) as LinearLayout
             ll_security_amount = v.findViewById<View>(R.id.ll_security_amount) as LinearLayout
             ll_leadAction = v.findViewById<View>(R.id.ll_leadAction) as LinearLayout
+            ll_leadAction_sub = v.findViewById<View>(R.id.ll_leadAction_sub) as LinearLayout
             ll_buy_back_amount = v.findViewById<View>(R.id.ll_buy_back_amount) as LinearLayout
             check = v.findViewById<View>(R.id.check) as CheckBox
             edit_security_amount =

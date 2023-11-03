@@ -288,7 +288,7 @@
                             android:layout_weight="1"
                             android:layout_marginLeft="10dp"
                             android:fontFamily="@font/myfont"
-                            android:text="20-10-2023"
+                            android:text=""
                             android:textStyle="normal"
                             android:textColor="@color/black"
                             android:layout_centerVertical="true" />
@@ -301,7 +301,7 @@
                             android:textSize="14dp"
                             android:layout_weight="1"
                             android:fontFamily="@font/myfont"
-                            android:text="20-10-2023"
+                            android:text=""
                             android:layout_marginLeft="5dp"
                             android:textStyle="normal"
                             android:textColor="@color/black"
