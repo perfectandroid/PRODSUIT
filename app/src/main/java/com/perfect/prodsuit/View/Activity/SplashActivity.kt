@@ -63,11 +63,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY = "-500"
 
     ////    QA 12.10.2023
-   /* val CERT_NAME = "certificate_qa.pem"
-    val BASE_URL = "https://112.133.227.123:14020/QAPersuiteAPI/api/"
-    val IMAGE_URL = "https://112.133.227.123:14020/QAPersuiteAPI/"
-    val BANK_KEY = "-500"
-*/
+//    val CERT_NAME = "certificate_qa.pem"
+//    val BASE_URL  = "https://112.133.227.123:14020/QAPersuiteAPI/api/"
+//    val IMAGE_URL = "https://112.133.227.123:14020/QAPersuiteAPI/"
+//    val BANK_KEY  = "-500"
+
     ////    DEMO 21.02.2023
 //    val CERT_NAME = "demos.pem"
 //    val BASE_URL = "https://202.164.150.65:14271/PerfectprodsuiteAPI/api/"
@@ -192,7 +192,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
 
     //ASCO ERP 25.9.2023
-//    val CERT_NAME = "ascolive.pem"
+//    val CERT_NAME = "support_demo.pem"
 //    val BASE_URL  = "https://45.118.163.44:14005/ProdSuiteAPIASCO/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14005/ProdSuiteAPIASCO"
 //    val BANK_KEY  = "-518"
@@ -221,6 +221,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://59.96.61.232:14001/PerSuiteAPISHEETAL/"
 //    val BANK_KEY  = "-517"
 
+
 //    Marketing 30.10.2023
 //    val CERT_NAME = "maketting_demo.pem"
 //    val BASE_URL  = "https://45.118.163.44:14008/ProdSuiteAPIMarketingDemo/api/"
@@ -233,6 +234,12 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BASE_URL  = "https://45.118.163.44:14008/ProdSuiteAPISupportDemo/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14008/ProdSuiteAPISupportDemo/"
 //    val BANK_KEY  = "-521"
+
+    //ASCO ERP 30.10.2023
+//    val CERT_NAME = "support_demo.pem"
+//    val BASE_URL  = "https://45.118.163.44:14005/ProdSuiteAPIASCO/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14005/ProdSuiteAPIASCO"
+//    val BANK_KEY  = "-518"
 
     var TAG = "SplashActivity"
     lateinit var splashresellerActivityViewModel: SplashresellerActivityViewModel

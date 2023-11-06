@@ -64,14 +64,14 @@ class ProjectActivity : AppCompatActivity() , View.OnClickListener  {
                 val i = Intent(this@ProjectActivity, MaterialUsageActivity::class.java)
                 startActivity(i)
             }
+            R.id.llMaterialRequest->{
+                val i = Intent(this@ProjectActivity, MaterialRequestActivity::class.java)
+                startActivity(i)
+            }
             R.id.llProjectFollowup->{
                 val i = Intent(this@ProjectActivity, ProjectFollowUpActivity::class.java)
                 startActivity(i)
 //                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            }
-            R.id.llMaterialRequest->{
-                val i = Intent(this@ProjectActivity, MaterialRequestActivity::class.java)
-                startActivity(i)
             }
         }
     }

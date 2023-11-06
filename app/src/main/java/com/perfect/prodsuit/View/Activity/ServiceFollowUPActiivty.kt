@@ -254,6 +254,8 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var strActiontakenStatusMessage                                      = ""
     var strSumPayMethode = "0"
 
+    var saveAttendanceMark = false
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -309,7 +311,28 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 
         serviceFollowUpInfo = 0
         loadInfo(ID_Customerserviceregister,ID_CustomerserviceregisterProductDetails)
+        checkAttendance()
         clearData()
+    }
+
+    private fun checkAttendance() {
+
+        saveAttendanceMark = false
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        if (boolAttendance) {
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status", "")
+            if (status.equals("0") || status.equals("")) {
+                Common.punchingRedirectionConfirm(this, "", "")
+            } else if (status.equals("1")) {
+                saveAttendanceMark = true
+            }
+
+        } else {
+            saveAttendanceMark = true
+        }
     }
 
     private fun clearData() {
@@ -2750,21 +2773,25 @@ Log.v("adasdasds","modeTab "+modeTab)
 //                modeTab = modeTab+1
 //                loadlayout()
 
-                if (modeTab == 0){
-                    valiadateServiceAttended()
-                }
-                else if (modeTab == 1){
-
-                   validatetab2()
-                }
-                else if (modeTab == 2){
-                   validateService3()
-                }
-                else if(modeTab==3)
-                {
+                checkAttendance()
+                if (saveAttendanceMark) {
                     Config.disableClick(v)
-                    validateActiontaken4()
+                    if (modeTab == 0){
+                        valiadateServiceAttended()
+                    }
+                    else if (modeTab == 1){
 
+                        validatetab2()
+                    }
+                    else if (modeTab == 2){
+                        validateService3()
+                    }
+                    else if(modeTab==3)
+                    {
+                        Config.disableClick(v)
+                        validateActiontaken4()
+
+                    }
                 }
 
 
@@ -3213,29 +3240,33 @@ Log.v("adasdasds","modeTab "+modeTab)
 //                        var jsonObject=new Js
 //                    }
 //                }
-                Log.v("sfsdfsdfsd","modelFollowUpAttendance "+modelFollowUpAttendance.toString())
-                for (obj in serviceFollowAttendanceAdapter!!.modelFollowUpAttendance) {
-                    if(obj.isChecked.equals("1")) {
-                        val jsonObject = JSONObject()
-                        jsonObject.put("ID_Employee", obj.ID_Employee)
-                        jsonObject.put("EmployeeType", obj.ID_CSAEmployeeType)
-                        AttendedEmployeeDetails.put(jsonObject)
+                checkAttendance()
+                if (saveAttendanceMark) {
+                    Log.v("sfsdfsdfsd","modelFollowUpAttendance "+modelFollowUpAttendance.toString())
+                    for (obj in serviceFollowAttendanceAdapter!!.modelFollowUpAttendance) {
+                        if(obj.isChecked.equals("1")) {
+                            val jsonObject = JSONObject()
+                            jsonObject.put("ID_Employee", obj.ID_Employee)
+                            jsonObject.put("EmployeeType", obj.ID_CSAEmployeeType)
+                            AttendedEmployeeDetails.put(jsonObject)
+                        }
+                    }
+                    if(AttendedEmployeeDetails.length()==0)
+                    {
+                        Toast.makeText(
+                            applicationContext,
+                            "Please choose atlest one employee",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    else
+                    {
+                        dialogMoreServiceAttendeSheet!!.dismiss()
+                        Log.v("sfsdfsdfdsfs","sdfsddddd "+AttendedEmployeeDetails.toString())
+                        finalSave()
                     }
                 }
-                if(AttendedEmployeeDetails.length()==0)
-                {
-                    Toast.makeText(
-                        applicationContext,
-                        "Please choose atlest one employee",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-                else
-                {
-                    dialogMoreServiceAttendeSheet!!.dismiss()
-                    Log.v("sfsdfsdfdsfs","sdfsddddd "+AttendedEmployeeDetails.toString())
-                    finalSave()
-                }
+
 
             }
             dialogMoreServiceAttendeSheet!!.show()
@@ -4433,6 +4464,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                     Log.e(TAG,"1416662  Product                       "+modelServicesListDetails[i].Product)
                     Log.e(TAG,"1416663  ID_ComplaintList              "+modelServicesListDetails[i].ID_ComplaintList)
                     Log.e(TAG,"1416664  ID_CustomerWiseProductDetails "+modelServicesListDetails[i].ID_CustomerWiseProductDetails)
+                    Log.e(TAG,"1416664  ReplacementWarrantyExpireDate "+modelServicesListDetails[i].ReplacementWarrantyExpireDate)
 
                     val jObject = JSONObject()
                     val jObject1 = JSONObject()
