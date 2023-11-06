@@ -196,7 +196,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
-                                    android:visibility="visible">
+                                    android:visibility="gone">
 
 
                                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -455,7 +455,7 @@
                                                 android:drawableLeft="@drawable/svg_report"
                                                 android:backgroundTint="@color/greydark"
                                                 android:textSize="14dp"
-                                                android:editable="true"
+                                                android:editable="false"
                                                 android:maxLines="3"
                                                 android:maxLength="100"
                                                 android:drawableTint="@color/textColor"
@@ -641,7 +641,7 @@
                                     android:layout_height="wrap_content"
                                     android:orientation="vertical"
                                     android:paddingBottom="10dp"
-                                    android:visibility="gone">
+                                    android:visibility="visible">
 
 
                                     <androidx.appcompat.widget.LinearLayoutCompat
