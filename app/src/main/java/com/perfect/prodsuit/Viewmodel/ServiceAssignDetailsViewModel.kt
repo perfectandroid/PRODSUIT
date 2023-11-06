@@ -11,8 +11,14 @@ class ServiceAssignDetailsViewModel  : ViewModel()  {
 
     var serviceAssignDetailsData: MutableLiveData<ServiceAssignDetailsModel>? = null
 
-    fun getServiceAssignDetail(context: Context,ReqMode : String,ID_CustomerServiceRegister : String,FK_CustomerserviceregisterProductDetails:String) : LiveData<ServiceAssignDetailsModel>? {
-        serviceAssignDetailsData = ServiceAssignDetailsRepository.getServicesApiCall(context,ReqMode,ID_CustomerServiceRegister,FK_CustomerserviceregisterProductDetails)
+    fun getServiceAssignDetail(
+        context: Context,
+        ReqMode: String,
+        ID_CustomerServiceRegister: String,
+        FK_CustomerserviceregisterProductDetails: String,
+        TicketDate: String?,
+    ) : LiveData<ServiceAssignDetailsModel>? {
+        serviceAssignDetailsData = ServiceAssignDetailsRepository.getServicesApiCall(context,ReqMode,ID_CustomerServiceRegister,FK_CustomerserviceregisterProductDetails,TicketDate)
         return serviceAssignDetailsData
     }
 }
