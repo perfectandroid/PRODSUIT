@@ -87,6 +87,8 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     var stagecount                                        = 0
     var currentcount                                      = 0
 
+    var jsonObj: JSONObject? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_project_follow_up)
@@ -97,6 +99,10 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         currentstatusViewModel   = ViewModelProvider(this).get(CurrentStatusViewModel::class.java)
         materialusageProjectViewModel   = ViewModelProvider(this).get(MaterialUsageProjectViewModel::class.java)
         setRegViews()
+        var jsonObject: String? = intent.getStringExtra("jsonObject")
+        jsonObj = JSONObject(jsonObject)
+        ID_Project = jsonObj!!.getString("ID_FIELD")
+        tie_Project!!.setText(jsonObj!!.getString("ProjName"))
     }
 
     private fun setRegViews() {
@@ -264,14 +270,14 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                 val sdf = SimpleDateFormat("dd-MM-yyyy")
                 val currentDate = sdf.format(Date())
 
-                tie_Project!!.setText("")
+               // tie_Project!!.setText("")
                 tie_Followupdate!!.setText(currentDate)
                 tie_Stage!!.setText("")
                 tie_StatusDate!!.setText(currentDate)
                 tie_Remarks!!.setText("")
                 tie_CurrentStatus!!.setText("")
 
-                ID_Project = ""
+               // ID_Project = ""
                 ID_Stage   = ""
                 ID_CurrentStatus = ""
             }

@@ -68,9 +68,12 @@ class ProjectActivity : AppCompatActivity() , View.OnClickListener  {
                 startActivity(i)
             }
             R.id.llProjectFollowup->{
-                val i = Intent(this@ProjectActivity, ProjectFollowUpActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@ProjectActivity, ProjectFollowUpActivity::class.java)
+//                startActivity(i)
 //                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                val i = Intent(this@ProjectActivity, ProjectListActivity::class.java)
+                startActivity(i)
             }
             R.id.llMaterialRequest->{
                 val i = Intent(this@ProjectActivity, MaterialRequestActivity::class.java)

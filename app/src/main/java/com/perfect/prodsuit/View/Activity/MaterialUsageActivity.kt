@@ -130,6 +130,8 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
     var saveDetailArray :JSONArray? = null
     private var dialogConfirm : Dialog? = null
 
+    var jsonObj: JSONObject? = null
+
 
 
 
@@ -149,6 +151,10 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
         materialUsageSaveViewModel      = ViewModelProvider(this).get(MaterialUsageSaveViewModel::class.java)
 
         setRegViews()
+        var jsonObject: String? = intent.getStringExtra("jsonObject")
+        jsonObj = JSONObject(jsonObject)
+        ID_Project = jsonObj!!.getString("ID_FIELD")
+        tie_Project!!.setText(jsonObj!!.getString("ProjName"))
 
         usageMode = "1"
         managementMode = "0"
@@ -389,12 +395,12 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
 
     private fun resetData() {
 
-        ID_Project = ""
+//        ID_Project = ""
         ID_Stage = ""
         ID_Team = ""
         ID_Employee = "0"
 
-        tie_Project!!.setText("")
+//        tie_Project!!.setText("")
         tie_Stage!!.setText("")
         tie_Team!!.setText("")
         tie_Employee!!.setText("")
