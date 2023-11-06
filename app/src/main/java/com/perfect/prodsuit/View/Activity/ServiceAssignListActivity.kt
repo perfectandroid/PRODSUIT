@@ -23,7 +23,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.ItemClickListener
-import com.perfect.prodsuit.View.Adapter.DepartmentAdapter
 import com.perfect.prodsuit.View.Adapter.EmployeeAdapter
 import com.perfect.prodsuit.View.Adapter.FollowupActionAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceListAdapter
@@ -538,7 +537,14 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceAssignDetailViewModel.getServiceAssignDetail(this,ReqMode,ID_CustomerServiceRegister!!,FK_CustomerserviceregisterProductDetails!!)!!.observe(
+                serviceAssignDetailViewModel.getServiceAssignDetail(
+                    this,
+                    ReqMode,
+                    ID_CustomerServiceRegister!!,
+                    FK_CustomerserviceregisterProductDetails!!,
+                    TicketDate,
+
+                )!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 

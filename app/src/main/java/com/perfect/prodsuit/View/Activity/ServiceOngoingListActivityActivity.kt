@@ -114,6 +114,8 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
     var strEditProductComplaint : String?= ""
     var strEditCustomer : String?= ""
     var strEditProductname : String?= ""
+    var TicketDate : String?= ""
+
 
     var serAssignCount = 0
     lateinit var serviceAssignDetailViewModel: ServiceAssignDetailsViewModel
@@ -482,7 +484,13 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceAssignDetailViewModel.getServiceAssignDetail(this,ReqMode,ID_CustomerServiceRegister!!,FK_CustomerserviceregisterProductDetails!!)!!.observe(
+                serviceAssignDetailViewModel.getServiceAssignDetail(
+                    this,
+                    ReqMode,
+                    ID_CustomerServiceRegister!!,
+                    FK_CustomerserviceregisterProductDetails!!,
+                    TicketDate
+                )!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 

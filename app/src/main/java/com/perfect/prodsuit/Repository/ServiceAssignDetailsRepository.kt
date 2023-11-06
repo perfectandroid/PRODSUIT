@@ -10,7 +10,6 @@ import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.ServiceAssignDetailsModel
-import com.perfect.prodsuit.Model.ServicePriorityModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -28,12 +27,18 @@ object ServiceAssignDetailsRepository {
     val serviceAssignDetailsSetterGetter = MutableLiveData<ServiceAssignDetailsModel>()
     val TAG: String = "ServiceAssignDetailsRepository"
 
-    fun getServicesApiCall(context: Context,ReqMode : String,ID_CustomerServiceRegister : String,FK_CustomerserviceregisterProductDetails:String): MutableLiveData<ServiceAssignDetailsModel> {
-        getServiceAssignDetail(context,ReqMode,ID_CustomerServiceRegister,FK_CustomerserviceregisterProductDetails)
+    fun getServicesApiCall(
+        context: Context,
+        ReqMode: String,
+        ID_CustomerServiceRegister: String,
+        FK_CustomerserviceregisterProductDetails: String,
+        TicketDate: String?
+    ): MutableLiveData<ServiceAssignDetailsModel> {
+        getServiceAssignDetail(context,ReqMode,ID_CustomerServiceRegister,FK_CustomerserviceregisterProductDetails,TicketDate!!)
         return serviceAssignDetailsSetterGetter
     }
 
-    private fun getServiceAssignDetail(context: Context,ReqMode : String,ID_CustomerServiceRegister : String,FK_CustomerserviceregisterProductDetails:String) {
+    private fun getServiceAssignDetail(context: Context,ReqMode : String,ID_CustomerServiceRegister : String,FK_CustomerserviceregisterProductDetails:String,TicketDate:String) {
 
         try {
             serviceAssignDetailsSetterGetter.value = ServiceAssignDetailsModel("")

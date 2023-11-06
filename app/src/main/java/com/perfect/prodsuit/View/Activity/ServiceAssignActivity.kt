@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
@@ -449,7 +448,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceAssignDetailViewModel.getServiceAssignDetail(this,ReqMode,ID_CustomerServiceRegister!!,FK_CustomerserviceregisterProductDetails!!)!!.observe(
+                serviceAssignDetailViewModel.getServiceAssignDetail(this,ReqMode,ID_CustomerServiceRegister!!,FK_CustomerserviceregisterProductDetails!!,TicketDate)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -2465,8 +2464,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
     private fun saveValidation(v: View) {
 
-//        strVisitDate = tie_VisitDate!!.text.toString()
-//        strVisitTime = tie_VisitTime!!.text.toString()
+       strVisitDate = tie_VisitDate!!.text.toString()
+       strVisitTime = tie_VisitTime!!.text.toString()
         strRemark = tie_Remarks!!.text.toString()
 
         if (strVisitDate.equals("")){

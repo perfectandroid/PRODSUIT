@@ -20,12 +20,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.Helper.FullLenghRecyclertview
 import com.perfect.prodsuit.Helper.ItemClickListener
-import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.EmployeeAdapter
-import com.perfect.prodsuit.View.Adapter.ServiceAssignConfirmListAdapter
 import com.perfect.prodsuit.View.Adapter.ServicePriorityAdapter
 import com.perfect.prodsuit.Viewmodel.EmployeeViewModel
 import com.perfect.prodsuit.Viewmodel.ServiceAssignDetailsViewModel
@@ -55,6 +52,7 @@ class DeliveryAssignActivity : AppCompatActivity()  , View.OnClickListener, Item
     var ticketMode: String? = "0"
     var serviceMode: String? = "1"
     var productMode: String? = "1"
+    var TicketDate: String? = ""
 
     // Ticket Information
     private var tv_Ticket: TextView? = null
@@ -324,7 +322,14 @@ class DeliveryAssignActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceAssignDetailViewModel.getServiceAssignDetail(this,ReqMode,ID_CustomerServiceRegister!!,FK_CustomerserviceregisterProductDetails!!)!!.observe(
+                serviceAssignDetailViewModel.getServiceAssignDetail(
+                    this,
+                    ReqMode,
+                    ID_CustomerServiceRegister!!,
+                    FK_CustomerserviceregisterProductDetails!!,
+                    TicketDate
+
+                )!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
