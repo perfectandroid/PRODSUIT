@@ -77,6 +77,20 @@ class ServiceDetailsAdapter(
                 holder.til_productwise_cmplt.setText(empModel.ComplaintName)
                 holder.til_servicedescrption.setText(empModel.Description)
 
+                if (empModel.ServiceWarrantyExpired.equals("1")){
+                    holder.til_warranty_date.setTextColor(context.getColor(R.color.red))
+
+                }else{
+                    holder.til_warranty_date.setTextColor(context.getColor(R.color.black))
+                }
+
+                if (empModel.ReplacementWarrantyExpired.equals("1")){
+                    holder.til_replacement_date.setTextColor(context.getColor(R.color.red))
+                }else{
+                    holder.til_replacement_date.setTextColor(context.getColor(R.color.black))
+                }
+
+
                 if (empModel.isChekecd == true){
                     holder.chk_box.isChecked = true
                     holder.til_servicedescrption.isEnabled = true

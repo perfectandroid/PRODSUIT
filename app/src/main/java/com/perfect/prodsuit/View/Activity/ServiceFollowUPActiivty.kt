@@ -233,11 +233,28 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var servCompanantArray = JSONArray()
     var servicePartsAdapter: ServiceParts_replacedAdapter? = null
 
+    var followUpType                                      = 0
+    lateinit var followUpTypeViewModel: FollowUpTypeViewModel
+    private var dialogFollowupType: Dialog? = null
+    var recyFollowupType: RecyclerView? = null
+    lateinit var followUpTypeArrayList: JSONArray
+    lateinit var followUpTypeSort: JSONArray
+
+    var employee                                      = 0
+    lateinit var employeeViewModel: EmployeeViewModel
+    lateinit var employeeArrayList: JSONArray
+    lateinit var employeeSort: JSONArray
+    private var dialogEmployee: Dialog? = null
+    var recyEmployee: RecyclerView? = null
+
+
     var companantCharge : String? = "0"
     var discountAmount : String? = "0"
     var totalServiceCost : String? = "0"
     var strActiontakenStatusMessage                                      = ""
     var strSumPayMethode = "0"
+
+    var saveAttendanceMark = false
 
 
 
@@ -272,6 +289,8 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         warrantymodeViewModel = ViewModelProvider(this).get(WarrantyModeViewModel::class.java)
         serviceFollowUpAttendanceListViewModel = ViewModelProvider(this).get(ServiceFollowUpAttendanceListViewModel::class.java)
         serviceFollowUpSaveModel = ViewModelProvider(this).get(ServiceFollowUpSaveViewModel::class.java)
+        followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
+        employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
 
         db_helper = DBHelper(this,null)
         try {
@@ -292,7 +311,28 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 
         serviceFollowUpInfo = 0
         loadInfo(ID_Customerserviceregister,ID_CustomerserviceregisterProductDetails)
+        checkAttendance()
         clearData()
+    }
+
+    private fun checkAttendance() {
+
+        saveAttendanceMark = false
+        val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+        var boolAttendance = jsonObj!!.getString("ATTANCE_MARKING").toBoolean()
+        if (boolAttendance) {
+            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+            var status = StatusSP.getString("Status", "")
+            if (status.equals("0") || status.equals("")) {
+                Common.punchingRedirectionConfirm(this, "", "")
+            } else if (status.equals("1")) {
+                saveAttendanceMark = true
+            }
+
+        } else {
+            saveAttendanceMark = true
+        }
     }
 
     private fun clearData() {
@@ -364,11 +404,11 @@ Log.v("adasdasds","modeTab "+modeTab)
         for (obj in actionTakenSelected) {
             val jsonObject = JSONObject()
             jsonObject.put("ID_Product", obj.FK_Product)
-            jsonObject.put("ID_NextAction", obj.actionStatus)
-            jsonObject.put("ID_NextActionLead", obj.leadActionStatus)
-            jsonObject.put("FK_ActionType", "")
-            jsonObject.put("FK_EmployeeAssign", "")
-            jsonObject.put("NextActionDate", "")
+            jsonObject.put("ID_NextAction", obj.ID_Action)
+            jsonObject.put("ID_NextActionLead", obj.ID_leadAction)
+            jsonObject.put("FK_ActionType", obj.ID_ActionType)
+            jsonObject.put("FK_EmployeeAssign", obj.ID_Emplloyee)
+            jsonObject.put("NextActionDate", Config.convertDate(obj.FollowupDate))
             jsonObject.put("ProvideStandBy", obj.ProvideStandBy)
             jsonObject.put("CustomerNote", obj.Customer_note)
             jsonObject.put("EmployeeNote", obj.Employee_note)
@@ -377,6 +417,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             jsonObject.put("ID_CustomerWiseProductDetails", obj.ID_CustomerWiseProductDetails)
             jsonObject.put("FK_ProductNumberingDetails", "0")
             Actionproductdetails.put(jsonObject)
+
         }
         Log.v("sdfsdfsd","Actionproductdetails "+Actionproductdetails.toString())
         Log.v("sdfsdfsd", "payment  " + arrPaymentFinal.toString())
@@ -399,7 +440,7 @@ Log.v("adasdasds","modeTab "+modeTab)
     }
 
     private fun saveDetails(Actionproductdetails: JSONArray) {
-        var StartingDate= tie_DateAttended!!.text.toString()
+        var StartingDate= Config.convertDate(tie_DateAttended!!.text.toString())
         var totalSecurityAmount = edttotalSecurityAmount!!.text.toString()
 //        var componentCharge = edtcomponentCharge!!.text.toString()
 //        var totalServiceCost = edttotalServiceCost!!.text.toString()
@@ -507,7 +548,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                 tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
                                                 tv_succesok!!.setOnClickListener {
                                                     suceessDialog!!.dismiss()
-//                                                    val i = Intent(this@LeadGenerationActivity, LeadActivity::class.java)
+//                                                    val i = Intent(this@ServiceFollowUPActiivty, LeadActivity::class.java)
 //                                                    startActivity(i)
                                                     finish()
 
@@ -1221,7 +1262,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         edtcomponentCharge!!.setText(Config.changeTwoDecimel(companantCharge!!))
         edtdiscountAmount!!.setText(Config.changeTwoDecimel(discountAmount!!))
        // edt_other_charges!!.setText("0.00")
-        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         tie_DateAttended!!.setText(currentDate)
         loadNetAmount()
@@ -1234,8 +1275,8 @@ Log.v("adasdasds","modeTab "+modeTab)
                 actionTakenSelected!!.add(
                     ActionTakenMainModel(
                         empModel.FK_Product, empModel.Product, "", "",
-                        "", "", "false", "0.00", "", "0.00", "", empModel.ID_CustomerWiseProductDetails,""
-                    )
+                        "", "", false, "0.00", "", "0.00", "", empModel.ID_CustomerWiseProductDetails,"",
+                        "","","","","","","")
                 )
             }
 
@@ -1326,7 +1367,8 @@ Log.v("adasdasds","modeTab "+modeTab)
                 if (discAmount.toFloat() <= strNetAmount.toFloat()){
                     loadNetAmount()
                 }else{
-                    Toast.makeText(applicationContext,"Discount Amount should be less than or equals to Net Amount",Toast.LENGTH_SHORT).show()
+                    Config.showCustomToast("Discount Amount should be less than or equals to Net Amount",context)
+//                    Toast.makeText(applicationContext,"Discount Amount should be less than or equals to Net Amount",Toast.LENGTH_SHORT).show()
                 }
 
             }
@@ -1454,7 +1496,6 @@ Log.v("adasdasds","modeTab "+modeTab)
             val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
             recyPaymentMethod!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-//             val adapter = EmployeeAdapter(this@LeadGenerationActivity, employeeArrayList)
             val adapter = PayMethodAdapter(this@ServiceFollowUPActiivty, paymentMethodeArrayList)
             recyPaymentMethod!!.adapter = adapter
             adapter.setClickListener(this@ServiceFollowUPActiivty)
@@ -1887,7 +1928,10 @@ Log.v("adasdasds","modeTab "+modeTab)
         val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker = view.findViewById<DatePicker>(R.id.date_Picker1)
 
-        date_Picker.maxDate = System.currentTimeMillis()
+        if (DateType == 0) {
+            date_Picker.maxDate = System.currentTimeMillis()
+        }
+
 
 
         txtCancel.setOnClickListener {
@@ -1913,7 +1957,13 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
                 if (DateType == 0) {
-                    tie_DateAttended!!.setText("" + strYear + "-" + strMonth + "-" + strDay)
+                    tie_DateAttended!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                }
+                if (DateType == 1) {
+                    var empModel = actionTakenSelected[modEditPosition]
+                    empModel.FollowupDate = strDay + "-" + strMonth + "-" + strYear
+                    actionTakenAdapter!!.notifyItemChanged(modEditPosition)
+
                 }
 
 
@@ -2723,21 +2773,25 @@ Log.v("adasdasds","modeTab "+modeTab)
 //                modeTab = modeTab+1
 //                loadlayout()
 
-                if (modeTab == 0){
-                    valiadateServiceAttended()
-                }
-                else if (modeTab == 1){
-
-                   validatetab2()
-                }
-                else if (modeTab == 2){
-                   validateService3()
-                }
-                else if(modeTab==3)
-                {
+                checkAttendance()
+                if (saveAttendanceMark) {
                     Config.disableClick(v)
-                    validateActiontaken4()
+                    if (modeTab == 0){
+                        valiadateServiceAttended()
+                    }
+                    else if (modeTab == 1){
 
+                        validatetab2()
+                    }
+                    else if (modeTab == 2){
+                        validateService3()
+                    }
+                    else if(modeTab==3)
+                    {
+                        Config.disableClick(v)
+                        validateActiontaken4()
+
+                    }
                 }
 
 
@@ -2760,7 +2814,8 @@ Log.v("adasdasds","modeTab "+modeTab)
         if (hasId){
 
             if (billtype.equals("") || billtype.equals("0")){
-                Toast.makeText(applicationContext,"Select BillType",Toast.LENGTH_SHORT).show()
+                Config.showCustomToast("Select BillType",context)
+//                Toast.makeText(applicationContext,"Select BillType",Toast.LENGTH_SHORT).show()
             }
             else{
                 var hasId1 =  haspaymentMandtory(actionTakenSelected!!)
@@ -2769,9 +2824,11 @@ Log.v("adasdasds","modeTab "+modeTab)
                     // Payment Validation
                         var netAmntt= edtnetAmount!!.text.toString()
                         if (arrPaymentFinal.length() == 0){
-                            Toast.makeText(applicationContext,"Select payment Methode ",Toast.LENGTH_SHORT).show()
+                            Config.showCustomToast("Select payment Methode ",context)
+//                            Toast.makeText(applicationContext,"Select payment Methode ",Toast.LENGTH_SHORT).show()
                         }else if (strSumPayMethode.toFloat() != netAmntt.toFloat()){
-                            Toast.makeText(applicationContext,"Net Amount & Payment Amount should be equal",Toast.LENGTH_SHORT).show()
+                            Config.showCustomToast("Net Amount & Payment Amount should be equal",context)
+//                            Toast.makeText(applicationContext,"Net Amount & Payment Amount should be equal",Toast.LENGTH_SHORT).show()
                         }else{
                             serviceFollowUpAttendance=0
                             loadAttendance()
@@ -2785,7 +2842,8 @@ Log.v("adasdasds","modeTab "+modeTab)
                 }
             }
         }else{
-            Toast.makeText(applicationContext,"Select Action for "+strActiontakenStatusMessage,Toast.LENGTH_SHORT).show()
+            Config.showCustomToast(strActiontakenStatusMessage,context)
+            //Toast.makeText(applicationContext,strActiontakenStatusMessage,Toast.LENGTH_SHORT).show()
         }
 
 
@@ -2795,18 +2853,18 @@ Log.v("adasdasds","modeTab "+modeTab)
         var isChecked = true
         for (i in 0 until actionTakenSelected.size) {  // iterate through the JsonArray
 
-            Log.e(TAG,"252224   haspaymentMandtory   "+actionTakenSelected.get(i).Status)
-            if (!actionTakenSelected.get(i).Status.equals("4")){
-                Log.e(TAG,"25581   haspaymentMandtory   "+actionTakenSelected.get(i).Status)
-                if (!actionTakenSelected.get(i).Status.equals("11")){
-                    Log.e(TAG,"25582   haspaymentMandtory   "+actionTakenSelected.get(i).Status)
+            Log.e(TAG,"252224   haspaymentMandtory   "+actionTakenSelected.get(i).actionStatus)
+            if (!actionTakenSelected.get(i).actionStatus.equals("4")){
+                Log.e(TAG,"25581   haspaymentMandtory   "+actionTakenSelected.get(i).actionStatus)
+                if (!actionTakenSelected.get(i).actionStatus.equals("11")){
+                    Log.e(TAG,"25582   haspaymentMandtory   "+actionTakenSelected.get(i).actionStatus)
                     isChecked = false
                     break
                 }
-            }else if (!actionTakenSelected.get(i).Status.equals("11")){
-                Log.e(TAG,"25583   haspaymentMandtory   "+actionTakenSelected.get(i).Status)
-                if (!actionTakenSelected.get(i).Status.equals("4")){
-                    Log.e(TAG,"25584   haspaymentMandtory   "+actionTakenSelected.get(i).Status)
+            }else if (!actionTakenSelected.get(i).actionStatus.equals("11")){
+                Log.e(TAG,"25583   haspaymentMandtory   "+actionTakenSelected.get(i).actionStatus)
+                if (!actionTakenSelected.get(i).actionStatus.equals("4")){
+                    Log.e(TAG,"25584   haspaymentMandtory   "+actionTakenSelected.get(i).actionStatus)
                     isChecked = false
                     break
                 }
@@ -2821,9 +2879,27 @@ Log.v("adasdasds","modeTab "+modeTab)
         strActiontakenStatusMessage = ""
         for (i in 0 until actionTakenSelected.size) {  // iterate through the JsonArray
 
-            if (actionTakenSelected.get(i).actionStatus.equals("")){
-                strActiontakenStatusMessage = actionTakenSelected.get(i).Product
+            if (actionTakenSelected.get(i).ID_Action.equals("")){
+                strActiontakenStatusMessage = "Select Action for "+actionTakenSelected.get(i).Product
                 isChecked = false
+            }
+            else if (actionTakenSelected.get(i).actionStatus.equals("9") && actionTakenSelected.get(i).ID_leadAction.equals("")){
+                strActiontakenStatusMessage = "Select Lead Action for "+actionTakenSelected.get(i).Product
+                isChecked = false
+            }
+            else if (actionTakenSelected.get(i).leadActionStatus.equals("1")){
+                if (actionTakenSelected.get(i).ID_ActionType.equals("")){
+                    strActiontakenStatusMessage = "Select Action Type for "+actionTakenSelected.get(i).Product
+                    isChecked = false
+                }
+                else if (actionTakenSelected.get(i).FollowupDate.equals("")){
+                    strActiontakenStatusMessage = "Select FollowUp Date for "+actionTakenSelected.get(i).Product
+                    isChecked = false
+                }
+                else if (actionTakenSelected.get(i).ID_Emplloyee.equals("")){
+                    strActiontakenStatusMessage = "Select Assigned Employee for "+actionTakenSelected.get(i).Product
+                    isChecked = false
+                }
             }
 
         }
@@ -2879,7 +2955,8 @@ Log.v("adasdasds","modeTab "+modeTab)
             modeTab = modeTab+1
             loadlayout()
         }else{
-            Toast.makeText(applicationContext,""+strActiontakenStatusMessage,Toast.LENGTH_SHORT).show()
+            Config.showCustomToast(strActiontakenStatusMessage,context)
+           // Toast.makeText(applicationContext,""+strActiontakenStatusMessage,Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -2917,12 +2994,13 @@ Log.v("adasdasds","modeTab "+modeTab)
             recyFollowupAttended = dialogMoreServiceAttendeSheet!! .findViewById(R.id.recyFollowupAttended) as RecyclerView
             var tv_cancel = dialogMoreServiceAttendeSheet!! .findViewById(R.id.tv_cancel) as TextView
             var tv_submit = dialogMoreServiceAttendeSheet!! .findViewById(R.id.tv_submit) as TextView
+            var tv_main_header = dialogMoreServiceAttendeSheet!! .findViewById(R.id.tv_main_header) as TextView
 
             val window: Window? = dialogMoreServiceAttendeSheet!!.getWindow()
             window!!.setBackgroundDrawableResource(android.R.color.transparent);
             window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
-
+            tv_main_header.setText("Product Wise Complaints")
             val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
             recyFollowupAttended!!.layoutManager = lLayout as RecyclerView.LayoutManager?
             compAdapter = complaint_service_followup(this@ServiceFollowUPActiivty, complaintfollowup!!)
@@ -2958,7 +3036,7 @@ Log.v("adasdasds","modeTab "+modeTab)
     }
 
     private fun actionTakenActionPopUp() {
-        Log.e(TAG, "864  ")
+        Log.e(TAG, "3316  actionTakenActionPopUp")
         try {
             dialogMoreServiceAttendeSheet = Dialog(this)
             dialogMoreServiceAttendeSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -2996,7 +3074,7 @@ Log.v("adasdasds","modeTab "+modeTab)
     }
 
     private fun LeadActionPopup() {
-        Log.e(TAG, "864  ")
+        Log.e(TAG, "3316  LeadActionPopup")
         try {
             dialogMoreServiceAttendeSheet = Dialog(this)
             dialogMoreServiceAttendeSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -3162,29 +3240,33 @@ Log.v("adasdasds","modeTab "+modeTab)
 //                        var jsonObject=new Js
 //                    }
 //                }
-                Log.v("sfsdfsdfsd","modelFollowUpAttendance "+modelFollowUpAttendance.toString())
-                for (obj in serviceFollowAttendanceAdapter!!.modelFollowUpAttendance) {
-                    if(obj.isChecked.equals("1")) {
-                        val jsonObject = JSONObject()
-                        jsonObject.put("ID_Employee", obj.ID_Employee)
-                        jsonObject.put("EmployeeType", obj.ID_CSAEmployeeType)
-                        AttendedEmployeeDetails.put(jsonObject)
+                checkAttendance()
+                if (saveAttendanceMark) {
+                    Log.v("sfsdfsdfsd","modelFollowUpAttendance "+modelFollowUpAttendance.toString())
+                    for (obj in serviceFollowAttendanceAdapter!!.modelFollowUpAttendance) {
+                        if(obj.isChecked.equals("1")) {
+                            val jsonObject = JSONObject()
+                            jsonObject.put("ID_Employee", obj.ID_Employee)
+                            jsonObject.put("EmployeeType", obj.ID_CSAEmployeeType)
+                            AttendedEmployeeDetails.put(jsonObject)
+                        }
+                    }
+                    if(AttendedEmployeeDetails.length()==0)
+                    {
+                        Toast.makeText(
+                            applicationContext,
+                            "Please choose atlest one employee",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    else
+                    {
+                        dialogMoreServiceAttendeSheet!!.dismiss()
+                        Log.v("sfsdfsdfdsfs","sdfsddddd "+AttendedEmployeeDetails.toString())
+                        finalSave()
                     }
                 }
-                if(AttendedEmployeeDetails.length()==0)
-                {
-                    Toast.makeText(
-                        applicationContext,
-                        "Please choose atlest one employee",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-                else
-                {
-                    dialogMoreServiceAttendeSheet!!.dismiss()
-                    Log.v("sfsdfsdfdsfs","sdfsddddd "+AttendedEmployeeDetails.toString())
-                    finalSave()
-                }
+
 
             }
             dialogMoreServiceAttendeSheet!!.show()
@@ -3211,11 +3293,73 @@ Log.v("adasdasds","modeTab "+modeTab)
             getProductWiseComplaint(FK_Category!!, FK_Product!!)
         }
         if (data.equals("action_taken_action")) {
+
+            Log.e(TAG,"3316   action_taken_action")
             modEditPosition = position
             var FK_Category = modelServicesListDetails.get(position).FK_Category
             var FK_Product = modelServicesListDetails.get(position).FK_Product
             actionTakenActioncouny = 0
             getActionTakenAction(FK_Category!!, FK_Product!!)
+        }
+
+        if (data.equals("lead_FollowupDateClick")) {
+
+            Log.e(TAG,"3316   lead_FollowupDateClick")
+            modEditPosition = position
+            DateType = 1
+            openBottomSheet()
+
+        }
+
+
+
+        if (data.equals("lead_ActionTypeClick")) {
+
+            Log.e(TAG,"3316   lead_ActionTypeClick")
+            modEditPosition = position
+
+            followUpType = 0
+            getFollowupType()
+
+        }
+
+        if (data.equals("followuptype")) {
+            dialogFollowupType!!.dismiss()
+
+            val jsonObject = followUpTypeSort.getJSONObject(position)
+            Log.e(TAG, "ID_ActionType   " + jsonObject.getString("ID_ActionType"))
+
+            var empModel = actionTakenSelected[modEditPosition]
+
+            empModel.ID_ActionType = jsonObject.getString("ID_ActionType")
+            empModel.ActionType = jsonObject.getString("ActnTypeName")
+            empModel.ActionTypeMode = jsonObject.getString("ActionMode")
+
+            actionTakenAdapter!!.notifyItemChanged(modEditPosition)
+
+        }
+
+        if (data.equals("lead_AssignedToClick")) {
+            Log.e(TAG,"3316   lead_AssignedToClick")
+            modEditPosition = position
+
+            employee = 0
+            getEmployee()
+
+        }
+
+        if (data.equals("employee")) {
+            dialogEmployee!!.dismiss()
+            val jsonObject = employeeSort.getJSONObject(position)
+            Log.e(TAG, "ID_Employee   " + jsonObject.getString("ID_Employee"))
+
+            var empModel = actionTakenSelected[modEditPosition]
+
+            empModel.ID_Emplloyee = jsonObject.getString("ID_Employee")
+            empModel.EmplloyeeName = jsonObject.getString("EmpName")
+
+            actionTakenAdapter!!.notifyItemChanged(modEditPosition)
+
         }
 
         if (data.equals("securityAmountChanged")) {
@@ -3278,37 +3422,61 @@ Log.v("adasdasds","modeTab "+modeTab)
         if (data.equals("actionTakenActionFilter")) {
 
 
+            Log.e(TAG,"3316   actionTakenActionFilter")
             dialogMoreServiceAttendeSheet!!.dismiss()
             val jsonObject = actionTypeActionList.getJSONObject(position)
             var empModel = actionTakenSelected[modEditPosition]
+
             empModel.actionName = jsonObject.getString("NxtActnName")
-            empModel.actionStatus = jsonObject.getString("ID_NextAction")
-            empModel.Status = jsonObject.getString("Status")
+            empModel.ID_Action = jsonObject.getString("ID_NextAction")
+            empModel.actionStatus = jsonObject.getString("Status")
+            empModel.ID_leadAction = ""
+            empModel.leadAction = ""
+            empModel.leadActionStatus = ""
+            empModel.ID_ActionType = ""
+            empModel.ActionType = ""
+            empModel.ActionTypeMode = ""
+            empModel.FollowupDate = ""
+            empModel.ID_Emplloyee = ""
+            empModel.EmplloyeeName = ""
+
             if (!rcyler_actionTaken!!.isComputingLayout && rcyler_actionTaken!!.scrollState == SCROLL_STATE_IDLE) {
                 actionTakenAdapter!!.notifyItemChanged(modEditPosition)
             }
 
         }
         if (data.equals("leadActionAdapterClick")) {
+
+            Log.e(TAG,"3316 leadActionAdapterClick ")
             dialogMoreServiceAttendeSheet!!.dismiss()
             val jsonObject = leadActionList.getJSONObject(position)
             var empModel = actionTakenSelected[modEditPosition]
             empModel.leadAction = jsonObject.getString("NxtActnName")
-            empModel.leadActionStatus = jsonObject.getString("ID_NextAction")
+            empModel.ID_leadAction = jsonObject.getString("ID_NextAction")
+            empModel.leadActionStatus = jsonObject.getString("Status")
+            empModel.ID_ActionType = ""
+            empModel.ActionType = ""
+            empModel.ActionTypeMode = ""
+            empModel.FollowupDate = ""
+            empModel.ID_Emplloyee = ""
+            empModel.EmplloyeeName = ""
+
             actionTakenAdapter!!.notifyItemChanged(modEditPosition)
         }
         if (data.equals("check_click")) {
             var empModel = actionTakenSelected[position]
             Log.v("sdfsdfdsfds", "check value1 " + empModel.ProvideStandBy)
-            if (empModel.ProvideStandBy.equals("true")) {
-                empModel.ProvideStandBy = "false"
+            if (empModel.ProvideStandBy) {
+                empModel.ProvideStandBy = true
             } else {
-                empModel.ProvideStandBy = "true"
+                empModel.ProvideStandBy = false
             }
+            actionTakenAdapter!!.notifyItemChanged(position)
         }
 
 
         if (data.equals("lead_action")) {
+            Log.e(TAG,"3316   lead_action")
             modEditPosition = position
             var FK_Category = modelServicesListDetails.get(position).FK_Category
             var FK_Product = modelServicesListDetails.get(position).FK_Product
@@ -3524,6 +3692,284 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 //        24-10-2023 Ranjith
 
+    }
+
+    private fun getFollowupType() {
+//         var followUpType = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                followUpTypeViewModel.getFollowupType(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (followUpType == 0) {
+                                    followUpType++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   82   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("FollowUpTypeDetails")
+                                        followUpTypeArrayList =
+                                            jobjt.getJSONArray("FollowUpTypeDetailsList")
+                                        if (followUpTypeArrayList.length() > 0) {
+//                                             if (followUpType == 0){
+//                                                 followUpType++
+                                            followupTypePopup(followUpTypeArrayList)
+//                                             }
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun followupTypePopup(followUpTypeArrayList: JSONArray) {
+
+        try {
+
+            dialogFollowupType = Dialog(this)
+            dialogFollowupType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogFollowupType!!.setContentView(R.layout.followup_type_popup)
+            dialogFollowupType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyFollowupType =
+                dialogFollowupType!!.findViewById(R.id.recyFollowupType) as RecyclerView
+            val etsearch = dialogFollowupType!!.findViewById(R.id.etsearch) as EditText
+
+            followUpTypeSort = JSONArray()
+            for (k in 0 until followUpTypeArrayList.length()) {
+                val jsonObject = followUpTypeArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                followUpTypeSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+            recyFollowupType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//             val adapter = FollowupTypeAdapter(this@ServiceFollowUPActiivty, followUpTypeArrayList)
+            val adapter = FollowupTypeAdapter(this@ServiceFollowUPActiivty, followUpTypeSort)
+            recyFollowupType!!.adapter = adapter
+            adapter.setClickListener(this@ServiceFollowUPActiivty)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    followUpTypeSort = JSONArray()
+
+                    for (k in 0 until followUpTypeArrayList.length()) {
+                        val jsonObject = followUpTypeArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("ActnTypeName").length) {
+                            if (jsonObject.getString("ActnTypeName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                followUpTypeSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "followUpTypeSort               7103    " + followUpTypeSort)
+                    val adapter = FollowupTypeAdapter(this@ServiceFollowUPActiivty, followUpTypeSort)
+                    recyFollowupType!!.adapter = adapter
+                    adapter.setClickListener(this@ServiceFollowUPActiivty)
+                }
+            })
+
+            dialogFollowupType!!.show()
+            dialogFollowupType!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun getEmployee() {
+//         var employee = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                employeeViewModel.getEmployee(this, "0")!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (employee == 0) {
+                                    employee++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   1224   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("EmployeeDetails")
+                                        employeeArrayList =
+                                            jobjt.getJSONArray("EmployeeDetailsList")
+                                        if (employeeArrayList.length() > 0) {
+
+                                            employeePopup(employeeArrayList)
+
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun employeePopup(employeeArrayList: JSONArray) {
+        try {
+
+            dialogEmployee = Dialog(this)
+            dialogEmployee!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogEmployee!!.setContentView(R.layout.employee_popup)
+            dialogEmployee!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyEmployee = dialogEmployee!!.findViewById(R.id.recyEmployee) as RecyclerView
+            val etsearch = dialogEmployee!!.findViewById(R.id.etsearch) as EditText
+
+            employeeSort = JSONArray()
+            for (k in 0 until employeeArrayList.length()) {
+                val jsonObject = employeeArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                employeeSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+            recyEmployee!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//             val adapter = EmployeeAdapter(this@ServiceFollowUPActiivty, employeeArrayList)
+            val adapter = EmployeeAdapter(this@ServiceFollowUPActiivty, employeeSort)
+            recyEmployee!!.adapter = adapter
+            adapter.setClickListener(this@ServiceFollowUPActiivty)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    employeeSort = JSONArray()
+
+                    for (k in 0 until employeeArrayList.length()) {
+                        val jsonObject = employeeArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("EmpName").length) {
+                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                employeeSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "employeeSort               7103    " + employeeSort)
+                    val adapter = EmployeeAdapter(this@ServiceFollowUPActiivty, employeeSort)
+                    recyEmployee!!.adapter = adapter
+                    adapter.setClickListener(this@ServiceFollowUPActiivty)
+                }
+            })
+
+            dialogEmployee!!.show()
+            dialogEmployee!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun getComponantList() {
@@ -3906,11 +4352,13 @@ Log.v("adasdasds","modeTab "+modeTab)
                         }
                         dialogAddserviceSheet!!.dismiss()
                     }else{
-                        Toast.makeText(applicationContext,strActiontakenStatusMessage+" Already exist",Toast.LENGTH_SHORT).show()
+                        Config.showCustomToast(strActiontakenStatusMessage+" Already exist",context)
+                       // Toast.makeText(applicationContext,strActiontakenStatusMessage+" Already exist",Toast.LENGTH_SHORT).show()
                     }
 
                 }else{
-                    Toast.makeText(applicationContext,"Select atleast one companant",Toast.LENGTH_SHORT).show()
+                    Config.showCustomToast("Select atleast one companant",context)
+                  //  Toast.makeText(applicationContext,"Select atleast one companant",Toast.LENGTH_SHORT).show()
                 }
 
 
@@ -4057,7 +4505,8 @@ Log.v("adasdasds","modeTab "+modeTab)
             // 24-10-2023 Ranjith
         }else{
             Log.e(TAG,"10000666666   No Checked Box MArked")
-            Toast.makeText(applicationContext,"No Check box marked",Toast.LENGTH_SHORT).show()
+            Config.showCustomToast("No Check box marked",context)
+            //Toast.makeText(applicationContext,"No Check box marked",Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -4129,7 +4578,8 @@ Log.v("adasdasds","modeTab "+modeTab)
                 isChecked = true
                 if (serviceTab3MainModel.get(i).ID_ServiceType.equals("0") || serviceTab3MainModel.get(i).ID_ServiceType.equals("")){
                     isChecked = false
-                    Toast.makeText(applicationContext,"Select Service Type",Toast.LENGTH_SHORT).show()
+                    Config.showCustomToast("Select Service Type",context)
+//                    Toast.makeText(applicationContext,"Select Service Type",Toast.LENGTH_SHORT).show()
                     break
                 }
             }
