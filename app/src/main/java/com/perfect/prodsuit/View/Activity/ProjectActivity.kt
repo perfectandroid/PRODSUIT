@@ -20,6 +20,7 @@ class ProjectActivity : AppCompatActivity() , View.OnClickListener  {
     private var llMaterialUsage: LinearLayout? = null
     private var llProjectFollowup: LinearLayout? = null
     private var llMaterialRequest: LinearLayout? = null
+    private var llProjectTransaction: LinearLayout? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,11 +43,13 @@ class ProjectActivity : AppCompatActivity() , View.OnClickListener  {
         llMaterialUsage = findViewById(R.id.llMaterialUsage)
         llProjectFollowup = findViewById(R.id.llProjectFollowup)
         llMaterialRequest = findViewById(R.id.llMaterialRequest)
+        llProjectTransaction = findViewById(R.id.llProjectTransaction)
 
         llSiteVisit!!.setOnClickListener(this)
         llMaterialUsage!!.setOnClickListener(this)
         llProjectFollowup!!.setOnClickListener(this)
         llMaterialRequest!!.setOnClickListener(this)
+        llProjectTransaction!!.setOnClickListener(this)
 
     }
 
@@ -72,6 +75,15 @@ class ProjectActivity : AppCompatActivity() , View.OnClickListener  {
             R.id.llMaterialRequest->{
                 val i = Intent(this@ProjectActivity, MaterialRequestActivity::class.java)
                 startActivity(i)
+            }
+            R.id.llProjectTransaction->{
+//                val i = Intent(this@ProjectActivity, ProjectTransactionActivity::class.java)
+//                startActivity(i)
+
+                val i = Intent(this@ProjectActivity, ProjectListActivity::class.java)
+                startActivity(i)
+
+
             }
         }
     }
