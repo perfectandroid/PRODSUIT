@@ -43,9 +43,13 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     lateinit var projectArraylist : JSONArray
     lateinit var stageArraylist   : JSONArray
     lateinit var currentArraylist : JSONArray
+    lateinit var projectArrayList  : JSONArray
+    lateinit var stageArrayList    : JSONArray
+    lateinit var stageSort         : JSONArray
     lateinit var projectViewModel : ProjectViewModel
     lateinit var currentstatusViewModel      : CurrentStatusViewModel
     lateinit var materialusageStageViewModel : MaterialUsageStageViewModel
+    lateinit var materialusageProjectViewModel: MaterialUsageProjectViewModel
     private var progressDialog    : ProgressDialog?       = null
     private var tie_Project       : TextInputEditText?    = null
     private var tie_Followupdate  : TextInputEditText?    = null
@@ -74,6 +78,11 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     var strCurrentStatus                                  = ""
     var strStage                                          = ""
     var strRemarks                                        = ""
+    var ID_Project                                        = ""
+    var ID_CurrentStatus                                  = ""
+    var ID_Stage                                          = ""
+    var ID_Team                                           = ""
+    var ID_Employee                                       = "0"
     var projectcount                                      = 0
     var stagecount                                        = 0
     var currentcount                                      = 0
@@ -86,6 +95,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         projectViewModel = ViewModelProvider(this).get(ProjectViewModel::class.java)
         materialusageStageViewModel   = ViewModelProvider(this).get(MaterialUsageStageViewModel::class.java)
         currentstatusViewModel   = ViewModelProvider(this).get(CurrentStatusViewModel::class.java)
+        materialusageProjectViewModel   = ViewModelProvider(this).get(MaterialUsageProjectViewModel::class.java)
         setRegViews()
     }
 
@@ -217,7 +227,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         when(v!!.id) {
             R.id.imback->{
                 finish()
-                overridePendingTransition(R.anim.enter_from_right, R.anim.enter_from_right)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
             R.id.tie_Project -> {
 //                Toast.makeText(applicationContext, "please 0", Toast.LENGTH_SHORT).show()
@@ -259,6 +269,11 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                 tie_Stage!!.setText("")
                 tie_StatusDate!!.setText(currentDate)
                 tie_Remarks!!.setText("")
+                tie_CurrentStatus!!.setText("")
+
+                ID_Project = ""
+                ID_Stage   = ""
+                ID_CurrentStatus = ""
             }
         }
     }
@@ -300,7 +315,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                projectViewModel.getprojectV_Model(this)!!.observe(
+                materialusageProjectViewModel.getMaterialUsageProjectModel(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -314,11 +329,11 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   114455   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("DepartmentDetails")
-                                        projectArraylist = jobjt.getJSONArray("DepartmentDetailsList")
-                                        if (projectArraylist.length()>0){
+                                        val jobjt = jObject.getJSONObject("ProjectList")
+                                        projectArrayList = jobjt.getJSONArray("ProjectListDetails")
+                                        if (projectArrayList.length()>0){
 
-                                            projectPopup(projectArraylist)
+                                            projectPopup(projectArrayList)
 
                                         }
                                     } else {
@@ -345,7 +360,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                         }catch (e : Exception){
                             Toast.makeText(
                                 applicationContext,
-                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                ""+ Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -362,7 +377,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
 
     private fun projectPopup(projectArraylist: JSONArray) {
         try {
-
+//            modeTest = 1
             dialogProject = Dialog(this)
             dialogProject!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogProject!! .setContentView(R.layout.list_popup)
@@ -400,8 +415,8 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
 
                     for (k in 0 until projectArraylist.length()) {
                         val jsonObject = projectArraylist.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("DeptName").length) {
-                            if (jsonObject.getString("DeptName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                        if (textlength <= jsonObject.getString("ProjName").length) {
+                            if (jsonObject.getString("ProjName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
                                 projectSort.put(jsonObject)
                             }
 
@@ -432,7 +447,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                materialusageStageViewModel.getMaterialUsageStageModel(this,"")!!.observe(
+                materialusageStageViewModel.getMaterialUsageStageModel(this,ID_Project!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -446,11 +461,11 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   114455   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("DepartmentDetails")
-                                        stageArraylist = jobjt.getJSONArray("DepartmentDetailsList")
-                                        if (stageArraylist.length()>0){
+                                        val jobjt = jObject.getJSONObject("ProjectStagesList")
+                                        stageArrayList = jobjt.getJSONArray("ProjectStagesListDetails")
+                                        if (stageArrayList.length()>0){
 
-                                            stagePopup(stageArraylist)
+                                            stagePopup(stageArrayList)
 
                                         }
                                     } else {
@@ -477,7 +492,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                         }catch (e : Exception){
                             Toast.makeText(
                                 applicationContext,
-                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                ""+ Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -492,28 +507,28 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         }
     }
 
-    private fun stagePopup(stageArraylist: JSONArray) {
+    private fun stagePopup(stageArrayList: JSONArray) {
         try {
-
+//            modeTest = 2
             dialogStage = Dialog(this)
             dialogStage!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogStage!! .setContentView(R.layout.list_popup)
-            dialogStage!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+            dialogStage!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recylist = dialogStage!! .findViewById(R.id.recylist) as RecyclerView
             tvv_list_name = dialogStage!! .findViewById(R.id.tvv_list_name) as TextView
             val etsearch = dialogStage!! .findViewById(R.id.etsearch) as EditText
             tvv_list_name!!.setText("STAGE LIST")
 
-            stagetSort = JSONArray()
-            for (k in 0 until stageArraylist.length()) {
-                val jsonObject = stageArraylist.getJSONObject(k)
+            stageSort = JSONArray()
+            for (k in 0 until stageArrayList.length()) {
+                val jsonObject = stageArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
-                stagetSort.put(jsonObject)
+                stageSort.put(jsonObject)
             }
 
             val lLayout = GridLayoutManager(this@ProjectFollowUpActivity, 1)
             recylist!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-            val adapter = StageAdapter(this@ProjectFollowUpActivity, stagetSort)
+            val adapter = StageAdapter(this@ProjectFollowUpActivity, stageSort)
             recylist!!.adapter = adapter
             adapter.setClickListener(this@ProjectFollowUpActivity)
 
@@ -528,20 +543,20 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
 
                     //  list_view!!.setVisibility(View.VISIBLE)
                     val textlength = etsearch!!.text.length
-                    stagetSort = JSONArray()
+                    stageSort = JSONArray()
 
-                    for (k in 0 until stageArraylist.length()) {
-                        val jsonObject = stageArraylist.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("DeptName").length) {
-                            if (jsonObject.getString("DeptName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
-                                stagetSort.put(jsonObject)
+                    for (k in 0 until stageArrayList.length()) {
+                        val jsonObject = stageArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("StageName").length) {
+                            if (jsonObject.getString("StageName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                stageSort.put(jsonObject)
                             }
 
                         }
                     }
 
-                    Log.e(TAG,"stagetSort               7103    "+stagetSort)
-                    val adapter = StageAdapter(this@ProjectFollowUpActivity, stagetSort)
+                    Log.e(TAG,"stageSort               7103    "+stageSort)
+                    val adapter = StageAdapter(this@ProjectFollowUpActivity, stageSort)
                     recylist!!.adapter = adapter
                     adapter.setClickListener(this@ProjectFollowUpActivity)
                 }
@@ -687,6 +702,36 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     }
 
     override fun onClick(position: Int, data: String) {
-        TODO("Not yet implemented")
+        if (data.equals("projectClick")){
+
+            dialogProject!!.dismiss()
+            val jsonObject = projectSort.getJSONObject(position)
+
+            ID_Project = jsonObject.getString("ID_FIELD")
+            tie_Project!!.setText(jsonObject.getString("ProjName"))
+
+            ID_Stage = ""
+            tie_Stage!!.setText("")
+            tie_CurrentStatus!!.setText("")
+//            ID_Team = ""
+//            tie_Team!!.setText("")
+//            ID_Employee = "0"
+//            tie_Employee!!.setText("")
+
+        }
+
+        if (data.equals("stageCliik")){
+
+            dialogStage!!.dismiss()
+            val jsonObject = stageSort.getJSONObject(position)
+            ID_Stage = jsonObject.getString("ProjectStagesID")
+            tie_Stage!!.setText(jsonObject.getString("StageName"))
+
+//            ID_Team = ""
+//            tie_Team!!.setText("")
+//            ID_Employee = "0"
+//            tie_Employee!!.setText("")
+
+        }
     }
 }

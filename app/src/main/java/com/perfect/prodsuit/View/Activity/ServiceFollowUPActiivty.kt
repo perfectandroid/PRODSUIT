@@ -4464,6 +4464,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                     Log.e(TAG,"1416662  Product                       "+modelServicesListDetails[i].Product)
                     Log.e(TAG,"1416663  ID_ComplaintList              "+modelServicesListDetails[i].ID_ComplaintList)
                     Log.e(TAG,"1416664  ID_CustomerWiseProductDetails "+modelServicesListDetails[i].ID_CustomerWiseProductDetails)
+                    Log.e(TAG,"1416664  ReplacementWarrantyExpireDate "+modelServicesListDetails[i].ReplacementWarrantyExpireDate)
 
                     val jObject = JSONObject()
                     val jObject1 = JSONObject()

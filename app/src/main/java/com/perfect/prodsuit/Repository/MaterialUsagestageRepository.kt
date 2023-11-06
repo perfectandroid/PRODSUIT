@@ -23,17 +23,17 @@ import java.util.ArrayList
 object MaterialUsagestageRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val MaterialUsagestageSetterGetter = MutableLiveData<MetarialUsageStageModel>()
+    val ProjectStageSetterGetter = MutableLiveData<MetarialUsageStageModel>()
     val TAG: String = "MaterialUsagestageRepository"
 
     fun getServicesApiCall(context: Context,ID_Project : String): MutableLiveData<MetarialUsageStageModel> {
-        getMaterialUsage(context,ID_Project)
-        return MaterialUsagestageSetterGetter
+        getProjectStage(context,ID_Project)
+        return ProjectStageSetterGetter
     }
 
-    private fun getMaterialUsage(context: Context,ID_Project : String) {
+    private fun getProjectStage(context: Context,ID_Project : String) {
         try {
-            MaterialUsagestageSetterGetter.value = MetarialUsageStageModel("")
+            ProjectStageSetterGetter.value = MetarialUsageStageModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -72,7 +72,7 @@ object MaterialUsagestageRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Critrea1", ProdsuitApplication.encryptStart(ID_Project))
 
-                Log.e(TAG,"getDepartment  78   "+requestObject1)
+                Log.e(TAG,"requestObject1  78   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -92,7 +92,7 @@ object MaterialUsagestageRepository {
                         val leads = ArrayList<MetarialUsageStageModel>()
                         leads.add(MetarialUsageStageModel(response.body()))
                         val msg = leads[0].message
-                        MaterialUsagestageSetterGetter.value = MetarialUsageStageModel(msg)
+                        ProjectStageSetterGetter.value = MetarialUsageStageModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                         Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()

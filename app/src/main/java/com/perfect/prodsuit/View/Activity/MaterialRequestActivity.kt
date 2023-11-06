@@ -248,7 +248,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
         when (v!!.id) {
             R.id.imback -> {
                 finish()
-                overridePendingTransition(R.anim.enter_from_right, R.anim.enter_from_right)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
             }
             R.id.tv_MaterialReqst -> {
 

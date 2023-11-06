@@ -2072,7 +2072,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
-        overridePendingTransition(R.anim.enter_from_right, R.anim.enter_from_right);
+//        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

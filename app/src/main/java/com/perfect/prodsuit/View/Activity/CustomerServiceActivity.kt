@@ -35,6 +35,7 @@ import org.json.JSONObject
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.log
 
 
 class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , ItemClickListener {
@@ -194,6 +195,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var districtCount = 0
     var areaCount = 0
     var postCount = 0
+    var prioritymode = 0
 
     lateinit var pinCodeSearchViewModel: PinCodeSearchViewModel
     lateinit var pinCodeArrayList: JSONArray
@@ -276,6 +278,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var productHistDet = 0
     var salesHistDet = 0
     var cutDueDet = 0
+    var custServiceCount = 0
+    var categoryCount = 0
 
     var SubModeSearch: String? = ""
     var strCustomer: String? = ""
@@ -496,7 +500,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         checkAttendance()
 
         priorityDet = 0
-        getProductPriority("0")
+        prioritymode = 0
+        getProductPriority()
 
         til_CustomerName!!.setEndIconOnClickListener {
            // finish()
@@ -538,7 +543,6 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //                tie_Address!!.setText("")
 //            }
         }
-
 
 
 
@@ -813,6 +817,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 attDetailMode  = "1"
                 locDetailMode  = "1"
 
+                ReqMode = "66"
+                SubMode = "20"
+                categoryCount = 0
+                getCompCategory(ReqMode!!,SubMode!!)
+
                 hideViews()
             }
 
@@ -873,7 +882,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             R.id.tie_Priority->{
                 Config.disableClick(v)
                 priorityDet = 0
-                getProductPriority("1")
+                prioritymode = 1
+                getProductPriority()
 
             }
 
@@ -910,6 +920,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 CompcategoryDet = 0
                 ReqMode = "66"
                 SubMode = "20"
+                categoryCount = 1
                 getCompCategory(ReqMode!!,SubMode!!)
 
             }
@@ -2525,8 +2536,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         }
     }
 
-    private fun getProductPriority(modes : String) {
+    private fun getProductPriority() {
 //        var prodpriority = 0
+        Log.e(TAG,"ffffffffffffffff 1== "+prioritymode)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -2552,7 +2564,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                         servPriorityArrayList = jobjt.getJSONArray("CommonPopupList")
                                         if (servPriorityArrayList.length()>0){
 
-                                            if (modes.equals("0")){
+                                            Log.e(TAG,"ffffffffffffffff "+prioritymode)
+                                            if (prioritymode == 0){
                                                 var jsonObject1 = servPriorityArrayList.getJSONObject(2)
                                                 tie_Priority!!.setText(jsonObject1.getString("Description"))
                                                 ID_Priority = jsonObject1.getString("Code")
@@ -3104,9 +3117,16 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                         if (compCategoryArrayList.length()>0){
 
                                             // productPriorityPopup(prodPriorityArrayList)
-                                            compCategoryPopup(compCategoryArrayList)
+                                            Log.e(TAG,"bbbbbbbb   "+categoryCount)
 
+                                            if (categoryCount == 0){
+                                                var jsonObject1 = compCategoryArrayList.getJSONObject(2)
+                                                tie_CompCategory!!.setText(jsonObject1.getString("Description"))
+                                                ID_CompCategory = jsonObject1.getString("Code")
 
+                                            }else{
+                                                compCategoryPopup(compCategoryArrayList)
+                                            }
 
                                         }
 
@@ -4124,6 +4144,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             var txtNewUserCancel = dialogAddUserSheet!!.findViewById<TextView>(R.id.txtNewUserCancel)
             var txtNewUserSubmit = dialogAddUserSheet!!.findViewById<TextView>(R.id.txtNewUserSubmit)
+            var txtNewUserReset = dialogAddUserSheet!!.findViewById<TextView>(R.id.txtNewUserReset)
 
             tie_CN_Pincode!!.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
@@ -4158,8 +4179,32 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 }
             }
 
-            txtNewUserCancel!!.setOnClickListener {
-                dialogAddUserSheet!!.dismiss()
+            txtNewUserReset!!.setOnClickListener {
+//                dialogAddUserSheet!!.dismiss()
+                tie_CN_Name!!.addTextChangedListener(watcher)
+                tie_CN_Mobile!!.addTextChangedListener(watcher)
+                tie_CN_HouseName!!.addTextChangedListener(watcher)
+                tie_CN_Country!!.addTextChangedListener(watcher)
+                tie_CN_State!!.addTextChangedListener(watcher)
+                tie_CN_District!!.addTextChangedListener(watcher)
+
+                FK_Place    = ""
+                FK_Country  = ""
+                FK_States   = ""
+                FK_District = ""
+                FK_Area     = ""
+                FK_Post     = ""
+
+                tie_CN_Name!!.setText("")
+                tie_CN_Mobile!!.setText("")
+                tie_CN_HouseName!!.setText("")
+                tie_CN_Place!!.setText("")
+                tie_CN_Pincode!!.setText("")
+                tie_CN_Country!!.setText("")
+                tie_CN_State!!.setText("")
+                tie_CN_District!!.setText("")
+                tie_CN_Area!!.setText("")
+                tie_CN_Post!!.setText("")
             }
 
             txtNewUserSubmit!!.setOnClickListener {
@@ -4429,9 +4474,10 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //                        "\n"+"ID_Product    "+ID_Product)
 
 
+                custServiceCount = 0
                 getCustomerserviceCount(ID_Customer!!,Customer_Type!!,ID_Product!!)
 
-
+                Log.e(TAG,"ddddddddq ")
 
             }
 
@@ -4744,6 +4790,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //            }
 
             if (!ID_Customer.equals("")){
+                Log.e(TAG,"qqqqqqq 1 ")
                 productHistDet = 0
                 getProductHistory()
             }
@@ -4799,43 +4846,59 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message
+                            Log.e(TAG,"4848  ")
                             if (msg!!.length > 0) {
+
+                                if (custServiceCount == 0) {
+                                    custServiceCount++
+
                                 val jObject = JSONObject(msg)
-                                Log.e(TAG, "msg   count   " + msg)
+                                Log.e(TAG, "msg   count 1  " + msg)
                                 if (jObject.getString("StatusCode") == "0") {
 
-                                    val jobjt = jObject.getJSONObject("CustomerServiceRegisterCount")
-                                     warrantycount =jobjt.getString("WarrantyCount")
-                                     servicehistorycount =jobjt.getString("ServiceHistoryCount")
-                                     salescount =jobjt.getString("SalesCount")
-                                     customerduecount =jobjt.getString("CustomerDueCount")
+                                    val jobjt =
+                                        jObject.getJSONObject("CustomerServiceRegisterCount")
+                                    warrantycount = jobjt.getString("WarrantyCount")
+                                    servicehistorycount = jobjt.getString("ServiceHistoryCount")
+                                    salescount = jobjt.getString("SalesCount")
+                                    customerduecount = jobjt.getString("CustomerDueCount")
 
-                                    val warcount = context.getSharedPreferences(Config.SHARED_PREF50, 0)
+                                    val warcount =
+                                        context.getSharedPreferences(Config.SHARED_PREF50, 0)
                                     val warrantycountEditer = warcount.edit()
                                     warrantycountEditer.putString("WarrantyCount", warrantycount)
                                     warrantycountEditer.commit()
 
 
-                                    val servcount = context.getSharedPreferences(Config.SHARED_PREF51, 0)
+                                    val servcount =
+                                        context.getSharedPreferences(Config.SHARED_PREF51, 0)
                                     val servcountEditer = servcount.edit()
-                                    servcountEditer.putString("ServiceHistoryCount", servicehistorycount)
+                                    servcountEditer.putString(
+                                        "ServiceHistoryCount",
+                                        servicehistorycount
+                                    )
                                     servcountEditer.commit()
 
-                                    val salecount = context.getSharedPreferences(Config.SHARED_PREF52, 0)
+                                    val salecount =
+                                        context.getSharedPreferences(Config.SHARED_PREF52, 0)
                                     val salecountEditer = salecount.edit()
                                     salecountEditer.putString("SalesCount", salescount)
                                     salecountEditer.commit()
 
-                                    val custduecount = context.getSharedPreferences(Config.SHARED_PREF53, 0)
+                                    val custduecount =
+                                        context.getSharedPreferences(Config.SHARED_PREF53, 0)
                                     val custduecountEditer = custduecount.edit()
-                                    custduecountEditer.putString("CustomerDueCount", customerduecount)
+                                    custduecountEditer.putString(
+                                        "CustomerDueCount",
+                                        customerduecount
+                                    )
                                     custduecountEditer.commit()
 
 
-                                    tv_warranty_count!!.text=warrantycount
-                                    tv_product_count!!.text=servicehistorycount
-                                    tv_sales_count!!.text=salescount
-                                    tv_customerdue_count!!.text=customerduecount
+                                    tv_warranty_count!!.text = warrantycount
+                                    tv_product_count!!.text = servicehistorycount
+                                    tv_sales_count!!.text = salescount
+                                    tv_customerdue_count!!.text = customerduecount
 
                                     warrantyMode = "1"
                                     prodHistMode = "0"
@@ -4847,6 +4910,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                 } else {
 
                                 }
+                            }
                             } else {
 
                             }
@@ -4996,6 +5060,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                         recyServiceSalesHistory!!.visibility = View.GONE
                         recyServiceSalesHistory!!.adapter = null
                         if (!ID_Product.equals("") && !ID_Customer.equals("")){
+                            Log.e(TAG,"qqqqqqq 2 ")
                             productHistDet = 0
                             getProductHistory()
                         }
@@ -5063,12 +5128,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                progressDialog = ProgressDialog(context, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
+//                progressDialog = ProgressDialog(context, R.style.Progress)
+//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//                progressDialog!!.setCancelable(false)
+//                progressDialog!!.setIndeterminate(true)
+//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+//                progressDialog!!.show()
                 serviceProductHistoryViewModel.getServiceProductHistory(this,ID_Product!!,Customer_Type!!,ID_Customer!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -5096,16 +5161,16 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                                     }
                                 } else {
-//                                    val builder = AlertDialog.Builder(
-//                                        this@CustomerServiceActivity,
-//                                        R.style.MyDialogTheme
-//                                    )
-//                                    builder.setMessage(jObject.getString("EXMessage"))
-//                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                    }
-//                                    val alertDialog: AlertDialog = builder.create()
-//                                    alertDialog.setCancelable(false)
-//                                    alertDialog.show()
+                                    val builder = AlertDialog.Builder(
+                                        this@CustomerServiceActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
                                 }
                             }
 
@@ -5118,7 +5183,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //                            ).show()
                         }
                     })
-                progressDialog!!.dismiss()
+//                progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)

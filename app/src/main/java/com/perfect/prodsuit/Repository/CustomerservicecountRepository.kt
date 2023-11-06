@@ -41,6 +41,7 @@ object CustomerservicecountRepository {
         System.out.println("Datacount 2 :"+Customer_Type)
         System.out.println("Datacount 3 :"+ID_Product)
         try {
+//            CustomerservicecountSetterGetter.value = CustomerservicecountModel()
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -102,9 +103,11 @@ object CustomerservicecountRepository {
 
 
                 Log.e(TAG,"requestObject1   count   "+requestObject1)
+                Log.e(TAG,"4848  "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()
+                Log.e(TAG,"wwwwwwwwwww 3")
             }
             val body = RequestBody.create(
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
@@ -127,6 +130,7 @@ object CustomerservicecountRepository {
                     } catch (e: Exception) {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
+                        Log.e(TAG,"wwwwwwwwwww 1")
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
@@ -136,6 +140,7 @@ object CustomerservicecountRepository {
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
+            Log.e(TAG,"wwwwwwwwwww 2")
         }
     }
 }
