@@ -42,6 +42,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
     lateinit var serviceListViewModel: ServiceListViewModel
     lateinit var serviceListArrayList: JSONArray
     lateinit var serviceListSort: JSONArray
+
     var recyServiceList: RecyclerView? = null
     private var tv_listCount: TextView? = null
     private var txtv_headlabel: TextView? = null
@@ -89,6 +90,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
     var filterMobile : String? = ""
     var filterArea   : String? = ""
     var filterDueDays : String? = ""
+    var exmessage : String? = ""
 
 
     var statusCount = 0
@@ -128,8 +130,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
     var serUpdateCount = 0
     var strVisitDate : String?= ""
     var saveAttendanceMark = false
-
-
+    val jsons= JSONObject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -238,44 +239,92 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
             tie_Area!!.setText(""+filterArea)
             tie_DueDays!!.setText(""+filterDueDays)
 
+
+
+
             txtFilterSearch!!.setOnClickListener {
 
-                filterTicketNumber = tie_TicketNumber!!.text!!.toString().toLowerCase().trim()
-                filterBranch       = tie_Branch!!.text!!.toString().toLowerCase().trim()
-                filterCustomer     = tie_Customer!!.text!!.toString().toLowerCase().trim()
-                filterMobile       = tie_Mobile!!.text!!.toString().toLowerCase().trim()
-                filterArea         = tie_Area!!.text!!.toString().toLowerCase().trim()
-                filterDueDays      = tie_DueDays!!.text!!.toString().toLowerCase().trim()
 
-                serviceListSort = JSONArray()
+                if (tie_TicketNumber!!.text.toString().equals("")&&tie_Branch!!.text.toString().equals("")&&tie_Customer!!.text.toString().equals("")&&
+                    tie_Mobile!!.text.toString().equals("")&&
+                    tie_Area!!.text.toString().equals("")&&
+                    tie_DueDays!!.text.toString().equals("")){
+
+                    Toast.makeText(applicationContext,"Please enter any one field",Toast.LENGTH_LONG).show()
+                }
+                else
+                {
+                    filterTicketNumber = tie_TicketNumber!!.text!!.toString().toLowerCase().trim()
+                    filterBranch       = tie_Branch!!.text!!.toString().toLowerCase().trim()
+                    filterCustomer     = tie_Customer!!.text!!.toString().toLowerCase().trim()
+                    filterMobile       = tie_Mobile!!.text!!.toString().toLowerCase().trim()
+                    filterArea         = tie_Area!!.text!!.toString().toLowerCase().trim()
+                    filterDueDays      = tie_DueDays!!.text!!.toString().toLowerCase().trim()
+
+                    serviceListSort = JSONArray()
 
 //                        || jsonObject.getString("Customer")!!.toLowerCase().trim().contains(strCustomer)
 //                        || jsonObject.getString("Mobile")!!.toLowerCase().trim().contains(strMobile)
 //                        || jsonObject.getString("Area")!!.toLowerCase().trim().contains(strArea)
 //                        || jsonObject.getString("Due")!!.toLowerCase().trim().contains(strDueDays)
-                for (k in 0 until serviceListArrayList.length()) {
-                    val jsonObject = serviceListArrayList.getJSONObject(k)
-                  //  if (textlength <= jsonObject.getString("TicketNo").length) {
-                        if ((jsonObject.getString("TicketNo")!!.toLowerCase().trim().contains(filterTicketNumber!!))
-                            && (jsonObject.getString("Branch")!!.toLowerCase().trim().contains(filterBranch!!))
-                            && (jsonObject.getString("Customer")!!.toLowerCase().trim().contains(filterCustomer!!))
-                            && (jsonObject.getString("Mobile")!!.toLowerCase().trim().contains(filterMobile!!))
-                            && (jsonObject.getString("Area")!!.toLowerCase().trim().contains(filterArea!!))
-                            && (jsonObject.getString("Due")!!.toLowerCase().trim().contains(filterDueDays!!))){
-                         //   Log.e(TAG,"2161    "+strTicketNumber+"   "+strCustomer)
+
+                    for (k in 0 until serviceListArrayList.length()) {
+                        val jsonObject = serviceListArrayList.getJSONObject(k)
+                        //  if (textlength <= jsonObject.getString("TicketNo").length) {
+                        if ((jsonObject.getString("TicketNo")!!.toLowerCase().trim()
+                                .contains(filterTicketNumber!!))
+                            && (jsonObject.getString("Branch")!!.toLowerCase().trim()
+                                .contains(filterBranch!!))
+                            && (jsonObject.getString("Customer")!!.toLowerCase().trim()
+                                .contains(filterCustomer!!))
+                            && (jsonObject.getString("Mobile")!!.toLowerCase().trim()
+                                .contains(filterMobile!!))
+                            && (jsonObject.getString("Area")!!.toLowerCase().trim()
+                                .contains(filterArea!!))
+                            && (jsonObject.getString("Due")!!.toLowerCase().trim()
+                                .contains(filterDueDays!!))
+                        ) {
+                            //   Log.e(TAG,"2161    "+strTicketNumber+"   "+strCustomer)
                             serviceListSort.put(jsonObject)
-                        }else{
-                          //  Log.e(TAG,"2162    "+strTicketNumber+"   "+strCustomer)
+                        } else {
+                            //  Log.e(TAG,"2162    "+strTicketNumber+"   "+strCustomer)
                         }
 
-                   // }
-                }
-                dialog1.dismiss()
-                val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListSort,SubMode!!)
-                recyServiceList!!.adapter = adapter
-                adapter.setClickListener(this@ServiceAssignListActivity)
+                        // }
+                    }
+                    Log.i("Length",serviceListArrayList.length().toString())
 
-                tv_listCount!!.setText(""+serviceListSort.length())
+                    if (serviceListSort.length() > 0) {
+                        dialog1.dismiss()
+                        val adapter = ServiceListAdapter(
+                            this@ServiceAssignListActivity,
+                            serviceListSort,
+                            SubMode!!
+                        )
+                        recyServiceList!!.adapter = adapter
+                        adapter.setClickListener(this@ServiceAssignListActivity)
+
+                        tv_listCount!!.setText("" + serviceListSort.length())
+
+                    }
+                    else
+                    {
+                     //   exmessage =jsons.getString("EXMessage")
+                        val builder = AlertDialog.Builder(
+                            this@ServiceAssignListActivity,
+                            R.style.MyDialogTheme
+                        )
+                        builder.setMessage("Please Enter a Valid Ticket")
+                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                        }
+                        val alertDialog: AlertDialog = builder.create()
+                        alertDialog.setCancelable(false)
+                        alertDialog.show()
+                    }
+
+                }
+
+
 
             }
 
@@ -327,11 +376,13 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                                     Log.e(TAG, "msg   82   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("ServiceAssignNewDetails")
+
                                         serviceListArrayList = jobjt.getJSONArray("ServiceAssignNewList")
                                         if (serviceListArrayList.length() > 0) {
                                             imgv_filter!!.visibility  =View.VISIBLE
 
                                             serviceListSort = JSONArray()
+
                                             for (k in 0 until serviceListArrayList.length()) {
                                                 val jsonObject = serviceListArrayList.getJSONObject(k)
                                                 // reportNamesort.put(k,jsonObject)
@@ -348,6 +399,8 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 
                                         }
                                     } else {
+
+                                        Log.i("ExMessage",exmessage.toString())
                                         val builder = AlertDialog.Builder(
                                             this@ServiceAssignListActivity,
                                             R.style.MyDialogTheme

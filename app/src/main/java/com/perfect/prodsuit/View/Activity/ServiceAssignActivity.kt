@@ -6,15 +6,14 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.telecom.VideoProfile
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.core.view.updatePaddingRelative
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -29,6 +28,7 @@ import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.text.DateFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -216,6 +216,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     var TicketDate: String? = ""
     var dateattend: String? = ""
     var stridCustomer: String? = ""
+    val calendar11: Calendar? = Calendar.getInstance()
+    val calendar22: Calendar? = Calendar.getInstance()
 //    var str: String? = ""
 
     var serUpdateCount = 0
@@ -1007,7 +1009,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
             R.id.btnAdd->{
                 Config.disableClick(v)
-                addValidation()
+                var dates =tie_VisitDate!!.text.toString()
+                addValidation(dates)
             }
             R.id.btnClear->{
 
@@ -1083,9 +1086,11 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
     }
 
-    private fun addValidation() {
-      //  try {
+    private fun addValidation(dates: String) {
 
+
+     /*  til_VisitDate!!.setError("Visit On Date should be greater than or equal to Todays date");
+        til_VisitDate!!.setErrorIconDrawable(null)*/
         if(til_vehicleDetail!!.visibility==View.VISIBLE)
         {
             strRemark = tie_vehicle!!.text.toString()
@@ -1100,13 +1105,49 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         }
 
 
+        try {
+            val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
-        //Log.i("Remarks", strRemark!!)
+            val c = Calendar.getInstance().time
+            println("Current time => $c")
 
-            if (strVisitDate.equals("")){
-                til_VisitDate!!.setError("Select Visit Date");
+            val df = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            val formattedDate = df.format(c)
+            println("Current date => $formattedDate")
+
+            val date1 = dateFormat.parse(formattedDate)
+            val date2 = dateFormat.parse(dates)
+
+            calendar11!!.time = date1
+            calendar22!!.time = date2
+
+            System.out.println("Compare Result : " + calendar22.compareTo(calendar11))
+
+            System.out.println("Compare Resultt : " + calendar22.compareTo(calendar11))
+
+        /*    if(calendar22.compareTo(calendar11).equals(-1))
+            {
+                til_VisitDate!!.setError("Visit On Date should be greater than or equal to Today's Date")
                 til_VisitDate!!.setErrorIconDrawable(null)
-            }
+            }*/
+
+            //  System.out.println("Compare Result : " + calendar1.compareTo(calendar2))
+        }
+        catch(e: ParseException)
+        {
+
+
+        }
+        strVisitDate= calendar22!!.compareTo(calendar11).toString()
+
+         if (strVisitDate.equals("-1")){
+           /* til_VisitDate!!.setError("Select Visit Date");
+            til_VisitDate!!.setErrorIconDrawable(null)*/
+
+             til_VisitDate!!.setError("Visit On Date should be greater than or equal to Today's Date")
+             til_VisitDate!!.setErrorIconDrawable(null)
+        }
+
             else if (strVisitTime.equals("")){
                 til_VisitTime!!.setError("Select Visit Time");
                 til_VisitTime!!.setErrorIconDrawable(null)
@@ -1153,7 +1194,10 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
 
             }
+     /*  else if(strVisitDate!=null)
+        {
 
+        }*/
 
 
      /*   if (ID_Role!!.equals("")){
