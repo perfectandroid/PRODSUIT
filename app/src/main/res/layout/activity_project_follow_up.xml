@@ -165,13 +165,13 @@
                                                         android:paddingLeft="10dp"
                                                         android:paddingTop="8dp"
                                                         android:paddingBottom="8dp"
-                                                        android:drawableRight="@drawable/arrow_down"
                                                         android:drawableLeft="@drawable/svg_fd_actiontype"
                                                         android:drawablePadding="5dp"
                                                         android:drawableTint="@color/textColor"
                                                         android:textSize="14dp"
                                                         android:focusableInTouchMode="false"
                                                         android:editable="false"
+                                                        android:enabled="false"
                                                         android:fontFamily="@font/myfont"
                                                         android:textColor="@color/greydarks"
                                                         android:textStyle="normal"/>
@@ -247,7 +247,7 @@
                                                 <LinearLayout
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:orientation="horizontal"
+                                                    android:orientation="vertical"
                                                     android:layout_marginTop="10dp"
                                                     android:layout_marginLeft="15dp"
                                                     android:layout_marginRight="15dp"
@@ -285,19 +285,19 @@
                                                     </com.google.android.material.textfield.TextInputLayout>
 
                                                     <com.google.android.material.textfield.TextInputLayout
-                                                        android:id="@+id/til_CallTime"
+                                                        android:id="@+id/til_DueDate"
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
                                                         android:layout_weight="1"
-                                                        android:hint="Time"
-                                                        android:layout_marginLeft="5dp"
+                                                        android:hint="Due Date"
+                                                        android:layout_marginTop="10dp"
                                                         android:drawableTint="@color/textColor"
                                                         android:fontFamily="@font/myfont"
-                                                        android:visibility="gone"
+                                                        android:visibility="visible"
                                                         style="@style/Widget.App.TextInputLayout">
 
                                                         <com.google.android.material.textfield.TextInputEditText
-                                                            android:id="@+id/tie_CallTime"
+                                                            android:id="@+id/tie_DueDate"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:gravity="center_vertical"
@@ -307,7 +307,7 @@
                                                             android:textSize="14dp"
                                                             android:focusableInTouchMode="false"
                                                             android:editable="false"
-                                                            android:drawableLeft="@drawable/svg_fd_time"
+                                                            android:drawableLeft="@drawable/icon_svg_todate"
                                                             android:drawablePadding="5dp"
                                                             android:drawableTint="@color/textColor"
                                                             android:fontFamily="@font/myfont"
@@ -318,75 +318,9 @@
 
                                                 </LinearLayout>
 
-                                                <com.google.android.material.textfield.TextInputLayout
-                                                    android:id="@+id/til_CallStatus"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_weight="1"
-                                                    android:hint="Call Status"
-                                                    android:layout_marginTop="10dp"
-                                                    android:layout_marginLeft="15dp"
-                                                    android:layout_marginRight="15dp"
-                                                    android:drawableTint="@color/textColor"
-                                                    android:fontFamily="@font/myfont"
-                                                    style="@style/Widget.App.TextInputLayout"
-                                                    android:visibility="gone">
-
-                                                    <com.google.android.material.textfield.TextInputEditText
-                                                        android:id="@+id/tie_CallStatus"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:gravity="center_vertical"
-                                                        android:paddingLeft="10dp"
-                                                        android:paddingTop="8dp"
-                                                        android:paddingBottom="8dp"
-                                                        android:drawableRight="@drawable/arrow_down"
-                                                        android:drawableLeft="@drawable/svg_fd_callstatus"
-                                                        android:drawablePadding="5dp"
-                                                        android:drawableTint="@color/textColor"
-                                                        android:textSize="14dp"
-                                                        android:focusableInTouchMode="false"
-                                                        android:editable="false"
-                                                        android:fontFamily="@font/myfont"
-                                                        android:textColor="@color/greydarks"
-                                                        android:textStyle="normal"/>
-
-                                                </com.google.android.material.textfield.TextInputLayout>
 
 
-                                                <com.google.android.material.textfield.TextInputLayout
-                                                    android:id="@+id/til_CallDuration"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_weight="1"
-                                                    android:hint="Call Duration [seconds]"
-                                                    android:layout_marginTop="10dp"
-                                                    android:layout_marginLeft="15dp"
-                                                    android:layout_marginRight="15dp"
-                                                    android:drawableTint="@color/textColor"
-                                                    android:fontFamily="@font/myfont"
-                                                    style="@style/Widget.App.TextInputLayout"
-                                                    android:visibility="gone">
 
-                                                    <com.google.android.material.textfield.TextInputEditText
-                                                        android:id="@+id/tie_CallDuration"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:gravity="center_vertical"
-                                                        android:paddingLeft="10dp"
-                                                        android:paddingTop="8dp"
-                                                        android:paddingBottom="8dp"
-                                                        android:maxLength="6"
-                                                        android:drawableLeft="@drawable/svg_fd_callduration"
-                                                        android:drawablePadding="5dp"
-                                                        android:drawableTint="@color/textColor"
-                                                        android:textSize="14dp"
-                                                        android:inputType="number"
-                                                        android:fontFamily="@font/myfont"
-                                                        android:textColor="@color/greydarks"
-                                                        android:textStyle="normal"/>
-
-                                                </com.google.android.material.textfield.TextInputLayout>
 
 
                                                 <com.google.android.material.textfield.TextInputLayout
@@ -423,6 +357,38 @@
                                                 </com.google.android.material.textfield.TextInputLayout>
 
                                                 <com.google.android.material.textfield.TextInputLayout
+                                                    android:id="@+id/til_Reason"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:hint="Reason"
+                                                    android:layout_marginTop="10dp"
+                                                    android:layout_marginLeft="15dp"
+                                                    android:layout_marginRight="15dp"
+                                                    android:drawableTint="@color/textColor"
+                                                    android:fontFamily="@font/myfont"
+                                                    style="@style/Widget.App.TextInputLayout">
+
+                                                    <com.google.android.material.textfield.TextInputEditText
+                                                        android:id="@+id/tie_Reason"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:drawableLeft="@drawable/svg_report"
+                                                        android:drawablePadding="5dp"
+                                                        android:drawableTint="@color/textColor"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:gravity="center_vertical"
+                                                        android:paddingLeft="10dp"
+                                                        android:paddingTop="8dp"
+                                                        android:maxLength="200"
+                                                        android:maxLines="4"
+                                                        android:paddingBottom="8dp"
+                                                        android:textColor="@color/greydarks"
+                                                        android:textSize="14dp"
+                                                        android:textStyle="normal" />
+
+                                                </com.google.android.material.textfield.TextInputLayout>
+
+                                                <com.google.android.material.textfield.TextInputLayout
                                                     android:id="@+id/til_Remarks"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
@@ -439,7 +405,7 @@
                                                         android:id="@+id/tie_Remarks"
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
-                                                        android:drawableLeft="@drawable/svg_fd_empremarks"
+                                                        android:drawableLeft="@drawable/icon_svg_fromtime"
                                                         android:drawablePadding="5dp"
                                                         android:drawableTint="@color/textColor"
                                                         android:fontFamily="@font/myfont"

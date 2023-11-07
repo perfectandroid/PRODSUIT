@@ -72,6 +72,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     var ID_Stage   = ""
     private var strDate                           = ""
 
+    var jsonObj: JSONObject? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -83,6 +85,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         materialusageStageViewModel     = ViewModelProvider(this).get(MaterialUsageStageViewModel::class.java)
 
         setRegViews()
+        var jsonObject: String? = intent.getStringExtra("jsonObject")
+        jsonObj = JSONObject(jsonObject)
+
+        ID_Project = jsonObj!!.getString("ID_FIELD")
+        tie_Project!!.setText(jsonObj!!.getString("ProjName"))
 
 
     }

@@ -122,6 +122,8 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
     var saveDetailArray :JSONArray? = null
     private var dialogConfirm : Dialog? = null
 
+    var jsonObj: JSONObject? = null
+
     lateinit var materialRequestSaveViewModel: MaterialRequestSaveViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -140,7 +142,11 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
         materialusageTeamViewModel      = ViewModelProvider(this).get(MaterialUsageTeamViewModel::class.java)
         materialRequestSaveViewModel      = ViewModelProvider(this).get(MaterialRequestSaveViewModel::class.java)
         setRegViews()
+        var jsonObject: String? = intent.getStringExtra("jsonObject")
+        jsonObj = JSONObject(jsonObject)
 
+        ID_Project = jsonObj!!.getString("ID_FIELD")
+        tie_Project!!.setText(jsonObj!!.getString("ProjName"))
         requestMode = "1"
         detailMode = "0"
 
@@ -376,12 +382,12 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
     }
 
     private fun resetData() {
-        ID_Project = ""
+      //  ID_Project = ""
         ID_Stage = ""
         ID_Team = ""
         ID_Employee = ""
 
-        tie_Project!!.setText("")
+       // tie_Project!!.setText("")
         tie_Stage!!.setText("")
         tie_Team!!.setText("")
         tie_Employee!!.setText("")
@@ -575,8 +581,8 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
         val txtSubmit    = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
 
-        date_Picker1.setMinDate(System.currentTimeMillis())
-        date_Picker1.minDate = System.currentTimeMillis()
+//        date_Picker1.setMinDate(System.currentTimeMillis())
+//        date_Picker1.minDate = System.currentTimeMillis()
 
 
         txtCancel.setOnClickListener {
@@ -1624,6 +1630,11 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
             if (modelUsageProduct.size == 0){
                 ll_Detail!!.visibility = View.GONE
             }
+            ID_Product = "="
+            ID_Stock = ""
+            tie_Product!!.setText("")
+            tie_Quantity!!.setText("")
+            productTotQty = ""
 
         }
 

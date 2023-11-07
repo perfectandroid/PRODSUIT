@@ -55,7 +55,9 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     private var tie_Followupdate  : TextInputEditText?    = null
     private var tie_Stage         : TextInputEditText?    = null
     private var tie_CurrentStatus : TextInputEditText?    = null
+    private var tie_DueDate       : TextInputEditText?    = null
     private var tie_StatusDate    : TextInputEditText?    = null
+    private var tie_Reason        : TextInputEditText?    = null
     private var tie_Remarks       : TextInputEditText?    = null
     private var imback            : ImageView?            = null
     private var til_Project       : TextInputLayout?      = null
@@ -87,6 +89,8 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     var stagecount                                        = 0
     var currentcount                                      = 0
 
+    var jsonObj: JSONObject? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_project_follow_up)
@@ -97,6 +101,10 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         currentstatusViewModel   = ViewModelProvider(this).get(CurrentStatusViewModel::class.java)
         materialusageProjectViewModel   = ViewModelProvider(this).get(MaterialUsageProjectViewModel::class.java)
         setRegViews()
+        var jsonObject: String? = intent.getStringExtra("jsonObject")
+        jsonObj = JSONObject(jsonObject)
+        ID_Project = jsonObj!!.getString("ID_FIELD")
+        tie_Project!!.setText(jsonObj!!.getString("ProjName"))
     }
 
     private fun setRegViews() {
@@ -105,7 +113,9 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         tie_Followupdate   = findViewById(R.id.tie_Followupdate)
         tie_Stage          = findViewById(R.id.tie_Stage)
         tie_CurrentStatus  = findViewById(R.id.tie_CurrentStatus)
+        tie_DueDate        = findViewById(R.id.tie_DueDate)
         tie_StatusDate     = findViewById(R.id.tie_StatusDate)
+        tie_Reason         = findViewById(R.id.tie_Reason)
         tie_Remarks        = findViewById(R.id.tie_Remarks)
         imback             = findViewById(R.id.imback)
         til_Project        = findViewById(R.id.til_Project)
@@ -121,6 +131,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         tie_Followupdate!!.setOnClickListener(this)
         tie_Stage!!.setOnClickListener(this)
         tie_CurrentStatus!!.setOnClickListener(this)
+        tie_DueDate!!.setOnClickListener(this)
         tie_StatusDate!!.setOnClickListener(this)
         imback!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
@@ -179,8 +190,14 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         val txtSubmit    = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
 
-        date_Picker1.setMinDate(System.currentTimeMillis())
-        date_Picker1.minDate = System.currentTimeMillis()
+        if (datecheck!!.equals("0")){
+            date_Picker1.maxDate = System.currentTimeMillis()
+        }else if (datecheck!!.equals("1")){
+
+        }
+
+//        date_Picker1.setMinDate(System.currentTimeMillis())
+//        date_Picker1.minDate = System.currentTimeMillis()
 
 
         txtCancel.setOnClickListener {
@@ -206,7 +223,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                 if (datecheck!!.equals("0")){
                     tie_Followupdate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
                     strFollowupdate = strYear + "-" + strMonth + "-" + strDay
-                }else{
+                }else if (datecheck!!.equals("1")){
                     tie_StatusDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
                     strStatudate = strYear + "-" + strMonth + "-" + strDay
                 }
@@ -264,14 +281,14 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                 val sdf = SimpleDateFormat("dd-MM-yyyy")
                 val currentDate = sdf.format(Date())
 
-                tie_Project!!.setText("")
+               // tie_Project!!.setText("")
                 tie_Followupdate!!.setText(currentDate)
                 tie_Stage!!.setText("")
                 tie_StatusDate!!.setText(currentDate)
                 tie_Remarks!!.setText("")
                 tie_CurrentStatus!!.setText("")
 
-                ID_Project = ""
+               // ID_Project = ""
                 ID_Stage   = ""
                 ID_CurrentStatus = ""
             }
@@ -281,7 +298,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     private fun projectFollowupValidation(v: View){
 
         strProject      = tie_Project!!.text.toString()
-        strFollowupdate = tie_CurrentStatus!!.text.toString()
+        strFollowupdate = tie_Followupdate!!.text.toString()
         strStage        = tie_CurrentStatus!!.text.toString()
         strCurrentStatus= tie_CurrentStatus!!.text.toString()
         strStatudate    = tie_StatusDate!!.text.toString()

@@ -780,7 +780,7 @@
             android:fontFamily="@font/myfont"
             android:gravity="center"
             android:padding="2dp"
-            android:text="Colse"
+            android:text="Close"
             android:textAllCaps="true"
             android:textColor="@color/white"
             android:textSize="14dp"

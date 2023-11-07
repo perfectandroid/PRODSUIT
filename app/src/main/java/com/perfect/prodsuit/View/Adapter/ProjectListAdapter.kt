@@ -36,7 +36,8 @@ class ProjectListAdapter (internal var context: Context, internal var jsonArray:
                 val pos = position+1
                 holder.tv_ShortName.text        = jsonObject!!.getString("ShortName")
                 holder.tv_CreatedDate.text        = jsonObject!!.getString("CreateDate")
-                holder.tv_Name.text        = jsonObject!!.getString("ProjName")
+                holder.tv_ProjectName.text        = jsonObject!!.getString("ProjName")
+//                holder.tv_Customer.text        = "Ranjith"
                 holder.tv_StartDate.text        = jsonObject!!.getString("StartDate")
                 holder.tv_FinishDate.text        = jsonObject!!.getString("FinishDate")
                 holder.tv_FinalAmount.text        = jsonObject!!.getString("FinalAmount")
@@ -82,7 +83,8 @@ class ProjectListAdapter (internal var context: Context, internal var jsonArray:
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         internal var tv_ShortName               : TextView
         internal var tv_CreatedDate             : TextView
-        internal var tv_Name                    : TextView
+        internal var tv_ProjectName             : TextView
+        internal var tv_Customer                : TextView
         internal var tv_StartDate               : TextView
         internal var tv_FinishDate              : TextView
         internal var tv_FinalAmount             : TextView
@@ -93,7 +95,8 @@ class ProjectListAdapter (internal var context: Context, internal var jsonArray:
         init {
             tv_ShortName                    = v.findViewById<View>(R.id.tv_ShortName) as TextView
             tv_CreatedDate                  = v.findViewById<View>(R.id.tv_CreatedDate) as TextView
-            tv_Name                         = v.findViewById<View>(R.id.tv_Name) as TextView
+            tv_ProjectName                  = v.findViewById<View>(R.id.tv_ProjectName) as TextView
+            tv_Customer                     = v.findViewById<View>(R.id.tv_Customer) as TextView
             tv_StartDate                    = v.findViewById<View>(R.id.tv_StartDate) as TextView
             tv_FinishDate                   = v.findViewById<View>(R.id.tv_FinishDate) as TextView
             tv_FinalAmount                  = v.findViewById<View>(R.id.tv_FinalAmount) as TextView
