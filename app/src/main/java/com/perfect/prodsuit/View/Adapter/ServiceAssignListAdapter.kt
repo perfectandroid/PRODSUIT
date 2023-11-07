@@ -2,6 +2,7 @@ package com.perfect.prodsuit.View.Adapter
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +12,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.AssignedTicketsActivity
 import org.json.JSONArray
 import org.json.JSONObject
-import android.content.Intent
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import com.perfect.prodsuit.View.Activity.AssignedTicketsActivity
 
 
 class ServiceAssignListAdapter(
