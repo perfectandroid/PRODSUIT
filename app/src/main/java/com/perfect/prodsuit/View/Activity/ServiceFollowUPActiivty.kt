@@ -57,6 +57,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     private var imv_infofollowup                      : ImageView?      = null
     private var imback                                : ImageView?      = null
     private var imv_filterfollowup                    : ImageView?      = null
+    private var imv_addproduct                        : ImageView?      = null
     private var imv_scannerfollowup                   : ImageView?      = null
     private var rcyler_followup                       : RecyclerView?   = null
     private var rcyler_service3                       : RecyclerView?   = null
@@ -105,6 +106,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var serviceFollowUpInfo                                             = 0
     var serviceFollowUpMoreService                                      = 0
     var productwisecomplaintcouny                                       = 0
+
     lateinit var actionTakenViewModel: ActionTakenViewModel
     lateinit var leadActionViewModel: LeadActionViewModel
     lateinit var otherChargesViewViewModel: OtherChargesViewViewModel
@@ -227,6 +229,17 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var saveLeadGenDet = 0
     lateinit var serviceFollowUpSaveModel: ServiceFollowUpSaveViewModel
 
+    var allproductlst                                                   = 0
+    lateinit var allProductViewModel: AllProductViewModel
+    lateinit var allProductArrayList: JSONArray
+    lateinit var allProductSort: JSONArray
+    private var dialogAllproductSheet : Dialog? = null
+
+    var mainSubProduct                                                   = 0
+    lateinit var mainSubProductViewModel: MainSubProductViewModel
+    lateinit var mainSubProductArrayList: JSONArray
+
+
 //    Changes 26.10.2023
     var compnantMode                                      = 0
     lateinit var servCompanantViewModel: ServCompanantViewModel
@@ -291,6 +304,8 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         serviceFollowUpSaveModel = ViewModelProvider(this).get(ServiceFollowUpSaveViewModel::class.java)
         followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
+        allProductViewModel = ViewModelProvider(this).get(AllProductViewModel::class.java)
+        mainSubProductViewModel = ViewModelProvider(this).get(MainSubProductViewModel::class.java)
 
         db_helper = DBHelper(this,null)
         try {
@@ -359,6 +374,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 
             tv_main_header!!.text = "Service Attended"
             imv_filterfollowup!!.visibility = View.VISIBLE
+            imv_addproduct!!.visibility = View.GONE
         }
         if (modeTab == 1){
             ll_part_repaced2!!.visibility = View.VISIBLE
@@ -368,6 +384,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             txt_next!!.visibility = View.VISIBLE
             tv_main_header!!.text = "Parts Replaced"
             imv_filterfollowup!!.visibility = View.GONE
+            imv_addproduct!!.visibility = View.GONE
 
         }
         if (modeTab == 2){
@@ -380,6 +397,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             txt_next!!.visibility = View.VISIBLE
             tv_main_header!!.text = "Service"
             imv_filterfollowup!!.visibility = View.GONE
+            imv_addproduct!!.visibility = View.GONE
         }
 //        if (modeTab == 2){
 //            ll_Service3!!.visibility = View.VISIBLE
@@ -390,6 +408,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             ll_action_taken!!.visibility = View.VISIBLE
             tv_main_header!!.text = "Action Taken"
             imv_filterfollowup!!.visibility = View.GONE
+            imv_addproduct!!.visibility = View.GONE
             loadActionTaken()
         }
         if (modeTab == 5) {
@@ -633,6 +652,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         rcyler_followup      = findViewById(R.id.rcyler_followup)
 //        rcyler_service3      = findViewById(R.id.rcyler_service3)
         imv_filterfollowup   = findViewById(R.id.imv_filterfollowup)
+        imv_addproduct   = findViewById(R.id.imv_addproduct)
         imv_scannerfollowup  = findViewById(R.id.imv_scannerfollowup)
         imv_infofollowup     = findViewById(R.id.imv_infofollowup)
         tv_followupticket    = findViewById(R.id.tv_followupticket)
@@ -684,6 +704,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         imv_infofollowup!!.setOnClickListener(this)
         imv_scannerfollowup!!.setOnClickListener(this)
         imv_filterfollowup!!.setOnClickListener(this)
+        imv_addproduct!!.setOnClickListener(this)
         add_Product!!.setOnClickListener(this)
         imback!!.setOnClickListener(this)
         txt_next!!.setOnClickListener(this)
@@ -2375,7 +2396,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 //                if (servicepartsReplacedModel.get(i).WarrantyMode.equals("0") || servicepartsReplacedModel.get(i).ReplceMode.equals("0")  ||
 //                    servicepartsReplacedModel.get(i).Quantity.equals("") || servicepartsReplacedModel.get(i).Quantity.equals(".")  || Qty.toFloat() > 0){
-//                        rrrrrr
+//
 //                    isChecked = false
 //                    break
 //                }
@@ -2749,6 +2770,10 @@ Log.v("adasdasds","modeTab "+modeTab)
             R.id.imv_filterfollowup -> {
                 filterBottomData()
             }
+            R.id.imv_addproduct -> {
+                allproductlst = 0
+                getAllProductList()
+            }
             R.id.add_Product -> {
                 loadMoreServiceAttended()
             }
@@ -2806,6 +2831,8 @@ Log.v("adasdasds","modeTab "+modeTab)
 
         }
     }
+
+
 
     private fun validateActiontaken4() {
 
@@ -3188,6 +3215,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             e.printStackTrace()
         }
     }
+
     private fun attendancePopUp(modelFollowUpAttendance: java.util.ArrayList<ModelFollowUpAttendance>) {
         Log.e(TAG, "864  ")
         try {
@@ -3686,12 +3714,338 @@ Log.v("adasdasds","modeTab "+modeTab)
 
         }
 
+        if (data.equals("AllProductClik")){
+            dialogAllproductSheet!!.dismiss()
+            val jsonObject = allProductSort.getJSONObject(position)
+            var iD_Prod = jsonObject.getString("ID_Product")
+            var hasId =  hasCheckDuplicate(modelServicesListDetails!!,iD_Prod!!)
+            if (hasId){
+//                mainSubProduct = 0
+//                getMainsubProducts()
+            }else{
+                Config.showCustomToast("Product Already exist",context)
+            }
+
+
+
+
+        }
+
 
 
 
 
 //        24-10-2023 Ranjith
 
+    }
+
+    private fun hasCheckDuplicate(modelServicesListDetails: ArrayList<ServiceDetailsFullListModel> , iD_Prod : String): Boolean {
+
+        var isChecked = true
+        for (i in 0 until modelServicesListDetails.size) {  // iterate through the JsonArray
+            Log.e(TAG,"3750     "+modelServicesListDetails.get(i).FK_Product)
+
+            if (modelServicesListDetails.get(i).FK_Product.equals(iD_Prod)){
+                isChecked = false
+                break
+            }
+
+        }
+        return isChecked
+    }
+
+    private fun getAllProductList() {
+        var Reqmode = "16"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                allProductViewModel.getAllProduct(this,Reqmode)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (allproductlst == 0) {
+                                    allproductlst++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   3737   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("MainProductDetails")
+                                        allProductArrayList = jobjt.getJSONArray("MainProductDetailsList")
+                                        if (allProductArrayList.length() > 0) {
+
+                                            allProductListPop(allProductArrayList)
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun allProductListPop(allProductArrayList: JSONArray) {
+
+        try {
+
+            dialogAllproductSheet = Dialog(this)
+            dialogAllproductSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogAllproductSheet!! .setContentView(R.layout.serviceall_product_popup)
+            dialogAllproductSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+            dialogAllproductSheet!!.setCancelable(true)
+
+            var recycAllproduct = dialogAllproductSheet!! .findViewById(R.id.recycAllproduct) as RecyclerView
+            val etsearch = dialogAllproductSheet!!.findViewById(R.id.etsearch) as EditText
+
+            allProductSort = JSONArray()
+            for (k in 0 until allProductArrayList.length()) {
+                val jsonObject = allProductArrayList.getJSONObject(k)
+                allProductSort.put(jsonObject)
+            }
+
+
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+            recycAllproduct!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapter = ServiceAllproductAdapter(this@ServiceFollowUPActiivty, allProductSort)
+            recycAllproduct!!.adapter = adapter
+            adapter.setClickListener(this@ServiceFollowUPActiivty)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    allProductSort = JSONArray()
+
+                    for (k in 0 until allProductArrayList.length()) {
+                        val jsonObject = allProductArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("ProdName").length) {
+                            if (jsonObject.getString("ProdName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                allProductSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "departmentSort               7103    " + allProductSort)
+                    val adapter = ServiceAllproductAdapter(this@ServiceFollowUPActiivty, allProductSort)
+                    recycAllproduct!!.adapter = adapter
+                    adapter.setClickListener(this@ServiceFollowUPActiivty)
+                }
+            })
+
+
+
+
+
+            dialogAllproductSheet!!.show()
+            val window: Window? = dialogAllproductSheet!!.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.white);
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+        }catch (e : Exception){
+
+            Log.e(TAG,"3856  "+e)
+        }
+
+    }
+
+    private fun getMainsubProducts() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                mainSubProductViewModel.getMainSubProductData(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (mainSubProduct == 0) {
+                                    mainSubProduct++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   38971   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("ServiceDetails")
+                                        mainSubProductArrayList = jobjt.getJSONArray("ServiceAttendedList")
+                                        if (mainSubProductArrayList.length() > 0) {
+
+                                            Log.e(TAG,"38972   mainSubProductArrayList   "+mainSubProductArrayList.length())
+                                            for (i in 0 until mainSubProductArrayList.length()) {
+                                                var jsonObject = mainSubProductArrayList.getJSONObject(i)
+                                                Log.e(
+                                                    TAG,
+                                                    " 388...1  " + jsonObject.getString("Product")
+                                                )
+
+                                                //    modelServicesListDetails.clear()
+
+
+                                                modelServicesListDetails!!.add(
+                                                    ServiceDetailsFullListModel(
+                                                        "0",
+                                                        jsonObject.getString("FK_Category"),
+                                                        jsonObject.getString("MasterProduct"),
+                                                        jsonObject.getString("FK_Product"),
+                                                        jsonObject.getString("Product"),
+                                                        "-2",
+                                                        jsonObject.getString("BindProduct"),
+                                                        jsonObject.getString("ComplaintProduct"),
+                                                        jsonObject.getString("Warranty"),
+                                                        jsonObject.getString("ServiceWarrantyExpireDate"),
+                                                        jsonObject.getString("ReplacementWarrantyExpireDate"),
+                                                        jsonObject.getString("ID_CustomerWiseProductDetails"),
+                                                        jsonObject.getString("ServiceWarrantyExpired"),
+                                                        jsonObject.getString("ReplacementWarrantyExpired"),
+                                                        "0",
+                                                        "",
+                                                        "",
+                                                        false,
+                                                        jsonObject.getString("SerchSerialNo")
+                                                    )
+                                                )
+
+                                                var ServiceAttendedListDet =
+                                                    jsonObject.getJSONArray("ServiceAttendedListDet")
+                                                Log.e(TAG,"38973   ServiceAttendedListDet   "+ServiceAttendedListDet.length())
+
+                                                for (j in 0 until ServiceAttendedListDet.length()) {
+                                                    var jsonObjectSub =
+                                                        ServiceAttendedListDet.getJSONObject(j)
+                                                    Log.e(
+                                                        TAG,
+                                                        " 388...2  " + jsonObjectSub.getString("Product")
+                                                    )
+
+                                                    modelServicesListDetails!!.add(
+                                                        ServiceDetailsFullListModel(
+                                                            "1",
+                                                            jsonObjectSub.getString("FK_Category"),
+                                                            jsonObjectSub.getString("MasterProduct"),
+                                                            jsonObjectSub.getString("FK_Product"),
+                                                            jsonObjectSub.getString("Product"),
+                                                            jsonObjectSub.getString("SLNo"),
+                                                            jsonObjectSub.getString("BindProduct"),
+                                                            jsonObjectSub.getString("ComplaintProduct"),
+                                                            jsonObjectSub.getString("Warranty"),
+                                                            jsonObjectSub.getString("ServiceWarrantyExpireDate"),
+                                                            jsonObjectSub.getString("ReplacementWarrantyExpireDate"),
+                                                            jsonObjectSub.getString("ID_CustomerWiseProductDetails"),
+                                                            jsonObjectSub.getString("ServiceWarrantyExpired"),
+                                                            jsonObjectSub.getString("ReplacementWarrantyExpired"),
+                                                            "0",
+                                                            "",
+                                                            "",
+                                                            false,
+                                                            jsonObject.getString("SerchSerialNo")
+                                                        )
+                                                    )
+
+
+                                                }
+                                            }
+
+                                            val lLayout =
+                                                GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+                                            rcyler_followup!!.layoutManager =
+                                                lLayout as RecyclerView.LayoutManager?
+                                            servDetadapter = ServiceDetailsAdapter(
+                                                this@ServiceFollowUPActiivty,
+                                                modelServicesListDetails
+                                            )
+                                            rcyler_followup!!.adapter = servDetadapter
+                                            servDetadapter!!.setClickListener(this@ServiceFollowUPActiivty)
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
     private fun getFollowupType() {

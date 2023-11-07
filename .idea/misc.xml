@@ -153,7 +153,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_assign_tab1.xml" value="0.36666666666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_follow_up_list.xml" value="0.20677083333333332" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_follow_up_new.xml" value="0.27239583333333334" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_follow_upactiivty.xml" value="0.23489583333333333" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_follow_upactiivty.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_invoice.xml" value="0.36666666666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_services.xml" value="0.31979166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_site_visit.xml" value="0.346875" />
@@ -212,6 +212,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_reason_auth.xml" value="0.2578125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_search_module.xml" value="0.31354166666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service.xml" value="0.31354166666666666" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_allproduct.xml" value="0.2328125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_assign.xml" value="0.3625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_assign_list.xml" value="0.2984375" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_comp.xml" value="0.36666666666666664" />
@@ -259,6 +260,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/custome_toast1.xml" value="0.26145833333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/customersearch_popup.xml" value="0.3328125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/delete_confirmation.xml" value="0.346875" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/department_popup.xml" value="0.2328125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/dynamic_auth1.xml" value="0.27291666666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/emi_payment_bottom_sheet.xml" value="0.30462962962962964" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/employee_popup.xml" value="0.32916666666666666" />
@@ -279,6 +281,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/sa_filter_bottom_sheet.xml" value="0.27447916666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/search_module_popup.xml" value="0.31354166666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/service_role_popup.xml" value="0.3569230769230769" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/serviceall_product_popup.xml" value="0.2328125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/servicelist_popup.xml" value="0.24583333333333332" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/stock_mode_popup.xml" value="0.32916666666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/stock_request_popup.xml" value="0.3234375" />
