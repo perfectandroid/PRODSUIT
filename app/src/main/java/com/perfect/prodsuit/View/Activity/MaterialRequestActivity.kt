@@ -581,8 +581,8 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
         val txtSubmit    = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
 
-        date_Picker1.setMinDate(System.currentTimeMillis())
-        date_Picker1.minDate = System.currentTimeMillis()
+//        date_Picker1.setMinDate(System.currentTimeMillis())
+//        date_Picker1.minDate = System.currentTimeMillis()
 
 
         txtCancel.setOnClickListener {
@@ -1630,6 +1630,11 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
             if (modelUsageProduct.size == 0){
                 ll_Detail!!.visibility = View.GONE
             }
+            ID_Product = "="
+            ID_Stock = ""
+            tie_Product!!.setText("")
+            tie_Quantity!!.setText("")
+            productTotQty = ""
 
         }
 

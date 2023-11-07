@@ -649,5 +649,8 @@ interface ApiInterface {
     @POST("ServiceFollowUp/GetMainProductDetails")
     fun getMainProductDetails(@Body body: RequestBody): Call<String>
 
+    @POST("ServiceFollowUp/GetProductInfo")
+    fun getProductInfo(@Body body: RequestBody): Call<String>
+
 
 }

@@ -659,8 +659,9 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
         val txtSubmit    = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
 
-        date_Picker1.setMinDate(System.currentTimeMillis())
-        date_Picker1.minDate = System.currentTimeMillis()
+//        date_Picker1.setMinDate(System.currentTimeMillis())
+        date_Picker1.maxDate = System.currentTimeMillis()
+//        date_Picker1.minDate = System.currentTimeMillis()
 
 
         txtCancel.setOnClickListener {
@@ -1847,13 +1848,22 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
         }
 
         if (data.equals("deleteStocks")){
-
+            editMode = 0
             Log.e(TAG,"14644  "+position)
             modelUsageProduct!!.removeAt(position)
             materialUsageAdapter!!.notifyItemRemoved(position)
             if (modelUsageProduct.size == 0){
                 ll_usage_product!!.visibility = View.GONE
             }
+
+            ID_Product = "="
+            ID_Stock = ""
+            tie_Product!!.setText("")
+            tie_Quantity!!.setText("")
+            productTotQty = ""
+            ID_Mode = ""
+            tie_Mode!!.setText("")
+
 
         }
 

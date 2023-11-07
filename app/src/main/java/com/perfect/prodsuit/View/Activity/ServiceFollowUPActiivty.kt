@@ -374,7 +374,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 
             tv_main_header!!.text = "Service Attended"
             imv_filterfollowup!!.visibility = View.VISIBLE
-            imv_addproduct!!.visibility = View.GONE
+            imv_addproduct!!.visibility = View.VISIBLE
         }
         if (modeTab == 1){
             ll_part_repaced2!!.visibility = View.VISIBLE
@@ -3720,8 +3720,8 @@ Log.v("adasdasds","modeTab "+modeTab)
             var iD_Prod = jsonObject.getString("ID_Product")
             var hasId =  hasCheckDuplicate(modelServicesListDetails!!,iD_Prod!!)
             if (hasId){
-//                mainSubProduct = 0
-//                getMainsubProducts()
+                mainSubProduct = 0
+                getMainsubProducts(iD_Prod)
             }else{
                 Config.showCustomToast("Product Already exist",context)
             }
@@ -3897,7 +3897,9 @@ Log.v("adasdasds","modeTab "+modeTab)
 
     }
 
-    private fun getMainsubProducts() {
+    private fun getMainsubProducts(iD_Prod : String) {
+        var ReqMode = "115"
+//        var iD_Prod = "10716"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -3906,7 +3908,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                mainSubProductViewModel.getMainSubProductData(this)!!.observe(
+                mainSubProductViewModel.getMainSubProductData(this,iD_Prod,ReqMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -3919,8 +3921,8 @@ Log.v("adasdasds","modeTab "+modeTab)
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   38971   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("ServiceDetails")
-                                        mainSubProductArrayList = jobjt.getJSONArray("ServiceAttendedList")
+                                        val jobjt = jObject.getJSONObject("ProductInfo")
+                                        mainSubProductArrayList = jobjt.getJSONArray("ProductInfoList")
                                         if (mainSubProductArrayList.length() > 0) {
 
                                             Log.e(TAG,"38972   mainSubProductArrayList   "+mainSubProductArrayList.length())
@@ -3954,13 +3956,13 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                         "",
                                                         "",
                                                         false,
-                                                        jsonObject.getString("SerchSerialNo")
+                                                        "0"
                                                     )
                                                 )
 
                                                 var ServiceAttendedListDet =
-                                                    jsonObject.getJSONArray("ServiceAttendedListDet")
-                                                Log.e(TAG,"38973   ServiceAttendedListDet   "+ServiceAttendedListDet.length())
+                                                    jsonObject.getJSONArray("ProductInfoListDet")
+                                                Log.e(TAG,"38973   ProductInfoListDet   "+ServiceAttendedListDet.length())
 
                                                 for (j in 0 until ServiceAttendedListDet.length()) {
                                                     var jsonObjectSub =
@@ -3970,6 +3972,8 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                         " 388...2  " + jsonObjectSub.getString("Product")
                                                     )
 
+
+
                                                     modelServicesListDetails!!.add(
                                                         ServiceDetailsFullListModel(
                                                             "1",
@@ -3977,7 +3981,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                             jsonObjectSub.getString("MasterProduct"),
                                                             jsonObjectSub.getString("FK_Product"),
                                                             jsonObjectSub.getString("Product"),
-                                                            jsonObjectSub.getString("SLNo"),
+                                                            jsonObjectSub.getString("SNo"),
                                                             jsonObjectSub.getString("BindProduct"),
                                                             jsonObjectSub.getString("ComplaintProduct"),
                                                             jsonObjectSub.getString("Warranty"),
@@ -3990,12 +3994,13 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                             "",
                                                             "",
                                                             false,
-                                                            jsonObject.getString("SerchSerialNo")
+                                                            "0"
                                                         )
                                                     )
 
 
                                                 }
+
                                             }
 
                                             val lLayout =

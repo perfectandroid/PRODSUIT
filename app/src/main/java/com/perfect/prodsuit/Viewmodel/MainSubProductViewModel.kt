@@ -11,8 +11,8 @@ class MainSubProductViewModel : ViewModel() {
 
     var mainSubProductData: MutableLiveData<MainSubProductModel>? = null
 
-    fun getMainSubProductData(context: Context) : LiveData<MainSubProductModel>? {
-        mainSubProductData = MainSubProductRepository.getServicesApiCall(context)
+    fun getMainSubProductData(context: Context,iD_Prod : String,ReqMode : String) : LiveData<MainSubProductModel>? {
+        mainSubProductData = MainSubProductRepository.getServicesApiCall(context,iD_Prod,ReqMode)
         return mainSubProductData
     }
 }
