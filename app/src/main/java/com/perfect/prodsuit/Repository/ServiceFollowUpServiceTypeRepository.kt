@@ -23,7 +23,7 @@ import java.util.*
 
 object ServiceFollowUpServiceTypeRepository {
 
-    var TAG = "OverDueRepository"
+    var TAG = "ServiceFollowUpServiceTypeRepository"
     val serviceFollowUpSetterGetter = MutableLiveData<ServiceFollowUpServiceTypeModel>()
     private var progressDialog: ProgressDialog? = null
     fun getServicesApiCall(context: Context,customer_service_register:String,ID_Branch : String , ID_Employee : String): MutableLiveData<ServiceFollowUpServiceTypeModel> {
@@ -66,7 +66,7 @@ object ServiceFollowUpServiceTypeRepository {
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 Log.v("sdasd22efvvv","BankKey "+BankKeySP.getString("BANK_KEY", null))
                 Log.v("sdasd22efvvv","Token "+TokenSP.getString("Token", null))
-                Log.v("sdasd22efvvv","ReqMode "+85)
+                Log.v("sdasd22efvvv","ReqMode "+116)
                 Log.v("sdasd22efvvv","FK_Company "+FK_CompanySP.getString("FK_Company", null))
                 Log.v("sdasd22efvvv","FK_BranchCodeUser "+ID_Branch)
                 Log.v("sdasd22efvvv","EntrBy "+UserCodeSP.getString("UserCode", null))
@@ -75,7 +75,7 @@ object ServiceFollowUpServiceTypeRepository {
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("85"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("116"))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(ID_Branch))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
