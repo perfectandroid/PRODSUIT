@@ -1355,7 +1355,12 @@ Log.v("adasdasds","modeTab "+modeTab)
         })
 
         tv_payment_type!!.setOnClickListener(View.OnClickListener {
-            paymentMethodPopup()
+            if (billtype.equals("")){
+                Config.showCustomToast("Select BillType",context)
+            }else{
+                paymentMethodPopup()
+            }
+
         })
 
 
@@ -2839,16 +2844,17 @@ Log.v("adasdasds","modeTab "+modeTab)
         var hasId =  hasactionTakenSelected(actionTakenSelected!!)
 
         if (hasId){
-
-            if (billtype.equals("") || billtype.equals("0")){
-                Config.showCustomToast("Select BillType",context)
+            var hasId1 =  haspaymentMandtory(actionTakenSelected!!)
+            if (hasId1){
+                if (billtype.equals("") || billtype.equals("0")){
+                    Config.showCustomToast("Select BillType",context)
 //                Toast.makeText(applicationContext,"Select BillType",Toast.LENGTH_SHORT).show()
-            }
-            else{
-                var hasId1 =  haspaymentMandtory(actionTakenSelected!!)
-                Log.e(TAG,"  25585  "+hasId1)
-                if (hasId1){
-                    // Payment Validation
+                }
+                else{
+                    var hasId1 =  haspaymentMandtory(actionTakenSelected!!)
+                    Log.e(TAG,"  25585  "+hasId1)
+                    if (hasId1){
+                        // Payment Validation
                         var netAmntt= edtnetAmount!!.text.toString()
                         if (arrPaymentFinal.length() == 0){
                             Config.showCustomToast("Select payment Methode ",context)
@@ -2861,13 +2867,49 @@ Log.v("adasdasds","modeTab "+modeTab)
                             loadAttendance()
                         }
 
-                    Log.e(TAG,"  252222    Select payment methode   ")
-                }else{
-                    Log.e(TAG,"  252223    Select payment methode   ")
+                        Log.e(TAG,"  252222    Select payment methode   ")
+                    }else{
+                        Log.e(TAG,"  252223    Select payment methode   ")
                         serviceFollowUpAttendance=0
                         loadAttendance()
+                    }
                 }
             }
+            else{
+              //  Config.showCustomToast("Select BillType",context)
+                serviceFollowUpAttendance=0
+                loadAttendance()
+                //Toast.makeText(applicationContext,strActiontakenStatusMessage,Toast.LENGTH_SHORT).show()
+            }
+
+//            if (billtype.equals("") || billtype.equals("0")){
+//                Config.showCustomToast("Select BillType",context)
+////                Toast.makeText(applicationContext,"Select BillType",Toast.LENGTH_SHORT).show()
+//            }
+//            else{
+//                var hasId1 =  haspaymentMandtory(actionTakenSelected!!)
+//                Log.e(TAG,"  25585  "+hasId1)
+//                if (hasId1){
+//                    // Payment Validation
+//                        var netAmntt= edtnetAmount!!.text.toString()
+//                        if (arrPaymentFinal.length() == 0){
+//                            Config.showCustomToast("Select payment Methode ",context)
+////                            Toast.makeText(applicationContext,"Select payment Methode ",Toast.LENGTH_SHORT).show()
+//                        }else if (strSumPayMethode.toFloat() != netAmntt.toFloat()){
+//                            Config.showCustomToast("Net Amount & Payment Amount should be equal",context)
+////                            Toast.makeText(applicationContext,"Net Amount & Payment Amount should be equal",Toast.LENGTH_SHORT).show()
+//                        }else{
+//                            serviceFollowUpAttendance=0
+//                            loadAttendance()
+//                        }
+//
+//                    Log.e(TAG,"  252222    Select payment methode   ")
+//                }else{
+//                    Log.e(TAG,"  252223    Select payment methode   ")
+//                        serviceFollowUpAttendance=0
+//                        loadAttendance()
+//                }
+//            }
         }else{
             Config.showCustomToast(strActiontakenStatusMessage,context)
             //Toast.makeText(applicationContext,strActiontakenStatusMessage,Toast.LENGTH_SHORT).show()
