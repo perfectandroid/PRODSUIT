@@ -795,7 +795,7 @@
                                                             android:fontFamily="@font/myfont"
                                                             android:gravity="center_vertical"
                                                             android:paddingLeft="4dp"
-                                                            android:text="Remarks"
+                                                            android:hint="Remarks"
                                                             android:visibility="gone"
                                                             android:textColor="@color/black"
                                                             android:textSize="12dp" />
