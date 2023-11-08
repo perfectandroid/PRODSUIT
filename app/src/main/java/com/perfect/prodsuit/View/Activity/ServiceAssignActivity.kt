@@ -477,6 +477,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             strLandmark = jobjt.getString("Landmark")
                                             strCustomer = jobjt.getString("Customer")
                                             strContactNo = jobjt.getString("OtherMobile")
+                                            strRemark=jobjt.getString("Remarks")
                                             strAddress = jobjt.getString("Address")
                                             strMobile = jobjt.getString("Mobile")
                                             strReqDate = jobjt.getString("FromDate")+" - "+jobjt.getString("ToDate")
@@ -517,6 +518,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                                 tv_ContactNo!!.setText(""+strContactNo)
                                                 tv_Address!!.setText(""+strAddress)
                                                 tv_Mobile!!.setText(""+strMobile)
+                                               // tie_Remarks!!.setText(""+strRemark)
+
                                                 txtv_head!!.setText("Service Assign")
 
                                              //  til_Remarks!!.visibility=View.VISIBLE
@@ -599,6 +602,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             tv_Address!!.setText(""+strAddress)
                                             tv_Mobile!!.setText(""+strMobile)
                                             txtv_head!!.setText("Service Assign")
+                                            tie_Remarks!!.setText(""+strRemark)
 
                                             txtv_custbalnce!!.visibility=View.VISIBLE
                                             // Service Information
@@ -626,7 +630,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             txtv_remrkk!!.visibility=View.VISIBLE
                                             txtv_reqtimetitle!!.visibility=View.GONE
                                             txtv_custbalnce!!.visibility=View.GONE
-
+                                            txtv_remrkk!!.setText(""+strRemark)
 
 
                                             tv_PickupClick!!.setText("Product Details")
@@ -690,7 +694,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             tv_ProductClick!!.setText("Product Details")
                                             ll_lstclick!!.visibility=View.VISIBLE
                                             txtv_head!!.setText("Replacement Request")
-
+                                            tie_Remarks!!.setText(""+strRemark)
                                             crdvw_tkt !!.visibility=View.VISIBLE
                                             crdvw_srvce !!.visibility=View.VISIBLE
                                             crdvw_product !!.visibility=View.VISIBLE
@@ -751,6 +755,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             tie_Priority!!.setText(""+strPriorityName)
                                             tv_ListClick!!.setText("Delivery Information")
                                             btnSave!!.setText("Assign Delivery")
+                                            tie_Remarks!!.setText(""+strRemark)
 
                                         }
                                         else if (TicketStatus.equals("8"))
@@ -760,6 +765,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             ll_lstclick!!.visibility=View.VISIBLE
                                             txtv_head!!.setText("Factory Service")
 
+                                            tie_Remarks!!.setText(""+strRemark)
                                             crdvw_tkt !!.visibility=View.VISIBLE
                                             crdvw_srvce !!.visibility=View.VISIBLE
                                             crdvw_product !!.visibility=View.VISIBLE
@@ -1159,7 +1165,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 til_Priority!!.setErrorIconDrawable(null)
             }
 
-            else if (ID_Department.equals("")){
+            else if (ID_Department.equals("")&& (til_Department!!.isShown)){
 
                 if(til_Department!!.isShown)
                 {
@@ -1183,19 +1189,20 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
         }
 
-            else if (ID_Role.equals("")){
+        else if (ID_Role.equals("")&& (til_Role!!.isShown)){
 
-                if(til_Role!!.isShown) {
+               /* if(til_Role!!.isShown) {*/
                     til_Role!!.setError("Select Role");
                     til_Role!!.setErrorIconDrawable(null)
 
-                }
-                else if(!til_Role!!.isShown){
+               /* }
+                else if(!(til_Role!!.isShown)){
 
                 }
-
+*/
 
             }
+
      /*  else if(strVisitDate!=null)
         {
 
@@ -1244,7 +1251,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 Log.i("Add Id",ID_Employee.toString())
 
 
-                if(til_Role!!.visibility==View.VISIBLE){
+                if(til_Role!!.visibility==View.VISIBLE ){
                     jObject.put("ID_CSAEmployeeType",ID_Role) // Role
                     jObject.put("EmployeeType",tie_Role!!.text.toString())
                 }
@@ -2401,6 +2408,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 Log.i("arrindex",arrIndexUpdate.toString())
                 btnAdd!!.setText("Update")
 
+
 //            ID_Priority = jsonObject.getString("id_priority")
 //            ID_Department = jsonObject.getString("id_department")
 //            ID_Employee = jsonObject.getString("id_employee")
@@ -2419,11 +2427,17 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
                 ID_Employee = jsonObject.getString("ID_Employee")
                 Log.i("Editemp",ID_Employee.toString())
-                ID_Role= jsonObject.getString("ID_CSAEmployeeType")
+                if(til_Role!!.isShown())
+                {
+                    ID_Role= jsonObject.getString("ID_CSAEmployeeType")
+                    tie_Role!!.setText(""+jsonObject.getString("EmployeeType"))
+
+                }
+
 
                 tie_Department!!.setText(""+jsonObject.getString("Department"))
                 tie_Employee!!.setText(""+jsonObject.getString("Employee"))
-                tie_Role!!.setText(""+jsonObject.getString("EmployeeType"))
+
 
                 ticketMode = "1"
                 serviceMode  = "1"
