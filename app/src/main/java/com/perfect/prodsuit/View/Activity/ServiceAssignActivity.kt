@@ -518,7 +518,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                                 tv_ContactNo!!.setText(""+strContactNo)
                                                 tv_Address!!.setText(""+strAddress)
                                                 tv_Mobile!!.setText(""+strMobile)
-                                                tie_Remarks!!.setText(""+strRemark)
+                                               // tie_Remarks!!.setText(""+strRemark)
 
                                                 txtv_head!!.setText("Service Assign")
 
