@@ -11,8 +11,8 @@ class MaterialUsageStageViewModel : ViewModel()  {
 
     var materialusageStagetData: MutableLiveData<MetarialUsageStageModel>? = null
 
-    fun getMaterialUsageStageModel(context: Context,ID_Project : String) : LiveData<MetarialUsageStageModel>? {
-        materialusageStagetData = MaterialUsagestageRepository.getServicesApiCall(context,ID_Project)
+    fun getMaterialUsageStageModel(context: Context,ID_Project : String,ReqMode : String) : LiveData<MetarialUsageStageModel>? {
+        materialusageStagetData = MaterialUsagestageRepository.getServicesApiCall(context,ID_Project,ReqMode)
         return materialusageStagetData
     }
 

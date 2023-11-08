@@ -752,6 +752,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
 
     private fun getStage() {
         // var leadInfo = 0
+        var ReqMode = "17"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -760,7 +761,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                materialusageStageViewModel.getMaterialUsageStageModel(this,ID_Project!!)!!.observe(
+                materialusageStageViewModel.getMaterialUsageStageModel(this,ID_Project!!,ReqMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 

@@ -26,12 +26,12 @@ object MaterialUsagestageRepository {
     val ProjectStageSetterGetter = MutableLiveData<MetarialUsageStageModel>()
     val TAG: String = "MaterialUsagestageRepository"
 
-    fun getServicesApiCall(context: Context,ID_Project : String): MutableLiveData<MetarialUsageStageModel> {
-        getProjectStage(context,ID_Project)
+    fun getServicesApiCall(context: Context,ID_Project : String,ReqMode : String): MutableLiveData<MetarialUsageStageModel> {
+        getProjectStage(context,ID_Project,ReqMode)
         return ProjectStageSetterGetter
     }
 
-    private fun getProjectStage(context: Context,ID_Project : String) {
+    private fun getProjectStage(context: Context,ID_Project : String,ReqMode : String) {
         try {
             ProjectStageSetterGetter.value = MetarialUsageStageModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -68,7 +68,7 @@ object MaterialUsagestageRepository {
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("3"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Critrea1", ProdsuitApplication.encryptStart(ID_Project))
 
