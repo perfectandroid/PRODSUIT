@@ -105,37 +105,337 @@ object AuthorizationMixedRepository {
 
         try {
 
+//            var msg = "{\n" +
+
+//                    "  \"AuthorizationList\": {\n" +
+//                    "    \"ListData\": [\n" +
+//                    "      {\n" +
+//                    "        \"SlNo\": 1,\n" +
+//                    "        \"ID_FIELD\": 99,\n" +
+//                    "        \"Action\": \"Lead Generate\",\n" +
+//                    "        \"TransactionNo\": \"LD-000185\",\n" +
+//                    "        \"Date\": \"12/10/2023\",\n" +
+//                    "        \"drank\": 1,\n" +
+//                    "        \"EnteredBy\": \"VYSHAKH PN \",\n" +
+//                    "        \"EnteredOn\": \"12/10/2023\",\n" +
+//                    "        \"TotalCount\": 1\n" +
+//                    "      },\n" +
+//                    "      {\n" +
+//                    "        \"SlNo\": 1,\n" +
+//                    "        \"ID_FIELD\": 99,\n" +
+//                    "        \"Action\": \"Lead Generate\",\n" +
+//                    "        \"TransactionNo\": \"LD-000185\",\n" +
+//                    "        \"Date\": \"12/10/2023\",\n" +
+//                    "        \"drank\": 1,\n" +
+//                    "        \"EnteredBy\": \"VYSHAKH PN \",\n" +
+//                    "        \"EnteredOn\": \"12/10/2023\",\n" +
+//                    "        \"TotalCount\": 1\n" +
+//                    "      }\n" +
+//                    "    ],\n" +
+//                    "    \"ResponseCode\": \"0\",\n" +
+//                    "    \"ResponseMessage\": \"Transaction Verified\"\n" +
+//                    "  },\n" +
+//                    "  \"StatusCode\": 0,\n" +
+//                    "  \"EXMessage\": \"Transaction Verified\"\n" +
+//                    "}"
+
+            authorizationMixedSetterGetter.value = AuthorizationMixedModel()
+
             var msg = "{\n" +
-                    "  \"AuthorizationList\": {\n" +
-                    "    \"ListData\": [\n" +
-                    "      {\n" +
-                    "        \"SlNo\": 1,\n" +
-                    "        \"ID_FIELD\": 99,\n" +
-                    "        \"Action\": \"Lead Generate\",\n" +
-                    "        \"TransactionNo\": \"LD-000185\",\n" +
-                    "        \"Date\": \"12/10/2023\",\n" +
-                    "        \"drank\": 1,\n" +
-                    "        \"EnteredBy\": \"VYSHAKH PN \",\n" +
-                    "        \"EnteredOn\": \"12/10/2023\",\n" +
-                    "        \"TotalCount\": 1\n" +
-                    "      },\n" +
-                    "      {\n" +
-                    "        \"SlNo\": 1,\n" +
-                    "        \"ID_FIELD\": 99,\n" +
-                    "        \"Action\": \"Lead Generate\",\n" +
-                    "        \"TransactionNo\": \"LD-000185\",\n" +
-                    "        \"Date\": \"12/10/2023\",\n" +
-                    "        \"drank\": 1,\n" +
-                    "        \"EnteredBy\": \"VYSHAKH PN \",\n" +
-                    "        \"EnteredOn\": \"12/10/2023\",\n" +
-                    "        \"TotalCount\": 1\n" +
-                    "      }\n" +
-                    "    ],\n" +
-                    "    \"ResponseCode\": \"0\",\n" +
-                    "    \"ResponseMessage\": \"Transaction Verified\"\n" +
-                    "  },\n" +
-                    "  \"StatusCode\": 0,\n" +
-                    "  \"EXMessage\": \"Transaction Verified\"\n" +
+                    "    \"AuthorizationDataList\": {\n" +
+                    "        \"Lead\": [\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 1,\n" +
+                    "                \"TransNumber\": \"LD-000001\",\n" +
+                    "                \"TransDate\": \"07-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Anson\",\n" +
+                    "                \"CusMobile\": \"9526218069\",\n" +
+                    "                \"CusAddress\": \"tesr\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 2,\n" +
+                    "                \"TransNumber\": \"LD-000002\",\n" +
+                    "                \"TransDate\": \"07-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Ajith Kumar\",\n" +
+                    "                \"CusMobile\": \"9874563215\",\n" +
+                    "                \"CusAddress\": \"Thrissur\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"riyaske\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 3,\n" +
+                    "                \"TransNumber\": \"LD-000003\",\n" +
+                    "                \"TransDate\": \"08-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Apoorva\",\n" +
+                    "                \"CusMobile\": \"09090901233\",\n" +
+                    "                \"CusAddress\": \"\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            }\n" +
+                    "        ],\n" +
+                    "        \"Service\": [\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 1,\n" +
+                    "                \"TransNumber\": \"LD-000001\",\n" +
+                    "                \"TransDate\": \"07-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Anson\",\n" +
+                    "                \"CusMobile\": \"9526218069\",\n" +
+                    "                \"CusAddress\": \"tesr\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 2,\n" +
+                    "                \"TransNumber\": \"LD-000002\",\n" +
+                    "                \"TransDate\": \"07-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Ajith Kumar\",\n" +
+                    "                \"CusMobile\": \"9874563215\",\n" +
+                    "                \"CusAddress\": \"Thrissur\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"riyaske\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 3,\n" +
+                    "                \"TransNumber\": \"LD-000003\",\n" +
+                    "                \"TransDate\": \"08-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Apoorva\",\n" +
+                    "                \"CusMobile\": \"09090901233\",\n" +
+                    "                \"CusAddress\": \"\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 6,\n" +
+                    "                \"TransNumber\": \"LD-000005\",\n" +
+                    "                \"TransDate\": \"08-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"ANSON PAUL ANTONY\",\n" +
+                    "                \"CusMobile\": \"9526218067\",\n" +
+                    "                \"CusAddress\": \"PURATHOOR\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 10,\n" +
+                    "                \"TransNumber\": \"LD-000009\",\n" +
+                    "                \"TransDate\": \"11-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Mahin\",\n" +
+                    "                \"CusMobile\": \"8075099011\",\n" +
+                    "                \"CusAddress\": \"Kollam\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            }\n" +
+                    "        ],\n" +
+                    "        \"Project\": [\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 1,\n" +
+                    "                \"TransNumber\": \"LD-000001\",\n" +
+                    "                \"TransDate\": \"07-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Anson\",\n" +
+                    "                \"CusMobile\": \"9526218069\",\n" +
+                    "                \"CusAddress\": \"tesr\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 2,\n" +
+                    "                \"TransNumber\": \"LD-000002\",\n" +
+                    "                \"TransDate\": \"07-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Ajith Kumar\",\n" +
+                    "                \"CusMobile\": \"9874563215\",\n" +
+                    "                \"CusAddress\": \"Thrissur\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"riyaske\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 3,\n" +
+                    "                \"TransNumber\": \"LD-000003\",\n" +
+                    "                \"TransDate\": \"08-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Apoorva\",\n" +
+                    "                \"CusMobile\": \"09090901233\",\n" +
+                    "                \"CusAddress\": \"\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            }\n" +
+                    "        ],\n" +
+                    "        \"Collection\": [\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 1,\n" +
+                    "                \"TransNumber\": \"LD-000001\",\n" +
+                    "                \"TransDate\": \"07-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Anson\",\n" +
+                    "                \"CusMobile\": \"9526218069\",\n" +
+                    "                \"CusAddress\": \"tesr\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 2,\n" +
+                    "                \"TransNumber\": \"LD-000002\",\n" +
+                    "                \"TransDate\": \"07-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Ajith Kumar\",\n" +
+                    "                \"CusMobile\": \"9874563215\",\n" +
+                    "                \"CusAddress\": \"Thrissur\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"riyaske\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 3,\n" +
+                    "                \"TransNumber\": \"LD-000003\",\n" +
+                    "                \"TransDate\": \"08-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Apoorva\",\n" +
+                    "                \"CusMobile\": \"09090901233\",\n" +
+                    "                \"CusAddress\": \"\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 6,\n" +
+                    "                \"TransNumber\": \"LD-000005\",\n" +
+                    "                \"TransDate\": \"08-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"ANSON PAUL ANTONY\",\n" +
+                    "                \"CusMobile\": \"9526218067\",\n" +
+                    "                \"CusAddress\": \"PURATHOOR\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 10,\n" +
+                    "                \"TransNumber\": \"LD-000009\",\n" +
+                    "                \"TransDate\": \"11-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Mahin\",\n" +
+                    "                \"CusMobile\": \"8075099011\",\n" +
+                    "                \"CusAddress\": \"Kollam\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 10010,\n" +
+                    "                \"TransNumber\": \"LD-000010\",\n" +
+                    "                \"TransDate\": \"12-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Balakrishnan\",\n" +
+                    "                \"CusMobile\": \"9696969696\",\n" +
+                    "                \"CusAddress\": \"\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            }\n" +
+                    "        ],\n" +
+                    "        \"PickupAndDelivery\": [\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 1,\n" +
+                    "                \"TransNumber\": \"LD-000001\",\n" +
+                    "                \"TransDate\": \"07-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Anson\",\n" +
+                    "                \"CusMobile\": \"9526218069\",\n" +
+                    "                \"CusAddress\": \"tesr\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 2,\n" +
+                    "                \"TransNumber\": \"LD-000002\",\n" +
+                    "                \"TransDate\": \"07-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Ajith Kumar\",\n" +
+                    "                \"CusMobile\": \"9874563215\",\n" +
+                    "                \"CusAddress\": \"Thrissur\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"riyaske\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 3,\n" +
+                    "                \"TransNumber\": \"LD-000003\",\n" +
+                    "                \"TransDate\": \"08-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Apoorva\",\n" +
+                    "                \"CusMobile\": \"09090901233\",\n" +
+                    "                \"CusAddress\": \"\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            }\n" +
+                    "        ],\n" +
+                    "        \"Account\": [\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 1,\n" +
+                    "                \"TransNumber\": \"LD-000001\",\n" +
+                    "                \"TransDate\": \"07-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Anson\",\n" +
+                    "                \"CusMobile\": \"9526218069\",\n" +
+                    "                \"CusAddress\": \"tesr\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 2,\n" +
+                    "                \"TransNumber\": \"LD-000002\",\n" +
+                    "                \"TransDate\": \"07-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Ajith Kumar\",\n" +
+                    "                \"CusMobile\": \"9874563215\",\n" +
+                    "                \"CusAddress\": \"Thrissur\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"riyaske\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"FK_Transaction\": 3,\n" +
+                    "                \"TransNumber\": \"LD-000003\",\n" +
+                    "                \"TransDate\": \"08-09-2023 00:00:00\",\n" +
+                    "                \"CusName\": \"Apoorva\",\n" +
+                    "                \"CusMobile\": \"09090901233\",\n" +
+                    "                \"CusAddress\": \"\",\n" +
+                    "                \"Priority\": \"Hot\",\n" +
+                    "                \"EnteredBy\": \"VYSHAKH\",\n" +
+                    "                \"Reason\": \"\",\n" +
+                    "                \"Amount\": \"\"\n" +
+                    "            }\n" +
+                    "        ],\n" +
+                    "        \"ResponseCode\": \"0\",\n" +
+                    "        \"ResponseMessage\": \"Transaction Verified\"\n" +
+                    "    },\n" +
+                    "    \"StatusCode\": 0,\n" +
+                    "    \"EXMessage\": \"Transaction Verified\"\n" +
                     "}"
 
             authorizationMixedSetterGetter.value = AuthorizationMixedModel(msg)

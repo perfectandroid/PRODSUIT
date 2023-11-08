@@ -225,8 +225,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
         setMenuItemHidind()
 
-
-
         AddAttendanceApi(strLatitude,strLongitue,address)
         checkAttendance()
         setTechnologyPartner()

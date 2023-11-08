@@ -503,6 +503,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         prioritymode = 0
         getProductPriority()
 
+        ReqMode = "66"
+        SubMode = "20"
+        categoryCount = 0
+        getCompCategory(ReqMode!!,SubMode!!)
+
         til_CustomerName!!.setEndIconOnClickListener {
            // finish()
             Config.disableClick(it)
@@ -1648,6 +1653,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     }
 
     private fun validation1() {
+        Log.e(TAG,"Validation   1")
       //  strCategory = tie_CompCategory!!.text.toString()
         strCategory = tie_Category!!.text.toString()
         strCompany = tie_Company!!.text.toString()
@@ -1658,7 +1664,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
 
         if (ID_CompCategory.equals("")){
-
+            Log.e(TAG,"Validation   2")
             til_CompCategory!!.setError("Select Complaint Category");
             til_CompCategory!!.setErrorIconDrawable(null)
 
@@ -1671,6 +1677,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             hideViews()
         }
         else if (ID_Category.equals("")){
+            Log.e(TAG,"Validation   3")
 
             til_Category!!.setError("Select Category");
             til_Category!!.setErrorIconDrawable(null)
@@ -1696,6 +1703,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //            hideViews()
 //        }
         else if ((ID_CompCategory.equals("1") || ID_CompCategory.equals("2")) && ID_Services.equals("")){
+            Log.e(TAG,"Validation   4")
             til_Service!!.setError("Select Service");
             til_Service!!.setErrorIconDrawable(null)
 
@@ -1708,6 +1716,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             hideViews()
         }
         else if ((ID_CompCategory.equals("3") || ID_CompCategory.equals("4")) && ID_ComplaintList.equals("")){
+            Log.e(TAG,"Validation   5")
             til_Complaint!!.setError("Select Complaint");
             til_Complaint!!.setErrorIconDrawable(null)
 
@@ -1759,6 +1768,10 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             confirmationPopup()
 
         }
+        Log.e(TAG,"Validation   6")
+        Log.e(TAG,"Validation   1"+ID_CompCategory)
+        Log.e(TAG,"Validation   1"+ID_ComplaintList)
+        Log.e(TAG,"Validation   1"+ID_Services)
     }
 
     private fun confirmationPopup() {
@@ -3123,6 +3136,39 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                                 var jsonObject1 = compCategoryArrayList.getJSONObject(2)
                                                 tie_CompCategory!!.setText(jsonObject1.getString("Description"))
                                                 ID_CompCategory = jsonObject1.getString("Code")
+
+
+                                                ID_Category = ""
+                                                tie_Category!!.setText("")
+                                                tie_Product!!.setText("")
+                                                ID_Product = ""
+                                                tie_Company!!.setText("")
+                                                ID_Company = ""
+                                                tie_Service!!.setText("")
+                                                ID_Services = ""
+                                                tie_Complaint!!.setText("")
+                                                ID_ComplaintList = ""
+
+                                                if (ID_CompCategory.equals("1")){
+                                                    til_Company!!.visibility = View.GONE
+                                                    til_Service!!.visibility = View.VISIBLE
+                                                    til_Complaint!!.visibility = View.GONE
+                                                }
+                                                else if (ID_CompCategory.equals("2")){
+                                                    til_Company!!.visibility = View.VISIBLE
+                                                    til_Service!!.visibility = View.VISIBLE
+                                                    til_Complaint!!.visibility = View.GONE
+                                                }
+                                                else if (ID_CompCategory.equals("3")){
+                                                    til_Company!!.visibility = View.GONE
+                                                    til_Service!!.visibility = View.GONE
+                                                    til_Complaint!!.visibility = View.VISIBLE
+                                                }
+                                                else if (ID_CompCategory.equals("4")){
+                                                    til_Company!!.visibility = View.VISIBLE
+                                                    til_Service!!.visibility = View.GONE
+                                                    til_Complaint!!.visibility = View.VISIBLE
+                                                }
 
                                             }else{
                                                 compCategoryPopup(compCategoryArrayList)
