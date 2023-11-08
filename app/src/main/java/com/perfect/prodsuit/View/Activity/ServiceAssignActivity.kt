@@ -51,6 +51,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     internal var crdvw_product: CardView? = null
     internal var crdvw_pickup: CardView? = null
     var recyServiceAssign: RecyclerView? = null
+    var depmode = 0
 
     lateinit var departListSort: JSONArray
 
@@ -251,7 +252,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         val custbalidSP = context.getSharedPreferences(Config.SHARED_PREF71, 0)
         stridCustomer = custbalidSP.getString("custbalid","")
         Log.e(TAG,"ID_CustomerServiceRegister  163   "+ID_CustomerServiceRegister+"\n"+FK_CustomerserviceregisterProductDetails+"\n"+stridCustomer)
-      //  getDepartment()
+        depmode = 0
+        getDepartment()
 
     }
 
@@ -975,6 +977,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
             R.id.tie_Department->{
                 Config.disableClick(v)
+                depmode=1
                 department = 0
                 tie_Department!!.setText("")
                 getDepartment()
@@ -1238,6 +1241,9 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
                 jObject.put("ID_Employee", ID_Employee)
                 jObject.put("Employee", tie_Employee!!.text.toString())
+                Log.i("Add Id",ID_Employee.toString())
+
+
                 if(til_Role!!.visibility==View.VISIBLE){
                     jObject.put("ID_CSAEmployeeType",ID_Role) // Role
                     jObject.put("EmployeeType",tie_Role!!.text.toString())
@@ -1248,11 +1254,11 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 }
                 // Role
 
-
+                var hasId = hasEmployee(arrProducts,"ID_Employee",ID_Employee!!)
                  dateattend=tie_VisitDate!!.text.toString()
                 if (arrSaveUpdate.equals("0")){
                     //   jObject.put("ExistType","1") // ExistType = 0 Exist ,1 = Not
-                    var hasId = hasEmployee(arrProducts,"ID_Employee",ID_Employee!!)
+
                     Log.e(TAG,"arrSaveUpdate 0    "+hasId)
                     if (hasId==true){
                         card_details!!.visibility = View.VISIBLE
@@ -1295,15 +1301,17 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 else if (arrSaveUpdate.equals("1")){
                     //    jObject.put("ExistType","0") // ExistType = 0 Exist ,1 = Not
 
-                    var hasId = hasEmployee(arrProducts,"ID_Employee",ID_Employee!!)
-                    Log.e(TAG,"arrSaveUpdate 1   "+hasId)
+
+                    Log.e(TAG,"arrSaveUpdate 1   "+hasId+arrIndexUpdate.toString())
                     if (hasId==false){
                         card_details!!.visibility = View.VISIBLE
                         lnrHead_List!!.visibility = View.VISIBLE
 
-                        Log.e(TAG,"arrProducts  6091  "+arrProducts)
+                        Log.e(TAG,"arrProducts  6091  "+arrProducts+"\n"+arrIndexUpdate!!)
                         arrProducts.remove(arrIndexUpdate!!)
                         Log.e(TAG,"arrProducts  6092  "+arrProducts)
+                        Log.e(TAG,"jObject  6092  "+jObject)
+                        Log.i("arrindex",arrIndexUpdate.toString())
                         arrProducts.put(arrIndexUpdate!!,jObject)
                         Log.e(TAG,"arrProducts  6093  "+arrProducts)
                      //   viewList(arrProducts)
@@ -1341,6 +1349,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                         Log.e(TAG,"arrProducts  6091  "+arrProducts)
                         arrProducts.remove(arrIndexUpdate!!)
                         Log.e(TAG,"arrProducts  6092  "+arrProducts)
+                        Log.e(TAG,"jObject  6092  "+jObject)
                         arrProducts.put(arrIndexUpdate!!,jObject)
                         Log.e(TAG,"arrProducts  6093  "+arrProducts)
                         //   viewList(arrProducts)
@@ -1455,9 +1464,9 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
          val lLayout = GridLayoutManager(this@ServiceAssignActivity, 1)
          recyServiceAssign!!.layoutManager = lLayout as RecyclerView.LayoutManager?
          //  val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
-         val adapter = ServiceAssignListAdapter(this@ServiceAssignActivity,arrProducts!!,dateattend)
-         recyServiceAssign!!.adapter = adapter
-         adapter.setClickListener(this@ServiceAssignActivity)
+          adapterService = ServiceAssignListAdapter(this@ServiceAssignActivity,arrProducts!!,dateattend)
+         recyServiceAssign!!.adapter = adapterService
+         adapterService!!.setClickListener(this@ServiceAssignActivity)
 
 
 
@@ -1754,6 +1763,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
     }
     private fun getDepartment() {
+        Log.e(TAG,"ffffffffffffffff 1== "+depmode)
 //        var department = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -1797,7 +1807,17 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             }
                                             else  if(!tie_Department!!.text.toString()!!.equals(""))
                                             {*/
+
+                                            if (depmode == 0){
+                                                var jsonObject1 = departmentArrayList.getJSONObject(0)
+                                                tie_Department!!.setText(jsonObject1.getString("DeptName"))
+                                                ID_Department = jsonObject1.getString("ID_Department")
+
+                                            }else {
+
+
                                                 departmentPopup(departmentArrayList)
+                                            }
                                            // }
 
 
@@ -2330,7 +2350,10 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             tie_Employee!!.setText(jsonObject.getString("EmpName"))
 
 
+
         }
+
+
 
         if (data.equals("serviceRole")){
             dialogServiceRole!!.dismiss()
@@ -2356,6 +2379,9 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             arrProducts.remove(position)
             adapterService!!.notifyItemRemoved(position)
 
+
+
+
             if (arrProducts.length() > 0){
                 tv_no_record!!.visibility =View.GONE
             }else{
@@ -2368,10 +2394,11 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
             try {
                 val jsonObject = arrProducts.getJSONObject(position)
-//            arrProducts.remove(position)
+         //   arrProducts.add(position)
 //            adapterService!!.notifyItemRemoved(position)
                 arrSaveUpdate = "1"
                 arrIndexUpdate = position
+                Log.i("arrindex",arrIndexUpdate.toString())
                 btnAdd!!.setText("Update")
 
 //            ID_Priority = jsonObject.getString("id_priority")
@@ -2388,8 +2415,10 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 //            tie_Role!!.setText(""+jsonObject.getString("role"))
 
 
-                ID_Department = jsonObject.getString("DepartmentID")
+              //  ID_Department = jsonObject.getString("DepartmentID")
+
                 ID_Employee = jsonObject.getString("ID_Employee")
+                Log.i("Editemp",ID_Employee.toString())
                 ID_Role= jsonObject.getString("ID_CSAEmployeeType")
 
                 tie_Department!!.setText(""+jsonObject.getString("Department"))
