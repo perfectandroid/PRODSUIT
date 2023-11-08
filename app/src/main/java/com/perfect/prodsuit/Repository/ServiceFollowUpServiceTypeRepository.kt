@@ -23,7 +23,7 @@ import java.util.*
 
 object ServiceFollowUpServiceTypeRepository {
 
-    var TAG = "OverDueRepository"
+    var TAG = "ServiceFollowUpServiceTypeRepository"
     val serviceFollowUpSetterGetter = MutableLiveData<ServiceFollowUpServiceTypeModel>()
     private var progressDialog: ProgressDialog? = null
     fun getServicesApiCall(context: Context,customer_service_register:String,ID_Branch : String , ID_Employee : String): MutableLiveData<ServiceFollowUpServiceTypeModel> {

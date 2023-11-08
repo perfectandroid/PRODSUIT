@@ -21,6 +21,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
+import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.CommonAppViewModel
@@ -252,12 +253,25 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
     var checkCompanyApp =0
     var animBlink: Animation? = null
 
+    var distance: Double? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_splash)
         context = this@SplashActivity
+
+//        distance = SphericalUtil.computeDistanceBetween(sydney, Brisbane);
+
+        //    val distance: Double = Common.distance("17.372102".toDouble(),"78.484196".toDouble(),"17.375775".toDouble(),"78.469218".toDouble())
+//        val distance: Double = Common.distance("11.258753".toDouble(),"75.780411".toDouble(),"11.3891".toDouble(),"75.7604".toDouble())
+     //   val distance: Double = Common.distance("11.24855325159412".toDouble(),"75.83330446439908".toDouble(),"11.39936546334902".toDouble(),"75.92666858367409".toDouble())
+        val distance: Double = Common.distance("11.24855325159412".toDouble(),"75.83330446439908".toDouble()," 11.68284492077125".toDouble(),"75.97373498291024".toDouble())
+
+        Log.e(TAG,"230    Distance   :  "+distance)
+        var km = distance / 0.62137
+        Log.e(TAG,"230    km   :  "+km)
 
         splashresellerActivityViewModel = ViewModelProvider(this).get(SplashresellerActivityViewModel::class.java)
         maintanceMessageViewModel = ViewModelProvider(this).get(MaintanceMessageViewModel::class.java)

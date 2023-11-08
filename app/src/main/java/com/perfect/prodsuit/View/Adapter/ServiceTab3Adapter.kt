@@ -63,6 +63,8 @@ class ServiceTab3Adapter(
 //                    holder.ll_tab.setBackgroundColor(context.getColor(R.color.colorPrimarylite1))
                 }
 
+                Log.e(TAG,"6666   "+empModel.ID_ServiceType+"  :   "+position+"  :   "+empModel.ServiceType)
+
                 if (empModel.ID_ServiceType.equals("1")) {
                     holder.edt_serviceCost.isEnabled = true
                 } else {
