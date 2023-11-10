@@ -940,6 +940,19 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             }
 
             R.id.tv_ProductClick->{
+
+//                depmode = 0
+//                getDepartment()
+                depmode = 0
+                Log.e(TAG,"tttttttttt "+depmode)
+
+                if (depmode == 0){
+                    var jsonObject1 = departmentArrayList.getJSONObject(0)
+                    tie_Department!!.setText(jsonObject1.getString("DeptName"))
+                    ID_Department = jsonObject1.getString("ID_Department")
+
+                }
+
                 ticketMode = "1"
                 serviceMode  = "1"
                 productMode = "0"
@@ -985,7 +998,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 Config.disableClick(v)
                 depmode=1
                 department = 0
-                tie_Department!!.setText("")
+//                tie_Department!!.setText("")
                 getDepartment()
             }
             R.id.tie_Employee->{
@@ -1090,6 +1103,13 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         ID_Role = ""
         arrSaveUpdate ="0"
         btnAdd!!.setText("Add")
+
+        if (depmode == 0){
+            var jsonObject1 = departmentArrayList.getJSONObject(0)
+            tie_Department!!.setText(jsonObject1.getString("DeptName"))
+            ID_Department = jsonObject1.getString("ID_Department")
+
+        }
 
 
     }

@@ -655,6 +655,9 @@ interface ApiInterface {
     @POST("Project/UpdateProjectFollowUp")
     fun saveUpdateProjectFollowUp(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/AuthorizationDataList")
+    fun getAuthorizationDataList(@Body body: RequestBody): Call<String>
+
     @POST("Project/UnitList")
     fun getUnit(@Body body: RequestBody): Call<String>
 
