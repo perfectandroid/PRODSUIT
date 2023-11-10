@@ -16,12 +16,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ApproveAdapter
 import com.perfect.prodsuit.View.Adapter.AuthDsahboardAdapter
+import com.perfect.prodsuit.View.Adapter.HomeGrideCountAdapter
 import com.perfect.prodsuit.Viewmodel.ApprovalViewModel
 import com.perfect.prodsuit.Viewmodel.AuthDashViewModel
 import org.json.JSONArray
@@ -120,8 +122,14 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
                                                 }
                                             })
 //                                            val lLayout = LinearLayoutManager(this@ApproveActivity)
-                                            recyDahborad!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            authdashAdapter = AuthDsahboardAdapter(this@ApproveActivity, authdashArray)
+//                                            recyDahborad!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                            authdashAdapter = AuthDsahboardAdapter(this@ApproveActivity, authdashArray)
+//                                            recyDahborad!!.adapter = authdashAdapter
+//                                            authdashAdapter.setClickListener(this@ApproveActivity)
+
+                                            val HorizontalLayout = LinearLayoutManager(this@ApproveActivity, LinearLayoutManager.HORIZONTAL, false)
+                                            recyDahborad!!.setLayoutManager(HorizontalLayout)
+                                            val authdashAdapter = AuthDsahboardAdapter(this@ApproveActivity,authdashArray)
                                             recyDahborad!!.adapter = authdashAdapter
                                             authdashAdapter.setClickListener(this@ApproveActivity)
                                         }

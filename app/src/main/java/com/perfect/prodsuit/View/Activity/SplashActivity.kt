@@ -226,11 +226,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    Marketing 30.10.2023
 //    val CERT_NAME = "maketting_demo.pem"
 //    val BASE_URL  = "https://45.118.163.44:14008/ProdSuiteAPIMarketingDemo/api/"
-//    val IMAGE_URL = "https://45.118.163.44:14008/ProdSuiteAPISupportDemo/"
+//    val IMAGE_URL = "https://45.118.163.44:14008/ProdSuiteAPIMarketingDemo/"
 //    val BANK_KEY  = "-520"
 
 
-//  support_demo 30.10.2023
+//  support_demo 9.11.2023
 //    val CERT_NAME = "support_demo.pem"
 //    val BASE_URL  = "https://45.118.163.44:14008/ProdSuiteAPISupportDemo/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14008/ProdSuiteAPISupportDemo/"
