@@ -24,7 +24,7 @@ class UnitAdapter(internal var context: Context, internal var jsonArray: JSONArr
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_department, parent, false
+            R.layout.adapter_unit, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -37,11 +37,11 @@ class UnitAdapter(internal var context: Context, internal var jsonArray: JSONArr
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
-                holder.txtDepartment.text        = jsonObject!!.getString("DeptName")
+                holder.txtUnit.text        = jsonObject!!.getString("MeasurementUnit")
 
-                holder.lldepartment!!.setTag(position)
-                holder.lldepartment!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "department")
+                holder.ll_Unit!!.setTag(position)
+                holder.ll_Unit!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(position, "unitClick")
                 })
             }
         } catch (e: Exception) {
@@ -59,17 +59,17 @@ class UnitAdapter(internal var context: Context, internal var jsonArray: JSONArr
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position % 2
+        return position
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtDepartment   : TextView
+        internal var txtUnit   : TextView
         internal var txtsino         : TextView
-        internal var lldepartment    : LinearLayout
+        internal var ll_Unit    : LinearLayout
         init {
-            txtDepartment          = v.findViewById<View>(R.id.txtDepartment) as TextView
+            txtUnit          = v.findViewById<View>(R.id.txtUnit) as TextView
             txtsino                = v.findViewById<View>(R.id.txtsino) as TextView
-            lldepartment           = v.findViewById<View>(R.id.lldepartment) as LinearLayout
+            ll_Unit           = v.findViewById<View>(R.id.ll_Unit) as LinearLayout
         }
     }
     fun setClickListener(itemClickListener: ItemClickListener?) {

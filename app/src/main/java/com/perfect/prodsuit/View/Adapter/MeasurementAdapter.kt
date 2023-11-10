@@ -37,7 +37,7 @@ class MeasurementAdapter(internal var context: Context, internal var jsonArray: 
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
-                holder.txtMeasurement.text        = jsonObject!!.getString("MeasurementUnit")
+                holder.txtMeasurement.text        = jsonObject!!.getString("MeasurementType")
 
                 holder.llMeasurement!!.setTag(position)
                 holder.llMeasurement!!.setOnClickListener(View.OnClickListener {

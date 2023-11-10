@@ -207,8 +207,10 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_lead_by.xml" value="0.3171875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_lead_request.xml" value="0.29259259259259257" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_leadno.xml" value="0.3072916666666667" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_location_marking.xml" value="0.28802083333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_material_request.xml" value="0.23229166666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_material_usage.xml" value="0.34427083333333336" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_measurment_show.xml" value="0.3046875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_more_service_attended.xml" value="0.30462962962962964" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_other_charges.xml" value="0.28072916666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_parts_replaced.xml" value="0.30052083333333335" />
@@ -252,9 +254,11 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_team_employee.xml" value="0.34427083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_todolist.xml" value="0.25416666666666665" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_tracker.xml" value="0.3625" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_unit.xml" value="0.35" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_walking_existing.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adpate_home_grid.xml" value="0.27447916666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adpate_prod_information.xml" value="0.30462962962962964" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/alert_delete.xml" value="0.2671875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/alert_invalid_user.xml" value="0.2869791666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/alert_more_info.xml" value="0.21927083333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/alert_service_followup_filter.xml" value="0.346875" />
@@ -315,6 +319,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/testnew1.xml" value="0.18697916666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/testss.xml" value="0.26666666666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/testsssss.xml" value="0.26666666666666666" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/unit_popup.xml" value="0.35" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/walking_edit_bottomsheet.xml" value="0.25364583333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/menu/main_drawer.xml" value="0.309375" />
       </map>

@@ -566,6 +566,44 @@
 
                                                     </com.google.android.material.textfield.TextInputLayout>
 
+                                                    <com.google.android.material.textfield.TextInputLayout
+                                                        android:id="@+id/til_InspectionCharge"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:hint="Inspection Charge"
+                                                        android:layout_marginTop="10dp"
+                                                        android:layout_marginLeft="15dp"
+                                                        android:layout_marginRight="15dp"
+                                                        android:gravity="top"
+                                                        android:layout_gravity="top|start"
+                                                        android:drawableTint="@color/black"
+                                                        android:fontFamily="@font/myfont"
+                                                        style="@style/Widget.App.TextInputLayout">
+
+
+                                                        <com.google.android.material.textfield.TextInputEditText
+                                                            android:id="@+id/tie_InspectionCharge"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:paddingLeft="10dp"
+                                                            android:paddingTop="8dp"
+                                                            android:paddingBottom="8dp"
+                                                            android:inputType="numberDecimal"
+                                                            android:maxLines="4"
+                                                            android:maxLength="20"
+                                                            android:gravity="top|start"
+                                                            android:drawableLeft="@drawable/vtr_customer_note"
+                                                            android:drawablePadding="5dp"
+                                                            android:drawableTint="@color/black"
+                                                            android:textSize="14dp"
+                                                            android:focusableInTouchMode="true"
+                                                            android:editable="true"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textColor="@color/greydarks"
+                                                            android:textStyle="normal"/>
+
+                                                    </com.google.android.material.textfield.TextInputLayout>
+
 
 
 
@@ -893,7 +931,130 @@
                                                     android:background="@color/dropbg_color"
                                                     android:paddingBottom="10dp"
                                                     android:layout_margin="2dp"
-                                                    android:visibility="gone">
+                                                    android:visibility="visible">
+
+                                                    <LinearLayout
+                                                        android:id="@+id/ll_measureShow"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_margin="5dp"
+                                                        android:background="@drawable/shape_bg"
+                                                        android:padding="1dp"
+                                                        android:orientation="vertical"
+                                                        android:visibility="gone">
+
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:padding="3dp"
+                                                            android:background="#DFDDDD"
+                                                            android:orientation="horizontal">
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_weight="1"
+                                                                android:orientation="horizontal">
+
+                                                                <LinearLayout
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_weight="1"
+                                                                    android:orientation="vertical">
+
+                                                                    <TextView
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:paddingLeft="2dp"
+                                                                        android:fontFamily="@font/myfont"
+                                                                        android:textColor="@color/black"
+                                                                        android:textStyle="bold"
+                                                                        android:textSize="14dp"
+                                                                        android:text="Work Type"
+                                                                        android:visibility="visible"/>
+
+                                                                    <View
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="0.5dp"
+                                                                        android:layout_marginRight="2dp"
+                                                                        android:background="@color/white"/>
+
+                                                                    <TextView
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:paddingLeft="2dp"
+                                                                        android:layout_marginTop="-3dp"
+                                                                        android:fontFamily="@font/myfont"
+                                                                        android:textColor="@color/black"
+                                                                        android:textStyle="bold"
+                                                                        android:textSize="14dp"
+                                                                        android:text="Value"
+                                                                        android:visibility="visible"/>
+
+
+                                                                </LinearLayout>
+
+                                                                <LinearLayout
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_weight="1"
+                                                                    android:orientation="vertical">
+
+                                                                    <TextView
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:paddingLeft="2dp"
+                                                                        android:fontFamily="@font/myfont"
+                                                                        android:textColor="@color/black"
+                                                                        android:textStyle="bold"
+                                                                        android:textSize="14dp"
+                                                                        android:text="Measurement Type"
+                                                                        android:visibility="visible"/>
+
+                                                                    <View
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="0.5dp"
+                                                                        android:layout_marginLeft="2dp"
+                                                                        android:background="@color/white"/>
+
+                                                                    <TextView
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:paddingLeft="2dp"
+                                                                        android:layout_marginTop="-3dp"
+                                                                        android:fontFamily="@font/myfont"
+                                                                        android:textColor="@color/black"
+                                                                        android:textStyle="bold"
+                                                                        android:textSize="14dp"
+                                                                        android:text="Unit"
+                                                                        android:visibility="visible"/>
+
+
+                                                                </LinearLayout>
+
+
+                                                            </LinearLayout>
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_weight="5"
+                                                                android:orientation="vertical">
+
+                                                            </LinearLayout>
+
+
+
+
+
+                                                        </LinearLayout>
+
+                                                        <androidx.recyclerview.widget.RecyclerView
+                                                            android:id="@+id/recy_mesurment"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"/>
+
+                                                    </LinearLayout>
 
 
                                                     <com.google.android.material.textfield.TextInputLayout
@@ -992,6 +1153,7 @@
                                                             android:drawableLeft="@drawable/vtr_quantity"
                                                             android:drawablePadding="5dp"
                                                             android:drawableTint="@color/black"
+                                                            android:inputType="numberDecimal"
                                                             android:textSize="14dp"
                                                             android:focusableInTouchMode="true"
                                                             android:editable="true"

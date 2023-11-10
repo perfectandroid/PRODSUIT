@@ -117,19 +117,19 @@ object ProjectLeadNoRepository {
                     "    \"LeadDetailsList\": [\n" +
                     "      {\n" +
                     "        \"Lead_No\": \"000290\",\n" +
-                    "        \"Lead_Date\": \"19/09/2023\",\n" +
+                    "        \"Lead_Date\": \"19-09-2023\",\n" +
                     "        \"Name\": \"Raji\",\n" +
                     "        \"Mobile\": \"7894561230\"\n" +
                     "      },\n" +
                     "      {\n" +
                     "        \"Lead_No\": \"000294\",\n" +
-                    "        \"Lead_Date\": \"19/10/2023\",\n" +
+                    "        \"Lead_Date\": \"19-10-2023\",\n" +
                     "        \"Name\": \"JOppen\",\n" +
                     "        \"Mobile\": \"3216549870\"\n" +
                     "      },\n" +
                     "      {\n" +
                     "        \"Lead_No\": \"000296\",\n" +
-                    "        \"Lead_Date\": \"19/11/2023\",\n" +
+                    "        \"Lead_Date\": \"19-11-2023\",\n" +
                     "        \"Name\": \"Sahir\",\n" +
                     "        \"Mobile\": \"7418529630\"\n" +
                     "      }\n" +
