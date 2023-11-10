@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="0dp"
+    android:layout_marginTop="3dp"
+    android:backgroundTint="@color/white"
+    android:orientation="vertical">
+    <!--    app:cardUseCompatPadding="true"-->
+
+
+
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="0dp"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="0dp"
+        app:cardElevation="5dp">
+        <!--    app:cardUseCompatPadding="true"-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:orientation="vertical"
+            android:background="@drawable/border_5">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:paddingRight="5dp"
+                android:paddingLeft="5dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_weight="2">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:textSize="14dp"
+                                android:layout_weight="1"
+                                android:paddingLeft="0dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Type"
+                                android:layout_marginLeft="10dp"
+                                android:textStyle="normal"
+                                android:textColor="@color/black"
+                                android:layout_centerVertical="true" />
+
+
+
+                            <TextView
+                                android:id="@+id/tv_Type"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:textSize="15dp"
+                                android:layout_weight="1"
+                                android:layout_marginTop="-3dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="12-20-2023"
+                                android:layout_marginLeft="10dp"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"
+                                android:layout_centerVertical="true" />
+
+                        </LinearLayout>
+
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="end"
+                        android:gravity="end"
+                        android:layout_weight="2">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical|end"
+                            android:textSize="13dp"
+                            android:paddingLeft="2dp"
+                            android:fontFamily="@font/myfont"
+                            android:text="Incl. Tax"
+                            android:textStyle="normal"
+                            android:layout_gravity="end"
+                            android:textColor="@color/black" />
+
+                        <CheckBox
+                            android:id="@+id/chk_inclTax"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:gravity="end"
+                            android:layout_gravity="end"
+                            app:buttonTint="@color/colorPrimary" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="0dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:textSize="14dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_weight="1"
+                                android:paddingLeft="0dp"
+                                android:fontFamily="@font/myfont"
+                                android:layout_gravity="center"
+                                android:text=" Trans Type"
+                                android:textStyle="normal"
+                                android:textColor="@color/black"
+                                android:layout_centerVertical="true" />
+
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_TransType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:textSize="14dp"
+                            android:layout_weight="1"
+                            android:padding="5dp"
+                            android:paddingLeft="2dp"
+                            android:paddingRight="10dp"
+                            android:drawableEnd="@drawable/down_arrows"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:fontFamily="@font/myfont"
+                            android:background="@drawable/border_service1"
+                            android:text=""
+                            android:enabled="false"
+                            android:textStyle="normal"
+                            android:textColor="@color/black"
+                            android:layout_centerVertical="true" />
+
+                    </LinearLayout>
+
+
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:textSize="14dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_weight="1"
+                                    android:paddingLeft="2dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:layout_gravity="center"
+                                    android:text="Amount"
+                                    android:textStyle="normal"
+                                    android:textColor="@color/black"
+                                    android:layout_centerVertical="true" />
+
+
+                            </LinearLayout>
+
+                            <EditText
+                                android:id="@+id/edt_Amount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:textSize="14dp"
+                                android:layout_weight="1"
+                                android:paddingLeft="2dp"
+                                android:padding="5dp"
+                                android:paddingRight="10dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginLeft="10dp"
+                                android:fontFamily="@font/myfont"
+                                android:background="@drawable/border_service1"
+                                android:text=""
+                                android:enabled="true"
+                                android:textStyle="normal"
+                                android:textColor="@color/black"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:textSize="14dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_weight="1"
+                                    android:paddingLeft="2dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:layout_gravity="center"
+                                    android:text="Tax Amount"
+                                    android:textStyle="normal"
+                                    android:textColor="@color/black"
+                                    android:layout_centerVertical="true" />
+
+
+                            </LinearLayout>
+
+                            <EditText
+                                android:id="@+id/edt_Tax_Amount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:textSize="14dp"
+                                android:layout_weight="1"
+                                android:paddingLeft="2dp"
+                                android:padding="5dp"
+                                android:paddingRight="10dp"
+                                android:layout_marginRight="5dp"
+                                android:layout_marginLeft="10dp"
+                                android:fontFamily="@font/myfont"
+                                android:background="@drawable/border_service1"
+                                android:text=""
+                                android:enabled="true"
+                                android:textStyle="normal"
+                                android:textColor="@color/black"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+</LinearLayout>

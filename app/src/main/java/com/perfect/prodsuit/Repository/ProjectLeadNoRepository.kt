@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.OtherchargeModel
+import com.perfect.prodsuit.Model.ProjectLeadNoModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -18,22 +18,22 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.ArrayList
 
-object OtherchargeRepository {
+object ProjectLeadNoRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val otherchargeSetterGetter = MutableLiveData<OtherchargeModel>()
-    val TAG: String = "OtherchargeRepository"
+    val projectLeadNoSetterGetter = MutableLiveData<ProjectLeadNoModel>()
+    val TAG: String = "ProjectLeadNoRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<OtherchargeModel> {
-        getMeasureType(context)
-        return otherchargeSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<ProjectLeadNoModel> {
+        getProjectLeadNo(context)
+        return projectLeadNoSetterGetter
     }
 
-    private fun getMeasureType(context: Context) {
+    private fun getProjectLeadNo(context: Context) {
+//
 //        try {
-//            OtherchargeSetterGetter.value = OtherchargeModel("")
+//            projectLeadNoSetterGetter.value = ProjectLeadNoModel("")
 //            val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
 //            progressDialog = ProgressDialog(context, R.style.Progress)
 //            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -57,19 +57,22 @@ object OtherchargeRepository {
 //                .build()
 //            val apiService = retrofit.create(ApiInterface::class.java!!)
 //            val requestObject1 = JSONObject()
-//
 //            try {
 //                val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
 //                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
 //                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-//                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+//                val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+//                val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
 //
-//                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("20"))
+//
 //                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-//                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-//                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
 //                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-//                Log.e(TAG,"getDepartment  78   "+requestObject1)
+//                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
+//                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
+//                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
+//
+//
+//                Log.e(TAG,"78  getBranch  "+requestObject1)
 //            } catch (e: Exception) {
 //                e.printStackTrace()
 //            }
@@ -77,7 +80,7 @@ object OtherchargeRepository {
 //                okhttp3.MediaType.parse("application/json; charset=utf-8"),
 //                requestObject1.toString()
 //            )
-//            val call = apiService.getDepartment(body)
+//            val call = apiService.getServiceCountDetails(body)
 //            call.enqueue(object : retrofit2.Callback<String> {
 //                override fun onResponse(
 //                    call: retrofit2.Call<String>, response:
@@ -86,10 +89,11 @@ object OtherchargeRepository {
 //                    try {
 //                        progressDialog!!.dismiss()
 //                        val jObject = JSONObject(response.body())
-//                        val leads = ArrayList<OtherchargeModel>()
-//                        leads.add(OtherchargeModel(response.body()))
+//                        Log.e(TAG,"  114 COUNTS "+response.body())
+//                        val leads = ArrayList<ProjectLeadNoModel>()
+//                        leads.add(ProjectLeadNoModel(response.body()))
 //                        val msg = leads[0].message
-//                        OtherchargeSetterGetter.value = OtherchargeModel(msg)
+//                        projectLeadNoSetterGetter.value = ProjectLeadNoModel(msg)
 //                    } catch (e: Exception) {
 //                        progressDialog!!.dismiss()
 //                        Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
@@ -102,38 +106,32 @@ object OtherchargeRepository {
 //            })
 //        }catch (e : Exception){
 //            e.printStackTrace()
-//            progressDialog!!.dismiss()
 //            Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+//            progressDialog!!.dismiss()
 //        }
 
         try {
-            otherchargeSetterGetter.value = OtherchargeModel("")
+            projectLeadNoSetterGetter.value = ProjectLeadNoModel("")
             var msg = "{\n" +
-                    "  \"OtherChargesDetails\": {\n" +
-                    "    \"OtherChargesDetailsList\": [\n" +
+                    "  \"LeadDetails\": {\n" +
+                    "    \"LeadDetailsList\": [\n" +
                     "      {\n" +
-                    "        \"ID_Type\": \"1\",\n" +
-                    "        \"Type_Name\": \"Packing charge\"\n" +
+                    "        \"Lead_No\": \"000290\",\n" +
+                    "        \"Lead_Date\": \"19/09/2023\",\n" +
+                    "        \"Name\": \"Raji\",\n" +
+                    "        \"Mobile\": \"7894561230\"\n" +
                     "      },\n" +
                     "      {\n" +
-                    "        \"ID_Type\": \"2\",\n" +
-                    "        \"Type_Name\": \"Transportation charge\"\n" +
+                    "        \"Lead_No\": \"000294\",\n" +
+                    "        \"Lead_Date\": \"19/10/2023\",\n" +
+                    "        \"Name\": \"JOppen\",\n" +
+                    "        \"Mobile\": \"3216549870\"\n" +
                     "      },\n" +
                     "      {\n" +
-                    "        \"ID_Type\": \"3\",\n" +
-                    "        \"Type_Name\": \"Extra Charges\"\n" +
-                    "      },\n" +
-                    "      {\n" +
-                    "        \"ID_Type\": \"4\",\n" +
-                    "        \"Type_Name\": \"Vehicle special discount\"\n" +
-                    "      },\n" +
-                    "      {\n" +
-                    "        \"ID_Type\": \"5\",\n" +
-                    "        \"Type_Name\": \"Fuel Charge\"\n" +
-                    "      },\n" +
-                    "      {\n" +
-                    "        \"ID_Type\": \"6\",\n" +
-                    "        \"Type_Name\": \"Test Charge\"\n" +
+                    "        \"Lead_No\": \"000296\",\n" +
+                    "        \"Lead_Date\": \"19/11/2023\",\n" +
+                    "        \"Name\": \"Sahir\",\n" +
+                    "        \"Mobile\": \"7418529630\"\n" +
                     "      }\n" +
                     "    ],\n" +
                     "    \"ResponseCode\": \"0\",\n" +
@@ -142,7 +140,7 @@ object OtherchargeRepository {
                     "  \"StatusCode\": 0,\n" +
                     "  \"EXMessage\": \"Transaction Verified\"\n" +
                     "}"
-            otherchargeSetterGetter.value = OtherchargeModel(msg)
+            projectLeadNoSetterGetter.value = ProjectLeadNoModel(msg)
         }catch (e : Exception){
 
         }

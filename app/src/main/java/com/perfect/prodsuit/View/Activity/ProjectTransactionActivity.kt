@@ -21,12 +21,19 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Model.ActionTakenMainModel
+import com.perfect.prodsuit.Model.ModelFollowUpAttendance
+import com.perfect.prodsuit.Model.ModelOtherCharges
+import com.perfect.prodsuit.Model.ServiceDetailsFullListModel
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.OtherChargeAdapter
 import com.perfect.prodsuit.View.Adapter.ProjectAdapter
+import com.perfect.prodsuit.View.Adapter.ServiceAllproductAdapter
 import com.perfect.prodsuit.View.Adapter.StageAdapter
 import com.perfect.prodsuit.Viewmodel.MaterialUsageProductViewModel
 import com.perfect.prodsuit.Viewmodel.MaterialUsageProjectViewModel
 import com.perfect.prodsuit.Viewmodel.MaterialUsageStageViewModel
+import com.perfect.prodsuit.Viewmodel.OtherChargesViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.*
@@ -40,13 +47,16 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     private var tie_Project       : TextInputEditText? = null
     private var tie_Stage       : TextInputEditText? = null
     private var tie_Date       : TextInputEditText? = null
+    private var tie_OtherCharges       : TextInputEditText? = null
 
     private var til_Project       : TextInputLayout?   = null
     private var til_Stage       : TextInputLayout?   = null
     private var til_Date       : TextInputLayout?   = null
+    private var til_OtherCharges       : TextInputLayout?   = null
 
     lateinit var materialusageProjectViewModel: MaterialUsageProjectViewModel
     lateinit var materialusageStageViewModel  : MaterialUsageStageViewModel
+    lateinit var otherChargesViewModel  : OtherChargesViewModel
 
     var modeTest    = 0
     var usageMode: String? = "1"
@@ -54,12 +64,16 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
     var projectcount = 0
     var stagecount   = 0
+    var otherchargecount   = 0
 
     lateinit var projectArrayList  : JSONArray
     lateinit var stageArrayList    : JSONArray
+    lateinit var otherChargeArrayList : JSONArray
 
     lateinit var projectSort       : JSONArray
     lateinit var stageSort         : JSONArray
+
+    val modelOtherCharges = ArrayList<ModelOtherCharges>()
 
     private var dialogProject     : Dialog?            = null
     private var dialogStage       : Dialog?            = null
@@ -73,6 +87,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     private var strDate                           = ""
 
     var jsonObj: JSONObject? = null
+    private var dialogOtherChargesSheet : Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +98,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
         materialusageProjectViewModel   = ViewModelProvider(this).get(MaterialUsageProjectViewModel::class.java)
         materialusageStageViewModel     = ViewModelProvider(this).get(MaterialUsageStageViewModel::class.java)
+        otherChargesViewModel     = ViewModelProvider(this).get(OtherChargesViewModel::class.java)
 
         setRegViews()
         var jsonObject: String? = intent.getStringExtra("jsonObject")
@@ -101,6 +117,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         tie_Project      = findViewById(R.id.tie_Project)
         tie_Stage    = findViewById(R.id.tie_Stage)
         tie_Date    = findViewById(R.id.tie_Date)
+        tie_OtherCharges    = findViewById(R.id.tie_OtherCharges)
 
         til_Project      = findViewById(R.id.til_Project)
         til_Stage    = findViewById(R.id.til_Stage)
@@ -109,6 +126,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         tie_Project!!.setOnClickListener(this)
         tie_Stage!!.setOnClickListener(this)
         tie_Date!!.setOnClickListener(this)
+        tie_OtherCharges!!.setOnClickListener(this)
 
         til_Project!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_Date!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.color_mandatory)
@@ -146,6 +164,122 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                 Config.disableClick(v)
                 openBottomSheet()
             }
+
+            R.id.tie_OtherCharges->{
+                Config.disableClick(v)
+                otherchargecount = 0
+                getOtherCharges()
+            }
+        }
+    }
+
+    private fun getOtherCharges() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                otherChargesViewModel.getOthercharge(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (otherchargecount == 0){
+                                    otherchargecount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   114455   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("OtherChargesDetails")
+                                        otherChargeArrayList = jobjt.getJSONArray("OtherChargesDetailsList")
+                                        if (otherChargeArrayList.length()>0){
+
+                                            for (i in 0 until otherChargeArrayList.length()) {
+                                                var jsonObject = otherChargeArrayList.getJSONObject(i)
+
+                                                modelOtherCharges!!.add(ModelOtherCharges(jsonObject.getString("ID_Type"),jsonObject.getString("Type_Name"), "","","0.00", "0.00",false))
+                                            }
+                                        }
+                                             otherChargesPopup(modelOtherCharges)
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectTransactionActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun otherChargesPopup(modelOtherCharges : ArrayList<ModelOtherCharges>) {
+        try {
+
+            dialogOtherChargesSheet = Dialog(this)
+            dialogOtherChargesSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogOtherChargesSheet!! .setContentView(R.layout.other_charges_popup)
+            dialogOtherChargesSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+            dialogOtherChargesSheet!!.setCancelable(true)
+
+            var recycOtherCharges = dialogOtherChargesSheet!! .findViewById(R.id.recycOtherCharges) as RecyclerView
+            var txt_close = dialogOtherChargesSheet!! .findViewById(R.id.txt_close) as TextView
+            var txt_apply = dialogOtherChargesSheet!! .findViewById(R.id.txt_apply) as TextView
+
+
+            val lLayout = GridLayoutManager(this@ProjectTransactionActivity, 1)
+            recycOtherCharges!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapter = OtherChargeAdapter(this@ProjectTransactionActivity, modelOtherCharges)
+            recycOtherCharges!!.adapter = adapter
+            adapter.setClickListener(this@ProjectTransactionActivity)
+            adapter!!.setClickListener(this@ProjectTransactionActivity)
+
+            txt_close!!.setOnClickListener {
+                dialogOtherChargesSheet!!.dismiss()
+            }
+
+
+            dialogOtherChargesSheet!!.show()
+            val window: Window? = dialogOtherChargesSheet!!.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.white);
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+        }catch (e : Exception){
+
+            Log.e(TAG,"3856  "+e)
         }
     }
 

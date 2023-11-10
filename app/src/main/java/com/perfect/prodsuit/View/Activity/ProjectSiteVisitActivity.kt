@@ -12,7 +12,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -21,13 +20,14 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -53,7 +53,6 @@ import java.io.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
 
@@ -226,6 +225,14 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         imagemodeViewModel = ViewModelProvider(this).get(ImageModeViewModel::class.java)
         otherchargesViewModel = ViewModelProvider(this).get(OtherChargesViewModel::class.java)
         setRegViews()
+
+        var jsonObject: String? = intent.getStringExtra("jsonObject")
+        if (jsonObject.equals("")){
+            Log.e(TAG,"23111   ")
+        }else{
+            Log.e(TAG,"23112   ")
+        }
+
     }
 
     private fun setRegViews() {
@@ -1109,11 +1116,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 otherchargeSort.put(jsonObject)
             }
 
-            val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
-            recyOtherCharge!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-            val adapter = OtherChargeAdapter(this@ProjectSiteVisitActivity, otherchargeSort)
-            recyOtherCharge!!.adapter = adapter
-            adapter.setClickListener(this@ProjectSiteVisitActivity)
+//            val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
+//            recyOtherCharge!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            val adapter = OtherChargeAdapter(this@ProjectSiteVisitActivity, otherchargeSort)
+//            recyOtherCharge!!.adapter = adapter
+//            adapter.setClickListener(this@ProjectSiteVisitActivity)
 
             etsearch!!.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
@@ -1138,10 +1145,10 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                         }
                     }
 
-                    Log.e(TAG,"otherchargeSort               7103    "+otherchargeSort)
-                    val adapter = OtherChargeAdapter(this@ProjectSiteVisitActivity, otherchargeSort)
-                    recyOtherCharge!!.adapter = adapter
-                    adapter.setClickListener(this@ProjectSiteVisitActivity)
+//                    Log.e(TAG,"otherchargeSort               7103    "+otherchargeSort)
+//                    val adapter = OtherChargeAdapter(this@ProjectSiteVisitActivity, otherchargeSort)
+//                    recyOtherCharge!!.adapter = adapter
+//                    adapter.setClickListener(this@ProjectSiteVisitActivity)
                 }
             })
 

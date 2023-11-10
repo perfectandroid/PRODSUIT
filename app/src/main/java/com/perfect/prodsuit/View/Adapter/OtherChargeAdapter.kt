@@ -5,27 +5,28 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Model.ModelOtherCharges
+import com.perfect.prodsuit.Model.ServiceDetailsFullListModel
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class OtherChargeAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+class OtherChargeAdapter(internal var context: Context, internal var mList: List<ModelOtherCharges>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
 
     internal val TAG : String = "OtherChargeAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
 
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_leadno, parent, false
+            R.layout.adapter_project_othercharges, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -33,12 +34,12 @@ class OtherChargeAdapter(internal var context: Context, internal var jsonArray: 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
-            jsonObject = jsonArray.getJSONObject(position)
+
             if (holder is MainViewHolder) {
+                val empModel = mList[position]
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
-                holder.txtsino.text          = pos.toString()
-                holder.txtLeadNo.text        = jsonObject!!.getString("LeadNo")
+                holder.tv_Type.text        = empModel!!.Type_Name
 
             }
         } catch (e: Exception) {
@@ -48,7 +49,7 @@ class OtherChargeAdapter(internal var context: Context, internal var jsonArray: 
     }
 
     override fun getItemCount(): Int {
-        return jsonArray.length()
+        return mList.size
     }
 
     override fun getItemId(position: Int): Long {
@@ -56,17 +57,19 @@ class OtherChargeAdapter(internal var context: Context, internal var jsonArray: 
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position % 2
+        return position
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtLeadNo   : TextView
-        internal var txtsino     : TextView
-        internal var llleadNo    : LinearLayout
+        internal var tv_Type   : TextView
+      //  internal var tv_TransType     : TextView
+        internal var edt_Amount    : EditText
+        internal var edt_Tax_Amount    : EditText
         init {
-            txtLeadNo          = v.findViewById<View>(R.id.txtLeadNo) as TextView
-            txtsino                = v.findViewById<View>(R.id.txtsino) as TextView
-            llleadNo           = v.findViewById<View>(R.id.llleadNo) as LinearLayout
+            tv_Type          = v.findViewById<View>(R.id.tv_Type) as TextView
+         //   tv_TransType                = v.findViewById<View>(R.id.tv_TransType) as TextView
+            edt_Amount           = v.findViewById<View>(R.id.edt_Amount) as EditText
+            edt_Tax_Amount           = v.findViewById<View>(R.id.edt_Tax_Amount) as EditText
         }
     }
 

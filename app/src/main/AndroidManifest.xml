@@ -70,6 +70,16 @@
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.ProjectSiteVisitListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.ProjectSiteVisitTabActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.ProjectListActivity"
             android:exported="false"
             android:screenOrientation="portrait"
@@ -724,15 +734,11 @@
             android:name="com.perfect.prodsuit.View.Activity.AddNoteActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-
-
-        <activity
-            android:name="com.perfect.prodsuit.View.Activity.DashboardNewActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-
+            android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- <activity -->
+        <!-- android:name="com.perfect.prodsuit.View.Activity.DashboardNewActivity" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar" -->
+        <!-- android:windowSoftInputMode="stateHidden|adjustPan" /> -->
         <activity
             android:name="com.perfect.prodsuit.View.Activity.ReportViewDetailsActivity"
             android:screenOrientation="portrait"

@@ -270,7 +270,7 @@
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:padding="2dp"
-                                    android:src="@drawable/icon_svg_mobile"
+                                    android:src="@drawable/sicon_customer"
                                     app:tint="@color/colorPrimary" />
                                 <!--                            app:tint="@color/list_icon"-->
 
@@ -360,7 +360,7 @@
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:padding="2dp"
-                                    android:src="@drawable/icon_svg_area"
+                                    android:src="@drawable/sicon_startdate"
                                     app:tint="@color/colorPrimary" />
                                 <!--                            app:tint="@color/list_icon"-->
 
@@ -440,7 +440,7 @@
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:padding="2dp"
-                                    android:src="@drawable/icon_svg_area"
+                                    android:src="@drawable/sicon_finishdate"
                                     app:tint="@color/colorPrimary" />
                                 <!--                            app:tint="@color/list_icon"-->
 
@@ -602,7 +602,7 @@
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
                                     android:padding="2dp"
-                                    android:src="@drawable/icon_svg_area"
+                                    android:src="@drawable/sicon_final_amount"
                                     app:tint="@color/colorPrimary" />
                                 <!--                            app:tint="@color/list_icon"-->
 
