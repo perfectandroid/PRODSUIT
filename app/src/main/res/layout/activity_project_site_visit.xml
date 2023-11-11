@@ -931,7 +931,7 @@
                                                     android:background="@color/dropbg_color"
                                                     android:paddingBottom="10dp"
                                                     android:layout_margin="2dp"
-                                                    android:visibility="visible">
+                                                    android:visibility="gone">
 
                                                     <LinearLayout
                                                         android:id="@+id/ll_measureShow"
@@ -1482,7 +1482,7 @@
 
                                         <androidx.cardview.widget.CardView
                                             android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
+                                            android:layout_height="match_parent"
                                             app:cardBackgroundColor="@color/white"
                                             app:cardCornerRadius="0dp"
                                             app:cardElevation="2dp"
@@ -1493,7 +1493,7 @@
                                             android:visibility="visible">
                                             <LinearLayout
                                                 android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
+                                                android:layout_height="match_parent"
                                                 android:orientation="vertical">
 
                                                 <TextView
@@ -1522,12 +1522,19 @@
                                                     android:background="@color/dropbg_color"
                                                     android:paddingBottom="10dp"
                                                     android:layout_margin="2dp"
-                                                    android:visibility="gone">
+                                                    android:visibility="visible">
 
                                                     <androidx.recyclerview.widget.RecyclerView
                                                         android:id="@+id/recy_checklist"
                                                         android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"/>
+                                                        android:layout_height="wrap_content"
+                                                        android:visibility="gone"/>
+
+                                                    <ExpandableListView
+                                                        android:id="@+id/expandableListView"
+                                                        android:layout_width="match_parent"
+                                                        android:padding="3dp"
+                                                        android:layout_height="350dp" />
 
                                                 </LinearLayout>
 

@@ -102,6 +102,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_warning.xml" value="0.2675" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/top_round_shape.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/top_rounded_white.xml" value="0.263" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/transparent_drawable.xml" value="0.23" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/user_color.xml" value="0.229" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/vtr_quantity.xml" value="0.2625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/vtr_remark.xml" value="0.1875" />
@@ -243,6 +244,8 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_tab3.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_service_type.xml" value="0.22291666666666668" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_servicefollowup_productdeatail.xml" value="0.33" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_site_child.xml" value="0.25104166666666666" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_site_parent.xml" value="0.25104166666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_stage.xml" value="0.34427083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_stock_details.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_stock_mode.xml" value="0.2708333333333333" />

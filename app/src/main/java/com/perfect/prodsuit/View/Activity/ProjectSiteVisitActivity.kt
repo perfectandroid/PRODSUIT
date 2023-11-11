@@ -31,13 +31,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.*
-import com.perfect.prodsuit.Model.ModelMesurementDetails
-import com.perfect.prodsuit.Model.ModelMoreServices
-import com.perfect.prodsuit.Model.ModelProjectEmpDetails
-import com.perfect.prodsuit.Model.OtherChargesMainModel
+import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
@@ -67,11 +65,13 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private var tv_LeadClick: TextView? = null
     private var tv_EmployeeClick: TextView? = null
     private var tv_MeasurementClick: TextView? = null
+    private var tv_Checklist_Details: TextView? = null
     private var tvv_choosefile: TextView? = null
 
     private var ll_LeadClick: LinearLayout? = null
     private var ll_EmployeeClick: LinearLayout? = null
     private var ll_MeasurementClick: LinearLayout? = null
+    private var ll_Checklist_Details: LinearLayout? = null
     private var ll_measureShow: LinearLayout? = null
 
     private var tie_LeadNo: TextInputEditText? = null
@@ -126,6 +126,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     var showLead        = 1
     var showEmployee    = 0
     var showMeasurement = 0
+    var showChecklist   = 0
 
     var showSiteVisit   = 1
     var showLeadInfo    = 0
@@ -197,9 +198,13 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private var dialogServiceRole : Dialog? = null
     var recyServiceRole: RecyclerView? = null
 
+
     lateinit var unitViewModel: UnitViewModel
     lateinit var unitArrayList : JSONArray
     private var dialogUnit : Dialog? = null
+
+    var siteCheckcount   = 0
+    lateinit var siteCheckViewModel: SiteCheckViewModel
 
 
 
@@ -224,6 +229,9 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     val modelMesurementDetails = ArrayList<ModelMesurementDetails>()
     var measurementShowAdapter  : MeasurementShowAdapter? = null
 
+    var recy_checklist: RecyclerView? = null
+    var modelProjectCheckList = ArrayList<ModelProjectCheckList>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -241,6 +249,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         imagemodeViewModel = ViewModelProvider(this).get(ImageModeViewModel::class.java)
         otherchargesViewModel = ViewModelProvider(this).get(OtherChargesViewModel::class.java)
         unitViewModel = ViewModelProvider(this).get(UnitViewModel::class.java)
+        siteCheckViewModel = ViewModelProvider(this).get(SiteCheckViewModel::class.java)
 
         setRegViews()
 
@@ -268,10 +277,12 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         tv_LeadClick = findViewById(R.id.tv_LeadClick)
         tv_EmployeeClick = findViewById(R.id.tv_EmployeeClick)
         tv_MeasurementClick = findViewById(R.id.tv_MeasurementClick)
+        tv_Checklist_Details = findViewById(R.id.tv_Checklist_Details)
 
         ll_LeadClick = findViewById(R.id.ll_LeadClick)
         ll_EmployeeClick = findViewById(R.id.ll_EmployeeClick)
         ll_MeasurementClick = findViewById(R.id.ll_MeasurementClick)
+        ll_Checklist_Details = findViewById(R.id.ll_Checklist_Details)
         ll_measureShow = findViewById(R.id.ll_measureShow)
 
         tie_LeadNo = findViewById(R.id.tie_LeadNo)
@@ -293,6 +304,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
         recyEmpDetails        = findViewById(R.id.recyEmpDetails)
         recy_mesurment        = findViewById(R.id.recy_mesurment)
+        recy_checklist        = findViewById(R.id.recy_checklist)
+
         til_LeadNo            = findViewById<TextInputLayout>(R.id.til_LeadNo)
         til_VisitDate         = findViewById<TextInputLayout>(R.id.til_VisitDate)
         til_InspectionNotes1  = findViewById<TextInputLayout>(R.id.til_InspectionNotes1)
@@ -327,6 +340,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         tv_LeadClick!!.setOnClickListener(this)
         tv_EmployeeClick!!.setOnClickListener(this)
         tv_MeasurementClick!!.setOnClickListener(this)
+        tv_Checklist_Details!!.setOnClickListener(this)
 
         tie_LeadNo!!.setOnClickListener(this)
         tie_VisitDate!!.setOnClickListener(this)
@@ -722,12 +736,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
               openBottomTime()
             }
 
-            R.id.tv_LeadClick->{
-                showLead = 1
-                showEmployee = 0
-                 showMeasurement = 0
-                expandTab()
-            }
+
             R.id.tie_LeadNo->{
 
                 leadcount = 0
@@ -751,18 +760,43 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 unitcount = 0
                 getUnit()
             }
+
+            R.id.tv_LeadClick->{
+                showLead = 1
+                showEmployee = 0
+                showMeasurement = 0
+                showChecklist = 0
+                expandTab()
+            }
             R.id.tv_EmployeeClick->{
                 showLead = 0
                 showEmployee = 1
                 showMeasurement = 0
+                showChecklist = 0
                 expandTab()
             }
             R.id.tv_MeasurementClick->{
                 showLead = 0
                 showEmployee = 0
                 showMeasurement = 1
+                showChecklist = 0
                 expandTab()
             }
+            R.id.tv_Checklist_Details->{
+                showLead = 0
+                showEmployee = 0
+                showMeasurement = 0
+                showChecklist = 1
+                expandTab()
+
+                if (modelProjectCheckList.size == 0){
+                    siteCheckcount = 0
+                    getCheckedListData()
+                }
+
+            }
+
+
 
             R.id.tie_Department->{
                 Config.disableClick(v)
@@ -862,6 +896,85 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         }
     }
 
+    private fun getCheckedListData() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                siteCheckViewModel.getSiteCheck(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (siteCheckcount == 0){
+                                    siteCheckcount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   917771   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("checkDetails")
+                                        var arrayList = jobjt.getJSONArray("checkDetailsList")
+//                                        val gson = GsonBuilder().create()
+                                        val gson = Gson()
+                                        modelProjectCheckList = gson.fromJson(arrayList.toString(),Array<ModelProjectCheckList>::class.java).toList() as ArrayList<ModelProjectCheckList>
+//                                        siteCheckViewModel!!.add(SiteCheckViewModel(jsonObject.getString("ID_Type"),jsonObject.getString("Type_Name"), "","","0.00", "0.00",false))
+
+                                        Log.e(TAG,"917772   "+modelProjectCheckList.size)
+                                        Log.e(TAG,"917772   "+modelProjectCheckList[0].Label_Name)
+                                       // Log.e(TAG,"917772   "+Model[0].subArray[0].Label_Name)
+
+                                        if (modelProjectCheckList.size > 0){
+                                            val expandableListView: ExpandableListView = findViewById(R.id.expandableListView)
+                                            val adapter = SiteCheckListAdapter(this@ProjectSiteVisitActivity, modelProjectCheckList) // Provide your data here
+                                            expandableListView.setAdapter(adapter)
+                                            expandableListView.setGroupIndicator(resources.getDrawable(R.drawable.transparent_drawable))
+                                            expandableListView.setDividerHeight(0)
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectSiteVisitActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
 
 
     private fun clearData(){
@@ -1200,6 +1313,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         ll_LeadClick!!.visibility = View.GONE
         ll_EmployeeClick!!.visibility = View.GONE
         ll_MeasurementClick!!.visibility = View.GONE
+        ll_Checklist_Details!!.visibility = View.GONE
 
         if (showLead == 1){
             ll_LeadClick!!.visibility = View.VISIBLE
@@ -1210,6 +1324,10 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         if (showMeasurement == 1){
             ll_MeasurementClick!!.visibility = View.VISIBLE
         }
+        if (showChecklist == 1){
+            ll_Checklist_Details!!.visibility = View.VISIBLE
+        }
+
     }
 
     private fun getLeadNo() {
