@@ -39,7 +39,10 @@ class ComplaintServiceAdapter (internal var context: Context, internal var jsonA
                 holder.txtCompService.text        = jsonObject!!.getString("compService_name")
                 holder.llCompService!!.setTag(position)
                 holder.llCompService!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "CompService")
+                    clickListener!!.onClick(
+                        position,
+                        "CompService"
+                    )
                 })
             }
         } catch (e: Exception) {

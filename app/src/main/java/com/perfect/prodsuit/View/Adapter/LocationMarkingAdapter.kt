@@ -45,12 +45,18 @@ class LocationMarkingAdapter (internal var context: Context, internal var jsonAr
                 holder.txtAddress.text        = jsonObject!!.getString("LocLocationName")
 
                 holder.im_mapview!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "LocList")
+                    clickListener!!.onClick(
+                        position,
+                        "LocList"
+                    )
 
                 })
 
                 holder.im_detail!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "LocDetails")
+                    clickListener!!.onClick(
+                        position,
+                        "LocDetails"
+                    )
 
                 })
             }

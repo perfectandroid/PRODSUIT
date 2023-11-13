@@ -77,19 +77,28 @@ class ServiceParts_replacedAdapter (internal var context: Context, internal var 
 
                 holder.tvv_warrantyMode!!.setTag(position)
                 holder.tvv_warrantyMode!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "WarrantyModeList")
+                    clickListener!!.onClick(
+                        position,
+                        "WarrantyModeList"
+                    )
                 })
 
                 holder.tvv_replacedMode!!.setTag(position)
                 holder.tvv_replacedMode!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "ReplacedModeList")
+                    clickListener!!.onClick(
+                        position,
+                        "ReplacedModeList"
+                    )
                 })
 
 
                 holder.imv_addProduct!!.setTag(position)
                 holder.imv_addProduct!!.setOnClickListener(View.OnClickListener {
                     try {
-                        clickListener!!.onClick(position, "partAddService2Click")
+                        clickListener!!.onClick(
+                            position,
+                            "partAddService2Click"
+                        )
                     }catch (e:Exception){
                         Log.e(TAG,"93333   "+e)
                     }

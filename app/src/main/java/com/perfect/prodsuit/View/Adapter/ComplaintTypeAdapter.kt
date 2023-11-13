@@ -42,7 +42,10 @@ class ComplaintTypeAdapter(internal var context: Context, internal var jsonArray
 
                 holder.llcomplaint!!.setTag(position)
                 holder.llcomplaint!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "ComplaintType")
+                    clickListener!!.onClick(
+                        position,
+                        "ComplaintType"
+                    )
                 })
             }
         } catch (e: Exception) {

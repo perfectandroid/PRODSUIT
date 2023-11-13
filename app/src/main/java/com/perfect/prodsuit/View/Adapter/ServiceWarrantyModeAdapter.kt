@@ -43,7 +43,10 @@ class ServiceWarrantyModeAdapter(internal var context: Context, internal var jso
 
                 holder.ll_serviceWarrantyMode!!.setTag(position)
                 holder.ll_serviceWarrantyMode!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "warrantyservice")
+                    clickListener!!.onClick(
+                        position,
+                        "warrantyservice"
+                    )
                 })
             }
         } catch (e: Exception) {

@@ -75,7 +75,10 @@ class NotificationAdapter (internal var context: Context, internal var jsonArray
 
                 holder.ll_notif!!.setTag(position)
                 holder.ll_notif!!.setOnClickListener {
-                    clickListener!!.onClick(position, "readstatus")
+                    clickListener!!.onClick(
+                        position,
+                        "readstatus"
+                    )
                 }
 
             }

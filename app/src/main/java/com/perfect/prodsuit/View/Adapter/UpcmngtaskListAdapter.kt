@@ -51,7 +51,10 @@ class UpcmngtaskListAdapter(internal var context: Context, internal var jsonArra
 
                 holder.llUpComung!!.setTag(position)
                 holder.llUpComung!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "upcoming")
+                    clickListener!!.onClick(
+                        position,
+                        "upcoming"
+                    )
                 })
 
             }

@@ -46,7 +46,10 @@ class EmployeeInventoryAdapter (internal var context: Context, internal var json
 //                }
                 holder.llemployee!!.setTag(position)
                 holder.llemployee!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "employee")
+                    clickListener!!.onClick(
+                        position,
+                        "employee"
+                    )
                 })
             }
         } catch (e: Exception) {

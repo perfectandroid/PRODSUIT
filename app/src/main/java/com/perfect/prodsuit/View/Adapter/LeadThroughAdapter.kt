@@ -45,7 +45,10 @@ class LeadThroughAdapter(internal var context: Context, internal var jsonArray: 
 //                }
                 holder.llleadthrogh!!.setTag(position)
                 holder.llleadthrogh!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "leadthrough")
+                    clickListener!!.onClick(
+                        position,
+                        "leadthrough"
+                    )
                 })
             }
         } catch (e: Exception) {

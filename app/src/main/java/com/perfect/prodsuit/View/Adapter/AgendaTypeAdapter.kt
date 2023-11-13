@@ -75,7 +75,10 @@ class AgendaTypeAdapter (internal var context: Context, internal var jsonArray: 
                     Log.i("kkkkkkkkkk","position_click="+position)
                     Log.i("kkkkkkkkkk","position_click_selected_pos="+selectedPos)
                //     holder.ll_type!!.setBackgroundResource(R.drawable.shape_rectangle_border)
-                    clickListener!!.onClick(position, "agendaType")
+                    clickListener!!.onClick(
+                        position,
+                        "agendaType"
+                    )
 
                 })
 

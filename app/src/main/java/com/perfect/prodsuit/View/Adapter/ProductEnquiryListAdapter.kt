@@ -71,7 +71,10 @@ class ProductEnquiryListAdapter (internal var context: Context, internal var jso
 
                 holder.ll_product_list!!.setTag(position)
                 holder.ll_product_list!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "productEnquiryList")
+                    clickListener!!.onClick(
+                        position,
+                        "productEnquiryList"
+                    )
                 })
             }
         } catch (e: Exception) {

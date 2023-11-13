@@ -41,7 +41,10 @@ class MeasurementAdapter(internal var context: Context, internal var jsonArray: 
 
                 holder.llMeasurement!!.setTag(position)
                 holder.llMeasurement!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "MeasurementUnitClick")
+                    clickListener!!.onClick(
+                        position,
+                        "MeasurementUnitClick"
+                    )
                 })
             }
         } catch (e: Exception) {

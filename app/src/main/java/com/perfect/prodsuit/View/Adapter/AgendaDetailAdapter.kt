@@ -422,7 +422,10 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
 
                 holder.im_Call_Icon.setTag(position)
                 holder.im_Call_Icon.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "agendaCall")
+                    clickListener!!.onClick(
+                        position,
+                        "agendaCall"
+                    )
                 })
 
 
@@ -433,7 +436,10 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
                 holder.im_Call_Document.setTag(position)
                 holder.im_Call_Document.setOnClickListener(View.OnClickListener {
                  //   clickListener!!.onClick(position, "DocumentList")
-                    clickListener!!.onClick(position, "agendaMessage")
+                    clickListener!!.onClick(
+                        position,
+                        "agendaMessage"
+                    )
                 })
 
                 holder.cb_Call.setTag(position)
@@ -506,7 +512,10 @@ class AgendaDetailAdapter (internal var context: Context, internal var jsonArray
 //
                 holder.ll_agenda!!.setTag(position)
                 holder.ll_agenda!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "agendaList")
+                    clickListener!!.onClick(
+                        position,
+                        "agendaList"
+                    )
                 })
 
             }

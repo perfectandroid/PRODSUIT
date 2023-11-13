@@ -45,7 +45,10 @@ class FollowupTypeAdapter(internal var context: Context, internal var jsonArray:
 //                }
                 holder.llfollowuptype!!.setTag(position)
                 holder.llfollowuptype!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "followuptype")
+                    clickListener!!.onClick(
+                        position,
+                        "followuptype"
+                    )
                 })
             }
         } catch (e: Exception) {

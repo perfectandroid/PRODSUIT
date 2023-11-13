@@ -123,7 +123,10 @@ class ServiceDetailsAdapter(
 
                 holder.til_productwise_cmplt!!.setTag(position)
                 holder.til_productwise_cmplt!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "productwise_cmplt")
+                    clickListener!!.onClick(
+                        position,
+                        "productwise_cmplt"
+                    )
                 })
 
                 holder.chk_box!!.setTag(position)
@@ -134,7 +137,10 @@ class ServiceDetailsAdapter(
                         empModel.isChekecd = true
                         holder.til_servicedescrption.setText(  mList[position].Description)
                         holder.til_productwise_cmplt.setText(  mList[position].ComplaintName)
-                        clickListener!!.onClick(position, "chkproductwise_cmplt")
+                        clickListener!!.onClick(
+                            position,
+                            "chkproductwise_cmplt"
+                        )
                     }else{
                         holder.til_servicedescrption.isEnabled = false
                         holder.til_productwise_cmplt.isEnabled = false

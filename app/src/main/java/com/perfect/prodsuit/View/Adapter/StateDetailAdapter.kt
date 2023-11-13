@@ -40,7 +40,10 @@ class StateDetailAdapter(internal var context: Context, internal var jsonArray: 
 
                 holder.llState!!.setTag(position)
                 holder.llState!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "statedetail")
+                    clickListener!!.onClick(
+                        position,
+                        "statedetail"
+                    )
                 })
             }
         } catch (e: Exception) {

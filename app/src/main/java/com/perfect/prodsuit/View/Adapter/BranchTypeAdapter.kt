@@ -45,7 +45,10 @@ class BranchTypeAdapter(internal var context: Context, internal var jsonArray: J
 //                }
                 holder.llbranchtype!!.setTag(position)
                 holder.llbranchtype!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "branchtype")
+                    clickListener!!.onClick(
+                        position,
+                        "branchtype"
+                    )
                 })
             }
         } catch (e: Exception) {

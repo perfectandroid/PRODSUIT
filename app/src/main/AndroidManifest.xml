@@ -726,6 +726,14 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.TileGraphActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+
+
 
         <activity
             android:name="com.perfect.prodsuit.View.Activity.DashboardNewActivity"

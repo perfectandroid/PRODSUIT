@@ -43,12 +43,18 @@ class PaymentListAdapter  (internal var context: Context, internal var jsonArray
 
                 holder.im_delete!!.setTag(position)
                 holder.im_delete!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "deleteArrayList")
+                    clickListener!!.onClick(
+                        position,
+                        "deleteArrayList"
+                    )
                 })
 
                 holder.im_edit!!.setTag(position)
                 holder.im_edit!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "editArrayList")
+                    clickListener!!.onClick(
+                        position,
+                        "editArrayList"
+                    )
                 })
 
 

@@ -44,7 +44,10 @@ class ServiceSalesAdapter(internal var context: Context, internal var jsonArray:
 
                 holder.llSales!!.setTag(position)
                 holder.llSales!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "salesHistoryClick")
+                    clickListener!!.onClick(
+                        position,
+                        "salesHistoryClick"
+                    )
                 })
             }
         } catch (e: Exception) {

@@ -117,7 +117,10 @@ class ApproveAdapter (internal var context: Context, internal var jsonArray: JSO
 
                 holder.rltv_main!!.setTag(position)
                 holder.rltv_main!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "approveClick")
+                    clickListener!!.onClick(
+                        position,
+                        "approveClick"
+                    )
                 })
             }
         } catch (e: Exception) {

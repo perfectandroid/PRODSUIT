@@ -49,7 +49,10 @@ class ProductCategoryAdapter(internal var context: Context, internal var jsonArr
 //                }
                 holder.llprodcategory!!.setTag(position)
                 holder.llprodcategory!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "prodcategory")
+                    clickListener!!.onClick(
+                        position,
+                        "prodcategory"
+                    )
                 })
             }
         } catch (e: Exception) {

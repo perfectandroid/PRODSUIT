@@ -45,7 +45,10 @@ class CategoryAdapter (internal var context: Context, internal var jsonArray: JS
 //                }
                 holder.llCategory!!.setTag(position)
                 holder.llCategory!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "category")
+                    clickListener!!.onClick(
+                        position,
+                        "category"
+                    )
                 })
             }
         } catch (e: Exception) {

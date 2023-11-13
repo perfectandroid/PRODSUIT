@@ -41,7 +41,10 @@ class UnitAdapter(internal var context: Context, internal var jsonArray: JSONArr
 
                 holder.lldepartment!!.setTag(position)
                 holder.lldepartment!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "department")
+                    clickListener!!.onClick(
+                        position,
+                        "department"
+                    )
                 })
             }
         } catch (e: Exception) {

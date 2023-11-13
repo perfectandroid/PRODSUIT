@@ -45,7 +45,10 @@ class FollowupActionAdapter(internal var context: Context, internal var jsonArra
 //                }
                 holder.llfollowupaction!!.setTag(position)
                 holder.llfollowupaction!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "followupaction")
+                    clickListener!!.onClick(
+                        position,
+                        "followupaction"
+                    )
                 })
             }
         } catch (e: Exception) {

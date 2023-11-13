@@ -41,7 +41,10 @@ class ServiceTypeAdapter (internal var context: Context, internal var jsonArray:
 
                 holder.llServiceType!!.setTag(position)
                 holder.llServiceType!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "serviceTypeClick")
+                    clickListener!!.onClick(
+                        position,
+                        "serviceTypeClick"
+                    )
                 })
             }
         } catch (e: Exception) {

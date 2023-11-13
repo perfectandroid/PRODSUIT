@@ -61,7 +61,10 @@ class StockRTListAdapter (internal var context: Context, internal var jsonArray:
                 holder.tv_view!!.setTag(position)
                 holder.tv_view!!.setOnClickListener(View.OnClickListener {
                     Log.e(TAG,"Views   5801   "+jsonObject!!.getString("Transfered")+"   ::::    " +position)
-                    clickListener!!.onClick(position, "viewClicks")
+                    clickListener!!.onClick(
+                        position,
+                        "viewClicks"
+                    )
 //                    if (jsonArray.getJSONObject(position)!!.getString("Transfered").equals("1")){
 //                        Log.e(TAG,"Views   5802   ")
 //                        Config.snackBars(context,it,"Already Transfered")
@@ -74,7 +77,10 @@ class StockRTListAdapter (internal var context: Context, internal var jsonArray:
 
                 holder.tv_delete!!.setTag(position)
                 holder.tv_delete!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "deleteClicks")
+                    clickListener!!.onClick(
+                        position,
+                        "deleteClicks"
+                    )
                 })
             }
         } catch (e: Exception) {

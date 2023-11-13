@@ -40,7 +40,10 @@ class ProjectAdapter(internal var context: Context, internal var jsonArray: JSON
 
                 holder.llProject!!.setTag(position)
                 holder.llProject!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "projectClick")
+                    clickListener!!.onClick(
+                        position,
+                        "projectClick"
+                    )
                 })
             }
         } catch (e: Exception) {

@@ -45,7 +45,10 @@ class LeadFromAdapter(internal var context: Context, internal var jsonArray: JSO
 //                }
                 holder.llleadfrom!!.setTag(position)
                 holder.llleadfrom!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "leadfrom")
+                    clickListener!!.onClick(
+                        position,
+                        "leadfrom"
+                    )
 
                 })
             }

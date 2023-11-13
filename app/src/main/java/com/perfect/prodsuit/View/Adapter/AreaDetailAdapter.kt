@@ -40,7 +40,10 @@ class AreaDetailAdapter (internal var context: Context, internal var jsonArray: 
 
                 holder.llArea!!.setTag(position)
                 holder.llArea!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "areadetail")
+                    clickListener!!.onClick(
+                        position,
+                        "areadetail"
+                    )
                 })
             }
         } catch (e: Exception) {

@@ -95,7 +95,10 @@ class LeadEditDetailAdapter (internal var context: Context, internal var jsonArr
                 }
                 holder.llleadEdit!!.setTag(position)
                 holder.llleadEdit!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "leadedit")
+                    clickListener!!.onClick(
+                        position,
+                        "leadedit"
+                    )
                 })
             }
         } catch (e: Exception) {

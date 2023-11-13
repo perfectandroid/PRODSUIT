@@ -76,7 +76,10 @@ class ServiceNewListReportAdapter (internal var context: Context, internal var j
                 holder.ll_newList!!.setTag(position)
                 holder.ll_newList!!.setOnClickListener(View.OnClickListener {
                     Log.e(TAG,"serviceReportClick   5091")
-                    clickListener!!.onClick(position, "serviceReportClick")
+                    clickListener!!.onClick(
+                        position,
+                        "serviceReportClick"
+                    )
                 })
 
 

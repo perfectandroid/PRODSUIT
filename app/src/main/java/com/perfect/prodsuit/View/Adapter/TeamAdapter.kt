@@ -40,7 +40,10 @@ class TeamAdapter (internal var context: Context, internal var jsonArray: JSONAr
 
                 holder.llTeam!!.setTag(position)
                 holder.llTeam!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "teamClick")
+                    clickListener!!.onClick(
+                        position,
+                        "teamClick"
+                    )
                 })
             }
         } catch (e: Exception) {

@@ -45,7 +45,10 @@ class AgendaActionTypeAdapter (internal var context: Context, internal var jsonA
 //                }
                 holder.llactionType!!.setTag(position)
                 holder.llactionType!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "agendaactiontype")
+                    clickListener!!.onClick(
+                        position,
+                        "agendaactiontype"
+                    )
                 })
             }
         } catch (e: Exception) {

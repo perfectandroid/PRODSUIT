@@ -41,7 +41,10 @@ class FinancePlanTypeAdapter (internal var context: Context, internal var jsonAr
 
                 holder.llFinancePlan!!.setTag(position)
                 holder.llFinancePlan!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "FinancePlanClick")
+                    clickListener!!.onClick(
+                        position,
+                        "FinancePlanClick"
+                    )
                 })
             }
         } catch (e: Exception) {

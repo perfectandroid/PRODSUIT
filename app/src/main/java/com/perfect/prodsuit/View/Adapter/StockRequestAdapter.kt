@@ -44,7 +44,10 @@ class StockRequestAdapter (internal var context: Context, internal var jsonArray
 
                 holder.llstockrequest!!.setTag(position)
                 holder.llstockrequest!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "stockrequest")
+                    clickListener!!.onClick(
+                        position,
+                        "stockrequest"
+                    )
                 })
 
 

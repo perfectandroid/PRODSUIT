@@ -40,7 +40,10 @@ class ReasonAdapter (internal var context: Context, internal var jsonArray: JSON
 
                 holder.llreason!!.setTag(position)
                 holder.llreason!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "deletereasons")
+                    clickListener!!.onClick(
+                        position,
+                        "deletereasons"
+                    )
                 })
             }
         } catch (e: Exception) {

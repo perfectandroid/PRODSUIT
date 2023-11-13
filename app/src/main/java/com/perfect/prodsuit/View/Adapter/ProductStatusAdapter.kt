@@ -45,7 +45,10 @@ class ProductStatusAdapter(internal var context: Context, internal var jsonArray
 //                }
                 holder.llprodstatus!!.setTag(position)
                 holder.llprodstatus!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "prodstatus")
+                    clickListener!!.onClick(
+                        position,
+                        "prodstatus"
+                    )
                 })
             }
         } catch (e: Exception) {
