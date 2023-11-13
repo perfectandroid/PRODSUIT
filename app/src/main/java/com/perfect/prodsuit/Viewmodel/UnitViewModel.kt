@@ -12,8 +12,8 @@ class UnitViewModel : ViewModel()  {
 
     var uniteData: MutableLiveData<UnitModel>? = null
 
-    fun getUnit(context: Context) : LiveData<UnitModel>? {
-        uniteData = UnitRepository.getServicesApiCall(context)
+    fun getUnit(context: Context,ReqMode : String) : LiveData<UnitModel>? {
+        uniteData = UnitRepository.getServicesApiCall(context,ReqMode)
         return uniteData
     }
 

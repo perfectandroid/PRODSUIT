@@ -498,4 +498,13 @@
     <color name="color_chat_op">#565B75</color>
     <color name="bkdashtile">#565B75</color>
 
+    <color name="color_site_tab_10">#3B6561</color>
+    <color name="color_site_tab_11">#A0AEAC</color>
+
+    <color name="color_site_tab_20">#F09959</color>
+    <color name="color_site_tab_21">#B5AEA9</color>
+
+    <color name="color_site_tab_30">#404788</color>
+    <color name="color_site_tab_31">#9698A6</color>
+
 </resources>

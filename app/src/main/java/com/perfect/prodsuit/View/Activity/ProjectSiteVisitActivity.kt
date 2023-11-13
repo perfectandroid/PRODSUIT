@@ -12,7 +12,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -21,23 +20,22 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
-import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.Helper.FullLenghRecyclertview
-import com.perfect.prodsuit.Helper.ItemClickListener
-import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.ModelProjectEmpDetails
+import com.perfect.prodsuit.Helper.*
+import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
@@ -53,7 +51,6 @@ import java.io.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
 
@@ -68,11 +65,14 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private var tv_LeadClick: TextView? = null
     private var tv_EmployeeClick: TextView? = null
     private var tv_MeasurementClick: TextView? = null
+    private var tv_Checklist_Details: TextView? = null
     private var tvv_choosefile: TextView? = null
 
     private var ll_LeadClick: LinearLayout? = null
     private var ll_EmployeeClick: LinearLayout? = null
     private var ll_MeasurementClick: LinearLayout? = null
+    private var ll_Checklist_Details: LinearLayout? = null
+    private var ll_measureShow: LinearLayout? = null
 
     private var tie_LeadNo: TextInputEditText? = null
     private var tie_VisitDate: TextInputEditText? = null
@@ -83,6 +83,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private var tie_InspectionNotes1: TextInputEditText? = null
     private var tie_InspectionNotes2: TextInputEditText? = null
     private var tie_CustomerNotes: TextInputEditText? = null
+    private var tie_InspectionCharge: TextInputEditText? = null
     private var tie_Value: TextInputEditText? = null
     private var tie_Remarks: TextInputEditText? = null
     private var tie_Othercharges: TextInputEditText? = null
@@ -109,17 +110,23 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
     private var til_WorkType: TextInputLayout? = null
     private var til_MeasurementType: TextInputLayout? = null
+    private var til_Value: TextInputLayout? = null
     private var til_Unit: TextInputLayout? = null
 
     private var img_EmpAdd: ImageView? = null
     private var img_EmpRefresh: ImageView? = null
 
+    private var img_MeasureAdd: ImageView? = null
+    private var img_MeasureRefresh: ImageView? = null
+
     private var recyEmpDetails: FullLenghRecyclertview? = null
+    private var recy_mesurment: RecyclerView? = null
 
 
     var showLead        = 1
     var showEmployee    = 0
     var showMeasurement = 0
+    var showChecklist   = 0
 
     var showSiteVisit   = 1
     var showLeadInfo    = 0
@@ -135,8 +142,10 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     var otherchargecount = 0
     var imagemodecount   = 0
     var strID_FIELD   = ""
-    var strWorkTypeID   = ""
-    var strID_MeasurementUnit   = ""
+    var WorkTypeID   = ""
+    var ID_MeasurementUnit   = ""
+    var ID_Unit   = ""
+    var strUnit   = ""
 
     lateinit var departmentViewModel: DepartmentViewModel
     lateinit var imagemodeViewModel: ImageModeViewModel
@@ -150,7 +159,6 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     lateinit var otherChargeArrayList : JSONArray
     lateinit var worktypeArrayList : JSONArray
     lateinit var measurementDetailsArrayList : JSONArray
-    lateinit var unitArrayList : JSONArray
     lateinit var departmentSort : JSONArray
     lateinit var leadnoSort : JSONArray
     lateinit var otherchargeSort : JSONArray
@@ -163,7 +171,6 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private var dialogOthercharge : Dialog? = null
     private var dialogWorkType : Dialog? = null
     private var dialogMeasurement : Dialog? = null
-    private var dialogUnit : Dialog? = null
     private var dialogImagemode : Dialog? = null
     private val GALLERY = 1
     private val CAMERA = 2
@@ -192,6 +199,15 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     var recyServiceRole: RecyclerView? = null
 
 
+    lateinit var unitViewModel: UnitViewModel
+    lateinit var unitArrayList : JSONArray
+    private var dialogUnit : Dialog? = null
+
+    var siteCheckcount   = 0
+    lateinit var siteCheckViewModel: SiteCheckViewModel
+
+
+
     var ID_Department : String?= ""
     var ID_Employee : String?= ""
     var ID_EmployeeType : String?= ""
@@ -209,6 +225,13 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
     val modelProjectEmpDetails = ArrayList<ModelProjectEmpDetails>()
 
+    var jsonObj: JSONObject? = null
+    val modelMesurementDetails = ArrayList<ModelMesurementDetails>()
+    var measurementShowAdapter  : MeasurementShowAdapter? = null
+
+    var recy_checklist: RecyclerView? = null
+    var modelProjectCheckList = ArrayList<ModelProjectCheckList>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -225,7 +248,22 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         measurementViewModel = ViewModelProvider(this).get(MeasurementViewModel::class.java)
         imagemodeViewModel = ViewModelProvider(this).get(ImageModeViewModel::class.java)
         otherchargesViewModel = ViewModelProvider(this).get(OtherChargesViewModel::class.java)
+        unitViewModel = ViewModelProvider(this).get(UnitViewModel::class.java)
+        siteCheckViewModel = ViewModelProvider(this).get(SiteCheckViewModel::class.java)
+
         setRegViews()
+
+        var jsonObject: String? = intent.getStringExtra("jsonObject")
+        if (jsonObject.equals("")){
+            Log.e(TAG,"23111   ")
+            tie_LeadNo!!.isEnabled = true
+        }else{
+            Log.e(TAG,"23112   ")
+            jsonObj = JSONObject(jsonObject)
+            tie_LeadNo!!.setText(""+jsonObj!!.getString("Lead_No"))
+            tie_LeadNo!!.isEnabled = false
+        }
+
     }
 
     private fun setRegViews() {
@@ -239,10 +277,13 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         tv_LeadClick = findViewById(R.id.tv_LeadClick)
         tv_EmployeeClick = findViewById(R.id.tv_EmployeeClick)
         tv_MeasurementClick = findViewById(R.id.tv_MeasurementClick)
+        tv_Checklist_Details = findViewById(R.id.tv_Checklist_Details)
 
         ll_LeadClick = findViewById(R.id.ll_LeadClick)
         ll_EmployeeClick = findViewById(R.id.ll_EmployeeClick)
         ll_MeasurementClick = findViewById(R.id.ll_MeasurementClick)
+        ll_Checklist_Details = findViewById(R.id.ll_Checklist_Details)
+        ll_measureShow = findViewById(R.id.ll_measureShow)
 
         tie_LeadNo = findViewById(R.id.tie_LeadNo)
         tie_VisitDate = findViewById(R.id.tie_VisitDate)
@@ -258,7 +299,13 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         img_EmpAdd = findViewById(R.id.img_EmpAdd)
         img_EmpRefresh = findViewById(R.id.img_EmpRefresh)
 
+        img_MeasureAdd = findViewById(R.id.img_MeasureAdd)
+        img_MeasureRefresh = findViewById(R.id.img_MeasureRefresh)
+
         recyEmpDetails        = findViewById(R.id.recyEmpDetails)
+        recy_mesurment        = findViewById(R.id.recy_mesurment)
+        recy_checklist        = findViewById(R.id.recy_checklist)
+
         til_LeadNo            = findViewById<TextInputLayout>(R.id.til_LeadNo)
         til_VisitDate         = findViewById<TextInputLayout>(R.id.til_VisitDate)
         til_InspectionNotes1  = findViewById<TextInputLayout>(R.id.til_InspectionNotes1)
@@ -278,6 +325,12 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         btnReset = findViewById(R.id.btnReset)
         btnSubmit = findViewById(R.id.btnSubmit)
         tie_CustomerNotes = findViewById(R.id.tie_CustomerNotes)
+        tie_InspectionCharge = findViewById(R.id.tie_InspectionCharge)
+
+        til_WorkType            = findViewById<TextInputLayout>(R.id.til_WorkType)
+        til_MeasurementType            = findViewById<TextInputLayout>(R.id.til_MeasurementType)
+        til_Value            = findViewById<TextInputLayout>(R.id.til_Value)
+        til_Unit            = findViewById<TextInputLayout>(R.id.til_Unit)
 
 
         tv_SiteVisit!!.setOnClickListener(this)
@@ -287,6 +340,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         tv_LeadClick!!.setOnClickListener(this)
         tv_EmployeeClick!!.setOnClickListener(this)
         tv_MeasurementClick!!.setOnClickListener(this)
+        tv_Checklist_Details!!.setOnClickListener(this)
 
         tie_LeadNo!!.setOnClickListener(this)
         tie_VisitDate!!.setOnClickListener(this)
@@ -307,6 +361,9 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         img_EmpAdd!!.setOnClickListener(this)
         img_EmpRefresh!!.setOnClickListener(this)
 
+        img_MeasureAdd!!.setOnClickListener(this)
+        img_MeasureRefresh!!.setOnClickListener(this)
+
         til_LeadNo!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_VisitDate!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_InspectionNotes1!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
@@ -314,12 +371,150 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         til_Employee!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_EmployeeType!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
 
+
+        til_WorkType!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_MeasurementType!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_Value!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_Unit!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+
         hideShowTab()
         expandTab()
+
+        DecimelFormatters.setDecimelPlace(tie_InspectionCharge!!)
+        DecimelFormatters.setDecimelPlace(tie_Value!!)
+
+        onTextChangedValues()
+
         getCurrentDate()
       //  setIconinDrawable()
 //        getCustomer()
 
+    }
+
+    private fun onTextChangedValues() {
+        tie_LeadNo!!.addTextChangedListener(watcher)
+        tie_VisitDate!!.addTextChangedListener(watcher)
+        tie_InspectionNotes1!!.addTextChangedListener(watcher)
+
+        tie_Department!!.addTextChangedListener(watcher)
+        tie_Employee!!.addTextChangedListener(watcher)
+        tie_EmployeeType!!.addTextChangedListener(watcher)
+
+        tie_WorkType!!.addTextChangedListener(watcher)
+        tie_MeasurementType!!.addTextChangedListener(watcher)
+        tie_Value!!.addTextChangedListener(watcher)
+        tie_Unit!!.addTextChangedListener(watcher)
+
+    }
+
+    var watcher: TextWatcher = object : TextWatcher {
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            //YOUR CODE
+            val outputedText = s.toString()
+            Log.e(TAG,"28301    "+outputedText)
+
+        }
+
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            //YOUR CODE
+        }
+
+        override fun afterTextChanged(editable: Editable) {
+            Log.e(TAG,"28302    ")
+
+            when {
+                editable === tie_LeadNo!!.editableText -> {
+                    Log.e(TAG,"283021    ")
+                    if (tie_LeadNo!!.text.toString().equals("")){
+                        til_LeadNo!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_LeadNo!!.isErrorEnabled = false
+                        til_LeadNo!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+
+                }
+                editable === tie_VisitDate!!.editableText -> {
+                    Log.e(TAG,"283021    ")
+                    if (tie_VisitDate!!.text.toString().equals("")){
+                        til_VisitDate!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_VisitDate!!.isErrorEnabled = false
+                        til_VisitDate!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+
+                }
+                editable === tie_InspectionNotes1!!.editableText -> {
+                    if (tie_InspectionNotes1!!.text.toString().equals("")){
+                        til_InspectionNotes1!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_InspectionNotes1!!.isErrorEnabled = false
+                        til_InspectionNotes1!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+
+                editable === tie_Department!!.editableText -> {
+                    if (tie_Department!!.text.toString().equals("")){
+                        til_Department!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Department!!.isErrorEnabled = false
+                        til_Department!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+
+                editable === tie_Employee!!.editableText -> {
+                    if (tie_Employee!!.text.toString().equals("")){
+                        til_Employee!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Employee!!.isErrorEnabled = false
+                        til_Employee!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+
+                editable === tie_EmployeeType!!.editableText -> {
+                    if (tie_EmployeeType!!.text.toString().equals("")){
+                        til_EmployeeType!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_EmployeeType!!.isErrorEnabled = false
+                        til_EmployeeType!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+
+                editable === tie_WorkType!!.editableText -> {
+                    if (tie_WorkType!!.text.toString().equals("")){
+                        til_WorkType!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_WorkType!!.isErrorEnabled = false
+                        til_WorkType!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+                editable === tie_MeasurementType!!.editableText -> {
+                    if (tie_MeasurementType!!.text.toString().equals("")){
+                        til_MeasurementType!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_MeasurementType!!.isErrorEnabled = false
+                        til_MeasurementType!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+                editable === tie_Value!!.editableText -> {
+                    if (tie_Value!!.text.toString().equals("")){
+                        til_Value!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Value!!.isErrorEnabled = false
+                        til_Value!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+                editable === tie_Unit!!.editableText -> {
+                    if (tie_Unit!!.text.toString().equals("")){
+                        til_Unit!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Unit!!.isErrorEnabled = false
+                        til_Unit!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+
+            }
+
+        }
     }
 
     private fun customerAccessDetails() {
@@ -418,8 +613,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
 
-            date_Picker1.setMinDate(System.currentTimeMillis());
-            date_Picker1.minDate = System.currentTimeMillis()
+//            date_Picker1.setMinDate(System.currentTimeMillis());
+//            date_Picker1.minDate = System.currentTimeMillis()
 
 
         txtCancel.setOnClickListener {
@@ -541,12 +736,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
               openBottomTime()
             }
 
-            R.id.tv_LeadClick->{
-                showLead = 1
-                showEmployee = 0
-                 showMeasurement = 0
-                expandTab()
-            }
+
             R.id.tie_LeadNo->{
 
                 leadcount = 0
@@ -570,18 +760,43 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 unitcount = 0
                 getUnit()
             }
+
+            R.id.tv_LeadClick->{
+                showLead = 1
+                showEmployee = 0
+                showMeasurement = 0
+                showChecklist = 0
+                expandTab()
+            }
             R.id.tv_EmployeeClick->{
                 showLead = 0
                 showEmployee = 1
                 showMeasurement = 0
+                showChecklist = 0
                 expandTab()
             }
             R.id.tv_MeasurementClick->{
                 showLead = 0
                 showEmployee = 0
                 showMeasurement = 1
+                showChecklist = 0
                 expandTab()
             }
+            R.id.tv_Checklist_Details->{
+                showLead = 0
+                showEmployee = 0
+                showMeasurement = 0
+                showChecklist = 1
+                expandTab()
+
+                if (modelProjectCheckList.size == 0){
+                    siteCheckcount = 0
+                    getCheckedListData()
+                }
+
+            }
+
+
 
             R.id.tie_Department->{
                 Config.disableClick(v)
@@ -628,6 +843,33 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
 
             }
+
+            R.id.img_MeasureAdd->{
+
+                Config.Utils.hideSoftKeyBoard(context,v)
+                Config.disableClick(v)
+                validateMeasurment(v)
+
+            }
+
+            R.id.img_MeasureRefresh->{
+
+                updateedit = "0"
+                WorkTypeID   = ""
+                ID_MeasurementUnit     = ""
+                ID_Unit =  ""
+
+                tie_WorkType!!.setText("")
+                tie_MeasurementType!!.setText("")
+                tie_Value!!.setText("")
+                tie_Unit!!.setText("")
+                tie_Remarks!!.setText("")
+
+            }
+
+
+
+
             R.id.tie_Imagemode->{
 
 //                Toast.makeText(applicationContext, "test 2", Toast.LENGTH_LONG).show()
@@ -654,6 +896,87 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         }
     }
 
+    private fun getCheckedListData() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                siteCheckViewModel.getSiteCheck(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (siteCheckcount == 0){
+                                    siteCheckcount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   917771   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("checkDetails")
+                                        var arrayList = jobjt.getJSONArray("checkDetailsList")
+//                                        val gson = GsonBuilder().create()
+                                        val gson = Gson()
+                                        modelProjectCheckList = gson.fromJson(arrayList.toString(),Array<ModelProjectCheckList>::class.java).toList() as ArrayList<ModelProjectCheckList>
+//                                        siteCheckViewModel!!.add(SiteCheckViewModel(jsonObject.getString("ID_Type"),jsonObject.getString("Type_Name"), "","","0.00", "0.00",false))
+
+                                        Log.e(TAG,"917772   "+modelProjectCheckList.size)
+                                        Log.e(TAG,"917772   "+modelProjectCheckList[0].Label_Name)
+                                       // Log.e(TAG,"917772   "+Model[0].subArray[0].Label_Name)
+
+                                        if (modelProjectCheckList.size > 0){
+                                            val expandableListView: ExpandableListView = findViewById(R.id.expandableListView)
+                                            val adapter = SiteCheckListAdapter(this@ProjectSiteVisitActivity, modelProjectCheckList) // Provide your data here
+                                            expandableListView.setAdapter(adapter)
+                                            expandableListView.setGroupIndicator(resources.getDrawable(R.drawable.transparent_drawable))
+                                            expandableListView.setDividerHeight(0)
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectSiteVisitActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+
     private fun clearData(){
 
         val sdf = SimpleDateFormat("dd-MM-yyyy")
@@ -678,6 +1001,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         tie_InspectionNotes1!!.setText("")
         tie_InspectionNotes2!!.setText("")
         tie_CustomerNotes!!.setText("")
+        tie_InspectionCharge!!.setText("")
 
         tie_Department!!.setText("")
         tie_Employee!!.setText("")
@@ -749,6 +1073,115 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
             Log.e(TAG, "Exception 456  " + e.toString())
         }
+    }
+
+    private fun validateMeasurment(v: View) {
+
+        strUnit = tie_Value!!.text.toString()
+        var WorkType = tie_WorkType!!.text.toString()
+        var MeasurementType = tie_MeasurementType!!.text.toString()
+        var Value = tie_Value!!.text.toString()
+        var Unit = tie_Unit!!.text.toString()
+        var Remarks = tie_Remarks!!.text.toString()
+        if (strUnit.equals("") || strUnit.equals(".")){
+            strUnit = "0.00"
+        }
+
+        if (WorkTypeID.equals("")){
+            Config.snackBars(context,v,"Select Work Type")
+        }
+        else if (ID_MeasurementUnit.equals("")){
+            Config.snackBars(context,v,"Select Measurement Type")
+        }
+        else if (strUnit.toFloat() <= 0){
+            Config.snackBars(context,v,"Please Enter Measurement Value")
+        }
+        else if (ID_Unit.equals("")){
+            Config.snackBars(context,v,"Select Unit")
+        }
+        else{
+
+            if (updateedit!!.equals("0")){
+                var hasCheck =  hasMeasurement(modelMesurementDetails!!,WorkTypeID,ID_MeasurementUnit)
+                if (hasCheck){
+                    modelMesurementDetails!!.add(ModelMesurementDetails(WorkTypeID, WorkType,ID_MeasurementUnit,MeasurementType,Value,ID_Unit,Unit,Remarks))
+
+                    updateedit = "0"
+                    WorkTypeID   = ""
+                    ID_MeasurementUnit     = ""
+                    ID_Unit =  ""
+
+                    tie_WorkType!!.setText("")
+                    tie_MeasurementType!!.setText("")
+                    tie_Value!!.setText("")
+                    tie_Unit!!.setText("")
+                    tie_Remarks!!.setText("")
+
+                    if (modelMesurementDetails.size> 0){
+                        ll_measureShow!!.visibility = View.VISIBLE
+                        val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
+                        recy_mesurment!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
+                        measurementShowAdapter = MeasurementShowAdapter(this@ProjectSiteVisitActivity,modelMesurementDetails)
+                        recy_mesurment!!.adapter = measurementShowAdapter
+                        measurementShowAdapter!!.setClickListener(this@ProjectSiteVisitActivity)
+                    }
+                }
+                else{
+                    Config.snackBars(context,v,"Duplicate entry found")
+                }
+            }
+            else if (updateedit!!.equals("1")){
+
+                var hasCheck =  hasMeasurement(modelMesurementDetails!!,WorkTypeID,ID_MeasurementUnit)
+                if (hasCheck){
+
+
+                    updateedit = "0"
+                    WorkTypeID   = ""
+                    ID_MeasurementUnit     = ""
+                    ID_Unit =  ""
+
+                    tie_WorkType!!.setText("")
+                    tie_MeasurementType!!.setText("")
+                    tie_Value!!.setText("")
+                    tie_Unit!!.setText("")
+                    tie_Remarks!!.setText("")
+
+                    var empModel = modelMesurementDetails[modelPosition!!]
+                    empModel.WorkTypeID = WorkTypeID
+                    empModel.WorkType = WorkType
+                    empModel.ID_MeasurementUnit = ID_MeasurementUnit
+                    empModel.MeasurementUnit = MeasurementType
+                    empModel.Value = Value
+                    empModel.ID_Unit = ID_Unit
+                    empModel.Unit = Unit
+                    empModel.Remarks = Remarks
+
+                    measurementShowAdapter!!.notifyItemChanged(modelPosition!!)
+                }else{
+                    Config.snackBars(context,v,"Duplicate entry found")
+                }
+
+
+
+
+
+
+            }
+//            WorkTypeID, WorkType,ID_MeasurementUnit,MeasurementType,Value,ID_Unit,Unit,Remarks
+
+        }
+    }
+
+    private fun hasMeasurement(modelMesurementDetails: ArrayList<ModelMesurementDetails>, WorkTypeID: String, ID_MeasurementUnit: String): Boolean {
+        var isChecked = true
+        for (i in 0 until modelMesurementDetails.size) {
+            if (modelMesurementDetails.get(i).WorkTypeID.equals(WorkTypeID) && modelMesurementDetails.get(i).ID_MeasurementUnit.equals(ID_MeasurementUnit)){
+                isChecked = false
+            }
+        }
+
+        return isChecked
     }
 
     private fun validateEmpAdd(v :  View) {
@@ -880,6 +1313,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         ll_LeadClick!!.visibility = View.GONE
         ll_EmployeeClick!!.visibility = View.GONE
         ll_MeasurementClick!!.visibility = View.GONE
+        ll_Checklist_Details!!.visibility = View.GONE
 
         if (showLead == 1){
             ll_LeadClick!!.visibility = View.VISIBLE
@@ -890,6 +1324,10 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         if (showMeasurement == 1){
             ll_MeasurementClick!!.visibility = View.VISIBLE
         }
+        if (showChecklist == 1){
+            ll_Checklist_Details!!.visibility = View.VISIBLE
+        }
+
     }
 
     private fun getLeadNo() {
@@ -1109,11 +1547,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 otherchargeSort.put(jsonObject)
             }
 
-            val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
-            recyOtherCharge!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-            val adapter = OtherChargeAdapter(this@ProjectSiteVisitActivity, otherchargeSort)
-            recyOtherCharge!!.adapter = adapter
-            adapter.setClickListener(this@ProjectSiteVisitActivity)
+//            val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
+//            recyOtherCharge!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            val adapter = OtherChargeAdapter(this@ProjectSiteVisitActivity, otherchargeSort)
+//            recyOtherCharge!!.adapter = adapter
+//            adapter.setClickListener(this@ProjectSiteVisitActivity)
 
             etsearch!!.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
@@ -1138,10 +1576,10 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                         }
                     }
 
-                    Log.e(TAG,"otherchargeSort               7103    "+otherchargeSort)
-                    val adapter = OtherChargeAdapter(this@ProjectSiteVisitActivity, otherchargeSort)
-                    recyOtherCharge!!.adapter = adapter
-                    adapter.setClickListener(this@ProjectSiteVisitActivity)
+//                    Log.e(TAG,"otherchargeSort               7103    "+otherchargeSort)
+//                    val adapter = OtherChargeAdapter(this@ProjectSiteVisitActivity, otherchargeSort)
+//                    recyOtherCharge!!.adapter = adapter
+//                    adapter.setClickListener(this@ProjectSiteVisitActivity)
                 }
             })
 
@@ -1680,7 +2118,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     }
 
     private fun getMeasurementDetails() {
-        // var leadInfo = 0
+         var ReqMode = "5"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1689,7 +2127,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                measurementViewModel.getMeasurement(this)!!.observe(
+                measurementViewModel.getMeasurement(this,ReqMode!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -1810,7 +2248,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     }
 
     private fun getUnit() {
-        // var leadInfo = 0
+         var ReqMode = "2"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1819,7 +2257,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                measurementViewModel.getMeasurement(this)!!.observe(
+                unitViewModel.getUnit(this,ReqMode!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -1833,8 +2271,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   114455   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("DepartmentDetails")
-                                        unitArrayList = jobjt.getJSONArray("DepartmentDetailsList")
+                                        val jobjt = jObject.getJSONObject("UnitList")
+                                        unitArrayList = jobjt.getJSONArray("UnitListDetails")
                                         if (unitArrayList.length()>0){
 
                                             unitPopup(unitArrayList)
@@ -1889,48 +2327,48 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             recyUnit = dialogUnit!! .findViewById(R.id.recyUnit) as RecyclerView
             val etsearch = dialogUnit!! .findViewById(R.id.etsearch) as EditText
 
-            unitSort = JSONArray()
-            for (k in 0 until unitArrayList.length()) {
-                val jsonObject = unitArrayList.getJSONObject(k)
-                // reportNamesort.put(k,jsonObject)
-                unitSort.put(jsonObject)
-            }
+//            unitSort = JSONArray()
+//            for (k in 0 until unitArrayList.length()) {
+//                val jsonObject = unitArrayList.getJSONObject(k)
+//                // reportNamesort.put(k,jsonObject)
+//                unitSort.put(jsonObject)
+//            }
 
             val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
             recyUnit!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-            val adapter = UnitAdapter(this@ProjectSiteVisitActivity, unitSort)
+            val adapter = UnitAdapter(this@ProjectSiteVisitActivity, unitArrayList)
             recyUnit!!.adapter = adapter
             adapter.setClickListener(this@ProjectSiteVisitActivity)
 
-            etsearch!!.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(p0: Editable?) {
-                }
-
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                }
-
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-                    //  list_view!!.setVisibility(View.VISIBLE)
-                    val textlength = etsearch!!.text.length
-                    unitSort = JSONArray()
-
-                    for (k in 0 until unitArrayList.length()) {
-                        val jsonObject = unitArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("DeptName").length) {
-                            if (jsonObject.getString("DeptName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
-                                unitSort.put(jsonObject)
-                            }
-
-                        }
-                    }
-
-                    Log.e(TAG,"unitSort               7103    "+unitSort)
-                    val adapter = UnitAdapter(this@ProjectSiteVisitActivity, unitSort)
-                    recyUnit!!.adapter = adapter
-                    adapter.setClickListener(this@ProjectSiteVisitActivity)
-                }
-            })
+//            etsearch!!.addTextChangedListener(object : TextWatcher {
+//                override fun afterTextChanged(p0: Editable?) {
+//                }
+//
+//                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                }
+//
+//                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//
+//                    //  list_view!!.setVisibility(View.VISIBLE)
+//                    val textlength = etsearch!!.text.length
+//                    unitSort = JSONArray()
+//
+//                    for (k in 0 until unitArrayList.length()) {
+//                        val jsonObject = unitArrayList.getJSONObject(k)
+//                        if (textlength <= jsonObject.getString("DeptName").length) {
+//                            if (jsonObject.getString("DeptName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+//                                unitSort.put(jsonObject)
+//                            }
+//
+//                        }
+//                    }
+//
+//                    Log.e(TAG,"unitSort               7103    "+unitSort)
+//                    val adapter = UnitAdapter(this@ProjectSiteVisitActivity, unitSort)
+//                    recyUnit!!.adapter = adapter
+//                    adapter.setClickListener(this@ProjectSiteVisitActivity)
+//                }
+//            })
 
             dialogUnit!!.show()
             dialogUnit!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -2329,16 +2767,99 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
             Log.e(TAG,"WorkType   "+jsonObject.getString("WorkType"))
             tie_WorkType!!.setText(jsonObject.getString("WorkType"))
-            strWorkTypeID = jsonObject.getString("WorkTypeID")
+            WorkTypeID = jsonObject.getString("WorkTypeID")
 
         }
+
         if (data.equals("MeasurementUnitClick")){
             dialogMeasurement!!.dismiss()
             val jsonObject = measurementSort.getJSONObject(position)
 
-            Log.e(TAG,"MeasurementUnit   "+jsonObject.getString("MeasurementUnit"))
-            tie_MeasurementType!!.setText(jsonObject.getString("MeasurementUnit"))
-            strID_MeasurementUnit = jsonObject.getString("ID_MeasurementUnit")
+            Log.e(TAG,"MeasurementUnit   "+jsonObject.getString("MeasurementType"))
+            tie_MeasurementType!!.setText(jsonObject.getString("MeasurementType"))
+            ID_MeasurementUnit = jsonObject.getString("MeasurementTypeID")
+
+        }
+
+        if (data.equals("unitClick")){
+            dialogUnit!!.dismiss()
+            val jsonObject = unitArrayList.getJSONObject(position)
+
+            Log.e(TAG,"unitClick   "+jsonObject.getString("MeasurementUnit"))
+            tie_Unit!!.setText(jsonObject.getString("MeasurementUnit"))
+            ID_Unit = jsonObject.getString("MeasurementUnitID")
+
+
+        }
+
+        if (data.equals("editMeasureClick")) {
+            try {
+                modelPosition = position
+                updateedit = "1"
+
+                WorkTypeID   = modelMesurementDetails.get(position).WorkTypeID
+                ID_MeasurementUnit     = modelMesurementDetails.get(position).ID_MeasurementUnit
+                ID_Unit =  modelMesurementDetails.get(position).Unit
+
+                tie_WorkType!!.setText(modelMesurementDetails.get(position).WorkType)
+                tie_MeasurementType!!.setText(modelMesurementDetails.get(position).MeasurementUnit)
+                tie_Value!!.setText(modelMesurementDetails.get(position).Value)
+                tie_Unit!!.setText(modelMesurementDetails.get(position).Unit)
+                tie_Remarks!!.setText(modelMesurementDetails.get(position).Remarks)
+
+
+            } catch (e: Exception) {
+
+            }
+        }
+
+        if (data.equals("deleteMeasureClick")) {
+
+            try {
+                val dialog = BottomSheetDialog(this)
+                val view = layoutInflater.inflate(R.layout.alert_delete, null)
+
+                val btnNo = view.findViewById<Button>(R.id.btn_No)
+                val btnYes = view.findViewById<Button>(R.id.btn_Yes)
+                val textid1 = view.findViewById<TextView>(R.id.textid1)
+
+                textid1!!.setText("Do you want to delete this Measurement?")
+                btnNo.setOnClickListener {
+                    dialog .dismiss()
+//                chipNavigationBar!!.setItemSelected(R.id.home, true)
+                }
+                btnYes.setOnClickListener {
+//                finish()
+
+                    updateedit = "0"
+                    WorkTypeID   = ""
+                    ID_MeasurementUnit     = ""
+                    ID_Unit =  ""
+
+                    tie_WorkType!!.setText("")
+                    tie_MeasurementType!!.setText("")
+                    tie_Value!!.setText("")
+                    tie_Unit!!.setText("")
+                    tie_Remarks!!.setText("")
+
+
+                    modelMesurementDetails.removeAt(position)
+                    measurementShowAdapter!!.notifyItemRemoved(position)
+
+                    if (modelMesurementDetails.size <= 0){
+                        ll_measureShow!!.visibility = View.GONE
+                    }
+
+                    dialog.dismiss()
+
+                }
+                dialog.setCancelable(true)
+                dialog!!.setContentView(view)
+
+                dialog.show()
+            }catch (e : Exception){
+
+            }
 
         }
 
@@ -2365,6 +2886,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         }
         if (data.equals("deleteArrayList")) {
 
+
+
             val dialog = BottomSheetDialog(this)
             val view = layoutInflater.inflate(R.layout.alert_delete, null)
 
@@ -2379,6 +2902,17 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             }
             btnYes.setOnClickListener {
 //                finish()
+
+                updateedit = "0"
+                ID_Department = ""
+                tie_Department!!.setText("")
+
+                ID_Employee = ""
+                tie_Employee!!.setText("")
+
+                ID_EmployeeType = ""
+                tie_EmployeeType!!.setText("")
+
                 modelProjectEmpDetails.removeAt(position)
                 val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
                 recyEmpDetails!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))

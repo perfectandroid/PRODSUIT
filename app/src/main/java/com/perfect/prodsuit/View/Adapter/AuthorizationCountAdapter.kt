@@ -5,25 +5,25 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.transition.Hold
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Model.ModuleWiseExpandModel
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class AuthorizationCountAdapter(internal var context: Context, internal var jsonObjct: JSONObject):
+class AuthorizationCountAdapter(internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
 
     internal val TAG : String = "AccountDetailAdapter"
-    internal var jsonObj: JSONArray? = null
+    internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
-    internal var rcyexpand: RecyclerView? = null
     var row_index: Int = 0
+    var pos = -1
+//    var detailArray = ""
+    var detailArray = JSONArray()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
@@ -36,34 +36,50 @@ class AuthorizationCountAdapter(internal var context: Context, internal var json
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
-//            jsonObject = jsonArray.getJSONObject(position)
-//            jsonObj = jsonObjct.getJSONArray()
+            var jsonObject = jsonArray.getJSONObject(position)
+            Log.e(TAG,"dddddcheck  "+jsonObject)
+
+                if (holder is MainViewHolder) {
+                    val keys = jsonObject!!.keys()
+//                    Log.e(TAG,"JSON_KEY  1149   :  "+ keys.hasNext() )
+//                    Log.e(TAG,"JSON_KEY  1147   :  "+ keys.next() )
+
+//                    holder.rcyexpand.visibility = View.VISIBLE
+                    Log.e(TAG,"clickk 47471   :  "+position+" "+pos )
+                    if(position == pos){
+                        holder.rcyexpand.visibility = View.VISIBLE
+                    }else{
+                        holder.rcyexpand.visibility = View.GONE
+                    }
+
+                    while (keys.hasNext()) {
+                        val key = keys.next()
+                    Log.e(TAG,"JSON_KEY  1141   :  "+ key )
+                        holder.txt_labelName.text = key
 
 
-            Log.e(TAG,"checckkkk  "+jsonObjct)
-            if (holder is MainViewHolder) {
-//                holder.txtAccount.text  = jsonObj!!.getString("name")
-//                Log.e(TAG,"onBindViewHolder   1051   ")
-//                val pos = position+1
-//                holder.txtAccount.text        = jsonObj!!.getString("name")
-//                holder.imgIcon.setImageResource(jsonObj!!.getInt("image"))
-//                if (position == row_index){
-//                    holder.llaccontdetail!!.setBackgroundResource(R.drawable.shape_selected)
-//                }else{
-//                    holder.llaccontdetail!!.setBackgroundResource(R.drawable.shape_default)
-//                }
-//                holder.llaccontdetail!!.setTag(position)
-//                holder.llaccontdetail!!.setOnClickListener(View.OnClickListener {
-//                    clickListener!!.onClick(position, jsonObj!!.getString("name"))
-//                    row_index=position;
-//                    notifyDataSetChanged()
-//                })
+                        holder.txt_labelName!!.setTag(position)
+                        holder.txt_labelName!!.setOnClickListener(View.OnClickListener {
+//                        clickListener!!.onClick(position, "LabelClick")
+                            Log.e(TAG,"77777   :  "+position)
+                            Log.e(TAG,"77777ssaa1   :  "+holder.txt_labelName.text.toString())
+                            Log.e(TAG,"77777ssaa2   :  "+jsonArray.getJSONObject(position).getJSONArray(holder.txt_labelName.text.toString()))
 
-//                val lLayout = GridLayoutManager(this@AuthorizationCountAdapter, 1)
-//                rcyexpand!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                val adapter = AuthorizationExpandAdapter(this@AuthorizationCountAdapter, jobjt)
-//                rcyexpand!!.adapter = adapter
-//                adapter.setClickListener(this@AuthorizationCountAdapter)
+                            detailArray = (jsonArray.getJSONObject(position).getJSONArray(holder.txt_labelName.text.toString()))
+                            Log.e(TAG,"ssaadd   :  "+detailArray)
+
+                            val lLayout = GridLayoutManager(context, 1)
+                            holder.rcyexpand!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                            val adapter = AuthorizationExpandAdapter(context, detailArray)
+                            holder.rcyexpand!!.adapter = adapter
+
+                            pos = position
+                            notifyDataSetChanged()
+
+                        })
+                }
+
+
 
             }
         } catch (e: Exception) {
@@ -73,7 +89,7 @@ class AuthorizationCountAdapter(internal var context: Context, internal var json
     }
 
     override fun getItemCount(): Int {
-        return jsonObjct!!.length()
+        return jsonArray.length()
     }
 
     override fun getItemId(position: Int): Long {
@@ -85,17 +101,17 @@ class AuthorizationCountAdapter(internal var context: Context, internal var json
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtAccount        : TextView
-//        internal var rcyexpand         : RecyclerView
+        internal var txt_labelName        : TextView
+        internal var rcyexpand            : RecyclerView
         init {
-            txtAccount               = v.findViewById<View>(R.id.txtAccount) as TextView
-//            rcyexpand                = v.findViewById<View>(R.id.rcyexpand) as RecyclerView
+              txt_labelName               = v.findViewById<View>(R.id.txt_labelName) as TextView
+              rcyexpand                   = v.findViewById<View>(R.id.rcyexpand)     as RecyclerView
         }
     }
 
 
-    fun setClickListener(itemClickListener: ItemClickListener?) {
-        clickListener = itemClickListener
-    }
+//    fun setClickListener(itemClickListener: Context) {
+//        context = itemClickListener
+//    }
 
 }

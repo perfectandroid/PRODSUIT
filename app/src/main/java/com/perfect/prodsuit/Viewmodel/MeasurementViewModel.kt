@@ -11,8 +11,8 @@ class MeasurementViewModel : ViewModel()  {
 
     var measurementData: MutableLiveData<MeasurementTypeModel>? = null
 
-    fun getMeasurement(context: Context) : LiveData<MeasurementTypeModel>? {
-        measurementData = MeasurementTypeRepository.getServicesApiCall(context)
+    fun getMeasurement(context: Context,ReqMode : String) : LiveData<MeasurementTypeModel>? {
+        measurementData = MeasurementTypeRepository.getServicesApiCall(context,ReqMode)
         return measurementData
     }
 

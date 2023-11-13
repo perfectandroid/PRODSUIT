@@ -18,13 +18,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
-import com.perfect.prodsuit.Helper.ParentConstants
 import com.perfect.prodsuit.Model.ChildDataModel
 import com.perfect.prodsuit.Model.ModuleWiseExpandModel
-import com.perfect.prodsuit.Model.ServiceDetailsFullListModel
-import com.perfect.prodsuit.Model.ServiceDetailsSubListModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.ApproveAdapter
 import com.perfect.prodsuit.View.Adapter.AuthorizationCountAdapter
 import com.perfect.prodsuit.View.Adapter.AuthorizationMixedAdapter
 import com.perfect.prodsuit.Viewmodel.ApprovalViewModel
@@ -44,8 +40,9 @@ class AuthorizationMiniDashboardActivity : AppCompatActivity(), View.OnClickList
 
     internal var recycAuthMini: RecyclerView? = null
     lateinit var authorizationMixedViewModel: AuthorizationMixedViewModel
-    lateinit var authMixArrayList: JSONArray
+//    lateinit var authMixArrayList: JSONArray
     lateinit var authChildArrayList: JSONArray
+    var authMixArrayList = JSONArray()
     val modulewiseExpandModel  = ArrayList<ModuleWiseExpandModel>()
     var subList : MutableList<ChildDataModel> = ArrayList()
 //    var subList                : JSONArray
@@ -91,20 +88,25 @@ class AuthorizationMiniDashboardActivity : AppCompatActivity(), View.OnClickList
                                     Log.e(TAG, "msg   760000   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
-                                        val jobjt = jObject.getJSONObject("AuthorizationDataList")
-//                                        authMixArrayList = jobjt.getJSONArray("ListData")
-                                        Log.e(TAG, "jobjt   760000   " + jobjt)
+                                        val jobjt = jObject.getJSONObject("AuthorizationList")
+                                        authMixArrayList = jobjt.getJSONArray("ListData")
+                                        Log.e(TAG, "jobjt   760000 1   " + jobjt)
 
+//                                        authMixArrayList.put(jobjt)
 //                                        Log.e(TAG, "authMixArrayList   999101   " +authMixArrayList.getJSONObject())
+//                                        if (authMixArrayList.length()> 0){
+                                            Log.e(TAG, "authMixArrayList 140001  " + authMixArrayList)
 
-//                                        if (jobjt.length()> 0){
-//
-//
-//                                            val lLayout = GridLayoutManager(this@AuthorizationMiniDashboardActivity, 1)
-//                                            recycAuthMini!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                            val adapter = AuthorizationCountAdapter(this@AuthorizationMiniDashboardActivity, jobjt)
-//                                            recycAuthMini!!.adapter = adapter
+//                                            for (i in 0 until jobjt.length()) {
+//                                            var jsonObject = authMixArrayList.getJSONObject(i)
+
+                                            val lLayout = GridLayoutManager(this@AuthorizationMiniDashboardActivity, 1)
+                                            recycAuthMini!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            val adapter = AuthorizationCountAdapter(this@AuthorizationMiniDashboardActivity, authMixArrayList)
+                                            recycAuthMini!!.adapter = adapter
 //                                            adapter.setClickListener(this@AuthorizationMiniDashboardActivity)
+
+
 //                                        }
 
 //                                       for (i in 0 until authMixArrayList.length()) {
@@ -112,15 +114,15 @@ class AuthorizationMiniDashboardActivity : AppCompatActivity(), View.OnClickList
 //
 //                                            Log.e(TAG," authMixArrayList  "+jsonObject)
 //                                            val keys = jsonObject!!.keys()
-//
+////
 //                                            while (keys.hasNext()) {
 //                                                val key = keys.next()
 //                                                Log.e(TAG,"JSON_KEY  114   :  "+ key )
-////                                                Log.e(TAG,"JSON_KEY  116   :  "+ jsonObject.getJSONArray(key).getJSONObject(i).getString("Action"))
+//                                                Log.e(TAG,"JSON_KEY  116   :  "+ jsonObject.getJSONArray(key).getJSONObject(i).getString("Action"))
 //
-////                                                subList = jsonObject.getJSONArray(key)
-////                                                Log.e(TAG,"authChildArrayList  111   :  "+ jsonObject.getJSONArray(key))
-////                                                modulewiseExpandModel!!.add(ModuleWiseExpandModel(key, ParentConstants.PARENT,subList,false))
+//                                                subList = jsonObject.getJSONArray(key)
+//                                                Log.e(TAG,"authChildArrayList  111   :  "+ jsonObject.getJSONArray(key))
+//                                                modulewiseExpandModel!!.add(ModuleWiseExpandModel(key, ParentConstants.PARENT,subList,false))
 //                                            }
 //
 //                                            Log.e(TAG,"JSON_KEY  114 1   :  " )
@@ -163,6 +165,7 @@ class AuthorizationMiniDashboardActivity : AppCompatActivity(), View.OnClickList
                                 "" + Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
+                            Log.e(TAG,"ddd "+e)
                         }
 
                     })

@@ -26,12 +26,12 @@ object MeasurementTypeRepository {
     val MeasurementSetterGetter = MutableLiveData<MeasurementTypeModel>()
     val TAG: String = "MeasurementTypeRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<MeasurementTypeModel> {
-        getMeasureType(context)
+    fun getServicesApiCall(context: Context,ReqMode : String): MutableLiveData<MeasurementTypeModel> {
+        getMeasureType(context,ReqMode)
         return MeasurementSetterGetter
     }
 
-    private fun getMeasureType(context: Context) {
+    private fun getMeasureType(context: Context,ReqMode : String) {
         try {
             MeasurementSetterGetter.value = MeasurementTypeModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -64,11 +64,10 @@ object MeasurementTypeRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("2"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-
 //                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 Log.e(TAG,"MeasurementTypeDetails  78   "+requestObject1)
             } catch (e: Exception) {

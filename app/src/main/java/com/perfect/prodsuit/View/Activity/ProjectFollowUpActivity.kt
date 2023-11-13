@@ -50,6 +50,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     lateinit var currentstatusViewModel      : CurrentStatusViewModel
     lateinit var materialusageStageViewModel : MaterialUsageStageViewModel
     lateinit var materialusageProjectViewModel: MaterialUsageProjectViewModel
+    lateinit var projectFollowupSaveViewModel: ProjectFollowupSaveViewModel
     private var progressDialog    : ProgressDialog?       = null
     private var tie_Project       : TextInputEditText?    = null
     private var tie_Followupdate  : TextInputEditText?    = null
@@ -80,6 +81,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     var strCurrentStatus                                  = ""
     var strStage                                          = ""
     var strRemarks                                        = ""
+    var strReason                                         = ""
     var ID_Project                                        = ""
     var ID_CurrentStatus                                  = ""
     var ID_Stage                                          = ""
@@ -88,6 +90,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     var projectcount                                      = 0
     var stagecount                                        = 0
     var currentcount                                      = 0
+    var savecount                                         = 0
 
     var jsonObj: JSONObject? = null
 
@@ -100,11 +103,15 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         materialusageStageViewModel   = ViewModelProvider(this).get(MaterialUsageStageViewModel::class.java)
         currentstatusViewModel   = ViewModelProvider(this).get(CurrentStatusViewModel::class.java)
         materialusageProjectViewModel   = ViewModelProvider(this).get(MaterialUsageProjectViewModel::class.java)
+        projectFollowupSaveViewModel   = ViewModelProvider(this).get(ProjectFollowupSaveViewModel::class.java)
+
         setRegViews()
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
         ID_Project = jsonObj!!.getString("ID_FIELD")
         tie_Project!!.setText(jsonObj!!.getString("ProjName"))
+
+
     }
 
     private fun setRegViews() {
@@ -143,6 +150,8 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         til_CurrentStatus!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_StatusDate!!.defaultHintTextColor    = ContextCompat.getColorStateList(this,R.color.color_mandatory)
 
+
+        onTextChangedValues()
         getCurrentDate()
 
     }
@@ -177,6 +186,76 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         } catch (e: Exception) {
 
             Log.e(TAG, "strFollowupdate 4582   " + e.toString())
+        }
+    }
+
+    private fun onTextChangedValues() {
+        tie_Project!!.addTextChangedListener(watcher)
+        tie_Followupdate!!.addTextChangedListener(watcher)
+        tie_CurrentStatus!!.addTextChangedListener(watcher)
+        tie_StatusDate!!.addTextChangedListener(watcher)
+
+    }
+
+    var watcher: TextWatcher = object : TextWatcher {
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            //YOUR CODE
+            val outputedText = s.toString()
+            Log.e(TAG,"28301    "+outputedText)
+
+        }
+
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+            //YOUR CODE
+        }
+
+        override fun afterTextChanged(editable: Editable) {
+            Log.e(TAG,"28302    ")
+
+            when {
+                editable === tie_Project!!.editableText -> {
+                    Log.e(TAG,"283021    ")
+                    if (tie_Project!!.text.toString().equals("")){
+                        til_Project!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Project!!.isErrorEnabled = false
+                        til_Project!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+
+                }
+                editable === tie_Followupdate!!.editableText -> {
+                    Log.e(TAG,"283021    ")
+                    if (tie_Followupdate!!.text.toString().equals("")){
+                        til_Followupdate!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Followupdate!!.isErrorEnabled = false
+                        til_Followupdate!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+
+                }
+                editable === tie_CurrentStatus!!.editableText -> {
+                    if (tie_CurrentStatus!!.text.toString().equals("")){
+                        til_CurrentStatus!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_CurrentStatus!!.isErrorEnabled = false
+                        til_CurrentStatus!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+                editable === tie_StatusDate!!.editableText -> {
+                    if (tie_StatusDate!!.text.toString().equals("")){
+                        til_StatusDate!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_StatusDate!!.isErrorEnabled = false
+                        til_StatusDate!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+
+
+                }
+
+
+
+            }
+
         }
     }
 
@@ -301,26 +380,40 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         strFollowupdate = tie_Followupdate!!.text.toString()
         strStage        = tie_CurrentStatus!!.text.toString()
         strCurrentStatus= tie_CurrentStatus!!.text.toString()
+        strCurrentStatus= "0"
         strStatudate    = tie_StatusDate!!.text.toString()
         strRemarks      = tie_Remarks!!.text.toString()
+        strReason       = tie_Reason!!.text.toString()
 
         if (strProject!!.equals("")){
-            Config.snackBars(context, v, "Select Project")
+           // Config.snackBars(context, v, "Select Project")
+            til_Project!!.setError("Select Project")
+            til_Project!!.setErrorIconDrawable(null)
 
         }else if (strFollowupdate!!.equals("")){
-            Config.snackBars(context, v, "Select FollowUp Date")
+           // Config.snackBars(context, v, "Select FollowUp Date")
+            til_Followupdate!!.setError("Select Follow Up date")
+            til_Followupdate!!.setErrorIconDrawable(null)
 
         }else if (strCurrentStatus!!.equals("")){
-            Config.snackBars(context, v, "Select CurrentStatus")
+//            Config.snackBars(context, v, "Select CurrentStatus")
+            til_CurrentStatus!!.setError("Select Current Status")
+            til_CurrentStatus!!.setErrorIconDrawable(null)
 
         }else if (strStatudate!!.equals("")){
-            Config.snackBars(context, v, "Select Statudate")
+           // Config.snackBars(context, v, "Select Statudate")
+            til_StatusDate!!.setError("Select Status Date")
+            til_StatusDate!!.setErrorIconDrawable(null)
 
         }else{
-            Toast.makeText(applicationContext,"hloo",Toast.LENGTH_SHORT).show()
+            //Toast.makeText(applicationContext,"hloo",Toast.LENGTH_SHORT).show()
+                savecount = 0
+                saveProjectFollowUP()
         }
 
     }
+
+
 
     private fun getProject() {
         // var leadInfo = 0
@@ -643,6 +736,72 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                             Toast.makeText(
                                 applicationContext,
                                 ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+
+    private fun saveProjectFollowUP() {
+
+        var UserAction = "1"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                projectFollowupSaveViewModel.saveProjectFollowup(this,UserAction,ID_Project,ID_Stage,strFollowupdate!!,ID_CurrentStatus,strStatudate!!,strReason,strRemarks)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (projectcount == 0){
+                                    projectcount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   77666   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectFollowUpActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+ Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
