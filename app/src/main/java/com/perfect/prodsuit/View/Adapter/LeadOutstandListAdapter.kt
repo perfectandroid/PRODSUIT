@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.ServiceAssignListActivity
-import com.perfect.prodsuit.View.Activity.TileGraphActivity
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -180,7 +179,7 @@ class LeadOutstandListAdapter(
                         position,
                         "ModuleCount"
                     )
-                    jsonObject = jsonArray.getJSONObject(position)
+             /*jsonObject = jsonArray.getJSONObject(position)
                     var submode = jsonObject!!.getString("ModuleMode")
                     var label=jsonObject!!.getString("ModuleName")
                     Log.e(TAG,"Position   "+position+"\n"+submode+"\n"+label)
@@ -188,7 +187,7 @@ class LeadOutstandListAdapter(
                     val i = Intent(context, TileGraphActivity::class.java)
                     i.putExtra("SubMode",submode)
                     i.putExtra("label",label)
-                    context.startActivity(i)
+                    context.startActivity(i)*/
 
                 })
 
