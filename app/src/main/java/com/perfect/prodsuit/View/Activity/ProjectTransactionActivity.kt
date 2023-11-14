@@ -20,6 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
@@ -92,6 +93,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     val modelOtherChargesCalculation = ArrayList<ModelOtherChargesCalculation>()
     private var dialogOtherChargesCalcSheet : Dialog? = null
     private var otherChargeAdapter : OtherChargeAdapter? = null
+    private var taxDetailAdapter : TaxDetailAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -133,6 +135,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         tie_Stage!!.setOnClickListener(this)
         tie_Date!!.setOnClickListener(this)
         tie_OtherCharges!!.setOnClickListener(this)
+
+        DecimelFormatters.setDecimelPlace(tie_OtherCharges!!)
 
         til_Project!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_Date!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.color_mandatory)
@@ -306,6 +310,36 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                 dialogOtherChargesSheet!!.dismiss()
             }
 
+            txt_apply!!.setOnClickListener {
+
+                var otherCharge = 0F
+                for (i in 0 until modelOtherCharges.size) {
+                    if (modelOtherCharges[i].isCalculate){
+                        if (modelOtherCharges[i].OctyIncludeTaxAmount){
+                            if (modelOtherCharges[i].ID_TransType.equals("1")){
+                                // Debit
+                                otherCharge = otherCharge - (modelOtherCharges[i].OctyAmount).toFloat()
+                            }else if (modelOtherCharges[i].ID_TransType.equals("2")){
+                                // Credit
+                                otherCharge = otherCharge + (modelOtherCharges[i].OctyAmount).toFloat()
+                            }
+                        }else{
+                            if (modelOtherCharges[i].ID_TransType.equals("1")){
+                                // Debit
+                                otherCharge = otherCharge - ((modelOtherCharges[i].OctyAmount).toFloat()+(modelOtherCharges[i].OctyTaxAmount).toFloat())
+                            }else if (modelOtherCharges[i].ID_TransType.equals("2")){
+                                // Credit
+                                otherCharge = otherCharge + ((modelOtherCharges[i].OctyAmount).toFloat()+(modelOtherCharges[i].OctyTaxAmount).toFloat())
+                            }
+                        }
+                    }
+                }
+
+                tie_OtherCharges!!.setText(Config.changeTwoDecimel(otherCharge.toString()))
+                dialogOtherChargesSheet!!.dismiss()
+
+            }
+
 
             dialogOtherChargesSheet!!.show()
             val window: Window? = dialogOtherChargesSheet!!.getWindow()
@@ -417,6 +451,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                     empModel.TaxUpto = jsonObject.getString("TaxUpto")
                     empModel.TaxUptoPercentage = jsonObject.getBoolean("TaxUptoPercentage")
                     empModel.Amount = jsonObject.getString("Amount")
+
                 }
 //                val lLayout = GridLayoutManager(this@ProjectTransactionActivity, 1)
 //                recyOtherCalc!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -436,13 +471,16 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                 }
 
 
+
+
             }
 
             val lLayout = GridLayoutManager(this@ProjectTransactionActivity, 1)
             recyOtherCalc!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-            val adapter = TaxDetailAdapter(this@ProjectTransactionActivity, modelOtherChargesCalculation)
-            recyOtherCalc!!.adapter = adapter
-            adapter.setClickListener(this@ProjectTransactionActivity)
+            taxDetailAdapter = TaxDetailAdapter(this@ProjectTransactionActivity, modelOtherChargesCalculation)
+            recyOtherCalc!!.adapter = taxDetailAdapter
+            taxDetailAdapter!!.setClickListener(this@ProjectTransactionActivity)
+
             btnOk.setOnClickListener {
                 var sumOfTax = 0F
                 for (i in 0 until modelOtherChargesCalculation.size) {
@@ -455,6 +493,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
                 Log.e(TAG,"40552     "+sumOfTax)
                 modelOtherCharges[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+
                 otherChargeAdapter!!.notifyItemChanged(otherChargeClickPosition)
                 dialogOtherChargesCalcSheet!!.dismiss()
             }

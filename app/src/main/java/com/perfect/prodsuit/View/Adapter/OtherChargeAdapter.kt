@@ -68,6 +68,12 @@ class OtherChargeAdapter(internal var context: Context, internal var mList: List
                     holder.chk_inclTax!!.isEnabled = true
                 }
 
+                if (empModel.OctyIncludeTaxAmount){
+                    holder.chk_inclTax.isChecked = true
+                }else{
+                    holder.chk_inclTax.isChecked = false
+                }
+
 
                 holder.edt_TransType!!.setOnClickListener {
                     Log.e(TAG,"gridList  58881   "+empModel!!.OctyTransTypeActive)

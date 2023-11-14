@@ -1239,7 +1239,7 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                materialusageProductViewModel.getMaterialProduct(this,ID_Project!!,ID_Stage!!,ID_Team!!)!!.observe(
+                materialusageProductViewModel.getMaterialProduct(this,ID_Project!!,ID_Stage!!,ID_Team!!,ID_Employee)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -1792,6 +1792,17 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
             ID_Employee = "0"
             tie_Employee!!.setText("")
 
+            ID_Product = ""
+            ID_Stock = ""
+            ID_Mode = ""
+
+            tie_Product!!.setText("")
+            tie_Quantity!!.setText("")
+            tie_Mode!!.setText("")
+
+            ll_usage_product!!.visibility = View.GONE
+            modelUsageProduct.clear()
+
         }
         if (data.equals("stageCliik")){
 
@@ -1805,6 +1816,17 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
             ID_Employee = "0"
             tie_Employee!!.setText("")
 
+            ID_Product = ""
+            ID_Stock = ""
+            ID_Mode = ""
+
+            tie_Product!!.setText("")
+            tie_Quantity!!.setText("")
+            tie_Mode!!.setText("")
+
+            ll_usage_product!!.visibility = View.GONE
+            modelUsageProduct.clear()
+
         }
 
         if (data.equals("teamClick")){
@@ -1816,6 +1838,17 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
 
             ID_Employee = "0"
             tie_Employee!!.setText("")
+
+            ID_Product = ""
+            ID_Stock = ""
+            ID_Mode = ""
+
+            tie_Product!!.setText("")
+            tie_Quantity!!.setText("")
+            tie_Mode!!.setText("")
+
+            ll_usage_product!!.visibility = View.GONE
+            modelUsageProduct.clear()
 
         }
 

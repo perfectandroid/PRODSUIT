@@ -11,8 +11,8 @@ class MaterialUsageProductViewModel: ViewModel()  {
 
     var MaterialProductData: MutableLiveData<MaterialProductModel>? = null
 
-    fun getMaterialProduct(context: Context,ID_Project : String,ID_Stage : String,ID_Team : String) : LiveData<MaterialProductModel>? {
-        MaterialProductData = MaterialProductRepository.getServicesApiCall(context,ID_Project,ID_Stage,ID_Team)
+    fun getMaterialProduct(context: Context,ID_Project : String,ID_Stage : String,ID_Team : String,ID_Employee: String) : LiveData<MaterialProductModel>? {
+        MaterialProductData = MaterialProductRepository.getServicesApiCall(context,ID_Project,ID_Stage,ID_Team,ID_Employee)
         return MaterialProductData
     }
 

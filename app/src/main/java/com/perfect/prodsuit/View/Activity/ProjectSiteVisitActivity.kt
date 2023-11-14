@@ -1025,6 +1025,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     }
 
     private fun getCheckedListData() {
+
+        var ReqMode = "119"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1033,7 +1035,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                siteCheckViewModel.getSiteCheck(this)!!.observe(
+                siteCheckViewModel.getSiteCheck(this,ReqMode!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -1055,8 +1057,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 //                                        siteCheckViewModel!!.add(SiteCheckViewModel(jsonObject.getString("ID_Type"),jsonObject.getString("Type_Name"), "","","0.00", "0.00",false))
 
                                         Log.e(TAG,"917772   "+modelProjectCheckList.size)
-                                        Log.e(TAG,"917772   "+modelProjectCheckList[0].Label_Name)
-                                       // Log.e(TAG,"917772   "+Model[0].subArray[0].Label_Name)
+                                        Log.e(TAG,"917772   "+modelProjectCheckList[0].CLTyName)
+
 
                                         if (modelProjectCheckList.size > 0){
                                             val expandableListView: ExpandableListView = findViewById(R.id.expandableListView)
@@ -1260,10 +1262,10 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
             if (obj.is_checked){
 
-                for (objSub in obj.subArray) {
+                for (objSub in obj.SubArrary) {
                     if (objSub.is_checked){
-                        jsonObject.put("ID_Check", obj.ID_Check)
-                        jsonObject.put("ID_CheckSub", objSub.ID_Check)
+                        jsonObject.put("ID_Check", obj.ID_CheckListType)
+                        jsonObject.put("ID_CheckSub", objSub.ID_CheckList)
 
                         saveCheckedDetails.put(jsonObject)
                     }

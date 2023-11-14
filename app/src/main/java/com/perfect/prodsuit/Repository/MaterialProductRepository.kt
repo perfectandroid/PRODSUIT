@@ -26,12 +26,12 @@ object MaterialProductRepository {
     val materialProductSetterGetter = MutableLiveData<MaterialProductModel>()
     val TAG: String = "MaterialProductRepository"
 
-    fun getServicesApiCall(context: Context,ID_Project : String,ID_Stage : String,ID_Team : String): MutableLiveData<MaterialProductModel> {
-        getStage(context,ID_Project,ID_Stage,ID_Team)
+    fun getServicesApiCall(context: Context,ID_Project : String,ID_Stage : String,ID_Team : String,ID_Employee: String): MutableLiveData<MaterialProductModel> {
+        getStage(context,ID_Project,ID_Stage,ID_Team,ID_Employee)
         return materialProductSetterGetter
     }
 
-    private fun getStage(context: Context,ID_Project : String,ID_Stage : String,ID_Team : String) {
+    private fun getStage(context: Context,ID_Project : String,ID_Stage : String,ID_Team : String,ID_Employee: String) {
 
         try {
             materialProductSetterGetter.value = MaterialProductModel("")
@@ -78,7 +78,7 @@ object MaterialProductRepository {
                 requestObject1.put("Critrea1", ProdsuitApplication.encryptStart(ID_Project))
                 requestObject1.put("Critrea2", ProdsuitApplication.encryptStart(ID_Stage))
                 requestObject1.put("Critrea3", ProdsuitApplication.encryptStart(ID_Team))
-                requestObject1.put("Critrea4", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+                requestObject1.put("Critrea4", ProdsuitApplication.encryptStart(ID_Employee))
 
                 Log.e(TAG,"ProductList  78   "+requestObject1)
             } catch (e: Exception) {
