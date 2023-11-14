@@ -138,20 +138,29 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
                 holder.im_edit!!.setTag(position)
                 holder.im_edit!!.setOnClickListener(View.OnClickListener {
                     Config.disableClick(it)
-                    clickListener!!.onClick(position, "ServiceEdit")
+                    clickListener!!.onClick(
+                        position,
+                        "ServiceEdit"
+                    )
                 })
 
                 holder.im_tracker!!.setTag(position)
                 holder.im_tracker!!.setOnClickListener(View.OnClickListener {
                     Config.disableClick(it)
-                    clickListener!!.onClick(position, "ServiceTracker")
+                    clickListener!!.onClick(
+                        position,
+                        "ServiceTracker"
+                    )
                 })
 
 
 
                 holder.llServiceList!!.setTag(position)
                 holder.llServiceList!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "ServiceList")
+                    clickListener!!.onClick(
+                        position,
+                        "ServiceList"
+                    )
                 })
 
 //                val colorAnim: ValueAnimator = ObjectAnimator.ofInt(holder.tv_TimeDue!!, "textColor", Color.RED, Color.BLUE)

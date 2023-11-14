@@ -40,7 +40,10 @@ class ServiceCompanantAdapter (internal var context: Context, internal var jsonA
 
                 holder.ll_Companant!!.setTag(position)
                 holder.ll_Companant!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "componantListClik")
+                    clickListener!!.onClick(
+                        position,
+                        "componantListClik"
+                    )
                 })
             }
         } catch (e: Exception) {

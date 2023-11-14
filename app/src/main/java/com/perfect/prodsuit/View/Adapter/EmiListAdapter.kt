@@ -63,7 +63,10 @@ class EmiListAdapter (internal var context: Context, internal var jsonArray: JSO
 
                 holder.llEmiList!!.setTag(position)
                 holder.llEmiList!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "EmiList")
+                    clickListener!!.onClick(
+                        position,
+                        "EmiList"
+                    )
                 })
             }
         } catch (e: Exception) {

@@ -40,7 +40,10 @@ class CallStatusAdapter (internal var context: Context, internal var jsonArray: 
 
                 holder.llCallStatus!!.setTag(position)
                 holder.llCallStatus!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "callStatus")
+                    clickListener!!.onClick(
+                        position,
+                        "callStatus"
+                    )
                 })
             }
         } catch (e: Exception) {

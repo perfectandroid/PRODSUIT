@@ -57,7 +57,10 @@ class CompanyAdapter (internal var context: Context, internal var jsonArray: JSO
 //                }
                 holder.llCompany!!.setTag(position)
                 holder.llCompany!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "company")
+                    clickListener!!.onClick(
+                        position,
+                        "company"
+                    )
                 })
             }
         } catch (e: Exception) {

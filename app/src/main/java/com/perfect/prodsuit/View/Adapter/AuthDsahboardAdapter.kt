@@ -59,7 +59,10 @@ class AuthDsahboardAdapter (internal var context: Context, internal var jsonArra
 
                 holder.ll_authdash!!.setTag(position)
                 holder.ll_authdash!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "authDashClicks")
+                    clickListener!!.onClick(
+                        position,
+                        "authDashClicks"
+                    )
                 })
 
             }

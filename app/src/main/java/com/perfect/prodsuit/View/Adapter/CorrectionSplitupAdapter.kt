@@ -50,7 +50,10 @@ class CorrectionSplitupAdapter (internal var context: Context, internal var json
 
                 holder.card_main!!.setTag(position)
                 holder.card_main!!.setOnClickListener {
-                    clickListener!!.onClick(position, "correctsplitClick")
+                    clickListener!!.onClick(
+                        position,
+                        "correctsplitClick"
+                    )
                 }
 
             }

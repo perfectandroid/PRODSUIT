@@ -46,7 +46,10 @@ class ServicePriorityAdapter (internal var context: Context, internal var jsonAr
 //                }
                 holder.llservpriority!!.setTag(position)
                 holder.llservpriority!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "servpriority")
+                    clickListener!!.onClick(
+                        position,
+                        "servpriority"
+                    )
                 })
             }
         } catch (e: Exception) {

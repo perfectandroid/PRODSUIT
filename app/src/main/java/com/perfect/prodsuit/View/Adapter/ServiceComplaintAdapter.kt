@@ -40,7 +40,10 @@ class ServiceComplaintAdapter (internal var context: Context, internal var jsonA
 
                 holder.llComplaint!!.setTag(position)
                 holder.llComplaint!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "compalint")
+                    clickListener!!.onClick(
+                        position,
+                        "compalint"
+                    )
                 })
             }
         } catch (e: Exception) {

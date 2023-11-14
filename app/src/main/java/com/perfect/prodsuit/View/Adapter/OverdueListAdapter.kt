@@ -49,7 +49,10 @@ class OverdueListAdapter(internal var context: Context, internal var jsonArray: 
                 holder.txtv_asgndto.text        = jsonObject!!.getString("AssignedTo")
                 holder.llOverDue!!.setTag(position)
                 holder.llOverDue!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "overdue")
+                    clickListener!!.onClick(
+                        position,
+                        "overdue"
+                    )
                 })
             }
         } catch (e: Exception) {

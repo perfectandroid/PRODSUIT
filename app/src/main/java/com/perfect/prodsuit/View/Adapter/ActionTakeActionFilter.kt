@@ -40,7 +40,10 @@ class ActionTakeActionFilter(internal var context: Context, internal var jsonArr
                 holder.txtCompService.text        = jsonObject!!.getString("NxtActnName")
                 holder.llCompService!!.setTag(position)
                 holder.llCompService!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "actionTakenActionFilter")
+                    clickListener!!.onClick(
+                        position,
+                        "actionTakenActionFilter"
+                    )
                 })
             }
         } catch (e: Exception) {

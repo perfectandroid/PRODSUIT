@@ -45,7 +45,10 @@ class ProductPriorityAdapter(internal var context: Context, internal var jsonArr
 //                }
                 holder.llprodpriority!!.setTag(position)
                 holder.llprodpriority!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "prodpriority")
+                    clickListener!!.onClick(
+                        position,
+                        "prodpriority"
+                    )
                 })
             }
         } catch (e: Exception) {

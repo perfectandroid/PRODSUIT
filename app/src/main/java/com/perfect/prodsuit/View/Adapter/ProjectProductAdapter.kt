@@ -53,7 +53,10 @@ class ProjectProductAdapter(internal var context: Context, internal var jsonArra
 
                 holder.llProduct!!.setTag(position)
                 holder.llProduct!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "productClick")
+                    clickListener!!.onClick(
+                        position,
+                        "productClick"
+                    )
                 })
             }
         } catch (e: Exception) {

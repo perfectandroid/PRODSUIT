@@ -49,7 +49,10 @@ class HomeGridAdapter(internal var context: Context, internal var jsonArray: JSO
 
                 holder.ll_homeGrid!!.setTag(position)
                 holder.ll_homeGrid!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "homeGrid")
+                    clickListener!!.onClick(
+                        position,
+                        "homeGrid"
+                    )
                 })
 
             }

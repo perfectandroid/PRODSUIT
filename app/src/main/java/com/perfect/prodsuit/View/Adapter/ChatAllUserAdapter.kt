@@ -62,7 +62,10 @@ class ChatAllUserAdapter (internal var context: Context, internal var mList: Lis
 
                 holder.ll_userlist!!.setTag(position)
                 holder.ll_userlist!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "userAllClicks")
+                    clickListener!!.onClick(
+                        position,
+                        "userAllClicks"
+                    )
 
                 })
 

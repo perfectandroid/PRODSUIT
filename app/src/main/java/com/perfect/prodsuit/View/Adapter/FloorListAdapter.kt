@@ -43,7 +43,10 @@ class FloorListAdapter (internal var context: Context, internal var jsonArray: J
 
                 holder.llfloorlist!!.setTag(position)
                 holder.llfloorlist!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "ProductLocationList")
+                    clickListener!!.onClick(
+                        position,
+                        "ProductLocationList"
+                    )
                 })
             }
         } catch (e: Exception) {

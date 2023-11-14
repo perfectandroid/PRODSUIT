@@ -41,7 +41,10 @@ class PickupDeliveryProductAdapter (internal var context: Context, internal var 
                 holder.txtProduct.text        = jsonObject!!.getString("ProductName")
                 holder.llprodproduct!!.setTag(position)
                 holder.llprodproduct!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "PickupDeliveryProduct")
+                    clickListener!!.onClick(
+                        position,
+                        "PickupDeliveryProduct"
+                    )
                 })
             }
         } catch (e: Exception) {

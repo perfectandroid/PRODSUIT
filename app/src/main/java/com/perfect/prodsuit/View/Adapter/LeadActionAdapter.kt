@@ -40,7 +40,10 @@ class LeadActionAdapter(internal var context: Context, internal var jsonArray: J
                 holder.txtCompService.text        = jsonObject!!.getString("NxtActnName")
                 holder.llCompService!!.setTag(position)
                 holder.llCompService!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "leadActionAdapterClick")
+                    clickListener!!.onClick(
+                        position,
+                        "leadActionAdapterClick"
+                    )
                 })
             }
         } catch (e: Exception) {

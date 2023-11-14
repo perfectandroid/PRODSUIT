@@ -84,7 +84,10 @@ class CorrectionModuleListAdapter (internal var context: Context, internal var j
                 holder.ll_module_list!!.setTag(position)
                 holder.ll_module_list!!.setOnClickListener(View.OnClickListener {
 
-                    clickListener!!.onClick(position, "moduleListClick")
+                    clickListener!!.onClick(
+                        position,
+                        "moduleListClick"
+                    )
 //                    Log.e(TAG,"moduleListClick   "+jsonObject!!.getString("Module_Name"))
                 })
             }

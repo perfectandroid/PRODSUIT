@@ -46,7 +46,10 @@ class BillTypeAdapter (internal var context: Context, internal var jsonArray: JS
 //                }
                 holder.llBillTypes!!.setTag(position)
                 holder.llBillTypes!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "billTypeClicks")
+                    clickListener!!.onClick(
+                        position,
+                        "billTypeClicks"
+                    )
                 })
             }
         } catch (e: Exception) {

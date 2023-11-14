@@ -63,7 +63,10 @@ class ChatUserAdapter (internal var context: Context, internal var jsonArray: JS
 
                 holder.ll_userlist!!.setTag(position)
                 holder.ll_userlist!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "userChatClicks")
+                    clickListener!!.onClick(
+                        position,
+                        "userChatClicks"
+                    )
 
                 })
 

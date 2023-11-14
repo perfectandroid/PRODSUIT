@@ -45,7 +45,10 @@ class ServiceFollowupActionAdapter(internal var context: Context, internal var j
 //                }
                 holder.llfollowupaction!!.setTag(position)
                 holder.llfollowupaction!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "servicefollowupaction")
+                    clickListener!!.onClick(
+                        position,
+                        "servicefollowupaction"
+                    )
                 })
             }
         } catch (e: Exception) {

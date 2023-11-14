@@ -78,7 +78,10 @@ class ReadstatusAdapter (internal var context: Context, internal var jsonArray: 
                     try {
                        /* jsonObject1 = jsonArray.getJSONObject(position)
                          id =jsonObject1!!.getString("ID_NotificationDetails")*/
-                        clickListener!!.onClick(position, "readstatus")
+                        clickListener!!.onClick(
+                            position,
+                            "readstatus"
+                        )
 
 
 

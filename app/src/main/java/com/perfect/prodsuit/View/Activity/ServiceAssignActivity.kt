@@ -502,6 +502,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                         if (TicketStatus.equals("2"))
                                         {
 
+
+
                                                 tv_ServiceClick!!.setText("Service Information")
                                                 tv_ProductClick!!.setText("Product Details")
                                                 ll_lstclick!!.visibility=View.VISIBLE
@@ -958,6 +960,12 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 productMode = "0"
                 listMode = "1"
                 pickupMode="1"
+                department == 0
+                depmode = 0
+              //  getDepartment()
+                var jsonObject1 = departmentArrayList.getJSONObject(0)
+                tie_Department!!.setText(jsonObject1.getString("DeptName"))
+                ID_Department = jsonObject1.getString("ID_Department")
                 hideViews()
             }
 
@@ -1117,8 +1125,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     private fun addValidation(dates: String) {
 
 
-     /*  til_VisitDate!!.setError("Visit On Date should be greater than or equal to Todays date");
-        til_VisitDate!!.setErrorIconDrawable(null)*/
+        /*  til_VisitDate!!.setError("Visit On Date should be greater than or equal to Todays date");
+           til_VisitDate!!.setErrorIconDrawable(null)*/
         if(til_vehicleDetail!!.visibility==View.VISIBLE)
         {
             strRemark = tie_vehicle!!.text.toString()
@@ -1284,10 +1292,16 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 var hasId = hasEmployee(arrProducts,"ID_Employee",ID_Employee!!)
                  dateattend=tie_VisitDate!!.text.toString()
                 if (arrSaveUpdate.equals("0")){
+
+
                     //   jObject.put("ExistType","1") // ExistType = 0 Exist ,1 = Not
 
                     Log.e(TAG,"arrSaveUpdate 0    "+hasId)
                     if (hasId==true){
+
+
+//        var department = 0
+
                         card_details!!.visibility = View.VISIBLE
                         lnrHead_List!!.visibility = View.VISIBLE
                         arrProducts.put(jObject)
@@ -1334,6 +1348,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                         card_details!!.visibility = View.VISIBLE
                         lnrHead_List!!.visibility = View.VISIBLE
 
+
                         Log.e(TAG,"arrProducts  6091  "+arrProducts+"\n"+arrIndexUpdate!!)
                         arrProducts.remove(arrIndexUpdate!!)
                         Log.e(TAG,"arrProducts  6092  "+arrProducts)
@@ -1370,6 +1385,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                         hideViews()
                     }
                     else{
+                       // depmode = 0
+                     //   getDepartment()
                         card_details!!.visibility = View.VISIBLE
                         lnrHead_List!!.visibility = View.VISIBLE
 
@@ -1510,7 +1527,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
 
         if (dateMode == 0){
-            date_Picker1.maxDate = System.currentTimeMillis()
+          //  date_Picker1.maxDate = System.currentTimeMillis()
         }
 
         txtCancel.setOnClickListener {
@@ -1834,7 +1851,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             }
                                             else  if(!tie_Department!!.text.toString()!!.equals(""))
                                             {*/
-
+                                             Log.i("DEP",depmode.toString())
                                             if (depmode == 0){
                                                 var jsonObject1 = departmentArrayList.getJSONObject(0)
                                                 tie_Department!!.setText(jsonObject1.getString("DeptName"))
@@ -2426,7 +2443,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 arrSaveUpdate = "1"
                 arrIndexUpdate = position
                 Log.i("arrindex",arrIndexUpdate.toString())
-                btnAdd!!.setText("Update")
+               // btnAdd!!.setText("Update")
 
 
 //            ID_Priority = jsonObject.getString("id_priority")

@@ -40,7 +40,10 @@ class ReasonAuthAdapter (internal var context: Context, internal var jsonArray: 
 
                 holder.llReason!!.setTag(position)
                 holder.llReason!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "reasonClick")
+                    clickListener!!.onClick(
+                        position,
+                        "reasonClick"
+                    )
                 })
             }
         } catch (e: Exception) {

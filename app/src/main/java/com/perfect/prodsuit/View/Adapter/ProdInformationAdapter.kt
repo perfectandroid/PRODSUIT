@@ -173,14 +173,20 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
 
 
                     holder.tie_Priority.setOnClickListener(View.OnClickListener {
-                        clickListener!!.onClick(position, "PriorityCheck")
+                        clickListener!!.onClick(
+                            position,
+                            "PriorityCheck"
+                        )
 
                         Log.e(TAG,"PriorityCheck    ")
                     })
 
 //                    holder.tie_Complaint_Type.setTag(position)
                     holder.tie_Complaint_Type.setOnClickListener(View.OnClickListener {
-                        clickListener!!.onClick(position, "ComplaintTypeclick")
+                        clickListener!!.onClick(
+                            position,
+                            "ComplaintTypeclick"
+                        )
 
                         Log.e(TAG,"ComplaintType 111   ")
                     })
@@ -220,13 +226,19 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
 //                        holder.tie_StandByAmount.isEnabled = false
                         val jsonObject1 = jsonArray.getJSONObject(position)
                         jsonObject1.put("isSelected","1")
-                        clickListener!!.onClick(position, "changeAmount")
+                        clickListener!!.onClick(
+                            position,
+                            "changeAmount"
+                        )
 
                     }else{
                         Log.e(TAG,"82 checkbox   off")
                         val jsonObject1 = jsonArray.getJSONObject(position)
                         jsonObject1.put("isSelected","0")
-                        clickListener!!.onClick(position, "changeAmount")
+                        clickListener!!.onClick(
+                            position,
+                            "changeAmount"
+                        )
 //                        holder.tie_StandByAmount.isEnabled = false
                         holder.tie_Quantity.isEnabled = false
                         holder.tie_StandByProduct.isEnabled = false
@@ -286,7 +298,10 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
 
 
                 holder.tie_StandByProduct.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "ProductName")
+                    clickListener!!.onClick(
+                        position,
+                        "ProductName"
+                    )
 
 //                    Log.e(TAG,"standByAmount  ddddddd    "+jsonObject!!.getString("ProductName"))
                    // holder.tie_StandByProduct!!.setText(jsonObject!!.getString("Product"))
@@ -392,7 +407,10 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                         val jsonObject1 = jsonArray.getJSONObject(position)
                         jsonObject1.put("SPAmount",s.toString())
-                        clickListener!!.onClick(position, "changeAmount")
+                        clickListener!!.onClick(
+                            position,
+                            "changeAmount"
+                        )
                     }
 
                 })
@@ -447,7 +465,10 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
                         holder.tie_StandByProduct.isEnabled = true
                         holder.tie_StandByQuantity.isEnabled = true
 //                        holder.tie_StandByAmount.setText("0.00")
-                        clickListener!!.onClick(position, "changeAmount")
+                        clickListener!!.onClick(
+                            position,
+                            "changeAmount"
+                        )
                     }else{
                         Log.e(TAG,"82 swOnOff   off")
                         val jsonObject1 = jsonArray.getJSONObject(position)
@@ -459,7 +480,10 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
                         holder.tie_StandByAmount.setText("")
                         holder.tie_StandByProduct.setText("")
                         holder.tie_StandByQuantity.setText("")
-                        clickListener!!.onClick(position, "changeAmount")
+                        clickListener!!.onClick(
+                            position,
+                            "changeAmount"
+                        )
 
                     }
                 })

@@ -40,7 +40,10 @@ class ImagemodeAdapter(internal var context: Context, internal var jsonArray: JS
 
                 holder.lldepartment!!.setTag(position)
                 holder.lldepartment!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "department")
+                    clickListener!!.onClick(
+                        position,
+                        "department"
+                    )
                 })
             }
         } catch (e: Exception) {

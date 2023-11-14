@@ -41,7 +41,10 @@ class AssignedToAdapter (internal var context: Context, internal var jsonArray: 
 
                 holder.llAssignedTo!!.setTag(position)
                 holder.llAssignedTo!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "AssignedToClick")
+                    clickListener!!.onClick(
+                        position,
+                        "AssignedToClick"
+                    )
                 })
             }
         } catch (e: Exception) {

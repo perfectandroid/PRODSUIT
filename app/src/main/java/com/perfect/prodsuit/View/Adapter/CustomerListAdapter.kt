@@ -49,7 +49,10 @@ class CustomerListAdapter (internal var context: Context, internal var jsonArray
                 holder.txtMobile.text      = jsonObject!!.getString("Mobile")
                 holder.lladpcustomer!!.setTag(position)
                 holder.lladpcustomer!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "customerList")
+                    clickListener!!.onClick(
+                        position,
+                        "customerList"
+                    )
                     System.out.println("FK_Customer"+jsonObject!!.getString("Customer_ID"))
                     System.out.println("FK_CustomerOther"+jsonObject!!.getString("CusMode"))
 

@@ -39,13 +39,19 @@ class MaterialRequestAdapter (internal var context: Context, internal var mList:
 
                 holder.im_delete!!.setTag(position)
                 holder.im_delete!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "deleteStocks")
+                    clickListener!!.onClick(
+                        position,
+                        "deleteStocks"
+                    )
 
                 })
 
                 holder.im_edit!!.setTag(position)
                 holder.im_edit!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "editStocks")
+                    clickListener!!.onClick(
+                        position,
+                        "editStocks"
+                    )
 
                 })
 

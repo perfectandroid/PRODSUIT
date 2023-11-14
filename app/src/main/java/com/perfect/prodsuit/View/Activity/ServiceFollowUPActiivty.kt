@@ -35,6 +35,7 @@ import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -234,12 +235,14 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     lateinit var allProductArrayList: JSONArray
     lateinit var allProductSort: JSONArray
     private var dialogAllproductSheet : Dialog? = null
+    val calendar11: Calendar? = Calendar.getInstance()
+    val calendar22: Calendar? = Calendar.getInstance()
 
     var mainSubProduct                                                   = 0
     lateinit var mainSubProductViewModel: MainSubProductViewModel
     lateinit var mainSubProductArrayList: JSONArray
 
-
+    var followupDate : String?= ""
 //    Changes 26.10.2023
     var compnantMode                                      = 0
     lateinit var servCompanantViewModel: ServCompanantViewModel
@@ -1955,7 +1958,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         val date_Picker = view.findViewById<DatePicker>(R.id.date_Picker1)
 
         if (DateType == 0) {
-            date_Picker.maxDate = System.currentTimeMillis()
+          //  date_Picker.maxDate = System.currentTimeMillis()
         }
 
 
@@ -2968,6 +2971,49 @@ Log.v("adasdasds","modeTab "+modeTab)
                 else if (actionTakenSelected.get(i).ID_Emplloyee.equals("")){
                     strActiontakenStatusMessage = "Select Assigned Employee for "+actionTakenSelected.get(i).Product
                     isChecked = false
+                }
+
+                try {
+                    val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+
+                    val c = Calendar.getInstance().time
+                    println("Current time => $c")
+
+                    val df = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                    val formattedDate = df.format(c)
+                    println("Current date => $formattedDate")
+
+                    val date1 = dateFormat.parse(formattedDate)
+                    val date2 = dateFormat.parse(actionTakenSelected.get(i).FollowupDate)
+
+                    println("followup date => $date2")
+
+                    calendar11!!.time = date1
+                    calendar22!!.time = date2
+
+                    System.out.println("Compare Result : " + calendar22.compareTo(calendar11))
+
+                    System.out.println("Compare Resultt : " + calendar22.compareTo(calendar11))
+
+                    /*    if(calendar22.compareTo(calendar11).equals(-1))
+                        {
+                            til_VisitDate!!.setError("Visit On Date should be greater than or equal to Today's Date")
+                            til_VisitDate!!.setErrorIconDrawable(null)
+                        }*/
+
+                    //  System.out.println("Compare Result : " + calendar1.compareTo(calendar2))
+                }
+                catch(e: ParseException)
+                {
+
+
+                }
+                followupDate= calendar22!!.compareTo(calendar11).toString()
+                if (followupDate.equals("-1")){
+                    /* til_VisitDate!!.setError("Select Visit Date");
+                     til_VisitDate!!.setErrorIconDrawable(null)*/
+                    strActiontakenStatusMessage = "Visit On Date should be greater than or equal to Today's Date"+actionTakenSelected.get(i).Product
+
                 }
             }
 

@@ -40,7 +40,10 @@ class LeadDetailAdapter(internal var context: Context, internal var jsonArray: J
 
                 holder.llLeadDetail!!.setTag(position)
                 holder.llLeadDetail!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "LeadDetail1")
+                    clickListener!!.onClick(
+                        position,
+                        "LeadDetail1"
+                    )
                 })
             }
         } catch (e: Exception) {

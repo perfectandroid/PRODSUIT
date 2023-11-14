@@ -40,7 +40,10 @@ class ServiceReplacedModeAdaper (internal var context: Context, internal var jso
                 holder.txtCompService.text        = jsonObject!!.getString("ServiceTypeName")
                 holder.llCompService!!.setTag(position)
                 holder.llCompService!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "ReplaceService")
+                    clickListener!!.onClick(
+                        position,
+                        "ReplaceService"
+                    )
                 })
             }
         } catch (e: Exception) {

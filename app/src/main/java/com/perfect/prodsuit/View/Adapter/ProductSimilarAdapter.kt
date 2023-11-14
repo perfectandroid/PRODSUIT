@@ -153,13 +153,19 @@ class ProductSimilarAdapter (internal var context: Context, internal var jsonArr
 
                     holder.img_grid!!.setTag(position)
                     holder.img_grid!!.setOnClickListener(View.OnClickListener {
-                        clickListener!!.onClick(position, "Clickimggrid")
+                        clickListener!!.onClick(
+                            position,
+                            "Clickimggrid"
+                        )
 //                        clickListener!!.onClick(position, "productEnquiryDetails")
                     })
 
                     holder.img_list!!.setTag(position)
                     holder.img_list!!.setOnClickListener(View.OnClickListener {
-                        clickListener!!.onClick(position, "Clickimglist")
+                        clickListener!!.onClick(
+                            position,
+                            "Clickimglist"
+                        )
 //                        clickListener!!.onClick(position, "productEnquiryDetails")
                     })
 
@@ -193,7 +199,10 @@ class ProductSimilarAdapter (internal var context: Context, internal var jsonArr
 
                     holder.ll_product_list!!.setTag(position)
                     holder.ll_product_list!!.setOnClickListener(View.OnClickListener {
-                        clickListener!!.onClick(pos, "productEnquiryDetails")
+                        clickListener!!.onClick(
+                            pos,
+                            "productEnquiryDetails"
+                        )
 //                        clickListener!!.onClick(position, "productEnquiryDetails")
                     })
                 }

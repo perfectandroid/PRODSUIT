@@ -47,7 +47,10 @@ class LeadEditPopAdapter(internal var context: Context, internal var jsonArray: 
 //                }
                 holder.llleadby!!.setTag(position)
                 holder.llleadby!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "leadby")
+                    clickListener!!.onClick(
+                        position,
+                        "leadby"
+                    )
                 })
             }
         } catch (e: Exception) {

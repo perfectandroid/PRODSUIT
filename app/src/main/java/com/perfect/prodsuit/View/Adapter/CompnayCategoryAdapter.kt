@@ -45,7 +45,10 @@ class CompnayCategoryAdapter(internal var context: Context, internal var jsonArr
 //                }
                 holder.llCategory!!.setTag(position)
                 holder.llCategory!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "compCategory")
+                    clickListener!!.onClick(
+                        position,
+                        "compCategory"
+                    )
                 })
             }
         } catch (e: Exception) {

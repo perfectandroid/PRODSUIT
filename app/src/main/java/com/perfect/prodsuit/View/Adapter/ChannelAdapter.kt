@@ -46,7 +46,10 @@ class ChannelAdapter (internal var context: Context, internal var jsonArray: JSO
 //                }
                 holder.llChannel!!.setTag(position)
                 holder.llChannel!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "channel")
+                    clickListener!!.onClick(
+                        position,
+                        "channel"
+                    )
                 })
             }
         } catch (e: Exception) {

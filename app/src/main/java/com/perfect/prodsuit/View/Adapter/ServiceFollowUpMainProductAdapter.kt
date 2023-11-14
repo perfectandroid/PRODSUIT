@@ -45,7 +45,10 @@ class ServiceFollowUpMainProductAdapter(internal var context: Context, internal 
                 val pos = position+1
                 holder.txt_mainProduct.text        = ItemsModel.MainProduct
                 holder.llProduct_Main!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "MainProductList")
+                    clickListener!!.onClick(
+                        position,
+                        "MainProductList"
+                    )
 
 
                 })

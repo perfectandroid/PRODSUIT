@@ -49,7 +49,10 @@ class ServiceProductAdapter(internal var context: Context, internal var jsonArra
 
                 holder.llProduct!!.setTag(position)
                 holder.llProduct!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "serviceProduct")
+                    clickListener!!.onClick(
+                        position,
+                        "serviceProduct"
+                    )
 
                     System.out.println("Productid "+jsonObject!!.getString("ID_Product"))
 

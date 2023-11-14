@@ -40,7 +40,10 @@ class ServiceAllproductAdapter (internal var context: Context, internal var json
 
                 holder.ll_Allproduct!!.setTag(position)
                 holder.ll_Allproduct!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "AllProductClik")
+                    clickListener!!.onClick(
+                        position,
+                        "AllProductClik"
+                    )
                 })
             }
         } catch (e: Exception) {
