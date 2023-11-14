@@ -4,19 +4,27 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.CancellationSignal
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.MpinModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.ForgotMpinViewModel
@@ -50,13 +58,16 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
     private var et_5: EditText? = null
     private var et_6: EditText? = null
     private var imgShowPin: ImageView? = null
+    private var finger_print: ImageView? = null
     private var showPin: LinearLayout? = null
     private var clear: LinearLayout? = null
+    private var lin_fingerprint: LinearLayout? = null
     lateinit var context: Context
     lateinit var mpinActivityViewModel: MpinActivityViewModel
     lateinit var forgotMpinViewModel: ForgotMpinViewModel
     private var activity: String? = null
-
+    private var cancellationSignal: CancellationSignal? = null
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -68,6 +79,14 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         forgotMpinViewModel = ViewModelProvider(this).get(ForgotMpinViewModel::class.java)
 
         activity = intent.getStringExtra("activity")
+
+        if(checkBiometricFeatureAvailability(context)) {
+            loadBiometric()
+        }
+        else
+        {
+            lin_fingerprint!!.visibility=View.GONE
+        }
     }
 
     private fun setRegViews() {
@@ -91,8 +110,10 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         et_5 = findViewById<EditText>(R.id.et_5)
         et_6 = findViewById<EditText>(R.id.et_6)
         showPin = findViewById<LinearLayout>(R.id.showPin)
+        lin_fingerprint = findViewById<LinearLayout>(R.id.lin_fingerprint)
         clear = findViewById<LinearLayout>(R.id.clear)
         imgShowPin = findViewById<ImageView>(R.id.imgShowPin)
+        finger_print = findViewById<ImageView>(R.id.finger_print)
         tvLogout!!.setOnClickListener(this)
         tvForgotMpin!!.setOnClickListener(this)
         one!!.setOnClickListener(this)
@@ -107,6 +128,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         zero!!.setOnClickListener(this)
         clear!!.setOnClickListener(this)
         showPin!!.setOnClickListener(this)
+        finger_print!!.setOnClickListener(this)
         et_1!!.isEnabled = false
         et_2!!.isEnabled = false
         et_3!!.isEnabled = false
@@ -117,6 +139,12 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when(v.id){
+            R.id.finger_print->
+            {
+                if(checkBiometricFeatureAvailability(context)) {
+                    loadBiometric()
+                }
+            }
             R.id.tvLogout->{
                 try {
                   //  doLogout()
@@ -503,6 +531,74 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
+    }
+
+
+    fun checkBiometricFeatureAvailability(context: Context): Boolean {
+        val biometricManager = BiometricManager.from(context)
+
+        when (biometricManager.canAuthenticate()) {
+            BiometricManager.BIOMETRIC_SUCCESS -> {
+                return true
+                Log.v("Biometric Status ","success")
+            }
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
+                // No biometric features available on this device
+                Log.v("Biometric Status ","No biometric features available on this device")
+                return false
+            }
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> {
+                // Biometric features are currently unavailable
+                Log.v("Biometric Status ","Biometric features are currently unavailable")
+                return false
+            }
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
+                // No biometric features enrolled on this device
+                Log.v("Biometric Status ","No biometric features enrolled on this device")
+                notifyUser("No biometric features enrolled on this device")
+                return false
+            }
+        }
+        return false
+    }
+
+    private fun loadBiometric() {
+        val promptInfo = BiometricPrompt.PromptInfo.Builder()
+            .setTitle("Unlock "+getString(R.string.app_name))
+            .setSubtitle("Log in using biometric credential or with MPIN")
+            .setNegativeButtonText("Use MPIN")
+            .setConfirmationRequired(false)
+            .build()
+
+        val biometricPrompt = BiometricPrompt(this, ContextCompat.getMainExecutor(this),
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    // Handle authentication error
+                  //  notifyUser("Authentication error: $errString")
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    val mpinSP = context.getSharedPreferences(Config.SHARED_PREF74, 0)
+                    val mpin=mpinSP.getString("mpin", null)
+                    MpinVerification(""+mpin)
+                    // Handle authentication success
+                   //notifyUser("Authentication succeeded!")
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    // Handle authentication failure
+                 //   notifyUser("Authentication failed.")
+                }
+            })
+
+        biometricPrompt.authenticate(promptInfo)
+    }
+
+    private fun notifyUser(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun forgotMpinDialog() {
