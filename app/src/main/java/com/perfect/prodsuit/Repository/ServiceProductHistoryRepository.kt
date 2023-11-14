@@ -9,9 +9,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.CustomerSearchModel
 import com.perfect.prodsuit.Model.ServiceProductHistoryModel
-import com.perfect.prodsuit.Model.ServiceWarrantyModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -28,12 +26,18 @@ object ServiceProductHistoryRepository {
     val serviceProductHistSetterGetter = MutableLiveData<ServiceProductHistoryModel>()
     val TAG: String = "ServiceProductHistoryRepository"
 
-    fun getServicesApiCall(context: Context,ID_Product : String, Customer_Type: String, ID_Customer: String): MutableLiveData<ServiceProductHistoryModel> {
-        getServiceProductHistory(context, ID_Product, Customer_Type, ID_Customer)
+    fun getServicesApiCall(
+        context: Context,
+        ID_Category: String,
+        ID_Product: String,
+        Customer_Type: String,
+        ID_Customer: String
+    ): MutableLiveData<ServiceProductHistoryModel> {
+        getServiceProductHistory(context,ID_Category, ID_Product, Customer_Type, ID_Customer)
         return serviceProductHistSetterGetter
     }
 
-    private fun getServiceProductHistory(context: Context, ID_Product: String, Customer_Type: String, ID_Customer: String) {
+    private fun getServiceProductHistory(context: Context,ID_Category: String, ID_Product: String, Customer_Type: String, ID_Customer: String) {
 
         try {
             serviceProductHistSetterGetter.value = ServiceProductHistoryModel("")
@@ -77,7 +81,7 @@ object ServiceProductHistoryRepository {
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("71"))
-                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+               // requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart("2"))
 
@@ -98,6 +102,8 @@ object ServiceProductHistoryRepository {
 
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("Criteria", ProdsuitApplication.encryptStart(ID_Category))
+
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
 
 

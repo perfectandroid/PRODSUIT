@@ -35,7 +35,6 @@ import org.json.JSONObject
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.log
 
 
 class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , ItemClickListener {
@@ -5180,7 +5179,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //                progressDialog!!.setIndeterminate(true)
 //                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
 //                progressDialog!!.show()
-                serviceProductHistoryViewModel.getServiceProductHistory(this,ID_Product!!,Customer_Type!!,ID_Customer!!)!!.observe(
+                serviceProductHistoryViewModel.getServiceProductHistory(this,ID_Category!!,ID_Product!!,Customer_Type!!,ID_Customer!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
