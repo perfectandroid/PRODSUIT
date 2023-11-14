@@ -661,5 +661,14 @@ interface ApiInterface {
     @POST("Project/UnitList")
     fun getUnit(@Body body: RequestBody): Call<String>
 
+    @POST("Project/ProjectStatus")
+    fun getProjectStatus(@Body body: RequestBody): Call<String>
+
+    @POST("Project/ProjectOtherChargeDetails")
+    fun getProjectOtherChargeDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Project/OtherChargeTaxCalculationDetails")
+    fun getOtherChargeTaxCalculationDetails(@Body body: RequestBody): Call<String>
+
 
 }

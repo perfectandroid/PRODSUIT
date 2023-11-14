@@ -26,12 +26,12 @@ object CurrentStatusRepository {
     val CurrentStatusSetterGetter = MutableLiveData<CurrentModel>()
     val TAG: String = "CurrentStatusRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<CurrentModel> {
-        getImageMode(context)
+    fun getServicesApiCall(context: Context,ReqMode :  String,Critrea1:  String,SubMode:  String): MutableLiveData<CurrentModel> {
+        getImageMode(context,ReqMode,Critrea1,SubMode)
         return CurrentStatusSetterGetter
     }
 
-    private fun getImageMode(context: Context) {
+    private fun getImageMode(context: Context,ReqMode :  String,Critrea1:  String,SubMode:  String) {
         try {
             CurrentStatusSetterGetter.value = CurrentModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -64,12 +64,19 @@ object CurrentStatusRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("20"))
+               // {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","ReqMode":"17","FK_Company":"1","Critrea1":"0"}
+
+
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                Log.e(TAG,"getDepartment  78   "+requestObject1)
+                requestObject1.put("Critrea1", ProdsuitApplication.encryptStart(Critrea1))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
+
+                Log.e(TAG,"Project/ProjectStatus  7555   "+requestObject1)
+
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -77,7 +84,7 @@ object CurrentStatusRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getDepartment(body)
+            val call = apiService.getProjectStatus(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:

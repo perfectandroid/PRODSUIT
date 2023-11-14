@@ -26,6 +26,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ProjectAdapter
+import com.perfect.prodsuit.View.Adapter.ProjectStatusAdapter
 import com.perfect.prodsuit.View.Adapter.StageAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -91,6 +92,9 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     var stagecount                                        = 0
     var currentcount                                      = 0
     var savecount                                         = 0
+
+    var Critrea1                                          = "0"
+    var SubMode                                           = ""
 
     var jsonObj: JSONObject? = null
 
@@ -348,6 +352,15 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
 
             }
             R.id.tie_CurrentStatus -> {
+
+                if (!ID_Stage.equals("")){
+                    Critrea1 = ID_Stage
+                    SubMode = "2"
+                }
+                else if (!ID_Project.equals("")){
+                    Critrea1 = ID_Project
+                    SubMode = "1"
+                }
                 currentcount = 0
                 getCurrentStatus()
             }
@@ -395,7 +408,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
             til_Followupdate!!.setError("Select Follow Up date")
             til_Followupdate!!.setErrorIconDrawable(null)
 
-        }else if (strCurrentStatus!!.equals("")){
+        }else if (ID_CurrentStatus!!.equals("")){
 //            Config.snackBars(context, v, "Select CurrentStatus")
             til_CurrentStatus!!.setError("Select Current Status")
             til_CurrentStatus!!.setErrorIconDrawable(null)
@@ -681,7 +694,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     }
 
     private fun getCurrentStatus() {
-        // var leadInfo = 0
+         var ReqMode = "19"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -690,7 +703,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                currentstatusViewModel.getCurrentStatus(this)!!.observe(
+                currentstatusViewModel.getCurrentStatus(this,ReqMode,Critrea1!!,SubMode!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -704,8 +717,8 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   114455   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("DepartmentDetails")
-                                        currentArraylist = jobjt.getJSONArray("DepartmentDetailsList")
+                                        val jobjt = jObject.getJSONObject("ProjectStatus")
+                                        currentArraylist = jobjt.getJSONArray("ProjectStatusList")
                                         if (currentArraylist.length()>0){
 
                                             currentStatusPopup(currentArraylist)
@@ -777,6 +790,55 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                                     Log.e(TAG,"msg   77666   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
+                                        val jobjt = jObject.getJSONObject("UpdateProjectFollowUp")
+                                        try {
+
+                                            val suceessDialog = Dialog(this)
+                                            suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                            suceessDialog!!.setCancelable(false)
+                                            suceessDialog!!.setContentView(R.layout.success_popup)
+                                            suceessDialog!!.window!!.attributes.gravity =
+                                                Gravity.CENTER_VERTICAL;
+
+                                            val tv_succesmsg =
+                                                suceessDialog!!.findViewById(R.id.tv_succesmsg) as TextView
+                                            val tv_leadid =
+                                                suceessDialog!!.findViewById(R.id.tv_leadid) as TextView
+                                            val tv_succesok =
+                                                suceessDialog!!.findViewById(R.id.tv_succesok) as TextView
+                                            //LeadNumber
+                                            tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
+                                            tv_leadid!!.setText(jobjt.getString("LeadNumber"))
+
+                                            tv_succesok!!.setOnClickListener {
+                                                suceessDialog!!.dismiss()
+//                                                    val i = Intent(this@ProjectFollowUpActivity, LeadActivity::class.java)
+//                                                    startActivity(i)
+                                                finish()
+
+                                            }
+
+                                            suceessDialog!!.show()
+                                            suceessDialog!!.getWindow()!!.setLayout(
+                                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                                ViewGroup.LayoutParams.WRAP_CONTENT
+                                            );
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
+                                            val builder = AlertDialog.Builder(
+                                                this@ProjectFollowUpActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage(e.toString())
+                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                                onBackPressed()
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
+
+                                        }
+
                                     } else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectFollowUpActivity,
@@ -826,50 +888,52 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
             recylist = dialogCurrent!! .findViewById(R.id.recylist) as RecyclerView
             tvv_list_name = dialogCurrent!! .findViewById(R.id.tvv_list_name) as TextView
             val etsearch = dialogCurrent!! .findViewById(R.id.etsearch) as EditText
+            val llsearch = dialogCurrent!! .findViewById(R.id.llsearch) as LinearLayout
+            llsearch.visibility = View.GONE
             tvv_list_name!!.setText("CURRENT STATUS")
 
-            currentSort = JSONArray()
-            for (k in 0 until currentArraylist.length()) {
-                val jsonObject = currentArraylist.getJSONObject(k)
-                // reportNamesort.put(k,jsonObject)
-                currentSort.put(jsonObject)
-            }
+//            currentSort = JSONArray()
+//            for (k in 0 until currentArraylist.length()) {
+//                val jsonObject = currentArraylist.getJSONObject(k)
+//                // reportNamesort.put(k,jsonObject)
+//                currentSort.put(jsonObject)
+//            }
 
             val lLayout = GridLayoutManager(this@ProjectFollowUpActivity, 1)
             recylist!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-            val adapter = StageAdapter(this@ProjectFollowUpActivity, currentSort)
+            val adapter = ProjectStatusAdapter(this@ProjectFollowUpActivity, currentArraylist)
             recylist!!.adapter = adapter
             adapter.setClickListener(this@ProjectFollowUpActivity)
 
-            etsearch!!.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(p0: Editable?) {
-                }
-
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                }
-
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-                    //  list_view!!.setVisibility(View.VISIBLE)
-                    val textlength = etsearch!!.text.length
-                    currentSort = JSONArray()
-
-                    for (k in 0 until currentArraylist.length()) {
-                        val jsonObject = currentArraylist.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("DeptName").length) {
-                            if (jsonObject.getString("DeptName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
-                                currentSort.put(jsonObject)
-                            }
-
-                        }
-                    }
-
-                    Log.e(TAG,"currentSort               7103    "+currentSort)
-                    val adapter = StageAdapter(this@ProjectFollowUpActivity, currentSort)
-                    recylist!!.adapter = adapter
-                    adapter.setClickListener(this@ProjectFollowUpActivity)
-                }
-            })
+//            etsearch!!.addTextChangedListener(object : TextWatcher {
+//                override fun afterTextChanged(p0: Editable?) {
+//                }
+//
+//                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//                }
+//
+//                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//
+//                    //  list_view!!.setVisibility(View.VISIBLE)
+//                    val textlength = etsearch!!.text.length
+//                    currentSort = JSONArray()
+//
+//                    for (k in 0 until currentArraylist.length()) {
+//                        val jsonObject = currentArraylist.getJSONObject(k)
+//                        if (textlength <= jsonObject.getString("DeptName").length) {
+//                            if (jsonObject.getString("DeptName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+//                                currentSort.put(jsonObject)
+//                            }
+//
+//                        }
+//                    }
+//
+//                    Log.e(TAG,"currentSort               7103    "+currentSort)
+//                    val adapter = ProjectStatusAdapter(this@ProjectFollowUpActivity, currentSort)
+//                    recylist!!.adapter = adapter
+//                    adapter.setClickListener(this@ProjectFollowUpActivity)
+//                }
+//            })
 
             dialogCurrent!!.show()
             dialogCurrent!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -908,6 +972,14 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
 //            tie_Team!!.setText("")
 //            ID_Employee = "0"
 //            tie_Employee!!.setText("")
+
+        }
+
+        if (data.equals("ProjectStatusClick")){
+            dialogCurrent!!.dismiss()
+            val jsonObject = currentArraylist.getJSONObject(position)
+            ID_CurrentStatus = jsonObject.getString("FK_Status")
+            tie_CurrentStatus!!.setText(jsonObject.getString("StatusName"))
 
         }
     }
