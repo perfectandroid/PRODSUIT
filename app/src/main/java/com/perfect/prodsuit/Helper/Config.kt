@@ -129,6 +129,7 @@ object Config {
     const val SHARED_PREF71 = "custbalid"
     const val SHARED_PREF72 = "idcustsrvceregist"
     const val SHARED_PREF73 = "idcustsrvceregistproductdetail"
+    const val SHARED_PREF74 = "mpin"
 
 
     var width = 0
@@ -569,6 +570,13 @@ object Config {
 
             deleteFcmToken(context)
 
+            val mpinSP = context.getSharedPreferences(
+                Config.SHARED_PREF74,
+                0
+            )
+            val mpinEditer = mpinSP.edit()
+            mpinEditer.putString("mpin", "")
+            mpinEditer.commit()
 
             val loginSP = context.getSharedPreferences(SHARED_PREF, 0)
             val loginEditer = loginSP.edit()

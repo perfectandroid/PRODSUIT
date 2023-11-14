@@ -209,6 +209,17 @@
                 android:textColor="@color/black"
                 android:textColorHint="#fff"/>
         </LinearLayout>
+            <LinearLayout
+                android:id="@+id/lin_fingerprint"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="30dp">
+                <ImageView
+                    android:id="@+id/finger_print"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/finger_print"/>
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
