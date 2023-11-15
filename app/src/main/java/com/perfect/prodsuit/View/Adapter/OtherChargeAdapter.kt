@@ -122,7 +122,7 @@ class OtherChargeAdapter(internal var context: Context, internal var mList: List
                    }
 
                     clickListener!!.onClick(position, "TaxAmountClaculateClick")
-                    notifyItemChanged(position)
+                  //  notifyItemChanged(position)
                 }
 
 

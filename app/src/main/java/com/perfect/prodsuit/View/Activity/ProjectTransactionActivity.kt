@@ -59,6 +59,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     var stagecount   = 0
     var otherchargecount   = 0
     var otherchargetaxcount   = 0
+    var otherchargetaxMode   = 0  // 0 = Popup, 1 = change amount
     var otherChargeCalcPosition   = 0
     var otherChargeClickPosition   = 0
 
@@ -380,7 +381,30 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                         otherChargeCalcArrayList = jobjt.getJSONArray("OtherChargeTaxCalculationDetailsList")
 
                                         if (otherChargeCalcArrayList.length() > 0){
-                                            otherChargesCalcPopup(otherChargeCalcArrayList)
+                                            if (otherchargetaxMode == 0){
+                                                otherChargesCalcPopup(otherChargeCalcArrayList)
+                                            }else{
+                                                Log.e(TAG,"38777  ")
+                                                var sumOfTax = 0F
+                                                for (i in 0 until otherChargeCalcArrayList.length()) {
+                                                    val jsonObject2 = otherChargeCalcArrayList.getJSONObject(i)
+
+
+                                                        Log.e(TAG,"40551  "+jsonObject2.getString("Amount"))
+                                                        sumOfTax = sumOfTax +(jsonObject2.getString("Amount")).toFloat()
+
+                                                }
+
+                                                modelOtherCharges[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+                                                otherChargeAdapter!!.notifyItemChanged(otherChargeClickPosition)
+
+                                                Log.e(TAG,"40552     "+sumOfTax)
+//                                                modelOtherCharges[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+//
+//                                                otherChargeAdapter!!.notifyItemChanged(otherChargeClickPosition)
+//                                                dialogOtherChargesCalcSheet!!.dismiss()
+                                            }
+
                                         }
                                     } else {
                                         val builder = AlertDialog.Builder(
@@ -921,6 +945,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             }
 
             otherchargetaxcount = 0
+            otherchargetaxMode = 0
             getOtherChargeTax()
 
         }
@@ -938,8 +963,27 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             }
             FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
             otherchargetaxcount = 0
+            otherchargetaxMode = 0
             getOtherChargeTax()
         }
+
+        if (data.equals("TaxAmountClaculateClick")){
+
+            Log.e(TAG,"TaxAmountClaculateClick  8288   "+ modelOtherCharges[position].OctyIncludeTaxAmount)
+            otherChargeClickPosition = position
+            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
+            AmountTaxCalc = modelOtherCharges[position].OctyAmount
+            if (modelOtherCharges[position].OctyIncludeTaxAmount){
+                IncludeTaxCalc = "1"
+            }else{
+                IncludeTaxCalc = "0"
+            }
+            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
+            otherchargetaxcount = 0
+            otherchargetaxMode = 1
+            getOtherChargeTax()
+        }
+
     }
 
 

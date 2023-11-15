@@ -526,7 +526,7 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
                     else if (productTotQty.toFloat() >= sumQty){
                         result = true
                     }else{
-                        validateMessage = "Quantity Cannot be Greater than Currennt Stock"
+                        validateMessage = "Quantity Cannot be Greater than Current Stock"
                         result = false
                     }
                 }
