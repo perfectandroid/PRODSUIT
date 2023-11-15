@@ -45,7 +45,10 @@ class ProductDetailAdapter(internal var context: Context, internal var jsonArray
 //                }
                 holder.llprodproduct!!.setTag(position)
                 holder.llprodproduct!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "proddetails")
+                    clickListener!!.onClick(
+                        position,
+                        "proddetails"
+                    )
                 })
             }
         } catch (e: Exception) {

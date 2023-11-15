@@ -40,7 +40,10 @@ class ServiceMediaAdapter(internal var context: Context, internal var jsonArray:
 
                 holder.llServiceMedia!!.setTag(position)
                 holder.llServiceMedia!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "serviceMedia")
+                    clickListener!!.onClick(
+                        position,
+                        "serviceMedia"
+                    )
                 })
             }
         } catch (e: Exception) {

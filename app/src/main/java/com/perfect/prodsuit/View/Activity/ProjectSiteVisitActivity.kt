@@ -2,14 +2,15 @@ package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -23,6 +24,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -66,12 +68,16 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private var tv_EmployeeClick: TextView? = null
     private var tv_MeasurementClick: TextView? = null
     private var tv_Checklist_Details: TextView? = null
+    private var tv_OtherCharges: TextView? = null
     private var tvv_choosefile: TextView? = null
 
+    private var ll_saveSiteVisit: LinearLayout? = null
+    private var ll_UploadImage: LinearLayout? = null
     private var ll_LeadClick: LinearLayout? = null
     private var ll_EmployeeClick: LinearLayout? = null
     private var ll_MeasurementClick: LinearLayout? = null
     private var ll_Checklist_Details: LinearLayout? = null
+    private var ll_OtherCharges: LinearLayout? = null
     private var ll_measureShow: LinearLayout? = null
 
     private var tie_LeadNo: TextInputEditText? = null
@@ -88,8 +94,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private var tie_Remarks: TextInputEditText? = null
     private var tie_Othercharges: TextInputEditText? = null
     private var tie_Remark: TextInputEditText? = null
-    private var tie_Remark11: TextInputEditText? = null
-    private var tie_Imagemode: TextInputEditText? = null
+    private var tie_Common_Remark: TextInputEditText? = null
+    private var tie_Attachments: TextInputEditText? = null
     private var imv_name: TextView? = null
 
     private var tie_WorkType: TextInputEditText? = null
@@ -100,13 +106,15 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private var til_LeadNo: TextInputLayout? = null
     private var til_VisitDate: TextInputLayout? = null
     private var til_InspectionNotes1: TextInputLayout? = null
-    private var til_Imagemode: TextInputLayout? = null
+    private var til_Attachments: TextInputLayout? = null
     private var til_VisitTime: TextInputLayout? = null
     private var til_Department: TextInputLayout? = null
     private var til_Employee: TextInputLayout? = null
     private var til_EmployeeType: TextInputLayout? = null
     private var btnSubmit: Button? = null
     private var btnReset: Button? = null
+    private var btnDocClose: Button? = null
+    private var btnDocUpload: Button? = null
 
     private var til_WorkType: TextInputLayout? = null
     private var til_MeasurementType: TextInputLayout? = null
@@ -127,6 +135,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     var showEmployee    = 0
     var showMeasurement = 0
     var showChecklist   = 0
+    var showOtherCharge = 0
 
     var showSiteVisit   = 1
     var showLeadInfo    = 0
@@ -157,6 +166,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     lateinit var imagemodeArrayList : JSONArray
     lateinit var leadnoArrayList : JSONArray
     lateinit var otherChargeArrayList : JSONArray
+    lateinit var otherChargeCalcArrayList : JSONArray
     lateinit var worktypeArrayList : JSONArray
     lateinit var measurementDetailsArrayList : JSONArray
     lateinit var departmentSort : JSONArray
@@ -176,7 +186,6 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private val CAMERA = 2
     private var image = ""
     private var destination: File? = null
-    private val MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1
     private val PERMISSION_REQUEST_CODE = 200
     var recyDeaprtment: RecyclerView? = null
     var recyLeadNo: RecyclerView? = null
@@ -206,6 +215,20 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     var siteCheckcount   = 0
     lateinit var siteCheckViewModel: SiteCheckViewModel
 
+    var mode = ""
+
+    lateinit var otherChargeTaxCalculationViewModel  : OtherChargeTaxCalculationViewModel
+    var otherchargetaxcount   = 0
+    var otherchargetaxMode   = 0  // 0 = Popup, 1 = change amount
+    var otherChargeCalcPosition   = 0
+    var otherChargeClickPosition   = 0
+
+    private var MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1
+    private var PICK_IMAGE_CAMERA = 1
+    private var PICK_IMAGE_GALLERY = 2
+    private var PICK_DOCUMRNT_GALLERY = 3
+    private var PERMISSION_CAMERA = 1
+
 
 
     var ID_Department : String?= ""
@@ -222,6 +245,9 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     var strInspectionNote1 = ""
     var strInspectionNote2 = ""
     var strCustomerNotes   = ""
+    var FK_TaxGroup   = ""
+    var IncludeTaxCalc   = ""
+    var AmountTaxCalc   = ""
 
     val modelProjectEmpDetails = ArrayList<ModelProjectEmpDetails>()
 
@@ -231,6 +257,27 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
     var recy_checklist: RecyclerView? = null
     var modelProjectCheckList = ArrayList<ModelProjectCheckList>()
+
+
+
+    var saveEmployeeDetails= JSONArray()
+    var saveMeasurementDetails= JSONArray()
+    var saveCheckedDetails= JSONArray()
+
+    private var inputStreamImg: InputStream? = null
+    private var imgPath: String? = null
+    private var bitmap: Bitmap? = null
+    var documentPath : String = ""
+
+    private val PICK_DOCUMENT_REQUEST_CODE = 123
+
+    val modelOtherCharges = ArrayList<ModelOtherCharges>()
+    private var dialogOtherChargesSheet : Dialog? = null
+    val modelOtherChargesCalculation = ArrayList<ModelOtherChargesCalculation>()
+    private var dialogOtherChargesCalcSheet : Dialog? = null
+    private var otherChargeAdapter : OtherChargeAdapter? = null
+    private var taxDetailAdapter : TaxDetailAdapter? = null
+    private var recyOtherCalc     : RecyclerView?      = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -250,10 +297,12 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         otherchargesViewModel = ViewModelProvider(this).get(OtherChargesViewModel::class.java)
         unitViewModel = ViewModelProvider(this).get(UnitViewModel::class.java)
         siteCheckViewModel = ViewModelProvider(this).get(SiteCheckViewModel::class.java)
+        otherChargeTaxCalculationViewModel     = ViewModelProvider(this).get(OtherChargeTaxCalculationViewModel::class.java)
 
         setRegViews()
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
+        mode = intent.getStringExtra("mode").toString()
         if (jsonObject.equals("")){
             Log.e(TAG,"23111   ")
             tie_LeadNo!!.isEnabled = true
@@ -278,11 +327,15 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         tv_EmployeeClick = findViewById(R.id.tv_EmployeeClick)
         tv_MeasurementClick = findViewById(R.id.tv_MeasurementClick)
         tv_Checklist_Details = findViewById(R.id.tv_Checklist_Details)
+        tv_OtherCharges = findViewById(R.id.tv_OtherCharges)
 
+        ll_saveSiteVisit = findViewById(R.id.ll_saveSiteVisit)
+        ll_UploadImage = findViewById(R.id.ll_UploadImage)
         ll_LeadClick = findViewById(R.id.ll_LeadClick)
         ll_EmployeeClick = findViewById(R.id.ll_EmployeeClick)
         ll_MeasurementClick = findViewById(R.id.ll_MeasurementClick)
         ll_Checklist_Details = findViewById(R.id.ll_Checklist_Details)
+        ll_OtherCharges = findViewById(R.id.ll_OtherCharges)
         ll_measureShow = findViewById(R.id.ll_measureShow)
 
         tie_LeadNo = findViewById(R.id.tie_LeadNo)
@@ -312,18 +365,20 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         til_Department        = findViewById<TextInputLayout>(R.id.til_Department)
         til_Employee          = findViewById<TextInputLayout>(R.id.til_Employee)
         til_EmployeeType      = findViewById<TextInputLayout>(R.id.til_EmployeeType)
-        til_Imagemode = findViewById<TextInputLayout>(R.id.til_Imagemode)
+        til_Attachments = findViewById<TextInputLayout>(R.id.til_Attachments)
         tie_InspectionNotes1 = findViewById(R.id.tie_InspectionNotes1)
         tie_InspectionNotes2 = findViewById(R.id.tie_InspectionNotes2)
         tie_Value = findViewById(R.id.tie_Value)
         tie_Remarks = findViewById(R.id.tie_Remarks)
         tie_Othercharges = findViewById(R.id.tie_Othercharges)
         tie_Remark = findViewById(R.id.tie_Remark)
-        tie_Remark11 = findViewById(R.id.tie_Remark11)
-        tie_Imagemode = findViewById(R.id.tie_Imagemode)
+        tie_Common_Remark = findViewById(R.id.tie_Common_Remark)
+        tie_Attachments = findViewById(R.id.tie_Attachments)
         imv_name = findViewById(R.id.imv_name)
         btnReset = findViewById(R.id.btnReset)
         btnSubmit = findViewById(R.id.btnSubmit)
+        btnDocClose = findViewById(R.id.btnDocClose)
+        btnDocUpload = findViewById(R.id.btnDocUpload)
         tie_CustomerNotes = findViewById(R.id.tie_CustomerNotes)
         tie_InspectionCharge = findViewById(R.id.tie_InspectionCharge)
 
@@ -341,6 +396,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         tv_EmployeeClick!!.setOnClickListener(this)
         tv_MeasurementClick!!.setOnClickListener(this)
         tv_Checklist_Details!!.setOnClickListener(this)
+        tv_OtherCharges!!.setOnClickListener(this)
 
         tie_LeadNo!!.setOnClickListener(this)
         tie_VisitDate!!.setOnClickListener(this)
@@ -351,12 +407,14 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         tie_WorkType!!.setOnClickListener(this)
         tie_MeasurementType!!.setOnClickListener(this)
         tie_Unit!!.setOnClickListener(this)
-        til_Imagemode!!.setOnClickListener(this)
+        til_Attachments!!.setOnClickListener(this)
         tvv_choosefile!!.setOnClickListener(this)
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
+        btnDocClose!!.setOnClickListener(this)
+        btnDocUpload!!.setOnClickListener(this)
         tie_Othercharges!!.setOnClickListener(this)
-        tie_Imagemode!!.setOnClickListener(this)
+        tie_Attachments!!.setOnClickListener(this)
 
         img_EmpAdd!!.setOnClickListener(this)
         img_EmpRefresh!!.setOnClickListener(this)
@@ -766,6 +824,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 showEmployee = 0
                 showMeasurement = 0
                 showChecklist = 0
+                showOtherCharge = 0
                 expandTab()
             }
             R.id.tv_EmployeeClick->{
@@ -773,6 +832,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 showEmployee = 1
                 showMeasurement = 0
                 showChecklist = 0
+                showOtherCharge = 0
                 expandTab()
             }
             R.id.tv_MeasurementClick->{
@@ -780,6 +840,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 showEmployee = 0
                 showMeasurement = 1
                 showChecklist = 0
+                showOtherCharge = 0
                 expandTab()
             }
             R.id.tv_Checklist_Details->{
@@ -787,12 +848,23 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 showEmployee = 0
                 showMeasurement = 0
                 showChecklist = 1
+                showOtherCharge = 0
                 expandTab()
 
                 if (modelProjectCheckList.size == 0){
                     siteCheckcount = 0
                     getCheckedListData()
                 }
+
+            }
+
+            R.id.tv_OtherCharges->{
+                showLead = 0
+                showEmployee = 0
+                showMeasurement = 0
+                showChecklist = 0
+                showOtherCharge = 1
+                expandTab()
 
             }
 
@@ -834,8 +906,9 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             }
             R.id.tie_Othercharges->{
 //                Toast.makeText(applicationContext, "test 1", Toast.LENGTH_LONG).show()
+                Config.disableClick(v)
                 otherchargecount = 0
-                getOthercharges()
+                getOtherCharges()
 
             }
 
@@ -870,11 +943,12 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
 
 
-            R.id.tie_Imagemode->{
+            R.id.tie_Attachments->{
 
 //                Toast.makeText(applicationContext, "test 2", Toast.LENGTH_LONG).show()
                 imagemodecount = 0
-                getImageMode()
+                selectImage()
+               // getImageMode()
             }
             R.id.tvv_choosefile->{
                 try {
@@ -889,14 +963,88 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             }
             R.id.btnSubmit->{
                 siteVisitValidation(v)
+
+                successBottomSheet(v)
             }
             R.id.btnReset->{
                 clearData()
             }
+
+            R.id.btnDocClose->{
+               finish()
+            }
+
+            R.id.btnDocUpload->{
+               docUploadSucces(v)
+            }
+        }
+    }
+
+    private fun docUploadSucces(v: View) {
+        try {
+            val dialog = BottomSheetDialog(this)
+            val view = layoutInflater.inflate(R.layout.upload_more_document_bottom, null)
+
+            val btnNo = view.findViewById<Button>(R.id.btn_No)
+            val btnYes = view.findViewById<Button>(R.id.btn_Yes)
+            val textid1 = view.findViewById<TextView>(R.id.textid1)
+
+
+            textid1!!.setText("Do you want to upload more document?")
+            btnNo.setOnClickListener {
+                dialog .dismiss()
+                finish()
+            }
+            btnYes.setOnClickListener {
+                dialog.dismiss()
+
+            }
+            dialog.setCancelable(true)
+            dialog!!.setContentView(view)
+
+            dialog.show()
+        }catch (e : Exception){
+
+        }
+    }
+
+    private fun successBottomSheet(v: View) {
+
+        try {
+            val dialog = BottomSheetDialog(this)
+            val view = layoutInflater.inflate(R.layout.success_project_bottom, null)
+
+            val btnNo = view.findViewById<Button>(R.id.btn_No)
+            val btnYes = view.findViewById<Button>(R.id.btn_Yes)
+            val textid1 = view.findViewById<TextView>(R.id.textid1)
+            val textid2 = view.findViewById<TextView>(R.id.textid2)
+
+            textid1!!.setText("Succesfully Saved")
+            textid2!!.setText("Do you want to upload document?")
+            btnNo.setOnClickListener {
+                dialog .dismiss()
+                finish()
+            }
+            btnYes.setOnClickListener {
+//                finish()
+
+                dialog.dismiss()
+                ll_saveSiteVisit!!.visibility = View.GONE
+                ll_UploadImage!!.visibility = View.VISIBLE
+
+            }
+            dialog.setCancelable(true)
+            dialog!!.setContentView(view)
+
+            dialog.show()
+        }catch (e : Exception){
+
         }
     }
 
     private fun getCheckedListData() {
+
+        var ReqMode = "119"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -905,7 +1053,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                siteCheckViewModel.getSiteCheck(this)!!.observe(
+                siteCheckViewModel.getSiteCheck(this,ReqMode!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -927,8 +1075,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 //                                        siteCheckViewModel!!.add(SiteCheckViewModel(jsonObject.getString("ID_Type"),jsonObject.getString("Type_Name"), "","","0.00", "0.00",false))
 
                                         Log.e(TAG,"917772   "+modelProjectCheckList.size)
-                                        Log.e(TAG,"917772   "+modelProjectCheckList[0].Label_Name)
-                                       // Log.e(TAG,"917772   "+Model[0].subArray[0].Label_Name)
+                                        Log.e(TAG,"917772   "+modelProjectCheckList[0].CLTyName)
+
 
                                         if (modelProjectCheckList.size > 0){
                                             val expandableListView: ExpandableListView = findViewById(R.id.expandableListView)
@@ -983,38 +1131,83 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         val sdfTime1 = SimpleDateFormat("hh:mm aa")
         val currentDate = sdf.format(Date())
         val time = sdfTime1.format(Date())
-
         Log.e(TAG, "newtime  885  " + time)
 
-        ID_Employee          = ""
-        ID_Employee          = ""
-        ID_EmployeeType      = ""
-        strInspectionNote1   = ""
-        strLeadno            = ""
-        strVisitdate         = ""
-        visitDate            = ""
-        visitTime            = ""
+        if (mode.equals("0")){
 
-        tie_LeadNo!!.setText("")
-        tie_VisitDate!!.setText(currentDate)
-        tie_VisitTime!!.setText(time)
+            tie_LeadNo!!.setText("")
+            strID_FIELD = ""
+        }
         tie_InspectionNotes1!!.setText("")
         tie_InspectionNotes2!!.setText("")
         tie_CustomerNotes!!.setText("")
         tie_InspectionCharge!!.setText("")
 
+
+        // Employee Details
+
+
+        updateedit = "0"
+        ID_Department          = ""
+        ID_Employee          = ""
+        ID_EmployeeType      = ""
+
         tie_Department!!.setText("")
         tie_Employee!!.setText("")
         tie_EmployeeType!!.setText("")
+
+        modelProjectEmpDetails!!.clear()
+
+        // Measurement
+
+        WorkTypeID = ""
+        ID_MeasurementUnit = ""
+        ID_Unit = ""
 
         tie_WorkType!!.setText("")
         tie_MeasurementType!!.setText("")
         tie_Value!!.setText("")
         tie_Unit!!.setText("")
         tie_Remarks!!.setText("")
+
+        modelMesurementDetails.clear()
+
+        // Check Details
+
+        modelProjectCheckList.clear()
+
+        showLead = 1
+        showEmployee = 0
+        showMeasurement = 0
+        showChecklist = 0
+        showOtherCharge = 0
+        expandTab()
+
+        // Other Charges
+
         tie_Othercharges!!.setText("")
-        tie_Remark11!!.setText("")
-        tie_Imagemode!!.setText("")
+        tie_Common_Remark!!.setText("")
+
+
+//        strInspectionNote1   = ""
+//        strLeadno            = ""
+//        strVisitdate         = ""
+//        visitDate            = ""
+//        visitTime            = ""
+//
+//        tie_LeadNo!!.setText("")
+//        tie_VisitDate!!.setText(currentDate)
+//        tie_VisitTime!!.setText(time)
+//        tie_InspectionNotes1!!.setText("")
+//        tie_InspectionNotes2!!.setText("")
+//        tie_CustomerNotes!!.setText("")
+//        tie_InspectionCharge!!.setText("")
+
+
+
+
+
+        tie_Attachments!!.setText("")
         imv_name!!.setText("")
 
     }
@@ -1028,6 +1221,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         strInspectionNote2 = tie_InspectionNotes2!!.text.toString()
         strCustomerNotes   = tie_CustomerNotes!!.text.toString()
 
+
+
         if (strLeadno!!.equals("")){
             Config.snackBars(context, v, "Select LeadNo")
 
@@ -1038,9 +1233,73 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             Config.snackBars(context, v, "Please Enter InspectonNote 1")
 
         }else{
-
+            validateSaveEmployee(v)
         }
 
+    }
+
+    private fun validateSaveEmployee(v : View) {
+        saveEmployeeDetails = JSONArray()
+        for (obj in modelProjectEmpDetails) {
+            val jsonObject = JSONObject()
+            jsonObject.put("ID_Department", obj.ID_Department)
+            jsonObject.put("ID_Employee", obj.ID_Employee)
+            jsonObject.put("ID_EmployeeType", obj.ID_EmployeeType)
+
+            saveEmployeeDetails.put(jsonObject)
+        }
+
+        if (saveEmployeeDetails.length() > 0){
+            validateSaveMeasurement(v)
+        }else{
+            Config.snackBars(context, v, "Enter Atleast One Emplyee Details !!!")
+        }
+    }
+
+    private fun validateSaveMeasurement(v: View) {
+        saveMeasurementDetails = JSONArray()
+        for (obj in modelMesurementDetails) {
+            val jsonObject = JSONObject()
+            jsonObject.put("WorkTypeID", obj.WorkTypeID)
+            jsonObject.put("ID_MeasurementUnit", obj.ID_MeasurementUnit)
+            jsonObject.put("Value", obj.Value)
+            jsonObject.put("ID_Unit", obj.ID_Unit)
+            jsonObject.put("Remarks", obj.Remarks)
+
+            saveMeasurementDetails.put(jsonObject)
+        }
+
+        validateSaveCheckList(v)
+    }
+
+    private fun validateSaveCheckList(v: View) {
+
+        saveCheckedDetails = JSONArray()
+        for (obj in modelProjectCheckList) {
+            val jsonObject = JSONObject()
+
+            if (obj.is_checked){
+
+                for (objSub in obj.SubArrary) {
+                    if (objSub.is_checked){
+                        jsonObject.put("ID_Check", obj.ID_CheckListType)
+                        jsonObject.put("ID_CheckSub", objSub.ID_CheckList)
+
+                        saveCheckedDetails.put(jsonObject)
+                    }
+                }
+            }
+
+        }
+        validateSaveOtherCharges(v)
+
+    }
+
+    private fun validateSaveOtherCharges(v: View) {
+
+        Log.e(TAG," 117881 saveEmployeeDetails     :  "+saveEmployeeDetails)
+        Log.e(TAG," 117882 saveMeasurementDetails  :  "+saveMeasurementDetails)
+        Log.e(TAG," 117883 saveCheckedDetails      :  "+saveCheckedDetails)
     }
 
 
@@ -1314,6 +1573,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         ll_EmployeeClick!!.visibility = View.GONE
         ll_MeasurementClick!!.visibility = View.GONE
         ll_Checklist_Details!!.visibility = View.GONE
+        ll_OtherCharges!!.visibility = View.GONE
 
         if (showLead == 1){
             ll_LeadClick!!.visibility = View.VISIBLE
@@ -1326,6 +1586,9 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         }
         if (showChecklist == 1){
             ll_Checklist_Details!!.visibility = View.VISIBLE
+        }
+        if (showOtherCharge == 1){
+            ll_OtherCharges!!.visibility = View.VISIBLE
         }
 
     }
@@ -1460,8 +1723,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         }
     }
 
-    private fun getOthercharges() {
-        // var leadInfo = 0
+    private fun getOtherCharges() {
+        var ReqMode = "117"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1470,7 +1733,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                otherchargesViewModel.getOthercharge(this)!!.observe(
+                otherchargesViewModel.getOthercharge(this,ReqMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -1484,13 +1747,45 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   114455   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("DepartmentDetails")
-                                        otherChargeArrayList = jobjt.getJSONArray("DepartmentDetailsList")
+                                        val jobjt = jObject.getJSONObject("ProjectOtherChargeDetails")
+                                        otherChargeArrayList = jobjt.getJSONArray("ProjectOtherChargeDetailsList")
                                         if (otherChargeArrayList.length()>0){
+                                            var gridList = Config.getTransType(this@ProjectSiteVisitActivity)
+                                            val jObject1 = JSONObject(gridList)
+                                            Log.e(TAG,"gridList  2111   "+gridList)
+                                            val jobjt1 = jObject1.getJSONObject("TransType")
+                                            var typeArrayList = jobjt1.getJSONArray("TransTypeDetails")
 
-                                            otherChargesPopup(otherChargeArrayList)
+                                            for (i in 0 until otherChargeArrayList.length()) {
+                                                var jsonObject = otherChargeArrayList.getJSONObject(i)
 
+                                                var ID_TransType = ""
+                                                var TransType_Name = ""
+
+                                                if (jsonObject.getString("OctyTransTypeActive").equals("0")){
+                                                    val jsonObject = typeArrayList.getJSONObject(0)
+                                                    ID_TransType = jsonObject.getString("ID_TransType")
+                                                    TransType_Name = jsonObject.getString("TransType_Name")
+                                                }
+                                                else if (jsonObject.getString("OctyTransTypeActive").equals("1")){
+                                                    val jsonObject = typeArrayList.getJSONObject(1)
+                                                    ID_TransType = jsonObject.getString("ID_TransType")
+                                                    TransType_Name = jsonObject.getString("TransType_Name")
+                                                }
+                                                else if (jsonObject.getString("OctyTransTypeActive").equals("2")){
+                                                    val jsonObject = typeArrayList.getJSONObject(0)
+                                                    ID_TransType = jsonObject.getString("ID_TransType")
+                                                    TransType_Name = jsonObject.getString("TransType_Name")
+                                                }
+
+                                                modelOtherCharges!!.add(ModelOtherCharges(jsonObject.getString("ID_OtherChargeType"),jsonObject.getString("OctyName"),
+                                                    jsonObject.getString("OctyTransTypeActive"),jsonObject.getString("OctyTransType"),jsonObject.getString("FK_TaxGroup"),
+                                                    jsonObject.getString("OctyAmount"), jsonObject.getString("OctyTaxAmount"),false,
+                                                    ID_TransType, TransType_Name,false))
+                                            }
                                         }
+
+                                        otherChargesPopup(modelOtherCharges)
                                     } else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
@@ -1530,64 +1825,255 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         }
     }
 
-    private fun otherChargesPopup(otherChargeArrayList: JSONArray) {
+    private fun otherChargesPopup(modelOtherCharges : ArrayList<ModelOtherCharges>) {
         try {
 
-            dialogOthercharge = Dialog(this)
-            dialogOthercharge!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogOthercharge!! .setContentView(R.layout.othercharge_popup)
-            dialogOthercharge!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-            recyOtherCharge = dialogOthercharge!! .findViewById(R.id.recyOtherCharge) as RecyclerView
-            val etsearch = dialogOthercharge!! .findViewById(R.id.etsearch) as EditText
+            dialogOtherChargesSheet = Dialog(this)
+            dialogOtherChargesSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogOtherChargesSheet!! .setContentView(R.layout.other_charges_popup)
+            dialogOtherChargesSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+            dialogOtherChargesSheet!!.setCancelable(true)
 
-            otherchargeSort = JSONArray()
-            for (k in 0 until otherChargeArrayList.length()) {
-                val jsonObject = otherChargeArrayList.getJSONObject(k)
-                // reportNamesort.put(k,jsonObject)
-                otherchargeSort.put(jsonObject)
+            var recycOtherCharges = dialogOtherChargesSheet!! .findViewById(R.id.recycOtherCharges) as RecyclerView
+            var txt_close = dialogOtherChargesSheet!! .findViewById(R.id.txt_close) as TextView
+            var txt_apply = dialogOtherChargesSheet!! .findViewById(R.id.txt_apply) as TextView
+
+
+            val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
+            recycOtherCharges!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            otherChargeAdapter = OtherChargeAdapter(this@ProjectSiteVisitActivity, modelOtherCharges)
+            recycOtherCharges!!.adapter = otherChargeAdapter
+            otherChargeAdapter!!.setClickListener(this@ProjectSiteVisitActivity)
+            otherChargeAdapter!!.setClickListener(this@ProjectSiteVisitActivity)
+
+            txt_close!!.setOnClickListener {
+                dialogOtherChargesSheet!!.dismiss()
             }
 
-//            val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
-//            recyOtherCharge!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//            val adapter = OtherChargeAdapter(this@ProjectSiteVisitActivity, otherchargeSort)
-//            recyOtherCharge!!.adapter = adapter
-//            adapter.setClickListener(this@ProjectSiteVisitActivity)
+            txt_apply!!.setOnClickListener {
 
-            etsearch!!.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(p0: Editable?) {
-                }
-
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                }
-
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-                    //  list_view!!.setVisibility(View.VISIBLE)
-                    val textlength = etsearch!!.text.length
-                    otherchargeSort = JSONArray()
-
-                    for (k in 0 until otherChargeArrayList.length()) {
-                        val jsonObject = otherChargeArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("DeptName").length) {
-                            if (jsonObject.getString("DeptName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
-                                otherchargeSort.put(jsonObject)
+                var otherCharge = 0F
+                for (i in 0 until modelOtherCharges.size) {
+                    if (modelOtherCharges[i].isCalculate){
+                        if (modelOtherCharges[i].OctyIncludeTaxAmount){
+                            if (modelOtherCharges[i].ID_TransType.equals("2")){
+                                // Credit
+                                otherCharge = otherCharge - (modelOtherCharges[i].OctyAmount).toFloat()
+                            }else if (modelOtherCharges[i].ID_TransType.equals("1")){
+                                // Debit
+                                otherCharge = otherCharge + (modelOtherCharges[i].OctyAmount).toFloat()
                             }
+                        }else{
+                            if (modelOtherCharges[i].ID_TransType.equals("2")){
+                                // Credit
 
+                                otherCharge = otherCharge - ((modelOtherCharges[i].OctyAmount).toFloat()+(modelOtherCharges[i].OctyTaxAmount).toFloat())
+                            }else if (modelOtherCharges[i].ID_TransType.equals("1")){
+                                // Debit
+                                otherCharge = otherCharge + ((modelOtherCharges[i].OctyAmount).toFloat()+(modelOtherCharges[i].OctyTaxAmount).toFloat())
+                            }
                         }
                     }
-
-//                    Log.e(TAG,"otherchargeSort               7103    "+otherchargeSort)
-//                    val adapter = OtherChargeAdapter(this@ProjectSiteVisitActivity, otherchargeSort)
-//                    recyOtherCharge!!.adapter = adapter
-//                    adapter.setClickListener(this@ProjectSiteVisitActivity)
                 }
-            })
 
-            dialogOthercharge!!.show()
-            dialogOthercharge!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                tie_Othercharges!!.setText(Config.changeTwoDecimel(otherCharge.toString()))
+                dialogOtherChargesSheet!!.dismiss()
+
+            }
+
+
+            dialogOtherChargesSheet!!.show()
+            val window: Window? = dialogOtherChargesSheet!!.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.white);
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
+        }catch (e : Exception){
+
+            Log.e(TAG,"3856  "+e)
+        }
+    }
+
+    private fun getOtherChargeTax() {
+        var ReqMode = "118"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                otherChargeTaxCalculationViewModel.getOtherChargeTaxCalculation(this,ReqMode!!,FK_TaxGroup,IncludeTaxCalc,AmountTaxCalc)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (otherchargetaxcount == 0){
+                                    otherchargetaxcount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   6733332   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("OtherChargeTaxCalculationDetails")
+                                        otherChargeCalcArrayList = jobjt.getJSONArray("OtherChargeTaxCalculationDetailsList")
+
+                                        if (otherChargeCalcArrayList.length() > 0){
+                                            if (otherchargetaxMode == 0){
+                                                otherChargesCalcPopup(otherChargeCalcArrayList)
+                                            }else{
+                                                Log.e(TAG,"38777  ")
+                                                var sumOfTax = 0F
+                                                for (i in 0 until otherChargeCalcArrayList.length()) {
+                                                    val jsonObject2 = otherChargeCalcArrayList.getJSONObject(i)
+
+
+                                                    Log.e(TAG,"40551  "+jsonObject2.getString("Amount"))
+                                                    sumOfTax = sumOfTax +(jsonObject2.getString("Amount")).toFloat()
+
+                                                }
+
+                                                modelOtherCharges[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+                                                otherChargeAdapter!!.notifyItemChanged(otherChargeClickPosition)
+
+                                                Log.e(TAG,"40552     "+sumOfTax)
+//                                                modelOtherCharges[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+//
+//                                                otherChargeAdapter!!.notifyItemChanged(otherChargeClickPosition)
+//                                                dialogOtherChargesCalcSheet!!.dismiss()
+                                            }
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectSiteVisitActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+ Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun otherChargesCalcPopup(otherChargeCalcArrayList: JSONArray) {
+        try {
+
+
+            dialogOtherChargesCalcSheet = Dialog(this)
+            dialogOtherChargesCalcSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogOtherChargesCalcSheet!! .setContentView(R.layout.list_other_charge_popup)
+            dialogOtherChargesCalcSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            dialogOtherChargesCalcSheet!!.setCancelable(false)
+            recyOtherCalc = dialogOtherChargesCalcSheet!! .findViewById(R.id.recyOtherCalc) as RecyclerView
+            var btnOk = dialogOtherChargesCalcSheet!! .findViewById(R.id.btnOk) as Button
+
+            var hasId1 =  hasOtherChecked(modelOtherChargesCalculation!!,FK_TaxGroup)
+            Log.e(TAG,"3199   "+hasId1)
+            if (hasId1){
+                Log.e(TAG,"31991   "+hasId1)
+
+                for (i in 0 until otherChargeCalcArrayList.length()) {
+
+                    val jsonObject = otherChargeCalcArrayList.getJSONObject(i)
+                    var empModel = modelOtherChargesCalculation[otherChargeCalcPosition]
+                    empModel.FK_TaxGroup = FK_TaxGroup
+                    empModel.ID_TaxSettings = jsonObject.getString("ID_TaxSettings")
+                    empModel.FK_TaxType = jsonObject.getString("FK_TaxType")
+                    empModel.TaxTyName = jsonObject.getString("TaxTyName")
+                    empModel.TaxPercentage = jsonObject.getString("TaxPercentage")
+                    empModel.TaxtyInterstate = jsonObject.getBoolean("TaxtyInterstate")
+                    empModel.TaxUpto = jsonObject.getString("TaxUpto")
+                    empModel.TaxUptoPercentage = jsonObject.getBoolean("TaxUptoPercentage")
+                    empModel.Amount = jsonObject.getString("Amount")
+
+                }
+
+            }else{
+                Log.e(TAG,"31992   "+hasId1)
+                for (i in 0 until otherChargeCalcArrayList.length()) {
+                    val jsonObject = otherChargeCalcArrayList.getJSONObject(i)
+                    modelOtherChargesCalculation!!.add(
+                        ModelOtherChargesCalculation(FK_TaxGroup,jsonObject.getString("ID_TaxSettings"),jsonObject.getString("FK_TaxType"),
+                            jsonObject.getString("TaxTyName"),jsonObject.getString("TaxPercentage"),jsonObject.getBoolean("TaxtyInterstate"),
+                            jsonObject.getString("TaxUpto"),jsonObject.getBoolean("TaxUptoPercentage"),jsonObject.getString("Amount"))
+                    )
+                }
+
+
+
+
+            }
+
+            val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
+            recyOtherCalc!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            taxDetailAdapter = TaxDetailAdapter(this@ProjectSiteVisitActivity, modelOtherChargesCalculation)
+            recyOtherCalc!!.adapter = taxDetailAdapter
+            taxDetailAdapter!!.setClickListener(this@ProjectSiteVisitActivity)
+
+            btnOk.setOnClickListener {
+                var sumOfTax = 0F
+                for (i in 0 until modelOtherChargesCalculation.size) {
+                    if (modelOtherChargesCalculation[i].FK_TaxGroup.equals(FK_TaxGroup)){
+
+                        Log.e(TAG,"40551  "+modelOtherChargesCalculation[i].Amount)
+                        sumOfTax = sumOfTax +(modelOtherChargesCalculation[i].Amount).toFloat()
+                    }
+                }
+
+                Log.e(TAG,"40552     "+sumOfTax)
+                modelOtherCharges[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+
+                otherChargeAdapter!!.notifyItemChanged(otherChargeClickPosition)
+                dialogOtherChargesCalcSheet!!.dismiss()
+            }
+
+            dialogOtherChargesCalcSheet!!.show()
+            dialogOtherChargesCalcSheet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun hasOtherChecked(modelOtherChargesCalculation: ArrayList<ModelOtherChargesCalculation>, FK_TaxGroup: String): Boolean {
+        var isChecked = false
+        for (i in 0 until modelOtherChargesCalculation.size) {
+            if (modelOtherChargesCalculation.get(i).FK_TaxGroup.equals(FK_TaxGroup)){
+                isChecked = true
+                otherChargeCalcPosition = i
+                break
+            }
+        }
+        return isChecked
     }
 
     private fun getDepartment() {
@@ -2378,6 +2864,154 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     }
 
 
+    private fun selectImage() {
+        try {
+            val pm = packageManager
+            val hasPerm = pm.checkPermission(Manifest.permission.CAMERA, packageName)
+            if (hasPerm == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) !== PackageManager.PERMISSION_GRANTED
+                ) {
+                    // Permission is not granted
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                            this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
+                    ) {
+                        // Show an explanation to the user *asynchronously* -- don't block
+                        // this thread waiting for the user's response! After the user
+                        // sees the explanation, try again to request the permission.
+                    } else {
+                        // No explanation needed; request the permission
+                        ActivityCompat.requestPermissions(
+                            this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                        )
+                    }
+                } else {
+                    val options = arrayOf<CharSequence>(
+                        "Take Photo",
+                        "Choose From Gallery",
+                        "Choose Document",
+                        "Cancel"
+                    )
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                    builder.setTitle("Select Option")
+                    builder.setItems(options,
+                        DialogInterface.OnClickListener { dialog, item ->
+                            if (options[item] == "Take Photo") {
+                                dialog.dismiss()
+                                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                                startActivityForResult(intent, PICK_IMAGE_CAMERA)
+                            } else if (options[item] == "Choose From Gallery") {
+                                dialog.dismiss()
+                                val pickPhoto = Intent(
+                                    Intent.ACTION_PICK,
+                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                                )
+                                startActivityForResult(pickPhoto, PICK_IMAGE_GALLERY)
+                            } else if (options[item] == "Choose Document") {
+                               // browseDocuments()
+                              //  browseFolders()
+
+                                pickDocument()
+                            } else if (options[item] == "Cancel") {
+                                dialog.dismiss()
+                            }
+                            dialog.dismiss()
+                        })
+                    builder.show()
+                }
+            } else ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.CAMERA),
+                PERMISSION_CAMERA
+            )
+        } catch (e: Exception) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Camera Permission error", Toast.LENGTH_SHORT).show()
+            e.printStackTrace()
+        }
+    }
+
+    private fun browseFolders() {
+        val folderPath = Environment.getExternalStorageDirectory().absolutePath // or specify your folder path
+        val folder = File(folderPath)
+
+        if (folder.exists() && folder.isDirectory) {
+            val folders = folder.listFiles { file ->
+                file.isDirectory
+            }
+
+            // Now 'folders' contains only the directories in the folder
+            for (folder in folders) {
+                // Process each folder as needed
+                // Example: Log the folder name
+                Log.d("Folder", folder.name)
+            }
+        } else {
+            // Handle the case when the folder doesn't exist or is not a directory
+        }
+    }
+
+     private fun pickDocument() {
+
+//         val mimetypes = arrayOf(
+//             "jpeg/*",
+//             "jpg/*",
+//             "png/*",
+//             "docx/*",
+//             "doc/*",
+//             "xlsx/*",
+//             "xls/*",
+//             "pdf/*"
+//         )
+
+         val mimetypes = arrayOf(
+             "image/*",
+             "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+             "application/pdf"
+         )
+
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = "*/*"  // All file types
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes)
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true)
+
+        startActivityForResult(intent, PICK_DOCUMENT_REQUEST_CODE)
+    }
+
+
+    private fun browseDocuments() {
+
+
+        val mimetypes = arrayOf(
+            "jpg/*",
+            "jpeg/*",
+            ".pdf/*",
+            ".doc/*",
+            ".docx/*",
+            ".xls/*",
+            ".xlsx/*"
+        )
+
+//        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+//        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        //   intent.setAction(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+//        val uri = Uri.parse(Environment.getExternalStorageDirectory().path + File.separator)
+//        val file = DocumentFile.fromTreeUri(context, uri)
+        intent.type = "*/*"
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes) //Important part here
+        intent.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+      //  intent.putExtra(Intent.EXTRA_INITIAL_URI, file!!.getUri());
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        startActivityForResult(intent, PICK_DOCUMRNT_GALLERY)
+    }
+
     private fun getImageMode() {
 //        var department = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -2515,28 +3149,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == GALLERY) {
-            if (data != null) {
-                val contentURI = data!!.data
-                try {
-                    var selectedImageUri: Uri = data.getData()!!
-                    data.getData()
-
-                        //   val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
-//                        imgvupload1!!.setImageURI(contentURI)
-                        image = getRealPathFromURI(selectedImageUri)
-                        Log.e(TAG, "image1  2052    " + image)
-
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                    Toast.makeText(this@ProjectSiteVisitActivity, "Failed!", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-
-        }
-
-        else if (requestCode == CAMERA) {
+        inputStreamImg = null
+        if (requestCode == PICK_IMAGE_CAMERA) {
 
             try {
                 if (data != null) {
@@ -2551,6 +3165,9 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                                 )
                             ) {
+                                // Show an explanation to the user *asynchronously* -- don't block
+                                // this thread waiting for the user's response! After the user
+                                // sees the explanation, try again to request the permission.
 
                             } else {
                                 // No explanation needed; request the permission
@@ -2562,12 +3179,15 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                             }
                         } else {
 
+                            Log.e(TAG,"3961   "+data)
+                            Log.e(TAG,"3962   "+data!!.getExtras()!!.get("data"))
+
                             val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
                             val bytes = ByteArrayOutputStream()
                             thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-
-
+                            val fileName = "IMG_" + System.currentTimeMillis() + ".jpg";
                             try {
+
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                                     destination = File(
                                         Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
@@ -2585,7 +3205,12 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                     destination!!.createNewFile()
                                 }
 
-                                destination = File((Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" + "", "IMG_" + System.currentTimeMillis() + ".jpg")
+
+                                destination = File(
+                                    (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
+                                            "",
+                                    fileName
+                                )
                                 val fo: FileOutputStream
 
 
@@ -2601,19 +3226,16 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                 Log.e(TAG, "FileNotFoundException   23672    " + e.toString())
                             }
 
-                                image = destination!!.getAbsolutePath()
-//                                Log.e(TAG, "image1  20522    " + image1)
-                                destination = File(image)
+
+                            imgPath = destination!!.getAbsolutePath()
+                            Log.e(TAG, "imgPath  20522    " + imgPath)
+                            destination = File(imgPath)
+                            documentPath = imgPath!!
+                            //txtAttachmentPath!!.setText(imgPath)
+                            //  tie_Attachment!!.setText(imgPath)
+                            tie_Attachments!!.setText(fileName)
 
 
-                                val myBitmap = BitmapFactory.decodeFile(destination.toString())
-                                val converetdImage = getResizedBitmap(myBitmap, 500)
-                                //  val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
-
-
-                                if (image != null) {
-
-                                }
                         }
                     } catch (e: IOException) {
                         e.printStackTrace()
@@ -2624,8 +3246,114 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             } catch (e: Exception) {
 
             }
+
+        }
+        else if (requestCode == PICK_IMAGE_GALLERY) {
+            if (data != null) {
+                val selectedImage = data.data
+                try {
+                    val fileName = UriUtil.getFileName(this,data!!.data!!)
+                    Log.e(TAG,"561 fileName :   "+fileName)
+                    bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImage)
+                    val bytes = ByteArrayOutputStream()
+                    bitmap!!.compress(Bitmap.CompressFormat.JPEG, 50, bytes)
+                    imgPath = getRealPathFromURI(selectedImage!!)
+                    destination = File(imgPath.toString())
+                    documentPath = imgPath!!
+                   // txtAttachmentPath!!.setText(imgPath)
+                    tie_Attachments!!.setText(fileName)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            } else {
+                Toast.makeText(this, "No image selected from gallery", Toast.LENGTH_SHORT).show()
+            }
+        }
+        else if (requestCode == PICK_DOCUMRNT_GALLERY) {
+            try {
+                if (data != null) {
+                    val uri = data.data
+                    Log.e(TAG,"561  uri "+uri)
+                    Log.e(TAG,"561 data  "+data)
+
+//                    OLD
+                    //    selectedFilePath = UriUtil.fileFromContentUri(this, uri!!).toString()
+                    //   selectedFilePath = UriUtil.getPath(this, uri!!).toString()
+                    //   selectedFilePath = getRealPathFromURI(uri)
+
+
+//                    selectedFilePath = getRealPathFromURI(uri)
+////                    selectedFilePath = getRealPathUri(uri)
+//                    Log.e(TAG,"561  selectedFilePath   "+selectedFilePath)
+//                    destination = File(selectedFilePath.toString())
+//                    Log.e(TAG,"561 destination  "+destination)
+//                    documentPath = selectedFilePath!!
+//                    Log.e(TAG,"561 documentPath   "+documentPath)
+//                    txtAttachmentPath!!.setText(selectedFilePath)
+//                    tie_Attachment!!.setText(selectedFilePath)
+//
+//                    22.02.2023
+
+                    val fileName = UriUtil.getFileName(this,data!!.data!!)
+                    val filepath= UriUtil.fileFromContentUri(this,data!!.data!!,fileName!!)  // WORKING 22.02.2023
+                    tie_Attachments!!.setText(fileName)
+                    Log.e(TAG,"561 filepath :   "+filepath)
+                    documentPath = filepath.toString()
+
+//                    val map: MimeTypeMap = MimeTypeMap.getSingleton()
+//                    val ext: String = MimeTypeMap.getFileExtensionFromUrl(filepath.name)
+//                    var type: String? = map.getMimeTypeFromExtension(ext)
+//                    if (type == null)
+//                        type = "*/*";
+//
+//                    val intent = Intent(Intent.ACTION_VIEW)
+//                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//                    val data: Uri = Uri.fromFile(filepath)
+//                    intent.setDataAndType(data, type)
+//                    startActivity(intent)
+
+                } else {
+                    Toast.makeText(this, "No Document selected", Toast.LENGTH_SHORT).show()
+                }
+            }catch (e: Exception){
+                Log.e(TAG,"561   "+e.toString())
+            }
+
+        }
+
+        else if (requestCode == PICK_DOCUMENT_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            data?.data?.let { documentUri ->
+                // Perform the upload operation with the selected document URI
+
+                val fileName = UriUtil.getFileName(this,data!!.data!!)
+                val filepath= UriUtil.fileFromContentUri(this,data!!.data!!,fileName!!)  // WORKING 22.02.2023
+                tie_Attachments!!.setText(fileName)
+                Log.e(TAG,"561 filepath :   "+filepath)
+                documentPath = filepath.toString()
+
+                uploadDocument(documentUri)
+            }
         }
     }
+
+    private fun uploadDocument(documentUri: Uri) {
+        val documentFile = DocumentFile.fromSingleUri(this, documentUri)
+
+        if (documentFile != null && documentFile.exists()) {
+            // Get information about the selected document
+            val documentName = documentFile.name
+            val documentSize = documentFile.length()
+
+            Log.d("Document Info", "Name: $documentName, Size: $documentSize bytes")
+
+            // Perform your upload logic here
+            // Example: Upload the document to a server, etc.
+        } else {
+            Log.e("Error", "Unable to access the selected document.")
+        }
+    }
+
     private fun showPictureDialog() {
 
         try {
@@ -2945,5 +3673,66 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
             }
         }
+
+        if (data.equals("IncludeTaxClick")){
+
+            Log.e(TAG,"IncludeTaxClick  6733   "+ modelOtherCharges[position].OctyIncludeTaxAmount)
+//            if (modelOtherCharges[position].OctyIncludeTaxAmount){
+////                FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
+////                otherchargetaxcount = 0
+////                getOtherChargeTax()
+//            }else{
+//
+//            }
+            otherChargeClickPosition = position
+            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
+            AmountTaxCalc = modelOtherCharges[position].OctyAmount
+            if (modelOtherCharges[position].OctyIncludeTaxAmount){
+                IncludeTaxCalc = "1"
+            }else{
+                IncludeTaxCalc = "0"
+            }
+
+            otherchargetaxcount = 0
+            otherchargetaxMode = 0
+            getOtherChargeTax()
+
+        }
+
+        if (data.equals("IncludeTaxAmountClick")){
+
+            Log.e(TAG,"IncludeTaxAmountClick  8288   "+ modelOtherCharges[position].OctyIncludeTaxAmount)
+            otherChargeClickPosition = position
+            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
+            AmountTaxCalc = modelOtherCharges[position].OctyAmount
+            if (modelOtherCharges[position].OctyIncludeTaxAmount){
+                IncludeTaxCalc = "1"
+            }else{
+                IncludeTaxCalc = "0"
+            }
+            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
+            otherchargetaxcount = 0
+            otherchargetaxMode = 0
+            getOtherChargeTax()
+        }
+
+        if (data.equals("TaxAmountClaculateClick")){
+
+            Log.e(TAG,"TaxAmountClaculateClick  8288   "+ modelOtherCharges[position].OctyIncludeTaxAmount)
+            otherChargeClickPosition = position
+            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
+            AmountTaxCalc = modelOtherCharges[position].OctyAmount
+            if (modelOtherCharges[position].OctyIncludeTaxAmount){
+                IncludeTaxCalc = "1"
+            }else{
+                IncludeTaxCalc = "0"
+            }
+            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
+            otherchargetaxcount = 0
+            otherchargetaxMode = 1
+            getOtherChargeTax()
+        }
+
+
     }
 }

@@ -40,7 +40,10 @@ class StageAdapter(internal var context: Context, internal var jsonArray: JSONAr
 
                 holder.llStage!!.setTag(position)
                 holder.llStage!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "stageCliik")
+                    clickListener!!.onClick(
+                        position,
+                        "stageCliik"
+                    )
                 })
             }
         } catch (e: Exception) {

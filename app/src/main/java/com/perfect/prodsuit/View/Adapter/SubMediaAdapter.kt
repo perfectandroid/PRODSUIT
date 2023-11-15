@@ -45,7 +45,10 @@ class SubMediaAdapter(internal var context: Context, internal var jsonArray: JSO
 //                }
                 holder.llsubMedia!!.setTag(position)
                 holder.llsubMedia!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "submedia")
+                    clickListener!!.onClick(
+                        position,
+                        "submedia"
+                    )
                 })
             }
         } catch (e: Exception) {

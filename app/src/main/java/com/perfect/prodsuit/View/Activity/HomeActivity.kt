@@ -1010,8 +1010,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                val intent = Intent(this, ProductSearchActivity::class.java)
 //                startActivity(intent)
 
-//                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
-//                startActivity(i)
+                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
+                startActivity(i)
 
 
 //                val i = Intent(this@HomeActivity, StockTransferActivity::class.java)
@@ -1450,6 +1450,13 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
                                 if (jObject.getString("StatusCode") == "0") {
+                                    val mpinSP = applicationContext.getSharedPreferences(
+                                        Config.SHARED_PREF74,
+                                        0
+                                    )
+                                    val mpinEditer = mpinSP.edit()
+                                    mpinEditer.putString("mpin", newPin)
+                                    mpinEditer.commit()
                                     var jobj = jObject.getJSONObject("MPINDetails")
 
                                     val builder = AlertDialog.Builder(

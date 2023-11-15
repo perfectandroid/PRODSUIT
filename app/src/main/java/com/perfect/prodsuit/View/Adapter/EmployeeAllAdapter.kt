@@ -40,7 +40,10 @@ class EmployeeAllAdapter(internal var context: Context, internal var jsonArray: 
                 holder.txtDesignation.text        = jsonObject!!.getString("DesignationName")
                 holder.llemployee!!.setTag(position)
                 holder.llemployee!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "employeeAll")
+                    clickListener!!.onClick(
+                        position,
+                        "employeeAll"
+                    )
                 })
             }
         } catch (e: Exception) {

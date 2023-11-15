@@ -3516,6 +3516,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun getPaymentList() {
+    
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)

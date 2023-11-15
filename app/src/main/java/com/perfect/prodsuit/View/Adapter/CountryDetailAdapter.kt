@@ -41,7 +41,10 @@ class CountryDetailAdapter(internal var context: Context, internal var jsonArray
 
                 holder.llCountry!!.setTag(position)
                 holder.llCountry!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "countrydetail")
+                    clickListener!!.onClick(
+                        position,
+                        "countrydetail"
+                    )
                 })
             }
         } catch (e: Exception) {

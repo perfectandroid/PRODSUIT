@@ -41,7 +41,10 @@ class ProductStockAdapter (internal var context: Context, internal var jsonArray
 
                 holder.ll_ProductStock!!.setTag(position)
                 holder.ll_ProductStock!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "productstock")
+                    clickListener!!.onClick(
+                        position,
+                        "productstock"
+                    )
                 })
             }
         } catch (e: Exception) {

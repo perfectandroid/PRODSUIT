@@ -123,7 +123,10 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
                 holder.txtAddress.text      = jsonObject!!.getString("CusAddress1")
                 holder.lladpcustomer!!.setTag(position)
                 holder.lladpcustomer!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "customer")
+                    clickListener!!.onClick(
+                        position,
+                        "customer"
+                    )
                 })
             }
         } catch (e: Exception) {

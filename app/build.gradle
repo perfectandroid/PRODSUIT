@@ -151,6 +151,7 @@ dependencies {
     //Lottie
     def lottieVersion = "4.1.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
+    implementation 'androidx.biometric:biometric:1.1.0'
 
 
 

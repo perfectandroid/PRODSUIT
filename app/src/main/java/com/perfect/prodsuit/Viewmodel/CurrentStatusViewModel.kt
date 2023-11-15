@@ -13,8 +13,8 @@ class CurrentStatusViewModel : ViewModel()  {
 
     var currentstatusData: MutableLiveData<CurrentModel>? = null
 
-    fun getCurrentStatus(context: Context) : LiveData<CurrentModel>? {
-        currentstatusData = CurrentStatusRepository.getServicesApiCall(context)
+    fun getCurrentStatus(context: Context,ReqMode :  String,Critrea1:  String,SubMode:  String) : LiveData<CurrentModel>? {
+        currentstatusData = CurrentStatusRepository.getServicesApiCall(context,ReqMode,Critrea1,SubMode)
         return currentstatusData
     }
 

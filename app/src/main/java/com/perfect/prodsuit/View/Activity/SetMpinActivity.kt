@@ -508,6 +508,13 @@ class SetMpinActivity : AppCompatActivity(), View.OnClickListener {
                                 if (msg!!.length > 0) {
                                     val jObject = JSONObject(msg)
                                     if (jObject.getString("StatusCode") == "0") {
+                                        val mpinSP = applicationContext.getSharedPreferences(
+                                            Config.SHARED_PREF74,
+                                            0
+                                        )
+                                        val mpinEditer = mpinSP.edit()
+                                        mpinEditer.putString("mpin", Mpin)
+                                        mpinEditer.commit()
                                         var jobj = jObject.getJSONObject("MPINDetails")
 
                                         val builder = AlertDialog.Builder(

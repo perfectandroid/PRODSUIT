@@ -46,7 +46,10 @@ class ServiceRoleAdapter (internal var context: Context, internal var jsonArray:
 //                }
                 holder.llServiceRole!!.setTag(position)
                 holder.llServiceRole!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "serviceRole")
+                    clickListener!!.onClick(
+                        position,
+                        "serviceRole"
+                    )
                 })
             }
         } catch (e: Exception) {

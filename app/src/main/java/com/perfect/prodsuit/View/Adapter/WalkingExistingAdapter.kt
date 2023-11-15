@@ -50,7 +50,10 @@ class WalkingExistingAdapter (internal var context: Context, internal var modelW
                 holder.adp_imgEdit!!.setTag(position)
                 holder.adp_imgEdit!!.setOnClickListener(View.OnClickListener {
                     Log.e(TAG,"Click   51111  "+position)
-                    clickListener!!.onClick(position, "clickLead")
+                    clickListener!!.onClick(
+                        position,
+                        "clickLead"
+                    )
                 })
 
             }

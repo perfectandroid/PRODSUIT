@@ -44,22 +44,34 @@ class ProjectListAdapter (internal var context: Context, internal var jsonArray:
 
                 holder.ll_material_usage!!.setTag(position)
                 holder.ll_material_usage!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "materialUsageClick")
+                    clickListener!!.onClick(
+                        position,
+                        "materialUsageClick"
+                    )
                 })
 
                 holder.ll_material_request!!.setTag(position)
                 holder.ll_material_request!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "materialRequestClick")
+                    clickListener!!.onClick(
+                        position,
+                        "materialRequestClick"
+                    )
                 })
 
                 holder.ll_project_followup!!.setTag(position)
                 holder.ll_project_followup!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "projectFollowupClick")
+                    clickListener!!.onClick(
+                        position,
+                        "projectFollowupClick"
+                    )
                 })
 
                 holder.ll_project_transaction!!.setTag(position)
                 holder.ll_project_transaction!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "materialTransactionClick")
+                    clickListener!!.onClick(
+                        position,
+                        "materialTransactionClick"
+                    )
                 })
             }
         } catch (e: Exception) {

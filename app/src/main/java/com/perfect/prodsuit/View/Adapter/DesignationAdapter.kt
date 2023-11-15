@@ -45,7 +45,10 @@ class DesignationAdapter (internal var context: Context, internal var jsonArray:
 //                }
                 holder.lldesignation!!.setTag(position)
                 holder.lldesignation!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "designation")
+                    clickListener!!.onClick(
+                        position,
+                        "designation"
+                    )
                 })
             }
         } catch (e: Exception) {

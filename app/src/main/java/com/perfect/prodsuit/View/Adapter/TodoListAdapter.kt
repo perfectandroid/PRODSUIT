@@ -117,20 +117,29 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                 holder.lToDoList!!.setTag(position)
                 holder.lToDoList!!.setOnClickListener(View.OnClickListener {
                  //   if (!SubMode.equals("4")){
-                        clickListener!!.onClick(position, "todolist")
+                        clickListener!!.onClick(
+                            position,
+                            "todolist"
+                        )
                  //   }
 
                 })
 
                 holder.imcall!!.setTag(position)
                 holder.imcall!!.setOnClickListener(View.OnClickListener {
-                        clickListener!!.onClick(position, "todocall")
+                        clickListener!!.onClick(
+                            position,
+                            "todocall"
+                        )
                 })
 
                 holder.immessage!!.setTag(position)
                 holder.immessage!!.setOnClickListener(View.OnClickListener {
 //                    if (SubMode.equals("4")) {
-                        clickListener!!.onClick(position, "todoMessage")
+                        clickListener!!.onClick(
+                            position,
+                            "todoMessage"
+                        )
                         Log.e("ggggfffffffffff","todoMessage ")
 //                    }
                 })

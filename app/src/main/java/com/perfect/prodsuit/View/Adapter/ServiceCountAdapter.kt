@@ -136,7 +136,10 @@ class ServiceCountAdapter(
 
                 holder.ll_new!!.setTag(position)
                 holder.ll_new!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "ServiceCount")
+                    clickListener!!.onClick(
+                        position,
+                        "ServiceCount"
+                    )
                     jsonObject = jsonArray.getJSONObject(position)
                     var submode = jsonObject!!.getString("MasterID")
                     var label=jsonObject!!.getString("Field")

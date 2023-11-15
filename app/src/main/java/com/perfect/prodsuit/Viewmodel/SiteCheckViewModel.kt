@@ -11,8 +11,8 @@ class SiteCheckViewModel : ViewModel()  {
 
     var siteCheckData: MutableLiveData<SiteCheckModel>? = null
 
-    fun getSiteCheck(context: Context) : LiveData<SiteCheckModel>? {
-        siteCheckData = SiteCheckRepository.getServicesApiCall(context)
+    fun getSiteCheck(context: Context,ReqMode : String) : LiveData<SiteCheckModel>? {
+        siteCheckData = SiteCheckRepository.getServicesApiCall(context,ReqMode)
         return siteCheckData
     }
 }

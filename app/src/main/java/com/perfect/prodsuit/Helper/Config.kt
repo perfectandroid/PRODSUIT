@@ -129,6 +129,7 @@ object Config {
     const val SHARED_PREF71 = "custbalid"
     const val SHARED_PREF72 = "idcustsrvceregist"
     const val SHARED_PREF73 = "idcustsrvceregistproductdetail"
+    const val SHARED_PREF74 = "mpin"
 
 
     var width = 0
@@ -569,6 +570,13 @@ object Config {
 
             deleteFcmToken(context)
 
+            val mpinSP = context.getSharedPreferences(
+                Config.SHARED_PREF74,
+                0
+            )
+            val mpinEditer = mpinSP.edit()
+            mpinEditer.putString("mpin", "")
+            mpinEditer.commit()
 
             val loginSP = context.getSharedPreferences(SHARED_PREF, 0)
             val loginEditer = loginSP.edit()
@@ -1120,6 +1128,40 @@ object Config {
         }catch (e : Exception){
             result = ""
         }
+        return result
+    }
+
+    fun getTransType(context : Context): String {
+
+        var result =""
+
+        try {
+            val array = JSONArray()
+            val jsonObject = JSONObject()
+            val jsonObject1 = JSONObject()
+
+            var obj = JSONObject()
+            obj.put("ID_TransType", "1")
+            obj.put("TransType_Name", "Debit")
+
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("ID_TransType", "2")
+            obj.put("TransType_Name", "Credit")
+
+            array.put(obj)
+
+            jsonObject.put("TransTypeDetails", array)
+            jsonObject1.put("TransType", jsonObject)
+
+            result = jsonObject1.toString()
+
+        }catch (e : Exception){
+
+        }
+
+
         return result
     }
 

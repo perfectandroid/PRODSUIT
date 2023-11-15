@@ -42,7 +42,10 @@ class SearchModuleAdapter (internal var context: Context, internal var jsonArray
 
                 holder.llModule!!.setTag(position)
                 holder.llModule!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "moduleClicks")
+                    clickListener!!.onClick(
+                        position,
+                        "moduleClicks"
+                    )
                 })
 
             }

@@ -76,7 +76,10 @@ class FollowupTicketReportAdapter(internal var context: Context, internal var js
                 holder.ll_followList!!.setTag(position)
                 holder.ll_followList!!.setOnClickListener(View.OnClickListener {
                     Log.e(TAG,"newListClick   5091")
-                    clickListener!!.onClick(position, "followListClick")
+                    clickListener!!.onClick(
+                        position,
+                        "followListClick"
+                    )
                 })
 
 

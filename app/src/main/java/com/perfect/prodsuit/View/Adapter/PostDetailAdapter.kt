@@ -40,7 +40,10 @@ class PostDetailAdapter(internal var context: Context, internal var jsonArray: J
 
                 holder.llPost!!.setTag(position)
                 holder.llPost!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "postdetail")
+                    clickListener!!.onClick(
+                        position,
+                        "postdetail"
+                    )
                 })
             }
         } catch (e: Exception) {

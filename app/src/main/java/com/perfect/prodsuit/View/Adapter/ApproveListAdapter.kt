@@ -171,7 +171,10 @@ class ApproveListAdapter (internal var context: Context, internal var jsonArray:
 //
                 holder.ll_main!!.setTag(position)
                 holder.ll_main!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "approveListClick")
+                    clickListener!!.onClick(
+                        position,
+                        "approveListClick"
+                    )
                 })
             }
         } catch (e: Exception) {

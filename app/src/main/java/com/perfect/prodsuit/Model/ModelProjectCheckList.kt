@@ -1,3 +1,3 @@
 package com.perfect.prodsuit.Model
 
-data class ModelProjectCheckList(var ID_Check:String, var Label_Name:String, var is_checked :Boolean,var subArray : Array<ModelProjectCheckListSub> )
+data class ModelProjectCheckList(var ID_CheckListType:String, var CLTyName:String, var is_checked :Boolean = false ,var SubArrary : Array<ModelProjectCheckListSub> )

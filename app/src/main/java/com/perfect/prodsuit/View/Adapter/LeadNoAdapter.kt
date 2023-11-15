@@ -42,7 +42,10 @@ class LeadNoAdapter(internal var context: Context, internal var jsonArray: JSONA
 
                 holder.llleadNo!!.setTag(position)
                 holder.llleadNo!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "LeadNumberClick")
+                    clickListener!!.onClick(
+                        position,
+                        "LeadNumberClick"
+                    )
                 })
             }
         } catch (e: Exception) {

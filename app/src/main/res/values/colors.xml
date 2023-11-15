@@ -75,6 +75,22 @@
 <!--    Company Color-->
     <color name="company_background">#C9C9C9</color>
 
+    <color name="dashlead">#5B7399</color>
+    <color name="dashservce">#E48743</color>
+    <color name="dashprojct">#3D8C8C</color>
+    <color name="dashcollctn">#74A170</color>
+    <color name="dashpickup">#6B6B6B</color>
+    <color name="dashinventry">#2A5E62</color>
+    <color name="dashacnt">#2D3E50</color>
+
+
+    <color name="textlead">#5B7399</color>
+    <color name="textsrvce">#E48743</color>
+    <color name="textprjct">#3D8C8C</color>
+    <color name="textcollctn">#74A170</color>
+    <color name="textpickup">#6B6B6B</color>
+    <color name="textinvntry">#2A5E62</color>
+    <color name="textacnt">#2D3E50</color>
 
     // work
 
@@ -480,6 +496,7 @@
 
     <color name="color_chat_my">#2e666a</color>
     <color name="color_chat_op">#565B75</color>
+    <color name="bkdashtile">#565B75</color>
 
     <color name="color_site_tab_10">#3B6561</color>
     <color name="color_site_tab_11">#A0AEAC</color>

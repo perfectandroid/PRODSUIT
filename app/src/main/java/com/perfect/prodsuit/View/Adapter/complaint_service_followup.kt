@@ -40,7 +40,10 @@ class complaint_service_followup(internal var context: Context, internal var jso
                 holder.txtCompService.text        = jsonObject!!.getString("ComplaintName")
                 holder.llCompService!!.setTag(position)
                 holder.llCompService!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "CompServiceFollowUp")
+                    clickListener!!.onClick(
+                        position,
+                        "CompServiceFollowUp"
+                    )
                 })
             }
         } catch (e: Exception) {

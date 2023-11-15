@@ -40,7 +40,10 @@ class PayMethodAdapter (internal var context: Context, internal var jsonArray: J
 
                 holder.llPaymentMethod!!.setTag(position)
                 holder.llPaymentMethod!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "paymentMethod")
+                    clickListener!!.onClick(
+                        position,
+                        "paymentMethod"
+                    )
                 })
             }
         } catch (e: Exception) {

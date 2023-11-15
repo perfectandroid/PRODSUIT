@@ -67,7 +67,10 @@ class NewListTicketReportAdapter(internal var context: Context, internal var jso
                 holder.ll_newList!!.setTag(position)
                 holder.ll_newList!!.setOnClickListener(View.OnClickListener {
                     Log.e(TAG,"newListClick   5091")
-                    clickListener!!.onClick(position, "newListClick")
+                    clickListener!!.onClick(
+                        position,
+                        "newListClick"
+                    )
                 })
 
 

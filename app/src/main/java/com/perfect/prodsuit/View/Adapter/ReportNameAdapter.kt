@@ -72,7 +72,10 @@ class ReportNameAdapter(internal var context: Context, internal var jsonArray: J
 //                }
                 holder.llReportName!!.setTag(position)
                 holder.llReportName!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "reportname")
+                    clickListener!!.onClick(
+                        position,
+                        "reportname"
+                    )
                 })
 //                holder.llReportName!!.setOnClickListener(View.OnClickListener {
 //                 //   clickListener!!.onClick(position, "reportname")

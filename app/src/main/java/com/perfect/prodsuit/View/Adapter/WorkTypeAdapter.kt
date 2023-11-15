@@ -40,7 +40,10 @@ class WorkTypeAdapter(internal var context: Context, internal var jsonArray: JSO
 
                 holder.llWorkType!!.setTag(position)
                 holder.llWorkType!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "WorkType")
+                    clickListener!!.onClick(
+                        position,
+                        "WorkType"
+                    )
                 })
             }
         } catch (e: Exception) {

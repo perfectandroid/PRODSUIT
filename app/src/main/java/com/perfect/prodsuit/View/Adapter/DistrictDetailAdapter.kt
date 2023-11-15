@@ -40,7 +40,10 @@ class DistrictDetailAdapter(internal var context: Context, internal var jsonArra
 
                 holder.llDistrict!!.setTag(position)
                 holder.llDistrict!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "districtdetail")
+                    clickListener!!.onClick(
+                        position,
+                        "districtdetail"
+                    )
                 })
             }
         } catch (e: Exception) {

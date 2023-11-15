@@ -19,7 +19,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.ArrayList
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 object ServiceAssignRepository {
 
@@ -46,8 +48,14 @@ object ServiceAssignRepository {
 //
 //        val msg ="{\"ServiceAssignDetails\": {\"ServiceAssignDetailsList\": [{\"TicketNo\":\"TKT101\",\"TicketDate\": \"06/06/2022\",\"Branch\": \"Head Office Chalappuram\",\"Customer\": \"Yousaf\",\"Mobile\": \"9876543210\",\"Area\": \"Chalappuram\",\"Priority\": \"LOW\",\"Status\": \"Pending\",\"TimeDue\": \"1 Week Ago\"},{\"TicketNo\":\"TKT101\",\"TicketDate\": \"07/06/2022\",\"Branch\": \"Head Office Chalappuram\",\"Customer\": \"Yousaf\",\"Mobile\": \"9876543211\",\"Area\": \"Chalappuram\",\"Priority\": \"HIGH\",\"Status\": \"Completed\",\"TimeDue\": \"10 Days Ago\"},{\"TicketNo\":\"TKT101\",\"TicketDate\": \"08/06/2022\",\"Branch\": \"Head Office Chalappuram\",\"Customer\": \"Yousaf\",\"Mobile\": \"9876543212\",\"Area\": \"Chalappuram\",\"Priority\": \"MEDIUM\",\"Status\": \"Pending\",\"TimeDue\": \"1 Month Ago\"},{\"TicketNo\":\"TKT101\",\"TicketDate\": \"09/06/2022\",\"Branch\": \"Head Office Chalappuram\",\"Customer\": \"Yousaf\",\"Mobile\": \"9876543213\",\"Area\": \"Chalappuram\",\"Priority\": \"LOW\",\"Status\": \"Completed\",\"TimeDue\": \"5 Days Ago\"}],\"ResponseCode\": \"0\",\"ResponseMessage\": \"Transaction Verified\"},\"StatusCode\": 0,\"EXMessage\": \"Transaction Verified\"}"
 //        serviceAssignSetterGetter.value = ServiceAssignModel(msg)
+        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+        val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
 
-        Log.e(TAG,"strAssignees  4000    "+strAssignees)
+        val dateFrom = inputFormat.parse(strVisitDate)
+        val strFromDate = outputFormat.format(dateFrom)
+
+
+        Log.e(TAG,"strAssignees  4000    "+strVisitDate+"\n"+strFromDate)
         try {
             serviceAssignSetterGetter.value = ServiceAssignModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -94,7 +102,7 @@ object ServiceAssignRepository {
                 requestObject1.put("FK_Customerserviceregister", ProdsuitApplication.encryptStart(ID_CustomerServiceRegister))
                 requestObject1.put("FK_CustomerserviceregisterProductDetails", ProdsuitApplication.encryptStart(FK_CustomerserviceregisterProductDetails))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart("0"))
-                requestObject1.put("Visitdate", ProdsuitApplication.encryptStart(strVisitDate))
+                requestObject1.put("Visitdate", ProdsuitApplication.encryptStart(strFromDate))
                 requestObject1.put("Visittime", ProdsuitApplication.encryptStart(strVisitTime))
                 requestObject1.put("FK_Priority", ProdsuitApplication.encryptStart(ID_Priority))
                 requestObject1.put("Remark", ProdsuitApplication.encryptStart(strRemark))

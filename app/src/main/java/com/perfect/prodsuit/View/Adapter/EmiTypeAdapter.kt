@@ -40,7 +40,10 @@ class EmiTypeAdapter (internal var context: Context, internal var jsonArray: JSO
 
                 holder.llEmiType!!.setTag(position)
                 holder.llEmiType!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "emiType")
+                    clickListener!!.onClick(
+                        position,
+                        "emiType"
+                    )
                 })
             }
         } catch (e: Exception) {

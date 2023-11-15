@@ -39,12 +39,18 @@ class PaymentMethodAdapter(
                 holder.txt_amount.setText(jsonObject!!.getString("amount"))
                 holder.img_delete.setOnClickListener(View.OnClickListener {
                     if (mItemClickListener != null) {
-                        mItemClickListener!!.onClick(position, "delete");
+                        mItemClickListener!!.onClick(
+                            position,
+                            "delete"
+                        );
                     }
                 })
                 holder.img_edit.setOnClickListener(View.OnClickListener {
                     if (mItemClickListener != null) {
-                        mItemClickListener!!.onClick(position, "edit");
+                        mItemClickListener!!.onClick(
+                            position,
+                            "edit"
+                        );
                     }
                 })
             }

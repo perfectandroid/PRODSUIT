@@ -42,7 +42,10 @@ class ProductStockTransferAdapter (internal var context: Context, internal var j
 
                 holder.ll_ProductStock!!.setTag(position)
                 holder.ll_ProductStock!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "productstock")
+                    clickListener!!.onClick(
+                        position,
+                        "productstock"
+                    )
                 })
             }
         } catch (e: Exception) {

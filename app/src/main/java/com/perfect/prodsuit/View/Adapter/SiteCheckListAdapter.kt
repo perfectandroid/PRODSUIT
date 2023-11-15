@@ -22,7 +22,7 @@ class SiteCheckListAdapter (private val context: Context, private val parentItem
     }
 
     override fun getChildrenCount(groupPosition: Int): Int {
-        return parentItems[groupPosition].subArray.size
+        return parentItems[groupPosition].SubArrary.size
     }
 
     override fun getGroup(groupPosition: Int): Any {
@@ -30,7 +30,7 @@ class SiteCheckListAdapter (private val context: Context, private val parentItem
     }
 
     override fun getChild(groupPosition: Int, childPosition: Int): Any {
-        return parentItems[groupPosition].subArray[childPosition]
+        return parentItems[groupPosition].SubArrary[childPosition]
     }
 
     override fun getGroupId(groupPosition: Int): Long {
@@ -61,7 +61,7 @@ class SiteCheckListAdapter (private val context: Context, private val parentItem
         val parentItem = getGroup(groupPosition) as ModelProjectCheckList
         val textView = view.findViewById<TextView>(R.id.tv_parent_label)
         val chk_box_Parent = view.findViewById<CheckBox>(R.id.chk_box_Parent)
-        textView.text = parentItem.Label_Name
+        textView.text = parentItem.CLTyName
         if (parentItem.is_checked){
             chk_box_Parent.isChecked = true
         }else{
@@ -73,8 +73,8 @@ class SiteCheckListAdapter (private val context: Context, private val parentItem
             if (chk_box_Parent.isChecked){
                 parentItem.is_checked = true
                 (parent as ExpandableListView).expandGroup(groupPosition)
-                for (k in 0 until parentItem.subArray.size) {
-                    parentItem.subArray[k].is_checked= true
+                for (k in 0 until parentItem.SubArrary.size) {
+                    parentItem.SubArrary[k].is_checked= true
                 }
 
                 notifyDataSetChanged()
@@ -82,8 +82,8 @@ class SiteCheckListAdapter (private val context: Context, private val parentItem
             }else{
                 parentItem.is_checked = false
                 (parent as ExpandableListView).collapseGroup(groupPosition)
-                for (k in 0 until parentItem.subArray.size) {
-                    parentItem.subArray[k].is_checked= false
+                for (k in 0 until parentItem.SubArrary.size) {
+                    parentItem.SubArrary[k].is_checked= false
                 }
 
                 notifyDataSetChanged()
@@ -118,19 +118,19 @@ class SiteCheckListAdapter (private val context: Context, private val parentItem
 
         Log.e(TAG,"1099   "+groupPosition+"  :  "+childPosition)
         chk_box_child.isChecked = childItem.is_checked
-        textView.text = childItem.Label_Name
+        textView.text = childItem.CkLstName
 
         chk_box_child.setOnClickListener {
             if (chk_box_child.isChecked){
                 Log.e(TAG,"13221 Child  hasCheck     ")
-                parentItems[groupPosition].subArray[childPosition].is_checked = true
+                parentItems[groupPosition].SubArrary[childPosition].is_checked = true
 
             }else{
                 Log.e(TAG,"13222 Child  hasCheck     ")
-                parentItems[groupPosition].subArray[childPosition].is_checked  = false
+                parentItems[groupPosition].SubArrary[childPosition].is_checked  = false
             }
 
-            var hasCheck =  hasChildChecked(parentItems[groupPosition].subArray)
+            var hasCheck =  hasChildChecked(parentItems[groupPosition].SubArrary)
             Log.e(TAG,"13223 Child  hasCheck     "+hasCheck)
             if (hasCheck){
                 parentItems[groupPosition].is_checked = true

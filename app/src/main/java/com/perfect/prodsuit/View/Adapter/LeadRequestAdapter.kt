@@ -93,7 +93,10 @@ class LeadRequestAdapter (internal var context: Context, internal var jsonArray:
                 holder.llRequest!!.setTag(position)
                 holder.llRequest!!.setOnClickListener(View.OnClickListener {
                     Config.disableClick(it)
-                    clickListener!!.onClick(position, "LeadrequestClick")
+                    clickListener!!.onClick(
+                        position,
+                        "LeadrequestClick"
+                    )
                 })
 
             }

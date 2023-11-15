@@ -97,7 +97,10 @@ class HomeGrideCountAdapter (internal var context: Context, internal var jsonArr
 
                 holder.ll_homedash!!.setTag(position)
                 holder.ll_homedash!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "homeDashClicks")
+                    clickListener!!.onClick(
+                        position,
+                        "homeDashClicks"
+                    )
                 })
 
             }

@@ -41,7 +41,10 @@ class AreaListAdapter (internal var context: Context, internal var jsonArray: JS
                 holder.tvBranch.text        = jsonObject!!.getString("Branch")
                 holder.llemployee!!.setTag(position)
                 holder.llemployee!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "EmpName")
+                    clickListener!!.onClick(
+                        position,
+                        "EmpName"
+                    )
                 })
             }
         } catch (e: Exception) {

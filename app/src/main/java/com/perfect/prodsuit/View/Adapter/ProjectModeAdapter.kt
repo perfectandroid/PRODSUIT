@@ -40,7 +40,10 @@ class ProjectModeAdapter(internal var context: Context, internal var jsonArray: 
 
                 holder.llMode!!.setTag(position)
                 holder.llMode!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "modeClick")
+                    clickListener!!.onClick(
+                        position,
+                        "modeClick"
+                    )
                 })
             }
         } catch (e: Exception) {

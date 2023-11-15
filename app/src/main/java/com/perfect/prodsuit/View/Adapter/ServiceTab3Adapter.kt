@@ -88,7 +88,10 @@ class ServiceTab3Adapter(
 
                 holder.img_addService!!.setTag(position)
                 holder.img_addService!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "addService3Click")
+                    clickListener!!.onClick(
+                        position,
+                        "addService3Click"
+                    )
                 })
 
 
@@ -271,7 +274,10 @@ class ServiceTab3Adapter(
 
                 holder.tv_serviceType!!.setTag(position)
                 holder.tv_serviceType!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "addServiceType3Click")
+                    clickListener!!.onClick(
+                        position,
+                        "addServiceType3Click"
+                    )
                 })
 
                 holder.chk_box!!.setTag(position)

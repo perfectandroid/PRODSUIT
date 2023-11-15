@@ -49,7 +49,10 @@ class DepartmentAdapter(internal var context: Context, internal var jsonArray: J
 //                }
                 holder.lldepartment!!.setTag(position)
                 holder.lldepartment!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "department")
+                    clickListener!!.onClick(
+                        position,
+                        "department"
+                    )
                 })
             }
         } catch (e: Exception) {

@@ -655,6 +655,15 @@ interface ApiInterface {
     @POST("ServiceFollowUp/GetProductInfo")
     fun getProductInfo(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/DashBoardModule")
+    fun getDashboardModules(@Body body: RequestBody): Call<String>
+
+
+    @POST("DashBoard/TileLeadDashBoardDetails")
+    fun getDashboardTileDetails(@Body body: RequestBody): Call<String>
+
+
+
     @POST("Project/UpdateProjectFollowUp")
     fun saveUpdateProjectFollowUp(@Body body: RequestBody): Call<String>
 
@@ -663,6 +672,19 @@ interface ApiInterface {
 
     @POST("Project/UnitList")
     fun getUnit(@Body body: RequestBody): Call<String>
+
+    @POST("Project/ProjectStatus")
+    fun getProjectStatus(@Body body: RequestBody): Call<String>
+
+    @POST("Project/ProjectOtherChargeDetails")
+    fun getProjectOtherChargeDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Project/OtherChargeTaxCalculationDetails")
+    fun getOtherChargeTaxCalculationDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Project/checkDetailsEmplo")
+    fun getProjectcheckDetails(@Body body: RequestBody): Call<String>
+
 
 
 }

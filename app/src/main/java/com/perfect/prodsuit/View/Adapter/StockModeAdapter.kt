@@ -41,7 +41,10 @@ class StockModeAdapter(internal var context: Context, internal var jsonArray: JS
 
                 holder.ll_StockMode!!.setTag(position)
                 holder.ll_StockMode!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "stockmode")
+                    clickListener!!.onClick(
+                        position,
+                        "stockmode"
+                    )
                 })
             }
         } catch (e: Exception) {

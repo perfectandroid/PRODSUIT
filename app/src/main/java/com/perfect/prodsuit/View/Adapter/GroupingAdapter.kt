@@ -46,7 +46,10 @@ class GroupingAdapter (internal var context: Context, internal var jsonArray: JS
 //                }
                 holder.llGrouping!!.setTag(position)
                 holder.llGrouping!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "grouping")
+                    clickListener!!.onClick(
+                        position,
+                        "grouping"
+                    )
                 })
             }
         } catch (e: Exception) {

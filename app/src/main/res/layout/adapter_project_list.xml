@@ -86,7 +86,8 @@
                             android:orientation="vertical"
                             android:gravity="center"
                             android:layout_marginTop="10dp"
-                            android:background="@drawable/circle_white">
+                            android:background="@drawable/circle_white"
+                            android:visibility="invisible">
 
                             <ImageView
                                 android:id="@+id/im_Channel"
@@ -584,7 +585,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -760,21 +761,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="80dp"
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/ll_material_usage"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/sicon_usage"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -782,43 +776,85 @@
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/myfont"
                     android:gravity="center"
-                    android:text="Usage"
+                    android:text="Material"
                     android:textColor="@color/list_label"
-                    android:textSize="13dp"
+                    android:textSize="16dp"
                     android:textStyle="normal" />
 
-            </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.9dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/svg_sa_sub1"/>
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/svg_sa_sub1"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"/>
-
-            <LinearLayout
-                android:id="@+id/ll_material_request"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/sicon_request"/>
-
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textSize="13dp"
-                    android:fontFamily="@font/myfont"
-                    android:text="Request"
-                    android:textStyle="normal"
-                    android:textColor="@color/list_label"
-                    android:layout_centerVertical="true" />
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/ll_material_usage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/sicon_usage"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/myfont"
+                            android:gravity="center"
+                            android:text="Usage"
+                            android:textColor="@color/list_label"
+                            android:textSize="13dp"
+                            android:textStyle="normal" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/svg_sa_sub1"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_material_request"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/sicon_request"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="13dp"
+                            android:fontFamily="@font/myfont"
+                            android:text="Request"
+                            android:textStyle="normal"
+                            android:textColor="@color/list_label"
+                            android:layout_centerVertical="true" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
 
@@ -830,17 +866,10 @@
                 android:layout_marginBottom="10dp"/>
 
             <LinearLayout
-                android:id="@+id/ll_project_followup"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
                 android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/sicon_followup" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -848,45 +877,89 @@
                     android:layout_centerVertical="true"
                     android:fontFamily="@font/myfont"
                     android:gravity="center"
-                    android:text="Followup"
+                    android:text="Project"
                     android:textColor="@color/list_label"
-                    android:textSize="13dp"
+                    android:textSize="16dp"
                     android:textStyle="normal" />
 
-            </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.9dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/svg_sa_sub1"/>
 
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/svg_sa_sub1"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"/>
-
-            <LinearLayout
-                android:id="@+id/ll_project_transaction"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/sicon_transaction"/>
-
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textSize="13dp"
-                    android:fontFamily="@font/myfont"
-                    android:text="Transaction"
-                    android:textStyle="normal"
-                    android:textColor="@color/list_label"
-                    android:layout_centerVertical="true" />
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/ll_project_followup"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/sicon_followup" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/myfont"
+                            android:gravity="center"
+                            android:text="Followup"
+                            android:textColor="@color/list_label"
+                            android:textSize="13dp"
+                            android:textStyle="normal" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/svg_sa_sub1"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"/>
+
+                    <LinearLayout
+                        android:id="@+id/ll_project_transaction"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/sicon_transaction"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="13dp"
+                            android:fontFamily="@font/myfont"
+                            android:text="Transaction"
+                            android:textStyle="normal"
+                            android:textColor="@color/list_label"
+                            android:layout_centerVertical="true" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
 
             </LinearLayout>
+
+
 
         </LinearLayout>
 

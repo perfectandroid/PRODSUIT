@@ -38,6 +38,7 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
     lateinit var projectLeadNoViewModel: ProjectLeadNoViewModel
     lateinit var projectLeadArrayList: JSONArray
     var recycSiteVisit: RecyclerView? = null
+    var mode = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +51,7 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
+        mode = intent.getStringExtra("mode").toString()
         setRegViews()
 
         tv_header!!.setText(""+jsonObj!!.getString("Type_Name"))
@@ -156,6 +158,7 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
         if (data.equals("LeadListClick")){
             val jsonObject = projectLeadArrayList.getJSONObject(position)
             val i = Intent(this@ProjectSiteVisitListActivity, ProjectSiteVisitActivity::class.java)
+            i.putExtra("mode",mode)
             i.putExtra("jsonObject",jsonObject.toString())
             startActivity(i)
         }

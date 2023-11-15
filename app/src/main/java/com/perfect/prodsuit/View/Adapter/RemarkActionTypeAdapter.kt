@@ -40,7 +40,10 @@ class RemarkActionTypeAdapter (internal var context: Context, internal var jsonA
 
                 holder.llactionType!!.setTag(position)
                 holder.llactionType!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "remarkactiontype")
+                    clickListener!!.onClick(
+                        position,
+                        "remarkactiontype"
+                    )
                 })
             }
         } catch (e: Exception) {

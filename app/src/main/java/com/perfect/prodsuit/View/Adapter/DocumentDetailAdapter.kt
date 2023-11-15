@@ -42,12 +42,18 @@ class DocumentDetailAdapter (internal var context: Context, internal var jsonArr
 
                 holder.imgDownload!!.setTag(position)
                 holder.imgDownload!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "Documents")
+                    clickListener!!.onClick(
+                        position,
+                        "Documents"
+                    )
                 })
 
                 holder.llViewDesc!!.setTag(position)
                 holder.llViewDesc!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "ViewDescription")
+                    clickListener!!.onClick(
+                        position,
+                        "ViewDescription"
+                    )
                 })
             }
         } catch (e: Exception) {

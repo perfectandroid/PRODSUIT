@@ -46,7 +46,10 @@ class MediaTypeAdapter(internal var context: Context, internal var jsonArray: JS
 //                }
                 holder.llmediatype!!.setTag(position)
                 holder.llmediatype!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "mediatype")
+                    clickListener!!.onClick(
+                        position,
+                        "mediatype"
+                    )
                 })
             }
         } catch (e: Exception) {

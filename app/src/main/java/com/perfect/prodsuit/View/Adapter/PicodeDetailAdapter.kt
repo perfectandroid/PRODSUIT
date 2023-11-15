@@ -41,7 +41,10 @@ class PicodeDetailAdapter (internal var context: Context, internal var jsonArray
 
                 holder.llPinCode!!.setTag(position)
                 holder.llPinCode!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "pincodedetails")
+                    clickListener!!.onClick(
+                        position,
+                        "pincodedetails"
+                    )
                 })
             }
         } catch (e: Exception) {

@@ -194,21 +194,34 @@ class ActionTakenAdapter(
 
 
                 holder.tv_action_action_taken!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "action_taken_action")
+                    clickListener!!.onClick(
+                        position,
+                        "action_taken_action"
+                    )
                 })
                 holder.tv_lead_action!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "lead_action")
+                    clickListener!!.onClick(
+                        position,
+                        "lead_action"
+                    )
                 })
                 holder.tv_lead_FollowupDate!!.setOnClickListener(View.OnClickListener {
+
                     clickListener!!.onClick(position, "lead_FollowupDateClick")
                 })
 
                 holder.tv_lead_ActionType!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "lead_ActionTypeClick")
+                    clickListener!!.onClick(
+                        position,
+                        "lead_ActionTypeClick"
+                    )
                 })
 
                 holder.tv_lead_AssignedTo!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "lead_AssignedToClick")
+                    clickListener!!.onClick(
+                        position,
+                        "lead_AssignedToClick"
+                    )
                 })
 //                if (empModel.actionStatus.equals("5")) {
 //                    holder.ll_checkbox.visibility = View.VISIBLE
@@ -290,7 +303,10 @@ class ActionTakenAdapter(
                             secAmount = "0.00"
                         }
                         mList[position].securityAmount =  secAmount
-                        clickListener!!.onClick(position, "securityAmountChanged")
+                        clickListener!!.onClick(
+                            position,
+                            "securityAmountChanged"
+                        )
                     }
 
                     override fun afterTextChanged(s: Editable?) {}
@@ -402,7 +418,10 @@ class ActionTakenAdapter(
                     }else{
                         mList[position].ProvideStandBy =  false
                     }
-                   clickListener!!.onClick(position, "check_click")
+                   clickListener!!.onClick(
+                       position,
+                       "check_click"
+                   )
                 })
             }
 
