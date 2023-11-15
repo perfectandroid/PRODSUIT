@@ -166,6 +166,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     lateinit var imagemodeArrayList : JSONArray
     lateinit var leadnoArrayList : JSONArray
     lateinit var otherChargeArrayList : JSONArray
+    lateinit var otherChargeCalcArrayList : JSONArray
     lateinit var worktypeArrayList : JSONArray
     lateinit var measurementDetailsArrayList : JSONArray
     lateinit var departmentSort : JSONArray
@@ -216,6 +217,12 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
     var mode = ""
 
+    lateinit var otherChargeTaxCalculationViewModel  : OtherChargeTaxCalculationViewModel
+    var otherchargetaxcount   = 0
+    var otherchargetaxMode   = 0  // 0 = Popup, 1 = change amount
+    var otherChargeCalcPosition   = 0
+    var otherChargeClickPosition   = 0
+
     private var MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE = 1
     private var PICK_IMAGE_CAMERA = 1
     private var PICK_IMAGE_GALLERY = 2
@@ -238,6 +245,9 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     var strInspectionNote1 = ""
     var strInspectionNote2 = ""
     var strCustomerNotes   = ""
+    var FK_TaxGroup   = ""
+    var IncludeTaxCalc   = ""
+    var AmountTaxCalc   = ""
 
     val modelProjectEmpDetails = ArrayList<ModelProjectEmpDetails>()
 
@@ -248,8 +258,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     var recy_checklist: RecyclerView? = null
     var modelProjectCheckList = ArrayList<ModelProjectCheckList>()
 
-    val modelOtherCharges = ArrayList<ModelOtherCharges>()
-    private var dialogOtherChargesSheet : Dialog? = null
+
 
     var saveEmployeeDetails= JSONArray()
     var saveMeasurementDetails= JSONArray()
@@ -261,6 +270,14 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     var documentPath : String = ""
 
     private val PICK_DOCUMENT_REQUEST_CODE = 123
+
+    val modelOtherCharges = ArrayList<ModelOtherCharges>()
+    private var dialogOtherChargesSheet : Dialog? = null
+    val modelOtherChargesCalculation = ArrayList<ModelOtherChargesCalculation>()
+    private var dialogOtherChargesCalcSheet : Dialog? = null
+    private var otherChargeAdapter : OtherChargeAdapter? = null
+    private var taxDetailAdapter : TaxDetailAdapter? = null
+    private var recyOtherCalc     : RecyclerView?      = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -280,6 +297,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         otherchargesViewModel = ViewModelProvider(this).get(OtherChargesViewModel::class.java)
         unitViewModel = ViewModelProvider(this).get(UnitViewModel::class.java)
         siteCheckViewModel = ViewModelProvider(this).get(SiteCheckViewModel::class.java)
+        otherChargeTaxCalculationViewModel     = ViewModelProvider(this).get(OtherChargeTaxCalculationViewModel::class.java)
 
         setRegViews()
 
@@ -890,7 +908,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 //                Toast.makeText(applicationContext, "test 1", Toast.LENGTH_LONG).show()
                 Config.disableClick(v)
                 otherchargecount = 0
-                getOthercharges()
+                getOtherCharges()
 
             }
 
@@ -1705,7 +1723,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         }
     }
 
-    private fun getOthercharges() {
+    private fun getOtherCharges() {
         var ReqMode = "117"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -1729,16 +1747,44 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   114455   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("OtherChargesDetails")
-                                        otherChargeArrayList = jobjt.getJSONArray("OtherChargesDetailsList")
+                                        val jobjt = jObject.getJSONObject("ProjectOtherChargeDetails")
+                                        otherChargeArrayList = jobjt.getJSONArray("ProjectOtherChargeDetailsList")
                                         if (otherChargeArrayList.length()>0){
+                                            var gridList = Config.getTransType(this@ProjectSiteVisitActivity)
+                                            val jObject1 = JSONObject(gridList)
+                                            Log.e(TAG,"gridList  2111   "+gridList)
+                                            val jobjt1 = jObject1.getJSONObject("TransType")
+                                            var typeArrayList = jobjt1.getJSONArray("TransTypeDetails")
 
                                             for (i in 0 until otherChargeArrayList.length()) {
                                                 var jsonObject = otherChargeArrayList.getJSONObject(i)
 
-                                              //  modelOtherCharges!!.add(ModelOtherCharges(jsonObject.getString("ID_Type"),jsonObject.getString("Type_Name"), "","","0.00", "0.00",false))
+                                                var ID_TransType = ""
+                                                var TransType_Name = ""
+
+                                                if (jsonObject.getString("OctyTransTypeActive").equals("0")){
+                                                    val jsonObject = typeArrayList.getJSONObject(0)
+                                                    ID_TransType = jsonObject.getString("ID_TransType")
+                                                    TransType_Name = jsonObject.getString("TransType_Name")
+                                                }
+                                                else if (jsonObject.getString("OctyTransTypeActive").equals("1")){
+                                                    val jsonObject = typeArrayList.getJSONObject(1)
+                                                    ID_TransType = jsonObject.getString("ID_TransType")
+                                                    TransType_Name = jsonObject.getString("TransType_Name")
+                                                }
+                                                else if (jsonObject.getString("OctyTransTypeActive").equals("2")){
+                                                    val jsonObject = typeArrayList.getJSONObject(0)
+                                                    ID_TransType = jsonObject.getString("ID_TransType")
+                                                    TransType_Name = jsonObject.getString("TransType_Name")
+                                                }
+
+                                                modelOtherCharges!!.add(ModelOtherCharges(jsonObject.getString("ID_OtherChargeType"),jsonObject.getString("OctyName"),
+                                                    jsonObject.getString("OctyTransTypeActive"),jsonObject.getString("OctyTransType"),jsonObject.getString("FK_TaxGroup"),
+                                                    jsonObject.getString("OctyAmount"), jsonObject.getString("OctyTaxAmount"),false,
+                                                    ID_TransType, TransType_Name,false))
                                             }
                                         }
+
                                         otherChargesPopup(modelOtherCharges)
                                     } else {
                                         val builder = AlertDialog.Builder(
@@ -1795,13 +1841,44 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
             val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
             recycOtherCharges!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-            val adapter = OtherChargeAdapter(this@ProjectSiteVisitActivity, modelOtherCharges)
-            recycOtherCharges!!.adapter = adapter
-            adapter.setClickListener(this@ProjectSiteVisitActivity)
-            adapter!!.setClickListener(this@ProjectSiteVisitActivity)
+            otherChargeAdapter = OtherChargeAdapter(this@ProjectSiteVisitActivity, modelOtherCharges)
+            recycOtherCharges!!.adapter = otherChargeAdapter
+            otherChargeAdapter!!.setClickListener(this@ProjectSiteVisitActivity)
+            otherChargeAdapter!!.setClickListener(this@ProjectSiteVisitActivity)
 
             txt_close!!.setOnClickListener {
                 dialogOtherChargesSheet!!.dismiss()
+            }
+
+            txt_apply!!.setOnClickListener {
+
+                var otherCharge = 0F
+                for (i in 0 until modelOtherCharges.size) {
+                    if (modelOtherCharges[i].isCalculate){
+                        if (modelOtherCharges[i].OctyIncludeTaxAmount){
+                            if (modelOtherCharges[i].ID_TransType.equals("2")){
+                                // Credit
+                                otherCharge = otherCharge - (modelOtherCharges[i].OctyAmount).toFloat()
+                            }else if (modelOtherCharges[i].ID_TransType.equals("1")){
+                                // Debit
+                                otherCharge = otherCharge + (modelOtherCharges[i].OctyAmount).toFloat()
+                            }
+                        }else{
+                            if (modelOtherCharges[i].ID_TransType.equals("2")){
+                                // Credit
+
+                                otherCharge = otherCharge - ((modelOtherCharges[i].OctyAmount).toFloat()+(modelOtherCharges[i].OctyTaxAmount).toFloat())
+                            }else if (modelOtherCharges[i].ID_TransType.equals("1")){
+                                // Debit
+                                otherCharge = otherCharge + ((modelOtherCharges[i].OctyAmount).toFloat()+(modelOtherCharges[i].OctyTaxAmount).toFloat())
+                            }
+                        }
+                    }
+                }
+
+                tie_Othercharges!!.setText(Config.changeTwoDecimel(otherCharge.toString()))
+                dialogOtherChargesSheet!!.dismiss()
+
             }
 
 
@@ -1814,6 +1891,189 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
             Log.e(TAG,"3856  "+e)
         }
+    }
+
+    private fun getOtherChargeTax() {
+        var ReqMode = "118"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                otherChargeTaxCalculationViewModel.getOtherChargeTaxCalculation(this,ReqMode!!,FK_TaxGroup,IncludeTaxCalc,AmountTaxCalc)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (otherchargetaxcount == 0){
+                                    otherchargetaxcount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   6733332   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("OtherChargeTaxCalculationDetails")
+                                        otherChargeCalcArrayList = jobjt.getJSONArray("OtherChargeTaxCalculationDetailsList")
+
+                                        if (otherChargeCalcArrayList.length() > 0){
+                                            if (otherchargetaxMode == 0){
+                                                otherChargesCalcPopup(otherChargeCalcArrayList)
+                                            }else{
+                                                Log.e(TAG,"38777  ")
+                                                var sumOfTax = 0F
+                                                for (i in 0 until otherChargeCalcArrayList.length()) {
+                                                    val jsonObject2 = otherChargeCalcArrayList.getJSONObject(i)
+
+
+                                                    Log.e(TAG,"40551  "+jsonObject2.getString("Amount"))
+                                                    sumOfTax = sumOfTax +(jsonObject2.getString("Amount")).toFloat()
+
+                                                }
+
+                                                modelOtherCharges[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+                                                otherChargeAdapter!!.notifyItemChanged(otherChargeClickPosition)
+
+                                                Log.e(TAG,"40552     "+sumOfTax)
+//                                                modelOtherCharges[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+//
+//                                                otherChargeAdapter!!.notifyItemChanged(otherChargeClickPosition)
+//                                                dialogOtherChargesCalcSheet!!.dismiss()
+                                            }
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectSiteVisitActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+ Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun otherChargesCalcPopup(otherChargeCalcArrayList: JSONArray) {
+        try {
+
+
+            dialogOtherChargesCalcSheet = Dialog(this)
+            dialogOtherChargesCalcSheet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogOtherChargesCalcSheet!! .setContentView(R.layout.list_other_charge_popup)
+            dialogOtherChargesCalcSheet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            dialogOtherChargesCalcSheet!!.setCancelable(false)
+            recyOtherCalc = dialogOtherChargesCalcSheet!! .findViewById(R.id.recyOtherCalc) as RecyclerView
+            var btnOk = dialogOtherChargesCalcSheet!! .findViewById(R.id.btnOk) as Button
+
+            var hasId1 =  hasOtherChecked(modelOtherChargesCalculation!!,FK_TaxGroup)
+            Log.e(TAG,"3199   "+hasId1)
+            if (hasId1){
+                Log.e(TAG,"31991   "+hasId1)
+
+                for (i in 0 until otherChargeCalcArrayList.length()) {
+
+                    val jsonObject = otherChargeCalcArrayList.getJSONObject(i)
+                    var empModel = modelOtherChargesCalculation[otherChargeCalcPosition]
+                    empModel.FK_TaxGroup = FK_TaxGroup
+                    empModel.ID_TaxSettings = jsonObject.getString("ID_TaxSettings")
+                    empModel.FK_TaxType = jsonObject.getString("FK_TaxType")
+                    empModel.TaxTyName = jsonObject.getString("TaxTyName")
+                    empModel.TaxPercentage = jsonObject.getString("TaxPercentage")
+                    empModel.TaxtyInterstate = jsonObject.getBoolean("TaxtyInterstate")
+                    empModel.TaxUpto = jsonObject.getString("TaxUpto")
+                    empModel.TaxUptoPercentage = jsonObject.getBoolean("TaxUptoPercentage")
+                    empModel.Amount = jsonObject.getString("Amount")
+
+                }
+
+            }else{
+                Log.e(TAG,"31992   "+hasId1)
+                for (i in 0 until otherChargeCalcArrayList.length()) {
+                    val jsonObject = otherChargeCalcArrayList.getJSONObject(i)
+                    modelOtherChargesCalculation!!.add(
+                        ModelOtherChargesCalculation(FK_TaxGroup,jsonObject.getString("ID_TaxSettings"),jsonObject.getString("FK_TaxType"),
+                            jsonObject.getString("TaxTyName"),jsonObject.getString("TaxPercentage"),jsonObject.getBoolean("TaxtyInterstate"),
+                            jsonObject.getString("TaxUpto"),jsonObject.getBoolean("TaxUptoPercentage"),jsonObject.getString("Amount"))
+                    )
+                }
+
+
+
+
+            }
+
+            val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
+            recyOtherCalc!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            taxDetailAdapter = TaxDetailAdapter(this@ProjectSiteVisitActivity, modelOtherChargesCalculation)
+            recyOtherCalc!!.adapter = taxDetailAdapter
+            taxDetailAdapter!!.setClickListener(this@ProjectSiteVisitActivity)
+
+            btnOk.setOnClickListener {
+                var sumOfTax = 0F
+                for (i in 0 until modelOtherChargesCalculation.size) {
+                    if (modelOtherChargesCalculation[i].FK_TaxGroup.equals(FK_TaxGroup)){
+
+                        Log.e(TAG,"40551  "+modelOtherChargesCalculation[i].Amount)
+                        sumOfTax = sumOfTax +(modelOtherChargesCalculation[i].Amount).toFloat()
+                    }
+                }
+
+                Log.e(TAG,"40552     "+sumOfTax)
+                modelOtherCharges[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+
+                otherChargeAdapter!!.notifyItemChanged(otherChargeClickPosition)
+                dialogOtherChargesCalcSheet!!.dismiss()
+            }
+
+            dialogOtherChargesCalcSheet!!.show()
+            dialogOtherChargesCalcSheet!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun hasOtherChecked(modelOtherChargesCalculation: ArrayList<ModelOtherChargesCalculation>, FK_TaxGroup: String): Boolean {
+        var isChecked = false
+        for (i in 0 until modelOtherChargesCalculation.size) {
+            if (modelOtherChargesCalculation.get(i).FK_TaxGroup.equals(FK_TaxGroup)){
+                isChecked = true
+                otherChargeCalcPosition = i
+                break
+            }
+        }
+        return isChecked
     }
 
     private fun getDepartment() {
@@ -3413,5 +3673,66 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
             }
         }
+
+        if (data.equals("IncludeTaxClick")){
+
+            Log.e(TAG,"IncludeTaxClick  6733   "+ modelOtherCharges[position].OctyIncludeTaxAmount)
+//            if (modelOtherCharges[position].OctyIncludeTaxAmount){
+////                FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
+////                otherchargetaxcount = 0
+////                getOtherChargeTax()
+//            }else{
+//
+//            }
+            otherChargeClickPosition = position
+            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
+            AmountTaxCalc = modelOtherCharges[position].OctyAmount
+            if (modelOtherCharges[position].OctyIncludeTaxAmount){
+                IncludeTaxCalc = "1"
+            }else{
+                IncludeTaxCalc = "0"
+            }
+
+            otherchargetaxcount = 0
+            otherchargetaxMode = 0
+            getOtherChargeTax()
+
+        }
+
+        if (data.equals("IncludeTaxAmountClick")){
+
+            Log.e(TAG,"IncludeTaxAmountClick  8288   "+ modelOtherCharges[position].OctyIncludeTaxAmount)
+            otherChargeClickPosition = position
+            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
+            AmountTaxCalc = modelOtherCharges[position].OctyAmount
+            if (modelOtherCharges[position].OctyIncludeTaxAmount){
+                IncludeTaxCalc = "1"
+            }else{
+                IncludeTaxCalc = "0"
+            }
+            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
+            otherchargetaxcount = 0
+            otherchargetaxMode = 0
+            getOtherChargeTax()
+        }
+
+        if (data.equals("TaxAmountClaculateClick")){
+
+            Log.e(TAG,"TaxAmountClaculateClick  8288   "+ modelOtherCharges[position].OctyIncludeTaxAmount)
+            otherChargeClickPosition = position
+            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
+            AmountTaxCalc = modelOtherCharges[position].OctyAmount
+            if (modelOtherCharges[position].OctyIncludeTaxAmount){
+                IncludeTaxCalc = "1"
+            }else{
+                IncludeTaxCalc = "0"
+            }
+            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
+            otherchargetaxcount = 0
+            otherchargetaxMode = 1
+            getOtherChargeTax()
+        }
+
+
     }
 }

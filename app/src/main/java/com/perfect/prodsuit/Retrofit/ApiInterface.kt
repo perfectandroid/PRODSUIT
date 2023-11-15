@@ -679,7 +679,7 @@ interface ApiInterface {
     @POST("Project/OtherChargeTaxCalculationDetails")
     fun getOtherChargeTaxCalculationDetails(@Body body: RequestBody): Call<String>
 
-    @POST("Project/checkDetails")
+    @POST("Project/checkDetailsEmplo")
     fun getProjectcheckDetails(@Body body: RequestBody): Call<String>
 
 

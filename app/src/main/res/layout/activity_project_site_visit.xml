@@ -1515,7 +1515,6 @@
                                                             android:textSize="14dp"
                                                             android:maxLength="200"
                                                             android:focusableInTouchMode="false"
-                                                            android:editable="false"
                                                             android:fontFamily="@font/myfont"
                                                             android:textColor="@color/greydarks"
                                                             android:textStyle="normal"/>
