@@ -1357,11 +1357,17 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
         if (data.equals("deleteArrayList")){
 
-            arrAddUpdate = "0"
-            arrPosition = position
+
             val jsonObject = arrPayment.getJSONObject(position)
             var balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
             var Amount = (jsonObject!!.getString("Amount")).toFloat()
+
+            ID_PaymentMethod = ""
+            edtPayMethod!!.setText("")
+            edtPayRefNo!!.setText("")
+            edtPayAmount!!.setText("")
+
+            arrAddUpdate = "0"
 
             arrPayment.remove(position)
             adapterPaymentList!!.notifyItemRemoved(position)
