@@ -96,18 +96,14 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight=".5"
-
-
-
-
-
+                        android:layout_weight="1.5"
                         android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="0dp"
+                            android:padding="20dp"
                             android:src="@drawable/report_bg" />
                     </LinearLayout>
 
@@ -491,7 +487,7 @@
 
 <!--                    </LinearLayout>-->
                     <androidx.core.widget.NestedScrollView
-
+                        android:layout_weight=".6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <LinearLayout
@@ -681,6 +677,103 @@
 
                                     </LinearLayout>
 
+
+
+                                </LinearLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="20dp"/>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/card_project"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:cardCornerRadius="0dp"
+                                app:cardElevation="0dp"
+                                android:visibility="visible"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginLeft="25dp"
+                                android:layout_marginRight="25dp">
+                                <!--                        app:cardUseCompatPadding="true"-->
+                                <!--                            android:backgroundTint="@color/service3"-->
+
+
+                                <LinearLayout
+                                    android:id="@+id/llProjectReport"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="80dp"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:padding="1dp"
+                                    android:visibility="visible"
+                                    android:background="@drawable/border_3"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:layout_width="100dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/shapes_3"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="80dp"
+                                            android:layout_height="match_parent"
+                                            android:gravity="center"
+                                            android:orientation="vertical">
+
+                                            <LinearLayout
+                                                android:layout_width="80dp"
+                                                android:layout_height="match_parent"
+                                                android:gravity="center"
+                                                android:orientation="vertical">
+                                                <LinearLayout
+                                                    android:layout_width="40dp"
+                                                    android:layout_height="40dp"
+                                                    android:background="@drawable/background_shape"
+                                                    android:gravity="center"
+                                                    android:orientation="vertical">
+
+                                                    <ImageView
+                                                        android:layout_width="25dp"
+                                                        android:layout_height="25dp"
+                                                        android:src="@drawable/collection_report"
+                                                        android:tint="@color/black"
+                                                        tools:ignore="UseAppTint" />
+
+                                                </LinearLayout>
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+
+
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="2"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal">
+                                        <!--                                    android:background="@drawable/svg_service_followup"-->
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:text="Project Report"
+                                            android:layout_marginLeft="20dp"
+                                            android:textStyle="bold"
+                                            android:layout_weight="1"
+                                            android:textColor="@color/color_common3"
+                                            android:textSize="20dp"
+                                            android:fontFamily="@font/myfont" />
+
+
+                                    </LinearLayout>
 
 
                                 </LinearLayout>
@@ -951,7 +1044,7 @@
                                 android:layout_marginTop="20dp"
                                 android:layout_marginLeft="25dp"
                                 android:layout_marginRight="25dp"
-                                android:visibility="gone">
+                                android:visibility="invisible">
 
                                 <!--                            android:backgroundTint="@color/service2"-->
 
@@ -1023,7 +1116,7 @@
                                 android:layout_marginTop="20dp"
                                 android:layout_marginLeft="25dp"
                                 android:layout_marginRight="25dp"
-                                android:visibility="gone">
+                                android:visibility="invisible">
                                 <!--                        app:cardUseCompatPadding="true"-->
                                 <!--                            android:backgroundTint="@color/service3"-->
 
