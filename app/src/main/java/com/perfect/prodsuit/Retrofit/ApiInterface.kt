@@ -691,6 +691,9 @@ interface ApiInterface {
     @POST("Project/DownloadImage")
     fun saveDownloadImage(@Body body: RequestBody): Call<String>
 
+    @POST("Project/UpdateProjectTransaction")
+    fun saveUpdateProjectTransaction(@Body body: RequestBody): Call<String>
+
 
 
 

@@ -29,6 +29,7 @@ import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.SimpleDateFormat
 import java.util.*
 
 class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListener {
@@ -42,6 +43,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     private var tie_Date       : TextInputEditText? = null
     private var tie_OtherCharges       : TextInputEditText? = null
     private var tie_PaymentMethod       : TextInputEditText? = null
+    private var tie_Remarks       : TextInputEditText? = null
 
     private var til_Project       : TextInputLayout?   = null
     private var til_Stage       : TextInputLayout?   = null
@@ -90,6 +92,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     var IncludeTaxCalc   = ""
     var AmountTaxCalc   = ""
     private var strDate                           = ""
+    private var strOtherAmount                    = ""
+    private var strRemark                    = ""
 
     var jsonObj: JSONObject? = null
     private var dialogOtherChargesSheet : Dialog? = null
@@ -125,6 +129,16 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     var arrPosition: Int? = 0
     var ID_PaymentMethod: String? = ""
 
+    private var btnSubmit: Button? = null
+    private var btnReset: Button? = null
+    var savePaymentDetailArray = JSONArray()
+    var totPayAmount = 0.0f
+
+    var updateCount = 0
+    lateinit var updateProjectTransactionViewModel: UpdateProjectTransactionViewModel
+    var pssOtherCharge= JSONArray()
+    var pssOtherChargeTax= JSONArray()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -139,6 +153,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         otherChargeTaxCalculationViewModel     = ViewModelProvider(this).get(
             OtherChargeTaxCalculationViewModel::class.java)
         paymentMethodeViewModel = ViewModelProvider(this).get(PaymentMethodViewModel::class.java)
+        updateProjectTransactionViewModel = ViewModelProvider(this).get(UpdateProjectTransactionViewModel::class.java)
 
         setRegViews()
         var jsonObject: String? = intent.getStringExtra("jsonObject")
@@ -159,16 +174,26 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         tie_Date    = findViewById(R.id.tie_Date)
         tie_OtherCharges    = findViewById(R.id.tie_OtherCharges)
         tie_PaymentMethod    = findViewById(R.id.tie_PaymentMethod)
+        tie_Remarks    = findViewById(R.id.tie_Remarks)
 
         til_Project      = findViewById(R.id.til_Project)
         til_Stage    = findViewById(R.id.til_Stage)
-        til_Date    = findViewById(R.id.til_Stage)
+        til_Date    = findViewById(R.id.til_Date)
+
+        btnReset = findViewById(R.id.btnReset)
+        btnSubmit = findViewById(R.id.btnSubmit)
 
         tie_Project!!.setOnClickListener(this)
         tie_Stage!!.setOnClickListener(this)
         tie_Date!!.setOnClickListener(this)
         tie_OtherCharges!!.setOnClickListener(this)
         tie_PaymentMethod!!.setOnClickListener(this)
+        btnReset!!.setOnClickListener(this)
+        btnSubmit!!.setOnClickListener(this)
+
+
+
+
 
         DecimelFormatters.setDecimelPlace(tie_OtherCharges!!)
 
@@ -176,9 +201,35 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         til_Date!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.color_mandatory)
 
         onTextChangedValues()
+
+        getCurrentDate()
     }
 
+    private fun getCurrentDate() {
 
+
+        val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
+        val currentDate = sdf.format(Date())
+
+        try {
+
+            Log.e(TAG, "DATE TIME  196  " + currentDate)
+            val newDate: Date = sdf.parse(currentDate)
+            Log.e(TAG, "newDate  196  " + newDate)
+            val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
+            val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
+            val sdfTime1 = SimpleDateFormat("hh:mm aa")
+            val sdfTime2 = SimpleDateFormat("HH:mm", Locale.US)
+
+
+            tie_Date!!.setText("" + sdfDate1.format(newDate))
+
+
+        } catch (e: Exception) {
+
+            Log.e(TAG, "Exception 456  " + e.toString())
+        }
+    }
 
     override fun onClick(v: View) {
         when(v.id){
@@ -217,6 +268,248 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             R.id.tie_PaymentMethod->{
                 Config.disableClick(v)
                 paymentMethodPopup()
+            }
+
+            R.id.btnSubmit->{
+                Config.disableClick(v)
+                validateProjectTransaction(v)
+
+            }
+            R.id.btnReset->{
+                Config.disableClick(v)
+                clearData()
+            }
+        }
+    }
+
+    private fun clearData() {
+
+        ID_Stage = ""
+
+        tie_Stage!!.setText("")
+        tie_OtherCharges!!.setText("")
+        tie_Remarks!!.setText("")
+
+        modelOtherCharges.clear()
+        otherChargeAdapter = null
+
+        modelOtherChargesCalculation.clear()
+        taxDetailAdapter = null
+
+        arrPayment = JSONArray()
+        adapterPaymentList = null
+
+        getCurrentDate()
+    }
+
+    private fun validateProjectTransaction(v: View) {
+
+        strDate = tie_Date!!.text.toString()
+        strOtherAmount = tie_OtherCharges!!.text.toString()
+        strRemark = tie_Remarks!!.text.toString()
+        if (ID_Project.equals("")){
+            Config.snackBars(context, v, "Select Project")
+        }else if(strDate.equals("")){
+            Config.snackBars(context, v, "Select Date")
+        }
+        else if(strOtherAmount.equals("")){
+            Config.snackBars(context, v, "Other Amount cannot be zero")
+        }
+        else{
+
+            validateSaveOtherCharges(v)
+
+
+        }
+
+
+
+
+    }
+
+    private fun validateSaveOtherCharges(v: View) {
+
+        pssOtherCharge = JSONArray()
+        pssOtherChargeTax = JSONArray()
+        for (obj in modelOtherCharges) {
+
+            if (obj.isCalculate){
+                val jsonObject = JSONObject()
+                jsonObject.put("ID_OtherChargeType", obj.ID_OtherChargeType)
+                jsonObject.put("OctyTransType", obj.OctyTransType)
+                jsonObject.put("FK_TaxGroup", obj.FK_TaxGroup)
+                jsonObject.put("OctyAmount", obj.OctyAmount)
+                jsonObject.put("OctyTaxAmount", obj.OctyTaxAmount)
+                jsonObject.put("OctyIncludeTaxAmount", obj.OctyIncludeTaxAmount)
+
+                pssOtherCharge.put(jsonObject)
+                for (objSub in modelOtherChargesCalculation) {
+                    val jsonObject1 = JSONObject()
+                    if (obj.FK_TaxGroup.equals(objSub.FK_TaxGroup)){
+                        jsonObject1.put("ID_OtherChargeType", obj.ID_OtherChargeType)
+                        jsonObject1.put("ID_TaxSettings", objSub.ID_TaxSettings)
+                        jsonObject1.put("Amount", objSub.Amount)
+                        jsonObject1.put("TaxPercentage", objSub.TaxPercentage)
+                        jsonObject1.put("TaxGrpID", objSub.FK_TaxGroup)
+                        jsonObject1.put("FK_TaxType", objSub.FK_TaxType)
+                        jsonObject1.put("TaxTyName", objSub.TaxTyName)
+
+                        pssOtherChargeTax.put(jsonObject)
+                    }
+                }
+
+            }
+
+        }
+
+
+        Log.e(TAG," 117884 pssOtherCharge          :  "+pssOtherCharge)
+        Log.e(TAG," 117885 pssOtherChargeTax       :  "+pssOtherChargeTax)
+
+        validatePay(v)
+
+    }
+
+    private fun validatePay(v: View) {
+        try {
+            totPayAmount = 0.0f
+            savePaymentDetailArray = JSONArray()
+            for (i in 0 until arrPayment.length()) {
+                var jsonObject = arrPayment.getJSONObject(i)
+                val jsonObject2 = JSONObject()
+                jsonObject2.put("PaymentMethod",jsonObject.getString("MethodID"))
+                jsonObject2.put("Refno",jsonObject.getString("RefNo"))
+                jsonObject2.put("PAmount",jsonObject.getString("Amount"))
+
+
+
+                savePaymentDetailArray.put(jsonObject2)
+                totPayAmount = totPayAmount + jsonObject.getString("Amount").toFloat()
+            }
+
+            validatePaymentMethod(v)
+        }
+        catch (e : Exception){
+
+        }
+
+    }
+
+    private fun validatePaymentMethod(v: View) {
+
+        var otheAmount = tie_OtherCharges!!.text.toString()
+        if (otheAmount.equals("") || otheAmount.equals(".")){
+            otheAmount = "0.00"
+        }
+
+        if (otheAmount.toFloat() < 0){
+            otheAmount = (Math.abs(otheAmount.toFloat())).toString()
+        }
+        Log.e(TAG,"VALUES  1411   "+totPayAmount+"  ==  "+otheAmount.toFloat())
+
+        if (totPayAmount == otheAmount.toFloat()){
+            updateCount = 0
+            updateProjectTransaction()
+        }else{
+            Config.snackBars(context,v,"In Payment Method Balance Amt. Should be Zero")
+
+        }
+
+
+    }
+
+    private fun updateProjectTransaction() {
+
+        var UserAction = "1"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                updateProjectTransactionViewModel.SaveUpdateProjectTransaction(this,UserAction,strDate,ID_Project,ID_Stage,
+                    totPayAmount!!.toString(),strOtherAmount,strRemark,pssOtherCharge,pssOtherChargeTax,savePaymentDetailArray)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (updateCount == 0) {
+                                    updateCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   421111   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("UpdateProjectTransaction")
+                                        try {
+                                            val suceessDialog = Dialog(this)
+                                            suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                            suceessDialog!!.setCancelable(false)
+                                            suceessDialog!!.setContentView(R.layout.success_popup)
+                                            suceessDialog!!.window!!.attributes.gravity =
+                                                Gravity.CENTER_VERTICAL;
+
+                                            val tv_succesmsg =
+                                                suceessDialog!!.findViewById(R.id.tv_succesmsg) as TextView
+                                            val tv_leadid =
+                                                suceessDialog!!.findViewById(R.id.tv_leadid) as TextView
+                                            val tv_succesok = suceessDialog!!.findViewById(R.id.tv_succesok) as TextView
+                                            val ll_leadnumber = suceessDialog!!.findViewById(R.id.ll_leadnumber) as LinearLayout
+                                            //LeadNumber
+                                            ll_leadnumber.visibility = View.GONE
+                                            tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
+
+
+                                            tv_succesok!!.setOnClickListener {
+                                                suceessDialog!!.dismiss()
+                                                finish()
+
+                                            }
+
+                                            suceessDialog!!.show()
+                                            suceessDialog!!.getWindow()!!.setLayout(
+                                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                                ViewGroup.LayoutParams.WRAP_CONTENT
+                                            );
+                                        }catch (e : Exception){
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectTransactionActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
             }
         }
     }
@@ -902,6 +1195,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
     private fun onTextChangedValues() {
         tie_Project!!.addTextChangedListener(watcher)
+        tie_Date!!.addTextChangedListener(watcher)
     }
 
     var watcher: TextWatcher = object : TextWatcher {
@@ -1080,7 +1374,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
     private fun getStage() {
         // var leadInfo = 0
-        var ReqMode = "17"
+        var ReqMode = "3"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1221,9 +1515,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         val txtSubmit    = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
 
-        val maxDate = Calendar.getInstance()
-        maxDate.add(Calendar.MONTH, 1)
-        date_Picker1.maxDate = maxDate.timeInMillis
+        date_Picker1.maxDate = System.currentTimeMillis()
+
+//        val maxDate = Calendar.getInstance()
+//        maxDate.add(Calendar.MONTH, 1)
+//        date_Picker1.maxDate = maxDate.timeInMillis
 
         txtCancel.setOnClickListener {
             dialog.dismiss()

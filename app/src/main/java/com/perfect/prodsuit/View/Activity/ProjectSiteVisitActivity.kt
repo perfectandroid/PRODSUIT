@@ -322,6 +322,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         mode = intent.getStringExtra("mode").toString()
+        Log.e(TAG,"Mode  32555   "+mode)
         if (jsonObject.equals("")){
             Log.e(TAG,"23111   ")
             tie_LeadNo!!.isEnabled = true
@@ -1306,7 +1307,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         tie_EmployeeType!!.setText("")
 
         modelProjectEmpDetails!!.clear()
-
+        recyEmpDetails!!.adapter = null
         // Measurement
 
         WorkTypeID = ""
@@ -1320,10 +1321,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         tie_Remarks!!.setText("")
 
         modelMesurementDetails.clear()
-
+        recy_mesurment!!.adapter = null
         // Check Details
 
         modelProjectCheckList.clear()
+        modelOtherCharges.clear()
 
         showLead = 1
         showEmployee = 0
