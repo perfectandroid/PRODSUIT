@@ -97,6 +97,7 @@ object SiteCheckRepository {
                         val msg = leads[0].message
                         siteCheckSetterGetter.value = SiteCheckModel(msg)
                     } catch (e: Exception) {
+                        Log.e(TAG,"1000   "+e)
                         progressDialog!!.dismiss()
                         Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                     }

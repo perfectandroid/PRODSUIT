@@ -1514,7 +1514,6 @@
                                                             android:drawablePadding="5dp"
                                                             android:textSize="14dp"
                                                             android:maxLength="200"
-                                                            android:focusableInTouchMode="false"
                                                             android:fontFamily="@font/myfont"
                                                             android:textColor="@color/greydarks"
                                                             android:textStyle="normal"/>
@@ -1644,6 +1643,38 @@
                                     android:textSize="14dp"
                                     android:textStyle="normal"
                                     android:visibility="visible" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/til_doc_desc"
+                                style="@style/Widget.App.TextInputLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="15dp"
+                                android:drawableTint="@color/black"
+                                android:fontFamily="@font/myfont"
+                                android:hint="Description"
+                                android:visibility="visible">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/tie_doc_desc"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:drawableLeft="@drawable/vtr_remark"
+                                    android:drawablePadding="5dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center_vertical"
+                                    android:maxLength="200"
+                                    android:paddingLeft="10dp"
+                                    android:paddingTop="8dp"
+                                    android:paddingBottom="8dp"
+                                    android:textColor="@color/greydarks"
+                                    android:textSize="14dp"
+                                    android:textStyle="normal" />
 
                             </com.google.android.material.textfield.TextInputLayout>
 

@@ -679,8 +679,15 @@ interface ApiInterface {
     @POST("Project/OtherChargeTaxCalculationDetails")
     fun getOtherChargeTaxCalculationDetails(@Body body: RequestBody): Call<String>
 
-    @POST("Project/checkDetailsEmplo")
+    @POST("Project/checkDetails")
     fun getProjectcheckDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Project/UpadateSiteVisit")
+    fun saveUpadateSiteVisit(@Body body: RequestBody): Call<String>
+
+    @POST("Project/DownloadImage")
+    fun saveDownloadImage(@Body body: RequestBody): Call<String>
+
 
 
 
