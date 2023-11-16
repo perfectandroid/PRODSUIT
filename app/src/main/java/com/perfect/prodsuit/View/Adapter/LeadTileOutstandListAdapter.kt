@@ -1,29 +1,32 @@
 package com.perfect.prodsuit.View.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.ServiceAssignListActivity
+import com.perfect.prodsuit.View.Activity.TileGraphActivity
 import org.json.JSONArray
 import org.json.JSONObject
 
 
-class LeadTileListAdapter(
+class LeadTileOutstandListAdapter(
     internal var context: Context,
     internal var jsonArray: JSONArray,
-    internal var remark: String
 
-    ):
+):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "LeadTileListAdapter"
+    internal val TAG : String = "LeadTileOutstandListAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
 
@@ -31,7 +34,7 @@ class LeadTileListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_leadtilelist, parent, false
+            R.layout.adapter_leadoutstandlist, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -41,7 +44,7 @@ class LeadTileListAdapter(
         try {
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-                Log.e(TAG,"onBindViewHolder   1051   ")
+                Log.e(TAG,"onBindViewHolder   1052   ")
                 val pos = position+1
 
 //                if (position % 2 == 0){
@@ -56,16 +59,16 @@ class LeadTileListAdapter(
                 holder.tv_newCount.text        = jsonObject!!.getString("Value")
              //   var mode = jsonObject!!.getString("ModuleMode")
 
-                if (jsonObject!!.getString("Label").equals("New")){
+                if (jsonObject!!.getString("Label").equals("LeadOutstand")){
                     holder.txtv_label.setTextColor(context.getColor(R.color.green))
                 }
-                if (jsonObject!!.getString("Label").equals("Ongoing")){
+                if (jsonObject!!.getString("Label").equals("Hot")){
                     holder.txtv_label.setTextColor(context.getColor(R.color.ongoing))
                 }
-                if (jsonObject!!.getString("Label").equals("Converted")){
-                    holder.txtv_label.setTextColor(context.getColor(R.color.converted))
+                if (jsonObject!!.getString("Label").equals("Warm")){
+                    holder.txtv_label.setTextColor(context.getColor(R.color.warm))
                 }
-                if (jsonObject!!.getString("Label").equals("Failed")){
+                if (jsonObject!!.getString("Label").equals("Cold")){
                     holder.txtv_label.setTextColor(context.getColor(R.color.bluecolr))
                 }
 
@@ -143,8 +146,6 @@ class LeadTileListAdapter(
 
                 holder.ll_new!!.setTag(position)
                 holder.ll_new!!.setOnClickListener(View.OnClickListener {
-
-                    Toast.makeText(context, remark, Toast.LENGTH_SHORT).show()
                 /*    clickListener!!.onClick(position, "ModuleCount")
                     jsonObject = jsonArray.getJSONObject(position)
                     var submode = jsonObject!!.getString("ModuleMode")

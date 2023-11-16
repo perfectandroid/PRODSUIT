@@ -670,5 +670,8 @@ interface ApiInterface {
     @POST("Project/UnitList")
     fun getUnit(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/EmployeeWiseTaegetInPercentage")
+    fun getEmployeewise(@Body body: RequestBody): Call<String>
+
 
 }

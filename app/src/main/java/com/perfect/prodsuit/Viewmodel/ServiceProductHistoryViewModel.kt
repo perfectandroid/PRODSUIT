@@ -11,8 +11,14 @@ class ServiceProductHistoryViewModel : ViewModel() {
 
     var serviceProductHistData: MutableLiveData<ServiceProductHistoryModel>? = null
 
-    fun getServiceProductHistory(context: Context,ID_Product : String, Customer_Type: String, ID_Customer: String) : LiveData<ServiceProductHistoryModel>? {
-        serviceProductHistData = ServiceProductHistoryRepository.getServicesApiCall(context,ID_Product,Customer_Type,ID_Customer)
+    fun getServiceProductHistory(
+        context: Context,
+        ID_Category: String,
+        ID_Product: String,
+        Customer_Type: String,
+        ID_Customer: String
+    ) : LiveData<ServiceProductHistoryModel>? {
+        serviceProductHistData = ServiceProductHistoryRepository.getServicesApiCall(context,ID_Category,ID_Product,Customer_Type,ID_Customer)
         return serviceProductHistData
     }
 }

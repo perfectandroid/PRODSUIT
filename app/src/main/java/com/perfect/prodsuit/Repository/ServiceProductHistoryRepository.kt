@@ -25,7 +25,8 @@ object ServiceProductHistoryRepository {
     private var progressDialog: ProgressDialog? = null
     val serviceProductHistSetterGetter = MutableLiveData<ServiceProductHistoryModel>()
     val TAG: String = "ServiceProductHistoryRepository"
-
+    var fk_cust: String = ""
+    var fk_custother: String = ""
     fun getServicesApiCall(
         context: Context,
         ID_Category: String,
@@ -86,20 +87,29 @@ object ServiceProductHistoryRepository {
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart("2"))
 
                 requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
+
                 if (Customer_Type.equals("0")){
+
+                    fk_cust=ID_Customer
+                    fk_custother="0"
                     Log.e(CustomerServiceRegisterRepository.TAG,"642121   "+ID_Customer)
-                    requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart(ID_Customer))
-                    requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart("0"))
+                 /*   requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart(ID_Customer))
+                    requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart("0"))*/
                 }else if (Customer_Type.equals("1")){
                     Log.e(CustomerServiceRegisterRepository.TAG,"642122   "+ID_Customer)
-                    requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("0"))
-                    requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart(ID_Customer))
+                    fk_cust="0"
+                    fk_custother=ID_Customer
+                   /* requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("0"))
+                    requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart(ID_Customer))*/
                 }else{
+                    fk_cust="0"
+                    fk_custother="0"
                     Log.e(CustomerServiceRegisterRepository.TAG,"642123   "+ID_Customer)
-                    requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("0"))
-                    requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart("0"))
+                 /*   requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("0"))
+                    requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart("0"))*/
                 }
-
+                requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart(fk_cust))
+                requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart(fk_custother))
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Criteria", ProdsuitApplication.encryptStart(ID_Category))
@@ -107,7 +117,7 @@ object ServiceProductHistoryRepository {
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
 
 
-                Log.e(TAG,"requestObject1   74   "+requestObject1)
+                Log.e(TAG,"requestObject1   product   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
