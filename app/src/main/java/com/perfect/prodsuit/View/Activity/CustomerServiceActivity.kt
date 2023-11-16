@@ -454,7 +454,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var strLocationAddress: String? = ""
     var saveAttendanceMark = false
 
-
+    var currentDate11=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -4518,9 +4518,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //                        "\n"+"Customer_Type    "+Customer_Type+
 //                        "\n"+"ID_Product    "+ID_Product)
 
-
+                val sdf = SimpleDateFormat("yyyy-MM-dd")
+                 currentDate11 = sdf.format(Date())
+                Log.i("date55345",""+currentDate11)
                 custServiceCount = 0
-                getCustomerserviceCount(ID_Customer!!,Customer_Type!!,ID_Product!!)
+                getCustomerserviceCount(ID_Customer!!,Customer_Type!!,ID_Product!!,currentDate11!!)
 
                 Log.e(TAG,"ddddddddq ")
 
@@ -4875,7 +4877,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     }
 
-    private fun getCustomerserviceCount(ID_Customer: String, Customer_Type: String, ID_Product: String) {
+    private fun getCustomerserviceCount(ID_Customer: String, Customer_Type: String, ID_Product: String,CurrentDate:String) {
      //   ID_Customer!!,Customer_Type!!,ID_Product!!
             context = this@CustomerServiceActivity
             customerservicecountViewModel = ViewModelProvider(this).get(CustomerservicecountViewModel::class.java)
@@ -4887,7 +4889,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                     progressDialog!!.setIndeterminate(true)
                     progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                     progressDialog!!.show()
-                    customerservicecountViewModel.getCustomerserviceCount(this,ID_Customer,Customer_Type,ID_Product)!!.observe(
+                    customerservicecountViewModel.getCustomerserviceCount(this,ID_Customer,Customer_Type,ID_Product,CurrentDate)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message
@@ -5427,6 +5429,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             tie_MobileNo!!.setText(jsonObject!!.getString("Mobile"))
             tie_Address!!.setText(jsonObject!!.getString("Address"))
+            tie_ContactNo!!.setText(jsonObject!!.getString("OtherMobile"))
 
 //            if (ID_Customer.equals("")){
 //                til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)

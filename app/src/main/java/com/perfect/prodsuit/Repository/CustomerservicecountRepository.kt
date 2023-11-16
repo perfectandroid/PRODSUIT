@@ -25,8 +25,8 @@ object CustomerservicecountRepository {
     val CustomerservicecountSetterGetter = MutableLiveData<CustomerservicecountModel>()
     val TAG: String = "CustomerservicecountRepository"
 
-    fun getServicesApiCall(context: Context, ID_Customer: String, Customer_Type: String, ID_Product: String): MutableLiveData<CustomerservicecountModel> {
-        getCustomerservicecount(context,ID_Customer,Customer_Type,ID_Product)
+    fun getServicesApiCall(context: Context, ID_Customer: String, Customer_Type: String, ID_Product: String,CurrentDate:String): MutableLiveData<CustomerservicecountModel> {
+        getCustomerservicecount(context,ID_Customer,Customer_Type,ID_Product,CurrentDate)
         return CustomerservicecountSetterGetter
     }
 
@@ -36,12 +36,12 @@ object CustomerservicecountRepository {
         return CustomerservicecountSetterGetter
     }*/
 
-    private fun getCustomerservicecount(context: Context, ID_Customer: String, Customer_Type: String, ID_Product: String) {
+    private fun getCustomerservicecount(context: Context, ID_Customer: String, Customer_Type: String, ID_Product: String,CurrentDate:String) {
         System.out.println("Datacount 1 :"+ID_Customer)
         System.out.println("Datacount 2 :"+Customer_Type)
         System.out.println("Datacount 3 :"+ID_Product)
         try {
-//            CustomerservicecountSetterGetter.value = CustomerservicecountModel()
+            CustomerservicecountSetterGetter.value = CustomerservicecountModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -100,7 +100,7 @@ object CustomerservicecountRepository {
 
                 requestObject1.put("BranchCode", ProdsuitApplication.encryptStart("3"))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
-
+                requestObject1.put("FromDate", ProdsuitApplication.encryptStart(CurrentDate))
 
                 Log.e(TAG,"requestObject1   count   "+requestObject1)
                 Log.e(TAG,"4848  "+requestObject1)
