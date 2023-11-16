@@ -48,6 +48,12 @@ class ReportNameAdapter(internal var context: Context, internal var jsonArray: J
                     holder.llReportName!!.visibility = View.GONE
                     Log.e(TAG,"onBindViewHolder   105123   "+jsonObject!!.getString("ReportName"))
                 }
+                else if (report.equals("Project")){
+                   // holder.llReportName!!.visibility = View.GONE
+                    pos++
+                    holder.txtsino.text        = pos.toString()
+                    holder.txtReportName.text        = jsonObject!!.getString("ReportName")
+                }
                 else{
                     pos++
                     holder.txtsino.text        = pos.toString()

@@ -28,6 +28,10 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/btn_shape_reset.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/btn_shape_submit.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/btn_shape_submit1.xml" value="0.2675" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/checkbox_selector1.xml" value="0.2505" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/custom_toggle_button_background.xml" value="0.25" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/document_svg.xml" value="0.1935" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/documents.xml" value="0.2365" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/down_arrows.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/gradient_lead.xml" value="0.151" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/gradient_list.xml" value="0.151" />
@@ -83,6 +87,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shapes_sitevisit_2.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shapes_sitevisit_3.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/stock_inventorybg.xml" value="0.1885" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_attachemntfile.xml" value="0.2415" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_auth_arrow.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_auth_rectangle.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_delete.xml" value="0.262" />
@@ -156,7 +161,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_project.xml" value="0.24479166666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_project_follow_up.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_project_list.xml" value="0.25538971807628524" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_project_site_visit.xml" value="0.33" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_project_site_visit.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_project_site_visit_list.xml" value="0.29739583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_project_site_visit_tab.xml" value="0.35104166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_project_transaction.xml" value="0.3234375" />
@@ -215,6 +220,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_more_service_attended.xml" value="0.30462962962962964" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_other_charges.xml" value="0.28072916666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_parts_replaced.xml" value="0.30052083333333335" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_pay_method.xml" value="0.34427083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_payment_list.xml" value="0.30462962962962964" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_pincode_details.xml" value="0.28125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_product_category.xml" value="0.30885416666666665" />
@@ -229,6 +235,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_project_mode.xml" value="0.34427083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_project_othercharges.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_project_product.xml" value="0.34427083333333336" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_project_status.xml" value="0.29739583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_projectsite_visittab.xml" value="0.26666666666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_reason_auth.xml" value="0.2578125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_search_module.xml" value="0.31354166666666666" />
@@ -253,6 +260,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_stock_rtlist.xml" value="0.30885416666666665" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_stock_trans_confirm.xml" value="0.28125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_subcall_history.xml" value="0.3625" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_tax_detail.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_team.xml" value="0.34427083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_team_employee.xml" value="0.34427083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_todolist.xml" value="0.25416666666666665" />
@@ -272,6 +280,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/company_test1.xml" value="0.26944444444444443" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirm_material_usage.xml" value="0.35989583333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirm_stock_transfer.xml" value="0.33" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirm_upload_document_bottom.xml" value="0.28072916666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirmation_pop_lead.xml" value="0.28125" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirmation_pop_quicklead.xml" value="0.28489583333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/confirmmpin_popup.xml" value="0.2869791666666667" />
@@ -291,6 +300,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/employee_popup.xml" value="0.32916666666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/enlarge_product_image.xml" value="0.3333333333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/filter_manage.xml" value="0.3260416666666667" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/list_other_charge_popup.xml" value="0.26875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/list_popup.xml" value="0.34427083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/logout_popup.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/other_charges_popup.xml" value="0.3390625" />
@@ -315,6 +325,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/success_popup.xml" value="0.28020833333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/success_popup1.xml" value="0.33" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/success_popup_new.xml" value="0.28020833333333334" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/success_project_bottom.xml" value="0.2796875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/team_employee_popup.xml" value="0.34427083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/test.xml" value="0.3" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/test_new2.xml" value="0.35989583333333336" />

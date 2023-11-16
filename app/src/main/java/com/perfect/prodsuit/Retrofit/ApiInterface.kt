@@ -301,6 +301,9 @@ interface ApiInterface {
     @POST("UserValidations/ReportNameDetails")
     fun getReportNameDetails(@Body body: RequestBody): Call<String>
 
+    @POST("Report/ProjectReportNameDetails")
+    fun getProjectReportNameDetails(@Body body: RequestBody): Call<String>
+
     @POST("UserValidations/GroupingDetails")
     fun getGroupingDetails(@Body body: RequestBody): Call<String>
 
@@ -672,6 +675,29 @@ interface ApiInterface {
 
     @POST("DashBoard/EmployeeWiseTaegetInPercentage")
     fun getEmployeewise(@Body body: RequestBody): Call<String>
+
+    @POST("Project/ProjectStatus")
+    fun getProjectStatus(@Body body: RequestBody): Call<String>
+
+    @POST("Project/ProjectOtherChargeDetails")
+    fun getProjectOtherChargeDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Project/OtherChargeTaxCalculationDetails")
+    fun getOtherChargeTaxCalculationDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Project/checkDetails")
+    fun getProjectcheckDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Project/UpadateSiteVisit")
+    fun saveUpadateSiteVisit(@Body body: RequestBody): Call<String>
+
+    @POST("Project/DownloadImage")
+    fun saveDownloadImage(@Body body: RequestBody): Call<String>
+
+    @POST("Project/UpdateProjectTransaction")
+    fun saveUpdateProjectTransaction(@Body body: RequestBody): Call<String>
+
+
 
 
 }

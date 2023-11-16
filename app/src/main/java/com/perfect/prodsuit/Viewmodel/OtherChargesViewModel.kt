@@ -11,8 +11,8 @@ class OtherChargesViewModel : ViewModel() {
 
     var otherchargeData: MutableLiveData<OtherchargeModel>? = null
 
-    fun getOthercharge(context: Context) : LiveData<OtherchargeModel>? {
-        otherchargeData = OtherchargeRepository.getServicesApiCall(context)
+    fun getOthercharge(context: Context,ReqMode : String) : LiveData<OtherchargeModel>? {
+        otherchargeData = OtherchargeRepository.getServicesApiCall(context,ReqMode)
         return otherchargeData
     }
 }

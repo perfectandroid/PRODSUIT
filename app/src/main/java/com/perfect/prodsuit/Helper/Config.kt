@@ -1131,6 +1131,40 @@ object Config {
         return result
     }
 
+    fun getTransType(context : Context): String {
+
+        var result =""
+
+        try {
+            val array = JSONArray()
+            val jsonObject = JSONObject()
+            val jsonObject1 = JSONObject()
+
+            var obj = JSONObject()
+            obj.put("ID_TransType", "1")
+            obj.put("TransType_Name", "Debit")
+
+            array.put(obj)
+
+            obj = JSONObject()
+            obj.put("ID_TransType", "2")
+            obj.put("TransType_Name", "Credit")
+
+            array.put(obj)
+
+            jsonObject.put("TransTypeDetails", array)
+            jsonObject1.put("TransType", jsonObject)
+
+            result = jsonObject1.toString()
+
+        }catch (e : Exception){
+
+        }
+
+
+        return result
+    }
+
     fun getCompliantOrService(context : Context): String {
         var result =""
         try {
@@ -1220,6 +1254,14 @@ object Config {
         }
 
         return result
+    }
+
+    fun convert12HourTo24Hour(time12: String): String {
+        val inputFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+        val date = inputFormat.parse(time12)
+        return outputFormat.format(date)
     }
 
 

@@ -149,21 +149,21 @@ class ProjectSiteVisitTabActivity : AppCompatActivity() , View.OnClickListener, 
             val jsonObject = siteVisitArrayList.getJSONObject(position)
             if (position == 0){
                 val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitActivity::class.java)
-                i.putExtra("mode",1)
+                i.putExtra("mode","0")
                 i.putExtra("jsonObject","")
                 startActivity(i)
             }
 
             if (position == 1){
                 val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitListActivity::class.java)
-                i.putExtra("mode",1)
+                i.putExtra("mode",position)
                 i.putExtra("jsonObject",jsonObject.toString())
                 startActivity(i)
             }
 
             if (position == 2){
                 val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitListActivity::class.java)
-                i.putExtra("mode",2)
+                i.putExtra("mode",position)
                 i.putExtra("jsonObject",jsonObject.toString())
                 startActivity(i)
             }
