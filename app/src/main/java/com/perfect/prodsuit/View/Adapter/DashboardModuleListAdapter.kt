@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.InventoryGraphActivity
 import com.perfect.prodsuit.View.Activity.ServiceAssignListActivity
 import com.perfect.prodsuit.View.Activity.TileGraphActivity
 import org.json.JSONArray
@@ -185,10 +186,23 @@ class DashboardModuleListAdapter(
                     var label=jsonObject!!.getString("ModuleName")
                     Log.e(TAG,"Position   "+position+"\n"+submode+"\n"+label)
 
-                    val i = Intent(context, TileGraphActivity::class.java)
-                    i.putExtra("SubMode",submode)
-                    i.putExtra("label",label)
-                    context.startActivity(i)
+                    if (submode=="1")
+                    {
+                        val i = Intent(context, TileGraphActivity::class.java)
+                        i.putExtra("SubMode",submode)
+                        i.putExtra("label",label)
+                        context.startActivity(i)
+                    }
+                    if (submode=="4")
+                    {
+                        val i = Intent(context, InventoryGraphActivity::class.java)
+                        i.putExtra("SubMode",submode)
+                        i.putExtra("label",label)
+                        context.startActivity(i)
+                    }
+
+
+
 
                 })
 
