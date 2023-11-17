@@ -103,7 +103,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
     var ID_Project   = ""
     var ID_Stage   = ""
     var ID_Team   = ""
-    var ID_Employee   = ""
+    var ID_Employee   = "0"
 
     var ID_Product   = ""
     var ID_Stock   = ""
@@ -385,7 +385,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
       //  ID_Project = ""
         ID_Stage = ""
         ID_Team = ""
-        ID_Employee = ""
+        ID_Employee = "0"
 
        // tie_Project!!.setText("")
         tie_Stage!!.setText("")
@@ -1334,7 +1334,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
             tvc_Employee!!.setText(tie_Employee!!.text.toString())
 
             ll_mode!!.visibility  =View.GONE
-            if (ID_Employee.equals("")){
+            if (ID_Employee.equals("0")){
                 ll_Employee!!.visibility  =View.GONE
             }
 
@@ -1574,7 +1574,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
             tie_Stage!!.setText("")
             ID_Team = ""
             tie_Team!!.setText("")
-            ID_Employee = ""
+            ID_Employee = "0"
             tie_Employee!!.setText("")
 
         }
@@ -1588,7 +1588,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
 
             ID_Team = ""
             tie_Team!!.setText("")
-            ID_Employee = ""
+            ID_Employee = "0"
             tie_Employee!!.setText("")
 
         }
@@ -1599,7 +1599,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
             ID_Team = jsonObject.getString("ID_ProjectTeam")
             tie_Team!!.setText(jsonObject.getString("TeamName"))
 
-            ID_Employee = ""
+            ID_Employee = "0"
             tie_Employee!!.setText("")
 
         }
