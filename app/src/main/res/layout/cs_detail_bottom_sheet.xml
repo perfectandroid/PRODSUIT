@@ -162,7 +162,7 @@
                                     android:fontFamily="@font/myfont"
                                     android:gravity="center"
                                     android:padding="5dp"
-                                    android:text="Product History"
+                                    android:text="Service History"
                                     android:textAllCaps="true"
                                     android:textColor="@color/white"
                                     android:textSize="15sp"

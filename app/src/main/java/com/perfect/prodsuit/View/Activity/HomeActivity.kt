@@ -1091,7 +1091,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             }
             R.id.ll_dashboard -> {
 //                https://github.com/PhilJay/MPAndroidChart
-                val i = Intent(this@HomeActivity, DashBoardActivity::class.java)
+                val i = Intent(this@HomeActivity, DashboardNewActivity::class.java)
                 startActivity(i)
             }
             R.id.ll_reminder -> {
@@ -2361,7 +2361,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 startActivity(i)
             }
             if (grid_id.equals("2")){
-                val i = Intent(this@HomeActivity, DashBoardActivity::class.java)
+                val i = Intent(this@HomeActivity, DashboardNewActivity::class.java)
                 startActivity(i)
             }
             if (grid_id.equals("3")){

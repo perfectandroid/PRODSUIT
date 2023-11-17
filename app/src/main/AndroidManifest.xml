@@ -70,144 +70,149 @@
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ProjectReportDetailActivity"
+            android:name=".View.Activity.InventoryGraphActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".View.Activity.ProjectReportDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ProjectReportActivity"
+            android:name=".View.Activity.ProjectReportActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ProjectSiteVisitListActivity"
+            android:name=".View.Activity.ProjectSiteVisitListActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ProjectSiteVisitTabActivity"
+            android:name=".View.Activity.ProjectSiteVisitTabActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ProjectListActivity"
+            android:name=".View.Activity.ProjectListActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ProjectTransactionActivity"
+            android:name=".View.Activity.ProjectTransactionActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceInvoiceActivity"
+            android:name=".View.Activity.ServiceInvoiceActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ChatActivity1"
+            android:name=".View.Activity.ChatActivity1"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ChatUserListActivity"
+            android:name=".View.Activity.ChatUserListActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ChatRegisterActivity"
+            android:name=".View.Activity.ChatRegisterActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.CommonSearchActivity"
+            android:name=".View.Activity.CommonSearchActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.AuthorizationMiniDashboardActivity"
+            android:name=".View.Activity.AuthorizationMiniDashboardActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceFollowupGroupByActivity"
+            android:name=".View.Activity.ServiceFollowupGroupByActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceFollowUPActiivty"
+            android:name=".View.Activity.ServiceFollowUPActiivty"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.DashboradCommonActivity"
+            android:name=".View.Activity.DashboradCommonActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.VoiceRecordingActivity"
+            android:name=".View.Activity.VoiceRecordingActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.CorrectionSplitupActivity"
+            android:name=".View.Activity.CorrectionSplitupActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.CorrectionModuleListActivity"
+            android:name=".View.Activity.CorrectionModuleListActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.WalkingExistingActivity"
+            android:name=".View.Activity.WalkingExistingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LeadCorrectionActivity"
+            android:name=".View.Activity.LeadCorrectionActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LeadGenerationQuickActivity"
+            android:name=".View.Activity.LeadGenerationQuickActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ReminderShowActivity"
+            android:name=".View.Activity.ReminderShowActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ApprovalListActivity"
+            android:name=".View.Activity.ApprovalListActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ApprovalListDetailActivity"
+            android:name=".View.Activity.ApprovalListDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ApproveActivity"
+            android:name=".View.Activity.ApproveActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.StockRTListActivity"
+            android:name=".View.Activity.StockRTListActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -215,128 +220,128 @@
         <!-- android:name="com.perfect.prodsuit.View.Activity.DeliveryActivity" -->
         <!-- android:exported="false" /> -->
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.MaterialRequestActivity"
+            android:name=".View.Activity.MaterialRequestActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.InventoryActivity"
+            android:name=".View.Activity.InventoryActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.StockRequestActivity"
+            android:name=".View.Activity.StockRequestActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.StockTransferActivity"
+            android:name=".View.Activity.StockTransferActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ProjectSiteVisitActivity"
+            android:name=".View.Activity.ProjectSiteVisitActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ProjectActivity"
+            android:name=".View.Activity.ProjectActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ProductEnquiryDetailActivity"
+            android:name=".View.Activity.ProductEnquiryDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ProductSearchActivity"
+            android:name=".View.Activity.ProductSearchActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.scanners.BarcodeScannerActivity"
+            android:name=".scanners.BarcodeScannerActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LocationEnableActivity"
+            android:name=".View.Activity.LocationEnableActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.MapRootDetailActivity"
+            android:name=".View.Activity.MapRootDetailActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.MapRootActivity"
+            android:name=".View.Activity.MapRootActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LocationMarkingNewActivity"
+            android:name=".View.Activity.LocationMarkingNewActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LocationMarkingActivity"
+            android:name=".View.Activity.LocationMarkingActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.WalkingCustomerActivity"
+            android:name=".View.Activity.WalkingCustomerActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.AttendanceMarkingActivity"
+            android:name=".View.Activity.AttendanceMarkingActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LocationViewActivity"
+            android:name=".View.Activity.LocationViewActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.CollectionReportActivity"
+            android:name=".View.Activity.CollectionReportActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceFollowUpNewActivity"
+            android:name=".View.Activity.ServiceFollowUpNewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceReportDetailActivity"
+            android:name=".View.Activity.ServiceReportDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceReportActivity"
+            android:name=".View.Activity.ServiceReportActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ReportMainActivity"
+            android:name=".View.Activity.ReportMainActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -346,158 +351,158 @@
                 android:value="" />
         </activity>
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ProductInformationActivity"
+            android:name=".View.Activity.ProductInformationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.PickUpAndDeliveryUpdateActivity"
+            android:name=".View.Activity.PickUpAndDeliveryUpdateActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.PickUpAndDeliveryListActivity"
+            android:name=".View.Activity.PickUpAndDeliveryListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.PickUpAndDeliveryActivity"
+            android:name=".View.Activity.PickUpAndDeliveryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LocationCollectionActivity"
+            android:name=".View.Activity.LocationCollectionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.TrackerActivity"
+            android:name=".View.Activity.TrackerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.DeliveryAssignActivity"
+            android:name=".View.Activity.DeliveryAssignActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.EmiCollectionActivity"
+            android:name=".View.Activity.EmiCollectionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.EmiToDoListActivity"
+            android:name=".View.Activity.EmiToDoListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.EmiActivity"
+            android:name=".View.Activity.EmiActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceOngoingListActivityActivity"
+            android:name=".View.Activity.ServiceOngoingListActivityActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceAssignListActivity"
+            android:name=".View.Activity.ServiceAssignListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceAssignTabActivity"
+            android:name=".View.Activity.ServiceAssignTabActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.AddRemarkMultipleActivity"
+            android:name=".View.Activity.AddRemarkMultipleActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceAssignActivity"
+            android:name=".View.Activity.ServiceAssignActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.CustomerServiceActivity"
+            android:name=".View.Activity.CustomerServiceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.DocumentViewActivity"
+            android:name=".View.Activity.DocumentViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.DocumentListActivity"
+            android:name=".View.Activity.DocumentListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceFollowUpListActivity"
+            android:name=".View.Activity.ServiceFollowUpListActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.PRODSUIT.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceFollowUpActivity"
+            android:name=".View.Activity.ServiceFollowUpActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceFollowUpAmcActivity"
+            android:name=".View.Activity.ServiceFollowUpAmcActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.PRODSUIT.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceFollowUpHistory"
+            android:name=".View.Activity.ServiceFollowUpHistory"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.PRODSUIT.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceFollowUpAmcListActivity"
+            android:name=".View.Activity.ServiceFollowUpAmcListActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.PRODSUIT.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceFollowUpSummary"
+            android:name=".View.Activity.ServiceFollowUpSummary"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.PRODSUIT.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LocationActivity2"
+            android:name=".View.Activity.LocationActivity2"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LocationPickersActivity"
+            android:name=".View.Activity.LocationPickersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.FollowUpActivity"
+            android:name=".View.Activity.FollowUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.TicketReportDetailActivity"
+            android:name=".View.Activity.TicketReportDetailActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.AddRemarkActivity"
+            android:name=".View.Activity.AddRemarkActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.MapsAgendaActivity"
+            android:name=".View.Activity.MapsAgendaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.AddDocumentActivity"
+            android:name=".View.Activity.AddDocumentActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- <activity -->
@@ -513,11 +518,11 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ProjectFollowUpActivity"
+            android:name=".View.Activity.ProjectFollowUpActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.MaterialUsageActivity"
+            android:name=".View.Activity.MaterialUsageActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" /> <!-- <activity -->
@@ -526,246 +531,248 @@
         <!-- android:theme="@style/AppTheme.NoActionBar" -->
         <!-- tools:ignore="MissingClass" /> -->
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ExpenseAddActivity"
+            android:name=".View.Activity.ExpenseAddActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LeadNewActionActivity"
+            android:name=".View.Activity.LeadNewActionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LeadNextActionActivity"
+            android:name=".View.Activity.LeadNextActionActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.AgendaActivity"
+            android:name=".View.Activity.AgendaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.MessagesActivity"
+            android:name=".View.Activity.MessagesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.CallRemarkActivity"
+            android:name=".View.Activity.CallRemarkActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.SiteVisitActivity"
+            android:name=".View.Activity.SiteVisitActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.AccountDetailsActivity"
+            android:name=".View.Activity.AccountDetailsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LeadGeneratnActivity"
+            android:name=".View.Activity.LeadGeneratnActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.WarrantyAMCActivity"
+            android:name=".View.Activity.WarrantyAMCActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LocationActivity"
+            android:name=".View.Activity.LocationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ClosedTicketActivity"
+            android:name=".View.Activity.ClosedTicketActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ImageActivity"
+            android:name=".View.Activity.ImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.AssignedTicketsActivity"
+            android:name=".View.Activity.AssignedTicketsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceHistoryActivity"
+            android:name=".View.Activity.ServiceHistoryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.NotificationActivity"
+            android:name=".View.Activity.NotificationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.CustomerBalanceActivity"
+            android:name=".View.Activity.CustomerBalanceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LocationPickerActivity"
+            android:name=".View.Activity.LocationPickerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ProductActivity"
+            android:name=".View.Activity.ProductActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.CustomerSearchActivity"
+            android:name=".View.Activity.CustomerSearchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.DashBoardActivity"
+            android:name=".View.Activity.DashBoardActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LeadActivity"
+            android:name=".View.Activity.LeadActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LeadGenerationActivity"
+            android:name=".View.Activity.LeadGenerationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LeadManagemnetActivity"
+            android:name=".View.Activity.LeadManagemnetActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ServiceActivity"
+            android:name=".View.Activity.ServiceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.AboutUsActivity"
+            android:name=".View.Activity.AboutUsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ContactUsActivity"
+            android:name=".View.Activity.ContactUsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ProfileActivity"
+            android:name=".View.Activity.ProfileActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.HomeActivity"
+            android:name=".View.Activity.HomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.LoginActivity"
+            android:name=".View.Activity.LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.WelcomeActivity"
+            android:name=".View.Activity.WelcomeActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.MpinActivity"
+            android:name=".View.Activity.MpinActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.OTPActivity"
+            android:name=".View.Activity.OTPActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.WelcomeSliderActivity"
+            android:name=".View.Activity.WelcomeSliderActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.TodoListActivity"
+            android:name=".View.Activity.TodoListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.OverDueActivity"
+            android:name=".View.Activity.OverDueActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.UpcomingtaskActivity"
+            android:name=".View.Activity.UpcomingtaskActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.MyLeadActivity"
+            android:name=".View.Activity.MyLeadActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.SetMpinActivity"
+            android:name=".View.Activity.SetMpinActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ExpenseActivity"
+            android:name=".View.Activity.ExpenseActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ReportActivity"
+            android:name=".View.Activity.ReportActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.TicketReportActivity"
+            android:name=".View.Activity.TicketReportActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.ReportViewActivity"
+            android:name=".View.Activity.ReportViewActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.AddNoteActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-
-
-        <activity
-            android:name="com.perfect.prodsuit.View.Activity.DashboardNewActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan" />
-
-        <activity
-            android:name="com.perfect.prodsuit.View.Activity.ReportViewDetailsActivity"
+            android:name=".View.Activity.AddNoteActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.AddQuotationActivity"
+            android:name=".View.Activity.DashboardNewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".View.Activity.ReportViewDetailsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".View.Activity.TileGraphActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".View.Activity.AddQuotationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <receiver
-            android:name="com.perfect.prodsuit.Receivers.PhoneStatReceiver"
+            android:name=".Receivers.PhoneStatReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -781,7 +788,7 @@
         </receiver>
 
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.SplashActivity"
+            android:name=".View.Activity.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -856,16 +863,16 @@
         <!-- </intent-filter> -->
         <!-- </receiver> -->
         <service
-            android:name="com.perfect.prodsuit.View.Service.NotificationLocationService"
+            android:name=".View.Service.NotificationLocationService"
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name="com.perfect.prodsuit.View.Service.LocationUpdateService"
+            android:name=".View.Service.LocationUpdateService"
             android:enabled="true"
             android:exported="false" />
 
         <receiver
-            android:name="com.perfect.prodsuit.View.Service.LocationReceiver"
+            android:name=".View.Service.LocationReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="my.custom.broadcast" />
@@ -874,7 +881,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.perfect.prodsuit.View.Service.NotificationEvent"
+            android:name=".View.Service.NotificationEvent"
             android:exported="false">
             <intent-filter>
                 <action android:name="my.custom.ACTION_NOTIFICATION_CLICK" />
@@ -882,7 +889,7 @@
         </receiver>
 
         <service
-            android:name="com.perfect.prodsuit.fire.MyFirebaseMessagingService"
+            android:name=".fire.MyFirebaseMessagingService"
             android:directBootAware="true"
             android:exported="true">
             <intent-filter>
@@ -890,9 +897,9 @@
             </intent-filter>
         </service>
 
-        <receiver android:name="com.perfect.prodsuit.Receivers.ReminderReceiver" />
+        <receiver android:name=".Receivers.ReminderReceiver" />
         <receiver
-            android:name="com.perfect.prodsuit.Receivers.MyAlarmReceiver"
+            android:name=".Receivers.MyAlarmReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="${applicationId}.ACTION_ALARM" />

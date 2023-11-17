@@ -1350,7 +1350,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
 
                         Log.e(TAG,"arrProducts  6091  "+arrProducts+"\n"+arrIndexUpdate!!)
-                        arrProducts.remove(arrIndexUpdate!!)
+                     //   arrProducts.remove(arrIndexUpdate!!)
                         Log.e(TAG,"arrProducts  6092  "+arrProducts)
                         Log.e(TAG,"jObject  6092  "+jObject)
                         Log.i("arrindex",arrIndexUpdate.toString())
@@ -1391,7 +1391,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                         lnrHead_List!!.visibility = View.VISIBLE
 
                         Log.e(TAG,"arrProducts  6091  "+arrProducts)
-                        arrProducts.remove(arrIndexUpdate!!)
+                   //     arrProducts.remove(arrIndexUpdate!!)
                         Log.e(TAG,"arrProducts  6092  "+arrProducts)
                         Log.e(TAG,"jObject  6092  "+jObject)
                         arrProducts.put(arrIndexUpdate!!,jObject)

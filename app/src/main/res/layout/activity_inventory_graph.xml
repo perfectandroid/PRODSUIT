@@ -1,0 +1,890 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/navbg"
+    tools:context=".View.Activity.InventoryGraphActivity"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/llback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/shape_header">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imback"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="left"
+                    android:background="@color/color_activity_transparent"
+                    android:padding="10dp"
+                    android:src="@drawable/back_arro"
+                    android:tint="@color/white"
+                    tools:ignore="UseAppTint" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/mainHeadingDash"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/myfont"
+                android:gravity="center"
+                android:text="Dashboard"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:tint="@color/black" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+
+
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/greylight"
+        android:orientation="vertical"
+        >
+        <!--starting here-->
+
+
+
+
+        <LinearLayout
+            android:id="@+id/startView"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="3dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:id="@+id/llMainDetail"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:orientation="vertical">
+                    <!-- main page start-->
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:id="@+id/mainpage"
+                        android:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:background="@drawable/navbg"
+                            android:orientation="vertical">
+
+
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="0dp"
+                                android:orientation="vertical">
+
+
+                                <!--All tab here-->
+                                <LinearLayout
+                                    android:paddingRight="10dp"
+                                    android:paddingLeft="10dp"
+                                    android:paddingTop="10dp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <LinearLayout
+
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical"
+                                        android:visibility="visible">
+
+                                        <!--Stock Value Tile-->
+
+                                        <LinearLayout
+                                            android:id="@+id/TileLinear"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@color/colorPrimary"
+                                            android:visibility="visible"
+                                            android:orientation="horizontal">
+
+
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="70dp"
+                                                android:background="@color/colorPrimary"
+                                                android:weightSum="4"
+                                                android:orientation="horizontal">
+                                                <LinearLayout
+                                                    android:paddingLeft="20dp"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="3"
+
+                                                    >
+                                                    <TextView
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_gravity="center"
+                                                        android:layout_weight="1"
+                                                        android:gravity="left"
+                                                        android:text="Stock value"
+                                                        android:textColor="@color/white"
+                                                        android:textAllCaps="true"
+                                                        android:layout_marginTop="10dp"
+                                                        android:layout_marginBottom="10dp"
+                                                        android:layout_marginLeft="2dp"
+                                                        android:layout_marginRight="2dp"
+                                                        android:textSize="15dp"
+                                                        android:textStyle="bold"
+                                                        android:fontFamily="@font/myfont" />
+
+                                                </LinearLayout>
+                                                <LinearLayout
+                                                    android:gravity="center"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_width="0dp"
+                                                    android:layout_weight="1"
+
+                                                    >
+                                                    <TextView
+                                                        android:id="@+id/tv_stockCount"
+                                                        android:layout_width="50dp"
+                                                        android:layout_height="50dp"
+                                                        android:text="300"
+                                                        android:gravity="center"
+                                                        android:background="@drawable/counts_color1"
+                                                        android:textColor="@color/white"
+                                                        android:textSize="18dp"
+                                                        android:fontFamily="@font/myfont" />
+                                                </LinearLayout>
+
+
+
+
+
+                                            </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+                                        </LinearLayout>
+
+
+                                        <View
+                                            android:layout_width="match_parent"
+                                            android:layout_height="1dp"
+                                            android:background="@color/grey"/>
+                                        <LinearLayout
+                                            android:layout_marginTop="10dp"
+
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@color/white"
+                                            android:orientation="vertical"
+                                            android:visibility="visible">
+
+
+                                            <!-- one-->
+                                            <LinearLayout
+                                                android:layout_weight="1"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical">
+
+
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="vertical">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_gravity="center"
+                                                        android:orientation="vertical"
+                                                        android:paddingLeft="10dp"
+                                                        android:paddingTop="8dp">
+                                                        <!--                                android:background="@color/purple_700"-->
+                                                        <TextView
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_weight=".8"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center"
+                                                            android:text="Monthly sale graph"
+                                                            android:textAllCaps="true"
+                                                            android:textColor="@color/black"
+                                                            android:textSize="13dp"
+                                                            android:textStyle="bold" />
+
+                                                        <TextView
+                                                            android:visibility="gone"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_marginTop="-8dp"
+                                                            android:layout_weight=".8"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center"
+                                                            android:text="IN PERCENTAGE"
+                                                            android:textAllCaps="true"
+                                                            android:textColor="@color/greydark"
+                                                            android:textSize="8dp"
+                                                            android:textStyle="bold" />
+
+                                                        <TextView
+                                                            android:id="@+id/tv_leadStageTotal"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="30dp"
+                                                            android:layout_gravity="center"
+                                                            android:layout_weight="1"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center"
+                                                            android:textColor="@color/white"
+                                                            android:textSize="20dp"
+                                                            android:textStyle="bold"
+                                                            android:visibility="gone" />
+
+                                                        <ImageView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:layout_weight="1"
+                                                            android:gravity="center"
+                                                            android:padding="15dp"
+                                                            android:src="@drawable/dash2"
+                                                            android:tint="@color/white"
+                                                            android:visibility="gone"
+                                                            tools:ignore="UseAppTint" />
+                                                    </LinearLayout>
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:orientation="horizontal">
+
+                                                        <com.github.mikephil.charting.charts.BarChart
+                                                            android:id="@+id/barChart"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="150dp"
+                                                            android:layout_margin="2dp"
+                                                            android:layout_weight="1"
+                                                            android:visibility="visible" />
+
+                                                        <LinearLayout
+                                                            android:visibility="gone"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_weight="1.5"
+                                                            android:gravity="center"
+                                                            android:orientation="vertical">
+
+                                                            <androidx.recyclerview.widget.RecyclerView
+                                                                android:id="@+id/rclv_barchart"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_margin="1dp"
+                                                                android:visibility="visible" />
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:gravity="center_vertical"
+                                                                android:orientation="horizontal"
+                                                                android:padding="5dp"
+                                                                android:visibility="gone">
+
+                                                                <TextView
+                                                                    android:layout_width="12dp"
+                                                                    android:layout_height="12dp"
+                                                                    android:background="@color/greydark"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+                                                                <TextView
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:text="NEW"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+
+                                                            </LinearLayout>
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:gravity="center_vertical"
+                                                                android:orientation="horizontal"
+                                                                android:padding="5dp"
+                                                                android:visibility="gone">
+
+                                                                <TextView
+                                                                    android:layout_width="12dp"
+                                                                    android:layout_height="12dp"
+                                                                    android:background="@color/red"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+                                                                <TextView
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:text="FINAL STAGE"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+
+                                                            </LinearLayout>
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:gravity="center_vertical"
+                                                                android:orientation="horizontal"
+                                                                android:padding="5dp"
+                                                                android:visibility="gone">
+
+                                                                <TextView
+                                                                    android:layout_width="12dp"
+                                                                    android:layout_height="12dp"
+                                                                    android:background="@color/green"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+                                                                <TextView
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:text="PROCESSING"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+
+                                                            </LinearLayout>
+
+                                                        </LinearLayout>
+
+                                                    </LinearLayout>
+
+                                                </LinearLayout>
+
+
+                                            </LinearLayout>
+
+                                            <!-- second-->
+                                            <View
+                                                android:layout_width="match_parent"
+                                                android:layout_height="1dp"
+                                                android:background="@color/grey"/>
+
+                                            <LinearLayout
+                                                android:layout_weight="1"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical">
+
+
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="vertical">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_gravity="center"
+                                                        android:orientation="vertical"
+                                                        android:paddingLeft="10dp"
+                                                        android:paddingTop="8dp">
+                                                        <!--                                android:background="@color/purple_700"-->
+                                                        <TextView
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_weight=".8"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center"
+                                                            android:text="sale comparison"
+                                                            android:textAllCaps="true"
+                                                            android:textColor="@color/black"
+                                                            android:textSize="13dp"
+                                                            android:textStyle="bold" />
+
+                                                        <TextView
+                                                            android:visibility="gone"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_marginTop="-8dp"
+                                                            android:layout_weight=".8"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center"
+                                                            android:text="IN PERCENTAGE"
+                                                            android:textAllCaps="true"
+                                                            android:textColor="@color/greydark"
+                                                            android:textSize="8dp"
+                                                            android:textStyle="bold" />
+
+
+
+                                                    </LinearLayout>
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:orientation="horizontal">
+
+                                                        <com.github.mikephil.charting.charts.BarChart
+
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="150dp"
+                                                            android:layout_margin="2dp"
+                                                            android:layout_weight="1"
+                                                            android:visibility="visible" />
+
+                                                        <LinearLayout
+                                                            android:visibility="gone"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_weight="1.5"
+                                                            android:gravity="center"
+                                                            android:orientation="vertical">
+
+                                                            <androidx.recyclerview.widget.RecyclerView
+
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_margin="1dp"
+                                                                android:visibility="visible" />
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:gravity="center_vertical"
+                                                                android:orientation="horizontal"
+                                                                android:padding="5dp"
+                                                                android:visibility="gone">
+
+                                                                <TextView
+                                                                    android:layout_width="12dp"
+                                                                    android:layout_height="12dp"
+                                                                    android:background="@color/greydark"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+                                                                <TextView
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:text="NEW"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+
+                                                            </LinearLayout>
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:gravity="center_vertical"
+                                                                android:orientation="horizontal"
+                                                                android:padding="5dp"
+                                                                android:visibility="gone">
+
+                                                                <TextView
+                                                                    android:layout_width="12dp"
+                                                                    android:layout_height="12dp"
+                                                                    android:background="@color/red"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+                                                                <TextView
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:text="FINAL STAGE"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+
+                                                            </LinearLayout>
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:gravity="center_vertical"
+                                                                android:orientation="horizontal"
+                                                                android:padding="5dp"
+                                                                android:visibility="gone">
+
+                                                                <TextView
+                                                                    android:layout_width="12dp"
+                                                                    android:layout_height="12dp"
+                                                                    android:background="@color/green"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+                                                                <TextView
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:text="PROCESSING"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+
+                                                            </LinearLayout>
+
+                                                        </LinearLayout>
+
+                                                    </LinearLayout>
+
+                                                </LinearLayout>
+
+
+                                            </LinearLayout>
+
+
+
+
+                                        </LinearLayout>
+
+                                        <View
+                                            android:layout_width="match_parent"
+                                            android:layout_height="1dp"
+                                            android:background="@color/grey"/>
+
+                                        <!-- third-->
+                                        <LinearLayout
+                                            android:layout_marginTop="10dp"
+
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@color/white"
+                                            android:orientation="vertical"
+                                            android:visibility="visible">
+
+                                            <LinearLayout
+                                                android:layout_weight="1"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical">
+
+
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="vertical">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_gravity="center"
+                                                        android:orientation="vertical"
+                                                        android:paddingLeft="10dp"
+                                                        android:paddingTop="8dp">
+                                                        <!--                                android:background="@color/purple_700"-->
+                                                        <TextView
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_weight=".8"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center"
+                                                            android:text="stock list ( category )"
+                                                            android:textAllCaps="true"
+                                                            android:textColor="@color/black"
+                                                            android:textSize="13dp"
+                                                            android:textStyle="bold" />
+
+                                                        <TextView
+                                                            android:visibility="gone"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_marginTop="-8dp"
+                                                            android:layout_weight=".8"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center"
+                                                            android:text="IN PERCENTAGE"
+                                                            android:textAllCaps="true"
+                                                            android:textColor="@color/greydark"
+                                                            android:textSize="8dp"
+                                                            android:textStyle="bold" />
+
+
+
+                                                    </LinearLayout>
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:orientation="horizontal">
+
+                                                        <com.github.mikephil.charting.charts.BarChart
+
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="150dp"
+                                                            android:layout_margin="2dp"
+                                                            android:layout_weight="1"
+                                                            android:visibility="visible" />
+
+                                                        <LinearLayout
+                                                            android:visibility="gone"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_weight="1.5"
+                                                            android:gravity="center"
+                                                            android:orientation="vertical">
+
+                                                            <androidx.recyclerview.widget.RecyclerView
+
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_margin="1dp"
+                                                                android:visibility="visible" />
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:gravity="center_vertical"
+                                                                android:orientation="horizontal"
+                                                                android:padding="5dp"
+                                                                android:visibility="gone">
+
+                                                                <TextView
+                                                                    android:layout_width="12dp"
+                                                                    android:layout_height="12dp"
+                                                                    android:background="@color/greydark"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+                                                                <TextView
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:text="NEW"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+
+                                                            </LinearLayout>
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:gravity="center_vertical"
+                                                                android:orientation="horizontal"
+                                                                android:padding="5dp"
+                                                                android:visibility="gone">
+
+                                                                <TextView
+                                                                    android:layout_width="12dp"
+                                                                    android:layout_height="12dp"
+                                                                    android:background="@color/red"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+                                                                <TextView
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:text="FINAL STAGE"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+
+                                                            </LinearLayout>
+
+                                                            <LinearLayout
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:gravity="center_vertical"
+                                                                android:orientation="horizontal"
+                                                                android:padding="5dp"
+                                                                android:visibility="gone">
+
+                                                                <TextView
+                                                                    android:layout_width="12dp"
+                                                                    android:layout_height="12dp"
+                                                                    android:background="@color/green"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+                                                                <TextView
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:layout_marginLeft="10dp"
+                                                                    android:fontFamily="@font/myfont"
+                                                                    android:text="PROCESSING"
+                                                                    android:textColor="@color/black"
+                                                                    android:textSize="12dp"
+                                                                    android:textStyle="bold" />
+
+
+                                                            </LinearLayout>
+
+                                                        </LinearLayout>
+
+                                                    </LinearLayout>
+
+                                                </LinearLayout>
+
+
+                                            </LinearLayout>
+
+
+
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+
+
+
+
+
+                                </LinearLayout>
+
+
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <!-- main page end-->
+
+                    <!-- first lead page  -->
+
+                    <!--second services page-->
+
+
+
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+        </LinearLayout>
+
+
+
+
+        <!--end here-->
+
+
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
+
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

@@ -18,6 +18,7 @@
             android:layout_height="10dp"
             android:fontFamily="@font/myfont"
             android:textSize="10dp"
+            android:visibility="gone"
             android:textStyle="bold"
             android:background="@color/greydark"
             android:textColor="@color/black"/>
@@ -26,7 +27,8 @@
             android:id="@+id/tv_PieName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="HOT"
+            android:text=""
+            android:visibility="gone"
             android:layout_marginLeft="10dp"
             android:fontFamily="@font/myfont"
             android:textSize="10dp"
