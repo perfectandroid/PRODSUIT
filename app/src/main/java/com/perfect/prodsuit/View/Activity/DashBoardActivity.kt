@@ -19,6 +19,7 @@ import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.components.*
 import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.google.android.material.tabs.TabLayout
@@ -1141,7 +1142,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         // barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
         barDataSet.setColors(colors)
         //barDataSet.setValueFormatter(DecimalRemover())
-
+        barDataSet.valueFormatter = DefaultValueFormatter(0)
         val data = BarData(barDataSet)
         data.setValueTextSize(15f)
         data.setValueTextColor(Color.BLACK)
@@ -1534,7 +1535,7 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
         // barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
         barDataSet.setColors(colors)
         //barDataSet.setValueFormatter(DecimalRemover())
-
+        barDataSet.valueFormatter = DefaultValueFormatter(0)
         val data = BarData(barDataSet)
         data.setValueTextSize(15f)
         data.setValueTextColor(Color.BLACK)
