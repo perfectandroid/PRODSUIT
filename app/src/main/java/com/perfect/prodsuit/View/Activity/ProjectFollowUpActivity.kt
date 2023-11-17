@@ -112,8 +112,9 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         setRegViews()
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
-        ID_Project = jsonObj!!.getString("ID_FIELD")
+        ID_Project = jsonObj!!.getString("ID_Project")
         tie_Project!!.setText(jsonObj!!.getString("ProjName"))
+        tie_DueDate!!.setText(jsonObj!!.getString("DueDate"))
 
 
     }
@@ -804,11 +805,12 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                                                 suceessDialog!!.findViewById(R.id.tv_succesmsg) as TextView
                                             val tv_leadid =
                                                 suceessDialog!!.findViewById(R.id.tv_leadid) as TextView
-                                            val tv_succesok =
-                                                suceessDialog!!.findViewById(R.id.tv_succesok) as TextView
+                                            val tv_succesok = suceessDialog!!.findViewById(R.id.tv_succesok) as TextView
+                                            val ll_leadnumber = suceessDialog!!.findViewById(R.id.ll_leadnumber) as LinearLayout
+                                            ll_leadnumber.visibility = View.GONE
                                             //LeadNumber
                                             tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
-                                            tv_leadid!!.setText(jobjt.getString("LeadNumber"))
+                                          //  tv_leadid!!.setText(jobjt.getString("LeadNumber"))
 
                                             tv_succesok!!.setOnClickListener {
                                                 suceessDialog!!.dismiss()

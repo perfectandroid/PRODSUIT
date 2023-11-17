@@ -1327,6 +1327,18 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         modelProjectCheckList.clear()
         modelOtherCharges.clear()
 
+
+        tie_Othercharges!!.setText("")
+        tie_Common_Remark!!.setText("")
+
+
+        modelOtherCharges.clear()
+        otherChargeAdapter = null
+
+        modelOtherChargesCalculation.clear()
+        taxDetailAdapter = null
+
+
         showLead = 1
         showEmployee = 0
         showMeasurement = 0
@@ -1335,9 +1347,6 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         expandTab()
 
         // Other Charges
-
-        tie_Othercharges!!.setText("")
-        tie_Common_Remark!!.setText("")
 
 
 //        strInspectionNote1   = ""
@@ -2189,19 +2198,19 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 for (i in 0 until modelOtherCharges.size) {
                     if (modelOtherCharges[i].isCalculate){
                         if (modelOtherCharges[i].OctyIncludeTaxAmount){
-                            if (modelOtherCharges[i].ID_TransType.equals("2")){
+                            if (modelOtherCharges[i].ID_TransType.equals("1")){
                                 // Credit
                                 otherCharge = otherCharge - (modelOtherCharges[i].OctyAmount).toFloat()
-                            }else if (modelOtherCharges[i].ID_TransType.equals("1")){
+                            }else if (modelOtherCharges[i].ID_TransType.equals("2")){
                                 // Debit
                                 otherCharge = otherCharge + (modelOtherCharges[i].OctyAmount).toFloat()
                             }
                         }else{
-                            if (modelOtherCharges[i].ID_TransType.equals("2")){
+                            if (modelOtherCharges[i].ID_TransType.equals("1")){
                                 // Credit
 
                                 otherCharge = otherCharge - ((modelOtherCharges[i].OctyAmount).toFloat()+(modelOtherCharges[i].OctyTaxAmount).toFloat())
-                            }else if (modelOtherCharges[i].ID_TransType.equals("1")){
+                            }else if (modelOtherCharges[i].ID_TransType.equals("2")){
                                 // Debit
                                 otherCharge = otherCharge + ((modelOtherCharges[i].OctyAmount).toFloat()+(modelOtherCharges[i].OctyTaxAmount).toFloat())
                             }

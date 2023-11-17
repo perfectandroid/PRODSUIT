@@ -145,7 +145,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
 
-        ID_Project = jsonObj!!.getString("ID_FIELD")
+        ID_Project = jsonObj!!.getString("ID_Project")
         tie_Project!!.setText(jsonObj!!.getString("ProjName"))
         requestMode = "1"
         detailMode = "0"
