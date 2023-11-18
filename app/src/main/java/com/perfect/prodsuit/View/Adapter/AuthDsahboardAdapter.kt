@@ -29,13 +29,16 @@ class AuthDsahboardAdapter (internal var context: Context, internal var jsonArra
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
 
-        if (viewType == VIEW_TYPE_FIRST_ROW) {
-            val v = LayoutInflater.from(parent.context).inflate(R.layout.adapter_authdash, parent, false)
-            vh = MainViewHolder(v)
-        }else{
-            val v = LayoutInflater.from(parent.context).inflate(R.layout.adapter_authdash_single, parent, false)
-            vh = MainViewHolder(v)
-        }
+//        if (viewType == VIEW_TYPE_FIRST_ROW) {
+//            val v = LayoutInflater.from(parent.context).inflate(R.layout.adapter_authdash, parent, false)
+//            vh = MainViewHolder(v)
+//        }else{
+//            val v = LayoutInflater.from(parent.context).inflate(R.layout.adapter_authdash_single, parent, false)
+//            vh = MainViewHolder(v)
+//        }
+
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.adapter_authdash, parent, false)
+        vh = MainViewHolder(v)
 
         return vh
     }

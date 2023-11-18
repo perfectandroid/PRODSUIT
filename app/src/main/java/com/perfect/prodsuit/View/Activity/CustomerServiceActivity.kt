@@ -4826,6 +4826,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         if (prodHistMode.equals("0")){
             ll_tab_production!!.setBackgroundResource(R.drawable.shape_rectangle_border_with_bg)
 
+            Log.e(TAG,"ssssssssssdddd 1 "+prodHistMode)
             card_production!!.visibility = View.VISIBLE
          //   horizontalScroll!!.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
           //  horizontalScroll!!.scrollTo(ll_tab_production!!.getRight(), ll_tab_production!!.getTop())
@@ -5300,16 +5301,16 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                                     }
                                 } else {
-//                                val builder = AlertDialog.Builder(
-//                                    this@CustomerServiceActivity,
-//                                    R.style.MyDialogTheme
-//                                )
-//                                builder.setMessage(jObject.getString("EXMessage"))
-//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                }
-//                                val alertDialog: AlertDialog = builder.create()
-//                                alertDialog.setCancelable(false)
-//                                alertDialog.show()
+                                val builder = AlertDialog.Builder(
+                                    this@CustomerServiceActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
                                 }
 
                             }

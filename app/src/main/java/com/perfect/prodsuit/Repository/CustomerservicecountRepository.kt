@@ -102,8 +102,8 @@ object CustomerservicecountRepository {
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
                 requestObject1.put("FromDate", ProdsuitApplication.encryptStart(CurrentDate))
 
-                Log.e(TAG,"requestObject1   count   "+requestObject1)
-                Log.e(TAG,"4848  "+requestObject1)
+                Log.e(TAG,"requestObject1   countttttt   "+requestObject1)
+                Log.e(TAG,"msg   count 1  "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -121,7 +121,7 @@ object CustomerservicecountRepository {
                 ) {
                     try {
                         progressDialog!!.dismiss()
-                        Log.e(CustomerservicecountRepository.TAG,"0974  response    "+response.body())
+                        Log.e(TAG,"0974  response    "+response.body())
                         val jObject = JSONObject(response.body())
                         val count = ArrayList<CustomerservicecountModel>()
                         count.add(CustomerservicecountModel(response.body()))

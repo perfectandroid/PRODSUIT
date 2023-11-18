@@ -34,6 +34,7 @@ import com.perfect.prodsuit.View.Adapter.MonthlyBarChartAdapter
 import com.perfect.prodsuit.View.Adapter.PieChartAdapter
 import com.perfect.prodsuit.Viewmodel.InventoryMonthlySaleViewModel
 import com.perfect.prodsuit.Viewmodel.LeadTileViewModel
+import com.perfect.prodsuit.Viewmodel.ProductReorderLevelViewModel
 import com.perfect.prodsuit.Viewmodel.StockListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -43,7 +44,9 @@ class InventoryGraphActivity : AppCompatActivity() {
     var TAG  ="InventoryGraphActivity"
     lateinit var context: Context
     lateinit var inventoryViewModel: InventoryMonthlySaleViewModel
+    lateinit var productreorderLevelViewModel: ProductReorderLevelViewModel
     lateinit var stockListViewModel: StockListViewModel
+    var ProductReorderLevelCount = 0
 
 
 
@@ -78,6 +81,106 @@ class InventoryGraphActivity : AppCompatActivity() {
         getStckListCategory()
 
 
+
+        productreorderLevelViewModel = ViewModelProvider(this).get(ProductReorderLevelViewModel::class.java)
+//        setRegViews()
+    }
+
+
+//    private fun setRegViews() {
+
+//        tvv_prl_slnmbr       = findViewById(R.id.tvv_prl_slnmbr)
+//        tvv_prl_product      = findViewById(R.id.tvv_prl_product)
+//        tvv_prl_reorderlevel = findViewById(R.id.tvv_prl_reorderlevel)
+//        tvv_prl_currentstock = findViewById(R.id.tvv_prl_currentstock)
+//        tvv_dropdown         = findViewById(R.id.tvv_dropdown)
+
+//    }
+
+    private fun getProductReorderLevel() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productreorderLevelViewModel.getproductreorderLevel(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (ProductReorderLevelCount == 0) {
+                                    ProductReorderLevelCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   999101   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("InventoryProductReorderLevel")
+//                                        approvalArrayList = jobjt.getJSONArray("AuthorizationModuleDetails")
+//                                        Log.e(TAG, "approvalArray   999101   " + approvalArrayList)
+
+//                                        if (approvalArrayList.length()> 0){
+//
+//                                            tv_listCount!!.setText(""+approvalArrayList.length())
+
+
+//                                            val lLayout = GridLayoutManager(this@InventoryGraphActivity, 1)
+//                                            recyclr_colom!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                            val adapter = ApproveAdapter(this@InventoryGraphActivity, approvalArrayList)
+//                                            recyclr_colom!!.adapter = adapter
+//                                            adapter.setClickListener(this@InventoryGraphActivity)
+//                                        }
+//                                        else if (approvalArray.equals("")){
+//
+//                                            Log.e(TAG, "approvalArray   10001   " + approvalArrayList)
+//
+//                                            recyAprrove!!.visibility = View.GONE
+//                                            imv_nodata!!.visibility = View.VISIBLE
+//
+//                                        }
+
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@InventoryGraphActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
 

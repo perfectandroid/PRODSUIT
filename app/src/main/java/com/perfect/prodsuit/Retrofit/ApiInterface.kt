@@ -701,6 +701,9 @@ interface ApiInterface {
     @POST("Project/UpdateProjectTransaction")
     fun saveUpdateProjectTransaction(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/InventoryProductReorderLevel")
+    fun getInventoryProductReorderLevel(@Body body: RequestBody): Call<String>
+
 
 
 
