@@ -662,7 +662,11 @@ interface ApiInterface {
     @POST("DashBoard/TileLeadDashBoardDetails")
     fun getDashboardTileDetails(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/InventoryMonthlySaleGraph")
+    fun getInventoryMonthlySaleDetails(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/InventoryStockListCategory")
+    fun getStockListCategoryDetails(@Body body: RequestBody): Call<String>
 
     @POST("Project/UpdateProjectFollowUp")
     fun saveUpdateProjectFollowUp(@Body body: RequestBody): Call<String>
