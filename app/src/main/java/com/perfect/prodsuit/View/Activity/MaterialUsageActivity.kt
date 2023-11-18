@@ -1584,7 +1584,7 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
 
     private fun saveMaterialUsage() {
          var UserAction = "1"
-         var TransMode = ""
+         var TransMode = "PRMU"
          var ID_ProjectMaterialUsage = "0"
 
         when (Config.ConnectivityUtils.isConnected(this)) {

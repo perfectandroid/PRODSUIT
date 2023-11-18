@@ -1371,7 +1371,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
 
     private fun saveMaterialUsage() {
         var UserAction = "1"
-        var TransMode = ""
+        var TransMode = "PRMR"
         var ID_ProjectMaterialRequest = "0"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
