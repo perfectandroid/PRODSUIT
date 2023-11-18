@@ -57,7 +57,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/svg_trans_rect"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/tv_ShortName"
@@ -87,15 +88,16 @@
                             android:gravity="center"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/circle_white"
-                            android:visibility="invisible">
+                            android:visibility="visible">
 
                             <ImageView
                                 android:id="@+id/im_Channel"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:src="@drawable/communication_color"
+                                android:padding="5dp"
+                                android:src="@drawable/sicon_project"
                                 android:layout_alignParentLeft="true"
-                                android:visibility="gone" />
+                                android:visibility="visible" />
 
                         </LinearLayout>
 
@@ -304,6 +306,136 @@
 
                                 <TextView
                                     android:id="@+id/tv_Customer"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:textSize="12dp"
+                                    android:paddingLeft="2dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:text=""
+                                    android:textStyle="normal"
+                                    android:textColor="@color/black"
+                                    android:layout_centerVertical="true" />
+
+                            </LinearLayout>
+
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.5"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:padding="2dp"
+                                    android:src="@drawable/sicon_address"
+                                    app:tint="@color/colorPrimary" />
+                                <!--                            app:tint="@color/list_icon"-->
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:textSize="12dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:text="Address"
+                                    android:textColor="@color/list_label"
+                                    android:layout_centerVertical="true" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="5dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textSize="12dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"
+                                android:textColor="@color/black"
+                                android:layout_centerVertical="true" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tv_Address"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:textSize="12dp"
+                                    android:paddingLeft="2dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:text=""
+                                    android:textStyle="normal"
+                                    android:textColor="@color/black"
+                                    android:layout_centerVertical="true" />
+
+                            </LinearLayout>
+
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.5"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:padding="2dp"
+                                    android:src="@drawable/sicon_mobile"
+                                    app:tint="@color/colorPrimary" />
+                                <!--                            app:tint="@color/list_icon"-->
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:textSize="12dp"
+                                    android:fontFamily="@font/myfont"
+                                    android:text="MobileNumber"
+                                    android:textColor="@color/list_label"
+                                    android:layout_centerVertical="true" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="5dp"
+                                android:layout_height="match_parent"
+                                android:gravity="start"
+                                android:textSize="12dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"
+                                android:textColor="@color/black"
+                                android:layout_centerVertical="true" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tv_MobileNumber"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
@@ -761,13 +893,15 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="90dp"
             android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:background="#DFE2E3"
                 android:orientation="vertical">
 
                 <TextView
@@ -777,13 +911,13 @@
                     android:fontFamily="@font/myfont"
                     android:gravity="center"
                     android:text="Material"
-                    android:textColor="@color/list_label"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="16dp"
-                    android:textStyle="normal" />
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.9dp"
+                    android:layout_height="0.7dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/svg_sa_sub1"/>
@@ -791,6 +925,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -802,8 +937,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:src="@drawable/sicon_usage"/>
 
                         <TextView
@@ -813,7 +948,7 @@
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:text="Usage"
-                            android:textColor="@color/list_label"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="13dp"
                             android:textStyle="normal" />
 
@@ -835,8 +970,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:src="@drawable/sicon_request"/>
 
                         <TextView
@@ -847,7 +982,7 @@
                             android:fontFamily="@font/myfont"
                             android:text="Request"
                             android:textStyle="normal"
-                            android:textColor="@color/list_label"
+                            android:textColor="@color/colorPrimary"
                             android:layout_centerVertical="true" />
 
                     </LinearLayout>
@@ -863,12 +998,15 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/svg_sa_sub1"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:background="#DFE2E3"
                 android:orientation="vertical">
 
                 <TextView
@@ -878,13 +1016,13 @@
                     android:fontFamily="@font/myfont"
                     android:gravity="center"
                     android:text="Project"
-                    android:textColor="@color/list_label"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="16dp"
-                    android:textStyle="normal" />
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.9dp"
+                    android:layout_height="0.7dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/svg_sa_sub1"/>
@@ -903,8 +1041,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:src="@drawable/sicon_followup" />
 
                         <TextView
@@ -914,7 +1052,7 @@
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
                             android:text="Followup"
-                            android:textColor="@color/list_label"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="13dp"
                             android:textStyle="normal" />
 
@@ -936,8 +1074,8 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
                             android:src="@drawable/sicon_transaction"/>
 
                         <TextView
@@ -948,7 +1086,7 @@
                             android:fontFamily="@font/myfont"
                             android:text="Transaction"
                             android:textStyle="normal"
-                            android:textColor="@color/list_label"
+                            android:textColor="@color/colorPrimary"
                             android:layout_centerVertical="true" />
 
                     </LinearLayout>

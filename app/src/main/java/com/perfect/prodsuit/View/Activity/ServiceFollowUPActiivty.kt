@@ -3811,7 +3811,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                 mainSubProduct = 0
                 getMainsubProducts(iD_Prod)
             }else{
-                Config.showCustomToast("Product Already exist",context)
+                Config.showCustomToast("Product Already exists",context)
             }
 
 

@@ -159,7 +159,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
 
-        ID_Project = jsonObj!!.getString("ID_FIELD")
+        ID_Project = jsonObj!!.getString("ID_Project")
         tie_Project!!.setText(jsonObj!!.getString("ProjName"))
 
 
@@ -981,18 +981,18 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                 for (i in 0 until modelOtherCharges.size) {
                     if (modelOtherCharges[i].isCalculate){
                         if (modelOtherCharges[i].OctyIncludeTaxAmount){
-                            if (modelOtherCharges[i].ID_TransType.equals("1")){
+                            if (modelOtherCharges[i].ID_TransType.equals("2")){
                                 // Debit
                                 otherCharge = otherCharge - (modelOtherCharges[i].OctyAmount).toFloat()
-                            }else if (modelOtherCharges[i].ID_TransType.equals("2")){
+                            }else if (modelOtherCharges[i].ID_TransType.equals("1")){
                                 // Credit
                                 otherCharge = otherCharge + (modelOtherCharges[i].OctyAmount).toFloat()
                             }
                         }else{
-                            if (modelOtherCharges[i].ID_TransType.equals("1")){
+                            if (modelOtherCharges[i].ID_TransType.equals("2")){
                                 // Debit
                                 otherCharge = otherCharge - ((modelOtherCharges[i].OctyAmount).toFloat()+(modelOtherCharges[i].OctyTaxAmount).toFloat())
-                            }else if (modelOtherCharges[i].ID_TransType.equals("2")){
+                            }else if (modelOtherCharges[i].ID_TransType.equals("1")){
                                 // Credit
                                 otherCharge = otherCharge + ((modelOtherCharges[i].OctyAmount).toFloat()+(modelOtherCharges[i].OctyTaxAmount).toFloat())
                             }
