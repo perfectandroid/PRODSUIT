@@ -620,7 +620,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                             val jObject = JSONObject(msg)
                             if (jObject.getString("StatusCode") == "0") {
 
-                                Log.e(TAG,"493   ")
+                                Log.e(TAG,"493   "+jObject)
                                 try {
                                     var jobj = jObject.getJSONObject("ResellerDetails")
 

@@ -704,6 +704,22 @@ interface ApiInterface {
     @POST("DashBoard/InventoryProductReorderLevel")
     fun getInventoryProductReorderLevel(@Body body: RequestBody): Call<String>
 
+    // CRM DASH
+
+    // Ticket outstanding =>  DashMode = 4 , DashType = 1
+    // Ticket Status =>  DashMode = 5, DashType = 1
+    @POST("DashBoard/CRMTileDashBoardDetails")
+    fun getCRMTileDashBoardDetails(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/CRMStagewiseDetails")
+    fun getCRMStagewiseDetails(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/CRMcomplaintwise")
+    fun getCRMcomplaintwise(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/CRMservicewise")
+    fun getCRMservicewise(@Body body: RequestBody): Call<String>
+
 
 
 
