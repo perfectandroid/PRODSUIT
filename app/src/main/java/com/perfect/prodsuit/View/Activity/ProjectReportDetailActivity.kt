@@ -3,7 +3,6 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,11 +12,11 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -43,33 +42,35 @@ class ProjectReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
     var outstandingList = 0
     var serviceList = 0
 
-    internal var ll_NewList: LinearLayout? = null
+    internal var ll_SiteVisit: LinearLayout? = null
     internal var ll_OutStanding: LinearLayout? = null
     internal var ll_Service: LinearLayout? = null
 
-    lateinit var serviceNewListReportViewModel: ServiceNewListReportViewModel
-    lateinit var newListReportArrayList : JSONArray
-    var recyNewList  : RecyclerView? = null
+    lateinit var projectsitevisitReportArrayList : JSONArray
+    var recySiteVisit  : RecyclerView? = null
 
-    lateinit var serviceListReportViewModel: ServiceListReportViewModel
+
+    /*lateinit var serviceListReportViewModel: ServiceListReportViewModel
     lateinit var serviceListReportArrayList : JSONArray
     var recyService  : RecyclerView? = null
 
     lateinit var serviceOutstandingListReportViewModel: ServiceOutstandingListReportViewModel
     lateinit var outstandingListReportArrayList : JSONArray
-    var recyOutStanding  : RecyclerView? = null
+    var recyOutStanding  : RecyclerView? = null*/
+
+    lateinit var reportSitevisitProjectViewModel: ReportSitevisitProjectViewModel
+    lateinit var reportsitevisitArrayList: JSONArray
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        setContentView(R.layout.activity_service_report_detail)
+        setContentView(R.layout.activity_project_report_detail)
         setRegViews()
         context = this@ProjectReportDetailActivity
 
-        serviceNewListReportViewModel = ViewModelProvider(this).get(ServiceNewListReportViewModel::class.java)
-        serviceOutstandingListReportViewModel = ViewModelProvider(this).get(ServiceOutstandingListReportViewModel::class.java)
-        serviceListReportViewModel = ViewModelProvider(this).get(ServiceListReportViewModel::class.java)
+
+        reportSitevisitProjectViewModel = ViewModelProvider(this).get(ReportSitevisitProjectViewModel::class.java)
 
         if (getIntent().hasExtra("ReportName")) {
             tv_ReportName!!.setText(intent.getStringExtra("ReportName"))
@@ -88,9 +89,7 @@ class ProjectReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
         }
 
         if (ReportMode.equals("1")){
-            //New List
-            newList = 0
-          //  getNewListReport(ReportMode!!,ID_Branch!!,ID_Employee!!,strFromdate!!,strTodate!!,ID_CompService!!,ID_ComplaintList!!)
+            getReportSitevisit(ReportMode!!,strFromdate!!,strTodate!!, ID_Leadno!!)
         }
         if (ReportMode.equals("2")){
             //Outstanding
@@ -103,20 +102,15 @@ class ProjectReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
     private fun setRegViews() {
         imback = findViewById(R.id.imback)
         imback!!.setOnClickListener(this)
-
         tv_ReportName = findViewById(R.id.tv_ReportName)
         report_date= findViewById(R.id.report_date)
-
-        ll_NewList = findViewById(R.id.ll_NewList)
+        ll_SiteVisit = findViewById(R.id.ll_SiteVisit)
         ll_OutStanding = findViewById(R.id.ll_OutStanding)
         ll_Service = findViewById(R.id.ll_Service)
-
-        recyNewList = findViewById(R.id.recyNewList)
-        recyOutStanding = findViewById(R.id.recyOutStanding)
-        recyService = findViewById(R.id.recyService)
-
+        ll_SiteVisit = findViewById(R.id.ll_SiteVisit)
+  /*      recyOutStanding = findViewById(R.id.recyOutStanding)
+        recyService = findViewById(R.id.recyService)*/
     }
-
 
     override fun onClick(v: View) {
         when(v.id){
@@ -142,4 +136,57 @@ class ProjectReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
 
     }
 
+    private fun getReportSitevisit(ReportMode: String, strFromdate: String, strTodate: String, strIdLead: String) {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                reportSitevisitProjectViewModel.getReportsitevisitProject(this,ReportMode, strFromdate, strTodate, strIdLead)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG, "msg   10   " + msg)
+                            if (jObject.getString("StatusCode") == "0") {
+
+                                val jobjt = jObject.getJSONObject("ProjectReportNameDetails")
+                                reportsitevisitArrayList = jobjt.getJSONArray("ProjectReportNameDetailsList")
+                                if (reportsitevisitArrayList.length() > 0) {
+
+
+
+                                }
+                            } else {
+                                val builder = AlertDialog.Builder(
+                                    this@ProjectReportDetailActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
 }

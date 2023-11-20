@@ -1,0 +1,81 @@
+Index: app/src/main/res/layout/assignedto_popup.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"wrap_content\"\r\n    android:orientation=\"vertical\">\r\n\r\n    <TextView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:gravity=\"center\"\r\n        android:textColor=\"@color/white\"\r\n        android:textSize=\"17dp\"\r\n        android:textStyle=\"bold\"\r\n        android:textAllCaps=\"false\"\r\n        android:background=\"@drawable/shape_gradient_pop\"\r\n        android:padding=\"10dp\"\r\n        android:fontFamily=\"@font/myfont\"\r\n        android:text=\"Assigned To\"/>\r\n\r\n    <LinearLayout\r\n        android:id=\"@+id/llsearch\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"55dp\"\r\n        android:background=\"@drawable/shape_gradient_pop\"\r\n        android:paddingBottom=\"10dp\"\r\n        android:orientation=\"horizontal\"\r\n        android:visibility=\"visible\">\r\n        <!--                android:background=\"#e97a7a\"-->\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginTop=\"5dp\"\r\n            android:layout_marginLeft=\"15dp\"\r\n            android:layout_marginRight=\"15dp\"\r\n            android:background=\"@drawable/searchbg\"\r\n            android:layout_weight=\"0.2\">\r\n            <EditText\r\n                android:id=\"@+id/etsearch\"\r\n                android:layout_width=\"match_parent\"\r\n                android:layout_height=\"35dp\"\r\n                android:hint=\"Search...\"\r\n                android:lines=\"1\"\r\n                android:scrollHorizontally=\"true\"\r\n                android:ellipsize=\"end\"\r\n                android:inputType=\"text\"\r\n                android:textColorHint=\"@color/grey\"\r\n                android:paddingLeft=\"10dp\"\r\n                android:background=\"@drawable/searchbg\"\r\n                android:drawableLeft=\"@drawable/ic_search\"\r\n                android:fontFamily=\"@font/myfont\"\r\n                android:drawableTint=\"@color/grey\"\r\n                android:layout_weight=\"1\"\r\n                android:drawablePadding=\"10dp\"\r\n                android:paddingRight=\"10dp\"/>\r\n        </LinearLayout>\r\n    </LinearLayout>\r\n\r\n    <View\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"0dp\"\r\n        android:background=\"@color/grey\"/>\r\n\r\n    <androidx.recyclerview.widget.RecyclerView\r\n        android:id=\"@+id/recyassignedTo\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:visibility=\"visible\" />\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/assignedto_popup.xml b/app/src/main/res/layout/assignedto_popup.xml
+--- a/app/src/main/res/layout/assignedto_popup.xml	(revision d85d127e11439215a09fc7d19041b899a1cbc9be)
++++ b/app/src/main/res/layout/assignedto_popup.xml	(date 1699854063959)
+@@ -1,69 +1,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:layout_width="match_parent"
+-    android:layout_height="wrap_content"
+-    android:orientation="vertical">
+-
+-    <TextView
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:gravity="center"
+-        android:textColor="@color/white"
+-        android:textSize="17dp"
+-        android:textStyle="bold"
+-        android:textAllCaps="false"
+-        android:background="@drawable/shape_gradient_pop"
+-        android:padding="10dp"
+-        android:fontFamily="@font/myfont"
+-        android:text="Assigned To"/>
+-
+-    <LinearLayout
+-        android:id="@+id/llsearch"
+-        android:layout_width="match_parent"
+-        android:layout_height="55dp"
+-        android:background="@drawable/shape_gradient_pop"
+-        android:paddingBottom="10dp"
+-        android:orientation="horizontal"
+-        android:visibility="visible">
+-        <!--                android:background="#e97a7a"-->
+-        <LinearLayout
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:layout_marginTop="5dp"
+-            android:layout_marginLeft="15dp"
+-            android:layout_marginRight="15dp"
+-            android:background="@drawable/searchbg"
+-            android:layout_weight="0.2">
+-            <EditText
+-                android:id="@+id/etsearch"
+-                android:layout_width="match_parent"
+-                android:layout_height="35dp"
+-                android:hint="Search..."
+-                android:lines="1"
+-                android:scrollHorizontally="true"
+-                android:ellipsize="end"
+-                android:inputType="text"
+-                android:textColorHint="@color/grey"
+-                android:paddingLeft="10dp"
+-                android:background="@drawable/searchbg"
+-                android:drawableLeft="@drawable/ic_search"
+-                android:fontFamily="@font/myfont"
+-                android:drawableTint="@color/grey"
+-                android:layout_weight="1"
+-                android:drawablePadding="10dp"
+-                android:paddingRight="10dp"/>
+-        </LinearLayout>
+-    </LinearLayout>
+-
+-    <View
+-        android:layout_width="match_parent"
+-        android:layout_height="0dp"
+-        android:background="@color/grey"/>
+-
+-    <androidx.recyclerview.widget.RecyclerView
+-        android:id="@+id/recyassignedTo"
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:visibility="visible" />
+-
+-</LinearLayout>
+\ No newline at end of file
