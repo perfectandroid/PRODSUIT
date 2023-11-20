@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.ProjectSitevisitReportAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceNewListReportAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -46,10 +47,6 @@ class ProjectReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
     internal var ll_OutStanding: LinearLayout? = null
     internal var ll_Service: LinearLayout? = null
 
-    lateinit var projectsitevisitReportArrayList : JSONArray
-    var recySiteVisit  : RecyclerView? = null
-
-
     /*lateinit var serviceListReportViewModel: ServiceListReportViewModel
     lateinit var serviceListReportArrayList : JSONArray
     var recyService  : RecyclerView? = null
@@ -60,6 +57,7 @@ class ProjectReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
 
     lateinit var reportSitevisitProjectViewModel: ReportSitevisitProjectViewModel
     lateinit var reportsitevisitArrayList: JSONArray
+    var recySiteVisit : RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,6 +106,7 @@ class ProjectReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
         ll_OutStanding = findViewById(R.id.ll_OutStanding)
         ll_Service = findViewById(R.id.ll_Service)
         ll_SiteVisit = findViewById(R.id.ll_SiteVisit)
+        recySiteVisit = findViewById(R.id.recySiteVisit)
   /*      recyOutStanding = findViewById(R.id.recyOutStanding)
         recyService = findViewById(R.id.recyService)*/
     }
@@ -145,7 +144,7 @@ class ProjectReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                reportSitevisitProjectViewModel.getReportsitevisitProject(this,ReportMode, strFromdate, strTodate, strIdLead)!!.observe(
+                reportSitevisitProjectViewModel.getReportsitevisitProject(this,"4", strFromdate, strTodate, strIdLead)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -154,10 +153,16 @@ class ProjectReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
                             Log.e(TAG, "msg   10   " + msg)
                             if (jObject.getString("StatusCode") == "0") {
 
-                                val jobjt = jObject.getJSONObject("ProjectReportNameDetails")
-                                reportsitevisitArrayList = jobjt.getJSONArray("ProjectReportNameDetailsList")
+                                val jobjt = jObject.getJSONObject("ProjectReport")
+                                reportsitevisitArrayList = jobjt.getJSONArray("SiteVisitList")
                                 if (reportsitevisitArrayList.length() > 0) {
 
+
+                                    val lLayout = GridLayoutManager(this@ProjectReportDetailActivity, 1)
+                                    recySiteVisit!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                    val adapter1 = ProjectSitevisitReportAdapter(applicationContext, reportsitevisitArrayList,ReportMode)
+                                    recySiteVisit!!.adapter = adapter1
+                                    adapter1.setClickListener(this@ProjectReportDetailActivity)
 
 
                                 }
