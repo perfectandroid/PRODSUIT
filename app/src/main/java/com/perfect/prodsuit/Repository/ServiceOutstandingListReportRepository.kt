@@ -136,7 +136,8 @@ object ServiceOutstandingListReportRepository {
             val msg = leads[0].message
             serviceOutstandingListSetterGetter.value = ServiceOutstandingListReportModel(msg)
 
-        }catch (e : Exception){
+        }
+        catch (e : Exception){
 
         }
     }
