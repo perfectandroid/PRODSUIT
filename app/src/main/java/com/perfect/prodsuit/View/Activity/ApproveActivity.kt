@@ -100,27 +100,27 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
                                         if (authdashArray.length()> 0){
 
 
-                                            val lLayout = GridLayoutManager(this@ApproveActivity, 2)
-                                            lLayout.setSpanSizeLookup(object :
-                                                GridLayoutManager.SpanSizeLookup() {
-                                                override fun getSpanSize(position: Int): Int {
-                                                    // Change the span count based on the row position
-                                                    var result = 2
-                                                    Log.e(TAG,"10700   "+authdashArray.length())
-                                                    if (authdashArray.length()%2!=0){
-//                                                        return if (position%2 == 0) 1 else 2
-                                                        if (position == authdashArray.length() -1){
-                                                            result = 2
-                                                        }else{
-                                                            result = 1
-                                                        }
-                                                    }
-
+//                                            val lLayout = GridLayoutManager(this@ApproveActivity, 2)
+//                                            lLayout.setSpanSizeLookup(object :
+//                                                GridLayoutManager.SpanSizeLookup() {
+//                                                override fun getSpanSize(position: Int): Int {
+//                                                    // Change the span count based on the row position
+//                                                    var result = 2
+//                                                    Log.e(TAG,"10700   "+authdashArray.length())
+//                                                    if (authdashArray.length()%2!=0){
+////                                                        return if (position%2 == 0) 1 else 2
+//                                                        if (position == authdashArray.length() -1){
+//                                                            result = 2
+//                                                        }else{
+//                                                            result = 1
+//                                                        }
+//                                                    }
 //
-
-                                                    return result
-                                                }
-                                            })
+////
+//
+//                                                    return result
+//                                                }
+//                                            })
 //                                            val lLayout = LinearLayoutManager(this@ApproveActivity)
 //                                            recyDahborad!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //                                            authdashAdapter = AuthDsahboardAdapter(this@ApproveActivity, authdashArray)
@@ -299,15 +299,15 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
 //            val i = Intent(this@ApproveActivity, AuthorizationMiniDashboardActivity::class.java)
 //            i.putExtra("jsonObject",jsonObject.toString())
 //            startActivity(i)
-            if (position == 2){
-                val i = Intent(this@ApproveActivity, CommonSearchActivity::class.java)
-                i.putExtra("jsonObject",jsonObject.toString())
-                startActivity(i)
-            }else{
+//            if (position == 2){
+//                val i = Intent(this@ApproveActivity, CommonSearchActivity::class.java)
+//                i.putExtra("jsonObject",jsonObject.toString())
+//                startActivity(i)
+//            }else{
                 val i = Intent(this@ApproveActivity, AuthorizationMiniDashboardActivity::class.java)
                 i.putExtra("jsonObject",jsonObject.toString())
                 startActivity(i)
-            }
+//            }
 
 
         }

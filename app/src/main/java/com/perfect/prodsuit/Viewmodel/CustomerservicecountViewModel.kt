@@ -12,9 +12,9 @@ class CustomerservicecountViewModel : ViewModel() {
     fun getCustomerserviceCount(
         context: Context,
         ID_Customer: String,
-        Customer_Type: String, ID_Product: String
+        Customer_Type: String, ID_Product: String,CurrentDate:String
     ) : MutableLiveData<CustomerservicecountModel>? {
-        customerserviceCountData = CustomerservicecountRepository.getServicesApiCall(context,ID_Customer,Customer_Type,ID_Product)
+        customerserviceCountData = CustomerservicecountRepository.getServicesApiCall(context,ID_Customer,Customer_Type,ID_Product,CurrentDate)
         return customerserviceCountData
     }
 }

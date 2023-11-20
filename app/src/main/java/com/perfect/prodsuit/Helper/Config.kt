@@ -1256,5 +1256,13 @@ object Config {
         return result
     }
 
+    fun convert12HourTo24Hour(time12: String): String {
+        val inputFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+        val date = inputFormat.parse(time12)
+        return outputFormat.format(date)
+    }
+
 
 }

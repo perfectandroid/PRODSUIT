@@ -12,6 +12,7 @@
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.17239583333333333" />
         <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/custom_marker_view.xml" value="0.20416666666666666" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/arrow_next.xml" value="0.2265" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/authorization_home1.xml" value="0.2505" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/background_shape.xml" value="0.2625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/bg_auth.xml" value="0.263" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/border_1.xml" value="0.25" />
@@ -30,6 +31,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/btn_shape_submit1.xml" value="0.2675" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/checkbox_selector1.xml" value="0.2505" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/custom_toggle_button_background.xml" value="0.25" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/dashboard_home.xml" value="0.2505" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/document_svg.xml" value="0.1935" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/documents.xml" value="0.2365" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/down_arrows.xml" value="0.25" />
@@ -132,6 +134,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_customer_service.xml" value="0.346875" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_customer_service_sales.xml" value="0.2520833333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_customer_service_warranty.xml" value="0.35989583333333336" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.29583333333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_dashborad_common.xml" value="0.1890625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_emi.xml" value="0.26944444444444443" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_emi_collection.xml" value="0.30462962962962964" />
@@ -140,6 +143,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.30520833333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.3145833333333333" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_inventory.xml" value="0.25" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_inventory_graph.xml" value="0.2635416666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_lead_correction.xml" value="0.27395833333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_lead_generation_quick.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_lead_generatn.xml" value="0.29583333333333334" />
@@ -174,6 +178,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_follow_up_list.xml" value="0.20677083333333332" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_follow_up_new.xml" value="0.27239583333333334" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_follow_upactiivty.xml" value="0.25" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_graph.xml" value="0.2635416666666667" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_invoice.xml" value="0.36666666666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_services.xml" value="0.31979166666666664" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_site_visit.xml" value="0.346875" />
@@ -231,7 +236,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_project.xml" value="0.34427083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_project_emp_details.xml" value="0.3625" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_project_leadlist.xml" value="0.3307291666666667" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_project_list.xml" value="0.3390625" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_project_list.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_project_mode.xml" value="0.34427083333333336" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_project_othercharges.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_project_product.xml" value="0.34427083333333336" />

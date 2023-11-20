@@ -35,7 +35,6 @@ import org.json.JSONObject
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.log
 
 
 class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , ItemClickListener {
@@ -455,7 +454,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var strLocationAddress: String? = ""
     var saveAttendanceMark = false
 
-
+    var currentDate11=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -4519,9 +4518,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //                        "\n"+"Customer_Type    "+Customer_Type+
 //                        "\n"+"ID_Product    "+ID_Product)
 
-
+                val sdf = SimpleDateFormat("yyyy-MM-dd")
+                 currentDate11 = sdf.format(Date())
+                Log.i("date55345",""+currentDate11)
                 custServiceCount = 0
-                getCustomerserviceCount(ID_Customer!!,Customer_Type!!,ID_Product!!)
+                getCustomerserviceCount(ID_Customer!!,Customer_Type!!,ID_Product!!,currentDate11!!)
 
                 Log.e(TAG,"ddddddddq ")
 
@@ -4825,6 +4826,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         if (prodHistMode.equals("0")){
             ll_tab_production!!.setBackgroundResource(R.drawable.shape_rectangle_border_with_bg)
 
+            Log.e(TAG,"ssssssssssdddd 1 "+prodHistMode)
             card_production!!.visibility = View.VISIBLE
          //   horizontalScroll!!.fullScroll(HorizontalScrollView.FOCUS_RIGHT);
           //  horizontalScroll!!.scrollTo(ll_tab_production!!.getRight(), ll_tab_production!!.getTop())
@@ -4876,7 +4878,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     }
 
-    private fun getCustomerserviceCount(ID_Customer: String, Customer_Type: String, ID_Product: String) {
+    private fun getCustomerserviceCount(ID_Customer: String, Customer_Type: String, ID_Product: String,CurrentDate:String) {
      //   ID_Customer!!,Customer_Type!!,ID_Product!!
             context = this@CustomerServiceActivity
             customerservicecountViewModel = ViewModelProvider(this).get(CustomerservicecountViewModel::class.java)
@@ -4888,7 +4890,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                     progressDialog!!.setIndeterminate(true)
                     progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
                     progressDialog!!.show()
-                    customerservicecountViewModel.getCustomerserviceCount(this,ID_Customer,Customer_Type,ID_Product)!!.observe(
+                    customerservicecountViewModel.getCustomerserviceCount(this,ID_Customer,Customer_Type,ID_Product,CurrentDate)!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message
@@ -5180,7 +5182,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //                progressDialog!!.setIndeterminate(true)
 //                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
 //                progressDialog!!.show()
-                serviceProductHistoryViewModel.getServiceProductHistory(this,ID_Product!!,Customer_Type!!,ID_Customer!!)!!.observe(
+                serviceProductHistoryViewModel.getServiceProductHistory(this,ID_Category!!,ID_Product!!,Customer_Type!!,ID_Customer!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -5299,16 +5301,16 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                                     }
                                 } else {
-//                                val builder = AlertDialog.Builder(
-//                                    this@CustomerServiceActivity,
-//                                    R.style.MyDialogTheme
-//                                )
-//                                builder.setMessage(jObject.getString("EXMessage"))
-//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                }
-//                                val alertDialog: AlertDialog = builder.create()
-//                                alertDialog.setCancelable(false)
-//                                alertDialog.show()
+                                val builder = AlertDialog.Builder(
+                                    this@CustomerServiceActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
                                 }
 
                             }
@@ -5428,6 +5430,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             tie_MobileNo!!.setText(jsonObject!!.getString("Mobile"))
             tie_Address!!.setText(jsonObject!!.getString("Address"))
+            tie_ContactNo!!.setText(jsonObject!!.getString("OtherMobile"))
 
 //            if (ID_Customer.equals("")){
 //                til_CustomerName!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)

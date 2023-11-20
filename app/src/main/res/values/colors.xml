@@ -142,6 +142,7 @@
     <color name="leadstages_color9">#2F4F4F</color>
     <color name="leadstages_color10">#17a2b8</color>
     <color name="leadstages_color11">#7bd235</color>
+    <color name="leadstages_color12">#333751</color>
 
     <color name="cust_color1">#9575cd</color>
     <color name="cust_color2">#7986cb</color>
@@ -506,5 +507,10 @@
 
     <color name="color_site_tab_30">#404788</color>
     <color name="color_site_tab_31">#9698A6</color>
+
+    <color name="ongoing">#FA6925</color>
+    <color name="converted">#F5A93D</color>
+    <color name="bluecolr">#1A6ED9</color>
+    <color name="warm"> #f5a732</color>
 
 </resources>

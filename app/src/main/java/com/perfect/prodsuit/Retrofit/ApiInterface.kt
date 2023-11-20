@@ -665,7 +665,11 @@ interface ApiInterface {
     @POST("DashBoard/TileLeadDashBoardDetails")
     fun getDashboardTileDetails(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/InventoryMonthlySaleGraph")
+    fun getInventoryMonthlySaleDetails(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/InventoryStockListCategory")
+    fun getStockListCategoryDetails(@Body body: RequestBody): Call<String>
 
     @POST("Project/UpdateProjectFollowUp")
     fun saveUpdateProjectFollowUp(@Body body: RequestBody): Call<String>
@@ -676,6 +680,9 @@ interface ApiInterface {
     @POST("Project/UnitList")
     fun getUnit(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/EmployeeWiseTaegetInPercentage")
+    fun getEmployeewise(@Body body: RequestBody): Call<String>
+
     @POST("Project/ProjectStatus")
     fun getProjectStatus(@Body body: RequestBody): Call<String>
 
@@ -685,8 +692,21 @@ interface ApiInterface {
     @POST("Project/OtherChargeTaxCalculationDetails")
     fun getOtherChargeTaxCalculationDetails(@Body body: RequestBody): Call<String>
 
-    @POST("Project/checkDetailsEmplo")
+    @POST("Project/checkDetails")
     fun getProjectcheckDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Project/UpadateSiteVisit")
+    fun saveUpadateSiteVisit(@Body body: RequestBody): Call<String>
+
+    @POST("Project/DownloadImage")
+    fun saveDownloadImage(@Body body: RequestBody): Call<String>
+
+    @POST("Project/UpdateProjectTransaction")
+    fun saveUpdateProjectTransaction(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/InventoryProductReorderLevel")
+    fun getInventoryProductReorderLevel(@Body body: RequestBody): Call<String>
+
 
 
 

@@ -96,6 +96,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private var tie_Remark: TextInputEditText? = null
     private var tie_Common_Remark: TextInputEditText? = null
     private var tie_Attachments: TextInputEditText? = null
+    private var tie_doc_desc: TextInputEditText? = null
     private var imv_name: TextView? = null
 
     private var tie_WorkType: TextInputEditText? = null
@@ -245,6 +246,9 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     var strInspectionNote1 = ""
     var strInspectionNote2 = ""
     var strCustomerNotes   = ""
+    var strInspectionCharge  = ""
+    var strExpenseAmount        = ""
+    var strCommonRemark        = ""
     var FK_TaxGroup   = ""
     var IncludeTaxCalc   = ""
     var AmountTaxCalc   = ""
@@ -260,9 +264,12 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
 
 
+
     var saveEmployeeDetails= JSONArray()
     var saveMeasurementDetails= JSONArray()
     var saveCheckedDetails= JSONArray()
+    var pssOtherCharge= JSONArray()
+    var pssOtherChargeTax= JSONArray()
 
     private var inputStreamImg: InputStream? = null
     private var imgPath: String? = null
@@ -278,6 +285,16 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private var otherChargeAdapter : OtherChargeAdapter? = null
     private var taxDetailAdapter : TaxDetailAdapter? = null
     private var recyOtherCalc     : RecyclerView?      = null
+
+    var upadateSitecount   = 0
+    lateinit var upadateSiteVisitViewModel: UpadateSiteVisitViewModel
+    var FK_SiteVisit   = ""  // Image Uploading ID
+    var strDescription   = ""
+    var strImageName   = ""
+    var encodeDoc : String = ""
+
+    var updateDocscount   = 0
+    lateinit var siteVisitDocUploadViewModel  : SiteVisitDocUploadViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -298,11 +315,14 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         unitViewModel = ViewModelProvider(this).get(UnitViewModel::class.java)
         siteCheckViewModel = ViewModelProvider(this).get(SiteCheckViewModel::class.java)
         otherChargeTaxCalculationViewModel     = ViewModelProvider(this).get(OtherChargeTaxCalculationViewModel::class.java)
+        upadateSiteVisitViewModel     = ViewModelProvider(this).get(UpadateSiteVisitViewModel::class.java)
+        siteVisitDocUploadViewModel     = ViewModelProvider(this).get(SiteVisitDocUploadViewModel::class.java)
 
         setRegViews()
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         mode = intent.getStringExtra("mode").toString()
+        Log.e(TAG,"Mode  32555   "+mode)
         if (jsonObject.equals("")){
             Log.e(TAG,"23111   ")
             tie_LeadNo!!.isEnabled = true
@@ -374,6 +394,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         tie_Remark = findViewById(R.id.tie_Remark)
         tie_Common_Remark = findViewById(R.id.tie_Common_Remark)
         tie_Attachments = findViewById(R.id.tie_Attachments)
+        tie_doc_desc = findViewById(R.id.tie_doc_desc)
         imv_name = findViewById(R.id.imv_name)
         btnReset = findViewById(R.id.btnReset)
         btnSubmit = findViewById(R.id.btnSubmit)
@@ -963,8 +984,10 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             }
             R.id.btnSubmit->{
                 siteVisitValidation(v)
+                //successBottomSheet(v)
 
-                successBottomSheet(v)
+//                validateSaveOtherCharges(v)
+
             }
             R.id.btnReset->{
                 clearData()
@@ -975,12 +998,135 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             }
 
             R.id.btnDocUpload->{
-               docUploadSucces(v)
+             //  docUploadSucces(v)
+                docUploadValidation(v)
             }
         }
     }
 
-    private fun docUploadSucces(v: View) {
+    private fun docUploadValidation(v: View) {
+
+
+        strDescription = tie_doc_desc!!.text.toString()
+        strImageName = tie_Attachments!!.text.toString()
+
+        if(strImageName.equals("")){
+            Config.snackBars(context,v,"Select Documents")
+        }
+        else if(documentPath.equals("")){
+            Config.snackBars(context,v,"Pick Documents")
+        }
+        else{
+            try {
+                val inputStream: InputStream = FileInputStream(documentPath)
+                val bos = ByteArrayOutputStream()
+                val b = ByteArray(1024 * 8)
+                var bytesRead = 0
+
+                while (inputStream.read(b).also { bytesRead = it } != -1) {
+                    bos.write(b, 0, bytesRead)
+                }
+
+                //   byteArray = bos.toByteArray()
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                    encodeDoc = Base64.getEncoder().encodeToString(stream.toByteArray());
+                    encodeDoc = Base64.getEncoder().encodeToString(bos.toByteArray());
+                } else {
+                    //  encodeDoc = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+                    encodeDoc = android.util.Base64.encodeToString(bos.toByteArray(), android.util.Base64.DEFAULT)
+                }
+                val extension: String = documentPath.substring(documentPath.lastIndexOf("."))
+                Log.e(TAG,"encodeDoc   508   "+encodeDoc)
+                updateDocscount = 0
+                saveDocuments(strDescription,strImageName,encodeDoc,extension)
+            }catch (e: Exception){
+
+            }
+        }
+
+    }
+
+    private fun saveDocuments(strDescription: String, strImageName: String, encodeDoc: String?, extension: String) {
+        var TransMode = "PRSV"
+      //  FK_SiteVisit = "19"
+        Toast.makeText(applicationContext,""+FK_SiteVisit,Toast.LENGTH_SHORT).show()
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                siteVisitDocUploadViewModel.getSiteVisitDocUpload(this,TransMode,FK_SiteVisit,strImageName,extension,strDescription,encodeDoc!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (updateDocscount == 0){
+                                    updateDocscount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   10722     "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("DownloadImage")
+                                        try {
+
+                                            tie_Attachments!!.setText("")
+                                            tie_doc_desc!!.setText("")
+                                            imv_name!!.setText("")
+
+                                            docUploadSucces(jobjt.getString("ResponseMessage"))
+
+                                        }catch (e : Exception){
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectSiteVisitActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+    private fun docUploadSucces(ResponseMessage: String) {
         try {
             val dialog = BottomSheetDialog(this)
             val view = layoutInflater.inflate(R.layout.upload_more_document_bottom, null)
@@ -998,8 +1144,12 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             btnYes.setOnClickListener {
                 dialog.dismiss()
 
+                tie_Attachments!!.setText("")
+                tie_doc_desc!!.setText("")
+                encodeDoc = ""
+
             }
-            dialog.setCancelable(true)
+            dialog.setCancelable(false)
             dialog!!.setContentView(view)
 
             dialog.show()
@@ -1157,7 +1307,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         tie_EmployeeType!!.setText("")
 
         modelProjectEmpDetails!!.clear()
-
+        recyEmpDetails!!.adapter = null
         // Measurement
 
         WorkTypeID = ""
@@ -1171,10 +1321,23 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         tie_Remarks!!.setText("")
 
         modelMesurementDetails.clear()
-
+        recy_mesurment!!.adapter = null
         // Check Details
 
         modelProjectCheckList.clear()
+        modelOtherCharges.clear()
+
+
+        tie_Othercharges!!.setText("")
+        tie_Common_Remark!!.setText("")
+
+
+        modelOtherCharges.clear()
+        otherChargeAdapter = null
+
+        modelOtherChargesCalculation.clear()
+        taxDetailAdapter = null
+
 
         showLead = 1
         showEmployee = 0
@@ -1184,9 +1347,6 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         expandTab()
 
         // Other Charges
-
-        tie_Othercharges!!.setText("")
-        tie_Common_Remark!!.setText("")
 
 
 //        strInspectionNote1   = ""
@@ -1208,6 +1368,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
 
         tie_Attachments!!.setText("")
+        tie_doc_desc!!.setText("")
         imv_name!!.setText("")
 
     }
@@ -1220,18 +1381,43 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         strInspectionNote1 = tie_InspectionNotes1!!.text.toString()
         strInspectionNote2 = tie_InspectionNotes2!!.text.toString()
         strCustomerNotes   = tie_CustomerNotes!!.text.toString()
+        strInspectionCharge   = tie_InspectionCharge!!.text.toString()
+        strExpenseAmount   = tie_Othercharges!!.text.toString()
+        strCommonRemark   = tie_Common_Remark!!.text.toString()
 
 
+        if (strInspectionCharge.equals("") || strInspectionCharge.equals(".")){
+            strInspectionCharge = "0.00"
+        }
+
+        if (strExpenseAmount.equals("") || strExpenseAmount.equals(".")){
+            strExpenseAmount = "0.00"
+        }
 
         if (strLeadno!!.equals("")){
             Config.snackBars(context, v, "Select LeadNo")
-
+            showLead = 1
+            showEmployee = 0
+            showMeasurement = 0
+            showChecklist = 0
+            showOtherCharge = 0
+            expandTab()
         }else if (strVisitdate!!.equals("")){
             Config.snackBars(context, v, "Select Visitdate")
-
+            showLead = 1
+            showEmployee = 0
+            showMeasurement = 0
+            showChecklist = 0
+            showOtherCharge = 0
+            expandTab()
         }else if (strInspectionNote1!!.equals("")){
             Config.snackBars(context, v, "Please Enter InspectonNote 1")
-
+            showLead = 1
+            showEmployee = 0
+            showMeasurement = 0
+            showChecklist = 0
+            showOtherCharge = 0
+            expandTab()
         }else{
             validateSaveEmployee(v)
         }
@@ -1242,9 +1428,10 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         saveEmployeeDetails = JSONArray()
         for (obj in modelProjectEmpDetails) {
             val jsonObject = JSONObject()
-            jsonObject.put("ID_Department", obj.ID_Department)
-            jsonObject.put("ID_Employee", obj.ID_Employee)
-            jsonObject.put("ID_EmployeeType", obj.ID_EmployeeType)
+            jsonObject.put("EmployeeID", obj.ID_Employee)
+            jsonObject.put("EmployeeType", obj.ID_EmployeeType)
+            jsonObject.put("Department", obj.ID_Department)
+            jsonObject.put("Employee", obj.Employee)
 
             saveEmployeeDetails.put(jsonObject)
         }
@@ -1253,6 +1440,12 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             validateSaveMeasurement(v)
         }else{
             Config.snackBars(context, v, "Enter Atleast One Emplyee Details !!!")
+            showLead = 0
+            showEmployee = 1
+            showMeasurement = 0
+            showChecklist = 0
+            showOtherCharge = 0
+            expandTab()
         }
     }
 
@@ -1260,11 +1453,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         saveMeasurementDetails = JSONArray()
         for (obj in modelMesurementDetails) {
             val jsonObject = JSONObject()
-            jsonObject.put("WorkTypeID", obj.WorkTypeID)
-            jsonObject.put("ID_MeasurementUnit", obj.ID_MeasurementUnit)
-            jsonObject.put("Value", obj.Value)
-            jsonObject.put("ID_Unit", obj.ID_Unit)
-            jsonObject.put("Remarks", obj.Remarks)
+            jsonObject.put("WorkType", obj.WorkTypeID)
+            jsonObject.put("MeasurementType", obj.ID_MeasurementUnit)
+            jsonObject.put("MeasurementValue", obj.Value)
+            jsonObject.put("MeasurementUnit", obj.ID_Unit)
+            jsonObject.put("MDRemarks", obj.Remarks)
 
             saveMeasurementDetails.put(jsonObject)
         }
@@ -1276,14 +1469,18 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
         saveCheckedDetails = JSONArray()
         for (obj in modelProjectCheckList) {
-            val jsonObject = JSONObject()
 
             if (obj.is_checked){
 
                 for (objSub in obj.SubArrary) {
                     if (objSub.is_checked){
-                        jsonObject.put("ID_Check", obj.ID_CheckListType)
-                        jsonObject.put("ID_CheckSub", objSub.ID_CheckList)
+                        val jsonObject = JSONObject()
+                        Log.e(TAG,"obj.SubArrary 13131    "+obj.ID_CheckListType)
+                        Log.e(TAG,"ID_CheckListType 13132    "+objSub.ID_CheckListType)
+                        Log.e(TAG,"ID_CheckList 13133    "+objSub.ID_CheckList)
+
+                        jsonObject.put("FK_CheckListType", obj.ID_CheckListType)  // main
+                        jsonObject.put("FK_CheckList", objSub.ID_CheckList) // Sub
 
                         saveCheckedDetails.put(jsonObject)
                     }
@@ -1297,9 +1494,154 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
     private fun validateSaveOtherCharges(v: View) {
 
+        pssOtherCharge = JSONArray()
+        pssOtherChargeTax = JSONArray()
+        for (obj in modelOtherCharges) {
+
+            if (obj.isCalculate){
+                val jsonObject = JSONObject()
+                jsonObject.put("ID_OtherChargeType", obj.ID_OtherChargeType)
+                jsonObject.put("OctyTransType", obj.OctyTransType)
+                jsonObject.put("FK_TaxGroup", obj.FK_TaxGroup)
+                jsonObject.put("OctyAmount", obj.OctyAmount)
+                jsonObject.put("OctyTaxAmount", obj.OctyTaxAmount)
+                jsonObject.put("OctyIncludeTaxAmount", obj.OctyIncludeTaxAmount)
+
+                pssOtherCharge.put(jsonObject)
+                for (objSub in modelOtherChargesCalculation) {
+                    val jsonObject1 = JSONObject()
+                    if (obj.FK_TaxGroup.equals(objSub.FK_TaxGroup)){
+                        jsonObject1.put("ID_OtherChargeType", obj.ID_OtherChargeType)
+                        jsonObject1.put("ID_TaxSettings", objSub.ID_TaxSettings)
+                        jsonObject1.put("Amount", objSub.Amount)
+                        jsonObject1.put("TaxPercentage", objSub.TaxPercentage)
+                        jsonObject1.put("TaxGrpID", objSub.FK_TaxGroup)
+                        jsonObject1.put("FK_TaxType", objSub.FK_TaxType)
+                        jsonObject1.put("TaxTyName", objSub.TaxTyName)
+
+                        pssOtherChargeTax.put(jsonObject)
+                    }
+                }
+
+            }
+
+        }
+
         Log.e(TAG," 117881 saveEmployeeDetails     :  "+saveEmployeeDetails)
         Log.e(TAG," 117882 saveMeasurementDetails  :  "+saveMeasurementDetails)
         Log.e(TAG," 117883 saveCheckedDetails      :  "+saveCheckedDetails)
+        Log.e(TAG," 117884 pssOtherCharge          :  "+pssOtherCharge)
+        Log.e(TAG," 117885 pssOtherChargeTax       :  "+pssOtherChargeTax)
+
+        saveUpadateSiteVisit()
+
+    }
+
+    private fun saveUpadateSiteVisit() {
+        var UserAction = "1"
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                upadateSiteVisitViewModel.getUpadateSiteVisit(this,UserAction,strLeadno,strVisitdate!!,visitTime,strInspectionNote1,strInspectionNote2,
+                    strCustomerNotes,strExpenseAmount,strCommonRemark,strInspectionCharge,saveEmployeeDetails,saveMeasurementDetails,saveCheckedDetails,
+                    pssOtherCharge,pssOtherChargeTax)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (upadateSitecount == 0){
+                                    upadateSitecount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   14111     "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("UpadateSiteVisit")
+                                        try {
+
+                                            tie_Attachments!!.setText("")
+                                            tie_doc_desc!!.setText("")
+                                            imv_name!!.setText("")
+                                            encodeDoc = ""
+
+                                            val dialog = BottomSheetDialog(this)
+                                            val view = layoutInflater.inflate(R.layout.success_project_bottom, null)
+
+                                            val btnNo = view.findViewById<Button>(R.id.btn_No)
+                                            val btnYes = view.findViewById<Button>(R.id.btn_Yes)
+                                            val textid1 = view.findViewById<TextView>(R.id.textid1)
+                                            val textid2 = view.findViewById<TextView>(R.id.textid2)
+
+                                            FK_SiteVisit = jobjt.getString("FK_SiteVisit")
+                                            textid1!!.setText(jobjt.getString("ResponseMessage"))
+                                            textid2!!.setText("Do you want to upload document?")
+                                            btnNo.setOnClickListener {
+                                                dialog .dismiss()
+                                                finish()
+                                            }
+                                            btnYes.setOnClickListener {
+//                finish()
+
+                                                dialog.dismiss()
+                                                ll_saveSiteVisit!!.visibility = View.GONE
+                                                ll_UploadImage!!.visibility = View.VISIBLE
+
+
+
+                                            }
+                                            dialog.setCancelable(true)
+                                            dialog!!.setContentView(view)
+
+                                            dialog.show()
+                                        }catch (e : Exception){
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectSiteVisitActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
     }
 
 
@@ -1856,19 +2198,19 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 for (i in 0 until modelOtherCharges.size) {
                     if (modelOtherCharges[i].isCalculate){
                         if (modelOtherCharges[i].OctyIncludeTaxAmount){
-                            if (modelOtherCharges[i].ID_TransType.equals("2")){
+                            if (modelOtherCharges[i].ID_TransType.equals("1")){
                                 // Credit
                                 otherCharge = otherCharge - (modelOtherCharges[i].OctyAmount).toFloat()
-                            }else if (modelOtherCharges[i].ID_TransType.equals("1")){
+                            }else if (modelOtherCharges[i].ID_TransType.equals("2")){
                                 // Debit
                                 otherCharge = otherCharge + (modelOtherCharges[i].OctyAmount).toFloat()
                             }
                         }else{
-                            if (modelOtherCharges[i].ID_TransType.equals("2")){
+                            if (modelOtherCharges[i].ID_TransType.equals("1")){
                                 // Credit
 
                                 otherCharge = otherCharge - ((modelOtherCharges[i].OctyAmount).toFloat()+(modelOtherCharges[i].OctyTaxAmount).toFloat())
-                            }else if (modelOtherCharges[i].ID_TransType.equals("1")){
+                            }else if (modelOtherCharges[i].ID_TransType.equals("2")){
                                 // Debit
                                 otherCharge = otherCharge + ((modelOtherCharges[i].OctyAmount).toFloat()+(modelOtherCharges[i].OctyTaxAmount).toFloat())
                             }

@@ -153,7 +153,7 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
         setRegViews()
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
-        ID_Project = jsonObj!!.getString("ID_FIELD")
+        ID_Project = jsonObj!!.getString("ID_Project")
         tie_Project!!.setText(jsonObj!!.getString("ProjName"))
 
         usageMode = "1"
@@ -1584,7 +1584,7 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
 
     private fun saveMaterialUsage() {
          var UserAction = "1"
-         var TransMode = ""
+         var TransMode = "PRMU"
          var ID_ProjectMaterialUsage = "0"
 
         when (Config.ConnectivityUtils.isConnected(this)) {

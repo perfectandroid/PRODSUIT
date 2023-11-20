@@ -88,14 +88,14 @@ class AuthorizationMiniDashboardActivity : AppCompatActivity(), View.OnClickList
                                     Log.e(TAG, "msg   760000   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
-                                        val jobjt = jObject.getJSONObject("AuthorizationList")
-                                        authMixArrayList = jobjt.getJSONArray("ListData")
-                                        Log.e(TAG, "jobjt   760000 1   " + jobjt)
+                                        val jobjt = jObject.getJSONObject("AuthorizationDataList")
+                                        authMixArrayList = jobjt.getJSONArray("DataItems")
+                                        Log.e(TAG, "jobjt   760000 1   " + authMixArrayList)
 
 //                                        authMixArrayList.put(jobjt)
 //                                        Log.e(TAG, "authMixArrayList   999101   " +authMixArrayList.getJSONObject())
 //                                        if (authMixArrayList.length()> 0){
-                                            Log.e(TAG, "authMixArrayList 140001  " + authMixArrayList)
+//                                            Log.e(TAG, "authMixArrayList 140001  " + authMixArrayList)
 
 //                                            for (i in 0 until jobjt.length()) {
 //                                            var jsonObject = authMixArrayList.getJSONObject(i)
