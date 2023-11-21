@@ -58,8 +58,7 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
         ReqMode = intent.getStringExtra("ReqMode").toString()
         SubMode = intent.getStringExtra("SubMode").toString()
         setRegViews()
-
-        tv_header!!.setText(""+jsonObj!!.getString("Type_Name"))
+        tv_header!!.setText(""+intent!!.getStringExtra("Type_Name"))
 
         projectLeadNoCount = 0
         getLeadDetails()
@@ -88,19 +87,19 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   1062   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
-//                                        val jobjt = jObject.getJSONObject("LeadDetails")
-//                                        projectLeadArrayList = jobjt.getJSONArray("LeadDetailsList")
-//
-//                                        Log.e(TAG," 788   "+projectLeadArrayList)
-//                                        if (projectLeadArrayList.length() > 0){
-//                                            val lLayout = GridLayoutManager(this@ProjectSiteVisitListActivity, 1)
-//                                            recycSiteVisit!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                            //  val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
-//                                            val adapter = ProjectLeadListAdapter(this@ProjectSiteVisitListActivity, projectLeadArrayList)
-//                                            recycSiteVisit!!.adapter = adapter
-//                                            adapter.setClickListener(this@ProjectSiteVisitListActivity)
-//                                        }
-//
+                                        val jobjt = jObject.getJSONObject("ProjectSiteVisitAssign")
+                                        projectLeadArrayList = jobjt.getJSONArray("ProjectSiteVisitAssignList")
+
+                                        Log.e(TAG," 788   "+projectLeadArrayList)
+                                        if (projectLeadArrayList.length() > 0){
+                                            val lLayout = GridLayoutManager(this@ProjectSiteVisitListActivity, 1)
+                                            recycSiteVisit!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            //  val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
+                                            val adapter = ProjectLeadListAdapter(this@ProjectSiteVisitListActivity, projectLeadArrayList)
+                                            recycSiteVisit!!.adapter = adapter
+                                            adapter.setClickListener(this@ProjectSiteVisitListActivity)
+                                        }
+
 
                                     } else {
                                         val builder = AlertDialog.Builder(

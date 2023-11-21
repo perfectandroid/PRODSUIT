@@ -35,11 +35,11 @@ class ProjectSiteVisitTabAdapter (internal var context: Context, internal var js
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
 
-                holder.txtv_label.text        = jsonObject!!.getString("Type_Name")
+                holder.txtv_label.text        = jsonObject!!.getString("Label_Name")
                 holder.tv_newCount.text        = jsonObject!!.getString("Count")
 
                 if (position == 0){
-                    holder.tv_newCount.visibility = View.GONE
+                  //  holder.tv_newCount.visibility = View.GONE
                     holder.txtv_label!!.setTextColor(context.resources.getColor(R.color.color_site_tab_10))
                     holder.tv_newCount!!.setBackgroundResource(R.color.color_site_tab_10)
                     holder.ll_tab!!.setBackgroundResource(R.drawable.border_sitevisit_1)
@@ -60,7 +60,15 @@ class ProjectSiteVisitTabAdapter (internal var context: Context, internal var js
                     holder.tv_newCount!!.setBackgroundResource(R.color.color_site_tab_30)
                     holder.ll_tab!!.setBackgroundResource(R.drawable.border_sitevisit_3)
                     holder.ll_firstbg!!.setBackgroundResource(R.drawable.shapes_sitevisit_3)
-                    holder.img_icon!!.setBackgroundResource(R.drawable.sicon_await)
+                    holder.img_icon!!.setBackgroundResource(R.drawable.sicon_overdue)
+
+                }
+                else if (position == 3){
+                    holder.txtv_label!!.setTextColor(context.resources.getColor(R.color.color_site_tab_40))
+                    holder.tv_newCount!!.setBackgroundResource(R.color.color_site_tab_40)
+                    holder.ll_tab!!.setBackgroundResource(R.drawable.border_sitevisit_4)
+                    holder.ll_firstbg!!.setBackgroundResource(R.drawable.shapes_sitevisit_4)
+                    holder.img_icon!!.setBackgroundResource(R.drawable.sicon_upcoming)
 
                 }
 

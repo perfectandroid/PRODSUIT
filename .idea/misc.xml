@@ -23,6 +23,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/border_sitevisit_1.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/border_sitevisit_2.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/border_sitevisit_3.xml" value="0.25" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/border_sitevisit_4.xml" value="0.2505" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/btn_bg3.xml" value="0.2465" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/btn_bgcolour.xml" value="0.307" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/btn_bgcolouryellow.xml" value="0.2465" />
@@ -38,6 +39,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/gradient_lead.xml" value="0.151" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/gradient_list.xml" value="0.151" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/ic_completed.xml" value="0.1055" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/ic_punch.xml" value="0.2395" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/ic_send_24.xml" value="0.2465" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/icon_svg_mobile.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/invalid_user.xml" value="0.1685" />
@@ -88,6 +90,8 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shapes_sitevisit_1.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shapes_sitevisit_2.xml" value="0.25" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shapes_sitevisit_3.xml" value="0.25" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/shapes_sitevisit_4.xml" value="0.2505" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/sicon_await.xml" value="0.2505" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/stock_inventorybg.xml" value="0.1885" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_attachemntfile.xml" value="0.2415" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/drawable/svg_auth_arrow.xml" value="0.263" />
@@ -347,6 +351,7 @@
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/unit_popup.xml" value="0.35" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/walking_edit_bottomsheet.xml" value="0.25364583333333335" />
         <entry key="..\:/Working/PRODSUIT/app/src/main/res/menu/main_drawer.xml" value="0.309375" />
+        <entry key="..\:/Working/PRODSUIT/app/src/main/res/menu/navbottom_item.xml" value="0.3421875" />
       </map>
     </option>
   </component>

@@ -329,7 +329,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         }else{
             Log.e(TAG,"23112   ")
             jsonObj = JSONObject(jsonObject)
-            tie_LeadNo!!.setText(""+jsonObj!!.getString("Lead_No"))
+            tie_LeadNo!!.setText(""+jsonObj!!.getString("LeadNo"))
             tie_LeadNo!!.isEnabled = false
         }
 
@@ -1283,11 +1283,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         val time = sdfTime1.format(Date())
         Log.e(TAG, "newtime  885  " + time)
 
-        if (mode.equals("0")){
-
-            tie_LeadNo!!.setText("")
-            strID_FIELD = ""
-        }
+//        if (mode.equals("0")){
+//
+//            tie_LeadNo!!.setText("")
+//            strID_FIELD = ""
+//        }
         tie_InspectionNotes1!!.setText("")
         tie_InspectionNotes2!!.setText("")
         tie_CustomerNotes!!.setText("")

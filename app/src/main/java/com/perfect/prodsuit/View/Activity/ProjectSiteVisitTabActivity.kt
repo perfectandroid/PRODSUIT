@@ -76,8 +76,8 @@ class ProjectSiteVisitTabActivity : AppCompatActivity() , View.OnClickListener, 
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   1062   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("SiteTabDetails")
-                                        siteVisitArrayList = jobjt.getJSONArray("SiteTabDetailsList")
+                                        val jobjt = jObject.getJSONObject("ProjectSiteVisitCount")
+                                        siteVisitArrayList = jobjt.getJSONArray("ProjectSiteVisitCountDetail")
 
                                         Log.e(TAG," 788   "+siteVisitArrayList)
                                         if (siteVisitArrayList.length() > 0){
@@ -149,36 +149,44 @@ class ProjectSiteVisitTabActivity : AppCompatActivity() , View.OnClickListener, 
 //        Submode=0  Submode=1 ToDo 2 =OverDue 3 = Upcoming
         if (data.equals("SiteVisitTabClick")){
             val jsonObject = siteVisitArrayList.getJSONObject(position)
-            if (position == 0){
-                val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitActivity::class.java)
-                i.putExtra("ReqMode","1")
-                i.putExtra("SubMode","0")
-                i.putExtra("jsonObject","")
-                startActivity(i)
-            }
 
-            if (position == 1){
-                val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitListActivity::class.java)
-                i.putExtra("ReqMode","1")
-                i.putExtra("SubMode","1")
-                i.putExtra("jsonObject",jsonObject.toString())
-                startActivity(i)
-            }
+            val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitListActivity::class.java)
+            i.putExtra("ReqMode","1")
+            i.putExtra("SubMode",jsonObject.getString("Mode"))
+            i.putExtra("Type_Name",jsonObject.getString("Label_Name"))
+            i.putExtra("jsonObject",jsonObject.toString())
+            startActivity(i)
 
-            if (position == 2){
-                val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitListActivity::class.java)
-                i.putExtra("ReqMode","1")
-                i.putExtra("SubMode","2")
-                i.putExtra("jsonObject",jsonObject.toString())
-                startActivity(i)
-            }
-            if (position == 3){
-                val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitListActivity::class.java)
-                i.putExtra("ReqMode","1")
-                i.putExtra("SubMode","3")
-                i.putExtra("jsonObject",jsonObject.toString())
-                startActivity(i)
-            }
+//            if (position == 0){
+//                val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitActivity::class.java)
+//                i.putExtra("ReqMode","1")
+//                i.putExtra("SubMode",jsonObject.getString("Mode"))
+//                i.putExtra("jsonObject","")
+//                startActivity(i)
+//            }
+//
+//            if (position == 1){
+//                val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitListActivity::class.java)
+//                i.putExtra("ReqMode","1")
+//                i.putExtra("SubMode","1")
+//                i.putExtra("jsonObject",jsonObject.toString())
+//                startActivity(i)
+//            }
+//
+//            if (position == 2){
+//                val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitListActivity::class.java)
+//                i.putExtra("ReqMode","1")
+//                i.putExtra("SubMode","2")
+//                i.putExtra("jsonObject",jsonObject.toString())
+//                startActivity(i)
+//            }
+//            if (position == 3){
+//                val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitListActivity::class.java)
+//                i.putExtra("ReqMode","1")
+//                i.putExtra("SubMode","3")
+//                i.putExtra("jsonObject",jsonObject.toString())
+//                startActivity(i)
+//            }
         }
 
 
