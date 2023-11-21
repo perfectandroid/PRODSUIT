@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="2dp"
+        android:paddingLeft="2dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="15dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_colorBox"
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/myfont"
+            android:textSize="10dp"
+            android:textStyle="bold"
+            android:background="@color/greydark"
+            android:textColor="@color/black"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NEW"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/myfont"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:textColor="@color/greydark"/>
+            <TextView
+
+                android:paddingLeft="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/myfont"
+                android:textSize="12dp"
+                android:textStyle="bold"
+                android:textColor="@color/grey"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/tv_value"
+                android:paddingLeft="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="52"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="-5dp"
+                android:fontFamily="@font/myfont"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -40,6 +40,10 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
     var recycSiteVisit: RecyclerView? = null
     var mode = ""
 
+    private var ReqMode :  String? =  ""
+    private var SubMode :  String? =  ""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -51,7 +55,8 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
-        mode = intent.getStringExtra("mode").toString()
+        ReqMode = intent.getStringExtra("ReqMode").toString()
+        SubMode = intent.getStringExtra("SubMode").toString()
         setRegViews()
 
         tv_header!!.setText(""+jsonObj!!.getString("Type_Name"))
@@ -62,6 +67,7 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
     }
 
     private fun getLeadDetails() {
+
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -70,7 +76,7 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                projectLeadNoViewModel.getProjectLeadNo(this)!!.observe(
+                projectLeadNoViewModel.getProjectLeadNo(this,ReqMode!!,SubMode!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -82,19 +88,19 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   1062   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("LeadDetails")
-                                        projectLeadArrayList = jobjt.getJSONArray("LeadDetailsList")
-
-                                        Log.e(TAG," 788   "+projectLeadArrayList)
-                                        if (projectLeadArrayList.length() > 0){
-                                            val lLayout = GridLayoutManager(this@ProjectSiteVisitListActivity, 1)
-                                            recycSiteVisit!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            //  val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
-                                            val adapter = ProjectLeadListAdapter(this@ProjectSiteVisitListActivity, projectLeadArrayList)
-                                            recycSiteVisit!!.adapter = adapter
-                                            adapter.setClickListener(this@ProjectSiteVisitListActivity)
-                                        }
-
+//                                        val jobjt = jObject.getJSONObject("LeadDetails")
+//                                        projectLeadArrayList = jobjt.getJSONArray("LeadDetailsList")
+//
+//                                        Log.e(TAG," 788   "+projectLeadArrayList)
+//                                        if (projectLeadArrayList.length() > 0){
+//                                            val lLayout = GridLayoutManager(this@ProjectSiteVisitListActivity, 1)
+//                                            recycSiteVisit!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                            //  val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
+//                                            val adapter = ProjectLeadListAdapter(this@ProjectSiteVisitListActivity, projectLeadArrayList)
+//                                            recycSiteVisit!!.adapter = adapter
+//                                            adapter.setClickListener(this@ProjectSiteVisitListActivity)
+//                                        }
+//
 
                                     } else {
                                         val builder = AlertDialog.Builder(

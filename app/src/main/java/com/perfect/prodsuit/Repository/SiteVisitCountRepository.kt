@@ -26,13 +26,12 @@ object SiteVisitCountRepository {
     val siteVisitCountSetterGetter = MutableLiveData<SiteVisitCountModel>()
     val TAG: String = "ServiceCountRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<SiteVisitCountModel> {
-        getSiteVisitCount(context)
+    fun getServicesApiCall(context: Context,ReqMode : String): MutableLiveData<SiteVisitCountModel> {
+        getSiteVisitCount(context,ReqMode)
         return siteVisitCountSetterGetter
     }
 
-    private fun getSiteVisitCount(context: Context) {
-//
+    private fun getSiteVisitCount(context: Context,ReqMode : String) {
 //        try {
 //            siteVisitCountSetterGetter.value = SiteVisitCountModel("")
 //            val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -64,14 +63,13 @@ object SiteVisitCountRepository {
 //                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
 //                val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
 //                val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
-//
+//                //      {"BankKey":"","FK_Company":"1","ReqMode":"2"}
 //
 //                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
 //                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-//                requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
 //                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
-//                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
-//
+//                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
+
 //
 //                Log.e(TAG,"78  getBranch  "+requestObject1)
 //            } catch (e: Exception) {
@@ -81,7 +79,7 @@ object SiteVisitCountRepository {
 //                okhttp3.MediaType.parse("application/json; charset=utf-8"),
 //                requestObject1.toString()
 //            )
-//            val call = apiService.getServiceCountDetails(body)
+//            val call = apiService.getProjectSiteVisitCount(body)
 //            call.enqueue(object : retrofit2.Callback<String> {
 //                override fun onResponse(
 //                    call: retrofit2.Call<String>, response:

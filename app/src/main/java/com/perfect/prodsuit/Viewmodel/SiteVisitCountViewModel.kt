@@ -11,8 +11,8 @@ class SiteVisitCountViewModel: ViewModel() {
 
     var siteVisitCountData: MutableLiveData<SiteVisitCountModel>? = null
 
-    fun getSiteVisitCount(context: Context) : LiveData<SiteVisitCountModel>? {
-        siteVisitCountData = SiteVisitCountRepository.getServicesApiCall(context)
+    fun getSiteVisitCount(context: Context,ReqMode : String) : LiveData<SiteVisitCountModel>? {
+        siteVisitCountData = SiteVisitCountRepository.getServicesApiCall(context,ReqMode)
         return siteVisitCountData
     }
 }

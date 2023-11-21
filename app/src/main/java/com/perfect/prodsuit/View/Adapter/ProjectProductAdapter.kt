@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -40,15 +41,18 @@ class ProjectProductAdapter(internal var context: Context, internal var jsonArra
 
                 holder.txtsino.text        = pos.toString()
                 holder.txtProduct.text        = jsonObject!!.getString("Name")
-                holder.txtSalesPrice.text        = jsonObject!!.getString("SalesPrice")
+                holder.txtSalesPrice.text        = Config.changeTwoDecimel(jsonObject!!.getString("SalesPrice"))
+
 
                 if (mode.equals("0")){
                     holder.tv_labelStock.text        = "Available Stock"
-                    holder.txtAvailableStock.text        = jsonObject!!.getString("AvailableStock")
+                    holder.txtAvailableStock.text        = Config.changeTwoDecimel(jsonObject!!.getString("AvailableStock"))
+                    holder.txtAssignedStock.text        = Config.changeTwoDecimel(jsonObject!!.getString("AssignedStock"))
                 }
                 if (mode.equals("1")){
                     holder.tv_labelStock.text        = "Current Stock"
-                    holder.txtAvailableStock.text        = jsonObject!!.getString("CurrentStock")
+                    holder.txtAvailableStock.text        = Config.changeTwoDecimel(jsonObject!!.getString("CurrentStock"))
+                    holder.ll_Assigned.visibility = View.GONE
                 }
 
                 holder.llProduct!!.setTag(position)
@@ -82,16 +86,20 @@ class ProjectProductAdapter(internal var context: Context, internal var jsonArra
         internal var txtProduct   : TextView
         internal var txtsino         : TextView
         internal var txtAvailableStock         : TextView
+        internal var txtAssignedStock         : TextView
         internal var txtSalesPrice         : TextView
         internal var tv_labelStock         : TextView
+        internal var ll_Assigned    : LinearLayout
         internal var llProduct    : LinearLayout
         init {
             txtProduct          = v.findViewById<View>(R.id.txtProduct) as TextView
             txtsino                = v.findViewById<View>(R.id.txtsino) as TextView
             txtAvailableStock                = v.findViewById<View>(R.id.txtAvailableStock) as TextView
+            txtAssignedStock                = v.findViewById<View>(R.id.txtAssignedStock) as TextView
             txtSalesPrice                = v.findViewById<View>(R.id.txtSalesPrice) as TextView
             tv_labelStock                = v.findViewById<View>(R.id.tv_labelStock) as TextView
             llProduct           = v.findViewById<View>(R.id.llProduct) as LinearLayout
+            ll_Assigned           = v.findViewById<View>(R.id.ll_Assigned) as LinearLayout
         }
     }
     fun setClickListener(itemClickListener: ItemClickListener?) {
