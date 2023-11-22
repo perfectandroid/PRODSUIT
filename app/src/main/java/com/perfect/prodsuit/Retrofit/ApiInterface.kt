@@ -735,7 +735,8 @@ interface ApiInterface {
     @POST("Project/ProjectSiteVisitAssign")
     fun getProjectSiteVisitAssign(@Body body: RequestBody): Call<String>
 
-
+    @POST("DashBoard/Top10ProductsinLead")
+    fun getTop10Products(@Body body: RequestBody): Call<String>
 
     @POST("DashBoard/Leadstagewiseforcast")
     fun getLeadStagewiseForecast(@Body body: RequestBody): Call<String>
