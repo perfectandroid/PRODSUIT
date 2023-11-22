@@ -101,7 +101,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     var SubMode                                           = ""
 
     var CreatedDate                                       = ""
-
+    var DueDate                                       = ""
     var jsonObj: JSONObject? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -125,6 +125,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         ID_Project = jsonObj!!.getString("ID_Project")
         tie_Project!!.setText(jsonObj!!.getString("ProjName"))
         CreatedDate = jsonObj!!.getString("CreateDate")
+        DueDate = jsonObj!!.getString("DueDate")
         tie_DueDate!!.setText(jsonObj!!.getString("DueDate"))
 
         getCurrentDate()
@@ -456,6 +457,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                // tie_Project!!.setText("")
                 tie_Followupdate!!.setText(currentDate)
                 tie_Stage!!.setText("")
+                tie_Reason!!.setText("")
                 tie_StatusDate!!.setText(currentDate)
                 tie_Remarks!!.setText("")
                 tie_CurrentStatus!!.setText("")
@@ -463,6 +465,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                // ID_Project = ""
                 ID_Stage   = ""
                 ID_CurrentStatus = ""
+                tie_DueDate!!.setText(DueDate)
             }
         }
     }
@@ -1066,9 +1069,12 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         if (data.equals("stageCliik")){
 
             dialogStage!!.dismiss()
+
             val jsonObject = stageSort.getJSONObject(position)
+            Log.e(TAG,"jsonObject  1074   "+jsonObject)
             ID_Stage = jsonObject.getString("ProjectStagesID")
             tie_Stage!!.setText(jsonObject.getString("StageName"))
+            tie_DueDate!!.setText(jsonObject!!.getString("DueDate"))
 
 //            ID_Team = ""
 //            tie_Team!!.setText("")

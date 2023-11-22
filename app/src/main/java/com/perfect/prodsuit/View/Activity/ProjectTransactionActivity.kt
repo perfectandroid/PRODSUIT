@@ -139,6 +139,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     var pssOtherCharge= JSONArray()
     var pssOtherChargeTax= JSONArray()
 
+    var CreatedDate                                       = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -159,6 +160,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
 
+        CreatedDate = jsonObj!!.getString("CreateDate")
         ID_Project = jsonObj!!.getString("ID_Project")
         tie_Project!!.setText(jsonObj!!.getString("ProjName"))
 
@@ -307,10 +309,16 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         strDate = tie_Date!!.text.toString()
         strOtherAmount = tie_OtherCharges!!.text.toString()
         strRemark = tie_Remarks!!.text.toString()
+
+        val date1 = Config.convertDate(CreatedDate)
+        val date2 = Config.convertDate(tie_Date!!.text.toString())
+
+        var isValid1 = Config.convertTimemills(date1,date2)
+
         if (ID_Project.equals("")){
             Config.snackBars(context, v, "Select Project")
-        }else if(strDate.equals("")){
-            Config.snackBars(context, v, "Select Date")
+        }else if(strDate.equals("") || !isValid1){
+            Config.snackBars(context, v, "Date should be greater than or equal to Created date and less than or equal to Current date")
         }
         else if(strOtherAmount.equals("")){
             Config.snackBars(context, v, "Other Amount cannot be zero")
@@ -1515,7 +1523,19 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         val txtSubmit    = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
 
+//        val sdf = SimpleDateFormat("yyyy-MM-dd")
+//        val mDate1 = sdf.parse(CreatedDate)
+//        val timeInMilliseconds1 = mDate1.time
+//        date_Picker1.minDate = timeInMilliseconds1
         date_Picker1.maxDate = System.currentTimeMillis()
+
+//        val date = "2023-10-12"
+//        val (year, month, day) = Config.getDateComponents(CreatedDate)
+//        Log.e(TAG,"1528   "+"Year: $year, Month: $month, Day: $day")
+//
+//        val minDate = Calendar.getInstance()
+//        minDate.set(2023, 10, 27)
+//        date_Picker1.minDate = minDate.timeInMillis
 
 //        val maxDate = Calendar.getInstance()
 //        maxDate.add(Calendar.MONTH, 1)
