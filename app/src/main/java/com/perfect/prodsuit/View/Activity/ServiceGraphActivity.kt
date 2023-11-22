@@ -4,16 +4,17 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
@@ -26,12 +27,12 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Repository.CRMTileDashBoardDetailsRepository
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
-import java.util.ArrayList
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -72,12 +73,14 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     private var tv_ComplaintRemark: TextView? = null
     private var tv_ServiceRemark: TextView? = null
 
+    lateinit var chartTypeViewModel               : ChartTypeViewModel
 
     lateinit var crmservicewiseViewModel          : CRMservicewiseViewModel
     lateinit var crmStagewiseDetailsViewModel     : CRMStagewiseDetailsViewModel
-    lateinit var crmTileDashBoardDetailsViewModel : CRMTileDashBoardDetailsViewModel
     lateinit var crmcomplaintwiseViewModel        : CRMcomplaintwiseViewModel
-    lateinit var chartTypeViewModel               : ChartTypeViewModel
+
+    lateinit var crmTileDashBoardDetailsViewModel : CRMTileDashBoardDetailsViewModel
+    lateinit var crmTileTicketStatusViewModel : CRMTileTicketStatusViewModel
 
     lateinit var chartTypeArrayList: JSONArray
     var ID_ChartMode    :  String? = ""
@@ -97,11 +100,24 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     //ServiceWiseChart BarChart
     private lateinit var ServiceWiseChart: BarChart
     private var modelCRMServiceBar = ArrayList<ModelCRMServiceBar>()
+
     lateinit var serviceWiseArrayList: JSONArray
     var recycServiceWise: RecyclerView? = null
 
 
+    // Tile
 
+    private var ll_crmtile_outstanding: LinearLayout? = null
+    private var ll_crmtile_status: LinearLayout? = null
+
+    private var recyc_crmtile_Outstanding: RecyclerView? = null
+    private var recyc_crmtile_Status: RecyclerView? = null
+
+    var crmOutstandingAdapter:  CrmOutstandingAdapter? = null
+    var crmStatusAdapter:  CrmStatusAdapter? = null
+
+    lateinit var crmOutstandingArrayList : JSONArray
+    lateinit var crmStatusArrayList : JSONArray
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,6 +131,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         crmservicewiseViewModel          = ViewModelProvider(this).get(CRMservicewiseViewModel::class.java)
         crmStagewiseDetailsViewModel     = ViewModelProvider(this).get(CRMStagewiseDetailsViewModel::class.java)
         crmTileDashBoardDetailsViewModel = ViewModelProvider(this).get(CRMTileDashBoardDetailsViewModel::class.java)
+        crmTileTicketStatusViewModel = ViewModelProvider(this).get(CRMTileTicketStatusViewModel::class.java)
         crmcomplaintwiseViewModel        = ViewModelProvider(this).get(CRMcomplaintwiseViewModel::class.java)
         chartTypeViewModel               = ViewModelProvider(this).get(ChartTypeViewModel::class.java)
 
@@ -124,6 +141,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         label   = intent.getStringExtra("label")
 
         Log.e(TAG,"3555   "+SubMode+"  :  "+label)
+        getCurrentDate()
 
         TabMode       = 0
         ContinueMode  = 0
@@ -144,6 +162,29 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 //        crmcomplaintwiseCount = 0
 //        getCRMcomplaintwiseData()
 
+    }
+
+    private fun getCurrentDate() {
+
+        val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
+        val currentDate = sdf.format(Date())
+
+        try {
+
+            Log.e(TAG,"DATE TIME  196  "+currentDate)
+            val newDate: Date = sdf.parse(currentDate)
+            Log.e(TAG,"newDate  196  "+newDate)
+            val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
+            val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
+            val sdfTime1 = SimpleDateFormat("hh:mm aa")
+            val sdfTime2 = SimpleDateFormat("HH:mm", Locale.US)
+
+            TransDate = sdfDate1.format(newDate)
+
+        }catch (e: Exception){
+
+            Log.e(TAG,"Exception 196  "+e.toString())
+        }
     }
 
 
@@ -174,6 +215,14 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         recycStagWise       = findViewById<RecyclerView>(R.id.recycStagWise)
         recycServiceWise    = findViewById<RecyclerView>(R.id.recycServiceWise)
         recycComplaintWise    = findViewById<RecyclerView>(R.id.recycComplaintWise)
+
+        // Tile
+
+        ll_crmtile_outstanding         = findViewById<LinearLayout>(R.id.ll_crmtile_outstanding)
+        ll_crmtile_status    = findViewById<LinearLayout>(R.id.ll_crmtile_status)
+
+        recyc_crmtile_Outstanding    = findViewById<RecyclerView>(R.id.recyc_crmtile_Outstanding)
+        recyc_crmtile_Status    = findViewById<RecyclerView>(R.id.recyc_crmtile_Status)
 
         tvv_dash!!.setOnClickListener(this)
         tvv_tile!!.setOnClickListener(this)
@@ -206,6 +255,9 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
             TicketOutstandingCount = 0
             getTicketOutstandingData()
+
+            TicketStatusCount = 0
+            getTicketStatusData()
 
         }
 
@@ -542,7 +594,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun getTicketOutstandingData() {
-        DashMode = "4"
+        var DashMode2 = "4"
         DashType = "1"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -552,32 +604,41 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                crmTileDashBoardDetailsViewModel.getCRMTileDashBoardDetails(this,TransDate!!,DashMode!!,DashType!!)!!.observe(
+                crmTileDashBoardDetailsViewModel.getCRMTileDashBoardDetails(this,TransDate!!,DashMode2!!,DashType!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        Log.e(TAG,"msg   27661   "+msg)
+                        Log.e(TAG,"msg  Outstandin  27661   "+msg)
                         if (msg!!.length > 0) {
                             if (TicketOutstandingCount == 0) {
                                 TicketOutstandingCount++
 
                                 val jObject = JSONObject(msg)
-                                Log.e(TAG,"msg   27662   "+msg)
-                                if (jObject.getString("StatusCode").equals("0")) {
+                                Log.e(TAG,"msg   276621   "+msg)
+                                if (jObject.getString("StatusCode").equals("-2")) {
 
+                                    val jobjt = jObject.getJSONObject("CRMTileDashBoardDetails")
+                                    crmOutstandingArrayList = jobjt.getJSONArray("CRMTileDashBoardDetailsList")
+                                    if (crmOutstandingArrayList.length() > 0){
+
+                                        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                                        recyc_crmtile_Outstanding!!.layoutManager = layoutManager
+                                        crmOutstandingAdapter = CrmOutstandingAdapter(this@ServiceGraphActivity, crmOutstandingArrayList)
+                                        recyc_crmtile_Outstanding!!.adapter = crmOutstandingAdapter
+                                    }
 
 
                                 } else {
-                                    val builder = AlertDialog.Builder(
-                                        this@ServiceGraphActivity,
-                                        R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
+//                                    val builder = AlertDialog.Builder(
+//                                        this@ServiceGraphActivity,
+//                                        R.style.MyDialogTheme
+//                                    )
+//                                    builder.setMessage(jObject.getString("EXMessage"))
+//                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                    }
+//                                    val alertDialog: AlertDialog = builder.create()
+//                                    alertDialog.setCancelable(false)
+//                                    alertDialog.show()
                                 }
                             }
                         } else {
@@ -600,7 +661,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun getTicketStatusData() {
-        DashMode = "5"
+        var DashMode1 = "5"
         DashType = "1"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -610,29 +671,41 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                crmTileDashBoardDetailsViewModel.getCRMTileDashBoardDetails(this,TransDate!!,DashMode!!,DashType!!)!!.observe(
+                crmTileTicketStatusViewModel.getCRMTileTicketStatusData(this,TransDate!!,DashMode1!!,DashType!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
+                        Log.e(TAG,"msg Status  276622   "+msg)
                         if (msg!!.length > 0) {
                             if (TicketStatusCount == 0) {
                                 TicketStatusCount++
 
                                 val jObject = JSONObject(msg)
-                                Log.e(TAG,"msg   3299   "+msg)
-                                if (jObject.getString("StatusCode") == "0") {
+                                Log.e(TAG,"msg   6255   "+msg)
+                                if (jObject.getString("StatusCode").equals("-2")) {
+
+                                    val jobjt = jObject.getJSONObject("CRMTileDashBoardDetails")
+                                    crmStatusArrayList = jobjt.getJSONArray("CRMTileDashBoardDetailsList")
+                                    if (crmStatusArrayList.length() > 0){
+
+                                        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                                        recyc_crmtile_Status!!.layoutManager = layoutManager
+                                        crmStatusAdapter = CrmStatusAdapter(this@ServiceGraphActivity, crmStatusArrayList)
+                                        recyc_crmtile_Status!!.adapter = crmStatusAdapter
+                                    }
+
 
                                 } else {
-                                    val builder = AlertDialog.Builder(
-                                        this@ServiceGraphActivity,
-                                        R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
+//                                    val builder = AlertDialog.Builder(
+//                                        this@ServiceGraphActivity,
+//                                        R.style.MyDialogTheme
+//                                    )
+//                                    builder.setMessage(jObject.getString("EXMessage"))
+//                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                    }
+//                                    val alertDialog: AlertDialog = builder.create()
+//                                    alertDialog.setCancelable(false)
+//                                    alertDialog.show()
                                 }
                             }
                         } else {
@@ -641,6 +714,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 //                                "Some Technical Issues.",
 //                                Toast.LENGTH_LONG
 //                            ).show()
+//                            Log.e(TAG,"1154  ")
                         }
                     })
                 progressDialog!!.dismiss()
@@ -648,6 +722,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
+                Log.e(TAG,"1155  ")
             }
         }
     }

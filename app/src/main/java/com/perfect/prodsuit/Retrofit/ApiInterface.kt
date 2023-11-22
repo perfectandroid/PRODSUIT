@@ -714,6 +714,9 @@ interface ApiInterface {
     @POST("DashBoard/CRMTileDashBoardDetails")
     fun getCRMTileDashBoardDetails(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/CRMTileDashBoardDetails")
+    fun getCRMTileDashBoardStatusDetails(@Body body: RequestBody): Call<String>
+
     @POST("DashBoard/CRMStagewiseDetails")
     fun getCRMStagewiseDetails(@Body body: RequestBody): Call<String>
 
