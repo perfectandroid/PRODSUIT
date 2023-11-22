@@ -37,13 +37,13 @@ object LeadTileRepository {
         try {
             serviceCountSetterGetter.value = LeadTileModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
-            progressDialog = ProgressDialog(context, R.style.Progress)
-            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-            progressDialog!!.setCancelable(false)
-            progressDialog!!.setIndeterminate(true)
-            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
-                R.drawable.progress))
-            progressDialog!!.show()
+//            progressDialog = ProgressDialog(context, R.style.Progress)
+//            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//            progressDialog!!.setCancelable(false)
+//            progressDialog!!.setIndeterminate(true)
+//            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
+//                R.drawable.progress))
+//            progressDialog!!.show()
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
@@ -76,6 +76,8 @@ object LeadTileRepository {
                 val currentDate = sdf.format(Date())
                 System.out.println(" C DATE is  "+currentDate)
 
+                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
               requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
               //  requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart("40"))
@@ -107,7 +109,7 @@ object LeadTileRepository {
                     Response<String>
                 ) {
                     try {
-                        progressDialog!!.dismiss()
+                       // progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
                         Log.e(TAG,"  LEAD TILE "+response.body())
                         val leads = ArrayList<ServiceCountModel>()

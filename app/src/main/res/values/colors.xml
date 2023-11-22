@@ -516,4 +516,10 @@
     <color name="bluecolr">#1A6ED9</color>
     <color name="warm"> #f5a732</color>
     <color name="tileclick">#D5E3E4</color>
+
+    <color name="leadbar1">#FF03DAC5</color>
+    <color name="leadbar2">#A8031D</color>
+    <color name="leadbar3">#e4b5fc</color>
+    <color name="leadbar4">#ED5970</color>
+    <color name="leadbar5">#3B6561</color>
 </resources>

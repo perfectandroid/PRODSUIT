@@ -9,8 +9,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.LeadStatusDashModel
-import com.perfect.prodsuit.Model.LeadstagewiseModel
+import com.perfect.prodsuit.Model.ProjectStatuslistReportModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -19,22 +18,23 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.text.SimpleDateFormat
-import java.util.*
+import java.util.ArrayList
 
-object LeadStagesForecastRepository {
+object ReportStatuslistProjectRepository {
+
     private var progressDialog: ProgressDialog? = null
-    val leadstagewisedashSetterGetter = MutableLiveData<LeadstagewiseModel>()
-    val TAG: String = "LeadStagesForecastRepository"
+    val reportNameSetterGetter = MutableLiveData<ProjectStatuslistReportModel>()
+    val TAG: String = "ReportNameRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<LeadstagewiseModel> {
-        getLeadStatusDashboard(context)
-        return leadstagewisedashSetterGetter
+    fun getServicesApiCall(context: Context,RegMode : String, Fromdate : String, Todate : String, IdLead : String): MutableLiveData<ProjectStatuslistReportModel> {
+        getReportStatusList(context,RegMode,Fromdate,Todate,IdLead)
+        return reportNameSetterGetter
     }
 
-    private fun getLeadStatusDashboard(context: Context) {
+    private fun getReportStatusList(context: Context,RegMode : String,fromdate : String,todate : String,idlead : String) {
+
         try {
-            leadstagewisedashSetterGetter.value = LeadstagewiseModel("")
+            reportNameSetterGetter.value = ProjectStatuslistReportModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -60,38 +60,33 @@ object LeadStagesForecastRepository {
             val requestObject1 = JSONObject()
             try {
 
+                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
-                val FK_DepartmentSP = context.getSharedPreferences(Config.SHARED_PREF55, 0)
+                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
-                val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
-                val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
-
-
-                val sdf = SimpleDateFormat("yyyy-MM-dd")
-                val currentDate = sdf.format(Date())
-                System.out.println(" C DATE is  "+currentDate)
+                val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-                //  requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart("40"))
-                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
-                requestObject1.put("FK_Department", ProdsuitApplication.encryptStart(FK_DepartmentSP.getString("FK_Department", null)))
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
-                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
-                // requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
-                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("3"))
-                requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))
+                requestObject1.put("EntrBy", UserCodeSP.getString("UserCode", null))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+                requestObject1.put("FromDate", fromdate)
+                requestObject1.put("ToDate", todate)
+                requestObject1.put("LeadNo", "0")
+                requestObject1.put("FK_Area", "0")
+                requestObject1.put("FK_Project", "0")
+                requestObject1.put("Category", "0")
+                requestObject1.put("ReportMode", RegMode)
+                requestObject1.put("FK_Machine", "10")
+                requestObject1.put("Criteria", "0")
+                requestObject1.put("TableCount", "1")
 
-                Log.e(LeadDashRepository.TAG,"requestObject1   71   "+requestObject1)
-
-
+                 Log.e(TAG,"78  getBranch  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -99,23 +94,23 @@ object LeadStagesForecastRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getLeadStagewiseForecast(body)
+            Log.i("responserrr","body=="+requestObject1.toString())
+            val call = apiService.getProjectReportDetail(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
                     Response<String>
                 ) {
                     try {
-                        Log.e(TAG,"response  leadstagewise   "+response.body())
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<LeadStatusDashModel>()
-                        leads.add(LeadStatusDashModel(response.body()))
+                        val leads = ArrayList<ProjectStatuslistReportModel>()
+                        leads.add(ProjectStatuslistReportModel(response.body()))
                         val msg = leads[0].message
-                        leadstagewisedashSetterGetter.value = LeadstagewiseModel(msg)
+                        reportNameSetterGetter.value = ProjectStatuslistReportModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
-                        Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
@@ -126,7 +121,7 @@ object LeadStagesForecastRepository {
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
-            Toast.makeText(context,""+e.toString(),Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
         }
     }
 }
