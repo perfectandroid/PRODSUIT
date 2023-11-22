@@ -21,6 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Model.ModelUsageProduct
 import com.perfect.prodsuit.R
@@ -219,6 +220,8 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
         til_Quantity!!.defaultHintTextColor  = ContextCompat.getColorStateList(this,R.color.color_mandatory)
 
 
+        DecimelFormatters.setDecimelPlace(tie_Quantity!!)
+
         onTextChangedValues()
 
         getCurrentDate()
@@ -414,11 +417,14 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
 
     private fun managementValidation(v: View) {
         productQty = tie_Quantity!!.text.toString()
+        if (productQty.equals("") || productQty.equals(".")){
+            productQty ="0"
+        }
         if (ID_Product.equals("")){
             til_Product!!.setError("Select Product")
             til_Product!!.setErrorIconDrawable(null)
         }
-        else if (productQty.equals("")){
+        else if (productQty.toFloat() <= 0){
             til_Quantity!!.setError("Enter Quantity")
             til_Quantity!!.setErrorIconDrawable(null)
         }
@@ -473,7 +479,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
                     if (i != editIndex){
                         if (modelUsageProduct.get(i).ID_Product == ID_Product) {
 
-                            validateMessage = "Product * Already exits"
+                            validateMessage = "Product Already exits"
                             result = false
                         }
                     }
@@ -482,7 +488,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
             else{
                 if(modelUsageProduct.size > 0){
                     if (modelUsageProduct.get(i).ID_Product == ID_Product) {
-                        validateMessage = "Product * Already exits"
+                        validateMessage = "Product Already exits"
                         result = false
                     }
                 }
@@ -752,7 +758,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
 
     private fun getStage() {
         // var leadInfo = 0
-        var ReqMode = "17"
+        var ReqMode = "3"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1625,17 +1631,20 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
 
         if (data.equals("deleteStocks")){
 
+            if (editMode == 1){
+                ID_Product = "="
+                ID_Stock = ""
+                tie_Product!!.setText("")
+                tie_Quantity!!.setText("")
+                productTotQty = ""
+            }
+            editMode = 0
             Log.e(TAG,"14644  "+position)
             modelUsageProduct!!.removeAt(position)
             materialRequestAdapter!!.notifyItemRemoved(position)
             if (modelUsageProduct.size == 0){
                 ll_Detail!!.visibility = View.GONE
             }
-            ID_Product = "="
-            ID_Stock = ""
-            tie_Product!!.setText("")
-            tie_Quantity!!.setText("")
-            productTotQty = ""
 
         }
 

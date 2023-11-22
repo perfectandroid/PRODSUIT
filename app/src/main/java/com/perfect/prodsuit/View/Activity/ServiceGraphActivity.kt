@@ -27,9 +27,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Repository.CRMTileDashBoardDetailsRepository
-import com.perfect.prodsuit.View.Adapter.CrmStageChartAdapter
-import com.perfect.prodsuit.View.Adapter.LeadHistoryAdapter
-import com.perfect.prodsuit.View.Adapter.MonthlyBarChartAdapter
+import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -71,6 +69,9 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     private var ll_ComplaintWise: LinearLayout? = null
     private var ll_ServiceWise: LinearLayout? = null
 
+    private var tv_ComplaintRemark: TextView? = null
+    private var tv_ServiceRemark: TextView? = null
+
 
     lateinit var crmservicewiseViewModel          : CRMservicewiseViewModel
     lateinit var crmStagewiseDetailsViewModel     : CRMStagewiseDetailsViewModel
@@ -91,11 +92,15 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var ComplaintWiseChart: BarChart
     private var modelCRMComplaintBar = ArrayList<ModelCRMComplaintBar>()
     lateinit var complaintWiseArrayList: JSONArray
+    var recycComplaintWise: RecyclerView? = null
 
     //ServiceWiseChart BarChart
     private lateinit var ServiceWiseChart: BarChart
     private var modelCRMServiceBar = ArrayList<ModelCRMServiceBar>()
     lateinit var serviceWiseArrayList: JSONArray
+    var recycServiceWise: RecyclerView? = null
+
+
 
 
 
@@ -149,6 +154,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
         tvv_dash = findViewById<TextView>(R.id.tvv_dash)
         tvv_tile = findViewById<TextView>(R.id.tvv_tile)
+        tv_ComplaintRemark      = findViewById<TextView>(R.id.tv_ComplaintRemark)
+        tv_ServiceRemark      = findViewById<TextView>(R.id.tv_ServiceRemark)
 
         actv_mode= findViewById<AutoCompleteTextView>(R.id.actv_mode)
 
@@ -159,11 +166,14 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         ll_ComplaintWise    = findViewById<LinearLayout>(R.id.ll_ComplaintWise)
         ll_ServiceWise      = findViewById<LinearLayout>(R.id.ll_ServiceWise)
 
+
         StagWiseChart       = findViewById<BarChart>(R.id.StagWiseChart)
         ComplaintWiseChart  = findViewById<BarChart>(R.id.ComplaintWiseChart)
         ServiceWiseChart    = findViewById<BarChart>(R.id.ServiceWiseChart)
 
-        recycStagWise    = findViewById<RecyclerView>(R.id.recycStagWise)
+        recycStagWise       = findViewById<RecyclerView>(R.id.recycStagWise)
+        recycServiceWise    = findViewById<RecyclerView>(R.id.recycServiceWise)
+        recycComplaintWise    = findViewById<RecyclerView>(R.id.recycComplaintWise)
 
         tvv_dash!!.setOnClickListener(this)
         tvv_tile!!.setOnClickListener(this)
@@ -193,6 +203,9 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
             ll_Tile!!.visibility = View.VISIBLE
             tvv_dash!!.setBackgroundResource(R.drawable.btn_shape_reset)
             tvv_tile!!.setBackgroundResource(R.drawable.btn_dash)
+
+            TicketOutstandingCount = 0
+            getTicketOutstandingData()
 
         }
 
@@ -348,6 +361,18 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     serviceWiseArrayList=jobjt.getJSONArray("CRMservicewiseList")
 
                                     Log.e(TAG,"3913 serviceWiseArrayList  "+serviceWiseArrayList)
+                                    tv_ServiceRemark!!.setText(jobjt.getString("Reamrk"))
+                                    if (serviceWiseArrayList.length() > 0){
+
+                                        setServiceBarchart()
+
+                                        val lLayout = GridLayoutManager(this@ServiceGraphActivity, 2)
+                                        recycServiceWise!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = CrmServiceChartAdapter(this@ServiceGraphActivity, serviceWiseArrayList)
+                                        recycServiceWise!!.adapter = adapter
+                                    }
+
+
                                 } else {
                                     val builder = AlertDialog.Builder(
                                         this@ServiceGraphActivity,
@@ -448,8 +473,6 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-
-
     private fun getCRMcomplaintwiseData() {
         DashMode = "11"
         DashType = "2"
@@ -475,8 +498,18 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                     val jobjt = jObject.getJSONObject("CRMcomplaintwise")
                                     complaintWiseArrayList=jobjt.getJSONArray("CRMcomplaintwiseList")
-
+                                    tv_ComplaintRemark!!.setText(jobjt.getString("Reamrk"))
                                     Log.e(TAG,"3912 complaintWiseArrayList  "+complaintWiseArrayList)
+
+                                    if (complaintWiseArrayList.length() > 0){
+
+                                        setComplaintBarchart()
+
+                                        val lLayout = GridLayoutManager(this@ServiceGraphActivity, 2)
+                                        recycComplaintWise!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = CrmComplaintChartAdapter(this@ServiceGraphActivity, complaintWiseArrayList)
+                                        recycComplaintWise!!.adapter = adapter
+                                    }
 
                                 } else {
                                     val builder = AlertDialog.Builder(
@@ -625,6 +658,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         modelCRMStageBar = getStagWiseList()
 
         StagWiseChart.axisLeft.setDrawGridLines(false)
+        StagWiseChart.setTouchEnabled(true)
         val xAxis: XAxis = StagWiseChart.xAxis
         xAxis.setDrawGridLines(false)
         xAxis.setDrawAxisLine(false)
@@ -795,7 +829,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         for (i in 0 until stageWiseArrayList.length())
         {
             var jsonObject = stageWiseArrayList.getJSONObject(i)
-            modelCRMStageBar.add(ModelCRMStageBar(jsonObject.getString("StatusName"),jsonObject.getString("StatusCount")))
+           // modelCRMStageBar.add(ModelCRMStageBar(jsonObject.getString("StatusName"),jsonObject.getString("StatusCount")))
+            modelCRMStageBar.add(ModelCRMStageBar("",jsonObject.getString("StatusCount")))
         }
 
         return modelCRMStageBar
@@ -813,6 +848,373 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
+    private fun setServiceBarchart() {
+        modelCRMServiceBar.clear()
+        modelCRMServiceBar = getServiceWiseList()
+
+        ServiceWiseChart.axisLeft.setDrawGridLines(false)
+        val xAxis: XAxis = ServiceWiseChart.xAxis
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(false)
+
+        //remove right y-axis
+        ServiceWiseChart.axisRight.isEnabled = false
+        //remove legend
+        ServiceWiseChart.legend.isEnabled = false
+        ServiceWiseChart!!.setScaleEnabled(true)
+        //remove description label
+        ServiceWiseChart.description.isEnabled = false
+
+
+        //add animation
+        ServiceWiseChart.animateY(1000)
+
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.valueFormatter = MyAxisFormatterBar2()
+        xAxis.setDrawLabels(true)
+        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = +325f
+        xAxis.textSize = 15f
+        xAxis.textColor = Color.BLACK
+
+        //colors
+        val colors: ArrayList<Int> = ArrayList()
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        /////////////////////////////////////
+
+        val entries: ArrayList<BarEntry> = ArrayList()
+        for (i in modelCRMServiceBar.indices) {
+            val score = modelCRMServiceBar[i]
+            entries.add(BarEntry(i.toFloat(), score.TotalCount.toFloat()))
+        }
+
+
+
+        val barDataSet = BarDataSet(entries, "Category")
+        // barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+        barDataSet.setColors(colors)
+        //barDataSet.setValueFormatter(DecimalRemover())
+        barDataSet.valueFormatter = DefaultValueFormatter(0)
+
+        val data = BarData(barDataSet)
+        data.setValueTextSize(15f)
+        data.setValueTextColor(Color.BLACK)
+        data.setDrawValues(false)
+        ServiceWiseChart.data = data
+
+
+        ServiceWiseChart.invalidate()
+
+
+    }
+
+    private fun getServiceWiseList(): ArrayList<ModelCRMServiceBar> {
+        for (i in 0 until serviceWiseArrayList.length())
+        {
+            var jsonObject = serviceWiseArrayList.getJSONObject(i)
+            // modelCRMStageBar.add(ModelCRMStageBar(jsonObject.getString("StatusName"),jsonObject.getString("StatusCount")))
+            modelCRMServiceBar.add(ModelCRMServiceBar("",jsonObject.getString("TotalCount"),jsonObject.getString("ActualPercent")))
+        }
+
+        return modelCRMServiceBar
+    }
+
+
+    private fun setComplaintBarchart() {
+        modelCRMComplaintBar.clear()
+        modelCRMComplaintBar = getComplaintWiseList()
+
+        ComplaintWiseChart.axisLeft.setDrawGridLines(false)
+        val xAxis: XAxis = ComplaintWiseChart.xAxis
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(false)
+
+        //remove right y-axis
+        ComplaintWiseChart.axisRight.isEnabled = false
+        //remove legend
+        ComplaintWiseChart.legend.isEnabled = false
+        ComplaintWiseChart!!.setScaleEnabled(true)
+        //remove description label
+        ComplaintWiseChart.description.isEnabled = false
+
+
+        //add animation
+        ComplaintWiseChart.animateY(1000)
+
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.valueFormatter = MyAxisFormatterBar2()
+        xAxis.setDrawLabels(true)
+        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = +325f
+        xAxis.textSize = 15f
+        xAxis.textColor = Color.BLACK
+
+        //colors
+        val colors: ArrayList<Int> = ArrayList()
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        /////////////////////////////////////
+
+        val entries: ArrayList<BarEntry> = ArrayList()
+        for (i in modelCRMComplaintBar.indices) {
+            val score = modelCRMComplaintBar[i]
+            entries.add(BarEntry(i.toFloat(), score.ComplaintCount.toFloat()))
+        }
+
+
+
+        val barDataSet = BarDataSet(entries, "Category")
+        // barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+        barDataSet.setColors(colors)
+        //barDataSet.setValueFormatter(DecimalRemover())
+        barDataSet.valueFormatter = DefaultValueFormatter(0)
+
+        val data = BarData(barDataSet)
+        data.setValueTextSize(15f)
+        data.setValueTextColor(Color.BLACK)
+        data.setDrawValues(false)
+        ComplaintWiseChart.data = data
+
+
+        ComplaintWiseChart.invalidate()
+
+
+    }
+
+    private fun getComplaintWiseList(): ArrayList<ModelCRMComplaintBar> {
+        for (i in 0 until complaintWiseArrayList.length())
+        {
+            var jsonObject = complaintWiseArrayList.getJSONObject(i)
+            // modelCRMStageBar.add(ModelCRMStageBar(jsonObject.getString("StatusName"),jsonObject.getString("StatusCount")))
+            modelCRMComplaintBar.add(ModelCRMComplaintBar("",jsonObject.getString("ComplaintCount")))
+        }
+
+        return modelCRMComplaintBar
+    }
+
+
 
 
     override fun onClick(v: View) {

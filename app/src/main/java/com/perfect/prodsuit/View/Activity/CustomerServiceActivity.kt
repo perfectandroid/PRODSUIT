@@ -1488,7 +1488,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         // Customer Details
 
         ID_Customer = ""
-        ID_Priority = ""
+        //   ID_Priority = ""
         ID_Channel = ""
         ID_Employee = ""
         ID_EmpMedia = ""
@@ -1499,25 +1499,25 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         tie_CustomerName!!.setText("")
         tie_MobileNo!!.setText("")
         tie_Address!!.setText("")
-        tie_Priority!!.setText("")
+        //   tie_Priority!!.setText("")
         tie_Channel!!.setText("")
         tie_EmpOrMedia!!.setText("")
 
         tie_CustomerName!!.isEnabled = true
-      //  tie_MobileNo!!.isEnabled = true
+        //  tie_MobileNo!!.isEnabled = true
         tie_Address!!.isEnabled = true
 
         til_EmpOrMedia!!.visibility = View.GONE
 
         // Complaint
-        ID_CompCategory = ""
+       // ID_CompCategory = ""
         ID_Category = ""
         ID_Company = ""
         ID_Product = ""
         ID_Services = ""
         ID_ComplaintList = ""
 
-        tie_CompCategory!!.setText("")
+     //   tie_CompCategory!!.setText("")
         tie_Category!!.setText("")
         tie_Company!!.setText("")
         tie_Product!!.setText("")
@@ -1545,6 +1545,17 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         tie_Status!!.setText("")
         tie_Attendedby!!.setText("")
+
+
+        priorityDet = 0
+        prioritymode = 0
+        getProductPriority()
+
+
+        ReqMode = "66"
+        SubMode = "20"
+        categoryCount = 0
+        getCompCategory(ReqMode!!,SubMode!!)
 
         getCurrentDate()
 

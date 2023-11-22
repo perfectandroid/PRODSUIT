@@ -729,6 +729,14 @@ interface ApiInterface {
     @POST("DashBoard/CRMservicewise")
     fun getCRMservicewise(@Body body: RequestBody): Call<String>
 
+    @POST("Project/ProjectSiteVisitCount")
+    fun getProjectSiteVisitCount(@Body body: RequestBody): Call<String>
+
+    @POST("Project/ProjectSiteVisitAssign")
+    fun getProjectSiteVisitAssign(@Body body: RequestBody): Call<String>
+
+
+
     @POST("DashBoard/Leadstagewiseforcast")
     fun getLeadStagewiseForecast(@Body body: RequestBody): Call<String>
 

@@ -72,7 +72,7 @@ object MaterialUsagestageRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Critrea1", ProdsuitApplication.encryptStart(ID_Project))
 
-                Log.e(TAG,"requestObject1  78   "+requestObject1)
+                Log.e(TAG,"requestObject1  7555   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

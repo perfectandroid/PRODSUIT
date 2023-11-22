@@ -21,6 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Model.ModelUsageProduct
 import com.perfect.prodsuit.R
@@ -221,6 +222,8 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
         til_Product!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_Quantity!!.defaultHintTextColor  = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_Mode!!.defaultHintTextColor      = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+
+        DecimelFormatters.setDecimelPlace(tie_Quantity!!)
 
         onTextChangedValues()
 
@@ -430,11 +433,14 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
     private fun managementValidation(v : View) {
 
         productQty = tie_Quantity!!.text.toString()
+        if (productQty.equals("") || productQty.equals(".")){
+            productQty ="0"
+        }
         if (ID_Product.equals("")){
             til_Product!!.setError("Select Product")
             til_Product!!.setErrorIconDrawable(null)
         }
-        else if (productQty.equals("")){
+        else if (productQty.toFloat() <= 0){
             til_Quantity!!.setError("Enter Quantity")
             til_Quantity!!.setErrorIconDrawable(null)
         }
@@ -520,7 +526,7 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
                 if (i != editIndex){
                     if (modelUsageProduct.get(i).ID_Product == ID_Product && modelUsageProduct.get(i).ID_Mode == ID_Mode) {
 
-                        validateMessage = "Product * Already exits"
+                        validateMessage = "Product Already exits"
                         result = false
                     }
                     else if (productTotQty.toFloat() >= sumQty){
@@ -554,7 +560,7 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
 
                     if (modelUsageProduct.get(i).ID_Product == ID_Product && modelUsageProduct.get(i).ID_Mode == ID_Mode) {
 
-                        validateMessage = "Product * Already exits"
+                        validateMessage = "Product Already exits"
                         result = false
                     }
                     else if (productTotQty.toFloat() < sumQty){
@@ -1882,6 +1888,17 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
         }
 
         if (data.equals("deleteStocks")){
+
+            if (editMode == 1){
+                ID_Product = "="
+                ID_Stock = ""
+                tie_Product!!.setText("")
+                tie_Quantity!!.setText("")
+                productTotQty = ""
+                ID_Mode = ""
+                tie_Mode!!.setText("")
+            }
+
             editMode = 0
             Log.e(TAG,"14644  "+position)
             modelUsageProduct!!.removeAt(position)
@@ -1889,15 +1906,6 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
             if (modelUsageProduct.size == 0){
                 ll_usage_product!!.visibility = View.GONE
             }
-
-            ID_Product = "="
-            ID_Stock = ""
-            tie_Product!!.setText("")
-            tie_Quantity!!.setText("")
-            productTotQty = ""
-            ID_Mode = ""
-            tie_Mode!!.setText("")
-
 
         }
 

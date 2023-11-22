@@ -37,21 +37,6 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
-                android:padding="2dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@color/list_data"
-                android:textSize="16dp"
-                android:textStyle="bold"
-                android:fontFamily="@font/myfont"
-                android:text="tretere"
-                android:textColor="@color/black"
-                android:layout_centerVertical="true"
-                android:id="@+id/txtProduct" />
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,9 +44,58 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:paddingLeft="3dp"
+                    android:background="@color/list_data"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/list_data"
+                        android:textSize="14dp"
+                        android:maxLines="2"
+                        android:fontFamily="@font/myfont"
+                        android:text="Product"
+                        android:textColor="@color/black"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:id="@+id/txtProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/list_data"
+                        android:textSize="12dp"
+                        android:layout_marginTop="-3dp"
+                        android:fontFamily="@font/myfont"
+                        android:text="Sales Price"
+                        android:textColor="@color/black"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:padding="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@color/list_data"
+                        android:textSize="16dp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/myfont"
+                        android:text="tretere"
+                        android:textColor="@color/black"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/txtProduct1" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="0dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -88,6 +122,57 @@
                         android:text="Sales Price"
                         android:textColor="@color/black"
                         android:layout_centerVertical="true" />
+
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/ll_Assigned"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="3dp"
+                    android:background="@color/list_data"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_Assigned"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/list_data"
+                        android:textSize="14dp"
+                        android:maxLines="2"
+                        android:fontFamily="@font/myfont"
+                        android:text="Assigned Stock"
+                        android:textColor="@color/black"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:id="@+id/txtAssignedStock"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/list_data"
+                        android:textSize="12dp"
+                        android:layout_marginTop="-3dp"
+                        android:fontFamily="@font/myfont"
+                        android:text="Sales Price"
+                        android:textColor="@color/black"
+                        android:layout_centerVertical="true" />
+
 
                 </LinearLayout>
 
