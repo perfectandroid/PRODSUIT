@@ -69,11 +69,15 @@ object EmployeeWiseRepository {
 
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
 
 
                 val sdf = SimpleDateFormat("yyyy-MM-dd")
                 val currentDate = sdf.format(Date())
                 System.out.println(" C DATE is  "+currentDate)
+
+                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))

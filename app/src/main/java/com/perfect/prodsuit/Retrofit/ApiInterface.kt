@@ -726,6 +726,9 @@ interface ApiInterface {
     @POST("DashBoard/Leadstagewiseforcast")
     fun getLeadStagewiseForecast(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/DashBoardNameDetails")
+    fun getDashboardNames(@Body body: RequestBody): Call<String>
+
 
 
 }

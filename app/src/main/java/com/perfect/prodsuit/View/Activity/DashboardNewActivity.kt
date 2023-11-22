@@ -33,7 +33,9 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DashboardNewActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListener,
+class
+
+DashboardNewActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListener,
     View.OnFocusChangeListener {
 
     var TAG  ="DashboardNewActivity"
