@@ -101,6 +101,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     private lateinit var pieChart: PieChart
 
     var recycPieChart: RecyclerView? = null
+    var crdv_lead: CardView? = null
+    var crdv_leadoutstand: CardView? = null
     lateinit var dashSort : JSONArray
     var rclrvw_leadoutstand: RecyclerView? = null
     var dashmoduleCount = 0
@@ -198,14 +200,14 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     leadoutstandtile++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   leadoutstandtile   " + msg)
-                                    if (jObject.getString("StatusCode") == "-2") {
+                                    if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("TileLeadDashBoardDetails")
 
 
                                         leadOutstandArrayList = jobjt.getJSONArray("LeadTileData")
                                         if (leadOutstandArrayList.length() > 0) {
 
-
+                                            crdv_leadoutstand!!.visibility=View.VISIBLE
                                             leadOutstandSort = JSONArray()
                                             for (k in 0 until leadOutstandArrayList.length()) {
                                                 val jsonObject = leadOutstandArrayList.getJSONObject(k)
@@ -232,6 +234,19 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
 
 
+                                        }
+                                        else {
+                                            crdv_leadoutstand!!.visibility=View.GONE
+                                            val builder = AlertDialog.Builder(
+                                                this@TileGraphActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage(jObject.getString("EXMessage"))
+                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
                                         }
                                     } else {
                                         val builder = AlertDialog.Builder(
@@ -282,6 +297,9 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         ll_Graph            = findViewById<LinearLayout>(R.id.ll_Graph)
         ll_Tile             = findViewById<LinearLayout>(R.id.ll_Tile)
 
+
+        crdv_lead = findViewById<CardView>(R.id.crdv_lead)
+        crdv_leadoutstand = findViewById<CardView>(R.id.crdv_leadoutstnd)
 
         tvv_dash = findViewById<TextView>(R.id.tvv_dash)
         tvv_tile = findViewById<TextView>(R.id.tvv_tile)
@@ -457,14 +475,14 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     dashmoduleCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   leadtile   " + msg)
-                                    if (jObject.getString("StatusCode") == "-2") {
+                                    if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("TileLeadDashBoardDetails")
                                         var remark =   jobjt.getString("Reamrk")
 
                                         ledaTileArrayList = jobjt.getJSONArray("LeadTileData")
                                         if (ledaTileArrayList.length() > 0) {
 
-
+                                            crdv_lead!!.visibility=View.VISIBLE
                                             leadTileSort = JSONArray()
                                             for (k in 0 until ledaTileArrayList.length()) {
                                                 val jsonObject = ledaTileArrayList.getJSONObject(k)
@@ -492,6 +510,19 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                              rclrvw_leadoutstand!!.layoutManager = lLayout1 as RecyclerView.LayoutManager?*/
 
 
+                                        }
+                                        else {
+                                            crdv_lead!!.visibility=View.GONE
+                                            val builder = AlertDialog.Builder(
+                                                this@TileGraphActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage(jObject.getString("EXMessage"))
+                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
                                         }
                                     } else {
                                         val builder = AlertDialog.Builder(
