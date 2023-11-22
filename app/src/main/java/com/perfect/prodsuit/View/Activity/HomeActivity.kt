@@ -1010,8 +1010,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                val intent = Intent(this, ProductSearchActivity::class.java)
 //                startActivity(intent)
 
-                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
+//                startActivity(i)
 
 
 //                val i = Intent(this@HomeActivity, StockTransferActivity::class.java)
@@ -2383,9 +2383,12 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
             }
             if (grid_id.equals("6")){
-                val i = Intent(this@HomeActivity, EmiActivity::class.java)
-                startActivity(i)
+//                val i = Intent(this@HomeActivity, EmiActivity::class.java)
+//                startActivity(i)
                // Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
+
+                val i = Intent(this@HomeActivity, ProjectActivity::class.java)
+                startActivity(i)
             }
             if (grid_id.equals("7")){
                 val i = Intent(this@HomeActivity, PickUpAndDeliveryActivity::class.java)

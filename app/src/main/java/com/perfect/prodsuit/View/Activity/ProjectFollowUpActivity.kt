@@ -33,6 +33,9 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , ItemClickListener {
 
@@ -66,6 +69,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     private var til_Followupdate  : TextInputLayout?      = null
     private var til_CurrentStatus : TextInputLayout?      = null
     private var til_StatusDate    : TextInputLayout?      = null
+    private var til_Reason        : TextInputLayout?      = null
     private var til_Stage         : TextInputLayout?      = null
     private var til_Remarks       : TextInputLayout?      = null
     private var dialogProject     : Dialog?               = null
@@ -96,6 +100,8 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     var Critrea1                                          = "0"
     var SubMode                                           = ""
 
+    var CreatedDate                                       = ""
+    var DueDate                                       = ""
     var jsonObj: JSONObject? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,13 +115,36 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         materialusageProjectViewModel   = ViewModelProvider(this).get(MaterialUsageProjectViewModel::class.java)
         projectFollowupSaveViewModel   = ViewModelProvider(this).get(ProjectFollowupSaveViewModel::class.java)
 
+
         setRegViews()
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
+
+
+        onTextChangedValues()
         ID_Project = jsonObj!!.getString("ID_Project")
         tie_Project!!.setText(jsonObj!!.getString("ProjName"))
+        CreatedDate = jsonObj!!.getString("CreateDate")
+        DueDate = jsonObj!!.getString("DueDate")
         tie_DueDate!!.setText(jsonObj!!.getString("DueDate"))
 
+        getCurrentDate()
+
+
+
+
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+//        val date1 = dateFormat.parse("2023-01-02")
+//        val date2 = dateFormat.parse("2023-01-03")
+        val date1 = Config.convertDate(CreatedDate)
+        val date2 = Config.convertDate(jsonObj!!.getString("DueDate"))
+        if (date1 >= date2) {
+            Log.e(TAG,"124441    "+"date1 is greater than or equal to date2")
+            println("date1 is greater than or equal to date2")
+        } else {
+            Log.e(TAG,"124442    "+"date1 is less than date2")
+            println("date1 is less than date2")
+        }
 
     }
 
@@ -134,6 +163,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         til_Followupdate   = findViewById(R.id.til_Followupdate)
         til_CurrentStatus  = findViewById(R.id.til_CurrentStatus)
         til_StatusDate     = findViewById(R.id.til_StatusDate)
+        til_Reason         = findViewById(R.id.til_Reason)
         btnSubmit          = findViewById(R.id.btnSubmit)
         btnReset           = findViewById(R.id.btnReset)
 //        tvv_list_name      = findViewById(R.id.tvv_list_name)
@@ -154,10 +184,10 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         til_Followupdate!!.defaultHintTextColor  = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_CurrentStatus!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_StatusDate!!.defaultHintTextColor    = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+      //  til_Reason!!.defaultHintTextColor    = ContextCompat.getColorStateList(this,R.color.color_mandatory)
 
 
-        onTextChangedValues()
-        getCurrentDate()
+
 
     }
 
@@ -199,6 +229,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         tie_Followupdate!!.addTextChangedListener(watcher)
         tie_CurrentStatus!!.addTextChangedListener(watcher)
         tie_StatusDate!!.addTextChangedListener(watcher)
+        tie_Reason!!.addTextChangedListener(watcher)
 
     }
 
@@ -230,7 +261,15 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                 }
                 editable === tie_Followupdate!!.editableText -> {
                     Log.e(TAG,"283021    ")
-                    if (tie_Followupdate!!.text.toString().equals("")){
+
+                    val date1 = Config.convertDate(CreatedDate)
+                    val date2 = Config.convertDate(tie_Followupdate!!.text.toString())
+                    Log.e(TAG,"DATE  25441   "+date2 +"  <=  "+ date1)
+                    var isValid = Config.convertTimemills(date1,date2)
+
+                  //  Log.e(TAG,"DATE  254412   "+date1 +"  <=  "+ Config.convertTimemills(date1,date2))
+//                    Log.e(TAG,"DATE  254413   "+date2 +"  <=  "+  Config.convertTimemills(date2))
+                    if (tie_Followupdate!!.text.toString().equals("") || !isValid){
                         til_Followupdate!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
                     }else{
                         til_Followupdate!!.isErrorEnabled = false
@@ -247,13 +286,32 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                     }
                 }
                 editable === tie_StatusDate!!.editableText -> {
-                    if (tie_StatusDate!!.text.toString().equals("")){
+                    val date1 = Config.convertDate(tie_Followupdate!!.text.toString())
+                    val date2 = Config.convertDate(tie_StatusDate!!.text.toString())
+                    var isValid = Config.convertTimemills(date1,date2)
+                    Log.e(TAG,"DATE  25442   "+date2 +"  <=  "+ date1)
+                    if (tie_StatusDate!!.text.toString().equals("") || !isValid){
                         til_StatusDate!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
                     }else{
                         til_StatusDate!!.isErrorEnabled = false
                         til_StatusDate!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
                     }
 
+
+                }
+
+                editable === tie_Reason!!.editableText -> {
+
+                    strReason       = tie_Reason!!.text.toString()
+                    val date3 = Config.convertDate(tie_StatusDate!!.text.toString())
+                    val date4 = Config.convertDate(tie_DueDate!!.text.toString())
+                    var isValid3 = Config.convertTimemills(date3,date4)
+                    if (!isValid3 && strReason.equals("")){
+                        til_Reason!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Reason!!.isErrorEnabled = false
+                        til_Reason!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
 
                 }
 
@@ -274,10 +332,19 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         val txtSubmit    = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
 
-        if (datecheck!!.equals("0")){
-            date_Picker1.maxDate = System.currentTimeMillis()
-        }else if (datecheck!!.equals("1")){
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
 
+        if (datecheck!!.equals("0")){
+            val date1 = Config.convertDate(CreatedDate)
+            val mDate1 = sdf.parse(date1)
+            val timeInMilliseconds1 = mDate1.time
+            date_Picker1.minDate = timeInMilliseconds1
+         //   date_Picker1.maxDate = System.currentTimeMillis()
+        }else if (datecheck!!.equals("1")){
+            val date1 = Config.convertDate(tie_Followupdate!!.text.toString())
+            val mDate1 = sdf.parse(date1)
+            val timeInMilliseconds1 = mDate1.time
+            date_Picker1.minDate = timeInMilliseconds1
         }
 
 //        date_Picker1.setMinDate(System.currentTimeMillis())
@@ -356,12 +423,25 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
 
                 if (!ID_Stage.equals("")){
                     Critrea1 = ID_Stage
-                    SubMode = "2"
+                    SubMode = "0"
                 }
                 else if (!ID_Project.equals("")){
-                    Critrea1 = ID_Project
-                    SubMode = "1"
+                    // Critrea1 = ID_Project
+//                    SubMode = "1"
+                    Critrea1 = "0"
+                    SubMode = "0"
                 }
+
+//                //OLD
+
+//                if (!ID_Stage.equals("")){
+//                    Critrea1 = ID_Stage
+//                    SubMode = "2"
+//                }
+//                else if (!ID_Project.equals("")){
+//                    Critrea1 = ID_Project
+//                    SubMode = "1"
+//                }
                 currentcount = 0
                 getCurrentStatus()
             }
@@ -377,6 +457,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                // tie_Project!!.setText("")
                 tie_Followupdate!!.setText(currentDate)
                 tie_Stage!!.setText("")
+                tie_Reason!!.setText("")
                 tie_StatusDate!!.setText(currentDate)
                 tie_Remarks!!.setText("")
                 tie_CurrentStatus!!.setText("")
@@ -384,6 +465,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                // ID_Project = ""
                 ID_Stage   = ""
                 ID_CurrentStatus = ""
+                tie_DueDate!!.setText(DueDate)
             }
         }
     }
@@ -399,14 +481,24 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         strRemarks      = tie_Remarks!!.text.toString()
         strReason       = tie_Reason!!.text.toString()
 
+
+        val date1 = Config.convertDate(CreatedDate)
+        val date2 = Config.convertDate(tie_Followupdate!!.text.toString())
+        val date3 = Config.convertDate(tie_StatusDate!!.text.toString())
+        val date4 = Config.convertDate(tie_DueDate!!.text.toString())
+        Log.e(TAG,"DATE  25441   "+date2 +"  <=  "+ date1)
+        var isValid1 = Config.convertTimemills(date1,date2)
+        var isValid2 = Config.convertTimemills(date2,date3)
+        var isValid3 = Config.convertTimemills(date3,date4)
+
         if (strProject!!.equals("")){
            // Config.snackBars(context, v, "Select Project")
             til_Project!!.setError("Select Project")
             til_Project!!.setErrorIconDrawable(null)
 
-        }else if (strFollowupdate!!.equals("")){
+        }else if (strFollowupdate!!.equals("") || !isValid1){
            // Config.snackBars(context, v, "Select FollowUp Date")
-            til_Followupdate!!.setError("Select Follow Up date")
+            til_Followupdate!!.setError("Follow Up date should be less than or equals to created date")
             til_Followupdate!!.setErrorIconDrawable(null)
 
         }else if (ID_CurrentStatus!!.equals("")){
@@ -414,15 +506,26 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
             til_CurrentStatus!!.setError("Select Current Status")
             til_CurrentStatus!!.setErrorIconDrawable(null)
 
-        }else if (strStatudate!!.equals("")){
+        }else if (strStatudate!!.equals("") || !isValid2){
            // Config.snackBars(context, v, "Select Statudate")
-            til_StatusDate!!.setError("Select Status Date")
+            til_StatusDate!!.setError("Status date should be less than or equals to Followu up date")
             til_StatusDate!!.setErrorIconDrawable(null)
 
-        }else{
+        }
+        else if (!isValid3 && strReason.equals("")){
+            // Config.snackBars(context, v, "Select Statudate")
+                Log.e(TAG,"484441    ")
+            til_Reason!!.setError("Enter Reason")
+            til_Reason!!.setErrorIconDrawable(null)
+        }
+        else{
+            Log.e(TAG,"484442    ")
             //Toast.makeText(applicationContext,"hloo",Toast.LENGTH_SHORT).show()
-                savecount = 0
-                saveProjectFollowUP()
+            til_Reason!!.isErrorEnabled = false
+            til_Reason!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+            savecount = 0
+            saveProjectFollowUP()
+
         }
 
     }
@@ -966,9 +1069,12 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
         if (data.equals("stageCliik")){
 
             dialogStage!!.dismiss()
+
             val jsonObject = stageSort.getJSONObject(position)
+            Log.e(TAG,"jsonObject  1074   "+jsonObject)
             ID_Stage = jsonObject.getString("ProjectStagesID")
             tie_Stage!!.setText(jsonObject.getString("StageName"))
+            tie_DueDate!!.setText(jsonObject!!.getString("DueDate"))
 
 //            ID_Team = ""
 //            tie_Team!!.setText("")

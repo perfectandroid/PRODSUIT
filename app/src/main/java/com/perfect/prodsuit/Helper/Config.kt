@@ -972,6 +972,7 @@ object Config {
             var iService = jsonObj!!.getString("SERVICE")
             var iCollection = jsonObj!!.getString("ACCOUNTS")
             var iPickUp = jsonObj!!.getString("DELIVERY")
+            var iProject = jsonObj!!.getString("PROJECT")
 
             val jsonObject1 = JSONObject()
             val jsonObject = JSONObject()
@@ -1038,12 +1039,21 @@ object Config {
                 array.put(obj)
             }
 
-            if(iCollection.equals("true")){
+//            if(iCollection.equals("true")){
+//                obj = JSONObject()
+//                obj.put("grid_id", "6")
+//                obj.put("grid_name", "Collection")
+//                //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
+//                obj.put("image","collection_home")
+//                obj.put("count","0")
+//                array.put(obj)
+//            }
+
+            if(iProject.equals("true")){
                 obj = JSONObject()
                 obj.put("grid_id", "6")
-                obj.put("grid_name", "Collection")
-                //   obj.put("image",context.resources.getDrawable(R.drawable.applogo) )
-                obj.put("image","collection_home")
+                obj.put("grid_name", "Project")
+                obj.put("image","project_home")
                 obj.put("count","0")
                 array.put(obj)
             }
@@ -1256,6 +1266,38 @@ object Config {
         return result
     }
 
+    fun convertTimemills(date1: String , date2: String): Boolean {
+
+        var result = false
+        try {
+            val sdf = SimpleDateFormat("yyyy-MM-dd")
+            val mDate1 = sdf.parse(date1)
+            val timeInMilliseconds1 = mDate1.time
+
+            val mDate2 = sdf.parse(date2)
+            val timeInMilliseconds2 = mDate2.time
+
+            if (timeInMilliseconds1 <= timeInMilliseconds2){
+                Log.e("TAG","13141    "+date1+"  <=  "+date2)
+                result = true
+            }else{
+                Log.e("TAG","13142    "+date1+"  >  "+date2)
+                result = false
+            }
+
+
+
+
+
+
+
+
+        }catch (e:Exception){
+            Log.e("TAG","123456   "+e)
+        }
+       return  result
+    }
+
     fun convert12HourTo24Hour(time12: String): String {
         val inputFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
         val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
@@ -1263,6 +1305,22 @@ object Config {
         val date = inputFormat.parse(time12)
         return outputFormat.format(date)
     }
+
+    fun getDateComponents(dateString: String): Triple<Int, Int, Int> {
+        val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+        val date = dateFormatter.parse(dateString) ?: Date()
+
+        val calendar = Calendar.getInstance().apply {
+            time = date
+        }
+
+        return Triple(
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH) + 1, // Months are zero-based, so add 1
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+    }
+
 
 
 }

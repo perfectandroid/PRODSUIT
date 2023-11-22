@@ -11,8 +11,8 @@ class ProjectLeadNoViewModel : ViewModel() {
 
     var projectLeadNoData: MutableLiveData<ProjectLeadNoModel>? = null
 
-    fun getProjectLeadNo(context: Context) : LiveData<ProjectLeadNoModel>? {
-        projectLeadNoData = ProjectLeadNoRepository.getServicesApiCall(context)
+    fun getProjectLeadNo(context: Context,ReqMode : String,SubMode : String) : LiveData<ProjectLeadNoModel>? {
+        projectLeadNoData = ProjectLeadNoRepository.getServicesApiCall(context,ReqMode,SubMode)
         return projectLeadNoData
     }
 }

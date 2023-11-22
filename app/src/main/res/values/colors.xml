@@ -505,8 +505,11 @@
     <color name="color_site_tab_20">#F09959</color>
     <color name="color_site_tab_21">#B5AEA9</color>
 
-    <color name="color_site_tab_30">#404788</color>
-    <color name="color_site_tab_31">#9698A6</color>
+    <color name="color_site_tab_30">#D54A41</color>
+    <color name="color_site_tab_31">#DCD5D5</color>
+
+    <color name="color_site_tab_40">#6082B7</color>
+    <color name="color_site_tab_41">#D5D7DA</color>
 
     <color name="ongoing">#FA6925</color>
     <color name="converted">#F5A93D</color>

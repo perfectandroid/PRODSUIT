@@ -34,10 +34,11 @@ class ProjectLeadListAdapter (internal var context: Context, internal var jsonAr
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
 
-                holder.tv_Date.text        = jsonObject!!.getString("Lead_Date")
-                holder.tv_LeadNo.text        ="Lead No : "+ jsonObject!!.getString("Lead_No")
-                holder.tv_Name.text        = jsonObject!!.getString("Name")
-                holder.tv_Mobile.text        = jsonObject!!.getString("Mobile")
+                holder.tv_Date.text        = jsonObject!!.getString("LeadDate")
+                holder.tv_LeadNo.text        =jsonObject!!.getString("LeadNo")
+                holder.tv_Name.text        = jsonObject!!.getString("CustomeName")
+                holder.tv_Mobile.text        = jsonObject!!.getString("MobileNo")
+                holder.tv_Address.text        = jsonObject!!.getString("CusAddress")
 
 
                 holder.ll_leadlist!!.setTag(position)
@@ -68,12 +69,14 @@ class ProjectLeadListAdapter (internal var context: Context, internal var jsonAr
         internal var tv_LeadNo   : TextView
         internal var tv_Mobile   : TextView
         internal var tv_Name   : TextView
+        internal var tv_Address   : TextView
         internal var ll_leadlist   : LinearLayout
         init {
             tv_Date          = v.findViewById<View>(R.id.tv_Date) as TextView
             tv_LeadNo          = v.findViewById<View>(R.id.tv_LeadNo) as TextView
             tv_Mobile          = v.findViewById<View>(R.id.tv_Mobile) as TextView
             tv_Name          = v.findViewById<View>(R.id.tv_Name) as TextView
+            tv_Address          = v.findViewById<View>(R.id.tv_Address) as TextView
             ll_leadlist          = v.findViewById<View>(R.id.ll_leadlist) as LinearLayout
 
         }

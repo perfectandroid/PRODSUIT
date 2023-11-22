@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.SiteVisitCountModel
+import com.perfect.prodsuit.Model.ProjectStatuslistReportModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -20,20 +20,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object SiteVisitCountRepository {
+object ReportStatuslistProjectRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val siteVisitCountSetterGetter = MutableLiveData<SiteVisitCountModel>()
-    val TAG: String = "ServiceCountRepository"
+    val reportNameSetterGetter = MutableLiveData<ProjectStatuslistReportModel>()
+    val TAG: String = "ReportNameRepository"
 
-    fun getServicesApiCall(context: Context,ReqMode : String): MutableLiveData<SiteVisitCountModel> {
-        getSiteVisitCount(context,ReqMode)
-        return siteVisitCountSetterGetter
+    fun getServicesApiCall(context: Context,RegMode : String, Fromdate : String, Todate : String, IdLead : String): MutableLiveData<ProjectStatuslistReportModel> {
+        getReportStatusList(context,RegMode,Fromdate,Todate,IdLead)
+        return reportNameSetterGetter
     }
 
-    private fun getSiteVisitCount(context: Context,ReqMode : String) {
+    private fun getReportStatusList(context: Context,RegMode : String,fromdate : String,todate : String,idlead : String) {
+
         try {
-            siteVisitCountSetterGetter.value = SiteVisitCountModel("")
+            reportNameSetterGetter.value = ProjectStatuslistReportModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -58,20 +59,34 @@ object SiteVisitCountRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+
+                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
-                val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
-                //      {"BankKey":"","FK_Company":"1","ReqMode":"2"}
+                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+                val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
+                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
+                requestObject1.put("EntrBy", UserCodeSP.getString("UserCode", null))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+                requestObject1.put("FromDate", fromdate)
+                requestObject1.put("ToDate", todate)
+                requestObject1.put("LeadNo", "0")
+                requestObject1.put("FK_Area", "0")
+                requestObject1.put("FK_Project", "0")
+                requestObject1.put("Category", "0")
+                requestObject1.put("ReportMode", RegMode)
+                requestObject1.put("FK_Machine", "10")
+                requestObject1.put("Criteria", "0")
+                requestObject1.put("TableCount", "1")
 
-
-                Log.e(TAG,"78  getBranch  "+requestObject1)
+                 Log.e(TAG,"78  getBranch  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -79,7 +94,8 @@ object SiteVisitCountRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getProjectSiteVisitCount(body)
+            Log.i("responserrr","body=="+requestObject1.toString())
+            val call = apiService.getProjectReportDetail(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -88,57 +104,24 @@ object SiteVisitCountRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        Log.e(TAG,"  114 COUNTS "+response.body())
-                        val leads = ArrayList<SiteVisitCountModel>()
-                        leads.add(SiteVisitCountModel(response.body()))
+                        val leads = ArrayList<ProjectStatuslistReportModel>()
+                        leads.add(ProjectStatuslistReportModel(response.body()))
                         val msg = leads[0].message
-                        siteVisitCountSetterGetter.value = SiteVisitCountModel(msg)
+                        reportNameSetterGetter.value = ProjectStatuslistReportModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
-                        Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
-                    Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
-            Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
             progressDialog!!.dismiss()
+            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
         }
-
-//        try {
-//            siteVisitCountSetterGetter.value = SiteVisitCountModel("")
-//            var msg = "{\n" +
-//                    "  \"SiteTabDetails\": {\n" +
-//                    "    \"SiteTabDetailsList\": [\n" +
-//                    "      {\n" +
-//                    "        \"ID_Type\": \"1\",\n" +
-//                    "        \"Type_Name\": \"New\",\n" +
-//                    "        \"Count\": \"\"\n" +
-//                    "      },\n" +
-//                    "      {\n" +
-//                    "        \"ID_Type\": \"2\",\n" +
-//                    "        \"Type_Name\": \"To Do\",\n" +
-//                    "        \"Count\": \"10\"\n" +
-//                    "      },\n" +
-//                    "      {\n" +
-//                    "        \"ID_Type\": \"3\",\n" +
-//                    "        \"Type_Name\": \"Await\",\n" +
-//                    "        \"Count\": \"15\"\n" +
-//                    "      }\n" +
-//                    "    ],\n" +
-//                    "    \"ResponseCode\": \"0\",\n" +
-//                    "    \"ResponseMessage\": \"Transaction Verified\"\n" +
-//                    "  },\n" +
-//                    "  \"StatusCode\": 0,\n" +
-//                    "  \"EXMessage\": \"Transaction Verified\"\n" +
-//                    "}"
-//            siteVisitCountSetterGetter.value = SiteVisitCountModel(msg)
-//        }catch (e : Exception){
-//
-//        }
     }
 }
