@@ -1251,6 +1251,51 @@
                                         </LinearLayout>
 
                                     </androidx.cardview.widget.CardView>
+                                    <androidx.cardview.widget.CardView
+                                        android:id="@+id/crdv_avgconvsnlead"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:background="@color/white"
+                                        android:visibility="gone"
+                                        app:cardCornerRadius="5dp"
+                                        app:cardElevation="1dp"
+                                        app:cardPreventCornerOverlap="true"
+                                        app:cardUseCompatPadding="true">
+                                        <ImageView
+                                            android:src="@drawable/bg_tile"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:scaleType="fitXY"/>
+
+                                        <LinearLayout
+                                            android:id="@+id/ll_cnvsnlead"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="#ffffff"
+                                            android:layout_weight="1"
+                                            android:paddingTop="15dp"
+                                            android:paddingBottom="15dp"
+                                            android:paddingLeft="10dp"
+                                            android:paddingRight="10dp"
+                                            android:gravity="center"
+                                            android:layout_gravity="center">
+
+                                            <androidx.recyclerview.widget.RecyclerView
+                                                android:id="@+id/rclrvw_avgleadconvsn"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:gravity="center"
+                                                android:layout_margin="10dp"
+                                                android:visibility="visible" />
+
+
+                                        </LinearLayout>
+
+                                    </androidx.cardview.widget.CardView>
 
 
 
