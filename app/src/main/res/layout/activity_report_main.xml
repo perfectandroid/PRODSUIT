@@ -503,7 +503,7 @@
                                 app:cardCornerRadius="0dp"
                                 app:cardElevation="0dp"
                                 android:padding="1dp"
-                                android:layout_marginTop="15dp"
+                                android:layout_marginTop="50dp"
                                 android:layout_marginLeft="25dp"
                                 android:layout_marginRight="25dp">
 
@@ -597,6 +597,7 @@
                                 app:cardElevation="0dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginLeft="25dp"
+                                android:visibility="gone"
                                 android:layout_marginRight="25dp">
 
                                 <!--                            android:backgroundTint="@color/service2"-->
@@ -708,7 +709,7 @@
                                     android:layout_gravity="center"
                                     android:gravity="center"
                                     android:padding="1dp"
-                                    android:visibility="visible"
+                                    android:visibility="gone"
                                     android:background="@drawable/border_3"
                                     android:orientation="horizontal">
 

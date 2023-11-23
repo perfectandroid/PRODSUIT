@@ -9,7 +9,10 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.HomeDashBoardCountDetailsModel
+import com.perfect.prodsuit.Model.PayMethodModel
+import com.perfect.prodsuit.Model.StockRTListModel
+import com.perfect.prodsuit.Model.SubProductModel
+import com.perfect.prodsuit.Model.SupplierWisePurchaseModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -20,20 +23,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object HomeDashBoardCountDetailsRepository {
+object SupplierWisePurchaseRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val homedashBoardCountDetailsSetterGetter = MutableLiveData<HomeDashBoardCountDetailsModel>()
-    val TAG: String = "HomeDashBoardCountDetailsRepository"
+    val supplierwisepurchaseSetterGetter = MutableLiveData<SupplierWisePurchaseModel>()
+    val TAG: String = "SupplierWisePurchaseRepository"
 
-    fun getServicesApiCall(context: Context,Criteria: String,ReqMode: String): MutableLiveData<HomeDashBoardCountDetailsModel> {
-        getHomeDashBoardCountDetails(context,Criteria,ReqMode)
-        return homedashBoardCountDetailsSetterGetter
+    fun getServicesApiCall(context: Context,currentDate: String,DashMode: String,DashType: String): MutableLiveData<SupplierWisePurchaseModel> {
+        getSupplierWisePurchase(context,currentDate,DashMode,DashType)
+        return supplierwisepurchaseSetterGetter
     }
+    private fun getSupplierWisePurchase(context: Context,currentDate: String,DashMode: String,DashType: String) {
 
-    private fun getHomeDashBoardCountDetails(context: Context,Criteria: String,ReqMode: String) {
         try {
-            homedashBoardCountDetailsSetterGetter.value = HomeDashBoardCountDetailsModel("")
+            supplierwisepurchaseSetterGetter.value = SupplierWisePurchaseModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -57,27 +60,29 @@ object HomeDashBoardCountDetailsRepository {
                 .build()
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
-
             try {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_DepartmentSP = context.getSharedPreferences(Config.SHARED_PREF55, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
-                val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
-                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
+                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("BANK_KEY", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+                requestObject1.put("DashMode", ProdsuitApplication.encryptStart(DashMode))
+                requestObject1.put("DashType", ProdsuitApplication.encryptStart(DashType))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
+                requestObject1.put("FK_Department", ProdsuitApplication.encryptStart(FK_DepartmentSP.getString("FK_Department", null)))
+                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
-                requestObject1.put("Criteria", ProdsuitApplication.encryptStart(Criteria))
+                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
 
-
-                Log.e(TAG,"HomeDashBoardCountDetailsRepository  6733331   "+requestObject1)
+                Log.e(TAG,"requestObject1   82   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -85,7 +90,7 @@ object HomeDashBoardCountDetailsRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getUserTaskListDetails(body)
+            val call = apiService.getInventorySupplierWisePurchase(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -94,13 +99,13 @@ object HomeDashBoardCountDetailsRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<HomeDashBoardCountDetailsModel>()
-                        leads.add(HomeDashBoardCountDetailsModel(response.body()))
+                        val leads = ArrayList<SupplierWisePurchaseModel>()
+                        leads.add(SupplierWisePurchaseModel(response.body()))
                         val msg = leads[0].message
-                        homedashBoardCountDetailsSetterGetter.value = HomeDashBoardCountDetailsModel(msg)
+                        supplierwisepurchaseSetterGetter.value = SupplierWisePurchaseModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
-                        Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {

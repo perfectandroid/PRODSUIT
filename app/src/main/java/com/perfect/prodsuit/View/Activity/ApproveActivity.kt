@@ -47,6 +47,7 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
     lateinit var authdashArray: JSONArray
     lateinit var authdashAdapter : AuthDsahboardAdapter
     var authCount = 0
+    var idMode = ""
 
     private var tv_listCount: TextView?          = null
 
@@ -65,6 +66,7 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
         approveCount = 0
         getAppoval()
 
+        //////////////////////////
         authCount = 0
         getAuthdah()
     }
@@ -94,11 +96,11 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
 
                                         val jobjt = jObject.getJSONObject("AuthorizationDetails")
                                         authdashArray = jobjt.getJSONArray("AuthorizationDetailsList")
-
                                         Log.e(TAG, "authdashArray   8888802   " + authdashArray)
 
                                         if (authdashArray.length()> 0){
 
+//                                            idMode =
 
 //                                            val lLayout = GridLayoutManager(this@ApproveActivity, 2)
 //                                            lLayout.setSpanSizeLookup(object :
@@ -126,6 +128,7 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
 //                                            authdashAdapter = AuthDsahboardAdapter(this@ApproveActivity, authdashArray)
 //                                            recyDahborad!!.adapter = authdashAdapter
 //                                            authdashAdapter.setClickListener(this@ApproveActivity)
+
 
                                             val HorizontalLayout = LinearLayoutManager(this@ApproveActivity, LinearLayoutManager.HORIZONTAL, false)
                                             recyDahborad!!.setLayoutManager(HorizontalLayout)
