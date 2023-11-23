@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.CRMTileDashBoardDetailsModel
+import com.perfect.prodsuit.Model.CRMTileTicketStatusModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -20,21 +20,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object CRMTileDashBoardDetailsRepository {
+object CRMTileTicketStatusRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val crmTileDashBoardDetailsSetGet = MutableLiveData<CRMTileDashBoardDetailsModel>()
-    val TAG: String = "CRMTileDashBoardDetailsRepository"
+    val crmTileTicketStatusSetGet = MutableLiveData<CRMTileTicketStatusModel>()
+    val TAG: String = "CRMTileTicketStatusRepository"
 
-    fun getServicesApiCall(context: Context, TransDate : String, DashMode : String, DashType : String): MutableLiveData<CRMTileDashBoardDetailsModel> {
-        getCRMTileDashBoardDetails(context, TransDate, DashMode, DashType)
-        return crmTileDashBoardDetailsSetGet
+    fun getServicesApiCall(context: Context, TransDate : String, DashMode : String, DashType : String): MutableLiveData<CRMTileTicketStatusModel> {
+        getCRMTileTicketStatus(context, TransDate, DashMode, DashType)
+        return crmTileTicketStatusSetGet
     }
 
-    private fun getCRMTileDashBoardDetails(context: Context, TransDate: String, DashMode: String, DashType: String) {
-
+    private fun getCRMTileTicketStatus(context: Context, TransDate: String, DashMode: String, DashType: String) {
         try {
-            crmTileDashBoardDetailsSetGet.value = CRMTileDashBoardDetailsModel("")
+            crmTileTicketStatusSetGet.value = CRMTileTicketStatusModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -89,7 +88,7 @@ object CRMTileDashBoardDetailsRepository {
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart(DashType))
 
 
-                Log.e(TAG,"92222   getCRMTileDashBoardDetails  "+requestObject1)
+                Log.e(TAG,"92221   getCRMTileDashBoardDetails  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -106,10 +105,10 @@ object CRMTileDashBoardDetailsRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<CRMTileDashBoardDetailsModel>()
-                        leads.add(CRMTileDashBoardDetailsModel(response.body()))
+                        val leads = ArrayList<CRMTileTicketStatusModel>()
+                        leads.add(CRMTileTicketStatusModel(response.body()))
                         val msg = leads[0].message
-                        crmTileDashBoardDetailsSetGet.value = CRMTileDashBoardDetailsModel(msg)
+                        crmTileTicketStatusSetGet.value = CRMTileTicketStatusModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                         Log.e(TAG,"1151  "+e)
