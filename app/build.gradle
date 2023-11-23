@@ -152,7 +152,8 @@ dependencies {
     def lottieVersion = "4.1.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
     implementation 'androidx.biometric:biometric:1.1.0'
-
+    //pyramid map
+    implementation 'com.github.dhaval-android:funnel_meter_chartview:1.0.0'	;
 
 
 
