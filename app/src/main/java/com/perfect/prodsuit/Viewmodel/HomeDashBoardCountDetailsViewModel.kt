@@ -10,8 +10,8 @@ class HomeDashBoardCountDetailsViewModel : ViewModel() {
 
     var homedashboardCountDetailsViewModelCountData: MutableLiveData<HomeDashBoardCountDetailsModel>? = null
 
-    fun getHomeDashBoardCountDetails(context: Context) : MutableLiveData<HomeDashBoardCountDetailsModel>? {
-        homedashboardCountDetailsViewModelCountData = HomeDashBoardCountDetailsRepository.getServicesApiCall(context)
+    fun getHomeDashBoardCountDetails(context: Context,Criteria: String,ReqMode: String) : MutableLiveData<HomeDashBoardCountDetailsModel>? {
+        homedashboardCountDetailsViewModelCountData = HomeDashBoardCountDetailsRepository.getServicesApiCall(context,Criteria,ReqMode)
         return homedashboardCountDetailsViewModelCountData
     }
 }

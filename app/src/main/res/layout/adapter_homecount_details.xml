@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="2dp"
+    android:orientation="vertical"
+    app:cardElevation="1dp">
+
+    <TextView
+        android:id="@+id/txt_labelName"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:background="@drawable/shape_bg2"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="10dp"
+        android:text="sdfgvgve"
+        android:layout_marginLeft="10dp"
+        android:singleLine="true"
+        android:paddingStart="35dp"
+        android:drawableEnd="@drawable/down_arrows"
+        android:textColor="@color/colorPrimary"
+        android:textSize="16dp"
+        android:textStyle="bold" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcyexpand"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:visibility="gone"
+        />
+
+</LinearLayout>

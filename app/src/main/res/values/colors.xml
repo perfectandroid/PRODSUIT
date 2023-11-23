@@ -205,6 +205,62 @@
     <color name="report_list6">#EFC5BE</color>
     <color name="shade_1">#A4A4A4</color>
 
+
+    <color name="barchart_colors1">#6FB6DA</color>
+    <color name="barchart_colors2">#DAAE63</color>
+    <color name="barchart_colors3">#D67D72</color>
+    <color name="barchart_colors4">#56CFBC</color>
+    <color name="barchart_colors5">#A99BF3</color>
+    <color name="barchart_colors6">#CD9C9D</color>
+    <color name="barchart_colors7">#B22222</color>
+    <color name="barchart_colors8">#FF1493</color>
+    <color name="barchart_colors9">#2F4F4F</color>
+    <color name="barchart_colors10">#17a2b8</color>
+    <color name="barchart_colors11">#7bd235</color>
+    <color name="barchart_colors12">#333751</color>
+
+
+    <color name="barchart_colors13">#4E7F98</color>
+    <color name="barchart_colors14">#D38D16</color>
+    <color name="barchart_colors15">#AF4336</color>
+    <color name="barchart_colors16">#1F4E47</color>
+    <color name="barchart_colors17">#1D163E</color>
+    <color name="barchart_colors18">#CD9C9D</color>
+    <color name="barchart_colors19">#601717</color>
+    <color name="barchart_colors20">#DC66A5</color>
+    <color name="barchart_colors21">#80D5D5</color>
+    <color name="barchart_colors22">#1E3337</color>
+    <color name="barchart_colors23">#72AA45</color>
+    <color name="barchart_colors24">#737EC5</color>
+
+    <color name="barchart_colors25">#073349</color>
+    <color name="barchart_colors26">#61430E</color>
+    <color name="barchart_colors27">#4C1A14</color>
+    <color name="barchart_colors28">#0D554A</color>
+    <color name="barchart_colors29">#1B114E</color>
+    <color name="barchart_colors30">#430708</color>
+    <color name="barchart_colors31">#270707</color>
+    <color name="barchart_colors32">#876577</color>
+    <color name="barchart_colors33">#156868</color>
+    <color name="barchart_colors34">#737A16</color>
+    <color name="barchart_colors35">#5A256E</color>
+    <color name="barchart_colors36">#1D7004</color>
+
+
+    <color name="barchart_colors37">#447FF4</color>
+    <color name="barchart_colors38">#CE16453A</color>
+    <color name="barchart_colors39">#EFC90A</color>
+    <color name="barchart_colors40">#FA03EF</color>
+    <color name="barchart_colors41">#8B82B6</color>
+    <color name="barchart_colors42">#6EBBF4</color>
+    <color name="barchart_colors43">#1E1D1D</color>
+    <color name="barchart_colors44">#4E062C</color>
+    <color name="barchart_colors45">#385353</color>
+    <color name="barchart_colors46">#A107F8</color>
+    <color name="barchart_colors47">#183004</color>
+    <color name="barchart_colors48">#061265</color>
+    <color name="barchart_colors49">#BEBFBD</color>
+    <color name="barchart_colors50">#2E2F39</color>
 <!--    <color name="tab_background_selected">#EF667B</color>-->
 <!--    <color name="tab_background_unselected">#E8465F</color>-->
 <!--    <color name="service_header">#E4E3E3</color>-->

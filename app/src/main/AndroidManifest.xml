@@ -775,6 +775,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.HomeDashBoardDetailPageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
         <receiver
             android:name="com.perfect.prodsuit.Receivers.PhoneStatReceiver"
