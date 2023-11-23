@@ -69,9 +69,19 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     private var ll_StagWise: LinearLayout? = null
     private var ll_ComplaintWise: LinearLayout? = null
     private var ll_ServiceWise: LinearLayout? = null
+    private var ll_ServiceCountOfWPA: LinearLayout? = null
+    private var ll_ServiceTop10Product: LinearLayout? = null
+    private var ll_ServiceSlaStatus: LinearLayout? = null
+    private var ll_ServiceChannelStatus: LinearLayout? = null
 
+    private var tv_StagWiseRemark: TextView? = null
     private var tv_ComplaintRemark: TextView? = null
     private var tv_ServiceRemark: TextView? = null
+
+    private var tv_ServiceCountOfWPA: TextView? = null
+    private var tv_ServiceTop10Product: TextView? = null
+    private var tv_ServiceSlaStatus: TextView? = null
+    private var tv_ServiceChannelStatus: TextView? = null
 
     lateinit var chartTypeViewModel               : ChartTypeViewModel
 
@@ -103,6 +113,20 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
     lateinit var serviceWiseArrayList: JSONArray
     var recycServiceWise: RecyclerView? = null
+
+    //Count of Warranty, Paid And AMC BarChart
+//    private lateinit var ServiceWiseChart: BarChart
+//    private var modelCRMServiceBar = ArrayList<ModelCRMServiceBar>()
+//
+//    lateinit var serviceWiseArrayList: JSONArray
+//    var recycServiceWise: RecyclerView? = null
+
+    //Top 10 Products In CRM BarChart
+//    private lateinit var ServiceWiseChart: BarChart
+//    private var modelCRMServiceBar = ArrayList<ModelCRMServiceBar>()
+//
+//    lateinit var serviceWiseArrayList: JSONArray
+//    var recycServiceWise: RecyclerView? = null
 
 
     // Tile
@@ -195,8 +219,16 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
         tvv_dash = findViewById<TextView>(R.id.tvv_dash)
         tvv_tile = findViewById<TextView>(R.id.tvv_tile)
+
+        tv_StagWiseRemark      = findViewById<TextView>(R.id.tv_StagWiseRemark)
         tv_ComplaintRemark      = findViewById<TextView>(R.id.tv_ComplaintRemark)
         tv_ServiceRemark      = findViewById<TextView>(R.id.tv_ServiceRemark)
+
+        tv_ServiceCountOfWPA      = findViewById<TextView>(R.id.tv_ServiceCountOfWPA)
+        tv_ServiceTop10Product      = findViewById<TextView>(R.id.tv_ServiceTop10Product)
+        tv_ServiceSlaStatus      = findViewById<TextView>(R.id.tv_ServiceSlaStatus)
+        tv_ServiceChannelStatus      = findViewById<TextView>(R.id.tv_ServiceChannelStatus)
+
 
         actv_mode= findViewById<AutoCompleteTextView>(R.id.actv_mode)
 
@@ -206,6 +238,10 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         ll_StagWise         = findViewById<LinearLayout>(R.id.ll_StagWise)
         ll_ComplaintWise    = findViewById<LinearLayout>(R.id.ll_ComplaintWise)
         ll_ServiceWise      = findViewById<LinearLayout>(R.id.ll_ServiceWise)
+        ll_ServiceCountOfWPA      = findViewById<LinearLayout>(R.id.ll_ServiceCountOfWPA)
+        ll_ServiceTop10Product      = findViewById<LinearLayout>(R.id.ll_ServiceTop10Product)
+        ll_ServiceSlaStatus      = findViewById<LinearLayout>(R.id.ll_ServiceSlaStatus)
+        ll_ServiceChannelStatus      = findViewById<LinearLayout>(R.id.ll_ServiceChannelStatus)
 
 
         StagWiseChart       = findViewById<BarChart>(R.id.StagWiseChart)
