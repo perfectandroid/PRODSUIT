@@ -1,5 +1,6 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
@@ -2599,6 +2600,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         }
 
     }
+ @SuppressLint("SuspiciousIndentation")
  private fun getSearch(idSearch: String) {
         if (!id_search.equals("")) {
             subMode = "0"
@@ -2619,6 +2621,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                     Observer { serviceSetterGetter ->
                         try {
                             val msg = serviceSetterGetter.message
+                            Log.e(TAG,"search... 447788"+msg)
                             if (msg!!.length > 0) {
                                 if (servicesearchcount == 0) {
                                     servicesearchcount++
@@ -2627,69 +2630,40 @@ Log.v("adasdasds","modeTab "+modeTab)
                                         val jobjt = jObject.getJSONObject("ServiceDetails")
                                         jsonArrayServiceType =
                                             jobjt.getJSONArray("ServiceAttendedList")
-                                        modelServicesListDetails.clear()
-                                        Log.e(TAG, " 388...0  ")
-                                        for (i in 0 until jsonArrayServiceType.length()) {
-                                            var jsonObject = jsonArrayServiceType.getJSONObject(i)
-                                            Log.e(
-                                                TAG,
-                                                " 388...1  " + jsonObject.getString("Product")
-                                            )
 
-                                            //    modelServicesListDetails.clear()
+                                            Log.e(TAG,"size 2233 jsonArrayServiceType=="+jsonArrayServiceType.length())
+                                        if (jsonArrayServiceType.length() > 0)
+                                        {
 
-
-                                            modelServicesListDetails!!.add(
-                                                ServiceDetailsFullListModel(
-                                                    "0",
-                                                    jsonObject.getString("FK_Category"),
-                                                    jsonObject.getString("MasterProduct"),
-                                                    jsonObject.getString("FK_Product"),
-                                                    jsonObject.getString("Product"),
-                                                    "-2",
-                                                    jsonObject.getString("BindProduct"),
-                                                    jsonObject.getString("ComplaintProduct"),
-                                                    jsonObject.getString("Warranty"),
-                                                    jsonObject.getString("ServiceWarrantyExpireDate"),
-                                                    jsonObject.getString("ReplacementWarrantyExpireDate"),
-                                                    jsonObject.getString("ID_CustomerWiseProductDetails"),
-                                                    jsonObject.getString("ServiceWarrantyExpired"),
-                                                    jsonObject.getString("ReplacementWarrantyExpired"),
-                                                    "0",
-                                                    "",
-                                                    "",
-                                                    false,
-                                                    jsonObject.getString("SerchSerialNo")
-                                                )
-                                            )
-
-                                            var ServiceAttendedListDet =
-                                                jsonObject.getJSONArray("ServiceAttendedListDet")
-
-                                            for (j in 0 until ServiceAttendedListDet.length()) {
-                                                var jsonObjectSub =
-                                                    ServiceAttendedListDet.getJSONObject(j)
+                                            Log.e(TAG,"size 2233 jsonArrayServiceType== if"+jsonArrayServiceType.length())
+                                            modelServicesListDetails.clear()
+                                            Log.e(TAG, " 388...0  ")
+                                            for (i in 0 until jsonArrayServiceType.length()) {
+                                                var jsonObject = jsonArrayServiceType.getJSONObject(i)
                                                 Log.e(
                                                     TAG,
-                                                    " 388...2  " + jsonObjectSub.getString("Product")
+                                                    " 388...1  " + jsonObject.getString("Product")
                                                 )
+
+                                                //    modelServicesListDetails.clear()
+
 
                                                 modelServicesListDetails!!.add(
                                                     ServiceDetailsFullListModel(
-                                                        "1",
-                                                        jsonObjectSub.getString("FK_Category"),
-                                                        jsonObjectSub.getString("MasterProduct"),
-                                                        jsonObjectSub.getString("FK_Product"),
-                                                        jsonObjectSub.getString("Product"),
-                                                        jsonObjectSub.getString("SLNo"),
-                                                        jsonObjectSub.getString("BindProduct"),
-                                                        jsonObjectSub.getString("ComplaintProduct"),
-                                                        jsonObjectSub.getString("Warranty"),
-                                                        jsonObjectSub.getString("ServiceWarrantyExpireDate"),
-                                                        jsonObjectSub.getString("ReplacementWarrantyExpireDate"),
-                                                        jsonObjectSub.getString("ID_CustomerWiseProductDetails"),
-                                                        jsonObjectSub.getString("ServiceWarrantyExpired"),
-                                                        jsonObjectSub.getString("ReplacementWarrantyExpired"),
+                                                        "0",
+                                                        jsonObject.getString("FK_Category"),
+                                                        jsonObject.getString("MasterProduct"),
+                                                        jsonObject.getString("FK_Product"),
+                                                        jsonObject.getString("Product"),
+                                                        "-2",
+                                                        jsonObject.getString("BindProduct"),
+                                                        jsonObject.getString("ComplaintProduct"),
+                                                        jsonObject.getString("Warranty"),
+                                                        jsonObject.getString("ServiceWarrantyExpireDate"),
+                                                        jsonObject.getString("ReplacementWarrantyExpireDate"),
+                                                        jsonObject.getString("ID_CustomerWiseProductDetails"),
+                                                        jsonObject.getString("ServiceWarrantyExpired"),
+                                                        jsonObject.getString("ReplacementWarrantyExpired"),
                                                         "0",
                                                         "",
                                                         "",
@@ -2698,29 +2672,80 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                     )
                                                 )
 
+                                                var ServiceAttendedListDet =
+                                                    jsonObject.getJSONArray("ServiceAttendedListDet")
 
+                                                for (j in 0 until ServiceAttendedListDet.length()) {
+                                                    var jsonObjectSub =
+                                                        ServiceAttendedListDet.getJSONObject(j)
+                                                    Log.e(
+                                                        TAG,
+                                                        " 388...2  " + jsonObjectSub.getString("Product")
+                                                    )
+
+                                                    modelServicesListDetails!!.add(
+                                                        ServiceDetailsFullListModel(
+                                                            "1",
+                                                            jsonObjectSub.getString("FK_Category"),
+                                                            jsonObjectSub.getString("MasterProduct"),
+                                                            jsonObjectSub.getString("FK_Product"),
+                                                            jsonObjectSub.getString("Product"),
+                                                            jsonObjectSub.getString("SLNo"),
+                                                            jsonObjectSub.getString("BindProduct"),
+                                                            jsonObjectSub.getString("ComplaintProduct"),
+                                                            jsonObjectSub.getString("Warranty"),
+                                                            jsonObjectSub.getString("ServiceWarrantyExpireDate"),
+                                                            jsonObjectSub.getString("ReplacementWarrantyExpireDate"),
+                                                            jsonObjectSub.getString("ID_CustomerWiseProductDetails"),
+                                                            jsonObjectSub.getString("ServiceWarrantyExpired"),
+                                                            jsonObjectSub.getString("ReplacementWarrantyExpired"),
+                                                            "0",
+                                                            "",
+                                                            "",
+                                                            false,
+                                                            jsonObject.getString("SerchSerialNo")
+                                                        )
+                                                    )
+
+
+                                                }
                                             }
-                                        }
 
-                                        for (j in 0 until modelServicesListDetails.size) {
-                                            Log.e(
-                                                TAG,
-                                                "447..1   " + "" + j + "  " + modelServicesListDetails.get(
-                                                    j
-                                                ).Product
+                                            for (j in 0 until modelServicesListDetails.size) {
+                                                Log.e(
+                                                    TAG,
+                                                    "447..1   " + "" + j + "  " + modelServicesListDetails.get(
+                                                        j
+                                                    ).Product
+                                                )
+                                            }
+
+                                            val lLayout =
+                                                GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+                                            rcyler_followup!!.layoutManager =
+                                                lLayout as RecyclerView.LayoutManager?
+                                            servDetadapter = ServiceDetailsAdapter(
+                                                this@ServiceFollowUPActiivty,
+                                                modelServicesListDetails
                                             )
+                                            rcyler_followup!!.adapter = servDetadapter
+                                            servDetadapter!!.setClickListener(this@ServiceFollowUPActiivty)
+                                        }
+                                        else{
+                                            Log.e(TAG,"size 2233 jsonArrayServiceType==  else"+jsonArrayServiceType.length())
+
+                                            val builder = AlertDialog.Builder(
+                                                this@ServiceFollowUPActiivty, R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage("No Data Found")
+                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
                                         }
 
-                                        val lLayout =
-                                            GridLayoutManager(this@ServiceFollowUPActiivty, 1)
-                                        rcyler_followup!!.layoutManager =
-                                            lLayout as RecyclerView.LayoutManager?
-                                        servDetadapter = ServiceDetailsAdapter(
-                                            this@ServiceFollowUPActiivty,
-                                            modelServicesListDetails
-                                        )
-                                        rcyler_followup!!.adapter = servDetadapter
-                                        servDetadapter!!.setClickListener(this@ServiceFollowUPActiivty)
+
 
 
                                     } else {
