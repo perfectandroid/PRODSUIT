@@ -17,7 +17,7 @@ class BarChartAdapter(internal var context: Context, internal var jsonArray: JSO
     internal val TAG : String = "LineChartAdapter"
     internal var jsonObject: JSONObject? = null
 
-    val color = intArrayOf(R.color.leadstatus_color1, R.color.leadstatus_color2, R.color.leadstatus_color3,R.color.leadstatus_color4)
+    val color = intArrayOf(R.color.leadbar1, R.color.leadbar2, R.color.leadbar3,R.color.leadbar4,R.color.leadbar5)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
@@ -32,7 +32,7 @@ class BarChartAdapter(internal var context: Context, internal var jsonArray: JSO
         try {
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-                Log.e(TAG,"onBindViewHolder   1051   "+jsonObject!!.getString("Fileds"))
+                Log.e(TAG,"onBindViewHolder   1051   "+jsonObject!!.getString("StatusName"))
                 val pos = position+1
                 holder.tv_BarBox.setBackgroundResource(color[position])
                 holder.tv_BarName.text        = jsonObject!!.getString("StatusName")

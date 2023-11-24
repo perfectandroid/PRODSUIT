@@ -19,7 +19,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.ArrayList
+import java.text.SimpleDateFormat
+import java.util.*
 
 object LeadStagesForecastRepository {
     private var progressDialog: ProgressDialog? = null
@@ -69,6 +70,10 @@ object LeadStagesForecastRepository {
                 val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
 
 
+                val sdf = SimpleDateFormat("yyyy-MM-dd")
+                val currentDate = sdf.format(Date())
+                System.out.println(" C DATE is  "+currentDate)
+
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
@@ -79,7 +84,7 @@ object LeadStagesForecastRepository {
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
-                requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-17"))
+                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
                 // requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
                 requestObject1.put("DashMode", ProdsuitApplication.encryptStart("3"))
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))

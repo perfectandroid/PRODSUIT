@@ -44,7 +44,7 @@ class ReportNameAdapter(internal var context: Context, internal var jsonArray: J
                     holder.llReportName!!.visibility = View.GONE
                     Log.e(TAG,"onBindViewHolder   10512   ")
                 }
-                else if (!jsonObject!!.getString("ReportMode").toString().equals("1") && !jsonObject!!.getString("ReportMode").toString().equals("3") && !jsonObject!!.getString("ReportMode").toString().equals("6") && report.equals("Service")){
+                else if (!jsonObject!!.getString("ReportMode").toString().equals("1") && !jsonObject!!.getString("ReportMode").toString().equals("3") && report.equals("Service")){
                     holder.llReportName!!.visibility = View.GONE
                     Log.e(TAG,"onBindViewHolder   105123   "+jsonObject!!.getString("ReportName"))
                 }
