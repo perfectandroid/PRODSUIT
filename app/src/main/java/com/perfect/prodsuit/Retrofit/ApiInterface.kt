@@ -769,4 +769,7 @@ interface ApiInterface {
     @POST("DashBoard/EmployeeWiseConversionTime")
     fun getEmployeeWiseConversionTime(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/ExpenseVSGain")
+    fun getTopRevenue(@Body body: RequestBody): Call<String>
+
 }
