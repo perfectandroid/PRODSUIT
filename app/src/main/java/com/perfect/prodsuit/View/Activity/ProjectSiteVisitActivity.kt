@@ -243,6 +243,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     var visitTime = ""
     var visitDate = ""
     var strLeadno = ""
+    var ID_LeadGenerate = ""
     var strInspectionNote1 = ""
     var strInspectionNote2 = ""
     var strCustomerNotes   = ""
@@ -321,14 +322,17 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         setRegViews()
 
         var jsonObject: String? = intent.getStringExtra("jsonObject")
-        mode = intent.getStringExtra("mode").toString()
+        mode = intent.getStringExtra("SubMode").toString()
+        jsonObj = JSONObject(jsonObject)
+
         Log.e(TAG,"Mode  32555   "+mode)
-        if (jsonObject.equals("")){
+        if (mode.equals("0")){
             Log.e(TAG,"23111   ")
             tie_LeadNo!!.isEnabled = true
         }else{
             Log.e(TAG,"23112   ")
-            jsonObj = JSONObject(jsonObject)
+
+            ID_LeadGenerate = jsonObj!!.getString("ID_LeadGenerate")
             tie_LeadNo!!.setText(""+jsonObj!!.getString("LeadNo"))
             tie_LeadNo!!.isEnabled = false
         }
@@ -1283,11 +1287,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         val time = sdfTime1.format(Date())
         Log.e(TAG, "newtime  885  " + time)
 
-//        if (mode.equals("0")){
-//
-//            tie_LeadNo!!.setText("")
-//            strID_FIELD = ""
-//        }
+        if (mode.equals("0")){
+            ID_LeadGenerate = ""
+            tie_LeadNo!!.setText("")
+            strID_FIELD = ""
+        }
         tie_InspectionNotes1!!.setText("")
         tie_InspectionNotes2!!.setText("")
         tie_CustomerNotes!!.setText("")
@@ -1394,7 +1398,17 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             strExpenseAmount = "0.00"
         }
 
-        if (strLeadno!!.equals("")){
+        if (ID_LeadGenerate!!.equals("")){
+            Config.snackBars(context, v, "Select LeadNo")
+            Config.snackBars(context, v, "Select LeadNo")
+            showLead = 1
+            showEmployee = 0
+            showMeasurement = 0
+            showChecklist = 0
+            showOtherCharge = 0
+            expandTab()
+        }
+        else if (strLeadno!!.equals("")){
             Config.snackBars(context, v, "Select LeadNo")
             showLead = 1
             showEmployee = 0
@@ -1533,6 +1547,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         Log.e(TAG," 117884 pssOtherCharge          :  "+pssOtherCharge)
         Log.e(TAG," 117885 pssOtherChargeTax       :  "+pssOtherChargeTax)
 
+        upadateSitecount = 0
         saveUpadateSiteVisit()
 
     }
@@ -1548,7 +1563,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                upadateSiteVisitViewModel.getUpadateSiteVisit(this,UserAction,strLeadno,strVisitdate!!,visitTime,strInspectionNote1,strInspectionNote2,
+                upadateSiteVisitViewModel.getUpadateSiteVisit(this,UserAction,ID_LeadGenerate,strVisitdate!!,visitTime,strInspectionNote1,strInspectionNote2,
                     strCustomerNotes,strExpenseAmount,strCommonRemark,strInspectionCharge,saveEmployeeDetails,saveMeasurementDetails,saveCheckedDetails,
                     pssOtherCharge,pssOtherChargeTax)!!.observe(
                     this,
@@ -2040,15 +2055,18 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                     //  list_view!!.setVisibility(View.VISIBLE)
                     val textlength = etsearch!!.text.length
                     leadnoSort = JSONArray()
-
+                    recyLeadNo!!.adapter = null
                     for (k in 0 until leadnoArrayList.length()) {
                         val jsonObject = leadnoArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("Name").length) {
-                            if (jsonObject.getString("Name")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                        //if (textlength <= jsonObject.getString("Name").length) {
+                            var searchValue = etsearch!!.text.toString().toLowerCase().trim()
+                            Log.e(TAG,"searchValue  20633  "+searchValue)
+                            if (jsonObject.getString("Name")!!.toLowerCase().trim().contains(searchValue) || jsonObject.getString("LeadNo")!!.toLowerCase().trim().contains(searchValue)
+                                || jsonObject.getString("MobileNo")!!.toLowerCase().trim().contains(searchValue)){
                                 leadnoSort.put(jsonObject)
                             }
 
-                        }
+                        //}
                     }
 
                     Log.e(TAG,"leadnoSort               7103    "+leadnoSort)
@@ -3828,6 +3846,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             Log.e(TAG,"LeadNo   "+jsonObject.getString("LeadNo"))
             tie_LeadNo!!.setText(jsonObject.getString("LeadNo"))
             strID_FIELD = jsonObject.getString("ID_FIELD")
+            ID_LeadGenerate = jsonObject.getString("ID_FIELD")
 
         }
 
