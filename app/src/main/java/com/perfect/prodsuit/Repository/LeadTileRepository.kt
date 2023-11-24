@@ -112,8 +112,8 @@ object LeadTileRepository {
                        // progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
                         Log.e(TAG,"  LEAD TILE "+response.body())
-                        val leads = ArrayList<ServiceCountModel>()
-                        leads.add(ServiceCountModel(response.body()))
+                        val leads = ArrayList<LeadTileModel>()
+                        leads.add(LeadTileModel(response.body()))
                         val msg = leads[0].message
                         serviceCountSetterGetter.value = LeadTileModel(msg)
                     } catch (e: Exception) {

@@ -9,7 +9,9 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.HomeDashBoardCountDetailsModel
+import com.perfect.prodsuit.Model.AverageLeadConversionModel
+import com.perfect.prodsuit.Model.LeadTileModel
+import com.perfect.prodsuit.Model.ServiceCountModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -18,30 +20,31 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.ArrayList
+import java.text.SimpleDateFormat
+import java.util.*
 
-object HomeDashBoardCountDetailsRepository {
+object AvergLeadConvrsnRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val homedashBoardCountDetailsSetterGetter = MutableLiveData<HomeDashBoardCountDetailsModel>()
-    val TAG: String = "HomeDashBoardCountDetailsRepository"
+    val avgleadconvsnSetterGetter = MutableLiveData<AverageLeadConversionModel>()
+    val TAG: String = "AvergLeadConvrsnRepository"
 
-    fun getServicesApiCall(context: Context,Criteria: String,ReqMode: String): MutableLiveData<HomeDashBoardCountDetailsModel> {
-        getHomeDashBoardCountDetails(context,Criteria,ReqMode)
-        return homedashBoardCountDetailsSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<AverageLeadConversionModel> {
+        getAvgLeadConvrsn(context)
+        return avgleadconvsnSetterGetter
     }
 
-    private fun getHomeDashBoardCountDetails(context: Context,Criteria: String,ReqMode: String) {
+    private fun getAvgLeadConvrsn(context: Context) {
         try {
-            homedashBoardCountDetailsSetterGetter.value = HomeDashBoardCountDetailsModel("")
+            avgleadconvsnSetterGetter.value = AverageLeadConversionModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
-            progressDialog = ProgressDialog(context, R.style.Progress)
-            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-            progressDialog!!.setCancelable(false)
-            progressDialog!!.setIndeterminate(true)
-            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
-                R.drawable.progress))
-            progressDialog!!.show()
+//            progressDialog = ProgressDialog(context, R.style.Progress)
+//            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+//            progressDialog!!.setCancelable(false)
+//            progressDialog!!.setIndeterminate(true)
+//            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
+//                R.drawable.progress))
+//            progressDialog!!.show()
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
@@ -57,27 +60,40 @@ object HomeDashBoardCountDetailsRepository {
                 .build()
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
-
             try {
+
+                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_DepartmentSP = context.getSharedPreferences(Config.SHARED_PREF55, 0)
+                val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
-                val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
+             /*   requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("15"))*/
+                val sdf = SimpleDateFormat("yyyy-MM-dd")
+                val currentDate = sdf.format(Date())
+                System.out.println(" C DATE is  "+currentDate)
+
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+
+              requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+              //  requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart("40"))
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
+                requestObject1.put("FK_Department", ProdsuitApplication.encryptStart(FK_DepartmentSP.getString("FK_Department", null)))
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
-                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
-                requestObject1.put("Criteria", ProdsuitApplication.encryptStart(Criteria))
+                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
+                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("2"))
+                requestObject1.put("DashType", ProdsuitApplication.encryptStart("1"))
 
 
-                Log.e(TAG,"HomeDashBoardCountDetailsRepository  6733331   "+requestObject1)
+
+                Log.e(TAG,"78  getAvgconvsn  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -85,19 +101,22 @@ object HomeDashBoardCountDetailsRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getUserTaskListDetails(body)
+
+           // val call = apiService.getDashboardDetails(body)
+            val call = apiService.getDashboardTileDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
                     Response<String>
                 ) {
                     try {
-                        progressDialog!!.dismiss()
+                       // progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<HomeDashBoardCountDetailsModel>()
-                        leads.add(HomeDashBoardCountDetailsModel(response.body()))
+                        Log.e(TAG,"  AVRG CONVERS VIEW"+response.body())
+                        val leads = ArrayList<AverageLeadConversionModel>()
+                        leads.add(AverageLeadConversionModel(response.body()))
                         val msg = leads[0].message
-                        homedashBoardCountDetailsSetterGetter.value = HomeDashBoardCountDetailsModel(msg)
+                        avgleadconvsnSetterGetter.value = AverageLeadConversionModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                         Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
@@ -110,8 +129,9 @@ object HomeDashBoardCountDetailsRepository {
             })
         }catch (e : Exception){
             e.printStackTrace()
-            progressDialog!!.dismiss()
             Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+            progressDialog!!.dismiss()
         }
     }
+
 }
