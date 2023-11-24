@@ -97,7 +97,7 @@ object ChartTypeRepository {
 
 
 
-                Log.e(TAG,"855 getAuthorizationAction  "+requestObject1)
+                Log.e(TAG,"8551 getAuthorizationAction  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

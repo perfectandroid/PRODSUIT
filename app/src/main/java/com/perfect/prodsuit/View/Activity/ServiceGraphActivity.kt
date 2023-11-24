@@ -177,7 +177,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         label   = intent.getStringExtra("label")
 
         Log.e(TAG,"3555   "+SubMode+"  :  "+label)
-        getCurrentDate()
+      //  getCurrentDate()
 
         TabMode       = 0
         ContinueMode  = 0
@@ -293,12 +293,13 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
             tvv_dash!!.setBackgroundResource(R.drawable.btn_dash)
             tvv_tile!!.setBackgroundResource(R.drawable.btn_shape_reset)
 
-            if (ContinueMode == 0){
-                ChartMode      = 0
-                chartModeCount = 0
-                getChartModeData()
-            }
-
+//            if (ContinueMode == 0){
+//                ChartMode      = 0
+//                chartModeCount = 0
+//                getChartModeData()
+//            }
+            crmStagewiseCount   = 0
+            getCRMStagewiseData()
 
         }else if (TabMode == 1){
             ContinueMode = 1
@@ -318,7 +319,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun getChartModeData() {
         var ReqMode = ""
-        var SubMode = "1"
+        var SubMode = "2"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -541,8 +542,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                 crmStagewiseCount++
 
                                 val jObject = JSONObject(msg)
-                                Log.e(TAG,"msg   1644   "+msg)
-                                if (jObject.getString("StatusCode").equals("0")) {
+                                Log.e(TAG,"msg   16441   "+msg)
+                                if (jObject.getString("StatusCode").equals("-2")) {
 
                                     val jobjt = jObject.getJSONObject("CRMStagewiseDetails")
                                     stageWiseArrayList=jobjt.getJSONArray("CRMStagewiseDetailsList")
