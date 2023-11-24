@@ -51,6 +51,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     lateinit var context: Context
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
+    lateinit var topRevenueArrayList: JSONArray
     lateinit var leadstagecountwiseListBarList: JSONArray
     lateinit var avgconvsnleadArrayList: JSONArray
 
@@ -60,6 +61,10 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     var leadstagecountwiseList = 0
     var leadstagecountwiseText: TextView? = null
     var recycleemployeewiseAvg: FullLenghRecyclertview? = null
+    var rclv_toprevenue: FullLenghRecyclertview? = null
+
+    private lateinit var top_revenuebarchart: BarChart
+
     var employeewiseAvgText: TextView? = null
     var employeewiseavgconvesionList = 0
     lateinit var employeewiseAvgViewModel: EmployeewiseAvgViewModel
@@ -74,6 +79,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     var recycleLeadSourse: FullLenghRecyclertview? = null
     var leadSourseList = 0
     lateinit var leadSourseViewModel: LeadSourseViewModel
+    lateinit var topRevenueViewModel: TopRevenueViewModel
     private var actv_mode: AutoCompleteTextView? = null
     var card_leadActivity: LinearLayout? = null
     var card_employeewiseAvg: LinearLayout? = null
@@ -135,6 +141,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
     var recycPieChart: RecyclerView? = null
     var crdv_lead: CardView? = null
+    var card_toprevenue: LinearLayout? = null
+
     var crdv_leadoutstand: CardView? = null
     lateinit var dashSort : JSONArray
     var rclrvw_leadoutstand: RecyclerView? = null
@@ -173,6 +181,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
     private var scoreListBar = ArrayList<EmployeewiseBarLead>()
     private var top10ListBar = ArrayList<Top10BarLead>()
+    private var topRevenueBar = ArrayList<TopRevenueBarLead>()
     lateinit var chartBarArrayList: JSONArray
       lateinit var empwiseArrayList: JSONArray
     private var scoreListPie = ArrayList<ScorePie>()
@@ -198,6 +207,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         leadstagecountwiseViewModel = ViewModelProvider(this).get(LeadstagecountwiseViewModel::class.java)
         leadActivityViewModels= ViewModelProvider(this).get(leadActivityViewModel::class.java)
         averageLeadConversionModel= ViewModelProvider(this).get(AvgLeadConversionViewModel::class.java)
+        topRevenueViewModel= ViewModelProvider(this).get(TopRevenueViewModel::class.java)
         setRegViews()
 
         SubMode = intent.getStringExtra("SubMode")
@@ -470,9 +480,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         card_leadActivity=findViewById(R.id.card_leadActivity)
         card_leadstagecountwise=findViewById(R.id.card_leadstagecountwise)
         crdv_avgconvsnlead=findViewById(R.id.crdv_avgconvsnlead)
+        card_toprevenue=findViewById(R.id.card_toprevenue)
 
 
         rclrvw_avgleadconvsn=findViewById(R.id.rclrvw_avgleadconvsn)
+        rclv_toprevenue=findViewById(R.id.rclv_toprevenue)
         tvv_dash = findViewById<TextView>(R.id.tvv_dash)
         tvv_tile = findViewById<TextView>(R.id.tvv_tile)
 
@@ -526,7 +538,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
       //  recycPieChart = findViewById<RecyclerView>(R.id.recycPieChart)
         barChart = findViewById<BarChart>(R.id.empwise_chart)
         top10_barchart = findViewById<BarChart>(R.id.top10_barchart)
-
+        top_revenuebarchart= findViewById<BarChart>(R.id.top_revenuebarchart)
 
       //  tie_dash!!.setOnClickListener(this)
         //  setProgresschart()
@@ -1419,7 +1431,6 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
 
     }
-
     private fun settop10chart() {
         top10ListBar.clear()
         top10ListBar = getTop10List()
@@ -1590,6 +1601,176 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
 
     }
+    private fun settoprevenuechart() {
+        topRevenueBar.clear()
+        topRevenueBar = getTopRevenueList()
+
+        top_revenuebarchart.axisLeft.setDrawGridLines(false)
+        val xAxis: XAxis = top_revenuebarchart.xAxis
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(false)
+
+        //remove right y-axis
+        top_revenuebarchart.axisRight.isEnabled = false
+        //remove legend
+        top_revenuebarchart.legend.isEnabled = false
+        top_revenuebarchart!!.setScaleEnabled(true)
+        //remove description label
+        top_revenuebarchart.description.isEnabled = false
+
+
+        //add animation
+        top_revenuebarchart.animateY(1000)
+
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.valueFormatter = MyAxisFormatterBar4()
+        xAxis.setDrawLabels(true)
+        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = +325f
+        xAxis.textSize = 15f
+        xAxis.textColor = Color.BLACK
+
+        //colors
+        val colors: java.util.ArrayList<Int> = java.util.ArrayList()
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        /////////////////////////////////////
+
+        val entries: ArrayList<BarEntry> = ArrayList()
+        for (i in topRevenueBar.indices) {
+            val score = topRevenueBar[i]
+            entries.add(BarEntry(i.toFloat(), score.topcount.toFloat()))
+        }
+
+
+
+        val barDataSet = BarDataSet(entries, "Category")
+        // barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+        barDataSet.setColors(colors)
+        //barDataSet.setValueFormatter(DecimalRemover())
+        barDataSet.valueFormatter = DefaultValueFormatter(0)
+
+        val data = BarData(barDataSet)
+        data.setValueTextSize(15f)
+        data.setValueTextColor(Color.BLACK)
+        data.setDrawValues(false)
+        top_revenuebarchart.data = data
+
+
+        top_revenuebarchart.invalidate()
+
+
+    }
     private fun getScoreList(): java.util.ArrayList<EmployeewiseBarLead> {
         for (i in 0 until empwiseArrayList.length())
         {
@@ -1608,7 +1789,15 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
         return top10ListBar
     }
+    private fun getTopRevenueList(): ArrayList<TopRevenueBarLead> {
+        for (i in 0 until topRevenueArrayList.length())
+        {
+            var jsonObject = topRevenueArrayList.getJSONObject(i)
+            topRevenueBar.add(TopRevenueBarLead(jsonObject.getString("MediaName"),jsonObject.getString("LeadAmount")))
+        }
 
+        return topRevenueBar
+    }
 
     private fun getLeadStagewiseforecast() {
         var leadStatusDash = 0
@@ -1701,6 +1890,18 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
             Log.d("TAG", "getAxisLabel: index $index")
             return if (index < top10ListBar.size) {
                 top10ListBar[index].topname
+            } else {
+                ""
+            }
+        }
+    }
+    inner class MyAxisFormatterBar4 : IndexAxisValueFormatter() {
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            val index = value.toInt()
+            Log.d("TAG", "getAxisLabel: index $index")
+            return if (index < topRevenueBar.size) {
+                topRevenueBar[index].topname
             } else {
                 ""
             }
@@ -1850,6 +2051,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     card_leadstagecountwise!!.visibility = View.GONE
                     card_employeewiseAvg!!.visibility = View.GONE
                     card_leadActivity!!.visibility = View.GONE
+                    card_toprevenue!!.visibility = View.GONE
                  //   crmStagewiseCount   = 0
                     getEmployeewiseChart()
                 }
@@ -1861,6 +2063,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     card_leadstagecountwise!!.visibility = View.GONE
                     card_employeewiseAvg!!.visibility = View.GONE
                     card_leadActivity!!.visibility = View.GONE
+                    card_toprevenue!!.visibility = View.GONE
                    // crmservicewiseCount = 0
                     getLeadStagewiseforecast()
                 }
@@ -1872,6 +2075,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     card_leadstagecountwise!!.visibility = View.GONE
                     card_employeewiseAvg!!.visibility = View.GONE
                     card_leadActivity!!.visibility = View.GONE
+                    card_toprevenue!!.visibility = View.GONE
                     getLeadSource()
 
                 }
@@ -1883,6 +2087,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     card_leadstagecountwise!!.visibility = View.VISIBLE
                     card_employeewiseAvg!!.visibility = View.GONE
                     card_leadActivity!!.visibility = View.GONE
+                    card_toprevenue!!.visibility = View.GONE
                     getLeadStageCountWise()
                 }
                 else if (ID_ChartMode.equals("8")) {
@@ -1893,6 +2098,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     card_leadstagecountwise!!.visibility = View.GONE
                     card_employeewiseAvg!!.visibility = View.VISIBLE
                     card_leadActivity!!.visibility = View.GONE
+                    card_toprevenue!!.visibility = View.GONE
                     getEmployeeWiseAvgConversion()
                 }
                 else if (ID_ChartMode.equals("1")) {
@@ -1903,6 +2109,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     card_leadstagecountwise!!.visibility = View.GONE
                     card_employeewiseAvg!!.visibility = View.GONE
                     card_leadActivity!!.visibility = View.VISIBLE
+                    card_toprevenue!!.visibility = View.GONE
                     getLeadActivity()
                 }
                 else if (ID_ChartMode.equals("5")){
@@ -1913,6 +2120,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     card_leadstagecountwise!!.visibility = View.GONE
                     card_employeewiseAvg!!.visibility = View.GONE
                     card_leadActivity!!.visibility = View.GONE
+                    card_toprevenue!!.visibility = View.GONE
                     getTop10Products()
 
                 }
@@ -1924,7 +2132,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     card_leadstagecountwise!!.visibility = View.GONE
                     card_employeewiseAvg!!.visibility = View.GONE
                     card_leadActivity!!.visibility = View.GONE
-                   // getTop10Products()
+                    card_toprevenue!!.visibility = View.VISIBLE
+                    getTopRevenue()
 
                 }
                 else if (ID_ChartMode.equals("9")){
@@ -1935,6 +2144,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     card_leadstagecountwise!!.visibility = View.GONE
                     card_employeewiseAvg!!.visibility = View.GONE
                     card_leadActivity!!.visibility = View.GONE
+                    card_toprevenue!!.visibility = View.GONE
                     // getTop10Products()
 
                 }
@@ -1982,6 +2192,94 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             top10ProductsArrayList
                                         )
                                         rclv_top10!!.adapter = adapter
+                                    }
+                                    else
+                                    {
+
+                                        val builder = AlertDialog.Builder(
+                                            this@TileGraphActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+
+                                    }
+                                    // setPieChart()
+
+
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@TileGraphActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(context, "" + e.toString(), Toast.LENGTH_SHORT).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+    private fun getTopRevenue() {
+        var leadStagesDash = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                topRevenueViewModel.getRevenue(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        try {
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG, "msg   toprevenue   " + msg)
+                                if (jObject.getString("StatusCode") == "0") {
+
+                                    val jobjt = jObject.getJSONObject("ExpenseVSGain")
+                                    topRevenueArrayList =
+                                        jobjt.getJSONArray("ExpenseVSGainList")
+                                    //  tv_leadStageTotal!!.setText(jobjt.getString("TotalCount"))
+                                    Log.e(TAG, "array  top10   " + topRevenueArrayList)
+                                    if (topRevenueArrayList.length() > 0){
+                                        settoprevenuechart()
+//                                    val recycPieChart =
+//                                        findViewById(R.id.recycPieChart) as RecyclerView
+                                        val lLayout = GridLayoutManager(this@TileGraphActivity, 1)
+                                        rclv_toprevenue!!.layoutManager =
+                                            lLayout as RecyclerView.LayoutManager?
+                                        val adapter = TopRevenueAdapter(
+                                            this@TileGraphActivity,
+                                            topRevenueArrayList
+                                        )
+                                        rclv_toprevenue!!.adapter = adapter
                                     }
                                     else
                                     {

@@ -334,7 +334,7 @@
 
                                     </LinearLayout>
                                     <LinearLayout
-                                        android:id="@+id/ll_empvs"
+                                        android:id="@+id/card_toprevenue"
                                         android:layout_marginTop="10dp"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
@@ -347,8 +347,8 @@
                                             android:layout_height="match_parent"
                                             android:orientation="vertical">
 
-                                            <com.github.mikephil.charting.charts.PieChart
-                                                android:id="@+id/empvs_barchart"
+                                            <com.github.mikephil.charting.charts.BarChart
+                                                android:id="@+id/top_revenuebarchart"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
                                                 android:layout_margin="2dp"
@@ -363,7 +363,7 @@
                                                 <com.perfect.prodsuit.Helper.FullLenghRecyclertview
 
 
-                                                    android:id="@+id/rclv_empvs"
+                                                    android:id="@+id/rclv_toprevenue"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_margin="5dp"
@@ -1134,6 +1134,7 @@
 
 
                                     </LinearLayout>
+
 
 
                                 </LinearLayout>
