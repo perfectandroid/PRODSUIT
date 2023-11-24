@@ -6,10 +6,13 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -20,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Adapter.LeadNoAdapter
 import com.perfect.prodsuit.View.Adapter.ProjectLeadListAdapter
 import com.perfect.prodsuit.Viewmodel.ProjectLeadNoViewModel
 import org.json.JSONArray
@@ -32,11 +36,13 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
     private var progressDialog    : ProgressDialog?    = null
 
     var tv_header    : TextView?    = null
+    var edtSearch    : EditText?    = null
     var jsonObj: JSONObject? = null
 
     var  projectLeadNoCount = 0
     lateinit var projectLeadNoViewModel: ProjectLeadNoViewModel
     lateinit var projectLeadArrayList: JSONArray
+    lateinit var projectLeadSortArrayList: JSONArray
     var recycSiteVisit: RecyclerView? = null
     var mode = ""
 
@@ -62,6 +68,44 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
 
         projectLeadNoCount = 0
         getLeadDetails()
+
+        edtSearch!!.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                //  list_view!!.setVisibility(View.VISIBLE)
+                val textlength = edtSearch!!.text.length
+                projectLeadSortArrayList = JSONArray()
+                recycSiteVisit!!.adapter = null
+                for (k in 0 until projectLeadArrayList.length()) {
+                    val jsonObject = projectLeadArrayList.getJSONObject(k)
+                  //  if (textlength <= jsonObject.getString("CustomeName").length) {
+                        var searchValue = edtSearch!!.text.toString().toLowerCase().trim()
+                        Log.e(TAG,"searchValue  20633  "+searchValue)
+                        if (jsonObject.getString("LeadNo")!!.toLowerCase().trim().contains(searchValue) || jsonObject.getString("MobileNo")!!.toLowerCase().trim().contains(searchValue)
+                            || jsonObject.getString("CustomeName")!!.toLowerCase().trim().contains(searchValue)){
+                            projectLeadSortArrayList.put(jsonObject)
+                        }
+
+                   // }
+                }
+
+                if (projectLeadSortArrayList.length() > 0){
+                    val lLayout = GridLayoutManager(this@ProjectSiteVisitListActivity, 1)
+                    recycSiteVisit!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                    //  val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
+                    val adapter = ProjectLeadListAdapter(this@ProjectSiteVisitListActivity, projectLeadSortArrayList)
+                    recycSiteVisit!!.adapter = adapter
+                    adapter.setClickListener(this@ProjectSiteVisitListActivity)
+                }
+
+            }
+        })
 
     }
 
@@ -90,12 +134,19 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
                                         val jobjt = jObject.getJSONObject("ProjectSiteVisitAssign")
                                         projectLeadArrayList = jobjt.getJSONArray("ProjectSiteVisitAssignList")
 
-                                        Log.e(TAG," 788   "+projectLeadArrayList)
-                                        if (projectLeadArrayList.length() > 0){
+                                        projectLeadSortArrayList = JSONArray()
+                                        for (k in 0 until projectLeadArrayList.length()) {
+                                            val jsonObject = projectLeadArrayList.getJSONObject(k)
+                                            // reportNamesort.put(k,jsonObject)
+                                            projectLeadSortArrayList.put(jsonObject)
+                                        }
+
+                                        Log.e(TAG," 788   "+projectLeadSortArrayList)
+                                        if (projectLeadSortArrayList.length() > 0){
                                             val lLayout = GridLayoutManager(this@ProjectSiteVisitListActivity, 1)
                                             recycSiteVisit!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                             //  val adapter = ServiceListAdapter(this@ServiceAssignListActivity, serviceListArrayList,SubMode!!)
-                                            val adapter = ProjectLeadListAdapter(this@ProjectSiteVisitListActivity, projectLeadArrayList)
+                                            val adapter = ProjectLeadListAdapter(this@ProjectSiteVisitListActivity, projectLeadSortArrayList)
                                             recycSiteVisit!!.adapter = adapter
                                             adapter.setClickListener(this@ProjectSiteVisitListActivity)
                                         }
@@ -144,6 +195,7 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
         val imback = findViewById<ImageView>(R.id.imback)
         tv_header = findViewById<TextView>(R.id.tv_header)
         recycSiteVisit = findViewById<RecyclerView>(R.id.recycSiteVisit)
+        edtSearch = findViewById<EditText>(R.id.edtSearch)
 
         imback!!.setOnClickListener(this)
 
@@ -161,7 +213,7 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
 
     override fun onClick(position: Int, data: String) {
         if (data.equals("LeadListClick")){
-            val jsonObject = projectLeadArrayList.getJSONObject(position)
+            val jsonObject = projectLeadSortArrayList.getJSONObject(position)
             val i = Intent(this@ProjectSiteVisitListActivity, ProjectSiteVisitActivity::class.java)
             i.putExtra("mode",mode)
             i.putExtra("jsonObject",jsonObject.toString())

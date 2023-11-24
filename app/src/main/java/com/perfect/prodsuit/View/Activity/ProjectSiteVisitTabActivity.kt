@@ -150,12 +150,23 @@ class ProjectSiteVisitTabActivity : AppCompatActivity() , View.OnClickListener, 
         if (data.equals("SiteVisitTabClick")){
             val jsonObject = siteVisitArrayList.getJSONObject(position)
 
-            val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitListActivity::class.java)
-            i.putExtra("ReqMode","1")
-            i.putExtra("SubMode",jsonObject.getString("Mode"))
-            i.putExtra("Type_Name",jsonObject.getString("Label_Name"))
-            i.putExtra("jsonObject",jsonObject.toString())
-            startActivity(i)
+            if (jsonObject.getInt("Mode") == 0){
+                val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitActivity::class.java)
+                i.putExtra("ReqMode","1")
+                i.putExtra("SubMode",jsonObject.getString("Mode"))
+                i.putExtra("Type_Name",jsonObject.getString("Label_Name"))
+                i.putExtra("jsonObject",jsonObject.toString())
+                startActivity(i)
+            }else{
+                val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitListActivity::class.java)
+                i.putExtra("ReqMode","1")
+                i.putExtra("SubMode",jsonObject.getString("Mode"))
+                i.putExtra("Type_Name",jsonObject.getString("Label_Name"))
+                i.putExtra("jsonObject",jsonObject.toString())
+                startActivity(i)
+            }
+
+
 
 //            if (position == 0){
 //                val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitActivity::class.java)

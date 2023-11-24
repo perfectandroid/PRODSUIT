@@ -25,70 +25,115 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:background="@drawable/shape_header">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:visibility="visible"
-                        android:layout_weight="2.7"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content">
 
-                        <ImageView
-                            android:id="@+id/imback"
-                            android:layout_width="50dp"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="50dp"
-                            android:layout_gravity="left"
-                            android:background="@color/color_activity_transparent"
-                            android:padding="10dp"
-                            android:tint="@color/white"
-                            android:src="@drawable/back_arro"
-                            tools:ignore="UseAppTint" />
+                            android:visibility="visible"
+                            android:layout_weight="2.7"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
 
+                            <ImageView
+                                android:id="@+id/imback"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="left"
+                                android:background="@color/color_activity_transparent"
+                                android:padding="10dp"
+                                android:tint="@color/white"
+                                android:src="@drawable/back_arro"
+                                tools:ignore="UseAppTint" />
+
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/tv_header"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="List"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:tint="@color/black"
+                            android:textColor="@color/white"
+                            android:textSize="20dp"
+                            android:textStyle="bold"
+                            android:textAllCaps="true"
+                            android:fontFamily="@font/myfont" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:layout_weight="2.7"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/imLeadedit"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_gravity="right"
+                                android:layout_marginRight="10dp"
+                                android:background="@color/color_activity_transparent"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_edit"
+                                android:visibility="invisible"
+                                tools:ignore="UseAppTint" />
+
+                        </LinearLayout>
                     </LinearLayout>
-
-
-                    <TextView
-                        android:id="@+id/tv_header"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="List"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:tint="@color/black"
-                        android:textColor="@color/white"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
-                        android:textAllCaps="true"
-                        android:fontFamily="@font/myfont" />
 
                     <LinearLayout
+                        android:id="@+id/llsearch"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_weight="2.7"
-                        android:gravity="center_vertical"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/imLeadedit"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="right"
-                            android:layout_marginRight="10dp"
-                            android:background="@color/color_activity_transparent"
-                            android:padding="5dp"
-                            android:src="@drawable/ic_edit"
-                            android:visibility="invisible"
-                            tools:ignore="UseAppTint" />
-
+                        android:layout_height="55dp"
+                        android:paddingBottom="10dp"
+                        android:orientation="horizontal">
+                        <!--                android:background="#e97a7a"-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:background="@drawable/searchbg"
+                            android:layout_weight="0.2">
+                            <EditText
+                                android:id="@+id/edtSearch"
+                                android:layout_width="match_parent"
+                                android:layout_height="35dp"
+                                android:hint="Search..."
+                                android:lines="1"
+                                android:scrollHorizontally="true"
+                                android:ellipsize="end"
+                                android:inputType="text"
+                                android:textColorHint="@color/grey"
+                                android:paddingLeft="10dp"
+                                android:background="@drawable/searchbg"
+                                android:drawableLeft="@drawable/ic_search"
+                                android:fontFamily="@font/myfont"
+                                android:drawableTint="@color/grey"
+                                android:layout_weight="1"
+                                android:drawablePadding="10dp"
+                                android:paddingRight="10dp"/>
+                        </LinearLayout>
                     </LinearLayout>
+
                 </LinearLayout>
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
