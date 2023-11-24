@@ -26,12 +26,12 @@ object CurrentStatusRepository {
     val CurrentStatusSetterGetter = MutableLiveData<CurrentModel>()
     val TAG: String = "CurrentStatusRepository"
 
-    fun getServicesApiCall(context: Context,ReqMode :  String,Critrea1:  String,SubMode:  String): MutableLiveData<CurrentModel> {
-        getImageMode(context,ReqMode,Critrea1,SubMode)
+    fun getServicesApiCall(context: Context,ReqMode :  String,Critrea1:  String,SubMode:  String,ID_Project :  String,ID_Stage :  String): MutableLiveData<CurrentModel> {
+        getImageMode(context,ReqMode,Critrea1,SubMode,ID_Project,ID_Stage)
         return CurrentStatusSetterGetter
     }
 
-    private fun getImageMode(context: Context,ReqMode :  String,Critrea1:  String,SubMode:  String) {
+    private fun getImageMode(context: Context,ReqMode :  String,Critrea1:  String,SubMode:  String,ID_Project :  String,ID_Stage :  String) {
         try {
             CurrentStatusSetterGetter.value = CurrentModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -66,13 +66,18 @@ object CurrentStatusRepository {
 
                // {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","ReqMode":"17","FK_Company":"1","Critrea1":"0"}
 
+//                {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","ReqMode":"19",
+//                    "FK_Company":"1","SubMode":"1","FK_Project":1,"FK_Stage":1}
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("Critrea1", ProdsuitApplication.encryptStart(Critrea1))
+               // requestObject1.put("Critrea1", ProdsuitApplication.encryptStart(Critrea1))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
+                requestObject1.put("FK_Project", ProdsuitApplication.encryptStart(ID_Project))
+                requestObject1.put("FK_Stage", ProdsuitApplication.encryptStart(ID_Stage))
 
                 Log.e(TAG,"Project/ProjectStatus  7555   "+requestObject1)
 

@@ -129,7 +129,7 @@
                         android:layout_weight="1"
                         android:drawableTint="@color/textColor"
                         android:fontFamily="@font/myfont"
-                        android:hint="From Date">
+                        android:hint="Ticket Date">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/edt_fromDate"

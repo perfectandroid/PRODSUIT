@@ -296,7 +296,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
     var updateDocscount   = 0
     lateinit var siteVisitDocUploadViewModel  : SiteVisitDocUploadViewModel
+    var strWarningMessage : String = ""
 
+    lateinit var projectLeadNoViewModel: ProjectLeadNoViewModel
+    private var ReqMode :  String? =  ""
+    private var SubMode :  String? =  ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -324,6 +328,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         mode = intent.getStringExtra("SubMode").toString()
         jsonObj = JSONObject(jsonObject)
+        ReqMode = intent.getStringExtra("ReqMode").toString()
+        SubMode = intent.getStringExtra("SubMode").toString()
 
         Log.e(TAG,"Mode  32555   "+mode)
         if (mode.equals("0")){
@@ -459,6 +465,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         til_MeasurementType!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_Value!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_Unit!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        projectLeadNoViewModel = ViewModelProvider(this).get(ProjectLeadNoViewModel::class.java)
 
         hideShowTab()
         expandTab()
@@ -822,8 +829,10 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
             R.id.tie_LeadNo->{
 
+
                 leadcount = 0
-                getLeadNo()
+               // getLeadNo()
+                getLeadDetails()
 //                showLead = 1
 //                showEmployee = 0
 //                 showMeasurement = 0
@@ -1291,6 +1300,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             ID_LeadGenerate = ""
             tie_LeadNo!!.setText("")
             strID_FIELD = ""
+            ID_LeadGenerate = ""
         }
         tie_InspectionNotes1!!.setText("")
         tie_InspectionNotes2!!.setText("")
@@ -1718,8 +1728,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         else{
 
             if (updateedit!!.equals("0")){
-                var hasCheck =  hasMeasurement(modelMesurementDetails!!,WorkTypeID,ID_MeasurementUnit)
-                if (hasCheck){
+//                var hasCheck =  hasMeasurement(modelMesurementDetails!!,WorkTypeID,ID_MeasurementUnit)
+//                if (hasCheck){
                     modelMesurementDetails!!.add(ModelMesurementDetails(WorkTypeID, WorkType,ID_MeasurementUnit,MeasurementType,Value,ID_Unit,Unit,Remarks))
 
                     updateedit = "0"
@@ -1741,15 +1751,15 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                         recy_mesurment!!.adapter = measurementShowAdapter
                         measurementShowAdapter!!.setClickListener(this@ProjectSiteVisitActivity)
                     }
-                }
-                else{
-                    Config.snackBars(context,v,"Duplicate entry found")
-                }
+//                }
+//                else{
+//                    Config.snackBars(context,v,"Duplicate entry found")
+//                }
             }
             else if (updateedit!!.equals("1")){
 
-                var hasCheck =  hasMeasurement(modelMesurementDetails!!,WorkTypeID,ID_MeasurementUnit)
-                if (hasCheck){
+//                var hasCheck =  hasMeasurement(modelMesurementDetails!!,WorkTypeID,ID_MeasurementUnit)
+//                if (hasCheck){
 
 
                     updateedit = "0"
@@ -1774,9 +1784,9 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                     empModel.Remarks = Remarks
 
                     measurementShowAdapter!!.notifyItemChanged(modelPosition!!)
-                }else{
-                    Config.snackBars(context,v,"Duplicate entry found")
-                }
+//                }else{
+//                    Config.snackBars(context,v,"Duplicate entry found")
+//                }
 
 
 
@@ -1793,6 +1803,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         var isChecked = true
         for (i in 0 until modelMesurementDetails.size) {
             if (modelMesurementDetails.get(i).WorkTypeID.equals(WorkTypeID) && modelMesurementDetails.get(i).ID_MeasurementUnit.equals(ID_MeasurementUnit)){
+                strWarningMessage = modelMesurementDetails.get(i).WorkType+" & "+modelMesurementDetails.get(i).MeasurementUnit +" Already Exists. Do you want to continue? "
                 isChecked = false
             }
         }
@@ -2020,6 +2031,73 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         }
     }
 
+    private fun getLeadDetails() {
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                projectLeadNoViewModel.getProjectLeadNo(this,ReqMode!!,SubMode!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        try {
+                            if (msg!!.length > 0) {
+
+                                if (leadcount == 0){
+                                    leadcount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   1062   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("ProjectSiteVisitAssign")
+                                        leadnoArrayList = jobjt.getJSONArray("ProjectSiteVisitAssignList")
+                                        if (leadnoArrayList.length()>0){
+                                            leadNoPopup(leadnoArrayList)
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectSiteVisitActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + e.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
     private fun leadNoPopup(leadnoArrayList: JSONArray) {
         try {
 
@@ -2061,7 +2139,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                         //if (textlength <= jsonObject.getString("Name").length) {
                             var searchValue = etsearch!!.text.toString().toLowerCase().trim()
                             Log.e(TAG,"searchValue  20633  "+searchValue)
-                            if (jsonObject.getString("Name")!!.toLowerCase().trim().contains(searchValue) || jsonObject.getString("LeadNo")!!.toLowerCase().trim().contains(searchValue)
+                            if (jsonObject.getString("CustomeName")!!.toLowerCase().trim().contains(searchValue) || jsonObject.getString("LeadNo")!!.toLowerCase().trim().contains(searchValue)
                                 || jsonObject.getString("MobileNo")!!.toLowerCase().trim().contains(searchValue)){
                                 leadnoSort.put(jsonObject)
                             }
@@ -3845,8 +3923,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
             Log.e(TAG,"LeadNo   "+jsonObject.getString("LeadNo"))
             tie_LeadNo!!.setText(jsonObject.getString("LeadNo"))
-            strID_FIELD = jsonObject.getString("ID_FIELD")
-            ID_LeadGenerate = jsonObject.getString("ID_FIELD")
+            strID_FIELD = jsonObject.getString("ID_LeadGenerate")
+            ID_LeadGenerate = jsonObject.getString("ID_LeadGenerate")
 
         }
 
@@ -3864,9 +3942,45 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             dialogMeasurement!!.dismiss()
             val jsonObject = measurementSort.getJSONObject(position)
 
-            Log.e(TAG,"MeasurementUnit   "+jsonObject.getString("MeasurementType"))
-            tie_MeasurementType!!.setText(jsonObject.getString("MeasurementType"))
-            ID_MeasurementUnit = jsonObject.getString("MeasurementTypeID")
+            var hasCheck =  hasMeasurement(modelMesurementDetails!!,WorkTypeID,jsonObject.getString("MeasurementTypeID"))
+            Log.e(TAG,"hasCheck  3686 "+hasCheck )
+            if (hasCheck){
+                Log.e(TAG,"MeasurementUnit 14561  "+jsonObject.getString("MeasurementType"))
+                tie_MeasurementType!!.setText(jsonObject.getString("MeasurementType"))
+                ID_MeasurementUnit = jsonObject.getString("MeasurementTypeID")
+            }else{
+
+
+                try {
+                    val dialog = BottomSheetDialog(this)
+                    val view = layoutInflater.inflate(R.layout.alert_delete, null)
+
+                    val btnNo = view.findViewById<Button>(R.id.btn_No)
+                    val btnYes = view.findViewById<Button>(R.id.btn_Yes)
+                    val textid1 = view.findViewById<TextView>(R.id.textid1)
+
+                    textid1!!.setText(""+strWarningMessage)
+                    btnNo.setOnClickListener {
+                        dialog .dismiss()
+
+                    }
+                    btnYes.setOnClickListener {
+                        dialog .dismiss()
+                        Log.e(TAG,"MeasurementUnit  14562   "+jsonObject.getString("MeasurementType"))
+                        tie_MeasurementType!!.setText(jsonObject.getString("MeasurementType"))
+                        ID_MeasurementUnit = jsonObject.getString("MeasurementTypeID")
+                    }
+                    dialog.setCancelable(true)
+                    dialog!!.setContentView(view)
+
+                    dialog.show()
+                }catch (e : Exception){
+
+                }
+            }
+
+
+
 
         }
 
