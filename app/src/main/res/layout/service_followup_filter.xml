@@ -83,7 +83,7 @@
                             android:id="@+id/til_Selectarea"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Search"
+                            android:hint="Enter Customer Id or Serial No or Mobile No"
                             android:layout_marginTop="10dp"
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp"

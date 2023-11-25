@@ -2575,7 +2575,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                 servicesearchcount = 0
                 if(id_search.equals(""))
                 {
-                    tie_Selectarea!!.setError("Please Enter a Valid Input");
+                    tie_Selectarea!!.setError("Please Enter Customer Id or Serial Number or Mobile No");
 
                 }
                 else{
