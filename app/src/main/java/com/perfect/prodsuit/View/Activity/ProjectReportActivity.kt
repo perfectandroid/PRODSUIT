@@ -36,6 +36,7 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
     lateinit var context: Context
     var tie_ReportName: TextInputEditText? = null
     var tie_LeadNo: TextInputEditText? = null
+    var tie_Cat: TextInputEditText? = null
     var tie_FromDate: TextInputEditText? = null
     var tie_ToDate: TextInputEditText? = null
     var tie_Product: TextInputEditText? = null
@@ -61,13 +62,25 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
     var FromDate: String = ""
     var ToDate: String = ""
     val sdf = SimpleDateFormat("yyyy-MM-dd")
+
+
+
+
+
+
     private var dialogLeadNo : Dialog? = null
     var recyLeadNo: RecyclerView? = null
     lateinit var leadnoSort : JSONArray
+    var strID_cat   = ""
     var strID_FIELD   = ""
     var leadcount       = 0
     lateinit var leadnoArrayList : JSONArray
     lateinit var leadnoViewModel: LeadNoViewModel
+
+
+
+    lateinit var catArrayList : JSONArray
+    lateinit var catViewModel: CatViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +88,7 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_project_report)
         context = this@ProjectReportActivity
+        catViewModel = ViewModelProvider(this).get(catViewModel::class.java)
         leadnoViewModel = ViewModelProvider(this).get(LeadNoViewModel::class.java)
         reportNameProjectViewModel = ViewModelProvider(this).get(ReportNameProjectViewModel::class.java)
        setRegViews()
@@ -86,6 +100,7 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         tie_FromDate = findViewById(R.id.tie_FromDate)
         tie_ToDate = findViewById(R.id.tie_ToDate)
         tie_LeadNo = findViewById(R.id.tie_LeadNo)
+        tie_Cat = findViewById(R.id.tie_Cat)
         btnSubmit = findViewById(R.id.btnSubmit)
         btnReset = findViewById(R.id.btnReset)
         imback!!.setOnClickListener(this)
@@ -93,6 +108,7 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         tie_FromDate!!.setOnClickListener(this)
         tie_ToDate!!.setOnClickListener(this)
         tie_LeadNo!!.setOnClickListener(this)
+        tie_Cat!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
         btnReset!!.setOnClickListener(this)
     }
@@ -108,6 +124,10 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             R.id.tie_LeadNo -> {
                 leadcount = 0
                 getLeadNo()
+            }
+            R.id.tie_Cat -> {
+               // leadcount = 0
+                getCat()
             }
             R.id.tie_FromDate -> {
                 openBottomSheet(tie_FromDate,tie_ToDate)
@@ -131,8 +151,10 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         tie_ToDate!!.setText(currentDate)
         tie_ReportName!!.setText("")
         tie_LeadNo!!.setText("")
+        tie_Cat!!.setText("")
         ReportMode = ""
         strID_FIELD = ""
+        strID_cat = ""
     }
 
     private fun validateData(v: View) {
@@ -145,6 +167,9 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         }
         else if (strID_FIELD.equals("")) {
             Config.snackBars(context, v, "Select Lead Number")
+        }
+        else if (strID_cat.equals("")) {
+            Config.snackBars(context, v, "Select Category Name")
         }else if (tie_FromDate!!.text.toString().equals("")) {
             Config.snackBars(context, v, "Select From Date")
         } else if (tie_ToDate!!.text.toString().equals("")) {
@@ -410,6 +435,136 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
                     for (k in 0 until leadnoArrayList.length()) {
                         val jsonObject = leadnoArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("Name").length) {
+                            if (jsonObject.getString("Name")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                leadnoSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"leadnoSort               7103    "+leadnoSort)
+                    val adapter = LeadNoAdapter(this@ProjectReportActivity, leadnoSort)
+                    recyLeadNo!!.adapter = adapter
+                    adapter.setClickListener(this@ProjectReportActivity)
+                }
+            })
+
+            dialogLeadNo!!.show()
+            dialogLeadNo!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getCat() {
+        // var leadInfo = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                catViewModel.getCat(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (leadcount == 0){
+                                    leadcount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   114455   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("CategoryNameDetails")
+                                        catArrayList = jobjt.getJSONArray("CategoryNameList")
+                                        if (catArrayList.length()>0){
+
+                                            catPopup(catArrayList)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectReportActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun catPopup(catArrayList: JSONArray) {
+        try {
+
+            dialogLeadNo = Dialog(this)
+            dialogLeadNo!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogLeadNo!! .setContentView(R.layout.lead_list_popup)
+            dialogLeadNo!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyLeadNo = dialogLeadNo!! .findViewById(R.id.recyLeadNo) as RecyclerView
+            val etsearch = dialogLeadNo!! .findViewById(R.id.etsearch) as EditText
+
+            leadnoSort = JSONArray()
+            for (k in 0 until catArrayList.length()) {
+                val jsonObject = catArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                leadnoSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@ProjectReportActivity, 1)
+            recyLeadNo!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapter = CatNameAdapter(this@ProjectReportActivity, leadnoSort)
+            recyLeadNo!!.adapter = adapter
+            adapter.setClickListener(this@ProjectReportActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    leadnoSort = JSONArray()
+
+                    for (k in 0 until catArrayList.length()) {
+                        val jsonObject = catArrayList.getJSONObject(k)
                         if (textlength <= jsonObject.getString("Name").length) {
                             if (jsonObject.getString("Name")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
                                 leadnoSort.put(jsonObject)
@@ -703,6 +858,12 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             Log.e(TAG,"LeadNo   "+jsonObject.getString("LeadNo"))
             tie_LeadNo!!.setText(jsonObject.getString("LeadNo"))
             strID_FIELD = jsonObject.getString("ID_FIELD")
+            dialogLeadNo!!.dismiss()
+        }
+        if (data.equals("CategoryClick")){
+            val jsonObject = leadnoSort.getJSONObject(position)
+            tie_Cat!!.setText(jsonObject.getString("CategoryName"))
+            strID_cat = jsonObject.getString("CategoryMode")
             dialogLeadNo!!.dismiss()
         }
     }
