@@ -6,28 +6,34 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.Observer
+
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.AuthorizationCountAdapter
-import com.perfect.prodsuit.Viewmodel.AuthorizationMixedViewModel
+import com.perfect.prodsuit.View.Adapter.DashCountDetailstAdapter
 import com.perfect.prodsuit.Viewmodel.HomeDashBoardCountDetailsViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
-class HomeDashBoardDetailPageActivity : AppCompatActivity() {
+class HomeDashBoardDetailPageActivity : AppCompatActivity(), View.OnClickListener {
 
     val TAG : String = "HomeDashBoardDetailPageActivity"
     lateinit var context: Context
     lateinit var homedashboardCountDetailsViewModel: HomeDashBoardCountDetailsViewModel
     internal var recycdetail_show: RecyclerView?    = null
     private var progressDialog   : ProgressDialog?  = null
-    var authMixCount                                = 0
-    var AttendedLeadsArraylist                      = JSONArray()
+    var CountDetailCount                            = 0
+    var DataItemsListArraylist                      = JSONArray()
+    var jsonObj: JSONObject? = null
+    private var Criteria: String? = ""
+    private var ReqMode: String? = ""
+//    private var Module_sub: String? = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,40 +43,59 @@ class HomeDashBoardDetailPageActivity : AppCompatActivity() {
         context = this@HomeDashBoardDetailPageActivity
         homedashboardCountDetailsViewModel = ViewModelProvider(this).get(HomeDashBoardCountDetailsViewModel::class.java)
 
+//        CountDetailCount = 0
+//        getCountDetailList()
+
+        var jsonObject: String? = intent.getStringExtra("jsonObject")
+        jsonObj = JSONObject(jsonObject)
+        Criteria= jsonObj!!.getString("Criteria")
+        Log.e(TAG,"Criteria 445   "+Criteria)
+        Log.e(TAG,"Criteria 445   "+jsonObj)
+        setRegViews()
+
+        CountDetailCount = 0
         getCountDetailList()
+    }
+
+    private fun setRegViews() {
+        recycdetail_show=findViewById(R.id.recycdetail_show)
+
+
+        val imback = findViewById<ImageView>(R.id.imback)
+        imback!!.setOnClickListener(this)
     }
 
     private fun getCountDetailList() {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-
+                ReqMode = "18"
                 progressDialog = ProgressDialog(context, R.style.Progress)
                 progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
                 progressDialog!!.setCancelable(false)
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                homedashboardCountDetailsViewModel.getHomeDashBoardCountDetails(this)!!.observe(
+                homedashboardCountDetailsViewModel.getHomeDashBoardCountDetails(this,Criteria!!,ReqMode!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
                         try {
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
-                                if (authMixCount == 0) {
-                                    authMixCount++
+                                if (CountDetailCount == 0) {
+                                    CountDetailCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   760000   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
                                         val jobjt = jObject.getJSONObject("UserTaskListDetails")
-                                        AttendedLeadsArraylist = jobjt.getJSONArray("AttendedLeads")
-                                        Log.e(TAG, "AttendedLeadsArraylist   6666   " + AttendedLeadsArraylist)
+                                        DataItemsListArraylist = jobjt.getJSONArray("DataItemsList")
+                                        Log.e(TAG, "DataItemsListArraylist   6666   " + DataItemsListArraylist)
 
 
                                         val lLayout = GridLayoutManager(this@HomeDashBoardDetailPageActivity, 1)
                                         recycdetail_show!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        val adapter = AuthorizationCountAdapter(this@HomeDashBoardDetailPageActivity, AttendedLeadsArraylist)
+                                        val adapter = DashCountDetailstAdapter(this@HomeDashBoardDetailPageActivity, DataItemsListArraylist)
                                         recycdetail_show!!.adapter = adapter
 //                                            adapter.setClickListener(this@AuthorizationMiniDashboardActivity)
 
@@ -107,6 +132,14 @@ class HomeDashBoardDetailPageActivity : AppCompatActivity() {
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
+            }
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when(v!!.id){
+            R.id.imback->{
+                finish()
             }
         }
     }

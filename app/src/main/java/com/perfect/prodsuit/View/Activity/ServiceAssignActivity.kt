@@ -1112,12 +1112,17 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         arrSaveUpdate ="0"
         btnAdd!!.setText("Add")
 
+     //   depmode = 0
+
         if (depmode == 0){
             var jsonObject1 = departmentArrayList.getJSONObject(0)
             tie_Department!!.setText(jsonObject1.getString("DeptName"))
             ID_Department = jsonObject1.getString("ID_Department")
 
         }
+        var jsonObject1 = departmentArrayList.getJSONObject(0)
+        tie_Department!!.setText(jsonObject1.getString("DeptName"))
+        ID_Department = jsonObject1.getString("ID_Department")
 
 
     }
@@ -1526,8 +1531,11 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
 
+        date_Picker1.minDate=System.currentTimeMillis()-1000
+     //   date_Picker1.maxDate=System.currentTimeMillis()
+
         if (dateMode == 0){
-          //  date_Picker1.maxDate = System.currentTimeMillis()
+         //   date_Picker1.maxDate = System.currentTimeMillis()
         }
 
         txtCancel.setOnClickListener {
@@ -2438,6 +2446,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
             try {
                 val jsonObject = arrProducts.getJSONObject(position)
+                Log.e(TAG,"product click 454545=="+arrProducts.getJSONObject(position))
+
          //   arrProducts.add(position)
 //            adapterService!!.notifyItemRemoved(position)
                 arrSaveUpdate = "1"

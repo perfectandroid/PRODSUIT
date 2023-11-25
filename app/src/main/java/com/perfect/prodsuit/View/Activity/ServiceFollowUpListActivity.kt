@@ -357,7 +357,12 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
             val builder: AlertDialog.Builder = AlertDialog.Builder(this)
             val dialog: AlertDialog = builder.setMessage("No data found")
                 .setPositiveButton("OK") {
-                        dialog, which -> dialog.dismiss()
+
+
+                        dialog, which ->
+//                    serviceFollowUpDet = 0
+//                    getServiceFollowUpList()
+                    dialog.dismiss()
                 }
 
                 .create()
@@ -429,7 +434,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 //            }
 
             if (mapLongitude.equals("") || mapLatitude.equals("")){
-                showSnackBar("Location Not Found", this)
+            //    showSnackBar("Location Notxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx Found", this)
                 val i = Intent(this@ServiceFollowUpListActivity, LocationViewActivity::class.java)
                 i.putExtra("mode","0")
                 i.putExtra("longitude",mapLongitude)
@@ -859,39 +864,88 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
             strToDate = ""
         }
         btnYes.setOnClickListener {
-            dialog.dismiss()
-            var jsonArrayFilterd: JSONArray = JSONArray()
-            var ticketNumber: String = ""
-            var product: String = ""
-            var date: String = ""
-            var customer: String = ""
-            var tickerNumber: String = ""
-            var status: String = ""
 
-            ticketNumber = edtTicket.text.toString()
-            product = edtProduct.text.toString()
-            date = edt_fromDate.text.toString()
-            customer = edt_customer.text.toString()
-            status = edt_status.text.toString()
-            if (status.equals("Choose"))
+
+
+
+            if (edtTicket!!.text.toString().equals("")&&edt_fromDate!!.text.toString().equals("")&&edt_customer!!.text.toString().equals("")){
+
+                Toast.makeText(applicationContext,"Please enter any one field",Toast.LENGTH_LONG).show()
+            }
+            else
             {
-                status=""
+
+
+            //    dialog.dismiss()
+                var jsonArrayFilterd: JSONArray = JSONArray()
+                var ticketNumber: String = ""
+                var product: String = ""
+                var date: String = ""
+                var customer: String = ""
+                var tickerNumber: String = ""
+                var status: String = ""
+
+                ticketNumber = edtTicket.text.toString()
+                product = edtProduct.text.toString()
+                date = edt_fromDate.text.toString()
+                customer = edt_customer.text.toString()
+                status = edt_status.text.toString()
+                if (status.equals("Choose"))
+                {
+                    status=""
+                }
+
+                var x = 0
+                for (i in 0 until serviceFollowUpArrayList.length()) {
+                    val item = serviceFollowUpArrayList.getJSONObject(i)
+
+                    Log.e(TAG, "list data 334455" +serviceFollowUpArrayList.getJSONObject(i))
+                    Log.e(TAG, "list data 334455 date==" +date)
+                    Log.v("fdfddefe", "i" + i)
+                    if (item.getString("Ticket").toLowerCase().contains(ticketNumber.toLowerCase()) &&
+                        //item.getString("product").toLowerCase().contains(product.toLowerCase()) &&
+                        item.getString("Customer").toLowerCase().contains(customer.toLowerCase()) &&
+                        item.getString("CurrentStatus").toLowerCase().contains(status.toLowerCase()) &&
+                        item.getString("TicketDate").toLowerCase().contains(date.toLowerCase())
+                    ) {
+                        jsonArrayFilterd.put(item)
+                    }
+
+                }
+                Log.e("fdfddefe", "json size=" + jsonArrayFilterd.length())
+
+            if (jsonArrayFilterd.length()>0)
+            {
+                dialog.dismiss()
+                setServiceFollowRecycler(jsonArrayFilterd)
+            }
+            else
+            {
+
+
+                val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                val dialog: AlertDialog = builder.setMessage("Please Enter a Valid Ticket")
+                    .setPositiveButton("OK") {
+
+
+                            dialog, which ->
+
+                        dialog.dismiss()
+                    }
+
+                    .create()
+                dialog.show()
+
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK)
+
             }
 
-            var x = 0
-            for (i in 0 until serviceFollowUpArrayList.length()) {
-                val item = serviceFollowUpArrayList.getJSONObject(i)
-                Log.v("fdfddefe", "i" + i)
-                if (item.getString("Ticket").toLowerCase().contains(ticketNumber.toLowerCase()) &&
-                    //item.getString("product").toLowerCase().contains(product.toLowerCase()) &&
-                    item.getString("Customer").toLowerCase().contains(customer.toLowerCase()) &&
-                    item.getString("CurrentStatus").toLowerCase().contains(status.toLowerCase())
-                ) {
-                    jsonArrayFilterd.put(item)
-                }
+
+
+
+     //           setServiceFollowRecycler(jsonArrayFilterd)
             }
-            Log.v("fdfddefe", "json size=" + jsonArrayFilterd.length())
-            setServiceFollowRecycler(jsonArrayFilterd)
+
         }
         dialog!!.setContentView(view)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)

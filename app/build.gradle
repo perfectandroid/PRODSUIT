@@ -8,14 +8,14 @@ android {
 
     signingConfigs {
         // HIDE
-        release {
+       /* release {
             storeFile file('D:\\Ranjith\\PRODSUIT\\Release\\persuitedevelopment.jks')
             storePassword 'persuite@dev2023'
             keyAlias 'persuitedev'
             keyPassword 'persuite@dev2023'
 //            v1SigningEnabled true
 //            v2SigningEnabled true
-        }
+        }*/
 
     }
     aaptOptions {
@@ -53,7 +53,7 @@ android {
                 abortOnError false
             }
             minifyEnabled false
-            signingConfig signingConfigs.release
+//s            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -152,7 +152,8 @@ dependencies {
     def lottieVersion = "4.1.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
     implementation 'androidx.biometric:biometric:1.1.0'
-
+    //pyramid map
+    implementation 'com.github.dhaval-android:funnel_meter_chartview:1.0.0'	;
 
 
 

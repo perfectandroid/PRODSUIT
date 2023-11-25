@@ -12,14 +12,14 @@
 
     <TextView
         android:id="@+id/tv_newCount"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:background="@drawable/elipse"
         android:fontFamily="@font/myfont"
         android:gravity="center"
         android:text=""
         android:textColor="@color/black"
-        android:textSize="9dp"
+        android:textSize="12dp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal" />
 
@@ -27,7 +27,7 @@
         android:id="@+id/txtv_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="9dp"
+        android:textSize="12dp"
         android:textStyle="bold"
         android:text=""
         android:layout_gravity="center_horizontal" />
