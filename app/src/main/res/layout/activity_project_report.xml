@@ -256,6 +256,44 @@
 
 
 
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/til_Cat"
+                                style="@style/Widget.App.TextInputLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="15dp"
+                                android:drawableTint="@color/textColor"
+                                android:fontFamily="@font/myfont"
+                                android:hint="Category *"
+                                android:orientation="vertical"
+                                android:textColorHint="@color/greydarks">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/tie_Cat"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:backgroundTint="@color/greydark"
+                                    android:drawableLeft="@drawable/lead_productss"
+                                    android:drawableRight="@drawable/arrow_down"
+                                    android:drawablePadding="5dp"
+                                    android:drawableTint="@color/textColor"
+                                    android:editable="false"
+                                    android:focusableInTouchMode="false"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="10dp"
+                                    android:paddingTop="8dp"
+                                    android:paddingBottom="8dp"
+                                    android:textColor="@color/black"
+                                    android:textSize="14dp"
+                                    android:textStyle="normal" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+
+
 
 
                             <LinearLayout
