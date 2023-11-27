@@ -1219,7 +1219,96 @@
                                         app:cardUseCompatPadding="true">
 
                                         <LinearLayout
-                                            android:id="@+id/ll_tile1"
+                                            android:orientation="vertical"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+                                         <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content">
+                                                <TextView
+                                                    android:id="@+id/txt_tileChartlead"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="50dp"
+                                                    android:layout_weight="1"
+                                                    android:text=""
+                                                    android:textAllCaps="true"
+                                                    android:textColor="@color/white"
+                                                    android:gravity="left|center"
+                                                    android:paddingLeft="15dp"
+                                                    android:layout_gravity="center"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:background="@color/colorPrimary"
+                                                    android:textStyle="bold"
+                                                    android:textSize="@dimen/header_text1"
+                                                    android:visibility="visible"/>
+
+                                         </LinearLayout>
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="#ffffff"
+                                            android:layout_weight="1"
+                                            android:gravity="center"
+                                            android:layout_gravity="center"
+                                            tools:ignore="Orientation">
+                                            <androidx.recyclerview.widget.RecyclerView
+                                                android:id="@+id/rclrvw_lead"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center"
+                                                android:layout_margin="10dp"
+                                                android:gravity="center"
+                                                android:visibility="visible" />
+                                        </LinearLayout>
+
+
+                                        </LinearLayout>
+                                    </androidx.cardview.widget.CardView>
+                                    <androidx.cardview.widget.CardView
+                                        android:id="@+id/crdv_avgconvsnlead"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:background="@color/white"
+                                        android:visibility="gone"
+                                        app:cardCornerRadius="5dp"
+                                        app:cardElevation="1dp"
+                                        app:cardPreventCornerOverlap="true"
+                                        app:cardUseCompatPadding="true">
+                                        <ImageView
+                                            android:src="@drawable/bg_tile"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:scaleType="fitXY"/>
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+                                            <TextView
+                                                android:id="@+id/txtv_leadChartAvg"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="50dp"
+                                                android:layout_weight="1"
+                                                android:text=""
+                                                android:textAllCaps="true"
+                                                android:textColor="@color/white"
+                                                android:gravity="left|center"
+                                                android:paddingLeft="15dp"
+                                                android:layout_gravity="center"
+                                                android:fontFamily="@font/myfont"
+                                                android:background="@color/colorPrimary"
+                                                android:textStyle="bold"
+                                                android:textSize="@dimen/header_text1"
+                                                android:visibility="visible"/>
+
+                                        </LinearLayout>
+                                        <LinearLayout
+                                            android:id="@+id/ll_cnvsnlead"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:background="#ffffff"
@@ -1229,20 +1318,21 @@
                                             android:paddingLeft="10dp"
                                             android:paddingRight="10dp"
                                             android:gravity="center"
-                                            android:layout_gravity="center"
-                                            tools:ignore="Orientation">
+                                            android:layout_gravity="center">
 
                                             <androidx.recyclerview.widget.RecyclerView
-                                                android:id="@+id/rclrvw_lead"
+                                                android:id="@+id/rclrvw_avgleadconvsn"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center"
-                                                android:layout_margin="10dp"
                                                 android:gravity="center"
+                                                android:layout_margin="10dp"
                                                 android:visibility="visible" />
 
 
                                         </LinearLayout>
+                                        </LinearLayout>
+
                                     </androidx.cardview.widget.CardView>
 
                                     <View
@@ -1268,7 +1358,31 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:scaleType="fitXY"/>
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+                                            <TextView
+                                                android:id="@+id/txtv_leadChartoutstand"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="50dp"
+                                                android:layout_weight="1"
+                                                android:text=""
+                                                android:textAllCaps="true"
+                                                android:textColor="@color/white"
+                                                android:gravity="left|center"
+                                                android:paddingLeft="15dp"
+                                                android:layout_gravity="center"
+                                                android:fontFamily="@font/myfont"
+                                                android:background="@color/colorPrimary"
+                                                android:textStyle="bold"
+                                                android:textSize="@dimen/header_text1"
+                                                android:visibility="visible"/>
 
+                                        </LinearLayout>
                                         <LinearLayout
                                             android:id="@+id/ll_tile2"
                                             android:layout_width="match_parent"
@@ -1293,50 +1407,6 @@
 
 
                                         </LinearLayout>
-
-                                    </androidx.cardview.widget.CardView>
-                                    <androidx.cardview.widget.CardView
-                                        android:id="@+id/crdv_avgconvsnlead"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="5dp"
-                                        android:layout_marginRight="5dp"
-                                        android:layout_marginBottom="5dp"
-                                        android:background="@color/white"
-                                        android:visibility="gone"
-                                        app:cardCornerRadius="5dp"
-                                        app:cardElevation="1dp"
-                                        app:cardPreventCornerOverlap="true"
-                                        app:cardUseCompatPadding="true">
-                                        <ImageView
-                                            android:src="@drawable/bg_tile"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:scaleType="fitXY"/>
-
-                                        <LinearLayout
-                                            android:id="@+id/ll_cnvsnlead"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:background="#ffffff"
-                                            android:layout_weight="1"
-                                            android:paddingTop="15dp"
-                                            android:paddingBottom="15dp"
-                                            android:paddingLeft="10dp"
-                                            android:paddingRight="10dp"
-                                            android:gravity="center"
-                                            android:layout_gravity="center">
-
-                                            <androidx.recyclerview.widget.RecyclerView
-                                                android:id="@+id/rclrvw_avgleadconvsn"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:layout_gravity="center"
-                                                android:gravity="center"
-                                                android:layout_margin="10dp"
-                                                android:visibility="visible" />
-
-
                                         </LinearLayout>
 
                                     </androidx.cardview.widget.CardView>
