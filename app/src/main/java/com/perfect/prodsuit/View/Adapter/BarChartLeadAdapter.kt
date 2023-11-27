@@ -39,9 +39,14 @@ class BarChartLeadAdapter(internal var context: Context, internal var jsonArray:
             if (holder is MainViewHolder) {
 
                 val pos = position+1
-                holder.tv_colorBox.setBackgroundResource(color[position])
+
+
                 holder.tv_label.text        = jsonObject!!.getString("EmpFName")
                 holder.tv_value.text        = jsonObject!!.getString("ActualPercentage").toFloat().toInt().toString()
+                if(!holder.tv_label.text.equals(""))
+                {
+                    holder.tv_colorBox.setBackgroundResource(color[position])
+                }
 
 //                if (position == 0){
 //                    holder.tv_label.text        = "Service Ticket Action-, Date Criteria"
