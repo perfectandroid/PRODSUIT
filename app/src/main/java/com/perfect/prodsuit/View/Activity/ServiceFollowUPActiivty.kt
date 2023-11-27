@@ -2568,6 +2568,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
             txtCancel.setOnClickListener {
+                tie_Selectarea!!.text!!.clear()
 //                loadLoginEmpDetails("1")
             }
 
