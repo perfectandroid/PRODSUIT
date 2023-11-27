@@ -35,10 +35,10 @@ class ProjectSitevisitReportAdapter (internal var context: Context, internal var
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
 
-                Log.e(TAG,"onBindViewHolder   1051   ")
+                Log.e(TAG,"onBindViewHolder   1051   gg"+jsonArray)
                 val pos = position+1
 
-                if (ReportMode.equals("1")) {
+              //  if (ReportMode.equals("1")) {
 
                     holder.tv_SiteVisitID.text = "Site Visit Id : "+jsonObject!!.getString("SiteVisitID")
                     holder.tv_leadno.text = jsonObject!!.getString("LeadNo")
@@ -50,7 +50,7 @@ class ProjectSitevisitReportAdapter (internal var context: Context, internal var
                     holder.tv_ExpenseAmount.text = "Expense Amount : "+ Config.changeTwoDecimel(jsonObject!!.getString("ExpenseAmount"))
                    // holder.tv_Remarks.text = "Remark : "+jsonObject!!.getString("Remarks")
 
-                }
+               // }
 
          /*       holder.ll_newList!!.setTag(position)
                 holder.ll_newList!!.setOnClickListener(View.OnClickListener {

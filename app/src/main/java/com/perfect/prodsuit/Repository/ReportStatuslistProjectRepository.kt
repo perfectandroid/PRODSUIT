@@ -26,12 +26,12 @@ object ReportStatuslistProjectRepository {
     val reportNameSetterGetter = MutableLiveData<ProjectStatuslistReportModel>()
     val TAG: String = "ReportNameRepository"
 
-    fun getServicesApiCall(context: Context,RegMode : String, Fromdate : String, Todate : String, IdLead : String): MutableLiveData<ProjectStatuslistReportModel> {
-        getReportStatusList(context,RegMode,Fromdate,Todate,IdLead)
+    fun getServicesApiCall(context: Context,RegMode : String, Fromdate : String, Todate : String, idcat : String): MutableLiveData<ProjectStatuslistReportModel> {
+        getReportStatusList(context,RegMode,Fromdate,Todate,idcat)
         return reportNameSetterGetter
     }
 
-    private fun getReportStatusList(context: Context,RegMode : String,fromdate : String,todate : String,idlead : String) {
+    private fun getReportStatusList(context: Context,RegMode : String,fromdate : String,todate : String,idcat : String) {
 
         try {
             reportNameSetterGetter.value = ProjectStatuslistReportModel("")
@@ -77,11 +77,11 @@ object ReportStatuslistProjectRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("FromDate", fromdate)
                 requestObject1.put("ToDate", todate)
-                requestObject1.put("LeadNo", "0")
+              //  requestObject1.put("LeadNo", "0")
                 requestObject1.put("FK_Area", "0")
-                requestObject1.put("FK_Project", "0")
-                requestObject1.put("Category", "0")
-                requestObject1.put("ReportMode", RegMode)
+              //  requestObject1.put("FK_Project", "0")
+                requestObject1.put("Category", idcat)
+                requestObject1.put("ReportMode", "1")
                 requestObject1.put("FK_Machine", "10")
                 requestObject1.put("Criteria", "0")
                 requestObject1.put("TableCount", "1")
@@ -95,7 +95,7 @@ object ReportStatuslistProjectRepository {
                 requestObject1.toString()
             )
             Log.i("responserrr","body=="+requestObject1.toString())
-            val call = apiService.getProjectReportDetail(body)
+            val call = apiService.getProjectListDetail(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:

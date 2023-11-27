@@ -5,9 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.CatModel
-import com.perfect.prodsuit.Model.LeadNoModel
 import com.perfect.prodsuit.Repository.CatRepository
-import com.perfect.prodsuit.Repository.LeadNoRepository
 
 class CatViewModel : ViewModel() {
 
