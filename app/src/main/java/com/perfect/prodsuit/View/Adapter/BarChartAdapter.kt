@@ -17,7 +17,7 @@ class BarChartAdapter(internal var context: Context, internal var jsonArray: JSO
     internal val TAG : String = "LineChartAdapter"
     internal var jsonObject: JSONObject? = null
 
-    val color = intArrayOf(R.color.leadbar1, R.color.leadbar2, R.color.leadbar3,R.color.leadbar4,R.color.leadbar5)
+    val color = intArrayOf(R.color.leadstatus_color1, R.color.leadstatus_color2, R.color.leadstatus_color3,R.color.leadstatus_color4,R.color.leadstatus_color5)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
@@ -34,8 +34,13 @@ class BarChartAdapter(internal var context: Context, internal var jsonArray: JSO
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   "+jsonObject!!.getString("StatusName"))
                 val pos = position+1
-                holder.tv_BarBox.setBackgroundResource(color[position])
+
                 holder.tv_BarName.text        = jsonObject!!.getString("StatusName")
+                holder.tv_BarName.text        = jsonObject!!.getString("Percentage "+"%"+"("+jsonObject!!.getString("Amount")+")")
+                if(!holder.tv_BarName.text.equals(""))
+                {
+                    holder.tv_BarBox.setBackgroundResource(color[position])
+                }
 
 
             }
@@ -61,9 +66,12 @@ class BarChartAdapter(internal var context: Context, internal var jsonArray: JSO
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         internal var tv_BarBox          : TextView
         internal var tv_BarName         : TextView
+        internal var tv_BarValue         : TextView
+
         init {
             tv_BarBox        = v.findViewById<View>(R.id.tv_BarBox) as TextView
             tv_BarName       = v.findViewById<View>(R.id.tv_BarName) as TextView
+            tv_BarValue       = v.findViewById<View>(R.id.tv_BarValue) as TextView
 
         }
     }

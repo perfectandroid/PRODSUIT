@@ -38,13 +38,13 @@ object AvergLeadConvrsnRepository {
         try {
             avgleadconvsnSetterGetter.value = AverageLeadConversionModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
-//            progressDialog = ProgressDialog(context, R.style.Progress)
-//            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//            progressDialog!!.setCancelable(false)
-//            progressDialog!!.setIndeterminate(true)
-//            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
-//                R.drawable.progress))
-//            progressDialog!!.show()
+            progressDialog = ProgressDialog(context, R.style.Progress)
+            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+            progressDialog!!.setCancelable(false)
+            progressDialog!!.setIndeterminate(true)
+            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
+                R.drawable.progress))
+            progressDialog!!.show()
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
@@ -110,7 +110,7 @@ object AvergLeadConvrsnRepository {
                     Response<String>
                 ) {
                     try {
-                       // progressDialog!!.dismiss()
+                        progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
                         Log.e(TAG,"  AVRG CONVERS VIEW"+response.body())
                         val leads = ArrayList<AverageLeadConversionModel>()
