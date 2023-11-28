@@ -11,10 +11,10 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class BarChartLeadAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+class EmployeewiseAmountAdapter(internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "BarChartLeadAdapter"
+    internal val TAG : String = "EmployeewiseAmountAdapter"
     internal var jsonObject: JSONObject? = null
 
     val color = intArrayOf(
@@ -39,14 +39,9 @@ class BarChartLeadAdapter(internal var context: Context, internal var jsonArray:
             if (holder is MainViewHolder) {
 
                 val pos = position+1
-
-
+                holder.tv_colorBox.setBackgroundResource(color[position])
                 holder.tv_label.text        = jsonObject!!.getString("EmpFName")
-                holder.tv_value.text        = jsonObject!!.getString("ActualPercentage").toFloat().toInt().toString()
-                if(!holder.tv_label.text.equals(""))
-                {
-                    holder.tv_colorBox.setBackgroundResource(color[position])
-                }
+                holder.tv_value.text        = jsonObject!!.getString("TargetAmount").toFloat().toInt().toString()
 
 //                if (position == 0){
 //                    holder.tv_label.text        = "Service Ticket Action-, Date Criteria"

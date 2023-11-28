@@ -9,9 +9,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.LeadInfoModel
-import com.perfect.prodsuit.Model.LeadNoModel
-import com.perfect.prodsuit.Model.MeasurementTypeModel
+import com.perfect.prodsuit.Model.CatModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -22,20 +20,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object LeadNoRepository {
+object CatRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val LeadnotSetterGetter = MutableLiveData<LeadNoModel>()
+    val LeadnotSetterGetter = MutableLiveData<CatModel>()
     val TAG: String = "LeadNoRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<LeadNoModel> {
+    fun getServicesApiCall(context: Context): MutableLiveData<CatModel> {
         getMeasureType(context)
         return LeadnotSetterGetter
     }
 
     private fun getMeasureType(context: Context) {
         try {
-            LeadnotSetterGetter.value = LeadNoModel("")
+            LeadnotSetterGetter.value = CatModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -61,15 +59,24 @@ object LeadNoRepository {
             val requestObject1 = JSONObject()
 
             try {
+
+
+                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+                val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("75"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+               requestObject1.put("ReqMode", "21")
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
+                requestObject1.put("EntrBy", UserCodeSP.getString("UserCode", null))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
 
 //                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 Log.e(TAG,"LeadNo  78   "+requestObject1)
@@ -80,7 +87,7 @@ object LeadNoRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getLeadList(body)
+            val call = apiService.getCategoryNameDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -88,12 +95,11 @@ object LeadNoRepository {
                 ) {
                     try {
                         progressDialog!!.dismiss()
-                        Log.e(TAG,"LeadNo  7844   "+response.body())
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<LeadNoModel>()
-                        leads.add(LeadNoModel(response.body()))
+                        val leads = ArrayList<CatModel>()
+                        leads.add(CatModel(response.body()))
                         val msg = leads[0].message
-                        LeadnotSetterGetter.value = LeadNoModel(msg)
+                        LeadnotSetterGetter.value = CatModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                         Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()

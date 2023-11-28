@@ -41,6 +41,7 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Repository.AreaListRepository
+import com.perfect.prodsuit.Repository.EmployeeWiseTargetAmountRepository
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -52,6 +53,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     internal var etdate: EditText? = null
     internal var ettime: EditText? = null
     lateinit var topRevenueArrayList: JSONArray
+    lateinit var emptargetamtArrayList: JSONArray
     lateinit var leadstagecountwiseListBarList: JSONArray
     lateinit var avgconvsnleadArrayList: JSONArray
 
@@ -60,6 +62,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     lateinit var leadActivityBarList: JSONArray
     var leadstagecountwiseList = 0
     var leadstagecountwiseText: TextView? = null
+    var txtv_EmpWiseRemark: TextView? = null
+
     var recycleemployeewiseAvg: FullLenghRecyclertview? = null
     var rclv_toprevenue: FullLenghRecyclertview? = null
 
@@ -68,13 +72,22 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     var employeewiseAvgText: TextView? = null
     var employeewiseavgconvesionList = 0
     lateinit var employeewiseAvgViewModel: EmployeewiseAvgViewModel
+    lateinit var employeewiseTargetAmountViewModel: EmployeewiseTargetAmountViewModel
     lateinit var leadstagecountwiseViewModel:LeadstagecountwiseViewModel
     lateinit var employeewiseAvgBarList: JSONArray
     internal var etdis: EditText? = null
     internal var tile1: LinearLayout? = null
     internal var tile2: LinearLayout? = null
+
+    internal var ll_empwseamt: LinearLayout? = null
+    var rclv_empwiseamt: FullLenghRecyclertview? = null
+    private lateinit var empwiseamt_barchart: BarChart
+
+
     lateinit var leadSourseChart: HorizontalBarChart
     var leadSourseSubText: TextView? = null
+    var txtv_LeadForecastRemark: TextView? = null
+
     lateinit var leadSourseBarList: JSONArray
     var recycleLeadSourse: FullLenghRecyclertview? = null
     var leadSourseList = 0
@@ -95,8 +108,12 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     internal var firstpage: LinearLayout? = null
     internal var ll_empwise: LinearLayout? = null
     var leadActivityList = 0
+    var employeewisetargetamtList=0
     lateinit var chartTypeViewModel: ChartTypeViewModel
     private var tvv_dash: TextView? = null
+    private var txt_tileChartlead: TextView? = null
+    private var txtv_leadChartAvg: TextView? = null
+    private var txtv_leadChartoutstand: TextView? = null
     private var tvv_tile: TextView? = null
     private var ll_Graph: LinearLayout? = null
     private var ll_Tile: LinearLayout? = null
@@ -181,6 +198,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
     private var scoreListBar = ArrayList<EmployeewiseBarLead>()
     private var top10ListBar = ArrayList<Top10BarLead>()
+    private var empwiseAmtBar = ArrayList<EmpwiseAmtBarLead>()
     private var topRevenueBar = ArrayList<TopRevenueBarLead>()
     lateinit var chartBarArrayList: JSONArray
       lateinit var empwiseArrayList: JSONArray
@@ -208,6 +226,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         leadActivityViewModels= ViewModelProvider(this).get(leadActivityViewModel::class.java)
         averageLeadConversionModel= ViewModelProvider(this).get(AvgLeadConversionViewModel::class.java)
         topRevenueViewModel= ViewModelProvider(this).get(TopRevenueViewModel::class.java)
+        employeewiseTargetAmountViewModel= ViewModelProvider(this).get(EmployeewiseTargetAmountViewModel::class.java)
         setRegViews()
 
         SubMode = intent.getStringExtra("SubMode")
@@ -242,12 +261,12 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     private fun getLeadOutstandTile() {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-               /* progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog = ProgressDialog(context, R.style.Progress)
                 progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
                 progressDialog!!.setCancelable(false)
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()*/
+                progressDialog!!.show()
                 leadOutstandViewModel.getLeadOutstandTileCount(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -261,7 +280,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     Log.e(TAG, "msg   leadoutstandtile   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("TileLeadDashBoardDetails")
-
+                                        var chartname =   jobjt.getString("ChartName")
+                                        txtv_leadChartoutstand!!.text=chartname
 
                                         leadOutstandArrayList = jobjt.getJSONArray("LeadTileData")
                                         if (leadOutstandArrayList.length() > 0) {
@@ -296,7 +316,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         }
                                         else {
                                             crdv_leadoutstand!!.visibility=View.GONE
-                                            val builder = AlertDialog.Builder(
+                                           /* val builder = AlertDialog.Builder(
                                                 this@TileGraphActivity,
                                                 R.style.MyDialogTheme
                                             )
@@ -305,10 +325,10 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             }
                                             val alertDialog: AlertDialog = builder.create()
                                             alertDialog.setCancelable(false)
-                                            alertDialog.show()
+                                            alertDialog.show()*/
                                         }
                                     } else {
-                                        val builder = AlertDialog.Builder(
+                                        /*val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
                                             R.style.MyDialogTheme
                                         )
@@ -317,7 +337,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         }
                                         val alertDialog: AlertDialog = builder.create()
                                         alertDialog.setCancelable(false)
-                                        alertDialog.show()
+                                        alertDialog.show()*/
                                     }
                                  //   progressDialog!!.dismiss()
                                 }
@@ -330,15 +350,15 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 //                            ).show()
                             }
                         } catch (e: Exception) {
-                            Toast.makeText(
+                           /* Toast.makeText(
                                 applicationContext,
                                 "" + e.toString(),
                                 Toast.LENGTH_SHORT
-                            ).show()
+                            ).show()*/
                         }
 
                     })
-              //  progressDialog!!.dismiss()
+                progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
@@ -350,12 +370,12 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     private fun getLeadAvgConvrsn() {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                /* progressDialog = ProgressDialog(context, R.style.Progress)
+                 progressDialog = ProgressDialog(context, R.style.Progress)
                  progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
                  progressDialog!!.setCancelable(false)
                  progressDialog!!.setIndeterminate(true)
                  progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                 progressDialog!!.show()*/
+                 progressDialog!!.show()
                 averageLeadConversionModel.getAvgLeadConvrsn(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -369,7 +389,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     Log.e(TAG, "msg   avgleadconvrsn   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("TileLeadDashBoardDetails")
-
+                                        var chartname =   jobjt.getString("ChartName")
+                                        txtv_leadChartAvg!!.text=chartname
 
                                         avgconvsnleadArrayList = jobjt.getJSONArray("LeadTileData")
                                         if (avgconvsnleadArrayList.length() > 0) {
@@ -404,7 +425,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         }
                                         else {
                                             crdv_avgconvsnlead!!.visibility=View.GONE
-                                            val builder = AlertDialog.Builder(
+                                           /* val builder = AlertDialog.Builder(
                                                 this@TileGraphActivity,
                                                 R.style.MyDialogTheme
                                             )
@@ -413,10 +434,10 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             }
                                             val alertDialog: AlertDialog = builder.create()
                                             alertDialog.setCancelable(false)
-                                            alertDialog.show()
+                                            alertDialog.show()*/
                                         }
                                     } else {
-                                        val builder = AlertDialog.Builder(
+                                        /*val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
                                             R.style.MyDialogTheme
                                         )
@@ -425,28 +446,28 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         }
                                         val alertDialog: AlertDialog = builder.create()
                                         alertDialog.setCancelable(false)
-                                        alertDialog.show()
+                                        alertDialog.show()*/
                                     }
                                     //   progressDialog!!.dismiss()
                                 }
 
                             } else {
-                            Toast.makeText(
+                          /*  Toast.makeText(
                                 applicationContext,
                                 "Some Technical Issues.",
                                 Toast.LENGTH_LONG
-                            ).show()
+                            ).show()*/
                             }
                         } catch (e: Exception) {
-                            Toast.makeText(
+                           /* Toast.makeText(
                                 applicationContext,
                                 "" + e.toString(),
                                 Toast.LENGTH_SHORT
-                            ).show()
+                            ).show()*/
                         }
 
                     })
-                //  progressDialog!!.dismiss()
+                  progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
@@ -468,10 +489,14 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         recycleemployeewiseAvg=findViewById(R.id.recycleemployeewiseAvg)
         employeewiseAvgText=findViewById(R.id.employeewiseAvgText)
         leadstagecountwiseText=findViewById(R.id.leadstagecountwiseText)
+        txtv_EmpWiseRemark=findViewById(R.id.txtv_EmpWiseRemark)
         recycleleadstagecountwise=findViewById(R.id.recycleleadstagecountwise)
         recycleleadActivity=findViewById(R.id.recycleleadActivity)
         leadActivityText=findViewById(R.id.leadActivityText)
 
+        rclv_empwiseamt=findViewById(R.id.rclv_empwiseamt)
+        ll_empwseamt            = findViewById<LinearLayout>(R.id.ll_empwseamt)
+        empwiseamt_barchart = findViewById<BarChart>(R.id.empwiseamt_barchart)
 
         crdv_lead = findViewById<CardView>(R.id.crdv_lead)
         crdv_leadoutstand = findViewById<CardView>(R.id.crdv_leadoutstnd)
@@ -481,12 +506,19 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         card_leadstagecountwise=findViewById(R.id.card_leadstagecountwise)
         crdv_avgconvsnlead=findViewById(R.id.crdv_avgconvsnlead)
         card_toprevenue=findViewById(R.id.card_toprevenue)
+        txtv_LeadForecastRemark=findViewById(R.id.txtv_LeadForecastRemark)
 
 
         rclrvw_avgleadconvsn=findViewById(R.id.rclrvw_avgleadconvsn)
         rclv_toprevenue=findViewById(R.id.rclv_toprevenue)
         tvv_dash = findViewById<TextView>(R.id.tvv_dash)
         tvv_tile = findViewById<TextView>(R.id.tvv_tile)
+
+        txt_tileChartlead = findViewById<TextView>(R.id.txt_tileChartlead)
+        txtv_leadChartAvg = findViewById<TextView>(R.id.txtv_leadChartAvg)
+        txtv_leadChartoutstand = findViewById<TextView>(R.id.txtv_leadChartoutstand)
+
+
 
         ll_Piechart= findViewById<LinearLayout>(R.id.ll_Piechart)
         ll_barchart= findViewById<LinearLayout>(R.id.ll_barchart)
@@ -645,12 +677,12 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     private fun getLeadTile() {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-               /* progressDialog = ProgressDialog(context, R.style.Progress)
+               progressDialog = ProgressDialog(context, R.style.Progress)
                 progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
                 progressDialog!!.setCancelable(false)
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()*/
+                progressDialog!!.show()
                 leadTileViewModel.getLeadTileCount(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -665,6 +697,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("TileLeadDashBoardDetails")
                                         var remark =   jobjt.getString("Reamrk")
+                                        var chartname =   jobjt.getString("ChartName")
+                                        txt_tileChartlead!!.text=chartname
 
                                         ledaTileArrayList = jobjt.getJSONArray("LeadTileData")
                                         if (ledaTileArrayList.length() > 0) {
@@ -700,7 +734,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         }
                                         else {
                                             crdv_lead!!.visibility=View.GONE
-                                            val builder = AlertDialog.Builder(
+                                           /* val builder = AlertDialog.Builder(
                                                 this@TileGraphActivity,
                                                 R.style.MyDialogTheme
                                             )
@@ -709,10 +743,10 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             }
                                             val alertDialog: AlertDialog = builder.create()
                                             alertDialog.setCancelable(false)
-                                            alertDialog.show()
+                                            alertDialog.show()*/
                                         }
                                     } else {
-                                        val builder = AlertDialog.Builder(
+                                      /*  val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
                                             R.style.MyDialogTheme
                                         )
@@ -721,7 +755,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         }
                                         val alertDialog: AlertDialog = builder.create()
                                         alertDialog.setCancelable(false)
-                                        alertDialog.show()
+                                        alertDialog.show()*/
                                     }
                                   //  progressDialog!!.dismiss()
                                 }
@@ -734,15 +768,15 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 //                            ).show()
                             }
                         } catch (e: Exception) {
-                            Toast.makeText(
+                            /*Toast.makeText(
                                 applicationContext,
                                 "" + e.toString(),
                                 Toast.LENGTH_SHORT
-                            ).show()
+                            ).show()*/
                         }
 
                     })
-               // progressDialog!!.dismiss()
+                progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
@@ -783,13 +817,17 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     val jobjt = jObject.getJSONObject("EmployeeWiseTaegetInPercentage")
                                     empwiseArrayList =
                                         jobjt.getJSONArray("EmployeeWiseTaegetDetails")
+                                    val remark =
+                                        jobjt.getString("Reamrk")
+                                    txtv_EmpWiseRemark!!.setText(remark)
                                   //  tv_leadStageTotal!!.setText(jobjt.getString("TotalCount"))
                                     Log.e(TAG, "array  empwise   " + empwiseArrayList)
                                     if (empwiseArrayList.length() > 0){
                                         setBarchart()
+                                        rclv_barchart!!.visibility=View.VISIBLE
 //                                    val recycPieChart =
 //                                        findViewById(R.id.recycPieChart) as RecyclerView
-                                        val lLayout = GridLayoutManager(this@TileGraphActivity, 1)
+                                        val lLayout = GridLayoutManager(this@TileGraphActivity, 2)
                                         rclv_barchart!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
                                         val adapter = BarChartLeadAdapter(
@@ -800,8 +838,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     }
                                     else
                                     {
-
-                                        val builder = AlertDialog.Builder(
+                                        rclv_barchart!!.visibility=View.GONE
+                                       /* val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
                                             R.style.MyDialogTheme
                                         )
@@ -811,12 +849,13 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         val alertDialog: AlertDialog = builder.create()
                                         alertDialog.setCancelable(false)
                                         alertDialog.show()
-
+*/
                                     }
                                     // setPieChart()
 
 
                                 } else {
+                                    rclv_barchart!!.visibility=View.GONE
                                     /*val builder = AlertDialog.Builder(
                                         this@TileGraphActivity,
                                         R.style.MyDialogTheme
@@ -942,86 +981,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
             }
         }
     }
-    /* private fun getLeadStatusDashBoard() {
-         var leadStatusDash = 0
-         when (Config.ConnectivityUtils.isConnected(this)) {
-             true -> {
-                 progressDialog = ProgressDialog(context, R.style.Progress)
-                 progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                 progressDialog!!.setCancelable(false)
-                 progressDialog!!.setIndeterminate(true)
-                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                 progressDialog!!.show()
-                 leadStatusDashViewModel.getLeadStatusDashboard(this)!!.observe(
-                     this,
-                     Observer { serviceSetterGetter ->
-                         val msg = serviceSetterGetter.message
-                         try {
-                             if (msg!!.length > 0) {
-                                 val jObject = JSONObject(msg)
-                                 Log.e(TAG, "msg   190   " + msg)
-                                 if (jObject.getString("StatusCode") == "0") {
 
-                                     val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
-                                     leadStatusArrayList =
-                                         jobjt.getJSONArray("LeadsDashBoardDetailsList")
-                                     //    tv_leadStatusTotal!!.setText(jobjt.getString("TotalCount"))
-                                     Log.e(TAG, "array  125   " + leadStatusArrayList)
-
-                                     setPieChart()
- //                                    val recycBarChart =
- //                                        findViewById(R.id.recycBarChart) as RecyclerView
-                                     val lLayout = GridLayoutManager(this@TileGraphActivity, 1)
-                                     rclv_leadStatus!!.layoutManager =
-                                         lLayout as RecyclerView.LayoutManager?
-                                     val adapter = BarChartAdapter(
-                                         this@TileGraphActivity,
-                                         leadStatusArrayList
-                                     )
-                                     rclv_leadStatus!!.adapter = adapter
-
- //                                val jobjt = jObject.getJSONObject("FollowUpActionDetails")
- //                                followUpActionArrayList = jobjt.getJSONArray("FollowUpActionDetailsList")
- //                                if (followUpActionArrayList.length()>0){
- //                                    if (followUpAction == 0){
- //                                        followUpAction++
- //                                        followUpActionPopup(followUpActionArrayList)
- //                                    }
- //
- //                                }
-                                 } else {
-                                     val builder = AlertDialog.Builder(
-                                         this@TileGraphActivity,
-                                         R.style.MyDialogTheme
-                                     )
-                                     builder.setMessage(jObject.getString("EXMessage"))
-                                     builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                     }
-                                     val alertDialog: AlertDialog = builder.create()
-                                     alertDialog.setCancelable(false)
-                                     alertDialog.show()
-                                 }
-                             } else {
- //                            Toast.makeText(
- //                                applicationContext,
- //                                "Some Technical Issues.",
- //                                Toast.LENGTH_LONG
- //                            ).show()
-                             }
-                         } catch (e: Exception) {
-                             Toast.makeText(context, "" + e.toString(), Toast.LENGTH_SHORT).show()
-                         }
-
-                     })
-                 progressDialog!!.dismiss()
-             }
-             false -> {
-                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                     .show()
-             }
-         }
-
-     }*/
     private fun setPieChart(leadStagewiseArrayList: JSONArray) {
         scoreListPie.clear()
         scoreListPie = getScoreList2(leadStagewiseArrayList)
@@ -1064,7 +1024,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         colorsStage.add(resources.getColor(R.color.leadstatus_color1))
         colorsStage.add(resources.getColor(R.color.leadstatus_color2))
         colorsStage.add(resources.getColor(R.color.leadstatus_color3))
-
+        colorsStage.add(resources.getColor(R.color.leadstatus_color4))
+        colorsStage.add(resources.getColor(R.color.leadstatus_color5))
         val pieDataSet = PieDataSet(pieEntries, label)
         pieDataSet.setValueFormatter(DecimalRemover())
         pieDataSet.valueTextSize = 12f
@@ -1190,77 +1151,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         alertDialog.show()
     }
 
-    private fun getLeadStagesDashBoard() {
-        var leadStagesDash = 0
-        when (Config.ConnectivityUtils.isConnected(this)) {
-            true -> {
-                progressDialog = ProgressDialog(context, R.style.Progress)
-                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                progressDialog!!.setCancelable(false)
-                progressDialog!!.setIndeterminate(true)
-                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                progressDialog!!.show()
-                leadStagesDashViewModel.getLeadStagesDashboard(this)!!.observe(
-                    this,
-                    Observer { serviceSetterGetter ->
-                        val msg = serviceSetterGetter.message
-                        try {
-                            if (msg!!.length > 0) {
-                                val jObject = JSONObject(msg)
-                                Log.e(TAG, "msg   190   " + msg)
-                                if (jObject.getString("StatusCode") == "0") {
 
-                                    val jobjt = jObject.getJSONObject("LeadsDashBoardDetails")
-                                    leadStagesDashArrayList =
-                                        jobjt.getJSONArray("LeadsDashBoardDetailsList")
-                                    //tv_leadStageTotal!!.setText(jobjt.getString("TotalCount"))
-                                    Log.e(TAG, "array  264   " + leadStagesDashArrayList)
-
-                                    // setPieChart()
-                                    setBarchart()
-//                                    val recycPieChart =
-//                                        findViewById(R.id.recycPieChart) as RecyclerView
-                                    val lLayout = GridLayoutManager(this@TileGraphActivity, 1)
-                                    recycPieChart!!.layoutManager =
-                                        lLayout as RecyclerView.LayoutManager?
-                                    val adapter = PieChartAdapter(
-                                        this@TileGraphActivity,
-                                        leadStagesDashArrayList
-                                    )
-                                    recycPieChart!!.adapter = adapter
-
-                                } else {
-                                    val builder = AlertDialog.Builder(
-                                        this@TileGraphActivity,
-                                        R.style.MyDialogTheme
-                                    )
-                                    builder.setMessage(jObject.getString("EXMessage"))
-                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                    }
-                                    val alertDialog: AlertDialog = builder.create()
-                                    alertDialog.setCancelable(false)
-                                    alertDialog.show()
-                                }
-                            } else {
-//                            Toast.makeText(
-//                                applicationContext,
-//                                "Some Technical Issues.",
-//                                Toast.LENGTH_LONG
-//                            ).show()
-                            }
-                        } catch (e: Exception) {
-                            Toast.makeText(context, "" + e.toString(), Toast.LENGTH_SHORT).show()
-                        }
-
-                    })
-                progressDialog!!.dismiss()
-            }
-            false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
-    }
     private fun setBarchart() {
         scoreListBar.clear()
         scoreListBar = getScoreList()
@@ -1771,6 +1662,176 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
 
     }
+    private fun setempwiswtargetamt() {
+        empwiseAmtBar.clear()
+        empwiseAmtBar = getEmpAmtList()
+
+        empwiseamt_barchart.axisLeft.setDrawGridLines(false)
+        val xAxis: XAxis = empwiseamt_barchart.xAxis
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(false)
+
+        //remove right y-axis
+        empwiseamt_barchart.axisRight.isEnabled = false
+        //remove legend
+        empwiseamt_barchart.legend.isEnabled = false
+        empwiseamt_barchart!!.setScaleEnabled(true)
+        //remove description label
+        empwiseamt_barchart.description.isEnabled = false
+
+
+        //add animation
+        empwiseamt_barchart.animateY(1000)
+
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.valueFormatter = MyAxisFormatterBar3()
+        xAxis.setDrawLabels(true)
+        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = +325f
+        xAxis.textSize = 15f
+        xAxis.textColor = Color.BLACK
+
+        //colors
+        val colors: java.util.ArrayList<Int> = java.util.ArrayList()
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        /////////////////////////////////////
+
+        val entries: ArrayList<BarEntry> = ArrayList()
+        for (i in empwiseAmtBar.indices) {
+            val score = empwiseAmtBar[i]
+            entries.add(BarEntry(i.toFloat(), score.topcount.toFloat()))
+        }
+
+
+
+        val barDataSet = BarDataSet(entries, "Category")
+        // barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+        barDataSet.setColors(colors)
+        //barDataSet.setValueFormatter(DecimalRemover())
+        barDataSet.valueFormatter = DefaultValueFormatter(0)
+
+        val data = BarData(barDataSet)
+        data.setValueTextSize(15f)
+        data.setValueTextColor(Color.BLACK)
+        data.setDrawValues(false)
+        empwiseamt_barchart.data = data
+
+
+        empwiseamt_barchart.invalidate()
+
+
+    }
     private fun getScoreList(): java.util.ArrayList<EmployeewiseBarLead> {
         for (i in 0 until empwiseArrayList.length())
         {
@@ -1779,6 +1840,16 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         }
 
         return scoreListBar
+    }
+
+    private fun getEmpAmtList(): ArrayList<EmpwiseAmtBarLead> {
+        for (i in 0 until emptargetamtArrayList.length())
+        {
+            var jsonObject = emptargetamtArrayList.getJSONObject(i)
+            empwiseAmtBar.add(EmpwiseAmtBarLead(jsonObject.getString("EmpFName"),jsonObject.getString("TargetAmount")))
+        }
+
+        return empwiseAmtBar
     }
     private fun getTop10List(): ArrayList<Top10BarLead> {
         for (i in 0 until top10ProductsArrayList.length())
@@ -1822,13 +1893,17 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         val jobjt = jObject.getJSONObject("Leadstagewiseforcast")
                                         leadStagewiseArrayList =
                                             jobjt.getJSONArray("LeadstagewiseforcastList")
+                                    val remark =
+                                        jobjt.getString("Reamrk")
+                                    txtv_LeadForecastRemark!!.visibility=View.VISIBLE
+                                    txtv_LeadForecastRemark!!.setText(remark)
                                         //    tv_leadStatusTotal!!.setText(jobjt.getString("TotalCount"))
                                         Log.e(TAG, "array  125   " + leadStagewiseArrayList)
 
                                         setPieChart(leadStagewiseArrayList)
     //                                    val recycBarChart =
     //                                        findViewById(R.id.recycBarChart) as RecyclerView
-                                        val lLayout = GridLayoutManager(this@TileGraphActivity, 1)
+                                        val lLayout = GridLayoutManager(this@TileGraphActivity, 2)
                                     rclv_leadStagewiseforecast!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
                                         val adapter = BarChartAdapter(
@@ -1839,7 +1914,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
 //
                                 } else {
-                                    val builder = AlertDialog.Builder(
+                                    txtv_LeadForecastRemark!!.visibility=View.GONE
+                                   /* val builder = AlertDialog.Builder(
                                         this@TileGraphActivity,
                                         R.style.MyDialogTheme
                                     )
@@ -1848,9 +1924,10 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     }
                                     val alertDialog: AlertDialog = builder.create()
                                     alertDialog.setCancelable(false)
-                                    alertDialog.show()
+                                    alertDialog.show()*/
                                 }
                             } else {
+                                txtv_LeadForecastRemark!!.visibility=View.GONE
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
@@ -1876,11 +1953,12 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             val index = value.toInt()
             Log.d("TAG", "getAxisLabel: index $index")
-            return if (index < scoreListBar.size) {
+            return ""
+           /* return if (index < scoreListBar.size) {
                 scoreListBar[index].empname
             } else {
                 ""
-            }
+            }*/
         }
     }
     inner class MyAxisFormatterBar3 : IndexAxisValueFormatter() {
@@ -1976,9 +2054,130 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             card_leadstagecountwise!!.visibility = View.GONE
                                             card_employeewiseAvg!!.visibility = View.GONE
                                             card_leadActivity!!.visibility = View.VISIBLE
+                                            leadActivityText!!.visibility=View.VISIBLE
                                           //  crmStagewiseCount   = 0
                                             getLeadActivity()
 
+
+                                        /*    var modeType = Array<String>(chartTypeArrayList.length()) { "" }
+                                            var modeTypeID = Array<String>(chartTypeArrayList.length()) { "" }
+                                            for (i in 0 until chartTypeArrayList.length()) {
+                                                val objects: JSONObject =
+                                                    chartTypeArrayList.getJSONObject(i)
+
+
+                                                modeType[i] = objects.getString("DashBoardName");
+                                                modeTypeID[i] = objects.getString("DashMode");
+
+
+                                                if (ID_ChartMode.equals("2")){
+                                                    ll_barchart!!.visibility=View.VISIBLE
+                                                    ll_Piechart!!.visibility=View.GONE
+                                                    ll_top10!!.visibility=View.GONE
+                                                    card_leadSourse!!.visibility = View.GONE
+                                                    card_leadstagecountwise!!.visibility = View.GONE
+                                                    card_employeewiseAvg!!.visibility = View.GONE
+                                                    card_leadActivity!!.visibility = View.GONE
+                                                    card_toprevenue!!.visibility = View.GONE
+                                                    //   crmStagewiseCount   = 0
+                                                    getEmployeewiseChart()
+                                                }
+                                                else if (ID_ChartMode.equals("3")){
+                                                    ll_Piechart!!.visibility=View.VISIBLE
+                                                    ll_barchart!!.visibility=View.GONE
+                                                    ll_top10!!.visibility=View.GONE
+                                                    card_leadSourse!!.visibility = View.GONE
+                                                    card_leadstagecountwise!!.visibility = View.GONE
+                                                    card_employeewiseAvg!!.visibility = View.GONE
+                                                    card_leadActivity!!.visibility = View.GONE
+                                                    card_toprevenue!!.visibility = View.GONE
+                                                    // crmservicewiseCount = 0
+                                                    getLeadStagewiseforecast()
+                                                }
+                                                else if (ID_ChartMode.equals("6")) {
+                                                    ll_Piechart!!.visibility = View.GONE
+                                                    ll_barchart!!.visibility = View.GONE
+                                                    ll_top10!!.visibility = View.GONE
+                                                    card_leadSourse!!.visibility = View.GONE
+                                                    card_leadstagecountwise!!.visibility = View.GONE
+                                                    card_employeewiseAvg!!.visibility = View.GONE
+                                                    card_leadActivity!!.visibility = View.GONE
+                                                    card_toprevenue!!.visibility = View.GONE
+                                                    getLeadSource()
+
+                                                }
+                                                else if (ID_ChartMode.equals("4")) {
+                                                    ll_Piechart!!.visibility = View.GONE
+                                                    ll_barchart!!.visibility = View.GONE
+                                                    ll_top10!!.visibility = View.GONE
+                                                    card_leadSourse!!.visibility = View.GONE
+                                                    card_leadstagecountwise!!.visibility = View.VISIBLE
+                                                    card_employeewiseAvg!!.visibility = View.GONE
+                                                    card_leadActivity!!.visibility = View.GONE
+                                                    card_toprevenue!!.visibility = View.GONE
+                                                    getLeadStageCountWise()
+                                                }
+                                                else if (ID_ChartMode.equals("8")) {
+                                                    ll_Piechart!!.visibility = View.GONE
+                                                    ll_barchart!!.visibility = View.GONE
+                                                    ll_top10!!.visibility = View.GONE
+                                                    card_leadSourse!!.visibility = View.GONE
+                                                    card_leadstagecountwise!!.visibility = View.GONE
+                                                    card_employeewiseAvg!!.visibility = View.VISIBLE
+                                                    card_leadActivity!!.visibility = View.GONE
+                                                    card_toprevenue!!.visibility = View.GONE
+                                                    getEmployeeWiseAvgConversion()
+                                                }
+                                                else if (ID_ChartMode.equals("1")) {
+                                                    ll_Piechart!!.visibility = View.GONE
+                                                    ll_barchart!!.visibility = View.GONE
+                                                    ll_top10!!.visibility = View.GONE
+                                                    card_leadSourse!!.visibility = View.GONE
+                                                    card_leadstagecountwise!!.visibility = View.GONE
+                                                    card_employeewiseAvg!!.visibility = View.GONE
+                                                    card_leadActivity!!.visibility = View.VISIBLE
+                                                    card_toprevenue!!.visibility = View.GONE
+                                                    getLeadActivity()
+                                                }
+                                                else if (ID_ChartMode.equals("5")){
+                                                    ll_Piechart!!.visibility=View.GONE
+                                                    ll_barchart!!.visibility=View.GONE
+                                                    ll_top10!!.visibility=View.VISIBLE
+                                                    card_leadSourse!!.visibility = View.GONE
+                                                    card_leadstagecountwise!!.visibility = View.GONE
+                                                    card_employeewiseAvg!!.visibility = View.GONE
+                                                    card_leadActivity!!.visibility = View.GONE
+                                                    card_toprevenue!!.visibility = View.GONE
+                                                    getTop10Products()
+
+                                                }
+                                                else if (ID_ChartMode.equals("7")){
+                                                    ll_Piechart!!.visibility=View.GONE
+                                                    ll_barchart!!.visibility=View.GONE
+                                                    ll_top10!!.visibility=View.GONE
+                                                    card_leadSourse!!.visibility = View.GONE
+                                                    card_leadstagecountwise!!.visibility = View.GONE
+                                                    card_employeewiseAvg!!.visibility = View.GONE
+                                                    card_leadActivity!!.visibility = View.GONE
+                                                    card_toprevenue!!.visibility = View.VISIBLE
+                                                    getTopRevenue()
+
+                                                }
+                                                else if (ID_ChartMode.equals("9")){
+                                                    ll_Piechart!!.visibility=View.GONE
+                                                    ll_barchart!!.visibility=View.GONE
+                                                    ll_top10!!.visibility=View.GONE
+                                                    card_leadSourse!!.visibility = View.GONE
+                                                    card_leadstagecountwise!!.visibility = View.GONE
+                                                    card_employeewiseAvg!!.visibility = View.GONE
+                                                    card_leadActivity!!.visibility = View.GONE
+                                                    card_toprevenue!!.visibility = View.GONE
+                                                    ll_empwseamt!!.visibility = View.VISIBLE
+                                                    getEmpwiseAmountTarget()
+
+                                                }
+                                            }
+*/
                                         }else{
                                             showChartDrop(chartTypeArrayList)
                                         }
@@ -2145,7 +2344,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     card_employeewiseAvg!!.visibility = View.GONE
                     card_leadActivity!!.visibility = View.GONE
                     card_toprevenue!!.visibility = View.GONE
-                    // getTop10Products()
+                    ll_empwseamt!!.visibility = View.VISIBLE
+                    getEmpwiseAmountTarget()
 
                 }
                 Log.e(TAG,"ID_ChartMode  253332   "+position)
@@ -2677,6 +2877,96 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
             }
         }
     }
+    private fun getEmpwiseAmountTarget() {
+
+        employeewisetargetamtList = 0
+        ll_empwseamt!!.visibility=View.VISIBLE
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(
+                    context.resources.getDrawable(
+                        R.drawable.progress
+                    )
+                )
+                progressDialog!!.show()
+                employeewiseTargetAmountViewModel.getEmployeewisetargetAmountChart(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        Log.e(TAG, "msg empwiseamount==   " + msg)
+                        try {
+                            if (msg!!.length > 0) {
+
+                                if (employeewisetargetamtList == 0) {
+                                    employeewisetargetamtList++
+                                    val jObject = JSONObject(msg)
+                                    //    Log.e(TAG, "msg   InventoryGraph   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        Log.e(TAG, "success and inside   ")
+                                        val jobjt =
+                                            jObject.getJSONObject("EmployeeWiseTaegetInPercentage")
+//                                        val remark =
+//                                            jobjt.getString("Reamrk")
+//                                        employeewiseAvgText!!.setText(remark)
+                                        emptargetamtArrayList =
+                                            jobjt.getJSONArray("EmployeeWiseTaegetDetails")
+                                        Log.e(TAG, "empwiseamtArrayList==   " + emptargetamtArrayList)
+                                      //  Log.e(TAG, "remark==   " + remark)
+                                        try {
+                                            if (emptargetamtArrayList.length() > 0) {
+
+                                                setempwiswtargetamt()
+                                               // setEmployeeAvgConversionBar(emptargetamtArrayList,remark)
+                                             //   setEmployeeAvgConversionBar(emptargetamtArrayList)
+                                                val lLayout = GridLayoutManager(this@TileGraphActivity, 2)
+                                                rclv_empwiseamt!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                                val adapter = EmployeewiseAmountAdapter(this@TileGraphActivity, emptargetamtArrayList)
+                                                rclv_empwiseamt!!.adapter = adapter
+
+
+                                            }
+                                        } catch (e: Exception) {
+                                            Log.e("exceptionStock344", "" + e.toString())
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@TileGraphActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+                        } catch (e: Exception) {
+
+                            Log.e(TAG, "exception==   " + e)
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
 
     private fun setEmployeeAvgConversionBar(employeewiseAvgBarList: JSONArray, remark: String) {
         try {
@@ -2862,6 +3152,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             jObject.getJSONObject("LeadActivites")
                                         val remark =
                                             jobjt.getString("Reamrk")
+                                        leadActivityText!!.visibility=View.VISIBLE
                                         leadActivityText!!.setText(remark)
                                         leadActivityBarList =
                                             jobjt.getJSONArray("LeadActivitesList")
@@ -2881,7 +3172,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             Log.e("exceptionStock344", "" + e.toString())
                                         }
                                     } else {
-                                        val builder = AlertDialog.Builder(
+                                        leadActivityText!!.visibility=View.GONE
+                                       /* val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
                                             R.style.MyDialogTheme
                                         )
@@ -2890,7 +3182,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         }
                                         val alertDialog: AlertDialog = builder.create()
                                         alertDialog.setCancelable(false)
-                                        alertDialog.show()
+                                        alertDialog.show()*/
                                     }
                                 }
 

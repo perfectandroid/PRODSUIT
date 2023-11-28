@@ -37,13 +37,13 @@ object LeadTileRepository {
         try {
             serviceCountSetterGetter.value = LeadTileModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
-//            progressDialog = ProgressDialog(context, R.style.Progress)
-//            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//            progressDialog!!.setCancelable(false)
-//            progressDialog!!.setIndeterminate(true)
-//            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
-//                R.drawable.progress))
-//            progressDialog!!.show()
+            progressDialog = ProgressDialog(context, R.style.Progress)
+            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+            progressDialog!!.setCancelable(false)
+            progressDialog!!.setIndeterminate(true)
+            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(
+                R.drawable.progress))
+            progressDialog!!.show()
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
@@ -109,7 +109,7 @@ object LeadTileRepository {
                     Response<String>
                 ) {
                     try {
-                       // progressDialog!!.dismiss()
+                        progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
                         Log.e(TAG,"  LEAD TILE "+response.body())
                         val leads = ArrayList<LeadTileModel>()
@@ -129,7 +129,7 @@ object LeadTileRepository {
         }catch (e : Exception){
             e.printStackTrace()
             Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
-            progressDialog!!.dismiss()
+           progressDialog!!.dismiss()
         }
     }
 

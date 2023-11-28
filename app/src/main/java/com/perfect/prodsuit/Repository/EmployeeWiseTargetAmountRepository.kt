@@ -9,10 +9,11 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.LeadInfoModel
-import com.perfect.prodsuit.Model.LeadNoModel
-import com.perfect.prodsuit.Model.MeasurementTypeModel
+import com.perfect.prodsuit.Model.EmployeewiseModel
+import com.perfect.prodsuit.Model.EmployeewisetargetAmountModel
+import com.perfect.prodsuit.Model.LeadStagesDashModel
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.EmployeewiseTargetAmountViewModel
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -20,22 +21,23 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.ArrayList
+import java.text.SimpleDateFormat
+import java.util.*
 
-object LeadNoRepository {
+object EmployeeWiseTargetAmountRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val LeadnotSetterGetter = MutableLiveData<LeadNoModel>()
-    val TAG: String = "LeadNoRepository"
+    val employeewisetargetamtSetterGetter = MutableLiveData<EmployeewisetargetAmountModel>()
+    val TAG: String = "EmployeeWiseTargetAmountRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<LeadNoModel> {
-        getMeasureType(context)
-        return LeadnotSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<EmployeewisetargetAmountModel> {
+        getEmployeewiseTargetAmountGraph(context)
+        return employeewisetargetamtSetterGetter
     }
 
-    private fun getMeasureType(context: Context) {
+    private fun getEmployeewiseTargetAmountGraph(context: Context) {
         try {
-            LeadnotSetterGetter.value = LeadNoModel("")
+            employeewisetargetamtSetterGetter.value =EmployeewisetargetAmountModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -59,20 +61,38 @@ object LeadNoRepository {
                 .build()
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
-
             try {
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                val FK_DepartmentSP = context.getSharedPreferences(Config.SHARED_PREF55, 0)
+                val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
 
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("75"))
+                val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+                val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+
+
+                val sdf = SimpleDateFormat("yyyy-MM-dd")
+                val currentDate = sdf.format(Date())
+                System.out.println(" C DATE is  "+currentDate)
+
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
-//                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-                Log.e(TAG,"LeadNo  78   "+requestObject1)
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
+                requestObject1.put("FK_Department", ProdsuitApplication.encryptStart(FK_DepartmentSP.getString("FK_Department", null)))
+                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
+                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
+                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("9"))
+                requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))
+                Log.e(TAG,"requestObject1   employeewise   "+requestObject1)
+
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -80,34 +100,35 @@ object LeadNoRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getLeadList(body)
+            val call = apiService.getEmployeewise(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
                     Response<String>
                 ) {
                     try {
+                        Log.e(TAG,"response  emp94   "+response.body())
                         progressDialog!!.dismiss()
-                        Log.e(TAG,"LeadNo  7844   "+response.body())
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<LeadNoModel>()
-                        leads.add(LeadNoModel(response.body()))
+                        val leads = ArrayList<EmployeewisetargetAmountModel>()
+                        leads.add(EmployeewisetargetAmountModel(response.body()))
                         val msg = leads[0].message
-                        LeadnotSetterGetter.value = LeadNoModel(msg)
+                        employeewisetargetamtSetterGetter.value = EmployeewisetargetAmountModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
-                        Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,""+e.toString(),Toast.LENGTH_SHORT).show()
+
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
-                    Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
-            Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 }

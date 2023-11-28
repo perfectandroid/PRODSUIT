@@ -13,7 +13,7 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class LeadNoAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+class CatNameAdapter(internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG : String = "LeadNoAdapter"
@@ -34,18 +34,18 @@ class LeadNoAdapter(internal var context: Context, internal var jsonArray: JSONA
         try {
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-                Log.e(TAG,"onBindViewHolder   10511   "+jsonArray)
+                Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text         = pos.toString()
-                holder.txtLeadNo.text       = jsonObject!!.getString("LeadNo")
-                holder.txtName.text         = jsonObject!!.getString("CustomeName")
-                holder.txtLeadDate.text     = jsonObject!!.getString("MobileNo")
+                //holder.txtLeadNo.text       = jsonObject!!.getString("CategoryMode")
+                holder.txtLeadNo.visibility       = View.GONE
+                holder.txtName.text         = jsonObject!!.getString("CategoryName")
 
                 holder.llleadNo!!.setTag(position)
                 holder.llleadNo!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(
                         position,
-                        "LeadNumberClick"
+                        "CategoryClick"
                     )
                 })
             }
@@ -71,13 +71,11 @@ class LeadNoAdapter(internal var context: Context, internal var jsonArray: JSONA
         internal var txtLeadNo   : TextView
         internal var txtsino     : TextView
         internal var txtName     : TextView
-        internal var txtLeadDate     : TextView
         internal var llleadNo    : LinearLayout
         init {
             txtLeadNo          = v.findViewById<View>(R.id.txtLeadNo) as TextView
             txtsino                = v.findViewById<View>(R.id.txtsino) as TextView
             txtName                = v.findViewById<View>(R.id.txtName) as TextView
-            txtLeadDate                = v.findViewById<View>(R.id.txtLeadDate) as TextView
             llleadNo           = v.findViewById<View>(R.id.llleadNo) as LinearLayout
         }
     }

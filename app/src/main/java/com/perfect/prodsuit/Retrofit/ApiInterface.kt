@@ -113,11 +113,14 @@ interface ApiInterface {
     @POST("Report/ProjectReport")
     fun getProjectReport(@Body body: RequestBody): Call<String>
 
+    @POST("Report/CategoryNameDetails")
+    fun getCategoryNameDetails(@Body body: RequestBody): Call<String>
+
     @POST("Report/ServiceNewList")
     fun getServiceNewList(@Body body: RequestBody): Call<String>
 
-    @POST("Report/ProjectReportDetail")
-    fun getProjectReportDetail(@Body body: RequestBody): Call<String>
+    @POST("Report/ProjectListDetail")
+    fun getProjectListDetail(@Body body: RequestBody): Call<String>
 
     @POST("Project/WorkTypeDetails")
     fun getWorkTypeDetails(@Body body: RequestBody): Call<String>
@@ -787,5 +790,7 @@ interface ApiInterface {
 
     @POST("DashBoard/ExpenseVSGain")
     fun getTopRevenue(@Body body: RequestBody): Call<String>
+
+
 
 }

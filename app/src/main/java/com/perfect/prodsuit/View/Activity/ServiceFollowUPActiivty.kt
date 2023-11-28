@@ -2568,6 +2568,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
             txtCancel.setOnClickListener {
+                tie_Selectarea!!.text!!.clear()
 //                loadLoginEmpDetails("1")
             }
 
@@ -2579,7 +2580,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                 servicesearchcount = 0
                 if(id_search.equals(""))
                 {
-                    tie_Selectarea!!.setError("Please Enter a Valid Input");
+                    tie_Selectarea!!.setError("Please Enter a Valid Customer Id or Serial Number or Mobile Number");
 
                 }
                 else{

@@ -30,7 +30,7 @@ class LeadAvgConsnListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_leadtilelist, parent, false
+            R.layout.adapter_convsn, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -52,11 +52,13 @@ class LeadAvgConsnListAdapter(
 
 
                 holder.txtv_label.text        = jsonObject!!.getString("Label")
+
                 holder.tv_newCount.text        = jsonObject!!.getString("Value")
+                holder.tv_newCount.setTextColor(context.getColor(R.color.green))
                 //   var mode = jsonObject!!.getString("ModuleMode")
 
                 if (jsonObject!!.getString("Label").equals("Average Conversion")){
-                    holder.txtv_label.setTextColor(context.getColor(R.color.green))
+                    holder.txtv_label.setTextColor(context.getColor(R.color.black))
                 }
                 /*if (jsonObject!!.getString("Label").equals("Ongoing")){
                     holder.txtv_label.setTextColor(context.getColor(R.color.ongoing))

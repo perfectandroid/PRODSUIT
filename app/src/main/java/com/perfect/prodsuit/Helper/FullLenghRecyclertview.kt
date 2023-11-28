@@ -30,4 +30,5 @@ class FullLenghRecyclertview : RecyclerView {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         }
     }
+
 }
