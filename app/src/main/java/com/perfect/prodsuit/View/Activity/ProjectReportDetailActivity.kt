@@ -39,6 +39,7 @@ class ProjectReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
     private var strFromdate:String?=""
     private var strTodate:String?=""
     private var ID_Leadno:String?=""
+    private var CatID:String?=""
 
   /*  internal var ll_SiteVisit: LinearLayout? = null
     internal var ll_OutStanding: LinearLayout? = null
@@ -62,6 +63,7 @@ class ProjectReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
 
 
         reportSitevisitProjectViewModel = ViewModelProvider(this).get(ReportSitevisitProjectViewModel::class.java)
+        reportStatusListProjectViewModel = ViewModelProvider(this).get(ReportStatusListProjectViewModel::class.java)
 
         if (getIntent().hasExtra("ReportName")) {
             tv_ReportName!!.setText(intent.getStringExtra("ReportName"))
@@ -78,12 +80,16 @@ class ProjectReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
         if (getIntent().hasExtra("LeadNumber")) {
             ID_Leadno = intent.getStringExtra("LeadNumber")
         }
+        if (getIntent().hasExtra("CatID")) {
+            CatID = intent.getStringExtra("CatID")
+        }
 
-        if (ReportMode.equals("1")){
+        if (ReportMode.equals("2")){
             getReportSitevisit(ReportMode!!,strFromdate!!,strTodate!!, ID_Leadno!!)
         }
-        if (ReportMode.equals("2")){
-            getProjectStatusListReport(ReportMode!!,strFromdate!!,strTodate!!, ID_Leadno!!)
+        if (ReportMode.equals("1")){
+           // getProjectStatusListReport(ReportMode!!,strFromdate!!,strTodate!!, ID_Leadno!!)
+            getProjectListReport(ReportMode!!,strFromdate!!,strTodate!!, CatID!!)
         }
 
     }
@@ -194,7 +200,7 @@ class ProjectReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
         }
     }
 
-    private fun getProjectStatusListReport(ReportMode: String, strFromdate: String, strTodate: String, strIdLead: String) {
+    private fun getProjectListReport(ReportMode: String, strFromdate: String, strTodate: String, strIdCat: String) {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -203,7 +209,7 @@ class ProjectReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                reportStatusListProjectViewModel.getReportstatuslistProject(this,"12", strFromdate, strTodate, strIdLead)!!.observe(
+                reportStatusListProjectViewModel.getReportstatuslistProject(this,"1", strFromdate, strTodate, strIdCat)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -220,8 +226,8 @@ class ProjectReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
 
 
 
-                                val jobjt = jObject.getJSONObject("ProjectReportDetail")
-                                reportsitevisitArrayList = jobjt.getJSONArray("ProjectStatusList")
+                                val jobjt = jObject.getJSONObject("ProjectListDetail")
+                                reportsitevisitArrayList = jobjt.getJSONArray("ProjectLists")
                                 if (reportsitevisitArrayList.length() > 0) {
 
 

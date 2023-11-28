@@ -9,22 +9,24 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.ItemClickListenerData
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class CatNameAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+class LeadNumberAdapter(internal var context: Context, internal var jsonArray: JSONArray, internal var report: String):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "LeadNoAdapter"
+    internal val TAG : String = "LeadnoAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
-
+    var pos = 0
+//    private var mItemClickListener: ItemClickListenerData? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_leadno, parent, false
+            R.layout.adapter_report_name, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -34,20 +36,21 @@ class CatNameAdapter(internal var context: Context, internal var jsonArray: JSON
         try {
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-                Log.e(TAG,"onBindViewHolder   1051   ")
-                val pos = position+1
-                holder.txtsino.text         = pos.toString()
-                //holder.txtLeadNo.text       = jsonObject!!.getString("CategoryMode")
-                holder.txtLeadNo.visibility       = View.GONE
-                holder.txtName.text         = jsonObject!!.getString("CategoryName")
+                if (report.equals("Project")){
+                   // holder.llReportName!!.visibility = View.GONE
+                    pos++
+                    holder.txtsino.text        = pos.toString()
+                    holder.txtReportName.text        = jsonObject!!.getString("LeadNo")
+                }
 
-                holder.llleadNo!!.setTag(position)
-                holder.llleadNo!!.setOnClickListener(View.OnClickListener {
+                holder.llReportName!!.setTag(position)
+                holder.llReportName!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(
                         position,
-                        "CategoryClick"
+                        "LeadNoClick"
                     )
                 })
+//
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -68,19 +71,22 @@ class CatNameAdapter(internal var context: Context, internal var jsonArray: JSON
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtLeadNo   : TextView
-        internal var txtsino     : TextView
-        internal var txtName     : TextView
-        internal var llleadNo    : LinearLayout
+        internal var txtReportName   : TextView
+        internal var txtsino         : TextView
+        internal var llReportName    : LinearLayout
         init {
-            txtLeadNo          = v.findViewById<View>(R.id.txtLeadNo) as TextView
-            txtsino                = v.findViewById<View>(R.id.txtsino) as TextView
-            txtName                = v.findViewById<View>(R.id.txtName) as TextView
-            llleadNo           = v.findViewById<View>(R.id.llleadNo) as LinearLayout
+            txtReportName      = v.findViewById<View>(R.id.txtReportName) as TextView
+            txtsino            = v.findViewById<View>(R.id.txtsino) as TextView
+            llReportName       = v.findViewById<View>(R.id.llReportName) as LinearLayout
         }
     }
 
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
+//    fun addItemClickListener(listener: ItemClickListenerData) {
+//        mItemClickListener = listener
+//    }
+
 }

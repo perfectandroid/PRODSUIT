@@ -40,16 +40,16 @@ class ProjectStatusListReportAdapter (internal var context: Context, internal va
 
                 if (ReportMode.equals("1")) {
 
-                    holder.tv_SiteVisitID.text = jsonObject!!.getString("CurrentStatus")+" on "+jsonObject!!.getString("StatusDate")
-                    holder.tv_leadno.text = jsonObject!!.getString("Project")+" [ "+jsonObject!!.getString("FK_Project")+" ]"
-                    holder.tv_VisitDate.text = "Site Visit Date : "+jsonObject!!.getString("VisitDate")
-                    holder.tv_VisitTime.text = "Site Visit Time : "+jsonObject!!.getString("VisitTime")
-                    holder.tv_Note1.text = "Follow up on "+jsonObject!!.getString("FollowupDate")+" [ ID: "+jsonObject!!.getString("ID_ProjectFollowUp")+" ]"
-                    //holder.tv_Note2.text = "Note 2 : "+jsonObject!!.getString("Note2")
-                   // holder.tv_CusNote.text = "Customer Note : "+jsonObject!!.getString("CusNote")
-                    //holder.tv_ExpenseAmount.text = "Expense Amount : "+ Config.changeTwoDecimel(jsonObject!!.getString("ExpenseAmount"))
-                   // holder.tv_Remarks.text = "Remark : "+jsonObject!!.getString("Remarks")
+                    holder.tv_SiteVisitID.text = jsonObject!!.getString("Status")
+                    holder.tv_leadno.text = jsonObject!!.getString("ProjectName")
+                    holder.tv_VisitDate.text = "Lead No : "+jsonObject!!.getString("LeadNumber")
 
+                    holder.tv_VisitTime.text = "Category : "+jsonObject!!.getString("Category")
+                    holder.tv_Note1.text = "Start Date "+jsonObject!!.getString("StartDate")
+                    holder.tv_Note2.text = "Due Date : "+jsonObject!!.getString("DueDate")
+                    holder.tv_CusNote.text = "Duration  : "+jsonObject!!.getString("Duration")
+                    holder.tv_ExpenseAmount.text = "Final Amount : "+ Config.changeTwoDecimel(jsonObject!!.getString("FinalAmount_R"))
+                   // holder.tv_Remarks.text = "Remark : "+jsonObject!!.getString("Remarks")
 
 
 

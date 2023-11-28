@@ -34,7 +34,7 @@ class LeadNoAdapter(internal var context: Context, internal var jsonArray: JSONA
         try {
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-                Log.e(TAG,"onBindViewHolder   1051   ")
+                Log.e(TAG,"onBindViewHolder   10511   "+jsonArray)
                 val pos = position+1
                 holder.txtsino.text         = pos.toString()
                 holder.txtLeadNo.text       = jsonObject!!.getString("LeadNo")

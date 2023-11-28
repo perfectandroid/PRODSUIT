@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
@@ -13,18 +12,17 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class CatNameAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+class CrmAmcDueStatusAdapter (internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "LeadNoAdapter"
+    internal val TAG : String = "CrmAmcDueStatusAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_leadno, parent, false
+            R.layout.adapter_crm_outstanding_count, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -36,18 +34,9 @@ class CatNameAdapter(internal var context: Context, internal var jsonArray: JSON
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
-                holder.txtsino.text         = pos.toString()
-                //holder.txtLeadNo.text       = jsonObject!!.getString("CategoryMode")
-                holder.txtLeadNo.visibility       = View.GONE
-                holder.txtName.text         = jsonObject!!.getString("CategoryName")
+                holder.tv_Count.text        = jsonObject!!.getString("Value")
+                holder.tv_label.text        = jsonObject!!.getString("Label")
 
-                holder.llleadNo!!.setTag(position)
-                holder.llleadNo!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(
-                        position,
-                        "CategoryClick"
-                    )
-                })
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -64,23 +53,17 @@ class CatNameAdapter(internal var context: Context, internal var jsonArray: JSON
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position % 2
+        return position
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtLeadNo   : TextView
-        internal var txtsino     : TextView
-        internal var txtName     : TextView
-        internal var llleadNo    : LinearLayout
+        internal var tv_Count   : TextView
+        internal var tv_label         : TextView
+        //        internal var llbranch    : LinearLayout
         init {
-            txtLeadNo          = v.findViewById<View>(R.id.txtLeadNo) as TextView
-            txtsino                = v.findViewById<View>(R.id.txtsino) as TextView
-            txtName                = v.findViewById<View>(R.id.txtName) as TextView
-            llleadNo           = v.findViewById<View>(R.id.llleadNo) as LinearLayout
+            tv_Count          = v.findViewById<View>(R.id.tv_Count) as TextView
+            tv_label            = v.findViewById<View>(R.id.tv_label) as TextView
+//            llbranch           = v.findViewById<View>(R.id.llbranch) as LinearLayout
         }
-    }
-
-    fun setClickListener(itemClickListener: ItemClickListener?) {
-        clickListener = itemClickListener
     }
 }

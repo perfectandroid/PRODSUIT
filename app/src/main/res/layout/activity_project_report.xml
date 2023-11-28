@@ -219,7 +219,7 @@
 
 
                             <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/til_Product"
+                                android:id="@+id/til_Leadno"
                                 style="@style/Widget.App.TextInputLayout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -229,6 +229,7 @@
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
                                 android:hint="Lead No *"
+                                android:visibility="gone"
                                 android:orientation="vertical"
                                 android:textColorHint="@color/greydarks">
 
@@ -266,7 +267,8 @@
                                 android:layout_marginRight="15dp"
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
-                                android:hint="Category *"
+                                android:hint="Category"
+                                android:visibility="gone"
                                 android:orientation="vertical"
                                 android:textColorHint="@color/greydarks">
 

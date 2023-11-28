@@ -119,8 +119,8 @@ interface ApiInterface {
     @POST("Report/ServiceNewList")
     fun getServiceNewList(@Body body: RequestBody): Call<String>
 
-    @POST("Report/ProjectReportDetail")
-    fun getProjectReportDetail(@Body body: RequestBody): Call<String>
+    @POST("Report/ProjectListDetail")
+    fun getProjectListDetail(@Body body: RequestBody): Call<String>
 
     @POST("Project/WorkTypeDetails")
     fun getWorkTypeDetails(@Body body: RequestBody): Call<String>
@@ -736,11 +736,27 @@ interface ApiInterface {
     @POST("DashBoard/CRMTileDashBoardDetails")
     fun getCRMTileDashBoardStatusDetails(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/CRMTileDashBoardDetails")
+    fun getCRMTileOutstandingCountDetails(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/CRMTileDashBoardDetails")
+    fun getCRMTileAMCDueStatus(@Body body: RequestBody): Call<String>
+
+
     @POST("DashBoard/CRMStagewiseDetails")
     fun getCRMStagewiseDetails(@Body body: RequestBody): Call<String>
 
     @POST("DashBoard/CRMcomplaintwise")
     fun getCRMcomplaintwise(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/CRMCountofWarrantyPaidandAMC")
+    fun getCRMCountofWarrantyPaidandAMC(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/CRMTop10Products")
+    fun getCRMTop10Products(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/CRMChannelWise")
+    fun getCRMCRMChannelWise(@Body body: RequestBody): Call<String>
 
     @POST("DashBoard/CRMservicewise")
     fun getCRMservicewise(@Body body: RequestBody): Call<String>
