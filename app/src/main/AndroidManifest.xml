@@ -70,6 +70,11 @@
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.AccountsGraphActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.ServiceGraphActivity"
             android:exported="false"
             android:screenOrientation="portrait"
