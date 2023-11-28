@@ -794,5 +794,11 @@ interface ApiInterface {
     @POST("UserValidations/CheckVersionCode")
     fun versionCheck(@Body body: RequestBody): Call<String>
 
+    @POST("Report/Grouping")
+    fun getReportGroupingDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Report/SummaryWiseReport")
+    fun getSummaryWiseReport(@Body body: RequestBody): Call<String>
+
 
 }

@@ -85,7 +85,220 @@
                 android:layout_height="match_parent"
                 android:background="@color/color_background"
                 android:orientation="vertical">
+                <LinearLayout
+                    android:id="@+id/ll_Summary"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#163d5c"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/Type"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/myfont"
+                                android:gravity="center"
+                                android:text="Employee"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#1f6096"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Opening"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginRight="2dp"
+                                android:textSize="10dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#21A194"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="New"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginRight="2dp"
+                                android:textSize="10dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#0b8d45"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Closed"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginRight="2dp"
+                                android:textSize="10dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="#d69929"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="2dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/myfont"
+                                android:gravity="center"
+                                android:text="Losed"
+                                android:textAllCaps="true"
+                                android:textColor="@color/white"
+                                android:textSize="10dp"
+                                android:textStyle="bold" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/grey"/>
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="#e65239"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:text="Balance"
+                                android:textColor="@color/white"
+                                android:textAllCaps="true"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginLeft="2dp"
+                                android:layout_marginRight="2dp"
+                                android:textSize="10dp"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/myfont" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycleSummary"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible" />
+
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_ActionList"
