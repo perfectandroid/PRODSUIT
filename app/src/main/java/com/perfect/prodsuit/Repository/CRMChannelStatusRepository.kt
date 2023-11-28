@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.CRMTop10ProductModel
+import com.perfect.prodsuit.Model.CRMChannelStatusModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -20,21 +20,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object CRMTop10ProductRepository {
 
+object CRMChannelStatusRepository {
     private var progressDialog: ProgressDialog? = null
-    val crmTop10ProductSetGet = MutableLiveData<CRMTop10ProductModel>()
-    val TAG: String = "CRMTop10ProductRepository"
+    val crmChannelStatusSetGet = MutableLiveData<CRMChannelStatusModel>()
+    val TAG: String = "CRMChannelStatusRepository"
 
-    fun getServicesApiCall(context: Context, TransDate : String, DashMode : String, DashType : String): MutableLiveData<CRMTop10ProductModel> {
-        getCRMTop10Products(context, TransDate, DashMode, DashType)
-        return crmTop10ProductSetGet
+    fun getServicesApiCall(context: Context, TransDate : String, DashMode : String, DashType : String): MutableLiveData<CRMChannelStatusModel> {
+        getCRMChannelStatus(context, TransDate, DashMode, DashType)
+        return crmChannelStatusSetGet
     }
 
-    private fun getCRMTop10Products(context: Context, TransDate: String, DashMode: String, DashType: String) {
-
+    private fun getCRMChannelStatus(context: Context,TransDate: String, DashMode: String, DashType: String) {
         try {
-            crmTop10ProductSetGet.value = CRMTop10ProductModel("")
+            crmChannelStatusSetGet.value = CRMChannelStatusModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -72,8 +71,8 @@ object CRMTop10ProductRepository {
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
 
 
-//                {"FK_Employee":"72","EntrBy":"sree1","FK_Department":"1","FK_Branch":"3","FK_Company":"1","FK_BranchCodeUser":"3",
-//                    "TransDate":"2023-11-08","DashMode":"14","DashType":"2"}
+//               {"FK_Employee":"10044","EntrBy":"SONAKM","FK_Department":"1","FK_Branch":"3","FK_Company":"1","FK_BranchCodeUser":"3",
+//               "TransDate":"2023-11-17","DashMode":"13","DashType":"2"}
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
@@ -97,7 +96,7 @@ object CRMTop10ProductRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getCRMTop10Products (body)
+            val call = apiService.getCRMCRMChannelWise(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -106,10 +105,10 @@ object CRMTop10ProductRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<CRMTop10ProductModel>()
-                        leads.add(CRMTop10ProductModel(response.body()))
+                        val leads = ArrayList<CRMChannelStatusModel>()
+                        leads.add(CRMChannelStatusModel(response.body()))
                         val msg = leads[0].message
-                        crmTop10ProductSetGet.value = CRMTop10ProductModel(msg)
+                        crmChannelStatusSetGet.value = CRMChannelStatusModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                         Log.e(TAG,"1151  "+e)
@@ -128,6 +127,6 @@ object CRMTop10ProductRepository {
             progressDialog!!.dismiss()
             Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
         }
-    }
 
+    }
 }
