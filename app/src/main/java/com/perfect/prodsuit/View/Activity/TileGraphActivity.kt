@@ -205,6 +205,9 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     private var scoreListPie = ArrayList<ScorePie>()
     lateinit var leadStagesDashViewModel: LeadStagesDashViewModel
     lateinit var leadStagesDashArrayList: JSONArray
+    var LeadTileCount  = 0
+    var LeadAvgCount  = 0
+    var LeadTileOutstandCount  = 0
 
     var TAG  ="TileGraphActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -274,8 +277,9 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                         try {
                             if (msg!!.length > 0) {
 
-                                if (leadoutstandtile == 0){
-                                    leadoutstandtile++
+
+                                if (LeadTileOutstandCount == 0){
+                                    LeadTileOutstandCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   leadoutstandtile   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
@@ -383,8 +387,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                         try {
                             if (msg!!.length > 0) {
 
-                                if (avgconvsnlead == 0){
-                                    avgconvsnlead++
+                                if (LeadAvgCount == 0){
+                                    LeadAvgCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   avgleadconvrsn   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
@@ -596,9 +600,10 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
             R.id.tvv_tile->{
                 TabMode = 1
                 hideViews()
-                getLeadTile()
+
+               /* getLeadTile()
                 getLeadOutstandTile()
-                getLeadAvgConvrsn()
+                getLeadAvgConvrsn()*/
             }
             R.id.actv_mode->{
                 ChartMode      = 1
@@ -690,8 +695,9 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                         try {
                             if (msg!!.length > 0) {
 
-                                if (dashmoduleCount == 0){
-                                    dashmoduleCount++
+
+                                if (LeadTileCount == 0){
+                                    LeadTileCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   leadtile   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
@@ -2007,6 +2013,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
             ll_Tile!!.visibility = View.VISIBLE
             tvv_dash!!.setBackgroundResource(R.drawable.btn_shape_reset)
             tvv_tile!!.setBackgroundResource(R.drawable.btn_dash)
+
+            LeadTileCount  = 0
+            LeadAvgCount  = 0
+            LeadTileOutstandCount  = 0
+
             getLeadTile()
             getLeadOutstandTile()
             getLeadAvgConvrsn()
@@ -2198,6 +2209,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                             }
 
                         } else {
+
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
