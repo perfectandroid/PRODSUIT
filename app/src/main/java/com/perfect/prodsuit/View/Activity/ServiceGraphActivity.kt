@@ -96,6 +96,13 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     private var tv_crmtile_outstandcount: TextView? = null
     private var tv_crmtile_amcDue: TextView? = null
 
+    private var tv_crmtile_Outstanding_remark: TextView? = null
+    private var tv_crmtile_Status_remark: TextView? = null
+    private var tv_crmtile_outstandcount_remark: TextView? = null
+    private var tv_crmtile_amcDue_remark: TextView? = null
+
+
+
     lateinit var chartTypeViewModel               : ChartTypeViewModel
 
     lateinit var crmservicewiseViewModel          : CRMservicewiseViewModel
@@ -161,6 +168,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
     private var ll_crmtile_outstanding: LinearLayout? = null
     private var ll_crmtile_status: LinearLayout? = null
+    private var ll_crmtile_outstandcount: LinearLayout? = null
+    private var ll_crmtile_amcDue: LinearLayout? = null
 
     private var recyc_crmtile_Outstanding: RecyclerView? = null
     private var recyc_crmtile_Status: RecyclerView? = null
@@ -207,7 +216,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         label   = intent.getStringExtra("label")
 
         Log.e(TAG,"3555   "+SubMode+"  :  "+label)
-      //  getCurrentDate()
+        getCurrentDate()
 
         TabMode       = 0
         ContinueMode  = 0
@@ -277,6 +286,12 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         tv_crmtile_amcDue      = findViewById<TextView>(R.id.tv_crmtile_amcDue)
 
 
+        tv_crmtile_Outstanding_remark      = findViewById<TextView>(R.id.tv_crmtile_Outstanding_remark)
+        tv_crmtile_Status_remark      = findViewById<TextView>(R.id.tv_crmtile_Status_remark)
+        tv_crmtile_outstandcount_remark      = findViewById<TextView>(R.id.tv_crmtile_outstandcount_remark)
+        tv_crmtile_amcDue_remark      = findViewById<TextView>(R.id.tv_crmtile_amcDue_remark)
+
+
         actv_mode= findViewById<AutoCompleteTextView>(R.id.actv_mode)
 
         ll_Graph            = findViewById<LinearLayout>(R.id.ll_Graph)
@@ -312,6 +327,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
         ll_crmtile_outstanding         = findViewById<LinearLayout>(R.id.ll_crmtile_outstanding)
         ll_crmtile_status    = findViewById<LinearLayout>(R.id.ll_crmtile_status)
+        ll_crmtile_outstandcount    = findViewById<LinearLayout>(R.id.ll_crmtile_outstandcount)
+        ll_crmtile_amcDue    = findViewById<LinearLayout>(R.id.ll_crmtile_amcDue)
 
         recyc_crmtile_Outstanding    = findViewById<RecyclerView>(R.id.recyc_crmtile_Outstanding)
         recyc_crmtile_Status    = findViewById<RecyclerView>(R.id.recyc_crmtile_Status)
@@ -658,7 +675,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   16441   "+msg)
-                                if (jObject.getString("StatusCode").equals("-2")) {
+                                if (jObject.getString("StatusCode").equals("0")) {
 
                                     val jobjt = jObject.getJSONObject("CRMStagewiseDetails")
                                     stageWiseArrayList=jobjt.getJSONArray("CRMStagewiseDetailsList")
@@ -729,7 +746,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   70444   "+msg)
-                                if (jObject.getString("StatusCode").equals("-2")) {
+                                if (jObject.getString("StatusCode").equals("0")) {
 
                                     val jobjt = jObject.getJSONObject("CRMCountofWarrantyPaidandAMC")
                                     countOfWPAArrayList=jobjt.getJSONArray("CRMCountofWarrantyPaidandAMCList")
@@ -775,8 +792,6 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
-
-
 
     private fun getCRMcomplaintwiseData() {
         // DashMode = "11"
@@ -868,7 +883,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   8488   "+msg)
-                                if (jObject.getString("StatusCode").equals("-2")) {
+                                if (jObject.getString("StatusCode").equals("0")) {
 
                                     val jobjt = jObject.getJSONObject("CRMTop10Products")
                                     top10ProductArrayList=jobjt.getJSONArray("CRMTop10ProductsList")
@@ -986,7 +1001,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     private fun getCRMChanelStatus() {
 
 //        DashMode = "11"
-        TransDate = "08-11-2023"
+//        TransDate = "08-11-2023"
         DashType = "2"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -1006,7 +1021,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   100055   "+msg)
-                                if (jObject.getString("StatusCode").equals("-2")) {
+                                if (jObject.getString("StatusCode").equals("0")) {
 
                                     val jobjt = jObject.getJSONObject("CRMChannelWise")
                                     crmChannelWiseArrayList=jobjt.getJSONArray("CRMChannelWiseList")
@@ -1060,6 +1075,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     private fun getTicketOutstandingData() {
         var DashMode2 = "4"
         DashType = "1"
+        ll_crmtile_outstanding!!.visibility = View.GONE
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
 //                progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1083,9 +1099,10 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                     val jobjt = jObject.getJSONObject("CRMTileDashBoardDetails")
                                     tv_crmtile_Outstanding!!.setText(jobjt.getString("ChartName"))
+                                    tv_crmtile_Outstanding_remark!!.setText(jobjt.getString("Reamrk"))
                                     crmOutstandingArrayList = jobjt.getJSONArray("CRMTileDashBoardDetailsList")
                                     if (crmOutstandingArrayList.length() > 0){
-
+                                        ll_crmtile_outstanding!!.visibility = View.VISIBLE
                                         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                                         recyc_crmtile_Outstanding!!.layoutManager = layoutManager
                                         crmOutstandingAdapter = CrmOutstandingAdapter(this@ServiceGraphActivity, crmOutstandingArrayList)
@@ -1128,6 +1145,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     private fun getTicketStatusData() {
         var DashMode1 = "5"
         DashType = "1"
+        ll_crmtile_status!!.visibility = View.GONE
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
 //                progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1151,9 +1169,10 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                     val jobjt = jObject.getJSONObject("CRMTileDashBoardDetails")
                                     tv_crmtile_Status!!.setText(jobjt.getString("ChartName"))
+                                    tv_crmtile_Status_remark!!.setText(jobjt.getString("Reamrk"))
                                     crmStatusArrayList = jobjt.getJSONArray("CRMTileDashBoardDetailsList")
                                     if (crmStatusArrayList.length() > 0){
-
+                                        ll_crmtile_status!!.visibility = View.VISIBLE
                                         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                                         recyc_crmtile_Status!!.layoutManager = layoutManager
                                         crmStatusAdapter = CrmStatusAdapter(this@ServiceGraphActivity, crmStatusArrayList)
@@ -1196,7 +1215,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     private fun getOutStandingCountData() {
         var DashMode2 = "6"
         DashType = "1"
-        TransDate = "08-11-2023"
+//        TransDate = "08-11-2023"
+        ll_crmtile_outstandcount!!.visibility = View.GONE
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
 //                progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1220,9 +1240,10 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                     val jobjt = jObject.getJSONObject("CRMTileDashBoardDetails")
                                     tv_crmtile_outstandcount!!.setText(jobjt.getString("ChartName"))
+                                    tv_crmtile_outstandcount_remark!!.setText(jobjt.getString("Reamrk"))
                                     crmoutstandingCountArrayList = jobjt.getJSONArray("CRMTileDashBoardDetailsList")
                                     if (crmoutstandingCountArrayList.length() > 0){
-
+                                        ll_crmtile_outstandcount!!.visibility = View.VISIBLE
                                         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                                         recyc_crmtile_outstandcount!!.layoutManager = layoutManager
                                         crmOutstandingCountAdapter = CrmOutstandingCountAdapter(this@ServiceGraphActivity, crmoutstandingCountArrayList)
@@ -1265,7 +1286,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     private fun getAmcDueStatusData() {
         var DashMode3 = "7"
         DashType = "1"
-        TransDate = "08-11-2023"
+//        TransDate = "08-11-2023"
+        ll_crmtile_amcDue!!.visibility = View.GONE
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
 //                progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1289,9 +1311,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                     val jobjt = jObject.getJSONObject("CRMTileDashBoardDetails")
                                     tv_crmtile_amcDue!!.setText(jobjt.getString("ChartName"))
+                                    tv_crmtile_amcDue_remark!!.setText(jobjt.getString("Reamrk"))
                                     crmAmcDueStatusArrayList = jobjt.getJSONArray("CRMTileDashBoardDetailsList")
                                     Log.e(TAG,"msg   884441   "+crmAmcDueStatusArrayList)
                                     if (crmAmcDueStatusArrayList.length() > 0){
+                                        ll_crmtile_amcDue!!.visibility = View.VISIBLE
                                         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                                         recyc_crmtile_amcDue!!.layoutManager = layoutManager
                                         crmAmcDueStatusAdapter = CrmAmcDueStatusAdapter(this@ServiceGraphActivity, crmAmcDueStatusArrayList)

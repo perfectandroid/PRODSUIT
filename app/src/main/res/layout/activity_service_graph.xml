@@ -161,7 +161,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
 
                             <androidx.cardview.widget.CardView
@@ -645,7 +645,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <LinearLayout
                                 android:gravity="center"
@@ -715,6 +715,7 @@
                                                         android:layout_weight="1"
                                                         android:gravity="center"
                                                         android:layout_gravity="center"
+                                                        android:orientation="vertical"
                                                         tools:ignore="Orientation">
 
                                                         <androidx.recyclerview.widget.RecyclerView
@@ -727,6 +728,21 @@
                                                             android:layout_margin="0dp"
                                                             android:gravity="center"
                                                             android:visibility="visible" />
+
+                                                        <TextView
+                                                            android:id="@+id/tv_crmtile_Outstanding_remark"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="50dp"
+                                                            android:layout_weight="1"
+                                                            android:text=""
+                                                            android:textColor="@color/greydark"
+                                                            android:gravity="left|center"
+                                                            android:paddingLeft="10dp"
+                                                            android:layout_gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="normal"
+                                                            android:textSize="@dimen/head_sub_text"
+                                                            android:visibility="visible"/>
 
 
                                                     </LinearLayout>
@@ -790,7 +806,8 @@
                                                         android:layout_weight="1"
                                                         android:gravity="center"
                                                         android:layout_gravity="center"
-                                                        tools:ignore="Orientation">
+                                                        tools:ignore="Orientation"
+                                                        android:orientation="vertical">
 
                                                         <androidx.recyclerview.widget.RecyclerView
                                                             android:id="@+id/recyc_crmtile_Status"
@@ -802,6 +819,21 @@
                                                             android:layout_margin="0dp"
                                                             android:gravity="center"
                                                             android:visibility="visible" />
+
+                                                        <TextView
+                                                            android:id="@+id/tv_crmtile_Status_remark"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="50dp"
+                                                            android:layout_weight="1"
+                                                            android:text=""
+                                                            android:textColor="@color/greydark"
+                                                            android:gravity="left|center"
+                                                            android:paddingLeft="10dp"
+                                                            android:layout_gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="normal"
+                                                            android:textSize="@dimen/head_sub_text"
+                                                            android:visibility="visible"/>
 
 
                                                     </LinearLayout>
@@ -865,7 +897,8 @@
                                                         android:layout_weight="1"
                                                         android:gravity="center"
                                                         android:layout_gravity="center"
-                                                        tools:ignore="Orientation">
+                                                        tools:ignore="Orientation"
+                                                        android:orientation="vertical">
 
                                                         <androidx.recyclerview.widget.RecyclerView
                                                             android:id="@+id/recyc_crmtile_outstandcount"
@@ -877,6 +910,21 @@
                                                             android:layout_margin="0dp"
                                                             android:gravity="center"
                                                             android:visibility="visible" />
+
+                                                        <TextView
+                                                            android:id="@+id/tv_crmtile_outstandcount_remark"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="50dp"
+                                                            android:layout_weight="1"
+                                                            android:text=""
+                                                            android:textColor="@color/greydark"
+                                                            android:gravity="left|center"
+                                                            android:paddingLeft="10dp"
+                                                            android:layout_gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="normal"
+                                                            android:textSize="@dimen/head_sub_text"
+                                                            android:visibility="visible"/>
 
 
                                                     </LinearLayout>
@@ -940,7 +988,8 @@
                                                         android:layout_weight="1"
                                                         android:gravity="center"
                                                         android:layout_gravity="center"
-                                                        tools:ignore="Orientation">
+                                                        tools:ignore="Orientation"
+                                                        android:orientation="vertical">
 
                                                         <androidx.recyclerview.widget.RecyclerView
                                                             android:id="@+id/recyc_crmtile_amcDue"
@@ -952,6 +1001,21 @@
                                                             android:layout_margin="0dp"
                                                             android:gravity="center"
                                                             android:visibility="visible" />
+
+                                                        <TextView
+                                                            android:id="@+id/tv_crmtile_amcDue_remark"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="50dp"
+                                                            android:layout_weight="1"
+                                                            android:text=""
+                                                            android:textColor="@color/greydark"
+                                                            android:gravity="left|center"
+                                                            android:paddingLeft="10dp"
+                                                            android:layout_gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="normal"
+                                                            android:textSize="@dimen/head_sub_text"
+                                                            android:visibility="visible"/>
 
 
                                                     </LinearLayout>
