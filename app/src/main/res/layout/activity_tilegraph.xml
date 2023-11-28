@@ -218,7 +218,7 @@
                                             <com.github.mikephil.charting.charts.BarChart
                                                 android:id="@+id/empwise_chart"
                                                 android:layout_width="match_parent"
-                                                android:layout_height="400dp"
+                                                android:layout_height="350dp"
                                                 android:layout_marginLeft="10dp"
                                                 android:layout_marginRight="10dp"
                                                 android:layout_weight="1"
@@ -280,7 +280,7 @@
                                             <com.github.mikephil.charting.charts.PieChart
                                                 android:id="@+id/leadstage_forecsast"
                                                 android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
+                                                android:layout_height="350dp"
                                                 android:layout_margin="2dp"
                                                 android:layout_weight="1"
                                                 android:visibility="visible" />
@@ -342,12 +342,13 @@
                                             <com.github.mikephil.charting.charts.BarChart
                                                 android:id="@+id/top10_barchart"
                                                 android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:layout_margin="2dp"
+                                                android:layout_height="350dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
                                                 android:layout_weight="1"
                                                 android:visibility="visible" />
                                             <TextView
-                                                android:id="@+id/txtv_barChartRemrk"
+                                                android:id="@+id/txtv_top10Remrk"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center_vertical"
@@ -367,7 +368,6 @@
                                                 android:padding="5dp"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
-                                                android:layout_weight="2.5"
                                                 android:layout_margin="5dp">
                                                 <com.perfect.prodsuit.Helper.FullLenghRecyclertview
 
@@ -461,10 +461,11 @@
                                             <com.github.mikephil.charting.charts.BarChart
                                                 android:id="@+id/empwiseamt_barchart"
                                                 android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:layout_margin="2dp"
+                                                android:layout_height="350dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
                                                 android:layout_weight="1"
-                                                android:visibility="visible" />
+                                                android:visibility="visible"  />
                                             <TextView
                                                 android:id="@+id/txtv_empamtRemrk"
                                                 android:layout_width="match_parent"
@@ -485,7 +486,6 @@
                                                 android:padding="5dp"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
-                                                android:layout_weight="2.5"
                                                 android:layout_margin="5dp">
                                                 <com.perfect.prodsuit.Helper.FullLenghRecyclertview
 
@@ -495,6 +495,7 @@
                                                     android:layout_height="wrap_content"
                                                     android:layout_margin="5dp"
                                                     android:padding="5dp"
+                                                    android:visibility="gone"
                                                     android:background="@drawable/svg_dashrect">
 
                                                 </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
