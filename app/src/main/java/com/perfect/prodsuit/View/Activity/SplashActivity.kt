@@ -2,8 +2,10 @@ package com.perfect.prodsuit.View.Activity
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -21,13 +23,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
+import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Viewmodel.CommonAppViewModel
-import com.perfect.prodsuit.Viewmodel.CompanyCodeViewModel
-import com.perfect.prodsuit.Viewmodel.MaintanceMessageViewModel
-import com.perfect.prodsuit.Viewmodel.SplashresellerActivityViewModel
+import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONObject
 
 class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
@@ -249,6 +249,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
     lateinit var maintanceMessageViewModel: MaintanceMessageViewModel
     lateinit var commonAppViewModel: CommonAppViewModel
     lateinit var companyCodeViewModel: CompanyCodeViewModel
+    lateinit var versionCheckViewModel: VersionCheckViewModel
     lateinit var context: Context
 
     var checkCommonApp =0
@@ -279,6 +280,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
         maintanceMessageViewModel = ViewModelProvider(this).get(MaintanceMessageViewModel::class.java)
         commonAppViewModel = ViewModelProvider(this).get(CommonAppViewModel::class.java)
         companyCodeViewModel = ViewModelProvider(this).get(CompanyCodeViewModel::class.java)
+        versionCheckViewModel = ViewModelProvider(this).get(VersionCheckViewModel::class.java)
 
         var height = Config.getWidth(context)
 
@@ -306,10 +308,141 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
         else if(chkstatus.equals("1")||chkstatus.equals("0"))
         {
             Log.i("response44","b.............  ")
-           showMaintanace()
+//           showMaintanace()
+            versionCheck()
         }
 
 
+    }
+
+    private fun versionCheck() {
+        var editLeadGenDet = 0
+        try {
+            when (Config.ConnectivityUtils.isConnected(this)) {
+                true -> {
+                    versionCheckViewModel.getVersion(this)!!.observe(
+                        this,
+                        Observer { serviceSetterGetter ->
+                            val msg = serviceSetterGetter.message
+
+
+                            try {
+//                            if (pinCodeDet == 0){
+//                                pinCodeDet++
+                                if (msg!!.length > 0) {
+
+                                    if (editLeadGenDet == 0) {
+                                        editLeadGenDet++
+                                        val jObject = JSONObject(msg)
+                                        Log.e(TAG, "msg   4233   " + msg)
+                                        if (jObject.getString("StatusCode") == "0") {
+
+
+                                            val jobjt =
+                                                jObject.getJSONObject("CheckVersionCode")
+                                            val ChkStatusOutput =
+                                                jobjt.getInt("ChkStatusOutput")
+                                            if (ChkStatusOutput == 10) {
+                                                playStorePop()
+                                            } else {
+                                                showMaintanace()
+                                            }
+
+                                        } else {
+                                            val builder = AlertDialog.Builder(
+                                                this@SplashActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage(jObject.getString("EXMessage"))
+                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
+                                        }
+                                    }
+
+                                } else {
+//                                    Toast.makeText(
+//                                        applicationContext,
+//                                        "Some Technical Issues.",
+//                                        Toast.LENGTH_LONG
+//                                    ).show()
+                                }
+                                //  }
+
+
+                            } catch (e: Exception) {
+
+                                Log.e(TAG, "Exception  4133    " + e.toString())
+                                Toast.makeText(
+                                    applicationContext,
+                                    "" + Config.SOME_TECHNICAL_ISSUES,
+                                    Toast.LENGTH_LONG
+                                ).show()
+
+                            }
+
+                        })
+                }
+                false -> {
+                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Exception  226666    " + e.toString())
+        }
+
+    }
+
+    private fun playStorePop() {
+        try {
+
+            val dialog1 = Dialog(this)
+            dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog1.setCanceledOnTouchOutside(false);
+            dialog1.setCancelable(false);
+            dialog1.setContentView(R.layout.play_update_layout)
+            val window: Window? = dialog1.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+
+
+            val txt_warning = dialog1.findViewById(R.id.txt_warning) as TextView
+            val txtCancel = dialog1.findViewById(R.id.txtCancel) as TextView
+            val txtSubmit = dialog1.findViewById(R.id.txtSubmit) as TextView
+
+            txt_warning.setText("We're excited to bring you the latest version of " + getString(R.string.app_name) + "! In this update, we've worked hard to enhance your experience and introduce some exciting new features")
+
+            txtCancel.setOnClickListener {
+                dialog1.dismiss()
+                finishAffinity()
+            }
+
+            txtSubmit.setOnClickListener {
+                val applicationId = BuildConfig.APPLICATION_ID
+                val playstorelink = "https://play.google.com/store/apps/details?id="+applicationId
+                Log.v("sfsdfsdfdsdd", "playStore " + playstorelink)
+                try {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+applicationId))
+                    intent.setPackage("com.android.vending") // Optional, restricts the intent to the Play Store app
+                    startActivity(intent)
+                } catch (e: ActivityNotFoundException) {
+                    // If the Play Store app is not installed, open the Play Store website
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id="+applicationId))
+                    startActivity(intent)
+                }
+            }
+
+            dialog1.show()
+
+        } catch (e: Exception) {
+
+        }
     }
 
 
@@ -384,7 +517,8 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                                                 commonAppEditer.putString("commonApp", jObject.getString("Mode"))
                                                 commonAppEditer.commit()
 
-                                                showMaintanace()
+//                                                showMaintanace()
+                                                versionCheck()
                                             }
                                         }
                                         else {
@@ -555,7 +689,8 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //                                            commonAppEditer.commit()
 
 
-                                            showMaintanace()
+//                                            showMaintanace()
+                                            versionCheck()
 
                                         }
                                         else {

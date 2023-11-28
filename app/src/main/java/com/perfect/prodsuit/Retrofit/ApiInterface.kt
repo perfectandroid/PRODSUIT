@@ -791,6 +791,8 @@ interface ApiInterface {
     @POST("DashBoard/ExpenseVSGain")
     fun getTopRevenue(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/CheckVersionCode")
+    fun versionCheck(@Body body: RequestBody): Call<String>
 
 
 }
