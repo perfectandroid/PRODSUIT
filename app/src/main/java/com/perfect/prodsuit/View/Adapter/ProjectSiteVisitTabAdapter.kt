@@ -39,7 +39,7 @@ class ProjectSiteVisitTabAdapter (internal var context: Context, internal var js
                 holder.tv_newCount.text        = jsonObject!!.getString("Count")
 
                 if (position == 0){
-                  //  holder.tv_newCount.visibility = View.GONE
+                    holder.tv_newCount.visibility = View.GONE
                     holder.txtv_label!!.setTextColor(context.resources.getColor(R.color.color_site_tab_10))
                     holder.tv_newCount!!.setBackgroundResource(R.color.color_site_tab_10)
                     holder.ll_tab!!.setBackgroundResource(R.drawable.border_sitevisit_1)

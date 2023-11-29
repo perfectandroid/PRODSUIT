@@ -20,7 +20,12 @@ class BarChartLeadAdapter(internal var context: Context, internal var jsonArray:
     val color = intArrayOf(
         R.color.leadstages_color1, R.color.leadstages_color2, R.color.leadstages_color3, R.color.leadstages_color4,
         R.color.leadstages_color5, R.color.leadstages_color6, R.color.leadstages_color7, R.color.leadstages_color8,
-        R.color.leadstages_color9, R.color.leadstages_color10, R.color.leadstages_color11, R.color.leadstages_color12
+        R.color.leadstages_color9, R.color.leadstages_color10, R.color.leadstages_color11, R.color.leadstages_color12,R.color.leadstages_color10,
+        R.color.mylead_Color, R.color.barchart_colors24,R.color.barchart_colors10,R.color.barchart_colors21,R.color.barchart_colors23,R.color.barchart_colors3,R.color.barchart_colors12,R.color.barchart_colors24,R.color.mylead_light_Color,R.color.mylead_light_Color1,R.color.barchart_colors28,R.color.barchart_colors18,
+        R.color.common_google_signin_btn_text_dark_focused,R.color.defaultColor,R.color.colorPrimary,R.color.color_approve,
+        R.color.fui_bgEmail,R.color.service_sf_main,R.color.zxing_viewfinder_mask,R.color.hand_color,
+        R.color.report_head2,R.color.fui_linkColor,R.color.emi_overdue_gardient1,R.color.emi_todo_gardient2
+
 
     )
 
@@ -39,9 +44,14 @@ class BarChartLeadAdapter(internal var context: Context, internal var jsonArray:
             if (holder is MainViewHolder) {
 
                 val pos = position+1
-                holder.tv_colorBox.setBackgroundResource(color[position])
+
+
                 holder.tv_label.text        = jsonObject!!.getString("EmpFName")
                 holder.tv_value.text        = jsonObject!!.getString("ActualPercentage").toFloat().toInt().toString()
+                if(!holder.tv_label.text.equals(""))
+                {
+                    holder.tv_colorBox.setBackgroundResource(color[position])
+                }
 
 //                if (position == 0){
 //                    holder.tv_label.text        = "Service Ticket Action-, Date Criteria"

@@ -97,6 +97,8 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     var currentcount                                      = 0
     var savecount                                         = 0
 
+    var currentStatusMode                                 = 0
+
     var Critrea1                                          = "0"
     var SubMode                                           = ""
 
@@ -130,6 +132,11 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
 
         getCurrentDate()
 
+
+        SubMode = "1"
+        currentStatusMode = 0
+        currentcount = 0
+        getCurrentStatus()
 
 
 
@@ -423,13 +430,13 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
 
                 if (!ID_Stage.equals("")){
                     Critrea1 = ID_Stage
-                    SubMode = "0"
+                    SubMode = "2"
                 }
                 else if (!ID_Project.equals("")){
                     // Critrea1 = ID_Project
 //                    SubMode = "1"
                     Critrea1 = "0"
-                    SubMode = "0"
+                    SubMode = "1"
                 }
 
 //                //OLD
@@ -443,6 +450,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
 //                    SubMode = "1"
 //                }
                 currentcount = 0
+                currentStatusMode = 1
                 getCurrentStatus()
             }
             R.id.btnSubmit -> {
@@ -463,6 +471,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                 tie_CurrentStatus!!.setText("")
 
                // ID_Project = ""
+                SubMode = "1"
                 ID_Stage   = ""
                 ID_CurrentStatus = ""
                 tie_DueDate!!.setText(DueDate)
@@ -807,7 +816,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                currentstatusViewModel.getCurrentStatus(this,ReqMode,Critrea1!!,SubMode!!)!!.observe(
+                currentstatusViewModel.getCurrentStatus(this,ReqMode,Critrea1!!,SubMode!!,ID_Project!!,ID_Stage!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -825,7 +834,13 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                                         currentArraylist = jobjt.getJSONArray("ProjectStatusList")
                                         if (currentArraylist.length()>0){
 
-                                            currentStatusPopup(currentArraylist)
+                                            if (currentStatusMode == 0){
+//                                                val jsonObject = currentArraylist.getJSONObject(0)
+//                                                ID_CurrentStatus = jsonObject.getString("FK_Status")
+//                                                tie_CurrentStatus!!.setText(jsonObject.getString("StatusName"))
+                                            }else{
+                                                currentStatusPopup(currentArraylist)
+                                            }
 
                                         }
                                     } else {
@@ -1075,6 +1090,9 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
             ID_Stage = jsonObject.getString("ProjectStagesID")
             tie_Stage!!.setText(jsonObject.getString("StageName"))
             tie_DueDate!!.setText(jsonObject!!.getString("DueDate"))
+
+            ID_CurrentStatus = ""
+            tie_CurrentStatus!!.setText("")
 
 //            ID_Team = ""
 //            tie_Team!!.setText("")

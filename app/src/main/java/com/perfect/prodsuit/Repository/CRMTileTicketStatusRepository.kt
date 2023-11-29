@@ -88,7 +88,7 @@ object CRMTileTicketStatusRepository {
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart(DashType))
 
 
-                Log.e(TAG,"92221   getCRMTileDashBoardDetails  "+requestObject1)
+                Log.e(TAG,"922222   getCRMTileDashBoardDetails  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

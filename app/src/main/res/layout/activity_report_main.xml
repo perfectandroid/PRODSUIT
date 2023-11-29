@@ -709,7 +709,7 @@
                                     android:layout_gravity="center"
                                     android:gravity="center"
                                     android:padding="1dp"
-                                    android:visibility="gone"
+                                    android:visibility="visible"
                                     android:background="@drawable/border_3"
                                     android:orientation="horizontal">
 

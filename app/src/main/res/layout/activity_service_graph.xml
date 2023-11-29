@@ -161,7 +161,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
 
                             <androidx.cardview.widget.CardView
@@ -525,6 +525,14 @@
                                                     android:layout_margin="2dp"
                                                     android:visibility="visible" />
 
+                                                <com.github.mikephil.charting.charts.PieChart
+                                                    android:id="@+id/slaStatusPieChart"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_margin="2dp"
+                                                    android:layout_weight="1"
+                                                    android:visibility="visible" />
+
                                                 <TextView
                                                     android:id="@+id/tv_ServiceSlaStatus"
                                                     android:layout_width="match_parent"
@@ -637,7 +645,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <LinearLayout
                                 android:gravity="center"
@@ -656,6 +664,7 @@
                                         android:layout_height="wrap_content"
                                         android:orientation="vertical">
 
+                                        // Ticket OustStanding
                                         <LinearLayout
                                             android:id="@+id/ll_crmtile_outstanding"
                                             android:layout_width="match_parent"
@@ -683,7 +692,7 @@
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content">
                                                         <TextView
-
+                                                            android:id="@+id/tv_crmtile_Outstanding"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="50dp"
                                                             android:layout_weight="1"
@@ -706,6 +715,7 @@
                                                         android:layout_weight="1"
                                                         android:gravity="center"
                                                         android:layout_gravity="center"
+                                                        android:orientation="vertical"
                                                         tools:ignore="Orientation">
 
                                                         <androidx.recyclerview.widget.RecyclerView
@@ -719,6 +729,21 @@
                                                             android:gravity="center"
                                                             android:visibility="visible" />
 
+                                                        <TextView
+                                                            android:id="@+id/tv_crmtile_Outstanding_remark"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="50dp"
+                                                            android:layout_weight="1"
+                                                            android:text=""
+                                                            android:textColor="@color/greydark"
+                                                            android:gravity="left|center"
+                                                            android:paddingLeft="10dp"
+                                                            android:layout_gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="normal"
+                                                            android:textSize="@dimen/head_sub_text"
+                                                            android:visibility="visible"/>
+
 
                                                     </LinearLayout>
 
@@ -730,6 +755,7 @@
 
                                         </LinearLayout>
 
+                                        // Ticket status
                                         <LinearLayout
                                             android:id="@+id/ll_crmtile_status"
                                             android:layout_width="match_parent"
@@ -757,7 +783,7 @@
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content">
                                                         <TextView
-
+                                                            android:id="@+id/tv_crmtile_Status"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="50dp"
                                                             android:layout_weight="1"
@@ -780,7 +806,8 @@
                                                         android:layout_weight="1"
                                                         android:gravity="center"
                                                         android:layout_gravity="center"
-                                                        tools:ignore="Orientation">
+                                                        tools:ignore="Orientation"
+                                                        android:orientation="vertical">
 
                                                         <androidx.recyclerview.widget.RecyclerView
                                                             android:id="@+id/recyc_crmtile_Status"
@@ -792,6 +819,203 @@
                                                             android:layout_margin="0dp"
                                                             android:gravity="center"
                                                             android:visibility="visible" />
+
+                                                        <TextView
+                                                            android:id="@+id/tv_crmtile_Status_remark"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="50dp"
+                                                            android:layout_weight="1"
+                                                            android:text=""
+                                                            android:textColor="@color/greydark"
+                                                            android:gravity="left|center"
+                                                            android:paddingLeft="10dp"
+                                                            android:layout_gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="normal"
+                                                            android:textSize="@dimen/head_sub_text"
+                                                            android:visibility="visible"/>
+
+
+                                                    </LinearLayout>
+
+                                                </LinearLayout>
+
+
+                                            </androidx.cardview.widget.CardView>
+
+
+                                        </LinearLayout>
+
+                                        // Outstanding count
+                                        <LinearLayout
+                                            android:id="@+id/ll_crmtile_outstandcount"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <androidx.cardview.widget.CardView
+                                                android:gravity="center"
+                                                android:layout_gravity="center"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginLeft="5dp"
+                                                android:layout_marginRight="5dp"
+                                                android:layout_marginBottom="5dp"
+                                                android:background="@color/white"
+                                                app:cardCornerRadius="5dp"
+                                                app:cardElevation="1dp"
+                                                app:cardPreventCornerOverlap="true"
+                                                app:cardUseCompatPadding="true">
+                                                <LinearLayout
+                                                    android:orientation="vertical"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content">
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content">
+                                                        <TextView
+                                                            android:id="@+id/tv_crmtile_outstandcount"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="50dp"
+                                                            android:layout_weight="1"
+                                                            android:text="Outstanding count"
+                                                            android:textColor="@color/white"
+                                                            android:gravity="left|center"
+                                                            android:paddingLeft="15dp"
+                                                            android:layout_gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:background="@color/colorPrimary"
+                                                            android:textStyle="bold"
+                                                            android:textSize="@dimen/header_text1"
+                                                            android:visibility="visible"/>
+
+                                                    </LinearLayout>
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:background="#ffffff"
+                                                        android:layout_weight="1"
+                                                        android:gravity="center"
+                                                        android:layout_gravity="center"
+                                                        tools:ignore="Orientation"
+                                                        android:orientation="vertical">
+
+                                                        <androidx.recyclerview.widget.RecyclerView
+                                                            android:id="@+id/recyc_crmtile_outstandcount"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:paddingTop="10dp"
+                                                            android:paddingBottom="10dp"
+                                                            android:layout_margin="0dp"
+                                                            android:gravity="center"
+                                                            android:visibility="visible" />
+
+                                                        <TextView
+                                                            android:id="@+id/tv_crmtile_outstandcount_remark"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="50dp"
+                                                            android:layout_weight="1"
+                                                            android:text=""
+                                                            android:textColor="@color/greydark"
+                                                            android:gravity="left|center"
+                                                            android:paddingLeft="10dp"
+                                                            android:layout_gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="normal"
+                                                            android:textSize="@dimen/head_sub_text"
+                                                            android:visibility="visible"/>
+
+
+                                                    </LinearLayout>
+
+                                                </LinearLayout>
+
+
+                                            </androidx.cardview.widget.CardView>
+
+
+                                        </LinearLayout>
+
+                                        // Amc Due
+                                        <LinearLayout
+                                            android:id="@+id/ll_crmtile_amcDue"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <androidx.cardview.widget.CardView
+                                                android:gravity="center"
+                                                android:layout_gravity="center"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginLeft="5dp"
+                                                android:layout_marginRight="5dp"
+                                                android:layout_marginBottom="5dp"
+                                                android:background="@color/white"
+                                                app:cardCornerRadius="5dp"
+                                                app:cardElevation="1dp"
+                                                app:cardPreventCornerOverlap="true"
+                                                app:cardUseCompatPadding="true">
+                                                <LinearLayout
+                                                    android:orientation="vertical"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content">
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content">
+                                                        <TextView
+                                                            android:id="@+id/tv_crmtile_amcDue"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="50dp"
+                                                            android:layout_weight="1"
+                                                            android:text="Amc due Status"
+                                                            android:textColor="@color/white"
+                                                            android:gravity="left|center"
+                                                            android:paddingLeft="15dp"
+                                                            android:layout_gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:background="@color/colorPrimary"
+                                                            android:textStyle="bold"
+                                                            android:textSize="@dimen/header_text1"
+                                                            android:visibility="visible"/>
+
+                                                    </LinearLayout>
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:background="#ffffff"
+                                                        android:layout_weight="1"
+                                                        android:gravity="center"
+                                                        android:layout_gravity="center"
+                                                        tools:ignore="Orientation"
+                                                        android:orientation="vertical">
+
+                                                        <androidx.recyclerview.widget.RecyclerView
+                                                            android:id="@+id/recyc_crmtile_amcDue"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:paddingTop="10dp"
+                                                            android:paddingBottom="10dp"
+                                                            android:layout_margin="0dp"
+                                                            android:gravity="center"
+                                                            android:visibility="visible" />
+
+                                                        <TextView
+                                                            android:id="@+id/tv_crmtile_amcDue_remark"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="50dp"
+                                                            android:layout_weight="1"
+                                                            android:text=""
+                                                            android:textColor="@color/greydark"
+                                                            android:gravity="left|center"
+                                                            android:paddingLeft="10dp"
+                                                            android:layout_gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="normal"
+                                                            android:textSize="@dimen/head_sub_text"
+                                                            android:visibility="visible"/>
 
 
                                                     </LinearLayout>

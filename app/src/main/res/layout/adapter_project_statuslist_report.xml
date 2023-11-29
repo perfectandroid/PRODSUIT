@@ -139,8 +139,7 @@
                     android:drawableLeft="@drawable/calendar_svglist"
                     android:drawableTint="@color/greydark"
                     android:drawablePadding="5dp"
-                    android:textColor="@color/black"
-                    android:visibility="gone"/>
+                    android:textColor="@color/black"/>
                 <!--                android:drawableLeft="@drawable/deadline"-->
 
                 <TextView
@@ -155,8 +154,7 @@
                     android:drawableLeft="@drawable/svg_action_type"
                     android:drawableTint="@color/greydark"
                     android:drawablePadding="5dp"
-                    android:textColor="@color/black"
-                    android:visibility="gone"/>
+                    android:textColor="@color/black"/>
                 <TextView
                     android:id="@+id/tv_ExpenseAmount"
                     android:fontFamily="@font/myfont"
@@ -169,8 +167,7 @@
                     android:drawableLeft="@drawable/svg_action_type"
                     android:drawableTint="@color/greydark"
                     android:drawablePadding="5dp"
-                    android:textColor="@color/black"
-                    android:visibility="gone"/>
+                    android:textColor="@color/black"/>
                 <!--                android:drawableLeft="@drawable/deadline"-->
 
 

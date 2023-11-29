@@ -213,6 +213,13 @@ class DashboardModuleListAdapter(
                         i.putExtra("label",label)
                         context.startActivity(i)
                     }
+                    if (submode=="5")
+                    {
+                        val i = Intent(context, AccountsGraphActivity::class.java)
+                        i.putExtra("SubMode",submode)
+                        i.putExtra("label",label)
+                        context.startActivity(i)
+                    }
 
 
 

@@ -32,6 +32,16 @@
             android:textSize="10dp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
+        <TextView
+            android:id="@+id/tv_BarValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HOT"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/myfont"
+            android:textSize="10dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
 
     </LinearLayout>

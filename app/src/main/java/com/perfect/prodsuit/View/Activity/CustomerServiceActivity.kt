@@ -38,7 +38,8 @@ import java.util.*
 
 
 class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , ItemClickListener {
-
+    var note=""
+    var pri = 0
     val TAG : String = "CustomerServiceActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
@@ -1510,7 +1511,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         til_EmpOrMedia!!.visibility = View.GONE
 
         // Complaint
-       // ID_CompCategory = ""
+
+        ID_CompCategory = ""
         ID_Category = ""
         ID_Company = ""
         ID_Product = ""
@@ -1552,10 +1554,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         getProductPriority()
 
 
+        CompcategoryDet = 0
         ReqMode = "66"
         SubMode = "20"
         categoryCount = 0
         getCompCategory(ReqMode!!,SubMode!!)
+
 
         getCurrentDate()
 
@@ -2583,12 +2587,16 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                     Log.e(TAG,"msg   353   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
+
+
                                         val jobjt = jObject.getJSONObject("CommonPopupDetails")
                                         servPriorityArrayList = jobjt.getJSONArray("CommonPopupList")
                                         if (servPriorityArrayList.length()>0){
 
                                             Log.e(TAG,"ffffffffffffffff "+prioritymode)
                                             if (prioritymode == 0){
+
+
                                                 var jsonObject1 = servPriorityArrayList.getJSONObject(2)
                                                 tie_Priority!!.setText(jsonObject1.getString("Description"))
                                                 ID_Priority = jsonObject1.getString("Code")
@@ -3143,6 +3151,10 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                             Log.e(TAG,"bbbbbbbb   "+categoryCount)
 
                                             if (categoryCount == 0){
+
+
+                                                Log.e(TAG,"bbbbbbbb 777   "+compCategoryArrayList.getJSONObject(2))
+                                                Log.e(TAG,"bbbbbbbb 777   "+compCategoryArrayList)
                                                 var jsonObject1 = compCategoryArrayList.getJSONObject(2)
                                                 tie_CompCategory!!.setText(jsonObject1.getString("Description"))
                                                 ID_CompCategory = jsonObject1.getString("Code")
@@ -4256,11 +4268,16 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 tie_CN_HouseName!!.setText("")
                 tie_CN_Place!!.setText("")
                 tie_CN_Pincode!!.setText("")
-                tie_CN_Country!!.setText("")
-                tie_CN_State!!.setText("")
-                tie_CN_District!!.setText("")
+//                tie_CN_Country!!.setText("")
+//                tie_CN_State!!.setText("")
+//                tie_CN_District!!.setText("")
                 tie_CN_Area!!.setText("")
                 tie_CN_Post!!.setText("")
+
+                defaultCount = 0
+                getDefaultValueSettings()
+
+
             }
 
             txtNewUserSubmit!!.setOnClickListener {
