@@ -865,7 +865,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     LeadTileCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   leadcountscenario   " + msg)
-                          /*          if (jObject.getString("StatusCode") == "0") {
+                                   if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("TileLeadDashBoardDetails")
                                         var remark =   jobjt.getString("Reamrk")
                                         var chartname =   jobjt.getString("ChartName")
@@ -892,20 +892,20 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                                 )
                                             )
                                             // rclrvw_lead!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            val adapter = LeadTileListAdapter(this@TileGraphActivity,leadTileSort,remark)
+                                            val adapter = LeadCountAdapter(this@TileGraphActivity,leadTileSort,remark)
                                             rclrvw_lead!!.adapter = adapter
                                             adapter.setClickListener(this@TileGraphActivity)
 
 
 
-                                            *//* val lLayout1 = GridLayoutManager(this@TileGraphActivity, 1)
-                                             rclrvw_leadoutstand!!.layoutManager = lLayout1 as RecyclerView.LayoutManager?*//*
+                                            /* val lLayout1 = GridLayoutManager(this@TileGraphActivity, 1)
+                                             rclrvw_leadoutstand!!.layoutManager = lLayout1 as RecyclerView.LayoutManager?*/
 
 
                                         }
                                         else {
                                             crdv_lead!!.visibility=View.GONE
-                                            *//* val builder = AlertDialog.Builder(
+                                            /* val builder = AlertDialog.Builder(
                                                  this@TileGraphActivity,
                                                  R.style.MyDialogTheme
                                              )
@@ -914,10 +914,10 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                              }
                                              val alertDialog: AlertDialog = builder.create()
                                              alertDialog.setCancelable(false)
-                                             alertDialog.show()*//*
+                                             alertDialog.show()*/
                                         }
                                     } else {
-                                        *//*  val builder = AlertDialog.Builder(
+                                        /*  val builder = AlertDialog.Builder(
                                               this@TileGraphActivity,
                                               R.style.MyDialogTheme
                                           )
@@ -926,8 +926,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                           }
                                           val alertDialog: AlertDialog = builder.create()
                                           alertDialog.setCancelable(false)
-                                          alertDialog.show()*//*
-                                    }*/
+                                          alertDialog.show()*/
+                                    }
                                     //  progressDialog!!.dismiss()
                                 }
 
@@ -2444,8 +2444,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
             Log.e(TAG, "00000111   " + ID_ChartMode)
             Log.e(TAG, "85456214   " + modeType)
 
-
-            val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, modeType)
+            val adapter = CustomAdapter(this, R.layout.custom_dropdown_item, modeType)
+         //   val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, modeType)
             actv_mode!!.setAdapter(adapter)
             actv_mode!!.showDropDown()
 
