@@ -1329,6 +1329,15 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
 
 
         }
+        if (data.equals("rootView")){
+            val jsonObject = locationList.getJSONObject(position)
+            Log.e(TAG,"1062   Location List")
+            val i = Intent(this@LocationMarkingNewActivity, RootViewActivity::class.java)
+            i.putExtra("FK_Employee",jsonObject.getString("FK_Employee"))
+            i.putExtra("strDate",strDate)
+            startActivity(i)
+        }
+
         if (data.equals("LocList")){
             val jsonObject = locationList.getJSONObject(position)
             Log.e(TAG,"1062   Location List")

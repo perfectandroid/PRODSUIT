@@ -781,6 +781,12 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.RootViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:exported="false" />
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.AddQuotationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
