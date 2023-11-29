@@ -17,9 +17,7 @@ class TopRevenueAdapter(internal var context: Context, internal var jsonArray: J
     internal val TAG : String = "TopRevenueAdapter"
     internal var jsonObject: JSONObject? = null
 
-    val color = intArrayOf(
-
-            R.color.leadstages_color1,
+    val color = intArrayOf(R.color.leadstages_color1,
     R.color.leadstages_color2,
     R.color.leadstages_color3,
     R.color.leadstages_color4,

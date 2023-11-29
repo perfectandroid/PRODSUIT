@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -57,14 +58,18 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     lateinit var emptargetamtArrayList: JSONArray
     lateinit var leadstagecountwiseListBarList: JSONArray
     lateinit var avgconvsnleadArrayList: JSONArray
-
     lateinit var leadActivityViewModels: leadActivityViewModel
+    lateinit var leadCountFollowupViewModel: LeadCountFollowupViewModel
+
     var leadActivityText: TextView? = null
     var mainHeadingDash: TextView? = null
     var txt_chartlabel: TextView? = null
     var txt_chartremark: TextView? = null
+    private var tvv_lemo_StagWise: TextView? = null
+    var drawableMore : Drawable? = null
+    var drawableLess : Drawable? = null
 
-
+    var lemoStagWiseMode    = 0
 
     lateinit var leadActivityBarList: JSONArray
     var leadstagecountwiseList = 0
@@ -91,6 +96,9 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     internal var etdis: EditText? = null
     internal var tile1: LinearLayout? = null
     internal var tile2: LinearLayout? = null
+    internal var ll_empwisebarchart: LinearLayout? = null
+
+
 
     internal var ll_empwseamt: LinearLayout? = null
     var rclv_empwiseamt: FullLenghRecyclertview? = null
@@ -247,6 +255,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         leadActivityViewModels= ViewModelProvider(this).get(leadActivityViewModel::class.java)
         averageLeadConversionModel= ViewModelProvider(this).get(AvgLeadConversionViewModel::class.java)
         topRevenueViewModel= ViewModelProvider(this).get(TopRevenueViewModel::class.java)
+        leadCountFollowupViewModel= ViewModelProvider(this).get(LeadCountFollowupViewModel::class.java)
         employeewiseTargetAmountViewModel= ViewModelProvider(this).get(EmployeewiseTargetAmountViewModel::class.java)
         setRegViews()
 
@@ -505,7 +514,12 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
 
+        drawableMore = resources.getDrawable(R.drawable.dash_more, null)
+        drawableLess = resources.getDrawable(R.drawable.dash_less, null)
 
+
+        ll_empwisebarchart = findViewById<LinearLayout>(R.id.ll_empwisebarchart)
+        tvv_lemo_StagWise      = findViewById<TextView>(R.id.tvv_lemo_StagWise)
 
         txt_chartlabel= findViewById<TextView>(R.id.txt_chartlabel)
         txt_chartremark= findViewById<TextView>(R.id.txt_chartremark)
@@ -557,6 +571,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         ll_top10= findViewById<LinearLayout>(R.id.ll_top10)
 
         actv_mode!!.setOnClickListener(this)
+        tvv_lemo_StagWise!!.setOnClickListener(this)
 
       /*  ll_empwise= findViewById<LinearLayout>(R.id.ll_empwise)
         ll_leadstage=findViewById<LinearLayout>(R.id.ll_leadstage)
@@ -637,6 +652,16 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 ChartMode      = 1
                 chartModeCount = 0
                 getChartModeData()
+            }
+            R.id.tvv_lemo_StagWise->{
+
+                if (lemoStagWiseMode == 0){
+                    lemoStagWiseMode = 1
+                }else{
+                    lemoStagWiseMode = 0
+                }
+
+              //  hideStageWise()
             }
         }
     }
@@ -819,7 +844,117 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         }
     }
 
+    private fun getLeadCountScenario() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                leadCountFollowupViewModel.getLeadCountFollowupCount(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        try {
+                            if (msg!!.length > 0) {
 
+
+                                if (LeadTileCount == 0){
+                                    LeadTileCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   leadcountscenario   " + msg)
+                          /*          if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("TileLeadDashBoardDetails")
+                                        var remark =   jobjt.getString("Reamrk")
+                                        var chartname =   jobjt.getString("ChartName")
+                                        txt_tileChartlead!!.text=chartname
+
+                                        ledaTileArrayList = jobjt.getJSONArray("LeadTileData")
+                                        if (ledaTileArrayList.length() > 0) {
+
+                                            crdv_lead!!.visibility=View.VISIBLE
+                                            leadTileSort = JSONArray()
+                                            for (k in 0 until ledaTileArrayList.length()) {
+                                                val jsonObject = ledaTileArrayList.getJSONObject(k)
+                                                // reportNamesort.put(k,jsonObject)
+                                                leadTileSort.put(jsonObject)
+                                            }
+
+
+                                            val lLayout = GridLayoutManager(this@TileGraphActivity, 1)
+                                            rclrvw_lead!!.setLayoutManager(
+                                                LinearLayoutManager(
+                                                    this,
+                                                    RecyclerView.HORIZONTAL,
+                                                    false
+                                                )
+                                            )
+                                            // rclrvw_lead!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            val adapter = LeadTileListAdapter(this@TileGraphActivity,leadTileSort,remark)
+                                            rclrvw_lead!!.adapter = adapter
+                                            adapter.setClickListener(this@TileGraphActivity)
+
+
+
+                                            *//* val lLayout1 = GridLayoutManager(this@TileGraphActivity, 1)
+                                             rclrvw_leadoutstand!!.layoutManager = lLayout1 as RecyclerView.LayoutManager?*//*
+
+
+                                        }
+                                        else {
+                                            crdv_lead!!.visibility=View.GONE
+                                            *//* val builder = AlertDialog.Builder(
+                                                 this@TileGraphActivity,
+                                                 R.style.MyDialogTheme
+                                             )
+                                             builder.setMessage(jObject.getString("EXMessage"))
+                                             builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                             }
+                                             val alertDialog: AlertDialog = builder.create()
+                                             alertDialog.setCancelable(false)
+                                             alertDialog.show()*//*
+                                        }
+                                    } else {
+                                        *//*  val builder = AlertDialog.Builder(
+                                              this@TileGraphActivity,
+                                              R.style.MyDialogTheme
+                                          )
+                                          builder.setMessage(jObject.getString("EXMessage"))
+                                          builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                          }
+                                          val alertDialog: AlertDialog = builder.create()
+                                          alertDialog.setCancelable(false)
+                                          alertDialog.show()*//*
+                                    }*/
+                                    //  progressDialog!!.dismiss()
+                                }
+
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+                        } catch (e: Exception) {
+                            /*Toast.makeText(
+                                applicationContext,
+                                "" + e.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()*/
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
     override fun onRestart() {
         super.onRestart()
        // getLeadTile()
@@ -865,8 +1000,12 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     if (empwiseArrayList.length() > 0){
                                         setBarchart()
                                         rclv_barchart!!.visibility=View.VISIBLE
+                                        lemoStagWiseMode = 0
 //                                    val recycPieChart =
 //                                        findViewById(R.id.recycPieChart) as RecyclerView
+                                        hideStageWise()
+
+
                                         val lLayout = GridLayoutManager(this@TileGraphActivity, 2)
                                         rclv_barchart!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
@@ -2103,6 +2242,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
             getLeadTile()
             getLeadOutstandTile()
             getLeadAvgConvrsn()
+            getLeadCountScenario()
         }
 
     }
@@ -2167,6 +2307,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                                 ll_barchart!!.visibility=View.VISIBLE
                                                 empwiselist = 0
                                                 getEmployeewiseChart()
+                                                tvv_lemo_StagWise!!.visibility=View.VISIBLE
+
                                                 dashname = jsonObject.getString("DashBoardName")
 
                                             }
@@ -2175,6 +2317,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                                 leadstagewiswforecast=0
                                                 // crmservicewiseCount = 0
                                                 getLeadStagewiseforecast()
+                                                tvv_lemo_StagWise!!.visibility=View.VISIBLE
                                                 dashname = jsonObject.getString("DashBoardName")
 
                                             }
@@ -2182,6 +2325,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
                                                 card_leadSourse!!.visibility = View.VISIBLE
                                                 getLeadSource()
+                                                tvv_lemo_StagWise!!.visibility=View.VISIBLE
                                                 leadSourseList = 0
                                                 dashname = jsonObject.getString("DashBoardName")
 
@@ -2191,6 +2335,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                                 card_leadstagecountwise!!.visibility = View.VISIBLE
                                                 leadstagecountwiseList = 0
                                                 getLeadStageCountWise()
+                                                tvv_lemo_StagWise!!.visibility=View.VISIBLE
                                                 dashname = jsonObject.getString("DashBoardName")
 
                                             }
@@ -2199,6 +2344,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                                 card_employeewiseAvg!!.visibility = View.VISIBLE
                                                 getEmployeeWiseAvgConversion()
                                                 employeewiseavgconvesionList=0
+                                                tvv_lemo_StagWise!!.visibility=View.VISIBLE
                                                 dashname = jsonObject.getString("DashBoardName")
 
                                             }
@@ -2207,6 +2353,9 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                                 card_leadActivity!!.visibility = View.VISIBLE
                                                 leadActivityList = 0
                                                 getLeadActivity()
+                                                tvv_lemo_StagWise!!.visibility=View.GONE
+
+
                                                 dashname = jsonObject.getString("DashBoardName")
 
                                             }
@@ -2214,6 +2363,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                                 ll_top10!!.visibility=View.VISIBLE
                                                 top10productlist=0
                                                 getTop10Products()
+                                                tvv_lemo_StagWise!!.visibility=View.VISIBLE
                                                 dashname = jsonObject.getString("DashBoardName")
 
                                             }
@@ -2222,6 +2372,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                                 card_toprevenue!!.visibility = View.VISIBLE
                                                 getTopRevenue()
                                                 toprevenuelist=0
+                                                tvv_lemo_StagWise!!.visibility=View.VISIBLE
                                                 dashname = jsonObject.getString("DashBoardName")
 
                                             }
@@ -2229,6 +2380,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                                 ll_empwseamt!!.visibility = View.VISIBLE
                                                 getEmpwiseAmountTarget()
                                                 employeewisetargetamtList=0
+                                                tvv_lemo_StagWise!!.visibility=View.VISIBLE
                                                 dashname = jsonObject.getString("DashBoardName")
 
 
@@ -2236,125 +2388,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
 
 
-                                        /*    var modeType = Array<String>(chartTypeArrayList.length()) { "" }
-                                            var modeTypeID = Array<String>(chartTypeArrayList.length()) { "" }
-                                            for (i in 0 until chartTypeArrayList.length()) {
-                                                val objects: JSONObject =
-                                                    chartTypeArrayList.getJSONObject(i)
 
 
-                                                modeType[i] = objects.getString("DashBoardName");
-                                                modeTypeID[i] = objects.getString("DashMode");
 
-
-                                                if (ID_ChartMode.equals("2")){
-                                                    ll_barchart!!.visibility=View.VISIBLE
-                                                    ll_Piechart!!.visibility=View.GONE
-                                                    ll_top10!!.visibility=View.GONE
-                                                    card_leadSourse!!.visibility = View.GONE
-                                                    card_leadstagecountwise!!.visibility = View.GONE
-                                                    card_employeewiseAvg!!.visibility = View.GONE
-                                                    card_leadActivity!!.visibility = View.GONE
-                                                    card_toprevenue!!.visibility = View.GONE
-                                                    //   crmStagewiseCount   = 0
-                                                    getEmployeewiseChart()
-                                                }
-                                                else if (ID_ChartMode.equals("3")){
-                                                    ll_Piechart!!.visibility=View.VISIBLE
-                                                    ll_barchart!!.visibility=View.GONE
-                                                    ll_top10!!.visibility=View.GONE
-                                                    card_leadSourse!!.visibility = View.GONE
-                                                    card_leadstagecountwise!!.visibility = View.GONE
-                                                    card_employeewiseAvg!!.visibility = View.GONE
-                                                    card_leadActivity!!.visibility = View.GONE
-                                                    card_toprevenue!!.visibility = View.GONE
-                                                    // crmservicewiseCount = 0
-                                                    getLeadStagewiseforecast()
-                                                }
-                                                else if (ID_ChartMode.equals("6")) {
-                                                    ll_Piechart!!.visibility = View.GONE
-                                                    ll_barchart!!.visibility = View.GONE
-                                                    ll_top10!!.visibility = View.GONE
-                                                    card_leadSourse!!.visibility = View.GONE
-                                                    card_leadstagecountwise!!.visibility = View.GONE
-                                                    card_employeewiseAvg!!.visibility = View.GONE
-                                                    card_leadActivity!!.visibility = View.GONE
-                                                    card_toprevenue!!.visibility = View.GONE
-                                                    getLeadSource()
-
-                                                }
-                                                else if (ID_ChartMode.equals("4")) {
-                                                    ll_Piechart!!.visibility = View.GONE
-                                                    ll_barchart!!.visibility = View.GONE
-                                                    ll_top10!!.visibility = View.GONE
-                                                    card_leadSourse!!.visibility = View.GONE
-                                                    card_leadstagecountwise!!.visibility = View.VISIBLE
-                                                    card_employeewiseAvg!!.visibility = View.GONE
-                                                    card_leadActivity!!.visibility = View.GONE
-                                                    card_toprevenue!!.visibility = View.GONE
-                                                    getLeadStageCountWise()
-                                                }
-                                                else if (ID_ChartMode.equals("8")) {
-                                                    ll_Piechart!!.visibility = View.GONE
-                                                    ll_barchart!!.visibility = View.GONE
-                                                    ll_top10!!.visibility = View.GONE
-                                                    card_leadSourse!!.visibility = View.GONE
-                                                    card_leadstagecountwise!!.visibility = View.GONE
-                                                    card_employeewiseAvg!!.visibility = View.VISIBLE
-                                                    card_leadActivity!!.visibility = View.GONE
-                                                    card_toprevenue!!.visibility = View.GONE
-                                                    getEmployeeWiseAvgConversion()
-                                                }
-                                                else if (ID_ChartMode.equals("1")) {
-                                                    ll_Piechart!!.visibility = View.GONE
-                                                    ll_barchart!!.visibility = View.GONE
-                                                    ll_top10!!.visibility = View.GONE
-                                                    card_leadSourse!!.visibility = View.GONE
-                                                    card_leadstagecountwise!!.visibility = View.GONE
-                                                    card_employeewiseAvg!!.visibility = View.GONE
-                                                    card_leadActivity!!.visibility = View.VISIBLE
-                                                    card_toprevenue!!.visibility = View.GONE
-                                                    getLeadActivity()
-                                                }
-                                                else if (ID_ChartMode.equals("5")){
-                                                    ll_Piechart!!.visibility=View.GONE
-                                                    ll_barchart!!.visibility=View.GONE
-                                                    ll_top10!!.visibility=View.VISIBLE
-                                                    card_leadSourse!!.visibility = View.GONE
-                                                    card_leadstagecountwise!!.visibility = View.GONE
-                                                    card_employeewiseAvg!!.visibility = View.GONE
-                                                    card_leadActivity!!.visibility = View.GONE
-                                                    card_toprevenue!!.visibility = View.GONE
-                                                    getTop10Products()
-
-                                                }
-                                                else if (ID_ChartMode.equals("7")){
-                                                    ll_Piechart!!.visibility=View.GONE
-                                                    ll_barchart!!.visibility=View.GONE
-                                                    ll_top10!!.visibility=View.GONE
-                                                    card_leadSourse!!.visibility = View.GONE
-                                                    card_leadstagecountwise!!.visibility = View.GONE
-                                                    card_employeewiseAvg!!.visibility = View.GONE
-                                                    card_leadActivity!!.visibility = View.GONE
-                                                    card_toprevenue!!.visibility = View.VISIBLE
-                                                    getTopRevenue()
-
-                                                }
-                                                else if (ID_ChartMode.equals("9")){
-                                                    ll_Piechart!!.visibility=View.GONE
-                                                    ll_barchart!!.visibility=View.GONE
-                                                    ll_top10!!.visibility=View.GONE
-                                                    card_leadSourse!!.visibility = View.GONE
-                                                    card_leadstagecountwise!!.visibility = View.GONE
-                                                    card_employeewiseAvg!!.visibility = View.GONE
-                                                    card_leadActivity!!.visibility = View.GONE
-                                                    card_toprevenue!!.visibility = View.GONE
-                                                    ll_empwseamt!!.visibility = View.VISIBLE
-                                                    getEmpwiseAmountTarget()
-
-                                                }
-                                            }
-*/
+                                        /*
+                                        * */
                                         }else{
                                             showChartDrop(chartTypeArrayList)
                                         }
@@ -2426,6 +2464,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     ll_barchart!!.visibility=View.VISIBLE
                     ll_Piechart!!.visibility=View.GONE
                     ll_top10!!.visibility=View.GONE
+                    tvv_lemo_StagWise!!.visibility=View.VISIBLE
                     card_leadSourse!!.visibility = View.GONE
                     card_leadstagecountwise!!.visibility = View.GONE
                     card_employeewiseAvg!!.visibility = View.GONE
@@ -2441,6 +2480,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     ll_Piechart!!.visibility=View.VISIBLE
                     ll_barchart!!.visibility=View.GONE
                     ll_top10!!.visibility=View.GONE
+                    tvv_lemo_StagWise!!.visibility=View.VISIBLE
                     card_leadSourse!!.visibility = View.GONE
                     card_leadstagecountwise!!.visibility = View.GONE
                     card_employeewiseAvg!!.visibility = View.GONE
@@ -2455,6 +2495,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     ll_Piechart!!.visibility = View.GONE
                     ll_barchart!!.visibility = View.GONE
                     ll_top10!!.visibility = View.GONE
+                    tvv_lemo_StagWise!!.visibility=View.VISIBLE
                     card_leadSourse!!.visibility = View.VISIBLE
                     card_leadstagecountwise!!.visibility = View.GONE
                     card_employeewiseAvg!!.visibility = View.GONE
@@ -2474,6 +2515,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     card_leadstagecountwise!!.visibility = View.VISIBLE
                     card_employeewiseAvg!!.visibility = View.GONE
                     card_leadActivity!!.visibility = View.GONE
+                    tvv_lemo_StagWise!!.visibility=View.VISIBLE
                     card_toprevenue!!.visibility = View.GONE
                     ll_empwseamt!!.visibility = View.GONE
                     leadstagecountwiseList = 0
@@ -2491,6 +2533,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     card_toprevenue!!.visibility = View.GONE
                     ll_empwseamt!!.visibility = View.GONE
                     getEmployeeWiseAvgConversion()
+                    tvv_lemo_StagWise!!.visibility=View.VISIBLE
                     employeewiseavgconvesionList=0
 
                 }
@@ -2504,6 +2547,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     card_leadActivity!!.visibility = View.VISIBLE
                     card_toprevenue!!.visibility = View.GONE
                     ll_empwseamt!!.visibility = View.GONE
+                    tvv_lemo_StagWise!!.visibility=View.GONE
                     getLeadActivity()
                     leadActivityList = 0
 
@@ -2511,6 +2555,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 else if (ID_ChartMode.equals("5")){
                     ll_Piechart!!.visibility=View.GONE
                     ll_barchart!!.visibility=View.GONE
+                    tvv_lemo_StagWise!!.visibility=View.VISIBLE
                     ll_top10!!.visibility=View.VISIBLE
                     card_leadSourse!!.visibility = View.GONE
                     card_leadstagecountwise!!.visibility = View.GONE
@@ -2524,6 +2569,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 else if (ID_ChartMode.equals("7")){
                     ll_Piechart!!.visibility=View.GONE
                     ll_barchart!!.visibility=View.GONE
+                    tvv_lemo_StagWise!!.visibility=View.VISIBLE
                     ll_top10!!.visibility=View.GONE
                     card_leadSourse!!.visibility = View.GONE
                     card_leadstagecountwise!!.visibility = View.GONE
@@ -2547,6 +2593,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     card_toprevenue!!.visibility = View.GONE
                     ll_empwseamt!!.visibility = View.VISIBLE
                     getEmpwiseAmountTarget()
+                    tvv_lemo_StagWise!!.visibility=View.VISIBLE
                     employeewisetargetamtList=0
 
                 }
@@ -2703,7 +2750,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         rclv_toprevenue!!.adapter = adapter
 */
 
-                                        val lLayout = GridLayoutManager(this@TileGraphActivity, 1)
+                                        val lLayout = GridLayoutManager(this@TileGraphActivity, 2)
                                         rclv_toprevenue!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
                                         val adapter = TopRevenueAdapter(
@@ -3463,6 +3510,17 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
+        }
+    }
+    private fun hideStageWise() {
+        if (lemoStagWiseMode == 0){
+            tvv_lemo_StagWise!!.setText("More")
+            tvv_lemo_StagWise!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+          //  ll_empwisebarchart!!.visibility = View.GONE
+        }else {
+            tvv_lemo_StagWise!!.setText("Less")
+            tvv_lemo_StagWise!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+           // ll_empwisebarchart!!.visibility = View.VISIBLE
         }
     }
 }
