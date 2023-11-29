@@ -39,8 +39,12 @@ class LeadStageCountWiseAdapter(
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
                 Log.v("sfsdfsdfds","code2  "+colorgroup.get(position))
+
+                val hexColorCode = String.format("#%06X", 0xFFFFFF and colorgroup.get(position))
                 holder.tv_colorBox.setBackgroundColor(
-                    Color.parseColor("#"+colorgroup.get(position)))
+                    Color.parseColor(hexColorCode))
+
+               // holder.tv_colorBox.setBackgroundColor(Color.parseColor("#"+colorgroup.get(position)))
 //                holder.tv_colorBox.setBackgroundColor(colorgroup.get(position))
                 holder.tv_label.text        = jsonObject!!.getString("StageName")
                 holder.tv_value.text        = jsonObject!!.getString("TotalCount")
