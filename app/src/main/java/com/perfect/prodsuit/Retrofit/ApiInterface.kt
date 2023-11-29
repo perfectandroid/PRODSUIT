@@ -837,4 +837,10 @@ interface ApiInterface {
     @POST("DashBoard/UpcomingStageDueDates")
     fun getUpcomingStageDueDates(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/InventoryTopSellingItem")
+    fun getTopSellingItem(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/InventoryTopSupplierList")
+    fun getTopSupplierList(@Body body: RequestBody): Call<String>
+
 }
