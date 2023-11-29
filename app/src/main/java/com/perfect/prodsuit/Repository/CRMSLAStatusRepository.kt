@@ -89,7 +89,7 @@ object CRMSLAStatusRepository {
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart(DashType))
 
 
-                Log.e(TAG,"9222   getCRMcomplaintwise  "+requestObject1)
+                Log.e(TAG,"92223   getCRMSLAViolationStatus  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -97,7 +97,7 @@ object CRMSLAStatusRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getCRMcomplaintwise(body)
+            val call = apiService.getCRMSLAViolationStatus(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:

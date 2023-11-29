@@ -49,25 +49,17 @@ class ProjectStatusListReportAdapter (internal var context: Context, internal va
                     holder.tv_Note2.text = "Due Date : "+jsonObject!!.getString("DueDate")
                     holder.tv_CusNote.text = "Duration  : "+jsonObject!!.getString("Duration")
                     holder.tv_ExpenseAmount.text = "Final Amount : "+ Config.changeTwoDecimel(jsonObject!!.getString("FinalAmount_R"))
-                   // holder.tv_Remarks.text = "Remark : "+jsonObject!!.getString("Remarks")
-
-
-
-                  // "hdn_EntrOn": "16-11-2023 15:00:30",
-
 
 
                 }
 
-         /*       holder.ll_newList!!.setTag(position)
-                holder.ll_newList!!.setOnClickListener(View.OnClickListener {
-                    Log.e(TAG,"serviceReportClick   5091")
+                holder.ll_projectList!!.setTag(position)
+                holder.ll_projectList!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(
                         position,
-                        "serviceReportClick"
+                        "ProjectListReportClick"
                     )
                 })
-*/
 
 
             }
@@ -99,10 +91,10 @@ class ProjectStatusListReportAdapter (internal var context: Context, internal va
         internal var tv_CusNote       : TextView
         internal var tv_ExpenseAmount   : TextView
         internal var tv_Remarks   : TextView
+        internal var ll_projectList          : LinearLayout
 
 
 /*
-        internal var ll_newList          : LinearLayout
 
         internal var ll_TicketNo         : LinearLayout
         internal var ll_TicketDate       : LinearLayout
@@ -125,8 +117,8 @@ class ProjectStatusListReportAdapter (internal var context: Context, internal va
             tv_CusNote          = v.findViewById<View>(R.id.tv_CusNote) as TextView
             tv_ExpenseAmount   = v.findViewById<View>(R.id.tv_ExpenseAmount) as TextView
             tv_Remarks   = v.findViewById<View>(R.id.tv_Remarks) as TextView
+            ll_projectList        = v.findViewById<View>(R.id.ll_projectList) as LinearLayout
 /*
-            ll_TicketNo        = v.findViewById<View>(R.id.ll_TicketNo) as LinearLayout
             ll_TicketDate      = v.findViewById<View>(R.id.ll_TicketDate) as LinearLayout
             ll_Customer        = v.findViewById<View>(R.id.ll_Customer) as LinearLayout
             ll_Service        = v.findViewById<View>(R.id.ll_Service) as LinearLayout

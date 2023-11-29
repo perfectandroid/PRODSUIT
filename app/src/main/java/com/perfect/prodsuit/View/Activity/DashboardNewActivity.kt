@@ -125,9 +125,7 @@ DashboardNewActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLis
 
                                             val lLayout = GridLayoutManager(this@DashboardNewActivity, 1)
                                             recyclervw_dashboard!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-
                                             val adapter = DashboardModuleListAdapter(this@DashboardNewActivity,dashmoduleSort)
-
                                             recyclervw_dashboard!!.adapter = adapter
                                             adapter.setClickListener(this@DashboardNewActivity)
                                         }

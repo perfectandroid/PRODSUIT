@@ -40,7 +40,7 @@ class ReportNameAdapter(internal var context: Context, internal var jsonArray: J
 
                 Log.i("responsereport","name="+jsonObject!!.getString("ReportName").toString())
                 Log.i("responsereport","mode="+jsonObject!!.getString("ReportMode").toString())
-                if (!jsonObject!!.getString("ReportMode").toString().equals("2") && !jsonObject!!.getString("ReportMode").toString().equals("5") && report.equals("Lead")){
+                if (!jsonObject!!.getString("ReportMode").toString().equals("2") && !jsonObject!!.getString("ReportMode").toString().equals("5") && !jsonObject!!.getString("ReportMode").toString().equals("6") && report.equals("Lead")){
                     holder.llReportName!!.visibility = View.GONE
                     Log.e(TAG,"onBindViewHolder   10512   ")
                 }
@@ -49,7 +49,7 @@ class ReportNameAdapter(internal var context: Context, internal var jsonArray: J
                     Log.e(TAG,"onBindViewHolder   105123   "+jsonObject!!.getString("ReportName"))
                 }
                 else if (report.equals("Project")){
-                   // holder.llReportName!!.visibility = View.GONE
+                    // holder.llReportName!!.visibility = View.GONE
                     pos++
                     holder.txtsino.text        = pos.toString()
                     holder.txtReportName.text        = jsonObject!!.getString("ReportName")

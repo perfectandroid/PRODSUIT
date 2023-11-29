@@ -120,13 +120,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_weight="1"
-                                android:text="DashBoard"
+                                android:text="Chart"
                                 android:textColor="@color/colorPrimary"
                                 android:gravity="center"
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/myfont"
                                 android:background="@drawable/btn_dash"
                                 android:textStyle="bold"
+                                android:textAllCaps="true"
                                 android:textSize="@dimen/header_text1"
                                 android:visibility="visible"/>
 
@@ -151,6 +152,7 @@
                                 android:layout_gravity="center"
                                 android:fontFamily="@font/myfont"
                                 android:textStyle="bold"
+                                android:textAllCaps="true"
                                 android:textSize="@dimen/header_text1" />
 
                         </LinearLayout>
@@ -161,7 +163,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
 
                             <androidx.cardview.widget.CardView
@@ -192,266 +194,31 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="20dp"
-                                                android:layout_marginLeft="20dp"
-                                                android:layout_marginRight="20dp"
+                                                android:layout_marginLeft="13dp"
+                                                android:layout_marginRight="13dp"
                                                 android:fontFamily="@font/myfont"
                                                 android:padding="10dp"
                                                 android:hint="Please Select"
+                                                android:drawablePadding="5dp"
+                                                android:drawableStart="@drawable/dash_icon"
                                                 android:focusableInTouchMode="false"
+                                                android:textSize="16sp"
                                                 android:drawableEnd="@drawable/down_arrows"
                                                 android:text=""
                                                 android:background="@drawable/bg_dash2"
                                                 android:layout_gravity="center"/>
                                         </LinearLayout>
 
-                                        <!--Stage wise -->
-                                        <LinearLayout
-                                            android:id="@+id/ll_StagWise"
-                                            android:layout_marginTop="10dp"
+                                        <androidx.cardview.widget.CardView
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            android:background="@color/white"
-                                            android:orientation="vertical"
-                                            android:visibility="gone">
-
-                                            <LinearLayout
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:orientation="vertical">
-
-                                                <com.github.mikephil.charting.charts.BarChart
-                                                    android:id="@+id/StagWiseChart"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="400dp"
-                                                    android:layout_marginLeft="10dp"
-                                                    android:layout_marginRight="10dp"
-                                                    android:visibility="visible" />
-
-                                                <TextView
-                                                    android:id="@+id/tv_StagWiseRemark"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center_vertical"
-                                                    android:layout_marginLeft="10dp"
-                                                    android:layout_marginTop="10dp"
-                                                    android:layout_marginRight="10dp"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:gravity="center_vertical"
-                                                    android:text=""
-                                                    android:textAllCaps="false"
-                                                    android:textColor="@color/black"
-                                                    android:textSize="14dp"
-                                                    android:textStyle="bold"
-                                                    android:tint="@color/black" />
-
-                                                <LinearLayout
-                                                    android:padding="5dp"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:layout_margin="5dp">
-                                                    <com.perfect.prodsuit.Helper.FullLenghRecyclertview
-                                                        android:id="@+id/recycStagWise"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_margin="5dp"
-                                                        android:padding="5dp"
-                                                        android:background="@drawable/svg_dashrect">
-
-                                                    </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
-                                                </LinearLayout>
-
-                                            </LinearLayout>
-
-                                        </LinearLayout>
-
-                                        <!--complaint wise -->
-                                        <LinearLayout
-                                            android:id="@+id/ll_ComplaintWise"
                                             android:layout_marginTop="10dp"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:background="@color/white"
-                                            android:orientation="vertical"
-                                            android:visibility="gone">
-
-
-
-                                            <LinearLayout
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:orientation="vertical">
-
-                                                <com.github.mikephil.charting.charts.BarChart
-                                                    android:id="@+id/ComplaintWiseChart"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="400dp"
-                                                    android:layout_margin="2dp"
-                                                    android:visibility="visible" />
-
-
-                                                <TextView
-                                                    android:id="@+id/tv_ComplaintRemark"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center_vertical"
-                                                    android:layout_marginLeft="10dp"
-                                                    android:layout_marginTop="10dp"
-                                                    android:layout_marginRight="10dp"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:gravity="center_vertical"
-                                                    android:text=""
-                                                    android:textAllCaps="false"
-                                                    android:textColor="@color/black"
-                                                    android:textSize="14dp"
-                                                    android:textStyle="bold"
-                                                    android:tint="@color/black" />
-                                                <LinearLayout
-                                                    android:padding="5dp"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:layout_margin="5dp">
-
-                                                    <com.perfect.prodsuit.Helper.FullLenghRecyclertview
-                                                        android:id="@+id/recycComplaintWise"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_margin="5dp"
-                                                        android:padding="5dp"
-                                                        android:background="@drawable/svg_dashrect">
-
-                                                    </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
-                                                </LinearLayout>
-
-                                            </LinearLayout>
-
-                                        </LinearLayout>
-
-                                        <!--service wise -->
-                                        <LinearLayout
-                                            android:id="@+id/ll_ServiceWise"
-                                            android:layout_marginTop="10dp"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:background="@color/white"
-                                            android:orientation="vertical"
-                                            android:visibility="gone">
-
-                                            <LinearLayout
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:orientation="vertical">
-
-                                                <com.github.mikephil.charting.charts.BarChart
-                                                    android:id="@+id/ServiceWiseChart"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="400dp"
-                                                    android:layout_margin="2dp"
-                                                    android:visibility="visible" />
-
-                                                <TextView
-                                                    android:id="@+id/tv_ServiceRemark"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center_vertical"
-                                                    android:layout_marginLeft="10dp"
-                                                    android:layout_marginTop="10dp"
-                                                    android:layout_marginRight="10dp"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:gravity="center_vertical"
-                                                    android:text=""
-                                                    android:textAllCaps="false"
-                                                    android:textColor="@color/black"
-                                                    android:textSize="14dp"
-                                                    android:textStyle="bold"
-                                                    android:tint="@color/black" />
-
-                                                <LinearLayout
-                                                    android:padding="5dp"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:layout_margin="5dp">
-                                                    <com.perfect.prodsuit.Helper.FullLenghRecyclertview
-                                                        android:id="@+id/recycServiceWise"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_margin="5dp"
-                                                        android:padding="5dp"
-                                                        android:background="@drawable/svg_dashrect">
-
-                                                    </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
-                                                </LinearLayout>
-
-                                            </LinearLayout>
-
-                                        </LinearLayout>
-
-                                        <!--Count of Warranty, Paid And AMC -->
-                                        <LinearLayout
-                                            android:id="@+id/ll_ServiceCountOfWPA"
-                                            android:layout_marginTop="10dp"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:background="@color/white"
-                                            android:orientation="vertical"
-                                            android:visibility="gone">
-
-                                            <LinearLayout
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:orientation="vertical">
-
-                                                <com.github.mikephil.charting.charts.BarChart
-                                                    android:id="@+id/ServiceCountOfWPAChart"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="400dp"
-                                                    android:layout_margin="2dp"
-                                                    android:visibility="visible" />
-
-                                                <TextView
-                                                    android:id="@+id/tv_ServiceCountOfWPA"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center_vertical"
-                                                    android:layout_marginLeft="10dp"
-                                                    android:layout_marginTop="10dp"
-                                                    android:layout_marginRight="10dp"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:gravity="center_vertical"
-                                                    android:text=""
-                                                    android:textAllCaps="false"
-                                                    android:textColor="@color/black"
-                                                    android:textSize="14dp"
-                                                    android:textStyle="bold"
-                                                    android:tint="@color/black" />
-
-                                                <LinearLayout
-                                                    android:padding="5dp"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:layout_margin="5dp">
-                                                    <com.perfect.prodsuit.Helper.FullLenghRecyclertview
-                                                        android:id="@+id/recycServiceCountOfWPA"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_margin="5dp"
-                                                        android:padding="5dp"
-                                                        android:background="@drawable/svg_dashrect">
-
-                                                    </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
-                                                </LinearLayout>
-
-                                            </LinearLayout>
-
-                                        </LinearLayout>
-
-                                        <!--Top 10 Products In CRM -->
-                                        <LinearLayout
-                                            android:id="@+id/ll_ServiceTop10Product"
-                                            android:layout_marginTop="10dp"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:background="@color/white"
-                                            android:orientation="vertical"
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_marginRight="10dp"
+                                            app:cardBackgroundColor="@color/white"
+                                            app:cardPreventCornerOverlap="true"
+                                            app:cardUseCompatPadding="true"
+                                            app:cardElevation="3dp"
                                             android:visibility="visible">
 
                                             <LinearLayout
@@ -459,175 +226,495 @@
                                                 android:layout_height="match_parent"
                                                 android:orientation="vertical">
 
-                                                <com.github.mikephil.charting.charts.BarChart
-                                                    android:id="@+id/ServiceTop10ProductChart"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="400dp"
-                                                    android:layout_margin="2dp"
-                                                    android:visibility="visible" />
-
-                                                <TextView
-                                                    android:id="@+id/tv_ServiceTop10Product"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center_vertical"
-                                                    android:layout_marginLeft="10dp"
-                                                    android:layout_marginTop="10dp"
-                                                    android:layout_marginRight="10dp"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:gravity="center_vertical"
-                                                    android:text=""
-                                                    android:textAllCaps="false"
-                                                    android:textColor="@color/black"
-                                                    android:textSize="14dp"
-                                                    android:textStyle="bold"
-                                                    android:tint="@color/black" />
-
+                                                <!--Stage wise -->
                                                 <LinearLayout
-                                                    android:padding="5dp"
+                                                    android:id="@+id/ll_StagWise"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
-                                                    android:layout_margin="5dp">
-                                                    <com.perfect.prodsuit.Helper.FullLenghRecyclertview
-                                                        android:id="@+id/recycServiceTop10Product"
+                                                    android:background="@color/white"
+                                                    android:orientation="vertical"
+                                                    android:visibility="visible">
+
+                                                    <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
-                                                        android:layout_margin="5dp"
-                                                        android:padding="5dp"
-                                                        android:background="@drawable/svg_dashrect">
+                                                        android:orientation="vertical"
+                                                        android:background="#E6F1F2">
 
-                                                    </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
-                                                </LinearLayout>
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:orientation="horizontal">
 
-                                            </LinearLayout>
+                                                            <TextView
+                                                                android:id="@+id/tvv_head_StagWise"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_weight="1"
+                                                                android:text=""
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:gravity="start"
+                                                                android:paddingLeft="5dp"
+                                                                android:paddingTop="5dp"
+                                                                android:layout_gravity="center"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="16dp"
+                                                                android:visibility="visible"/>
 
-                                        </LinearLayout>
+                                                            <TextView
+                                                                android:id="@+id/tvv_lemo_StagWise"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:paddingTop="2dp"
+                                                                android:paddingBottom="2dp"
+                                                                android:layout_gravity="center"
+                                                                android:layout_margin="5dp"
+                                                                android:layout_weight="2.8"
+                                                                android:background="@drawable/btn_bgcolour"
+                                                                android:drawableRight="@drawable/dash_more"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:gravity="center"
+                                                                android:paddingEnd="10dp"
+                                                                android:text="More"
+                                                                android:textAllCaps="false"
+                                                                android:textColor="@color/white"
+                                                                android:textSize="15sp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
 
-                                        <!--SLA Status -->
-                                        <LinearLayout
-                                            android:id="@+id/ll_ServiceSlaStatus"
-                                            android:layout_marginTop="10dp"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:background="@color/white"
-                                            android:orientation="vertical"
-                                            android:visibility="gone">
 
-                                            <LinearLayout
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:orientation="vertical">
+                                                        </LinearLayout>
 
-                                                <com.github.mikephil.charting.charts.BarChart
-                                                    android:id="@+id/ServiceSlaStatusChart"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="400dp"
-                                                    android:layout_margin="2dp"
-                                                    android:visibility="visible" />
 
-                                                <com.github.mikephil.charting.charts.PieChart
-                                                    android:id="@+id/slaStatusPieChart"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:layout_margin="2dp"
-                                                    android:layout_weight="1"
-                                                    android:visibility="visible" />
 
-                                                <TextView
-                                                    android:id="@+id/tv_ServiceSlaStatus"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center_vertical"
-                                                    android:layout_marginLeft="10dp"
-                                                    android:layout_marginTop="10dp"
-                                                    android:layout_marginRight="10dp"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:gravity="center_vertical"
-                                                    android:text=""
-                                                    android:textAllCaps="false"
-                                                    android:textColor="@color/black"
-                                                    android:textSize="14dp"
-                                                    android:textStyle="bold"
-                                                    android:tint="@color/black" />
+                                                        <TextView
+                                                            android:id="@+id/tv_StagWiseRemark"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center_vertical"
+                                                            android:paddingLeft="5dp"
+                                                            android:layout_marginTop="-7dp"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center_vertical"
+                                                            android:text=""
+                                                            android:textAllCaps="false"
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:textSize="13dp"
+                                                            android:textStyle="normal"
+                                                            android:tint="@color/black" />
 
-                                                <LinearLayout
-                                                    android:padding="5dp"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:layout_margin="5dp">
-                                                    <com.perfect.prodsuit.Helper.FullLenghRecyclertview
-                                                        android:id="@+id/recycServiceSlaStatus"
+
+                                                    </LinearLayout>
+
+                                                    <LinearLayout
                                                         android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_margin="5dp"
-                                                        android:padding="5dp"
-                                                        android:background="@drawable/svg_dashrect">
+                                                        android:layout_height="match_parent"
+                                                        android:gravity="center"
+                                                        android:orientation="vertical">
 
-                                                    </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                        <com.github.mikephil.charting.charts.BarChart
+                                                            android:id="@+id/StagWiseChart"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="400dp"
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:visibility="visible" />
+
+
+
+                                                        <LinearLayout
+                                                            android:id="@+id/ll_StagWiseRecyc"
+                                                            android:padding="5dp"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_margin="5dp"
+                                                            android:visibility="gone">
+                                                            <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                                                                android:id="@+id/recycStagWise"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_margin="5dp"
+                                                                android:padding="5dp"
+                                                                android:background="@drawable/svg_dashrect">
+
+                                                            </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                        </LinearLayout>
+
+                                                    </LinearLayout>
+
                                                 </LinearLayout>
 
-                                            </LinearLayout>
-
-                                        </LinearLayout>
-
-                                        <!--Channel Status -->
-                                        <LinearLayout
-                                            android:id="@+id/ll_ServiceChannelStatus"
-                                            android:layout_marginTop="10dp"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:background="@color/white"
-                                            android:orientation="vertical"
-                                            android:visibility="gone">
-
-                                            <LinearLayout
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:orientation="vertical">
-
-                                                <com.github.mikephil.charting.charts.BarChart
-                                                    android:id="@+id/ServiceChannelStatusChart"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="400dp"
-                                                    android:layout_margin="2dp"
-                                                    android:visibility="visible" />
-
-                                                <TextView
-                                                    android:id="@+id/tv_ServiceChannelStatus"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_gravity="center_vertical"
-                                                    android:layout_marginLeft="10dp"
-                                                    android:layout_marginTop="10dp"
-                                                    android:layout_marginRight="10dp"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:gravity="center_vertical"
-                                                    android:text=""
-                                                    android:textAllCaps="false"
-                                                    android:textColor="@color/black"
-                                                    android:textSize="14dp"
-                                                    android:textStyle="bold"
-                                                    android:tint="@color/black" />
-
+                                                <!--complaint wise -->
                                                 <LinearLayout
-                                                    android:padding="5dp"
+                                                    android:id="@+id/ll_ComplaintWise"
+                                                    android:layout_marginTop="10dp"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
-                                                    android:layout_margin="5dp">
-                                                    <com.perfect.prodsuit.Helper.FullLenghRecyclertview
-                                                        android:id="@+id/recycServiceChannelStatus"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_margin="5dp"
-                                                        android:padding="5dp"
-                                                        android:background="@drawable/svg_dashrect">
+                                                    android:background="@color/white"
+                                                    android:orientation="vertical"
+                                                    android:visibility="gone">
 
-                                                    </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:orientation="vertical">
+
+                                                        <com.github.mikephil.charting.charts.BarChart
+                                                            android:id="@+id/ComplaintWiseChart"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="400dp"
+                                                            android:layout_margin="2dp"
+                                                            android:visibility="visible" />
+
+
+                                                        <TextView
+                                                            android:id="@+id/tv_ComplaintRemark"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center_vertical"
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginTop="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center_vertical"
+                                                            android:text=""
+                                                            android:textAllCaps="false"
+                                                            android:textColor="@color/black"
+                                                            android:textSize="14dp"
+                                                            android:textStyle="bold"
+                                                            android:tint="@color/black" />
+                                                        <LinearLayout
+                                                            android:padding="5dp"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_margin="5dp">
+
+                                                            <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                                                                android:id="@+id/recycComplaintWise"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_margin="5dp"
+                                                                android:padding="5dp"
+                                                                android:background="@drawable/svg_dashrect">
+
+                                                            </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                        </LinearLayout>
+
+                                                    </LinearLayout>
+
                                                 </LinearLayout>
 
+                                                <!--service wise -->
+                                                <LinearLayout
+                                                    android:id="@+id/ll_ServiceWise"
+                                                    android:layout_marginTop="10dp"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:background="@color/white"
+                                                    android:orientation="vertical"
+                                                    android:visibility="gone">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:orientation="vertical">
+
+                                                        <com.github.mikephil.charting.charts.BarChart
+                                                            android:id="@+id/ServiceWiseChart"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="400dp"
+                                                            android:layout_margin="2dp"
+                                                            android:visibility="visible" />
+
+                                                        <TextView
+                                                            android:id="@+id/tv_ServiceRemark"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center_vertical"
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginTop="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center_vertical"
+                                                            android:text=""
+                                                            android:textAllCaps="false"
+                                                            android:textColor="@color/black"
+                                                            android:textSize="14dp"
+                                                            android:textStyle="bold"
+                                                            android:tint="@color/black" />
+
+                                                        <LinearLayout
+                                                            android:padding="5dp"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_margin="5dp">
+                                                            <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                                                                android:id="@+id/recycServiceWise"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_margin="5dp"
+                                                                android:padding="5dp"
+                                                                android:background="@drawable/svg_dashrect">
+
+                                                            </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                        </LinearLayout>
+
+                                                    </LinearLayout>
+
+                                                </LinearLayout>
+
+                                                <!--Count of Warranty, Paid And AMC -->
+                                                <LinearLayout
+                                                    android:id="@+id/ll_ServiceCountOfWPA"
+                                                    android:layout_marginTop="10dp"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:background="@color/white"
+                                                    android:orientation="vertical"
+                                                    android:visibility="gone">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:orientation="vertical">
+
+                                                        <com.github.mikephil.charting.charts.BarChart
+                                                            android:id="@+id/ServiceCountOfWPAChart"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="400dp"
+                                                            android:layout_margin="2dp"
+                                                            android:visibility="visible" />
+
+                                                        <TextView
+                                                            android:id="@+id/tv_ServiceCountOfWPA"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center_vertical"
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginTop="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center_vertical"
+                                                            android:text=""
+                                                            android:textAllCaps="false"
+                                                            android:textColor="@color/black"
+                                                            android:textSize="14dp"
+                                                            android:textStyle="bold"
+                                                            android:tint="@color/black" />
+
+                                                        <LinearLayout
+                                                            android:padding="5dp"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_margin="5dp">
+                                                            <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                                                                android:id="@+id/recycServiceCountOfWPA"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_margin="5dp"
+                                                                android:padding="5dp"
+                                                                android:background="@drawable/svg_dashrect">
+
+                                                            </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                        </LinearLayout>
+
+                                                    </LinearLayout>
+
+                                                </LinearLayout>
+
+                                                <!--Top 10 Products In CRM -->
+                                                <LinearLayout
+                                                    android:id="@+id/ll_ServiceTop10Product"
+                                                    android:layout_marginTop="10dp"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:background="@color/white"
+                                                    android:orientation="vertical"
+                                                    android:visibility="gone">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:orientation="vertical">
+
+                                                        <com.github.mikephil.charting.charts.BarChart
+                                                            android:id="@+id/ServiceTop10ProductChart"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="400dp"
+                                                            android:layout_margin="2dp"
+                                                            android:visibility="visible" />
+
+                                                        <TextView
+                                                            android:id="@+id/tv_ServiceTop10Product"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center_vertical"
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginTop="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center_vertical"
+                                                            android:text=""
+                                                            android:textAllCaps="false"
+                                                            android:textColor="@color/black"
+                                                            android:textSize="14dp"
+                                                            android:textStyle="bold"
+                                                            android:tint="@color/black" />
+
+                                                        <LinearLayout
+                                                            android:padding="5dp"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_margin="5dp">
+                                                            <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                                                                android:id="@+id/recycServiceTop10Product"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_margin="5dp"
+                                                                android:padding="5dp"
+                                                                android:background="@drawable/svg_dashrect">
+
+                                                            </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                        </LinearLayout>
+
+                                                    </LinearLayout>
+
+                                                </LinearLayout>
+
+                                                <!--SLA Status -->
+                                                <LinearLayout
+                                                    android:id="@+id/ll_ServiceSlaStatus"
+                                                    android:layout_marginTop="10dp"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:background="@color/white"
+                                                    android:orientation="vertical"
+                                                    android:visibility="gone">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:orientation="vertical">
+
+                                                        <com.github.mikephil.charting.charts.BarChart
+                                                            android:id="@+id/ServiceSlaStatusChart"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="400dp"
+                                                            android:layout_margin="2dp"
+                                                            android:visibility="visible" />
+
+                                                        <com.github.mikephil.charting.charts.PieChart
+                                                            android:id="@+id/slaStatusPieChart"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_margin="2dp"
+                                                            android:layout_weight="1"
+                                                            android:visibility="gone" />
+
+                                                        <TextView
+                                                            android:id="@+id/tv_ServiceSlaStatus"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center_vertical"
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginTop="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center_vertical"
+                                                            android:text=""
+                                                            android:textAllCaps="false"
+                                                            android:textColor="@color/black"
+                                                            android:textSize="14dp"
+                                                            android:textStyle="bold"
+                                                            android:tint="@color/black" />
+
+                                                        <LinearLayout
+                                                            android:padding="5dp"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_margin="5dp">
+                                                            <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                                                                android:id="@+id/recycServiceSlaStatus"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_margin="5dp"
+                                                                android:padding="5dp"
+                                                                android:background="@drawable/svg_dashrect">
+
+                                                            </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                        </LinearLayout>
+
+                                                    </LinearLayout>
+
+                                                </LinearLayout>
+
+                                                <!--Channel Status -->
+                                                <LinearLayout
+                                                    android:id="@+id/ll_ServiceChannelStatus"
+                                                    android:layout_marginTop="10dp"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:background="@color/white"
+                                                    android:orientation="vertical"
+                                                    android:visibility="gone">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:orientation="vertical">
+
+                                                        <com.github.mikephil.charting.charts.BarChart
+                                                            android:id="@+id/ServiceChannelStatusChart"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="400dp"
+                                                            android:layout_margin="2dp"
+                                                            android:visibility="visible" />
+
+                                                        <TextView
+                                                            android:id="@+id/tv_ServiceChannelStatus"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center_vertical"
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginTop="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center_vertical"
+                                                            android:text=""
+                                                            android:textAllCaps="false"
+                                                            android:textColor="@color/black"
+                                                            android:textSize="14dp"
+                                                            android:textStyle="bold"
+                                                            android:tint="@color/black" />
+
+                                                        <LinearLayout
+                                                            android:padding="5dp"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:layout_margin="5dp">
+                                                            <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                                                                android:id="@+id/recycServiceChannelStatus"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_margin="5dp"
+                                                                android:padding="5dp"
+                                                                android:background="@drawable/svg_dashrect">
+
+                                                            </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                        </LinearLayout>
+
+                                                    </LinearLayout>
+
+                                                </LinearLayout>
                                             </LinearLayout>
 
-                                        </LinearLayout>
+                                        </androidx.cardview.widget.CardView>
+
+
 
 
                                     </LinearLayout>
@@ -645,7 +732,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:gravity="center"

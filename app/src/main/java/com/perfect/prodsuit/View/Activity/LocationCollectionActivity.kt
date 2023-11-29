@@ -117,7 +117,8 @@ class LocationCollectionActivity : AppCompatActivity() , OnMapReadyCallback {
         val geocoder: Geocoder
         var addresses: List<Address?>
         geocoder = Geocoder(this, Locale.getDefault())
-        addresses = geocoder.getFromLocation(latitude.toDouble(),longitude.toDouble(), 1);
+        addresses =
+            geocoder.getFromLocation(latitude.toDouble(),longitude.toDouble(), 1) as List<Address?>;
         val city = addresses.get(0)!!.getAddressLine(0);
         Log.i("City",city)
 

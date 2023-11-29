@@ -119,6 +119,9 @@ interface ApiInterface {
     @POST("Report/ServiceNewList")
     fun getServiceNewList(@Body body: RequestBody): Call<String>
 
+    @POST("Report/Outstanding")
+    fun getOutstanding(@Body body: RequestBody): Call<String>
+
     @POST("Report/ProjectListDetail")
     fun getProjectListDetail(@Body body: RequestBody): Call<String>
 
@@ -749,6 +752,9 @@ interface ApiInterface {
     @POST("DashBoard/CRMcomplaintwise")
     fun getCRMcomplaintwise(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/CRMSLAViolationStatus")
+    fun getCRMSLAViolationStatus(@Body body: RequestBody): Call<String>
+
     @POST("DashBoard/CRMCountofWarrantyPaidandAMC")
     fun getCRMCountofWarrantyPaidandAMC(@Body body: RequestBody): Call<String>
 
@@ -791,6 +797,44 @@ interface ApiInterface {
     @POST("DashBoard/ExpenseVSGain")
     fun getTopRevenue(@Body body: RequestBody): Call<String>
 
+    // ACCOUND DASH
 
+    @POST("DashBoard/CashBalance")
+    fun getDashAccCashBalance(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/BankBalance")
+    fun getDashAccBankBalance(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/ExpenseChart")
+    fun getDashAccExpenseChart(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/AccountTileData")
+    fun getAccountsTilePLStatus(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/CheckVersionCode")
+    fun versionCheck(@Body body: RequestBody): Call<String>
+
+    @POST("Report/Grouping")
+    fun getReportGroupingDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Report/SummaryWiseReport")
+    fun getSummaryWiseReport(@Body body: RequestBody): Call<String>
+
+
+    @POST("DashBoard/ProjectTileDashBoardDetails")
+    fun getProjectDashTileDetails(@Body body: RequestBody): Call<String>
+
+
+    @POST("DashBoard/ProjectDelayedStatus")
+    fun getProjectDelayedStatusDetails(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/Top10Projects")
+    fun getTop10Projects(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/ProjectExpenseAnalysis")
+    fun getProjectExpenseAnalysis(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/UpcomingStageDueDates")
+    fun getUpcomingStageDueDates(@Body body: RequestBody): Call<String>
 
 }

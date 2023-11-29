@@ -4757,7 +4757,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         var addresses: List<Address?>
         geocoder = Geocoder(this@AgendaActivity, Locale.getDefault())
         Log.v("sfsfsf33rff", "geocoder " + geocoder)
-        addresses = geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1);
+        addresses =
+            geocoder.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1) as List<Address?>;
         if (addresses != null) {
             try {
                 Log.v("sfsfsf33rff", "addresses " + addresses.toString())
