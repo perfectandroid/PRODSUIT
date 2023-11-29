@@ -353,7 +353,7 @@
                                                     android:layout_height="match_parent"
                                                     android:background="@color/white"
                                                     android:orientation="vertical"
-                                                    android:visibility="visible">
+                                                    android:visibility="gone">
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
@@ -467,7 +467,6 @@
                                                 <!--service wise -->
                                                 <LinearLayout
                                                     android:id="@+id/ll_ServiceWise"
-                                                    android:layout_marginTop="10dp"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
                                                     android:background="@color/white"
@@ -476,7 +475,82 @@
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:orientation="vertical"
+                                                        android:background="#E6F1F2">
+
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:orientation="horizontal">
+
+                                                            <TextView
+                                                                android:id="@+id/tvv_head_ServiceWise"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_weight="1"
+                                                                android:text=""
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:gravity="start"
+                                                                android:paddingLeft="5dp"
+                                                                android:paddingTop="5dp"
+                                                                android:layout_gravity="center"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="16dp"
+                                                                android:visibility="visible"/>
+
+                                                            <TextView
+                                                                android:id="@+id/tvv_lemo_ServiceWise"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:paddingTop="2dp"
+                                                                android:paddingBottom="2dp"
+                                                                android:layout_gravity="center"
+                                                                android:layout_margin="5dp"
+                                                                android:layout_weight="2.8"
+                                                                android:background="@drawable/btn_bgcolour"
+                                                                android:drawableRight="@drawable/dash_more"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:gravity="center"
+                                                                android:paddingEnd="10dp"
+                                                                android:text="More"
+                                                                android:textAllCaps="false"
+                                                                android:textColor="@color/white"
+                                                                android:textSize="15sp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
+
+
+                                                        </LinearLayout>
+
+
+
+                                                        <TextView
+                                                            android:id="@+id/tv_ServiceRemark"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center_vertical"
+                                                            android:paddingLeft="5dp"
+                                                            android:layout_marginTop="-7dp"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center_vertical"
+                                                            android:text=""
+                                                            android:textAllCaps="false"
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:textSize="13dp"
+                                                            android:textStyle="normal"
+                                                            android:tint="@color/black" />
+
+
+
+                                                    </LinearLayout>
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
                                                         android:layout_height="match_parent"
+                                                        android:gravity="center"
                                                         android:orientation="vertical">
 
                                                         <com.github.mikephil.charting.charts.BarChart
@@ -486,28 +560,14 @@
                                                             android:layout_margin="2dp"
                                                             android:visibility="visible" />
 
-                                                        <TextView
-                                                            android:id="@+id/tv_ServiceRemark"
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:layout_gravity="center_vertical"
-                                                            android:layout_marginLeft="10dp"
-                                                            android:layout_marginTop="10dp"
-                                                            android:layout_marginRight="10dp"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:gravity="center_vertical"
-                                                            android:text=""
-                                                            android:textAllCaps="false"
-                                                            android:textColor="@color/black"
-                                                            android:textSize="14dp"
-                                                            android:textStyle="bold"
-                                                            android:tint="@color/black" />
 
                                                         <LinearLayout
+                                                            android:id="@+id/ll_ServiceWiseRecyc"
                                                             android:padding="5dp"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="match_parent"
-                                                            android:layout_margin="5dp">
+                                                            android:layout_margin="5dp"
+                                                            android:visibility="gone">
                                                             <com.perfect.prodsuit.Helper.FullLenghRecyclertview
                                                                 android:id="@+id/recycServiceWise"
                                                                 android:layout_width="match_parent"
@@ -526,12 +586,83 @@
                                                 <!--Count of Warranty, Paid And AMC -->
                                                 <LinearLayout
                                                     android:id="@+id/ll_ServiceCountOfWPA"
-                                                    android:layout_marginTop="10dp"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
                                                     android:background="@color/white"
                                                     android:orientation="vertical"
                                                     android:visibility="gone">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:orientation="vertical"
+                                                        android:background="#E6F1F2">
+
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:orientation="horizontal">
+
+                                                            <TextView
+                                                                android:id="@+id/tvv_head_ServiceCountOfWPA"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_weight="1"
+                                                                android:text=""
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:gravity="start"
+                                                                android:paddingLeft="5dp"
+                                                                android:paddingTop="5dp"
+                                                                android:layout_gravity="center"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="16dp"
+                                                                android:visibility="visible"/>
+
+                                                            <TextView
+                                                                android:id="@+id/tvv_lemo_ServiceCountOfWPA"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:paddingTop="2dp"
+                                                                android:paddingBottom="2dp"
+                                                                android:layout_gravity="center"
+                                                                android:layout_margin="5dp"
+                                                                android:layout_weight="2.8"
+                                                                android:background="@drawable/btn_bgcolour"
+                                                                android:drawableRight="@drawable/dash_more"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:gravity="center"
+                                                                android:paddingEnd="10dp"
+                                                                android:text="More"
+                                                                android:textAllCaps="false"
+                                                                android:textColor="@color/white"
+                                                                android:textSize="15sp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
+
+
+                                                        </LinearLayout>
+
+
+                                                        <TextView
+                                                            android:id="@+id/tv_ServiceCountOfWPA"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center_vertical"
+                                                            android:paddingLeft="5dp"
+                                                            android:layout_marginTop="-7dp"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center_vertical"
+                                                            android:text=""
+                                                            android:textAllCaps="false"
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:textSize="13dp"
+                                                            android:textStyle="normal"
+                                                            android:tint="@color/black" />
+
+
+                                                    </LinearLayout>
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
@@ -545,24 +676,10 @@
                                                             android:layout_margin="2dp"
                                                             android:visibility="visible" />
 
-                                                        <TextView
-                                                            android:id="@+id/tv_ServiceCountOfWPA"
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:layout_gravity="center_vertical"
-                                                            android:layout_marginLeft="10dp"
-                                                            android:layout_marginTop="10dp"
-                                                            android:layout_marginRight="10dp"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:gravity="center_vertical"
-                                                            android:text=""
-                                                            android:textAllCaps="false"
-                                                            android:textColor="@color/black"
-                                                            android:textSize="14dp"
-                                                            android:textStyle="bold"
-                                                            android:tint="@color/black" />
+
 
                                                         <LinearLayout
+                                                            android:id="@+id/ll_ServiceCountOfWPARecyc"
                                                             android:padding="5dp"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="match_parent"
@@ -585,12 +702,85 @@
                                                 <!--Top 10 Products In CRM -->
                                                 <LinearLayout
                                                     android:id="@+id/ll_ServiceTop10Product"
-                                                    android:layout_marginTop="10dp"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
                                                     android:background="@color/white"
                                                     android:orientation="vertical"
                                                     android:visibility="gone">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:orientation="vertical"
+                                                        android:background="#E6F1F2">
+
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:orientation="horizontal">
+
+                                                            <TextView
+                                                                android:id="@+id/tvv_head_ServiceTop10Product"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_weight="1"
+                                                                android:text=""
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:gravity="start"
+                                                                android:paddingLeft="5dp"
+                                                                android:paddingTop="5dp"
+                                                                android:layout_gravity="center"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="16dp"
+                                                                android:visibility="visible"/>
+
+                                                            <TextView
+                                                                android:id="@+id/tvv_lemo_ServiceTop10Product"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:paddingTop="2dp"
+                                                                android:paddingBottom="2dp"
+                                                                android:layout_gravity="center"
+                                                                android:layout_margin="5dp"
+                                                                android:layout_weight="2.8"
+                                                                android:background="@drawable/btn_bgcolour"
+                                                                android:drawableRight="@drawable/dash_more"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:gravity="center"
+                                                                android:paddingEnd="10dp"
+                                                                android:text="More"
+                                                                android:textAllCaps="false"
+                                                                android:textColor="@color/white"
+                                                                android:textSize="15sp"
+                                                                android:textStyle="bold"
+                                                                android:visibility="visible" />
+
+
+                                                        </LinearLayout>
+
+
+
+                                                        <TextView
+                                                            android:id="@+id/tv_ServiceTop10Product"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center_vertical"
+                                                            android:paddingLeft="5dp"
+                                                            android:layout_marginTop="-7dp"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center_vertical"
+                                                            android:text=""
+                                                            android:textAllCaps="false"
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:textSize="13dp"
+                                                            android:textStyle="normal"
+                                                            android:tint="@color/black" />
+
+
+
+                                                    </LinearLayout>
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
@@ -604,24 +794,9 @@
                                                             android:layout_margin="2dp"
                                                             android:visibility="visible" />
 
-                                                        <TextView
-                                                            android:id="@+id/tv_ServiceTop10Product"
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:layout_gravity="center_vertical"
-                                                            android:layout_marginLeft="10dp"
-                                                            android:layout_marginTop="10dp"
-                                                            android:layout_marginRight="10dp"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:gravity="center_vertical"
-                                                            android:text=""
-                                                            android:textAllCaps="false"
-                                                            android:textColor="@color/black"
-                                                            android:textSize="14dp"
-                                                            android:textStyle="bold"
-                                                            android:tint="@color/black" />
 
                                                         <LinearLayout
+                                                            android:id="@+id/ll_ServiceTop10ProductRecyc"
                                                             android:padding="5dp"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="match_parent"
