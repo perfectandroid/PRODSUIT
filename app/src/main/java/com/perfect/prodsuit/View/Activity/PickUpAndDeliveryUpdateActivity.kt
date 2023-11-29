@@ -435,7 +435,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                     if (location != null) {
                         val geocoder = Geocoder(this, Locale.getDefault())
                         val list: List<Address> =
-                            geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                            geocoder.getFromLocation(location.latitude, location.longitude, 1) as List<Address>
 
                         strLongitue = list[0].longitude.toString()
                         strLatitude = list[0].latitude.toString()

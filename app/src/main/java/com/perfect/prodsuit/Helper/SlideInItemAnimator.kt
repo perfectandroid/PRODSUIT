@@ -15,7 +15,7 @@ class SlideInItemAnimator : DefaultItemAnimator() {
                 .alpha(1f)
                 .setDuration(addDuration)
                 .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationEnd(animation: Animator?) {
+                    override fun onAnimationEnd(animation: Animator) {
                         dispatchAddFinished(holder)
                     }
                 })

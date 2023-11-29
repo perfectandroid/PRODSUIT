@@ -119,6 +119,9 @@ interface ApiInterface {
     @POST("Report/ServiceNewList")
     fun getServiceNewList(@Body body: RequestBody): Call<String>
 
+    @POST("Report/Outstanding")
+    fun getOutstanding(@Body body: RequestBody): Call<String>
+
     @POST("Report/ProjectListDetail")
     fun getProjectListDetail(@Body body: RequestBody): Call<String>
 
@@ -808,6 +811,30 @@ interface ApiInterface {
     @POST("DashBoard/AccountTileData")
     fun getAccountsTilePLStatus(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/CheckVersionCode")
+    fun versionCheck(@Body body: RequestBody): Call<String>
 
+    @POST("Report/Grouping")
+    fun getReportGroupingDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Report/SummaryWiseReport")
+    fun getSummaryWiseReport(@Body body: RequestBody): Call<String>
+
+
+    @POST("DashBoard/ProjectTileDashBoardDetails")
+    fun getProjectDashTileDetails(@Body body: RequestBody): Call<String>
+
+
+    @POST("DashBoard/ProjectDelayedStatus")
+    fun getProjectDelayedStatusDetails(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/Top10Projects")
+    fun getTop10Projects(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/ProjectExpenseAnalysis")
+    fun getProjectExpenseAnalysis(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/UpcomingStageDueDates")
+    fun getUpcomingStageDueDates(@Body body: RequestBody): Call<String>
 
 }

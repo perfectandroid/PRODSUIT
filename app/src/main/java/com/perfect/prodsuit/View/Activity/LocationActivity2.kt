@@ -128,7 +128,7 @@ class LocationActivity2 : FragmentActivity(), GoogleApiClient.ConnectionCallback
             val geocoder: Geocoder
             val addresses: List<Address>
             geocoder = Geocoder(this, Locale.getDefault())
-            addresses = geocoder.getFromLocation(lat, longi, 1)
+            addresses = geocoder.getFromLocation(lat, longi, 1) as List<Address>
             val address =
                 addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
             val city = addresses[0].locality

@@ -27,6 +27,7 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.checkProject
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -69,11 +70,13 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     lateinit var context: Context
 
     var tie_ReportName: TextInputEditText? = null
+    var tie_Category: TextInputEditText? = null
     var tie_Branch: TextInputEditText? = null
     var tie_FromDate: TextInputEditText? = null
     var tie_ToDate: TextInputEditText? = null
     var tie_EmployeeName: TextInputEditText? = null
     var tie_CollectedBy: TextInputEditText? = null
+    var tie_AssignedTo: TextInputEditText? = null
     var tie_Product: TextInputEditText? = null
     var tie_FollowUpAction: TextInputEditText? = null
     var tie_FollowUpType: TextInputEditText? = null
@@ -83,6 +86,13 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     var til_FollowUpAction: TextInputLayout? = null
     var til_FollowUpType: TextInputLayout? = null
+    var til_Status: TextInputLayout? = null
+    var til_Priority: TextInputLayout? = null
+    var til_CollectedBy: TextInputLayout? = null
+    var til_Group: TextInputLayout? = null
+    var til_AssignedTo: TextInputLayout? = null
+    var til_EmployeeName: TextInputLayout? = null
+    var til_Category: TextInputLayout? = null
 
     lateinit var reportNameViewModel: ReportNameViewModel
     lateinit var reportNameArrayList: JSONArray
@@ -116,9 +126,9 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     var empUseBranch = 0
     lateinit var empByBranchViewModel: EmpByBranchViewModel
-    lateinit var employeeAllArrayList : JSONArray
-    lateinit var employeeAllSort : JSONArray
-    private var dialogEmployeeAll : Dialog? = null
+    lateinit var employeeAllArrayList: JSONArray
+    lateinit var employeeAllSort: JSONArray
+    private var dialogEmployeeAll: Dialog? = null
     var recyEmployeeAll: RecyclerView? = null
 
     lateinit var leadByViewModel: LeadByViewModel
@@ -146,6 +156,13 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     var recyGrouping: RecyclerView? = null
 
 
+    lateinit var productCategoryViewModel: ProductCategoryViewModel
+    lateinit var prodCategoryArrayList: JSONArray
+    private var dialogProdCat: Dialog? = null
+    var recyProdCategory: RecyclerView? = null
+    lateinit var prodCategorySort: JSONArray
+    var ID_Category: String? = ""
+
     private var fromToDate: Int = 0
     private var ReportMode: String = ""
     private var ID_Branch: String = ""
@@ -155,8 +172,10 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     private var ID_Priority: String = ""
     private var ID_CollectedBy: String = ""
     private var ID_Employee: String = ""
+    private var ID_AssignedEmployee: String = ""
     private var ID_Status: String = ""
     private var GroupId: String = ""
+    var prodcategory = 0
 
     var countLeadBy = 0
 
@@ -188,6 +207,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
         productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
         groupingViewModel = ViewModelProvider(this).get(GroupingViewModel::class.java)
+        productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
 
         setRegViews()
         bottombarnav()
@@ -207,8 +227,6 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         loadLoginEmpDetails()
 
 
-
-
     }
 
     private fun loadLoginEmpDetails() {
@@ -216,7 +234,9 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
         val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
         ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+        ID_AssignedEmployee = FK_EmployeeSP.getString("FK_Employee", null).toString()
         tie_EmployeeName!!.setText(UserNameSP.getString("UserName", null))
+        tie_AssignedTo!!.setText(UserNameSP.getString("UserName", null))
 
         val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
         val BranchSP = context.getSharedPreferences(Config.SHARED_PREF45, 0)
@@ -226,6 +246,13 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
+        til_AssignedTo = findViewById(R.id.til_AssignedTo)
+        til_Group = findViewById(R.id.til_Grouping)
+        til_CollectedBy = findViewById(R.id.til_CollectedBy)
+        til_EmployeeName = findViewById(R.id.til_EmployeeName)
+        til_Category = findViewById(R.id.til_Category)
+        til_Status = findViewById(R.id.til_Status)
+        til_Priority = findViewById(R.id.til_Priority)
         imclose = findViewById(R.id.imclose)
         im_close = findViewById(R.id.im_close)
         llfromdate = findViewById(R.id.llfromdate)
@@ -244,6 +271,8 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         tie_ToDate = findViewById(R.id.tie_ToDate)
         tie_EmployeeName = findViewById(R.id.tie_EmployeeName)
         tie_CollectedBy = findViewById(R.id.tie_CollectedBy)
+        tie_Category = findViewById(R.id.tie_Category)
+        tie_AssignedTo = findViewById(R.id.tie_AssignedTo)
         tie_Product = findViewById(R.id.tie_Product)
         tie_FollowUpAction = findViewById(R.id.tie_FollowUpAction)
         tie_FollowUpType = findViewById(R.id.tie_FollowUpType)
@@ -264,19 +293,21 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         tie_ReportName!!.setOnClickListener(this)
         val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
         var isAdmin = IsAdminSP.getString("IsAdmin", null)
-        if (isAdmin.equals("1")){
+        if (isAdmin.equals("1")) {
             tie_Branch!!.setOnClickListener(this)
             tie_EmployeeName!!.setOnClickListener(this)
+            tie_AssignedTo!!.setOnClickListener(this)
+            tie_CollectedBy!!.setOnClickListener(this)
         }
         tie_FromDate!!.setOnClickListener(this)
         tie_ToDate!!.setOnClickListener(this)
-        tie_CollectedBy!!.setOnClickListener(this)
         tie_Product!!.setOnClickListener(this)
         tie_FollowUpAction!!.setOnClickListener(this)
         tie_FollowUpType!!.setOnClickListener(this)
         tie_Priority!!.setOnClickListener(this)
         tie_Status!!.setOnClickListener(this)
         tie_Grouping!!.setOnClickListener(this)
+        tie_Category!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
         btnReset!!.setOnClickListener(this)
     }
@@ -334,6 +365,10 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 txtfromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
                 ll_Fromdate!!.visibility = View.GONE
             }
+            R.id.tie_Category->{
+                prodcategory = 0
+                getCategory()
+            }
 
             R.id.tie_ReportName -> {
 
@@ -346,11 +381,11 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
             R.id.tie_FromDate -> {
 
-                openBottomSheet(tie_FromDate,tie_ToDate)
+                openBottomSheet(tie_FromDate, tie_ToDate)
             }
 
             R.id.tie_ToDate -> {
-                openBottomSheet(tie_FromDate,tie_ToDate)
+                openBottomSheet(tie_FromDate, tie_ToDate)
             }
 
             R.id.tie_CollectedBy -> {
@@ -359,7 +394,11 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
             R.id.tie_EmployeeName -> {
                 empUseBranch = 0
-                getEmpByBranch()
+                getEmpByBranch(0)
+            }
+            R.id.tie_AssignedTo -> {
+                empUseBranch = 0
+                getEmpByBranch(1)
             }
             R.id.tie_Product -> {
                 getProductDetail()
@@ -468,6 +507,148 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             e.printStackTrace()
         }
 
+    }
+
+    private fun getCategory() {
+//         var prodcategory = 0
+        var ReqMode = "13"
+        var SubMode = "0"
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productCategoryViewModel.getProductCategory(this, ReqMode!!, SubMode!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (prodcategory == 0) {
+                                    prodcategory++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   82   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("CategoryDetailsList")
+                                        prodCategoryArrayList = jobjt.getJSONArray("CategoryList")
+                                        if (prodCategoryArrayList.length() > 0) {
+//                                             if (prodcategory == 0){
+//                                                 prodcategory++
+                                            productCategoryPopup(prodCategoryArrayList)
+//                                             }
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@TicketReportActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun productCategoryPopup(prodCategoryArrayList: JSONArray) {
+        try {
+
+            dialogProdCat = Dialog(this)
+            dialogProdCat!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdCat!!.setContentView(R.layout.product_category_popup)
+            dialogProdCat!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyProdCategory = dialogProdCat!!.findViewById(R.id.recyProdCategory) as RecyclerView
+            val etsearch = dialogProdCat!!.findViewById(R.id.etsearch) as EditText
+
+            prodCategorySort = JSONArray()
+            for (k in 0 until prodCategoryArrayList.length()) {
+                val jsonObject = prodCategoryArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                prodCategorySort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
+            recyProdCategory!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//             val adapter = ProductCategoryAdapter(this@LeadGenerationActivity, prodCategoryArrayList)
+            val adapter = ProductCategoryAdapter(this@TicketReportActivity, prodCategorySort)
+            recyProdCategory!!.adapter = adapter
+            adapter.setClickListener(this@TicketReportActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    prodCategorySort = JSONArray()
+
+                    for (k in 0 until prodCategoryArrayList.length()) {
+                        val jsonObject = prodCategoryArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("CategoryName").length) {
+                            if (jsonObject.getString("CategoryName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                prodCategorySort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "prodCategorySort               7103    " + prodCategorySort)
+                    val adapter =
+                        ProductCategoryAdapter(this@TicketReportActivity, prodCategorySort)
+                    recyProdCategory!!.adapter = adapter
+                    adapter.setClickListener(this@TicketReportActivity)
+                }
+            })
+
+            dialogProdCat!!.show()
+            dialogProdCat!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 
@@ -714,7 +895,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                reportNameViewModel.getReportName(this,SubMode)!!.observe(
+                reportNameViewModel.getReportName(this, SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -761,9 +942,9 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         }
     }
 
-    private fun getEmpByBranch() {
+    private fun getEmpByBranch(i: Int) {
 //         var branch = 0
-        Log.v("sfsdfsdfdf","branch"+ID_Branch)
+        Log.v("sfsdfsdfdf", "branch" + ID_Branch)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -779,16 +960,17 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
 
-                                if (empUseBranch == 0){
+                                if (empUseBranch == 0) {
                                     empUseBranch++
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   1224   "+msg)
+                                    Log.e(TAG, "msg   1224   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("EmployeeDetails")
-                                        employeeAllArrayList = jobjt.getJSONArray("EmployeeDetailsList")
-                                        if (employeeAllArrayList.length()>0){
+                                        employeeAllArrayList =
+                                            jobjt.getJSONArray("EmployeeDetailsList")
+                                        if (employeeAllArrayList.length() > 0) {
 
-                                            employeeAllPopup(employeeAllArrayList)
+                                            employeeAllPopup(employeeAllArrayList, i)
 
                                         }
                                     } else {
@@ -812,10 +994,10 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 //                                     Toast.LENGTH_LONG
 //                                 ).show()
                             }
-                        }catch (e :Exception){
+                        } catch (e: Exception) {
                             Toast.makeText(
                                 applicationContext,
-                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -855,7 +1037,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
             recyReportName!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = ReportNameAdapter(this@TicketReportActivity, reportNamesort,"Lead")
+            val adapter = ReportNameAdapter(this@TicketReportActivity, reportNamesort, "Lead")
             recyReportName!!.adapter = adapter
             adapter.setClickListener(this@TicketReportActivity)
 
@@ -885,7 +1067,8 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                     }
 
                     Log.e(TAG, "reportNamesort               7103    " + reportNamesort)
-                    val adapter = ReportNameAdapter(this@TicketReportActivity, reportNamesort,"Lead")
+                    val adapter =
+                        ReportNameAdapter(this@TicketReportActivity, reportNamesort, "Lead")
                     recyReportName!!.adapter = adapter
                     adapter.setClickListener(this@TicketReportActivity)
                 }
@@ -1038,7 +1221,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     }
 
 
-    private fun openBottomSheet(dateField1:TextInputEditText?,dateField2:TextInputEditText?) {
+    private fun openBottomSheet(dateField1: TextInputEditText?, dateField2: TextInputEditText?) {
         // BottomSheet
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val dialog = BottomSheetDialog(this)
@@ -1059,7 +1242,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             edt_toDate!!.setText("")
 
             val calendar: Calendar = Calendar.getInstance()
-           // calendar.add(Calendar.MONTH, -1)
+            // calendar.add(Calendar.MONTH, -1)
             calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH))
             val FirstDay: Date = calendar.getTime()
 
@@ -1074,8 +1257,8 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
             FromDate = sdf.format(FirstDay)
             ToDate = sdf.format(LastDay)
-            Log.v("sdfsfdfdddd", "FromDate " +FromDate)
-            Log.v("sdfsfdfdddd", "ToDate " +ToDate)
+            Log.v("sdfsfdfdddd", "FromDate " + FromDate)
+            Log.v("sdfsfdfdddd", "ToDate " + ToDate)
         })
         rad_last_month.setOnClickListener(View.OnClickListener {
             FromDate = ""
@@ -1098,8 +1281,8 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
             FromDate = sdf.format(FirstDay)
             ToDate = sdf.format(LastDay)
-            Log.v("sdfsfdfdddd", "FromDate " +FromDate)
-            Log.v("sdfsfdfdddd", "ToDate " +ToDate)
+            Log.v("sdfsfdfdddd", "FromDate " + FromDate)
+            Log.v("sdfsfdfdddd", "ToDate " + ToDate)
         })
         rad_last_3_month.setOnClickListener(View.OnClickListener {
             FromDate = ""
@@ -1115,14 +1298,14 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             calendar1.set(Calendar.DATE, calendar1.getActualMaximum(Calendar.DAY_OF_MONTH))
             val LastDay: Date = calendar1.getTime()
             rad_this_month!!.isChecked = false
-            rad_last_month!!.isChecked =false
-            rad_last_3_month!!.isChecked =true
-            rad_last_6_month!!.isChecked =false
-            rad_last_12_month!!.isChecked =false
+            rad_last_month!!.isChecked = false
+            rad_last_3_month!!.isChecked = true
+            rad_last_6_month!!.isChecked = false
+            rad_last_12_month!!.isChecked = false
             FromDate = sdf.format(FirstDay)
             ToDate = sdf.format(LastDay)
-            Log.v("sdfsfdfdddd", "FromDate " +FromDate)
-            Log.v("sdfsfdfdddd", "ToDate " +ToDate)
+            Log.v("sdfsfdfdddd", "FromDate " + FromDate)
+            Log.v("sdfsfdfdddd", "ToDate " + ToDate)
         })
         rad_last_6_month.setOnClickListener(View.OnClickListener {
             FromDate = ""
@@ -1138,14 +1321,14 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             calendar1.set(Calendar.DATE, calendar1.getActualMaximum(Calendar.DAY_OF_MONTH))
             val LastDay: Date = calendar1.getTime()
             rad_this_month!!.isChecked = false
-            rad_last_month!!.isChecked =false
-            rad_last_3_month!!.isChecked =false
-            rad_last_6_month!!.isChecked =true
-            rad_last_12_month!!.isChecked =false
+            rad_last_month!!.isChecked = false
+            rad_last_3_month!!.isChecked = false
+            rad_last_6_month!!.isChecked = true
+            rad_last_12_month!!.isChecked = false
             FromDate = sdf.format(FirstDay)
             ToDate = sdf.format(LastDay)
-            Log.v("sdfsfdfdddd", "FromDate " +FromDate)
-            Log.v("sdfsfdfdddd", "ToDate " +ToDate)
+            Log.v("sdfsfdfdddd", "FromDate " + FromDate)
+            Log.v("sdfsfdfdddd", "ToDate " + ToDate)
         })
         rad_last_12_month.setOnClickListener(View.OnClickListener {
             FromDate = ""
@@ -1161,14 +1344,14 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             calendar1.set(Calendar.DATE, calendar1.getActualMaximum(Calendar.DAY_OF_MONTH))
             val LastDay: Date = calendar1.getTime()
             rad_this_month!!.isChecked = false
-            rad_last_month!!.isChecked =false
-            rad_last_3_month!!.isChecked =false
-            rad_last_6_month!!.isChecked =false
-            rad_last_12_month!!.isChecked =true
+            rad_last_month!!.isChecked = false
+            rad_last_3_month!!.isChecked = false
+            rad_last_6_month!!.isChecked = false
+            rad_last_12_month!!.isChecked = true
             FromDate = sdf.format(FirstDay)
             ToDate = sdf.format(LastDay)
-            Log.v("sdfsfdfdddd", "FromDate " +FromDate)
-            Log.v("sdfsfdfdddd", "ToDate " +ToDate)
+            Log.v("sdfsfdfdddd", "FromDate " + FromDate)
+            Log.v("sdfsfdfdddd", "ToDate " + ToDate)
         })
         edt_fromDate.setOnClickListener(View.OnClickListener {
             fromToDate = 0
@@ -1183,38 +1366,33 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             dialog.dismiss()
         }
         txtSubmit.setOnClickListener {
-                if(edt_fromDate.text.toString()==""&&edt_toDate.text.toString()!="")
-                {
-                    val builder = AlertDialog.Builder(
-                        this@TicketReportActivity,
-                        R.style.MyDialogTheme
-                    )
-                    builder.setMessage("Please Fill Both Fields")
-                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                    }
-                    val alertDialog: AlertDialog = builder.create()
-                    alertDialog.setCancelable(false)
-                    alertDialog.show()
+            if (edt_fromDate.text.toString() == "" && edt_toDate.text.toString() != "") {
+                val builder = AlertDialog.Builder(
+                    this@TicketReportActivity,
+                    R.style.MyDialogTheme
+                )
+                builder.setMessage("Please Fill Both Fields")
+                builder.setPositiveButton("Ok") { dialogInterface, which ->
                 }
-                else if(edt_fromDate.text.toString()!=""&&edt_toDate.text.toString()=="")
-                {
-                    val builder = AlertDialog.Builder(
-                        this@TicketReportActivity,
-                        R.style.MyDialogTheme
-                    )
-                    builder.setMessage("Please Fill Both Fields")
-                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-                    }
-                    val alertDialog: AlertDialog = builder.create()
-                    alertDialog.setCancelable(false)
-                    alertDialog.show()
+                val alertDialog: AlertDialog = builder.create()
+                alertDialog.setCancelable(false)
+                alertDialog.show()
+            } else if (edt_fromDate.text.toString() != "" && edt_toDate.text.toString() == "") {
+                val builder = AlertDialog.Builder(
+                    this@TicketReportActivity,
+                    R.style.MyDialogTheme
+                )
+                builder.setMessage("Please Fill Both Fields")
+                builder.setPositiveButton("Ok") { dialogInterface, which ->
                 }
-                else
-                {
-                    dialog.dismiss()
-                    dateField1!!.setText(FromDate)
-                    dateField2!!.setText(ToDate)
-                }
+                val alertDialog: AlertDialog = builder.create()
+                alertDialog.setCancelable(false)
+                alertDialog.show()
+            } else {
+                dialog.dismiss()
+                dateField1!!.setText(FromDate)
+                dateField2!!.setText(ToDate)
+            }
 
 //                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
 //                val day: Int = date_Picker1!!.getDayOfMonth()
@@ -1307,7 +1485,6 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         }
 
     }
-
 
     private fun getProductDetail() {
         var proddetail = 0
@@ -1457,7 +1634,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                followUpActionViewModel.getFollowupAction(this,SubMode)!!.observe(
+                followUpActionViewModel.getFollowupAction(this, SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -1513,64 +1690,64 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         }
     }
 
-  /*  private fun emplyeeDetailPopup() {
-        try {
-            dialogLeadBy = Dialog(this)
-            dialogLeadBy!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogLeadBy!!.setContentView(R.layout.lead_by_popup)
-            dialogLeadBy!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-            recyLeadby = dialogLeadBy!!.findViewById(R.id.recyLeadby) as RecyclerView
-            val etsearch = dialogLeadBy!!.findViewById(R.id.etsearch) as EditText
-            employeeDetailSort = JSONArray()
-            for (k in 0 until employeeDetailArrayList.length()) {
-                val jsonObject = employeeDetailArrayList.getJSONObject(k)
-                // reportNamesort.put(k,jsonObject)
-                employeeDetailSort.put(jsonObject)
-            }
-            val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
-            recyEmplyeeDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//            recyCustomer!!.setHasFixedSize(true)
-//            val adapter = LeadByAdapter(this@LeadGenerationActivity, leadByArrayList)
-            val adapter = EmployeeBranchWiseAdapter(this@TicketReportActivity, employeeDetailSort)
-            recyEmplyeeDetail!!.adapter = adapter
-            adapter.setClickListener(this@TicketReportActivity)
-            etsearch!!.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(p0: Editable?) {
-                }
+    /*  private fun emplyeeDetailPopup() {
+          try {
+              dialogLeadBy = Dialog(this)
+              dialogLeadBy!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+              dialogLeadBy!!.setContentView(R.layout.lead_by_popup)
+              dialogLeadBy!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+              recyLeadby = dialogLeadBy!!.findViewById(R.id.recyLeadby) as RecyclerView
+              val etsearch = dialogLeadBy!!.findViewById(R.id.etsearch) as EditText
+              employeeDetailSort = JSONArray()
+              for (k in 0 until employeeDetailArrayList.length()) {
+                  val jsonObject = employeeDetailArrayList.getJSONObject(k)
+                  // reportNamesort.put(k,jsonObject)
+                  employeeDetailSort.put(jsonObject)
+              }
+              val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
+              recyEmplyeeDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+  //            recyCustomer!!.setHasFixedSize(true)
+  //            val adapter = LeadByAdapter(this@LeadGenerationActivity, leadByArrayList)
+              val adapter = EmployeeBranchWiseAdapter(this@TicketReportActivity, employeeDetailSort)
+              recyEmplyeeDetail!!.adapter = adapter
+              adapter.setClickListener(this@TicketReportActivity)
+              etsearch!!.addTextChangedListener(object : TextWatcher {
+                  override fun afterTextChanged(p0: Editable?) {
+                  }
 
-                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                }
+                  override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                  }
 
-                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    //  list_view!!.setVisibility(View.VISIBLE)
-                    val textlength = etsearch!!.text.length
-                    employeeDetailSort = JSONArray()
-                    for (k in 0 until employeeDetailArrayList.length()) {
-                        val jsonObject = employeeDetailArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("Name").length) {
-                            if (jsonObject.getString("Name")!!.toLowerCase().trim()
-                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
-                            ) {
-                                employeeDetailSort.put(jsonObject)
-                            }
-                        }
-                    }
-                    Log.e(TAG, "leadBySort               7103    " + employeeDetailSort)
-                    val adapter =
-                        EmployeeBranchWiseAdapter(this@TicketReportActivity, employeeDetailSort)
-                    recyEmplyeeDetail!!.adapter = adapter
-                    adapter.setClickListener(this@TicketReportActivity)
-                }
-            })
-            dialogLeadBy!!.show()
-            dialogLeadBy!!.getWindow()!!.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            );
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }*/
+                  override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                      //  list_view!!.setVisibility(View.VISIBLE)
+                      val textlength = etsearch!!.text.length
+                      employeeDetailSort = JSONArray()
+                      for (k in 0 until employeeDetailArrayList.length()) {
+                          val jsonObject = employeeDetailArrayList.getJSONObject(k)
+                          if (textlength <= jsonObject.getString("Name").length) {
+                              if (jsonObject.getString("Name")!!.toLowerCase().trim()
+                                      .contains(etsearch!!.text.toString().toLowerCase().trim())
+                              ) {
+                                  employeeDetailSort.put(jsonObject)
+                              }
+                          }
+                      }
+                      Log.e(TAG, "leadBySort               7103    " + employeeDetailSort)
+                      val adapter =
+                          EmployeeBranchWiseAdapter(this@TicketReportActivity, employeeDetailSort)
+                      recyEmplyeeDetail!!.adapter = adapter
+                      adapter.setClickListener(this@TicketReportActivity)
+                  }
+              })
+              dialogLeadBy!!.show()
+              dialogLeadBy!!.getWindow()!!.setLayout(
+                  ViewGroup.LayoutParams.MATCH_PARENT,
+                  ViewGroup.LayoutParams.WRAP_CONTENT
+              );
+          } catch (e: Exception) {
+              e.printStackTrace()
+          }
+      }*/
 
     private fun leadByPopup(leadByArrayList: JSONArray) {
 
@@ -1847,15 +2024,15 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     }
 
-    private fun employeeAllPopup(employeeAllArrayList: JSONArray) {
+    private fun employeeAllPopup(employeeAllArrayList: JSONArray, i: Int) {
         try {
 
             dialogEmployeeAll = Dialog(this)
             dialogEmployeeAll!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogEmployeeAll!! .setContentView(R.layout.employeeall_popup)
+            dialogEmployeeAll!!.setContentView(R.layout.employeeall_popup)
             dialogEmployeeAll!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-            recyEmployeeAll = dialogEmployeeAll!! .findViewById(R.id.recyEmployeeAll) as RecyclerView
-            val etsearch = dialogEmployeeAll!! .findViewById(R.id.etsearch) as EditText
+            recyEmployeeAll = dialogEmployeeAll!!.findViewById(R.id.recyEmployeeAll) as RecyclerView
+            val etsearch = dialogEmployeeAll!!.findViewById(R.id.etsearch) as EditText
 
 
             employeeAllSort = JSONArray()
@@ -1865,13 +2042,23 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 employeeAllSort.put(jsonObject)
             }
 
-            val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
-            recyEmployeeAll!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            if (i == 0) {
+                val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
+                recyEmployeeAll!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
 //            val adapter = EmployeeAllAdapter(this@FollowUpActivity, employeeAllArrayList)
-            val adapter = EmployeeAllAdapter(this@TicketReportActivity, employeeAllSort)
-            recyEmployeeAll!!.adapter = adapter
-            adapter.setClickListener(this@TicketReportActivity)
+                val adapter = EmployeeAllAdapter(this@TicketReportActivity, employeeAllSort)
+                recyEmployeeAll!!.adapter = adapter
+                adapter.setClickListener(this@TicketReportActivity)
+            } else {
+                val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
+                recyEmployeeAll!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = EmployeeAllAdapter(this@FollowUpActivity, employeeAllArrayList)
+                val adapter = AssignedListAdapter(this@TicketReportActivity, employeeAllSort)
+                recyEmployeeAll!!.adapter = adapter
+                adapter.setClickListener(this@TicketReportActivity)
+            }
 
             etsearch!!.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
@@ -1889,14 +2076,16 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                     for (k in 0 until employeeAllArrayList.length()) {
                         val jsonObject = employeeAllArrayList.getJSONObject(k)
                         if (textlength <= jsonObject.getString("EmpName").length) {
-                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
                                 employeeAllSort.put(jsonObject)
                             }
 
                         }
                     }
 
-                    Log.e(TAG,"employeeAllSort               7103    "+employeeAllSort)
+                    Log.e(TAG, "employeeAllSort               7103    " + employeeAllSort)
                     val adapter = EmployeeAllAdapter(this@TicketReportActivity, employeeAllSort)
                     recyEmployeeAll!!.adapter = adapter
                     adapter.setClickListener(this@TicketReportActivity)
@@ -1904,7 +2093,10 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             })
 
             dialogEmployeeAll!!.show()
-            dialogEmployeeAll!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogEmployeeAll!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -2204,8 +2396,8 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                             Log.e(TAG, "msg   333   " + msg)
                             if (jObject.getString("StatusCode") == "0") {
 
-                                val jobjt = jObject.getJSONObject("GroupingDetails")
-                                groupingArrayList = jobjt.getJSONArray("GroupingDetailsList")
+                                val jobjt = jObject.getJSONObject("Grouping")
+                                groupingArrayList = jobjt.getJSONArray("GroupList")
                                 if (groupingArrayList.length() > 0) {
                                     if (grouping == 0) {
                                         grouping++
@@ -2341,7 +2533,18 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             if (ReportMode.equals("5")) {
 //                NewListTicket
 //                til_FollowUpAction!!.visibility = View.GONE
-//                til_FollowUpType!!.visibility = View.GONE
+                til_FollowUpType!!.visibility = View.GONE
+            }
+
+            if (ReportMode.equals("6")) {
+//                Lead Summary
+                til_Priority!!.visibility = View.GONE
+                til_Status!!.visibility = View.GONE
+                til_EmployeeName!!.visibility = View.GONE
+                til_AssignedTo!!.visibility = View.VISIBLE
+//                til_CollectedBy!!.visibility = View.VISIBLE
+                til_Group!!.visibility = View.VISIBLE
+                til_Category!!.visibility = View.VISIBLE
             }
 
         }
@@ -2356,8 +2559,34 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
             ID_Employee = ""
             tie_EmployeeName!!.setText("")
+            ID_AssignedEmployee = ""
+            tie_AssignedTo!!.setText("")
+            ID_CollectedBy = ""
+            tie_CollectedBy!!.setText("")
 
 
+        }
+
+        if (data.equals("prodcategory")) {
+            dialogProdCat!!.dismiss()
+//             val jsonObject = prodCategoryArrayList.getJSONObject(position)
+            val jsonObject = prodCategorySort.getJSONObject(position)
+            Log.e(TAG, "ID_Category   " + jsonObject.getString("ID_Category"))
+            ID_Category = jsonObject.getString("ID_Category")
+            tie_Category!!.setText(jsonObject.getString("CategoryName"))
+//                                  Log.i("resperr","check data side="+checkProject)
+//            if (jsonObject.getString("Project").equals("0")) {
+//                ll_product_qty!!.visibility = View.VISIBLE
+//                edtProjectName!!.visibility = View.GONE
+//                checkProject="1"  // <--gone
+//
+//            } else if (jsonObject.getString("Project").equals("1")) {
+//                ll_product_qty!!.visibility = View.GONE
+//                edtProjectName!!.visibility = View.VISIBLE
+//
+//                checkProject="0"  // <-- visible
+//
+//            }
         }
 
         if (data.equals("proddetails")) {
@@ -2424,13 +2653,24 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
         }
 
-        if (data.equals("employeeAll")){
+        if (data.equals("employeeAll")) {
             dialogEmployeeAll!!.dismiss()
 //            val jsonObject = employeeAllArrayList.getJSONObject(position)
             val jsonObject = employeeAllSort.getJSONObject(position)
-            Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Employee"))
+            Log.e(TAG, "ID_Employee   " + jsonObject.getString("ID_Employee"))
             ID_Employee = jsonObject.getString("ID_Employee")
             tie_EmployeeName!!.setText(jsonObject.getString("EmpName"))
+
+
+        }
+
+        if (data.equals("AssiggnedList")) {
+            dialogEmployeeAll!!.dismiss()
+//            val jsonObject = employeeAllArrayList.getJSONObject(position)
+            val jsonObject = employeeAllSort.getJSONObject(position)
+            Log.e(TAG, "ID_Employee   " + jsonObject.getString("ID_Employee"))
+            ID_AssignedEmployee = jsonObject.getString("ID_Employee")
+            tie_AssignedTo!!.setText(jsonObject.getString("EmpName"))
 
 
         }
@@ -2439,8 +2679,8 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             dialogGrouping!!.dismiss()
 //            val jsonObject = groupingArrayList.getJSONObject(position)
             val jsonObject = groupingSort.getJSONObject(position)
-            Log.e(TAG, "GroupId   " + jsonObject.getString("GroupId"))
-            GroupId = jsonObject.getString("GroupId")
+            Log.e(TAG, "GroupId   " + jsonObject.getString("GroupMode"))
+            GroupId = jsonObject.getString("GroupMode")
             tie_Grouping!!.setText(jsonObject.getString("GroupName"))
 
         }
@@ -2462,6 +2702,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         tie_Priority!!.setText("")
         tie_Status!!.setText("")
         tie_Grouping!!.setText("")
+        tie_Category!!.setText("")
 
         ReportMode = ""
         ID_Branch = ""
@@ -2471,6 +2712,15 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         ID_Priority = ""
         ID_Status = ""
         GroupId = ""
+        ID_Category = ""
+
+        til_Priority!!.visibility = View.VISIBLE
+        til_Status!!.visibility = View.VISIBLE
+        til_EmployeeName!!.visibility = View.VISIBLE
+        til_AssignedTo!!.visibility = View.GONE
+        til_CollectedBy!!.visibility = View.GONE
+        til_Group!!.visibility = View.GONE
+        til_Category!!.visibility = View.GONE
 
         loadLoginEmpDetails()
 
@@ -2480,22 +2730,36 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val fromDa = sdf.parse(tie_FromDate!!.text.toString());
         val toDa = sdf.parse(tie_ToDate!!.text.toString());
-
         if (ReportMode.equals("")) {
             Config.snackBars(context, v, "Select Report Name")
-        } else if (ID_Branch.equals("")) {
-            Config.snackBars(context, v, "Select Branch")
-        }
-        else if (ID_Employee.equals("")) {
-            Config.snackBars(context, v, "Select Employee")
-        }else if (tie_FromDate!!.text.toString().equals("")) {
-            Config.snackBars(context, v, "Select From Date")
-        } else if (tie_ToDate!!.text.toString().equals("")) {
-            Config.snackBars(context, v, "Select To Date")
-        } else if (fromDa.after(toDa)) {
-            Config.snackBars(context, v, "Check Selected Date Range")
+        } else if (ReportMode.equals("6")) {
+            if (ID_Branch.equals("")) {
+                Config.snackBars(context, v, "Select Branch")
+            } else if (tie_FromDate!!.text.toString().equals("")) {
+                Config.snackBars(context, v, "Select From Date")
+            } else if (tie_ToDate!!.text.toString().equals("")) {
+                Config.snackBars(context, v, "Select To Date")
+            } else if (fromDa.after(toDa)) {
+                Config.snackBars(context, v, "Check Selected Date Range")
+            }else if (GroupId.equals("")) {
+                Config.snackBars(context, v, "Select Group")
+            }else {
+                PassData()
+            }
         } else {
-            PassData()
+            if (ID_Branch.equals("")) {
+                Config.snackBars(context, v, "Select Branch")
+            } else if (ID_Employee.equals("")) {
+                Config.snackBars(context, v, "Select Employee")
+            } else if (tie_FromDate!!.text.toString().equals("")) {
+                Config.snackBars(context, v, "Select From Date")
+            } else if (tie_ToDate!!.text.toString().equals("")) {
+                Config.snackBars(context, v, "Select To Date")
+            } else if (fromDa.after(toDa)) {
+                Config.snackBars(context, v, "Check Selected Date Range")
+            } else {
+                PassData()
+            }
         }
 
 //        else if (ID_Product.equals("")){
@@ -2550,6 +2814,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         val strToDate = outputFormat.format(dateTo)
 
         Log.e(TAG, "strFromDate   " + strFromDate + "    " + strToDate)
+        Log.e(TAG, "sadasdasdsads   " + ID_Category)
 
 
         intent = Intent(applicationContext, TicketReportDetailActivity::class.java)
@@ -2565,57 +2830,61 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         intent.putExtra("ID_Priority", ID_Priority)
         intent.putExtra("ID_Status", ID_Status)
         intent.putExtra("GroupId", GroupId)
+        intent.putExtra("ID_CollectedBy", ID_CollectedBy)
+        intent.putExtra("ID_AssignedEmployee", ID_AssignedEmployee)
+        intent.putExtra("ID_Category", ID_Category)
+
         startActivity(intent)
     }
 
-    private fun datePicker(dateField:TextView) {
-            val builder = android.app.AlertDialog.Builder(this)
-            val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            val layout = inflater1.inflate(R.layout.alert_date_chooser, null)
-            val txtCancel = layout.findViewById(R.id.txtCancel) as TextView
-            val txtSubmit = layout.findViewById(R.id.txtSubmit) as TextView
-            val date_Picker1 = layout.findViewById<DatePicker>(R.id.date_Picker1)
-            builder.setView(layout)
-            val alertDialog = builder.create()
-            txtCancel.setOnClickListener {
-                alertDialog.dismiss()
-            }
-            txtSubmit.setOnClickListener {
-                alertDialog.dismiss()
+    private fun datePicker(dateField: TextView) {
+        val builder = android.app.AlertDialog.Builder(this)
+        val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater1.inflate(R.layout.alert_date_chooser, null)
+        val txtCancel = layout.findViewById(R.id.txtCancel) as TextView
+        val txtSubmit = layout.findViewById(R.id.txtSubmit) as TextView
+        val date_Picker1 = layout.findViewById<DatePicker>(R.id.date_Picker1)
+        builder.setView(layout)
+        val alertDialog = builder.create()
+        txtCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            alertDialog.dismiss()
 
-                try {
-                    //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
-                    val day: Int = date_Picker1!!.getDayOfMonth()
-                    val mon: Int = date_Picker1!!.getMonth()
-                    val month: Int = mon + 1
-                    val year: Int = date_Picker1!!.getYear()
-                    var strDay = day.toString()
-                    var strMonth = month.toString()
-                    var strYear = year.toString()
-                    if (strDay.length == 1) {
-                        strDay = "0" + day
-                    }
-                    if (strMonth.length == 1) {
-                        strMonth = "0" + strMonth
-                    }
-
-                    if (fromToDate == 0) {
-                        tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
-                        FromDate=strDay + "-" + strMonth + "-" + strYear
-                        dateField!!.setText("" +strDay + "-" + strMonth + "-" + strYear)
-                    }
-                    if (fromToDate == 1) {
-                        tie_ToDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
-                        ToDate=strDay + "-" + strMonth + "-" + strYear
-                        dateField!!.setText("" +strDay + "-" + strMonth + "-" + strYear)
-                    }
-
-
-                } catch (e: Exception) {
-                    Log.e(TAG, "Exception   428   " + e.toString())
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon + 1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1) {
+                    strDay = "0" + day
                 }
+                if (strMonth.length == 1) {
+                    strMonth = "0" + strMonth
+                }
+
+                if (fromToDate == 0) {
+                    tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                    FromDate = strDay + "-" + strMonth + "-" + strYear
+                    dateField!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                }
+                if (fromToDate == 1) {
+                    tie_ToDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                    ToDate = strDay + "-" + strMonth + "-" + strYear
+                    dateField!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                }
+
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Exception   428   " + e.toString())
             }
-            alertDialog.show()
+        }
+        alertDialog.show()
 
     }
 

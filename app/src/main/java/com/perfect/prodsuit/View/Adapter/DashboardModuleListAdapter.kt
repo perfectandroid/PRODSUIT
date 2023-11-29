@@ -198,6 +198,13 @@ class DashboardModuleListAdapter(
                         i.putExtra("label",label)
                         context.startActivity(i)
                     }
+                    if (submode=="3")
+                    {
+                        val i = Intent(context, ProjectGraphActivity::class.java)
+                        i.putExtra("SubMode",submode)
+                        i.putExtra("label",label)
+                        context.startActivity(i)
+                    }
 
                     if (submode=="4")
                     {

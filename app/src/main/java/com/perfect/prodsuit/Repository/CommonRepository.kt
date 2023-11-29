@@ -25,7 +25,7 @@ object CommonRepository {
 
     private var progressDialog: ProgressDialog? = null
     val channelSetterGetter = MutableLiveData<CommonModel>()
-    val TAG: String = "ChannelRepository"
+    val TAG: String = "CommonRepository"
 
     fun getServicesApiCall(context: Context,ReqMode : String,SubMode : String): MutableLiveData<CommonModel> {
         getchannel(context,ReqMode,SubMode)

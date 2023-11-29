@@ -43,7 +43,14 @@ class LocationMarkingAdapter (internal var context: Context, internal var jsonAr
                 holder.txtCustomer.text       = jsonObject!!.getString("EmployeeName")
                 holder.txtDesignation.text    = jsonObject!!.getString("DesName")
                 holder.txtAddress.text        = jsonObject!!.getString("LocLocationName")
+                holder.txtAddress.text        = jsonObject!!.getString("LocLocationName")
+                holder.im_rootview!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(
+                        position,
+                        "rootView"
+                    )
 
+                })
                 holder.im_mapview!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(
                         position,
@@ -86,6 +93,7 @@ class LocationMarkingAdapter (internal var context: Context, internal var jsonAr
         internal var txtDesignation     : TextView
         internal var txtAddress         : TextView
         internal var im_mapview         : ImageView
+        internal var im_rootview         : ImageView
         internal var im_detail          : ImageView
         internal var llLocationMarking  : LinearLayout
         init {
@@ -96,6 +104,7 @@ class LocationMarkingAdapter (internal var context: Context, internal var jsonAr
             txtDesignation              = v.findViewById<View>(R.id.txtDesignation) as TextView
             txtAddress                  = v.findViewById<View>(R.id.txtAddress) as TextView
             im_mapview                  = v.findViewById<View>(R.id.im_mapview) as ImageView
+            im_rootview                  = v.findViewById<View>(R.id.im_rootview) as ImageView
             im_detail                   = v.findViewById<View>(R.id.im_detail) as ImageView
             llLocationMarking           = v.findViewById<View>(R.id.llLocationMarking) as LinearLayout
         }
