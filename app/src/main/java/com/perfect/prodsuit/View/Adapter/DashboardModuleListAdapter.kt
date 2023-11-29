@@ -13,10 +13,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.InventoryGraphActivity
-import com.perfect.prodsuit.View.Activity.ServiceAssignListActivity
-import com.perfect.prodsuit.View.Activity.ServiceGraphActivity
-import com.perfect.prodsuit.View.Activity.TileGraphActivity
+import com.perfect.prodsuit.View.Activity.*
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -197,6 +194,13 @@ class DashboardModuleListAdapter(
                     if (submode=="2")
                     {
                         val i = Intent(context, ServiceGraphActivity::class.java)
+                        i.putExtra("SubMode",submode)
+                        i.putExtra("label",label)
+                        context.startActivity(i)
+                    }
+                    if (submode=="3")
+                    {
+                        val i = Intent(context, ProjectGraphActivity::class.java)
                         i.putExtra("SubMode",submode)
                         i.putExtra("label",label)
                         context.startActivity(i)

@@ -95,6 +95,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.ProjectGraphActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.ProjectSiteVisitTabActivity"
             android:exported="false"
             android:screenOrientation="portrait"
@@ -812,7 +817,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.perfect.prodsuite.fileprovider"
+            android:authorities="com.perfect.prodsuite_employee.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

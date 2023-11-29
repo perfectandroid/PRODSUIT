@@ -9,9 +9,11 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.CommonModel
-import com.perfect.prodsuit.Model.ProductPriorityModel
+import com.perfect.prodsuit.Model.ProjectDelayedModel
+
+
 import com.perfect.prodsuit.R
+
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -19,22 +21,23 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.ArrayList
+import java.text.SimpleDateFormat
+import java.util.*
 
-object CommonRepository {
+object ProjectDelayedStatusRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val channelSetterGetter = MutableLiveData<CommonModel>()
-    val TAG: String = "CommonRepository"
+    val projectDelayedSetterGetter = MutableLiveData<ProjectDelayedModel>()
+    val TAG: String = "ProjectDelayedStatusRepository"
 
-    fun getServicesApiCall(context: Context,ReqMode : String,SubMode : String): MutableLiveData<CommonModel> {
-        getchannel(context,ReqMode,SubMode)
-        return channelSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<ProjectDelayedModel> {
+        getProjectDelayedList(context)
+        return projectDelayedSetterGetter
     }
 
-    private fun getchannel(context: Context,ReqMode: String,SubMode: String) {
+    private fun getProjectDelayedList(context: Context) {
         try {
-            channelSetterGetter.value = CommonModel("")
+            projectDelayedSetterGetter.value = ProjectDelayedModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -60,27 +63,38 @@ object CommonRepository {
             val requestObject1 = JSONObject()
             try {
 
-                // Channel - Category
-               // {"ReqMode":"kIjonu0oPXI=","BankKey":"\/mXqmq3ZMvs=\n","Token":"0KjNuKHR16rDwHCS09BASBwyc4DHIeNqEVyN8kfrQtASybLeZjOwwA==\n","SubMode":"C9jcamVv4wY="}
-
-                // Company ADD FK_Company
-//                {"FK_Company":"vJ\/8asrP+O0=\n","ReqMode":"K76obqhY0lw=","BankKey":"\/mXqmq3ZMvs=\n","Name":"7wl7K1mbCdw=\n",
-//                    "Token":"0KjNuKHR16rDwHCS09BASBwyc4DHIeNqEVyN8kfrQtASybLeZjOwwA==\n"}
-
+                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_DepartmentSP = context.getSharedPreferences(Config.SHARED_PREF55, 0)
+                val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
+                val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
 
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
+
+                val sdf = SimpleDateFormat("yyyy-MM-dd")
+                val currentDate = sdf.format(Date())
+                System.out.println(" C DATE is  "+currentDate)
+
+
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
 
-                Log.e(TAG,"requestObject1   78   "+requestObject1)
-                Log.e(TAG,"requestObject1   782   ReqMode  :  "+ReqMode+"   SubMode  :  "+SubMode)
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
 
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
+                requestObject1.put("FK_Department", ProdsuitApplication.encryptStart(FK_DepartmentSP.getString("FK_Department", null)))
+                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
+                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
+                requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-17"))
+                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("17"))
+                requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))
+
+
+
+                Log.e(TAG,"ProjectDelayedStatusRepository 3355  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -88,34 +102,37 @@ object CommonRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getCommonPopup(body)
+
+
+            val call = apiService.getProjectDelayedStatusDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
                     Response<String>
                 ) {
                     try {
-
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<ProductPriorityModel>()
-                        leads.add(ProductPriorityModel(response.body()))
-                        val msg = leads[0].message
-                        channelSetterGetter.value = CommonModel(msg)
+                        Log.e(TAG,"  projectTile 3355 "+response.body())
+                        val salesComparison = ArrayList<ProjectDelayedModel>()
+                        salesComparison.add(ProjectDelayedModel(response.body()))
+                        val msg = salesComparison[0].message
+                        projectDelayedSetterGetter.value = ProjectDelayedModel(msg)
                     } catch (e: Exception) {
-                        e.printStackTrace()
                         progressDialog!!.dismiss()
-                        Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
+                    Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
-            progressDialog!!.dismiss()
             Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+            progressDialog!!.dismiss()
         }
     }
+
 }

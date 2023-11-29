@@ -769,4 +769,20 @@ interface ApiInterface {
     @POST("DashBoard/EmployeeWiseConversionTime")
     fun getEmployeeWiseConversionTime(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/ProjectTileDashBoardDetails")
+    fun getProjectDashTileDetails(@Body body: RequestBody): Call<String>
+
+
+    @POST("DashBoard/ProjectDelayedStatus")
+    fun getProjectDelayedStatusDetails(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/Top10Projects")
+    fun getTop10Projects(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/ProjectExpenseAnalysis")
+    fun getProjectExpenseAnalysis(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/UpcomingStageDueDates")
+    fun getUpcomingStageDueDates(@Body body: RequestBody): Call<String>
+
 }

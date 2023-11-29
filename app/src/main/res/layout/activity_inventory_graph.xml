@@ -196,6 +196,8 @@
                                                 android:textStyle="bold"
                                                 android:textSize="@dimen/header_text1" />
 
+
+
                                         </LinearLayout>
 
                                         <!--Dashboard-->
@@ -334,7 +336,8 @@
                                                                 <com.perfect.prodsuit.Helper.FullLenghRecyclertview
                                                                     android:id="@+id/recyColors"
                                                                     android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content">
+                                                                    android:layout_height="match_parent"
+                                                                    android:background="@drawable/svg_dashrect">
 
                                                                 </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
                                                             </LinearLayout>
@@ -370,7 +373,7 @@
                                                 android:layout_height="match_parent"
                                                 android:background="@color/white"
                                                 android:orientation="vertical"
-                                                android:visibility="visible">
+                                                android:visibility="gone">
 
 
                                                 <!-- one-->
@@ -465,7 +468,8 @@
                                                                 <com.perfect.prodsuit.Helper.FullLenghRecyclertview
                                                                     android:id="@+id/recyColorsStockList"
                                                                     android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content">
+                                                                    android:layout_height="wrap_content"
+                                                                    android:background="@drawable/svg_dashrect">
 
                                                                 </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
                                                             </LinearLayout>
@@ -697,7 +701,8 @@
                                                                 <com.perfect.prodsuit.Helper.FullLenghRecyclertview
                                                                     android:id="@+id/recysupplierwisepurchase"
                                                                     android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content">
+                                                                    android:layout_height="wrap_content"
+                                                                    android:background="@drawable/svg_dashrect">
 
                                                                 </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
                                                             </LinearLayout>
@@ -733,7 +738,7 @@
                                                 android:layout_height="match_parent"
                                                 android:background="@color/white"
                                                 android:orientation="vertical"
-                                                android:visibility="gone">
+                                                android:visibility="visible">
 
                                                 <LinearLayout
                                                     android:layout_weight="1"
@@ -904,6 +909,108 @@
                                         </LinearLayout>
                                         <!--Tile-->
 
+                                            <LinearLayout
+                                                android:id="@+id/ll_Tile"
+                                                android:gravity="center"
+                                                android:layout_gravity="center"
+                                                android:background="@color/white"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:visibility="gone"
+                                                android:orientation="vertical">
+
+                                                <ScrollView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:orientation="vertical">
+
+                                                        <LinearLayout
+                                                            android:id="@+id/ll_crmtile_outstanding"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:orientation="vertical">
+
+
+                                                        </LinearLayout>
+
+                                                        <LinearLayout
+                                                            android:id="@+id/ll_crmtile_status"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:orientation="vertical">
+
+                                                            <androidx.cardview.widget.CardView
+                                                                android:gravity="center"
+                                                                android:layout_gravity="center"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_marginLeft="5dp"
+                                                                android:layout_marginRight="5dp"
+                                                                android:layout_marginBottom="5dp"
+                                                                android:layout_marginTop="10dp"
+                                                                android:background="@color/white"
+                                                                app:cardCornerRadius="5dp"
+                                                                app:cardElevation="5dp"
+                                                                app:cardPreventCornerOverlap="true"
+                                                                app:cardUseCompatPadding="true">
+                                                                <LinearLayout
+                                                                    android:orientation="vertical"
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:padding="20dp">
+                                                                    <LinearLayout
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:padding="10dp"
+                                                                        android:background="@drawable/bg_shape_tile">
+
+                                                                        <TextView
+                                                                            android:id="@+id/tvv_tileName"
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_weight="1"
+                                                                            android:text="Stock Value"
+                                                                            android:textColor="@color/colorPrimary"
+                                                                            android:layout_gravity="center"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:textStyle="bold"
+                                                                            android:textSize="@dimen/header_text"
+                                                                            android:visibility="visible"/>
+
+                                                                        <TextView
+                                                                            android:id="@+id/tvv_count"
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_weight="1"
+                                                                            android:text=""
+                                                                            android:textColor="@color/colorPrimary"
+                                                                            android:gravity="end"
+                                                                            android:layout_gravity="center"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:textStyle="bold"
+                                                                            android:textSize="@dimen/header_text"
+                                                                            android:visibility="visible"/>
+
+                                                                    </LinearLayout>
+
+                                                                </LinearLayout>
+
+
+                                                            </androidx.cardview.widget.CardView>
+
+
+                                                        </LinearLayout>
+
+                                                    </LinearLayout>
+
+
+                                                </ScrollView>
+
+                                        </LinearLayout>
 
 
                                         <View
@@ -912,13 +1019,6 @@
                                             android:background="@color/grey"/>
 
                                         <!-- third-->
-                                        <LinearLayout
-                                            android:id="@+id/ll_Tile"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:orientation="vertical">
-
-                                        </LinearLayout>
 
                                     </LinearLayout>
 

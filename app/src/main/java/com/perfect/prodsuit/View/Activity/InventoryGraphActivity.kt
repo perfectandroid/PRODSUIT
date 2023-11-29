@@ -99,6 +99,9 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var stockValueArrayList: JSONArray
     lateinit var stockValueDataViewModel: StockValueDataViewModel
     var tileValue: String? = "0"
+    var tvv_tileName: TextView? = null
+    var tvv_count: TextView? = null
+    var tvv_countString: String? = null
 
     var TabMode         = 0 // 0 = Graph , 1 = Tile
     var ContinueMode    = 0 // 0 = First , 1 = Second
@@ -127,6 +130,8 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var chartTypeViewModel               : ChartTypeViewModel
 
 
+    var recyc_tile      : RecyclerView?     = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -146,11 +151,11 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
         ContinueMode  = 0
         hideViews()
 
-
-//        getInventorySale()
+        inventorysale = 0
+        getInventorySale()
 //        getStckListCategory()
 //        getProductReorderLevel()
-        getStockValueData()
+//        getStockValueData()
 //        getSalesComparisonList()
 //        supplierwisePurchaseCount = 0
 //        getSupplierWisePurchase()
@@ -175,6 +180,8 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
         ll_comparison               = findViewById(R.id.ll_comparison)
         ll_SupplierWisePurchase     = findViewById(R.id.ll_SupplierWisePurchase)
         ll_product_reorder          = findViewById(R.id.ll_product_reorder)
+        tvv_count                   = findViewById(R.id.tvv_count)
+        tvv_tileName                = findViewById(R.id.tvv_tileName)
 
         tvv_dash = findViewById<TextView>(R.id.tvv_dash)
         tvv_tile = findViewById<TextView>(R.id.tvv_tile)
@@ -183,8 +190,10 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
         ll_Tile             = findViewById<LinearLayout>(R.id.ll_Tile)
         comparisonListBarChart = findViewById<BarChart>(R.id.comparisonListBarChart)
         recy_comparisonColor = findViewById<RecyclerView>(R.id.recy_comparisonColor)
+        val imback = findViewById<ImageView>(R.id.imback)
 
 
+        imback!!.setOnClickListener(this)
         tvv_dash!!.setOnClickListener(this)
         tvv_tile!!.setOnClickListener(this)
         actv_mode!!.setOnClickListener(this)
@@ -220,7 +229,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   1777   "+msg)
-                                if (jObject.getString("StatusCode") == "0") {
+                                if (jObject.getString("StatusCode") == "-2") {
 
                                     val jobjt = jObject.getJSONObject("checkDetails")
                                     chartTypeArrayList = jobjt.getJSONArray("checkDetailsList")
@@ -351,7 +360,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     inventorysale++
                                     val jObject = JSONObject(msg)
                                 //    Log.e(TAG, "msg   InventoryGraph   " + msg)
-                                    if (jObject.getString("StatusCode") == "0") {
+                                    if (jObject.getString("StatusCode") == "-2") {
                                         Log.e(TAG, "success and inside   ")
                                         val jobjt = jObject.getJSONObject("InventoryMonthlySaleGraph")
                                         inventoryMonthlySaleArrayList=jobjt.getJSONArray("InventoryMonthlySaleGraphList")
@@ -362,9 +371,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                             inventorySaleSortArrayList = JSONArray()
                                             for (k in 0 until inventoryMonthlySaleArrayList.length()) {
-                                                val jsonObject =
-                                                    inventoryMonthlySaleArrayList.getJSONObject(k)
-
+                                                val jsonObject = inventoryMonthlySaleArrayList.getJSONObject(k)
                                                 inventorySaleSortArrayList.put(jsonObject)
                                             }
                                         }
@@ -555,9 +562,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                                 setSupplierWisePurchaseBarchart()
 
                                                 val lLayout = GridLayoutManager(this@InventoryGraphActivity, 2)
-
-                                                recysupplierwisepurchase!!.layoutManager =
-                                                    lLayout as RecyclerView.LayoutManager?
+                                                recysupplierwisepurchase!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                                 val adapter = SupplierWisePurchaseAdapter(this@InventoryGraphActivity, SupplierWisePurchasesortArraylist)
                                                 recysupplierwisepurchase!!.adapter = adapter
 
@@ -708,9 +713,13 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     if (jObject.getString("StatusCode") == "0") {
                                         Log.e(TAG, "success and inside   ")
                                         val jobjt = jObject.getJSONObject("StockValueData")
-                                        tileValue=jobjt.getString("StockValue")
+//                                        tileValue=jobjt.getString("StockValue")
 
                                         Log.e(TAG, "353353 tileValue==   "+tileValue)
+                                        Log.e(TAG, "353353 tileValue==   "+jobjt.getString("StockValue"))
+
+                                        tvv_count!!.text=  jobjt.getString("StockValue")
+
 
                                     } else {
                                         val builder = AlertDialog.Builder(
@@ -1521,7 +1530,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
             if (ContinueMode == 0){
                 ChartMode      = 0
                 chartModeCount = 0
-//                getChartModeData()
+                getStockValueData()
             }
 
 
@@ -1537,6 +1546,9 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v!!.id) {
+            R.id.imback -> {
+                finish()
+            }
             R.id.actv_mode -> {
                 ChartMode = 1
                 chartModeCount = 0
