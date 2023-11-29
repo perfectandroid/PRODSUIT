@@ -70,7 +70,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     var ContinueMode    = 0 // 0 = First , 1 = Second
     var ChartMode    = 0 // 0 = First , 1 = Second
 
-    var lemoStagWiseMode    = 0  // 0=more , 1 = less
+
 
 
     private var tvv_dash: TextView? = null
@@ -108,11 +108,20 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     private var tv_crmtile_outstandcount_remark: TextView? = null
     private var tv_crmtile_amcDue_remark: TextView? = null
 
+
+
+    var lemoStagWiseMode    = 0  // 0=more , 1 = less
+    var lemoComplaintWiseMode    = 0  // 0=more , 1 = less
+
+
     private var tvv_head_StagWise: TextView? = null
+    private var tvv_head_Complaint: TextView? = null
 
     private var tvv_lemo_StagWise: TextView? = null
+    private var tvv_lemo_ComplaintWise: TextView? = null
 
     private var ll_StagWiseRecyc: LinearLayout? = null
+    private var ll_ComplaintWiseRecyc: LinearLayout? = null
 
 
 
@@ -312,14 +321,18 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         tv_crmtile_amcDue_remark      = findViewById<TextView>(R.id.tv_crmtile_amcDue_remark)
 
         tvv_head_StagWise      = findViewById<TextView>(R.id.tvv_head_StagWise)
+        tvv_head_Complaint      = findViewById<TextView>(R.id.tvv_head_Complaint)
 
         tvv_lemo_StagWise      = findViewById<TextView>(R.id.tvv_lemo_StagWise)
+        tvv_lemo_ComplaintWise      = findViewById<TextView>(R.id.tvv_lemo_ComplaintWise)
 
         ll_StagWiseRecyc      = findViewById<LinearLayout>(R.id.ll_StagWiseRecyc)
+        ll_ComplaintWiseRecyc      = findViewById<LinearLayout>(R.id.ll_ComplaintWiseRecyc)
 
     //    tvv_lemo_StagWise!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
 
         tvv_lemo_StagWise!!.setOnClickListener(this)
+        tvv_lemo_ComplaintWise!!.setOnClickListener(this)
         actv_mode= findViewById<AutoCompleteTextView>(R.id.actv_mode)
 
         ll_Graph            = findViewById<LinearLayout>(R.id.ll_Graph)
@@ -465,7 +478,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                                 getCRMStagewiseData()
                                             }
                                             else if (ID_ChartMode.equals("11")){
-                                                ll_ComplaintWise!!.visibility = View.VISIBLE
+                                               // ll_ComplaintWise!!.visibility = View.VISIBLE
+                                                tvv_head_Complaint!!.setText(jsonObject.getString("DashBoardName"))
                                                 crmcomplaintwiseCount = 0
                                                 getCRMcomplaintwiseData()
                                             }
@@ -552,8 +566,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
             Log.e(TAG, "00000111   " + ID_ChartMode)
             Log.e(TAG, "85456214   " + modeType)
 
-
-            val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, modeType)
+            val adapter = CustomAdapter(this, R.layout.custom_dropdown_item, modeType)
+           // val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, modeType)
             actv_mode!!.setAdapter(adapter)
             actv_mode!!.showDropDown()
 
@@ -571,12 +585,14 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
                 if (ID_ChartMode.equals("10")){
-                    ll_StagWise!!.visibility = View.VISIBLE
+                   // ll_StagWise!!.visibility = View.VISIBLE
+                    tvv_head_StagWise!!.setText(modeType[position])
                     crmStagewiseCount   = 0
                     getCRMStagewiseData()
                 }
                 else if (ID_ChartMode.equals("11")){
-                    ll_ComplaintWise!!.visibility = View.VISIBLE
+                  //  ll_ComplaintWise!!.visibility = View.VISIBLE
+                    tvv_head_Complaint!!.setText(modeType[position])
                     crmcomplaintwiseCount = 0
                     getCRMcomplaintwiseData()
                 }
@@ -769,6 +785,18 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun hideComplaintWise() {
+        if (lemoComplaintWiseMode == 0){
+            tvv_lemo_ComplaintWise!!.setText("More")
+            tvv_lemo_ComplaintWise!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_ComplaintWiseRecyc!!.visibility = View.GONE
+        }else{
+            tvv_lemo_ComplaintWise!!.setText("Less")
+            tvv_lemo_ComplaintWise!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_ComplaintWiseRecyc!!.visibility = View.VISIBLE
+        }
+    }
+
     private fun getCRMCountOfWPAData() {
 
        // DashMode = "11"
@@ -868,7 +896,10 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     Log.e(TAG,"3912 complaintWiseArrayList  "+complaintWiseArrayList)
 
                                     if (complaintWiseArrayList.length() > 0){
+                                        ll_ComplaintWise!!.visibility = View.VISIBLE
+                                        lemoComplaintWiseMode = 0
 
+                                        hideComplaintWise()
                                         setComplaintBarchart()
 
                                         val lLayout = GridLayoutManager(this@ServiceGraphActivity, 2)
@@ -2901,6 +2932,19 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                 hideStageWise()
             }
+
+            R.id.tvv_lemo_ComplaintWise->{
+
+                if (lemoComplaintWiseMode == 0){
+                    lemoComplaintWiseMode = 1
+                }else{
+                    lemoComplaintWiseMode = 0
+                }
+
+                hideComplaintWise()
+            }
         }
     }
+
+
 }
