@@ -578,4 +578,19 @@
     <color name="leadbar3">#e4b5fc</color>
     <color name="leadbar4">#ED5970</color>
     <color name="leadbar5">#3B6561</color>
+
+
+<!--    <color name="color_dash1">#c3e6cb</color>-->
+<!--    <color name="color_dash2">#bee5eb</color>-->
+<!--    <color name="color_dash3">#f5c6cb</color>-->
+
+<!--    <color name="color_dash1">#3BA4A5</color>-->
+<!--    <color name="color_dash2">#1D7EAD</color>-->
+<!--    <color name="color_dash3">#B3C09E</color>-->
+
+    <color name="color_dash1">#CEEFE4</color>
+    <color name="color_dash2">#A4CFCB</color>
+    <color name="color_dash3">#D9D9F3</color>
+
+
 </resources>

@@ -749,6 +749,9 @@ interface ApiInterface {
     @POST("DashBoard/CRMcomplaintwise")
     fun getCRMcomplaintwise(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/CRMSLAViolationStatus")
+    fun getCRMSLAViolationStatus(@Body body: RequestBody): Call<String>
+
     @POST("DashBoard/CRMCountofWarrantyPaidandAMC")
     fun getCRMCountofWarrantyPaidandAMC(@Body body: RequestBody): Call<String>
 
@@ -790,6 +793,20 @@ interface ApiInterface {
 
     @POST("DashBoard/ExpenseVSGain")
     fun getTopRevenue(@Body body: RequestBody): Call<String>
+
+    // ACCOUND DASH
+
+    @POST("DashBoard/CashBalance")
+    fun getDashAccCashBalance(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/BankBalance")
+    fun getDashAccBankBalance(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/ExpenseChart")
+    fun getDashAccExpenseChart(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/AccountTileData")
+    fun getAccountsTilePLStatus(@Body body: RequestBody): Call<String>
 
 
 

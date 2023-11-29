@@ -9,7 +9,8 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.CRMSLAStatusModel
+import com.perfect.prodsuit.Model.AccountsTileModel
+
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -18,23 +19,23 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.text.SimpleDateFormat
 import java.util.ArrayList
+import java.util.Date
 
-object CRMSLAStatusRepository {
-
+object AccountsPLTileDashBoardRepository {
     private var progressDialog: ProgressDialog? = null
-    val crmSLAStatusSetGet = MutableLiveData<CRMSLAStatusModel>()
-    val TAG: String = "CRMSLAStatusRepository"
+    val accountsTileSetterGetter = MutableLiveData<AccountsTileModel>()
+    val TAG: String = "ProjectTileRepository"
 
-    fun getServicesApiCall(context: Context, TransDate : String, DashMode : String, DashType : String): MutableLiveData<CRMSLAStatusModel> {
-        getCRMSLAStatus(context, TransDate, DashMode, DashType)
-        return crmSLAStatusSetGet
+    fun getServicesApiCall(context: Context): MutableLiveData<AccountsTileModel> {
+        getAccounsTileList(context)
+        return accountsTileSetterGetter
     }
 
-    private fun getCRMSLAStatus(context: Context,TransDate: String, DashMode: String, DashType: String) {
-
+    private fun getAccounsTileList(context: Context) {
         try {
-            crmSLAStatusSetGet.value = CRMSLAStatusModel("")
+            accountsTileSetterGetter.value = AccountsTileModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -58,38 +59,40 @@ object CRMSLAStatusRepository {
                 .build()
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
-
             try {
 
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
-
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-                val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_DepartmentSP = context.getSharedPreferences(Config.SHARED_PREF55, 0)
+                val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
-                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
 
 
-//               {"FK_Employee":"10044","EntrBy":"SONAKM","FK_Department":"1","FK_Branch":"3","FK_Company":"1","FK_BranchCodeUser":"3",
-//               "TransDate":"2023-11-17","DashMode":"13","DashType":"2"}
+                val sdf = SimpleDateFormat("yyyy-MM-dd")
+                val currentDate = sdf.format(Date())
+                System.out.println(" C DATE is  "+currentDate)
+
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
+
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
                 requestObject1.put("FK_Department", ProdsuitApplication.encryptStart(FK_DepartmentSP.getString("FK_Department", null)))
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
-                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(Config.convertDate(TransDate)))
-                requestObject1.put("DashMode", ProdsuitApplication.encryptStart(DashMode))
-                requestObject1.put("DashType", ProdsuitApplication.encryptStart(DashType))
+                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
+                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("12"))
+                requestObject1.put("DashType", ProdsuitApplication.encryptStart("1"))
 
 
-                Log.e(TAG,"92223   getCRMSLAViolationStatus  "+requestObject1)
+
+                Log.e(TAG,"Accounts body 9867  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -97,7 +100,9 @@ object CRMSLAStatusRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getCRMSLAViolationStatus(body)
+
+
+            val call = apiService.getAccountsTilePLStatus(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -106,28 +111,25 @@ object CRMSLAStatusRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<CRMSLAStatusModel>()
-                        leads.add(CRMSLAStatusModel(response.body()))
-                        val msg = leads[0].message
-                        crmSLAStatusSetGet.value = CRMSLAStatusModel(msg)
+                        Log.e(TAG,"  Accounts 3355 "+response.body())
+                        val salesComparison = ArrayList<AccountsTileModel>()
+                        salesComparison.add(AccountsTileModel(response.body()))
+                        val msg = salesComparison[0].message
+                        accountsTileSetterGetter.value = AccountsTileModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
-                        Log.e(TAG,"1151  "+e)
                         Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
-                    Log.e(TAG,"1152  "+t)
                     Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
-            Log.e(TAG,"1153  "+e)
-            progressDialog!!.dismiss()
             Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+            progressDialog!!.dismiss()
         }
-
     }
 }

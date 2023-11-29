@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.CRMSLAStatusModel
+import com.perfect.prodsuit.Model.AccCashBalanceModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -20,21 +20,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object CRMSLAStatusRepository {
+object AccCashBalanceRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val crmSLAStatusSetGet = MutableLiveData<CRMSLAStatusModel>()
-    val TAG: String = "CRMSLAStatusRepository"
+    val accCashBalanceSetGet = MutableLiveData<AccCashBalanceModel>()
+    val TAG: String = "AccCashBalanceRepository"
 
-    fun getServicesApiCall(context: Context, TransDate : String, DashMode : String, DashType : String): MutableLiveData<CRMSLAStatusModel> {
-        getCRMSLAStatus(context, TransDate, DashMode, DashType)
-        return crmSLAStatusSetGet
+    fun getServicesApiCall(context: Context, TransDate : String, DashMode : String, DashType : String): MutableLiveData<AccCashBalanceModel> {
+        getAccCashBalance(context, TransDate, DashMode, DashType)
+        return accCashBalanceSetGet
     }
 
-    private fun getCRMSLAStatus(context: Context,TransDate: String, DashMode: String, DashType: String) {
+    private fun getAccCashBalance(context: Context, TransDate: String, DashMode: String, DashType: String) {
 
         try {
-            crmSLAStatusSetGet.value = CRMSLAStatusModel("")
+            accCashBalanceSetGet.value = AccCashBalanceModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -72,8 +72,9 @@ object CRMSLAStatusRepository {
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
 
 
-//               {"FK_Employee":"10044","EntrBy":"SONAKM","FK_Department":"1","FK_Branch":"3","FK_Company":"1","FK_BranchCodeUser":"3",
-//               "TransDate":"2023-11-17","DashMode":"13","DashType":"2"}
+
+//                {"BankKey":"-500","Token":"9B563F0E-33A2-4481-8713-042BCFD61F24","FK_Employee":"10044","EntrBy":"SONAKM","FK_Department":"2","FK_Branch":"3",
+//                    "FK_Company":"1","FK_BranchCodeUser":"3","TransDate":"2023-11-08","FK_Module":"5"}
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
@@ -89,7 +90,7 @@ object CRMSLAStatusRepository {
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart(DashType))
 
 
-                Log.e(TAG,"92223   getCRMSLAViolationStatus  "+requestObject1)
+                Log.e(TAG,"933331   getCRMTileDashBoardDetails  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -97,7 +98,7 @@ object CRMSLAStatusRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getCRMSLAViolationStatus(body)
+            val call = apiService.getDashAccCashBalance(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -106,10 +107,10 @@ object CRMSLAStatusRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<CRMSLAStatusModel>()
-                        leads.add(CRMSLAStatusModel(response.body()))
+                        val leads = ArrayList<AccCashBalanceModel>()
+                        leads.add(AccCashBalanceModel(response.body()))
                         val msg = leads[0].message
-                        crmSLAStatusSetGet.value = CRMSLAStatusModel(msg)
+                        accCashBalanceSetGet.value = AccCashBalanceModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                         Log.e(TAG,"1151  "+e)
@@ -130,4 +131,5 @@ object CRMSLAStatusRepository {
         }
 
     }
+
 }
