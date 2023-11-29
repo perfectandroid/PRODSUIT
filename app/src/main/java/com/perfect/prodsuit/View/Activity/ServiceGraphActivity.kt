@@ -112,16 +112,28 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
     var lemoStagWiseMode    = 0  // 0=more , 1 = less
     var lemoComplaintWiseMode    = 0  // 0=more , 1 = less
+    var lemoCountOfWPAMode    = 0  // 0=more , 1 = less
+    var lemoServiceWiseMode    = 0  // 0=more , 1 = less
+    var lemoServiceTop10ProductMode    = 0  // 0=more , 1 = less
 
 
     private var tvv_head_StagWise: TextView? = null
     private var tvv_head_Complaint: TextView? = null
+    private var tvv_head_ServiceCountOfWPA: TextView? = null
+    private var tvv_head_ServiceWise: TextView? = null
+    private var tvv_head_ServiceTop10Product: TextView? = null
 
     private var tvv_lemo_StagWise: TextView? = null
     private var tvv_lemo_ComplaintWise: TextView? = null
+    private var tvv_lemo_ServiceCountOfWPA: TextView? = null
+    private var tvv_lemo_ServiceWise: TextView? = null
+    private var tvv_lemo_ServiceTop10Product: TextView? = null
 
     private var ll_StagWiseRecyc: LinearLayout? = null
     private var ll_ComplaintWiseRecyc: LinearLayout? = null
+    private var ll_ServiceCountOfWPARecyc: LinearLayout? = null
+    private var ll_ServiceWiseRecyc: LinearLayout? = null
+    private var ll_ServiceTop10ProductRecyc: LinearLayout? = null
 
 
 
@@ -322,17 +334,31 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
         tvv_head_StagWise      = findViewById<TextView>(R.id.tvv_head_StagWise)
         tvv_head_Complaint      = findViewById<TextView>(R.id.tvv_head_Complaint)
+        tvv_head_ServiceCountOfWPA      = findViewById<TextView>(R.id.tvv_head_ServiceCountOfWPA)
+        tvv_head_ServiceWise      = findViewById<TextView>(R.id.tvv_head_ServiceWise)
+        tvv_head_ServiceTop10Product      = findViewById<TextView>(R.id.tvv_head_ServiceTop10Product)
 
         tvv_lemo_StagWise      = findViewById<TextView>(R.id.tvv_lemo_StagWise)
         tvv_lemo_ComplaintWise      = findViewById<TextView>(R.id.tvv_lemo_ComplaintWise)
+        tvv_lemo_ServiceCountOfWPA      = findViewById<TextView>(R.id.tvv_lemo_ServiceCountOfWPA)
+        tvv_lemo_ServiceWise      = findViewById<TextView>(R.id.tvv_lemo_ServiceWise)
+        tvv_lemo_ServiceTop10Product      = findViewById<TextView>(R.id.tvv_lemo_ServiceTop10Product)
 
         ll_StagWiseRecyc      = findViewById<LinearLayout>(R.id.ll_StagWiseRecyc)
         ll_ComplaintWiseRecyc      = findViewById<LinearLayout>(R.id.ll_ComplaintWiseRecyc)
+        ll_ServiceCountOfWPARecyc      = findViewById<LinearLayout>(R.id.ll_ServiceCountOfWPARecyc)
+        ll_ServiceWiseRecyc      = findViewById<LinearLayout>(R.id.ll_ServiceWiseRecyc)
+        ll_ServiceTop10ProductRecyc      = findViewById<LinearLayout>(R.id.ll_ServiceTop10ProductRecyc)
 
     //    tvv_lemo_StagWise!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
 
         tvv_lemo_StagWise!!.setOnClickListener(this)
         tvv_lemo_ComplaintWise!!.setOnClickListener(this)
+        tvv_lemo_ServiceCountOfWPA!!.setOnClickListener(this)
+        tvv_lemo_ServiceWise!!.setOnClickListener(this)
+        tvv_lemo_ServiceTop10Product!!.setOnClickListener(this)
+
+
         actv_mode= findViewById<AutoCompleteTextView>(R.id.actv_mode)
 
         ll_Graph            = findViewById<LinearLayout>(R.id.ll_Graph)
@@ -484,18 +510,21 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                                 getCRMcomplaintwiseData()
                                             }
                                             else if (ID_ChartMode.equals("12")){
-                                                ll_ServiceWise!!.visibility = View.VISIBLE
+                                               // ll_ServiceWise!!.visibility = View.VISIBLE
+                                                tvv_head_ServiceWise!!.setText(jsonObject.getString("DashBoardName"))
                                                 crmservicewiseCount = 0
                                                 getCRMservicewiseData()
                                             }
                                             else if (ID_ChartMode.equals("13")){
-                                                ll_ServiceCountOfWPA!!.visibility = View.VISIBLE
+                                              //  ll_ServiceCountOfWPA!!.visibility = View.VISIBLE
+                                                tvv_head_ServiceCountOfWPA!!.setText(jsonObject.getString("DashBoardName"))
                                                 crmCountOfWPACount = 0
                                                 getCRMCountOfWPAData()
                                             }
 
                                             else if (ID_ChartMode.equals("14")){
-                                                ll_ServiceTop10Product!!.visibility = View.VISIBLE
+                                              //  ll_ServiceTop10Product!!.visibility = View.VISIBLE
+                                                tvv_head_ServiceTop10Product!!.setText(jsonObject.getString("DashBoardName"))
                                                 crmtop1oproductCount = 0
                                                 getCRMTop10Product()
                                             }
@@ -597,17 +626,20 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                     getCRMcomplaintwiseData()
                 }
                 else if (ID_ChartMode.equals("12")){
-                    ll_ServiceWise!!.visibility = View.VISIBLE
+                 //   ll_ServiceWise!!.visibility = View.VISIBLE
+                    tvv_head_ServiceWise!!.setText(modeType[position])
                     crmservicewiseCount = 0
                     getCRMservicewiseData()
                 }
                 else if (ID_ChartMode.equals("13")){
-                    ll_ServiceCountOfWPA!!.visibility = View.VISIBLE
+                  //  ll_ServiceCountOfWPA!!.visibility = View.VISIBLE
+                    tvv_head_ServiceCountOfWPA!!.setText(modeType[position])
                     crmCountOfWPACount = 0
                     getCRMCountOfWPAData()
                 }
                 else if (ID_ChartMode.equals("14")){
-                    ll_ServiceTop10Product!!.visibility = View.VISIBLE
+                   // ll_ServiceTop10Product!!.visibility = View.VISIBLE
+                    tvv_head_ServiceTop10Product!!.setText(modeType[position])
                     crmtop1oproductCount = 0
                     getCRMTop10Product()
                 }
@@ -660,8 +692,13 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     Log.e(TAG,"3913 serviceWiseArrayList  "+serviceWiseArrayList)
                                     tv_ServiceRemark!!.setText(jobjt.getString("Reamrk"))
                                     if (serviceWiseArrayList.length() > 0){
+                                        ll_ServiceWise!!.visibility = View.VISIBLE
+                                        lemoServiceWiseMode = 0
+
+                                        hideServiceWise()
 
                                         setServiceBarchart()
+
 
                                         val lLayout = GridLayoutManager(this@ServiceGraphActivity, 2)
                                         recycServiceWise!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -797,6 +834,42 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun hideCountOfWPA() {
+        if (lemoCountOfWPAMode == 0){
+            tvv_lemo_ServiceCountOfWPA!!.setText("More")
+            tvv_lemo_ServiceCountOfWPA!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_ServiceCountOfWPARecyc!!.visibility = View.GONE
+        }else{
+            tvv_lemo_ServiceCountOfWPA!!.setText("Less")
+            tvv_lemo_ServiceCountOfWPA!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_ServiceCountOfWPARecyc!!.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideServiceWise() {
+        if (lemoServiceWiseMode == 0){
+            tvv_lemo_ServiceWise!!.setText("More")
+            tvv_lemo_ServiceWise!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_ServiceWiseRecyc!!.visibility = View.GONE
+        }else{
+            tvv_lemo_ServiceWise!!.setText("Less")
+            tvv_lemo_ServiceWise!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_ServiceWiseRecyc!!.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideServiceTop10Product() {
+        if (lemoServiceTop10ProductMode == 0){
+            tvv_lemo_ServiceTop10Product!!.setText("More")
+            tvv_lemo_ServiceTop10Product!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_ServiceTop10ProductRecyc!!.visibility = View.GONE
+        }else{
+            tvv_lemo_ServiceTop10Product!!.setText("Less")
+            tvv_lemo_ServiceTop10Product!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_ServiceTop10ProductRecyc!!.visibility = View.VISIBLE
+        }
+    }
+
     private fun getCRMCountOfWPAData() {
 
        // DashMode = "11"
@@ -828,6 +901,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     Log.e(TAG,"70444 countOfWPAArrayList  "+countOfWPAArrayList)
 
                                     if (countOfWPAArrayList.length() > 0){
+
+                                        ll_ServiceCountOfWPA!!.visibility = View.VISIBLE
+                                        lemoCountOfWPAMode = 0
+
+                                        hideCountOfWPA()
 
                                         setCountOfWPABarchart()
 
@@ -969,6 +1047,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                     if (top10ProductArrayList.length() > 0){
 
+                                        ll_ServiceTop10Product!!.visibility = View.VISIBLE
+                                        lemoServiceTop10ProductMode = 0
+
+                                        hideServiceTop10Product()
+
                                         setTop10ProductBarchart()
 
                                         val lLayout = GridLayoutManager(this@ServiceGraphActivity, 2)
@@ -1075,8 +1158,6 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
-
-
 
     private fun getCRMChanelStatus() {
 
@@ -1810,7 +1891,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         {
             var jsonObject = serviceWiseArrayList.getJSONObject(i)
             // modelCRMStageBar.add(ModelCRMStageBar(jsonObject.getString("StatusName"),jsonObject.getString("StatusCount")))
-            modelCRMServiceBar.add(ModelCRMServiceBar("",jsonObject.getString("TotalCount"),jsonObject.getString("ActualPercent")))
+            modelCRMServiceBar.add(ModelCRMServiceBar("",jsonObject.getString("ServiceCount"),""))
         }
 
         return modelCRMServiceBar
@@ -2943,8 +3024,45 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                 hideComplaintWise()
             }
+
+            R.id.tvv_lemo_ServiceCountOfWPA->{
+
+                if (lemoCountOfWPAMode == 0){
+                    lemoCountOfWPAMode = 1
+                }else{
+                    lemoCountOfWPAMode = 0
+                }
+
+                hideCountOfWPA()
+            }
+
+            R.id.tvv_lemo_ServiceWise->{
+
+                if (lemoServiceWiseMode == 0){
+                    lemoServiceWiseMode = 1
+                }else{
+                    lemoServiceWiseMode = 0
+                }
+
+                hideServiceWise()
+            }
+
+            R.id.tvv_lemo_ServiceTop10Product->{
+
+                if (lemoServiceTop10ProductMode == 0){
+                    lemoServiceTop10ProductMode = 1
+                }else{
+                    lemoServiceTop10ProductMode = 0
+                }
+
+                hideServiceTop10Product()
+            }
+
+
         }
     }
+
+
 
 
 }

@@ -40,8 +40,8 @@ class CrmServiceChartAdapter (internal var context: Context, internal var jsonAr
 
                 val pos = position+1
                 holder.tv_colorBox.setBackgroundResource(color[position])
-                holder.tv_label.text        = jsonObject!!.getString("ItemName")
-                holder.tv_value.text        = jsonObject!!.getString("TotalCount").toFloat().toInt().toString()
+                holder.tv_label.text        = jsonObject!!.getString("ServiceName")
+                holder.tv_value.text        = jsonObject!!.getString("ServiceCount")
 
 //                if (position == 0){
 //                    holder.tv_label.text        = "Service Ticket Action-, Date Criteria"
