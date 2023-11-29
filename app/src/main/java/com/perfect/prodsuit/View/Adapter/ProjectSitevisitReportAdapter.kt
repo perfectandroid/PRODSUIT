@@ -38,29 +38,21 @@ class ProjectSitevisitReportAdapter (internal var context: Context, internal var
                 Log.e(TAG,"onBindViewHolder   1051   gg"+jsonArray)
                 val pos = position+1
 
-              //  if (ReportMode.equals("1")) {
 
                     holder.tv_SiteVisitID.text = "Site Visit Id : "+jsonObject!!.getString("SiteVisitID")
                     holder.tv_leadno.text = jsonObject!!.getString("LeadNo")
                     holder.tv_VisitDate.text = "Site Visit Date : "+jsonObject!!.getString("VisitDate")
                     holder.tv_VisitTime.text = "Site Visit Time : "+jsonObject!!.getString("VisitTime")
-                    //holder.tv_Note1.text = "Note 1 : "+jsonObject!!.getString("Note1")
-                    //holder.tv_Note2.text = "Note 2 : "+jsonObject!!.getString("Note2")
-                   // holder.tv_CusNote.text = "Customer Note : "+jsonObject!!.getString("CusNote")
                     holder.tv_ExpenseAmount.text = "Expense Amount : "+ Config.changeTwoDecimel(jsonObject!!.getString("ExpenseAmount"))
-                   // holder.tv_Remarks.text = "Remark : "+jsonObject!!.getString("Remarks")
 
-               // }
 
-         /*       holder.ll_newList!!.setTag(position)
-                holder.ll_newList!!.setOnClickListener(View.OnClickListener {
-                    Log.e(TAG,"serviceReportClick   5091")
+                holder.ll_sitevisitList!!.setTag(position)
+                holder.ll_sitevisitList!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(
                         position,
-                        "serviceReportClick"
+                        "sitevisitReportClick"
                     )
                 })
-*/
 
 
             }
@@ -92,10 +84,10 @@ class ProjectSitevisitReportAdapter (internal var context: Context, internal var
         internal var tv_CusNote       : TextView
         internal var tv_ExpenseAmount   : TextView
         internal var tv_Remarks   : TextView
-
+        internal var ll_sitevisitList          : LinearLayout
 
 /*
-        internal var ll_newList          : LinearLayout
+        internal var ll_sitevisitList          : LinearLayout
 
         internal var ll_TicketNo         : LinearLayout
         internal var ll_TicketDate       : LinearLayout
@@ -118,8 +110,9 @@ class ProjectSitevisitReportAdapter (internal var context: Context, internal var
             tv_CusNote          = v.findViewById<View>(R.id.tv_CusNote) as TextView
             tv_ExpenseAmount   = v.findViewById<View>(R.id.tv_ExpenseAmount) as TextView
             tv_Remarks   = v.findViewById<View>(R.id.tv_Remarks) as TextView
+            ll_sitevisitList        = v.findViewById<View>(R.id.ll_sitevisitList) as LinearLayout
 /*
-            ll_TicketNo        = v.findViewById<View>(R.id.ll_TicketNo) as LinearLayout
+            ll_sitevisitList        = v.findViewById<View>(R.id.ll_sitevisitList) as LinearLayout
             ll_TicketDate      = v.findViewById<View>(R.id.ll_TicketDate) as LinearLayout
             ll_Customer        = v.findViewById<View>(R.id.ll_Customer) as LinearLayout
             ll_Service        = v.findViewById<View>(R.id.ll_Service) as LinearLayout

@@ -46,6 +46,7 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
     var tie_Product: TextInputEditText? = null
     var til_Leadno: TextInputLayout? = null
     var til_Cat: TextInputLayout? = null
+    var lldate: LinearLayout? = null
     lateinit var reportNameProjectViewModel: ReportNameProjectViewModel
     lateinit var reportNameArrayList: JSONArray
     lateinit var reportNamesort: JSONArray
@@ -101,6 +102,7 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
+        lldate = findViewById(R.id.lldate)
         til_Leadno = findViewById(R.id.til_Leadno)
         til_Cat = findViewById(R.id.til_Cat)
         tie_ReportName = findViewById(R.id.tie_ReportName)
@@ -178,9 +180,9 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         }
         /*else if (strID_cat.equals("")) {
             Config.snackBars(context, v, "Select Category Name")
-        }*/else if (tie_FromDate!!.text.toString().equals("")) {
+        }*/else if (tie_FromDate!!.text.toString().equals("")&&ReportMode.equals("1")) {
             Config.snackBars(context, v, "Select From Date")
-        } else if (tie_ToDate!!.text.toString().equals("")) {
+        } else if (tie_ToDate!!.text.toString().equals("")&&ReportMode.equals("1")) {
             Config.snackBars(context, v, "Select To Date")
         } else if (fromDa.after(toDa)) {
             Config.snackBars(context, v, "Check Selected Date Range")
@@ -986,10 +988,12 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             if(ReportMode.equals("1")){
                 til_Leadno!!.visibility=View.GONE
                 til_Cat!!.visibility=View.VISIBLE
+                lldate!!.visibility=View.VISIBLE
             }
             if(ReportMode.equals("2")){
                 til_Leadno!!.visibility=View.VISIBLE
                 til_Cat!!.visibility=View.GONE
+                lldate!!.visibility=View.GONE
             }
         }
         if (data.equals("LeadNumberClick")){

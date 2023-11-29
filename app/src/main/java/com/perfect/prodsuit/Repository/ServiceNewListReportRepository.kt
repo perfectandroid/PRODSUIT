@@ -73,30 +73,23 @@ object ServiceNewListReportRepository {
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
+                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(ID_Branch))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
                 requestObject1.put("EntrBy", UserCodeSP.getString("UserCode", null))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
                 requestObject1.put("FromDate", strFromdate)
                 requestObject1.put("ToDate", strTodate)
-               // requestObject1.put("LeadNo", idlead)
                 requestObject1.put("FK_Area", "0")
-                requestObject1.put("FK_Project", "0")
-
+                requestObject1.put("FK_Product", ID_Product)
                 requestObject1.put("FK_Priority", "0")
-                requestObject1.put("ReportMode", ReportMode)
+                requestObject1.put("ReportMode", "1")
                 requestObject1.put("FK_Machine", "10")
                 requestObject1.put("Criteria", "0")
                 requestObject1.put("TableCount", "1")
-
                 requestObject1.put("Status", "5")
                 requestObject1.put("DueCriteria", "1")
                 requestObject1.put("TicketNo", "")
-
-
-
-
 
 
                 Log.e(BranchRepository.TAG,"78  getBranch  "+requestObject1)

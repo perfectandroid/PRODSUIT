@@ -13,7 +13,7 @@ import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ServiceNewListReportAdapter (internal var context: Context, internal var jsonArray: JSONArray,internal var ReportMode: String):
+class ServiceOutstandingReportAdapter (internal var context: Context, internal var jsonArray: JSONArray, internal var ReportMode: String):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG : String = "ServiceNewListReportAdapter"
@@ -37,10 +37,11 @@ class ServiceNewListReportAdapter (internal var context: Context, internal var j
 
                 holder.tv_TicketNo.text      = jsonObject!!.getString("TicketNo")
                 holder.tv_CurrentStatus.text      = jsonObject!!.getString("CurrentStatus")
-                holder.tv_Cust.text      = "Customer : "+jsonObject!!.getString("Customer")
+                holder.tv_Cust.text      = "Customer : "+jsonObject!!.getString("Customer")+"[Ph no. "+jsonObject!!.getString("Mobile")+"]"
                 holder.tv_Product.text      = "Product : "+jsonObject!!.getString("Product")
-                holder.tv_Complaint.text      = "Complaint : "+jsonObject!!.getString("Complaint")
+                holder.tv_Complaint.text      = "Complaint or Service : "+jsonObject!!.getString("ComplaintorService")
                 holder.tv_Ticketdate.text      = "Ticket Date : "+jsonObject!!.getString("TicketDate")
+
 
                 holder.ll_newList!!.setTag(position)
                 holder.ll_newList!!.setOnClickListener(View.OnClickListener {

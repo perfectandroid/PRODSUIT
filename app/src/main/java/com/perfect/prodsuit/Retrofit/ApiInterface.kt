@@ -119,6 +119,9 @@ interface ApiInterface {
     @POST("Report/ServiceNewList")
     fun getServiceNewList(@Body body: RequestBody): Call<String>
 
+    @POST("Report/Outstanding")
+    fun getOutstanding(@Body body: RequestBody): Call<String>
+
     @POST("Report/ProjectListDetail")
     fun getProjectListDetail(@Body body: RequestBody): Call<String>
 

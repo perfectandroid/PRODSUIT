@@ -22,6 +22,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ServiceNewListReportAdapter
+import com.perfect.prodsuit.View.Adapter.ServiceOutstandingReportAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -96,7 +97,7 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
             strTodate = intent.getStringExtra("Todate")
         }
         if (getIntent().hasExtra("ID_Product")) {
-          //  ID_Product = intent.getStringExtra("ID_Product")
+           ID_Product = intent.getStringExtra("ID_Product")
         }
         if (getIntent().hasExtra("ID_CompService")) {
             ID_CompService = intent.getStringExtra("ID_CompService")
@@ -173,10 +174,10 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
                                         var toDate=arrayTo[2]+"-"+arrayTo[1]+"-"+arrayTo[0]
                                         report_date!!.text="Report between "+fromDate+" and "+toDate
 
-                                        val jobjt = jObject.getJSONObject("NewListDetails")
-                                        newListReportArrayList = jobjt.getJSONArray("NewListDetailsList")
+                                        val jobjt = jObject.getJSONObject("ServiceNewList")
+                                        newListReportArrayList = jobjt.getJSONArray("NewList")
 
-                                        Log.e(TAG,"NEW LIST  1553   "+newListReportArrayList)
+                                        Log.e(TAG,"NEW LIST  155345667   "+newListReportArrayList)
                                         try {
                                             val lLayout = GridLayoutManager(this@ServiceReportDetailActivity, 1)
                                             recyNewList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -336,13 +337,14 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
 
                         try {
                             val msg = serviceSetterGetter.message
+                            Log.e(TAG,"msg   2702   "+msg)
                             if (msg!!.length > 0) {
 
                                 if (newList == 0){
                                     newList++
 
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   2702   "+msg.length)
+                                    Log.e(TAG,"msg   2702   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         report_date!!.visibility = View.VISIBLE
                                         ll_OutStanding!!.visibility = View.VISIBLE
@@ -352,15 +354,15 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
                                         var toDate=arrayTo[2]+"-"+arrayTo[1]+"-"+arrayTo[0]
                                         report_date!!.text="Report between "+fromDate+" and "+toDate
 
-                                        val jobjt = jObject.getJSONObject("NewListDetails")
-                                        outstandingListReportArrayList = jobjt.getJSONArray("NewListDetailsList")
+                                        val jobjt = jObject.getJSONObject("Outstanding")
+                                        outstandingListReportArrayList = jobjt.getJSONArray("OutStandingList")
 
                                         Log.e(TAG,"NEW LIST  1553   "+outstandingListReportArrayList)
                                         try {
                                             val lLayout = GridLayoutManager(this@ServiceReportDetailActivity, 1)
                                             recyOutStanding!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                             // recyLeadGenReport!!.setHasFixedSize(true)
-                                            val adapter1 = ServiceNewListReportAdapter(applicationContext, outstandingListReportArrayList,ReportMode)
+                                            val adapter1 = ServiceOutstandingReportAdapter(applicationContext, outstandingListReportArrayList,ReportMode)
                                             recyOutStanding!!.adapter = adapter1
                                             adapter1.setClickListener(this@ServiceReportDetailActivity)
 

@@ -22,10 +22,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
-import com.perfect.prodsuit.Viewmodel.BranchViewModel
-import com.perfect.prodsuit.Viewmodel.EmpByBranchViewModel
-import com.perfect.prodsuit.Viewmodel.ReportNameViewModel
-import com.perfect.prodsuit.Viewmodel.ServiceComplaintViewModel
+import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.text.DateFormat
@@ -95,6 +92,13 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
     var ToDate: String = ""
     val sdf = SimpleDateFormat("yyyy-MM-dd")
 
+    lateinit var productDetailViewModel: ProductDetailViewModel
+    lateinit var prodDetailArrayList: JSONArray
+    lateinit var prodDetailSort: JSONArray
+    private var dialogProdDet: Dialog? = null
+    var recyProdDetail: RecyclerView? = null
+
+    private var ID_Product: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -102,6 +106,7 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         setContentView(R.layout.activity_service_report)
         context = this@ServiceReportActivity
 
+        productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
         reportNameViewModel = ViewModelProvider(this).get(ReportNameViewModel::class.java)
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
         empByBranchViewModel = ViewModelProvider(this).get(EmpByBranchViewModel::class.java)
@@ -205,6 +210,10 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
             }
 
+            R.id.tie_Product -> {
+                getProductDetail()
+            }
+
             R.id.btnSubmit -> {
                 validateData(v)
             }
@@ -215,6 +224,143 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             }
 
         }
+    }
+
+    private fun getProductDetail() {
+        var proddetail = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productDetailViewModel.getProductDetail(this, "0")!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        try {
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG, "msg   227   " + msg)
+                                if (jObject.getString("StatusCode") == "0") {
+
+                                    val jobjt = jObject.getJSONObject("ProductDetailsList")
+                                    prodDetailArrayList = jobjt.getJSONArray("ProductList")
+                                    if (prodDetailArrayList.length() > 0) {
+                                        if (proddetail == 0) {
+                                            proddetail++
+                                            productDetailPopup(prodDetailArrayList)
+                                        }
+
+                                    }
+
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@ServiceReportActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + e.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun productDetailPopup(prodDetailArrayList: JSONArray) {
+
+        try {
+
+            dialogProdDet = Dialog(this)
+            dialogProdDet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdDet!!.setContentView(R.layout.product_detail_popup)
+            dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyProdDetail = dialogProdDet!!.findViewById(R.id.recyProdDetail) as RecyclerView
+            val etsearch = dialogProdDet!!.findViewById(R.id.etsearch) as EditText
+
+            prodDetailSort = JSONArray()
+            for (k in 0 until prodDetailArrayList.length()) {
+                val jsonObject = prodDetailArrayList.getJSONObject(k)
+                prodDetailSort.put(jsonObject)
+            }
+
+
+            val lLayout = GridLayoutManager(this@ServiceReportActivity, 1)
+            recyProdDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = ProductDetailAdapter(this@TicketReportActivity, prodDetailArrayList)
+            val adapter = ProductDetailAdapter(this@ServiceReportActivity, prodDetailSort)
+            recyProdDetail!!.adapter = adapter
+            adapter.setClickListener(this@ServiceReportActivity)
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    prodDetailSort = JSONArray()
+
+                    for (k in 0 until prodDetailArrayList.length()) {
+                        val jsonObject = prodDetailArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("ProductName").length) {
+                            if (jsonObject.getString("ProductName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                prodDetailSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "prodDetailSort               7103    " + prodDetailSort)
+                    val adapter = ProductDetailAdapter(this@ServiceReportActivity, prodDetailSort)
+                    recyProdDetail!!.adapter = adapter
+                    adapter.setClickListener(this@ServiceReportActivity)
+                }
+            })
+
+            dialogProdDet!!.show()
+            dialogProdDet!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     private fun resetData() {
@@ -233,6 +379,7 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         ID_Branch = ""
         ID_CompService = ""
         ID_ComplaintList = ""
+        ID_Product = ""
 //        ID_CompService = ""
 
 
@@ -286,7 +433,7 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         intent.putExtra("ID_Employee", ID_Employee)
         intent.putExtra("Fromdate", strFromDate)
         intent.putExtra("Todate", strToDate)
-    //    intent.putExtra("ID_Product", ID_Product)
+        intent.putExtra("ID_Product", ID_Product)
         intent.putExtra("ID_CompService", ID_CompService)
         intent.putExtra("ID_ComplaintList", ID_ComplaintList)
 
@@ -997,7 +1144,7 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceComplaintViewModel.getserviceComplaintData(this,ReqMode!!,SubMode!!,ID_Category!!)!!.observe(
+                serviceComplaintViewModel.getserviceComplaintData(this,ReqMode!!,SubMode!!,/*ID_Category*/ID_CompService!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -1200,6 +1347,14 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
         }
 
+        if (data.equals("proddetails")) {
+            dialogProdDet!!.dismiss()
+//            val jsonObject = prodDetailArrayList.getJSONObject(position)
+            val jsonObject = prodDetailSort.getJSONObject(position)
+            Log.e(TAG, "ID_Product   " + jsonObject.getString("ID_Product"))
+            ID_Product = jsonObject.getString("ID_Product")
+            tie_Product!!.setText(jsonObject.getString("ProductName"))
+        }
 
     }
 

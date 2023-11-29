@@ -1308,7 +1308,6 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     }
 
-
     private fun getProductDetail() {
         var proddetail = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
