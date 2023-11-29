@@ -63,6 +63,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     var leadstagecountwiseList = 0
     var leadstagecountwiseText: TextView? = null
     var txtv_EmpWiseRemark: TextView? = null
+    var txtv_empamtRemrk: TextView? = null
+
 
     var recycleemployeewiseAvg: FullLenghRecyclertview? = null
     var rclv_toprevenue: FullLenghRecyclertview? = null
@@ -115,6 +117,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     private var txtv_leadChartAvg: TextView? = null
     private var txtv_leadChartoutstand: TextView? = null
     private var tvv_tile: TextView? = null
+    private var txtv_top10Remrk: TextView? = null
+
     private var ll_Graph: LinearLayout? = null
     private var ll_Tile: LinearLayout? = null
     var TabMode    = 0
@@ -205,6 +209,9 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     private var scoreListPie = ArrayList<ScorePie>()
     lateinit var leadStagesDashViewModel: LeadStagesDashViewModel
     lateinit var leadStagesDashArrayList: JSONArray
+    var LeadTileCount  = 0
+    var LeadAvgCount  = 0
+    var LeadTileOutstandCount  = 0
 
     var TAG  ="TileGraphActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -274,8 +281,9 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                         try {
                             if (msg!!.length > 0) {
 
-                                if (leadoutstandtile == 0){
-                                    leadoutstandtile++
+
+                                if (LeadTileOutstandCount == 0){
+                                    LeadTileOutstandCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   leadoutstandtile   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
@@ -383,8 +391,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                         try {
                             if (msg!!.length > 0) {
 
-                                if (avgconvsnlead == 0){
-                                    avgconvsnlead++
+                                if (LeadAvgCount == 0){
+                                    LeadAvgCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   avgleadconvrsn   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
@@ -490,9 +498,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         employeewiseAvgText=findViewById(R.id.employeewiseAvgText)
         leadstagecountwiseText=findViewById(R.id.leadstagecountwiseText)
         txtv_EmpWiseRemark=findViewById(R.id.txtv_EmpWiseRemark)
+        txtv_empamtRemrk=findViewById(R.id.txtv_empamtRemrk)
         recycleleadstagecountwise=findViewById(R.id.recycleleadstagecountwise)
         recycleleadActivity=findViewById(R.id.recycleleadActivity)
         leadActivityText=findViewById(R.id.leadActivityText)
+        txtv_top10Remrk=findViewById(R.id.txtv_top10Remrk)
 
         rclv_empwiseamt=findViewById(R.id.rclv_empwiseamt)
         ll_empwseamt            = findViewById<LinearLayout>(R.id.ll_empwseamt)
@@ -596,9 +606,10 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
             R.id.tvv_tile->{
                 TabMode = 1
                 hideViews()
-                getLeadTile()
+
+               /* getLeadTile()
                 getLeadOutstandTile()
-                getLeadAvgConvrsn()
+                getLeadAvgConvrsn()*/
             }
             R.id.actv_mode->{
                 ChartMode      = 1
@@ -690,8 +701,9 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                         try {
                             if (msg!!.length > 0) {
 
-                                if (dashmoduleCount == 0){
-                                    dashmoduleCount++
+
+                                if (LeadTileCount == 0){
+                                    LeadTileCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   leadtile   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
@@ -1021,11 +1033,39 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         }
 
         val colorsStage: ArrayList<Int> = ArrayList()
-        colorsStage.add(resources.getColor(R.color.leadstatus_color1))
-        colorsStage.add(resources.getColor(R.color.leadstatus_color2))
-        colorsStage.add(resources.getColor(R.color.leadstatus_color3))
-        colorsStage.add(resources.getColor(R.color.leadstatus_color4))
-        colorsStage.add(resources.getColor(R.color.leadstatus_color5))
+
+        colorsStage.add(resources.getColor(R.color.leadstages_color1))
+        colorsStage.add(resources.getColor(R.color.leadstages_color2))
+        colorsStage.add(resources.getColor(R.color.leadstages_color3))
+        colorsStage.add(resources.getColor(R.color.leadstages_color4))
+        colorsStage.add(resources.getColor(R.color.leadstages_color5))
+        colorsStage.add(resources.getColor(R.color.leadstages_color6))
+        colorsStage.add(resources.getColor(R.color.leadstages_color7))
+        colorsStage.add(resources.getColor(R.color.leadstages_color8))
+        colorsStage.add(resources.getColor(R.color.leadstages_color9))
+        colorsStage.add(resources.getColor(R.color.leadstages_color10))
+        colorsStage.add(resources.getColor(R.color.leadstages_color11))
+        colorsStage.add(resources.getColor(R.color.leadstages_color12))
+        colorsStage.add(resources.getColor(R.color.leadstages_color10))
+        colorsStage.add(resources.getColor(R.color.mylead_Color))
+        colorsStage.add(resources.getColor(R.color.barchart_colors24))
+        colorsStage.add(resources.getColor(R.color.barchart_colors10))
+        colorsStage.add(resources.getColor(R.color.barchart_colors21))
+        colorsStage.add(resources.getColor(R.color.barchart_colors23))
+        colorsStage.add(resources.getColor(R.color.barchart_colors3))
+        colorsStage.add(resources.getColor(R.color.barchart_colors12))
+        colorsStage.add(resources.getColor(R.color.barchart_colors24))
+        colorsStage.add(resources.getColor(R.color.mylead_light_Color))
+        colorsStage.add(resources.getColor(R.color.mylead_light_Color1))
+        colorsStage.add(resources.getColor(R.color.barchart_colors28))
+        colorsStage.add(resources.getColor(R.color.barchart_colors18))
+        colorsStage.add(resources.getColor(R.color.barchart_colors2))
+        colorsStage.add(resources.getColor(R.color.barchart_colors15))
+        colorsStage.add(resources.getColor(R.color.barchart_colors50))
+        colorsStage.add(resources.getColor(R.color.colorService))
+        colorsStage.add(resources.getColor(R.color.leadbar5))
+        colorsStage.add(resources.getColor(R.color.colorPrimary))
+        colorsStage.add(resources.getColor(R.color.colorAccent))
         val pieDataSet = PieDataSet(pieEntries, label)
         pieDataSet.setValueFormatter(DecimalRemover())
         pieDataSet.valueTextSize = 12f
@@ -1684,7 +1724,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         empwiseamt_barchart.animateY(1000)
 
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.valueFormatter = MyAxisFormatterBar3()
+        xAxis.valueFormatter = MyAxisFormatterBar9()
         xAxis.setDrawLabels(true)
         xAxis.granularity = 1f
         xAxis.labelRotationAngle = +325f
@@ -1692,7 +1732,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         xAxis.textColor = Color.BLACK
 
         //colors
-        val colors: java.util.ArrayList<Int> = java.util.ArrayList()
+        val colors: ArrayList<Int> = ArrayList()
         colors.add(resources.getColor(R.color.leadstages_color1))
         colors.add(resources.getColor(R.color.leadstages_color2))
         colors.add(resources.getColor(R.color.leadstages_color3))
@@ -1966,6 +2006,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
             val index = value.toInt()
             Log.d("TAG", "getAxisLabel: index $index")
+           // return ""
             return if (index < top10ListBar.size) {
                 top10ListBar[index].topname
             } else {
@@ -1983,6 +2024,19 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
             } else {
                 ""
             }
+        }
+    }
+    inner class MyAxisFormatterBar9 : IndexAxisValueFormatter() {
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            val index = value.toInt()
+            Log.d("TAG", "getAxisLabel: index $index")
+            return ""
+           /* return if (index < topRevenueBar.size) {
+                topRevenueBar[index].topname
+            } else {
+                ""
+            }*/
         }
     }
     private fun hideViews() {
@@ -2007,6 +2061,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
             ll_Tile!!.visibility = View.VISIBLE
             tvv_dash!!.setBackgroundResource(R.drawable.btn_shape_reset)
             tvv_tile!!.setBackgroundResource(R.drawable.btn_dash)
+
+            LeadTileCount  = 0
+            LeadAvgCount  = 0
+            LeadTileOutstandCount  = 0
+
             getLeadTile()
             getLeadOutstandTile()
             getLeadAvgConvrsn()
@@ -2198,6 +2257,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                             }
 
                         } else {
+
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
@@ -2378,13 +2438,17 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     val jobjt = jObject.getJSONObject("Top10ProductsinLead")
                                     top10ProductsArrayList =
                                         jobjt.getJSONArray("Top10ProductsinLeadlist")
+
+                                    val remark =
+                                        jobjt.getString("Reamrk")
+                                    txtv_top10Remrk!!.setText(remark)
                                     //  tv_leadStageTotal!!.setText(jobjt.getString("TotalCount"))
                                     Log.e(TAG, "array  top10   " + top10ProductsArrayList)
                                     if (top10ProductsArrayList.length() > 0){
                                         settop10chart()
 //                                    val recycPieChart =
 //                                        findViewById(R.id.recycPieChart) as RecyclerView
-                                        val lLayout = GridLayoutManager(this@TileGraphActivity, 1)
+                                        val lLayout = GridLayoutManager(this@TileGraphActivity, 2)
                                         rclv_top10!!.layoutManager =
                                             lLayout as RecyclerView.LayoutManager?
                                         val adapter = Top10LeadAdapter(
@@ -2912,6 +2976,10 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 //                                        val remark =
 //                                            jobjt.getString("Reamrk")
 //                                        employeewiseAvgText!!.setText(remark)
+
+                                        val remark =
+                                            jobjt.getString("Reamrk")
+                                        txtv_empamtRemrk!!.setText(remark)
                                         emptargetamtArrayList =
                                             jobjt.getJSONArray("EmployeeWiseTaegetDetails")
                                         Log.e(TAG, "empwiseamtArrayList==   " + emptargetamtArrayList)
@@ -2919,7 +2987,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         try {
                                             if (emptargetamtArrayList.length() > 0) {
 
-                                                setempwiswtargetamt()
+                                             //   setempwiswtargetamt()
                                                // setEmployeeAvgConversionBar(emptargetamtArrayList,remark)
                                              //   setEmployeeAvgConversionBar(emptargetamtArrayList)
                                                 val lLayout = GridLayoutManager(this@TileGraphActivity, 2)
@@ -3112,7 +3180,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
             val jsonObject = leadstagecountwiseListBarList.getJSONObject(i)
             val StageName = jsonObject.getString("StageName")
             val TotalCount = jsonObject.getString("TotalCount")
-            Log.v("sfsdfsdfds","code  "+"#"+colorgroup.get(i).hashCode())
+            Log.v("array","code  "+colorgroup+"\n"+"#"+colorgroup.get(i).hashCode())
             mDataSet.add(FunnelChartData("#"+colorgroup.get(i).hashCode(), StageName))
         }
         funnelChart.setmDataSet(mDataSet)

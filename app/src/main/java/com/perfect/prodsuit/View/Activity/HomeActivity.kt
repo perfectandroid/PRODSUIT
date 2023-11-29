@@ -2477,39 +2477,39 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 }
 
             }
-//            if (jsonObject.getString("Criteria").equals("1")){
-//
-//                if (jsonObject.getString("Value").equals("0")){
-//                    Toast.makeText(applicationContext, "No Data", Toast.LENGTH_LONG).show()
-//                }else{
-//                    val i = Intent(this@HomeActivity, HomeDashBoardDetailPageActivity::class.java)
-//                    i.putExtra("jsonObject",jsonObject.toString())
-//                    startActivity(i)
-//                }
-//
-//            }
-//            if (jsonObject.getString("Criteria").equals("2")){
-//
-//                if (jsonObject.getString("Value").equals("0")){
-//                    Toast.makeText(applicationContext, "No Data", Toast.LENGTH_LONG).show()
-//                }else{
-//                    val i = Intent(this@HomeActivity, HomeDashBoardDetailPageActivity::class.java)
-//                    i.putExtra("jsonObject",jsonObject.toString())
-//                    startActivity(i)
-//                }
-//
-//            }
-//            if (jsonObject.getString("Criteria").equals("4")){
-//
-//                if (jsonObject.getString("Value").equals("0")){
-//                    Toast.makeText(applicationContext, "No Data", Toast.LENGTH_LONG).show()
-//                }else{
-//                    val i = Intent(this@HomeActivity, HomeDashBoardDetailPageActivity::class.java)
-//                    i.putExtra("jsonObject",jsonObject.toString())
-//                    startActivity(i)
-//                }
-//
-//            }
+            if (jsonObject.getString("Criteria").equals("1")){
+
+                if (jsonObject.getString("Value").equals("0")){
+                    Toast.makeText(applicationContext, "No Data", Toast.LENGTH_LONG).show()
+                }else{
+                    val i = Intent(this@HomeActivity, HomeDashBoardDetailPageActivity::class.java)
+                    i.putExtra("jsonObject",jsonObject.toString())
+                    startActivity(i)
+                }
+
+            }
+            if (jsonObject.getString("Criteria").equals("2")){
+
+                if (jsonObject.getString("Value").equals("0")){
+                    Toast.makeText(applicationContext, "No Data", Toast.LENGTH_LONG).show()
+                }else{
+                    val i = Intent(this@HomeActivity, HomeDashBoardDetailPageActivity::class.java)
+                    i.putExtra("jsonObject",jsonObject.toString())
+                    startActivity(i)
+                }
+
+            }
+            if (jsonObject.getString("Criteria").equals("4")){
+
+                if (jsonObject.getString("Value").equals("0")){
+                    Toast.makeText(applicationContext, "No Data", Toast.LENGTH_LONG).show()
+                }else{
+                    val i = Intent(this@HomeActivity, HomeDashBoardDetailPageActivity::class.java)
+                    i.putExtra("jsonObject",jsonObject.toString())
+                    startActivity(i)
+                }
+
+            }
 
         }
     }

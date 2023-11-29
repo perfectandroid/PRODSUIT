@@ -70,6 +70,11 @@
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.AccountsGraphActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.ServiceGraphActivity"
             android:exported="false"
             android:screenOrientation="portrait"
@@ -91,6 +96,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.perfect.prodsuit.View.Activity.ProjectSiteVisitListActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.perfect.prodsuit.View.Activity.ProjectGraphActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -771,6 +781,12 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
+            android:name="com.perfect.prodsuit.View.Activity.RootViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            android:exported="false" />
+        <activity
             android:name="com.perfect.prodsuit.View.Activity.AddQuotationActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -812,7 +828,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.perfect.prodsuite.fileprovider"
+            android:authorities="com.perfect.prodsuite_employee.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

@@ -14,9 +14,9 @@
         android:layout_weight="1"
         android:layout_height="wrap_content">
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="60dp"
             android:background="@drawable/avgconsn"
-            android:layout_height="wrap_content"></ImageView>
+            android:layout_height="60dp"></ImageView>
     </LinearLayout>
 
     <LinearLayout
@@ -31,17 +31,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="@font/myfont"
             android:textStyle="bold"
-            android:text=""
+            android:text="trtr"
             android:layout_gravity="center_horizontal" />
         <TextView
             android:id="@+id/tv_newCount"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/myfont"
-            android:gravity="center"
-            android:text=""
+            android:layout_marginLeft="5dp"
+            android:text="rggg"
             android:textColor="@color/black"
             android:textSize="12dp"
             android:textStyle="bold"

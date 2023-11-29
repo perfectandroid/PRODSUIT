@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "145917630660",
+    "project_id": "persuite-employee",
+    "storage_bucket": "persuite-employee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145917630660:android:ed856a23074b2833ee9191",
+        "android_client_info": {
+          "package_name": "com.perfect.prodsuite_employee"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnFxX_xboflfQF4w1hQk2OsSCWXZHES-o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

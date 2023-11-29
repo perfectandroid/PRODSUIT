@@ -72,8 +72,8 @@ object CRMTop10ProductRepository {
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
 
 
-//               {"FK_Employee":"10044","EntrBy":"SONAKM","FK_Department":"1","FK_Branch":"3","FK_Company":"1","FK_BranchCodeUser":"3",
-//               "TransDate":"2023-11-17","DashMode":"13","DashType":"2"}
+//                {"FK_Employee":"72","EntrBy":"sree1","FK_Department":"1","FK_Branch":"3","FK_Company":"1","FK_BranchCodeUser":"3",
+//                    "TransDate":"2023-11-08","DashMode":"14","DashType":"2"}
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
@@ -97,7 +97,7 @@ object CRMTop10ProductRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getCRMcomplaintwise(body)
+            val call = apiService.getCRMTop10Products (body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
