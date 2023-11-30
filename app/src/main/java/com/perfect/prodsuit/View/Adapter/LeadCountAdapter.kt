@@ -31,7 +31,7 @@ class LeadCountAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_leadtilelist, parent, false
+            R.layout.adapter_leadcountscenariolist, parent, false
         )
         vh = MainViewHolder(v)
         return vh
