@@ -15,7 +15,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 
-class ProjectTileStatusAdapter(
+class ProjectTileStatusAdapter11(
     internal var context: Context,
     internal var jsonArray: JSONArray,
     internal var remark: String
@@ -41,7 +41,7 @@ class ProjectTileStatusAdapter(
         try {
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-                Log.e(TAG,"onBindViewHolder   1051   "+jsonObject)
+                Log.e(TAG,"onBindViewHolder   1051333   "+jsonObject)
                 val pos = position+1
 
 

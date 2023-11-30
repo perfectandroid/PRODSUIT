@@ -80,8 +80,8 @@ object SupplierWisePurchaseRepository {
                 requestObject1.put("FK_Department", ProdsuitApplication.encryptStart(FK_DepartmentSP.getString("FK_Department", null)))
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
-//                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
-                requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-08"))
+                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
+           //     requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-08"))
 
 
 

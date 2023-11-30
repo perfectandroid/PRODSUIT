@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.AxisBase
@@ -73,13 +74,19 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
     private var actv_mode: AutoCompleteTextView? = null
     private var ll_projectDelayed: LinearLayout? = null
+    private var ll_ComplaintWise: LinearLayout? = null
+    private var ll_ServiceWise: LinearLayout? = null
+    private var ll_top10Project: LinearLayout? = null
+    private var ll_CostMaterialUsageAllocate: LinearLayout? = null
+    private var ll_TotalStagewiseDue: LinearLayout? = null
+    private var ll_Upcoming_Stage_Due_Dates: LinearLayout? = null
 
     //project delayed
     var projectdelayCount      = 0
     lateinit var projectDelayedViewModel: ProjectDelayedViewModel
     lateinit var projectDelayArrayList: JSONArray
     private lateinit var projectDelayedChart: BarChart
-    var recycStagWise: RecyclerView? = null
+    var recycprojectDelayed: RecyclerView? = null
     private var projectDelayListBar = ArrayList<ProjectDelayBarModel>()
 
 
@@ -125,6 +132,12 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
     var recyTotalStagewiseDue                     : RecyclerView?   = null
     private lateinit var TotalStagewiseDueChart   : BarChart
 
+    private var tvv_head_projectDelayed: TextView? = null
+    private var tvv_lemo_projectDelayed: TextView? = null
+
+    var ll_projectDelayedRecyc                     : LinearLayout?   = null
+
+    var DashMode    :  String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -177,6 +190,17 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         CostMaterialUsageAllocateChart         = findViewById(R.id.CostMaterialUsageAllocateChart)
         TotalStagewiseDueChart                 = findViewById(R.id.TotalStagewiseDueChart)
         recyTotalStagewiseDue                  = findViewById(R.id.recyTotalStagewiseDue)
+        ll_ComplaintWise                  = findViewById(R.id.ll_ComplaintWise)
+        ll_ServiceWise                  = findViewById(R.id.ll_ServiceWise)
+        ll_top10Project                  = findViewById(R.id.ll_top10Project)
+        ll_ExpenseAnalysis                  = findViewById(R.id.ll_ExpenseAnalysis)
+        ll_CostMaterialUsageAllocate                  = findViewById(R.id.ll_CostMaterialUsageAllocate)
+        ll_TotalStagewiseDue                  = findViewById(R.id.ll_TotalStagewiseDue)
+        ll_Upcoming_Stage_Due_Dates                  = findViewById(R.id.ll_Upcoming_Stage_Due_Dates)
+        tvv_head_projectDelayed                  = findViewById(R.id.tvv_head_projectDelayed)
+        tvv_lemo_projectDelayed                  = findViewById(R.id.tvv_lemo_projectDelayed)
+        ll_projectDelayedRecyc                  = findViewById(R.id.ll_projectDelayedRecyc)
+        recycprojectDelayed                  = findViewById(R.id.recycprojectDelayed)
 
         tvv_dash!!.setOnClickListener(this)
         tvv_tile!!.setOnClickListener(this)
@@ -197,13 +221,13 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
             if (ContinueMode == 0) {
                 ChartMode = 0
                 chartModeCount = 0
-//                getChartModeData()
+               getChartModeData()
 //                getTop10Project()
 //                getProjectDelayed()
 //                getExpenseAnalysis()
 //                getUpcomingStageDueDates()
 //                getCostMaterialUsageAllocatedUsed()
-                getTotalStagewiseDue()
+          //      getTotalStagewiseDue()
             }
 
 
@@ -240,7 +264,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
             val sdfTime1 = SimpleDateFormat("hh:mm aa")
             val sdfTime2 = SimpleDateFormat("HH:mm", Locale.US)
 
-            TransDate = sdfDate1.format(newDate)
+            TransDate = sdfDate2.format(newDate)
 
         }catch (e: Exception){
 
@@ -250,7 +274,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
     private fun getChartModeData() {
         var ReqMode = ""
-        var SubMode = ""
+        var SubMode = "3"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -272,18 +296,65 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                 Log.e(TAG,"msg   1777   "+msg)
                                 if (jObject.getString("StatusCode") == "0") {
 
-                                    val jobjt = jObject.getJSONObject("checkDetails")
-                                    chartTypeArrayList = jobjt.getJSONArray("checkDetailsList")
+                                    val jobjt = jObject.getJSONObject("DashBoardNameDetails")
+                                    chartTypeArrayList = jobjt.getJSONArray("DashBoardNameDetailsList")
                                     if (chartTypeArrayList.length() > 0){
                                         if (ChartMode == 0){
                                             val jsonObject = chartTypeArrayList.getJSONObject(0)
-                                            ID_ChartMode = jsonObject.getString("ID_Mode")
-                                            actv_mode!!.setText(jsonObject.getString("Mode_Name"))
-//                                            Log.e(TAG,"ID_ChartMode  253331   "+ID_ChartMode)
-//
-                                            ll_projectDelayed!!.visibility = View.VISIBLE
-                                            projectdelayCount   = 0
-                                            getProjectDelayed()
+                                            ID_ChartMode = jsonObject.getString("DashMode")
+                                            actv_mode!!.setText(jsonObject.getString("DashBoardName"))
+
+                                            Log.e(TAG,"ID_ChartMode  253331   "+ID_ChartMode)
+                                            DashMode =  jsonObject.getString("DashMode")
+
+                                            ll_projectDelayed!!.visibility = View.GONE
+                                            ll_ComplaintWise!!.visibility = View.GONE
+                                            ll_ServiceWise!!.visibility = View.GONE
+                                            ll_top10Project!!.visibility = View.GONE
+                                            ll_ExpenseAnalysis!!.visibility = View.GONE
+                                            ll_TotalStagewiseDue!!.visibility = View.GONE
+                                            ll_Upcoming_Stage_Due_Dates!!.visibility = View.GONE
+
+                                            if (ID_ChartMode.equals("17")){
+
+//                                                tvv_head_StagWise!!.setText(jsonObject.getString("DashBoardName"))
+                                                projectdelayCount   = 0
+                                                getProjectDelayed()
+                                            }
+                                            else if (ID_ChartMode.equals("18")){
+                                                // ll_ComplaintWise!!.visibility = View.VISIBLE
+//                                                tvv_head_Complaint!!.setText(jsonObject.getString("DashBoardName"))
+                                                ExpenseAnalysisCount = 0
+                                                getExpenseAnalysis()
+                                            }
+                                            else if (ID_ChartMode.equals("19")){
+                                                // ll_ServiceWise!!.visibility = View.VISIBLE
+//                                                tvv_head_ServiceWise!!.setText(jsonObject.getString("DashBoardName"))
+                                                costmaterialusageAllocatedCount = 0
+                                                getCostMaterialUsageAllocatedUsed()
+                                            }
+                                            else if (ID_ChartMode.equals("20")){
+                                                //  ll_ServiceCountOfWPA!!.visibility = View.VISIBLE
+//                                                tvv_head_ServiceCountOfWPA!!.setText(jsonObject.getString("DashBoardName"))
+
+                                                UpcomingStageDueDatesCount = 0
+                                                getUpcomingStageDueDates()
+
+                                            }
+
+                                            else if (ID_ChartMode.equals("21")){
+                                                //  ll_ServiceTop10Product!!.visibility = View.VISIBLE
+//                                                tvv_head_ServiceTop10Product!!.setText(jsonObject.getString("DashBoardName"))
+                                                totalstagewiseCount = 0
+                                                getTotalStagewiseDue()
+                                            }
+                                            else if (ID_ChartMode.equals("22")){
+                                                // ll_ServiceSlaStatus!!.visibility = View.VISIBLE
+//                                                tvv_head_ServiceSlaStatus!!.setText(jsonObject.getString("DashBoardName"))
+                                                Top10ProjectCount = 0
+                                                getTop10Project()
+                                            }
+
 
                                         }else{
                                             showChartDrop(chartTypeArrayList)
@@ -318,6 +389,87 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
+        }
+    }
+
+    private fun showChartDrop(chartTypeArrayList: JSONArray) {
+
+        var modeType = Array<String>(chartTypeArrayList.length()) { "" }
+        var modeTypeID = Array<String>(chartTypeArrayList.length()) { "" }
+        var modeDashMode = Array<String>(chartTypeArrayList.length()) { "" }
+        for (i in 0 until chartTypeArrayList.length()) {
+            val objects: JSONObject = chartTypeArrayList.getJSONObject(i)
+
+
+            modeType[i] = objects.getString("DashBoardName");
+            modeTypeID[i] = objects.getString("DashMode");
+            modeDashMode[i] = objects.getString("DashMode");
+            //   ID_ChartMode = objects.getString("ID_Mode")
+
+            Log.e(TAG, "00000111   " + ID_ChartMode)
+            Log.e(TAG, "85456214   " + modeType)
+
+            val adapter = CustomAdapter(this, R.layout.custom_dropdown_item, modeType)
+            // val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, modeType)
+            actv_mode!!.setAdapter(adapter)
+            actv_mode!!.showDropDown()
+
+            actv_mode!!.setOnItemClickListener { parent, view, position, id ->
+                ID_ChartMode = modeTypeID[position]
+                DashMode = modeDashMode[position]
+                Log.e(TAG, "0000011122   " + ID_ChartMode)
+                ll_projectDelayed!!.visibility = View.GONE
+                ll_ComplaintWise!!.visibility = View.GONE
+                ll_ServiceWise!!.visibility = View.GONE
+                ll_top10Project!!.visibility = View.GONE
+                ll_ExpenseAnalysis!!.visibility = View.GONE
+                ll_TotalStagewiseDue!!.visibility = View.GONE
+                ll_Upcoming_Stage_Due_Dates!!.visibility = View.GONE
+
+
+                if (ID_ChartMode.equals("17")){
+
+//                                                tvv_head_StagWise!!.setText(jsonObject.getString("DashBoardName"))
+                    projectdelayCount   = 0
+                    getProjectDelayed()
+                }
+                else if (ID_ChartMode.equals("18")){
+                    // ll_ComplaintWise!!.visibility = View.VISIBLE
+//                                                tvv_head_Complaint!!.setText(jsonObject.getString("DashBoardName"))
+                    ExpenseAnalysisCount = 0
+                    getExpenseAnalysis()
+                }
+                else if (ID_ChartMode.equals("19")){
+                    // ll_ServiceWise!!.visibility = View.VISIBLE
+//                                                tvv_head_ServiceWise!!.setText(jsonObject.getString("DashBoardName"))
+                    costmaterialusageAllocatedCount = 0
+                    getCostMaterialUsageAllocatedUsed()
+                }
+                else if (ID_ChartMode.equals("20")){
+                    //  ll_ServiceCountOfWPA!!.visibility = View.VISIBLE
+//                                                tvv_head_ServiceCountOfWPA!!.setText(jsonObject.getString("DashBoardName"))
+
+                    UpcomingStageDueDatesCount = 0
+                    getUpcomingStageDueDates()
+
+                }
+
+                else if (ID_ChartMode.equals("21")){
+                    //  ll_ServiceTop10Product!!.visibility = View.VISIBLE
+//                                                tvv_head_ServiceTop10Product!!.setText(jsonObject.getString("DashBoardName"))
+                    totalstagewiseCount = 0
+                    getTotalStagewiseDue()
+                }
+                else if (ID_ChartMode.equals("22")){
+                    // ll_ServiceSlaStatus!!.visibility = View.VISIBLE
+//                                                tvv_head_ServiceSlaStatus!!.setText(jsonObject.getString("DashBoardName"))
+                    Top10ProjectCount = 0
+                    getTop10Project()
+                }
+
+                Log.e(TAG,"ID_ChartMode  253332   "+ID_ChartMode)
+            }
+
         }
     }
 
@@ -974,7 +1126,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                     totalstagewiseCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   CostMaterialUsage   " + msg)
-                                    if (jObject.getString("StatusCode") == "-2") {
+                                    if (jObject.getString("StatusCode") == "0") {
 
                                         val jobjt =
                                             jObject.getJSONObject("TotalStagewiseDue")
@@ -1192,9 +1344,9 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                             setProjectDelayBarchart()  //...........barchart here
 
                                             val lLayout = GridLayoutManager(this@ProjectGraphActivity, 2)
-                                            recycStagWise!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            val adapter = MonthlyBarChartAdapter(this@ProjectGraphActivity, projectDelayArrayList)
-                                            recycStagWise!!.adapter = adapter
+                                            recycprojectDelayed!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            val adapter = ProjectDelayedAdapter(this@ProjectGraphActivity, projectDelayArrayList)
+                                            recycprojectDelayed!!.adapter = adapter
 
 
 
@@ -1424,23 +1576,14 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                     Log.e(TAG, "msg   project bill   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
-                                        val jobjt =
-                                            jObject.getJSONObject("ProjectTileDashBoardDetails")
+                                        val jobjt = jObject.getJSONObject("ProjectTileDashBoardDetails")
                                         var remark =   jobjt.getString("Reamrk")
-
                                         projectBillArrayList=jobjt.getJSONArray("ProjectTileDashBoardDetailsList")
                                         Log.e(TAG, "projectBillArrayList 43434  =  "+projectBillArrayList)
 
-
-                                        val lLayout =
-                                            GridLayoutManager(this@ProjectGraphActivity, 4)
-
-                                        recycler_billing_status!!.layoutManager =
-                                            lLayout as RecyclerView.LayoutManager?
-                                        val adapter1 = ProjectBillStatusAdapter(
-                                            this@ProjectGraphActivity,
-                                            projectBillArrayList,remark
-                                        )
+                                        val lLayout = GridLayoutManager(this@ProjectGraphActivity, 4)
+                                        recycler_billing_status!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter1 = ProjectBillStatusAdapter(this@ProjectGraphActivity, projectBillArrayList,remark)
                                         recycler_billing_status!!.adapter = adapter1
 
 
@@ -1485,54 +1628,6 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
     }
 
-    private fun showChartDrop(chartTypeArrayList: JSONArray) {
-
-        var modeType = Array<String>(chartTypeArrayList.length()) { "" }
-        var modeTypeID = Array<String>(chartTypeArrayList.length()) { "" }
-        for (i in 0 until chartTypeArrayList.length()) {
-            val objects: JSONObject = chartTypeArrayList.getJSONObject(i)
-
-
-            modeType[i] = objects.getString("Mode_Name");
-            modeTypeID[i] = objects.getString("ID_Mode");
-            //   ID_ChartMode = objects.getString("ID_Mode")
-
-            Log.e(TAG, "00000111   " + ID_ChartMode)
-            Log.e(TAG, "85456214   " + modeType)
-
-
-            val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, modeType)
-            actv_mode!!.setAdapter(adapter)
-            actv_mode!!.showDropDown()
-
-            actv_mode!!.setOnItemClickListener { parent, view, position, id ->
-                ID_ChartMode = modeTypeID[position]
-
-                ll_projectDelayed!!.visibility = View.GONE
-//                ll_ComplaintWise!!.visibility = View.GONE
-//                ll_ServiceWise!!.visibility = View.GONE
-
-
-                if (ID_ChartMode.equals("1")){
-                    ll_projectDelayed!!.visibility = View.VISIBLE
-                    projectdelayCount   = 0
-                    getProjectDelayed()
-                }
-                else if (ID_ChartMode.equals("2")){
-//                    ll_ServiceWise!!.visibility = View.VISIBLE
-//                    crmservicewiseCount = 0
-//                    getCRMservicewiseData()
-                }
-                else if (ID_ChartMode.equals("3")){
-//                    ll_ComplaintWise!!.visibility = View.VISIBLE
-//                    crmcomplaintwiseCount = 0
-//                    getCRMcomplaintwiseData()
-                }
-                Log.e(TAG,"ID_ChartMode  253332   "+ID_ChartMode)
-            }
-
-        }
-    }
 
     private fun getProjectStatusTile() {
 
@@ -1565,35 +1660,24 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                         val jobjt = jObject.getJSONObject("ProjectTileDashBoardDetails")
                                         var remark = jobjt.getString("Reamrk")
 
-                                        projectStatusArrayList =
-                                            jobjt.getJSONArray("ProjectTileDashBoardDetailsList")
-                                        Log.e(
-                                            TAG,
-                                            "projectStatusArrayList 4343  =  " + projectStatusArrayList
-                                        )
+                                        projectStatusArrayList = jobjt.getJSONArray("ProjectTileDashBoardDetailsList")
+                                        Log.e(TAG, "projectStatusArrayList 4343  =  " + projectStatusArrayList)
 
 //                                        recycler_project_tile!!.setLayoutManager(
-//                                            LinearLayoutManager(
-//                                                this,
-//                                                RecyclerView.HORIZONTAL,
-//                                                false
-//                                            )
-//                                        )
-//
+//                                        LinearLayoutManager(this, RecyclerView.HORIZONTAL, false))
 //                                        val adapter = ProjectTileStatusAdapter(this@ProjectGraphActivity,projectStatusArrayList,remark)
 //                                        recycler_project_tile!!.adapter = adapter
 //                                     //   adapter.setClickListener(this@ProjectGraphActivity)
 
 
-                                        val lLayout =
-                                            GridLayoutManager(this@ProjectGraphActivity, 3)
+//                                        val lLayout = GridLayoutManager(this@ProjectGraphActivity, 3)
+//                                        recycler_project_tile!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                        val adapter1 = ProjectTileStatusAdapter(this@ProjectGraphActivity, projectStatusArrayList, remark)
+//                                        recycler_project_tile!!.adapter = adapter1
 
-                                        recycler_project_tile!!.layoutManager =
-                                            lLayout as RecyclerView.LayoutManager?
-                                        val adapter1 = ProjectTileStatusAdapter(
-                                            this@ProjectGraphActivity,
-                                            projectStatusArrayList, remark
-                                        )
+                                        val lLayout = GridLayoutManager(this@ProjectGraphActivity, 3)
+                                        recycler_project_tile!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter1 = ProjectTileStatusAdapter11(this@ProjectGraphActivity, projectStatusArrayList, remark)
                                         recycler_project_tile!!.adapter = adapter1
 
 

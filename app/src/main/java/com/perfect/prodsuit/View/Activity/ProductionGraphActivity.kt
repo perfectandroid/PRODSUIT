@@ -106,11 +106,11 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
     private var materialshortageBar = ArrayList<MaterialShortageBar>()
     private var ll_recyMaterialShortage: LinearLayout? = null
     private var ll_MaterialShortage: LinearLayout? = null
+    private var ll_materialrecycview: LinearLayout? = null
     private var tvv_head_MaterialShortage: TextView? = null
     private var tvv_lemo_MaterialShortage: TextView? = null
     private var tv_MaterialShortageRemark: TextView? = null
     var materialshortageMode    = 0  // 0=more , 1 = less
-
 
     var jobcardsCount = 0
     lateinit var jobcardsViewModel     : JobcardsViewModel
@@ -165,6 +165,8 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
         tv_UpcomingStockRemark   = findViewById(R.id.tv_UpcomingStockRemark)
         tv_UpcomingStockRemark   = findViewById(R.id.tv_UpcomingStockRemark)
         ll_CompletedProducts     = findViewById(R.id.ll_CompletedProducts)
+        ll_recyCompletedProducts     = findViewById(R.id.ll_recyCompletedProducts)
+        tvv_head_CompletedProducts     = findViewById(R.id.tvv_head_CompletedProducts)
 
         recyMaterialShortage         = findViewById(R.id.recyMaterialShortage)
         MaterialShortageChart        = findViewById(R.id.MaterialShortageChart)
@@ -176,7 +178,9 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
         ll_recyMaterialShortage      = findViewById(R.id.ll_recyMaterialShortage)
         tvv_head_MaterialShortage    = findViewById(R.id.tvv_head_MaterialShortage)
         ll_MaterialShortage          = findViewById(R.id.ll_MaterialShortage)
+        ll_materialrecycview          = findViewById(R.id.ll_materialrecycview)
         tv_CompletedProductsRemark   = findViewById(R.id.tv_CompletedProductsRemark)
+
 
         card_tile   = findViewById(R.id.card_tile)
         tv_Production_remark   = findViewById(R.id.tv_Production_remark)
@@ -187,6 +191,7 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
         tvv_dash!!.setOnClickListener(this)
         tvv_tile!!.setOnClickListener(this)
         actv_mode!!.setOnClickListener(this)
+        tvv_lemo_UpcomingStock!!.setOnClickListener(this)
 
 
     }
@@ -228,7 +233,7 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
             if (ContinueMode == 0) {
                 ChartMode = 0
                 chartModeCount = 0
-//                getChartModeData()
+                getChartModeData()
 //                getUpcomingStock()
 //                getCompletedProducts()
 //                getMaterialShortage()
@@ -252,198 +257,166 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun hidelemoupcomingstock() {
-        if (lemoupcomingstockMode == 0){
-            tvv_lemo_UpcomingStock!!.setText("More")
-            tvv_lemo_UpcomingStock!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
-            ll_recyUpcomingStock!!.visibility = View.GONE
-        }else{
-            tvv_lemo_UpcomingStock!!.setText("Less")
-            tvv_lemo_UpcomingStock!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
-            ll_recyUpcomingStock!!.visibility = View.VISIBLE
+
+
+    private fun getChartModeData() {
+        var ReqMode = ""
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                chartTypeViewModel.getChartType(this,ReqMode!!,SubMode!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+                            if (chartModeCount == 0) {
+                                chartModeCount++
+
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   1777   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+
+                                    val jobjt = jObject.getJSONObject("DashBoardNameDetails")
+                                    chartTypeArrayList = jobjt.getJSONArray("DashBoardNameDetailsList")
+
+
+                                    if (chartTypeArrayList.length() > 0){
+
+                                        if (ChartMode == 0){
+                                            val jsonObject = chartTypeArrayList.getJSONObject(0)
+                                            ID_ChartMode = jsonObject.getString("DashMode")
+                                            actv_mode!!.setText(jsonObject.getString("DashBoardName"))
+
+                                            Log.e(TAG,"ID_ChartMode  253331   "+ID_ChartMode)
+                                            DashMode =  jsonObject.getString("DashMode")
+
+                                            ll_MaterialShortage!!.visibility = View.GONE
+                                            ll_CompletedProducts!!.visibility = View.GONE
+                                            ll_UpcomingStock!!.visibility = View.GONE
+
+
+                                            if (ID_ChartMode.equals("34")){
+
+                                               ll_UpcomingStock!!.visibility = View.VISIBLE
+                                                tvv_head_UpcomingStock!!.setText(jsonObject.getString("DashBoardName"))
+                                                upcomingstockCount   = 0
+                                                getUpcomingStock()
+                                            }
+                                            else if (ID_ChartMode.equals("35")){
+//                                                ll_MaterialShortage!!.visibility = View.VISIBLE
+                                                tvv_head_MaterialShortage!!.setText(jsonObject.getString("DashBoardName"))
+                                                materialshortageCount = 0
+                                                getMaterialShortage()
+                                            }
+                                            else if (ID_ChartMode.equals("36")){
+//                                                ll_CompletedProducts!!.visibility = View.VISIBLE
+                                                tvv_head_CompletedProducts!!.setText(jsonObject.getString("DashBoardName"))
+                                                completedproductsCount = 0
+                                                getCompletedProducts()
+                                            }
+
+                                            Log.e(TAG,"drop down 7877   "+chartTypeArrayList)
+                                        }else{
+                                            Log.e(TAG,"drop down 7877   "+chartTypeArrayList)
+                                            showChartDrop(chartTypeArrayList)
+                                        }
+                                    }
+
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@ProductionGraphActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            }
+
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 
-//    private fun getChartModeData() {
-//        var ReqMode = ""
-//        var SubMode = "2"
-//        when (Config.ConnectivityUtils.isConnected(this)) {
-//            true -> {
-//                progressDialog = ProgressDialog(context, R.style.Progress)
-//                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-//                progressDialog!!.setCancelable(false)
-//                progressDialog!!.setIndeterminate(true)
-//                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-//                progressDialog!!.show()
-//                chartTypeViewModel.getChartType(this,ReqMode!!,SubMode!!)!!.observe(
-//                    this,
-//                    Observer { serviceSetterGetter ->
-//                        val msg = serviceSetterGetter.message
-//                        if (msg!!.length > 0) {
-//
-//                            if (chartModeCount == 0) {
-//                                chartModeCount++
-//
-//                                val jObject = JSONObject(msg)
-//                                Log.e(TAG,"msg   1777   "+msg)
-//                                if (jObject.getString("StatusCode") == "0") {
-//
-//                                    val jobjt = jObject.getJSONObject("DashBoardNameDetails")
-//                                    chartTypeArrayList = jobjt.getJSONArray("DashBoardNameDetailsList")
-//                                    if (chartTypeArrayList.length() > 0){
-//                                        if (ChartMode == 0){
-//                                            val jsonObject = chartTypeArrayList.getJSONObject(0)
-//                                            ID_ChartMode = jsonObject.getString("DashMode")
-//                                            actv_mode!!.setText(jsonObject.getString("DashBoardName"))
-//
-//                                            Log.e(TAG,"ID_ChartMode  253331   "+ID_ChartMode)
-//                                            DashMode =  jsonObject.getString("DashMode")
-//
-//                                            ll_MaterialShortage!!.visibility = View.GONE
-//                                            ll_CompletedProducts!!.visibility = View.GONE
-//
-//
-//                                            if (ID_ChartMode.equals("34")){
-//
-//                                                tvv_head_StagWise!!.setText(jsonObject.getString("DashBoardName"))
-//                                                upcomingstockCount   = 0
-//                                                getUpcomingStock()
-//                                            }
-//                                            else if (ID_ChartMode.equals("35")){
-//                                                // ll_ComplaintWise!!.visibility = View.VISIBLE
-//                                                tvv_head_Complaint!!.setText(jsonObject.getString("DashBoardName"))
-//                                                materialshortageCount = 0
-//                                                getMaterialShortage()
-//                                            }
-//                                            else if (ID_ChartMode.equals("36")){
-//                                                // ll_ServiceWise!!.visibility = View.VISIBLE
-//                                                tvv_head_ServiceWise!!.setText(jsonObject.getString("DashBoardName"))
-//                                                completedproductsCount = 0
-//                                                getCompletedProducts()
-//                                            }
-//
-//
-//                                        }else{
-//                                            showChartDrop(chartTypeArrayList)
-//                                        }
-//                                    }
-//
-//                                } else {
-//                                    val builder = AlertDialog.Builder(
-//                                        this@ProductionGraphActivity,
-//                                        R.style.MyDialogTheme
-//                                    )
-//                                    builder.setMessage(jObject.getString("EXMessage"))
-//                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                    }
-//                                    val alertDialog: AlertDialog = builder.create()
-//                                    alertDialog.setCancelable(false)
-//                                    alertDialog.show()
-//                                }
-//                            }
-//
-//                        } else {
-////                            Toast.makeText(
-////                                applicationContext,
-////                                "Some Technical Issues.",
-////                                Toast.LENGTH_LONG
-////                            ).show()
-//                        }
-//                    })
-//                progressDialog!!.dismiss()
-//            }
-//            false -> {
-//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-//                    .show()
-//            }
-//        }
-//    }
-//
-//    private fun showChartDrop(chartTypeArrayList: JSONArray) {
-//
-//        var modeType = Array<String>(chartTypeArrayList.length()) { "" }
-//        var modeTypeID = Array<String>(chartTypeArrayList.length()) { "" }
-//        var modeDashMode = Array<String>(chartTypeArrayList.length()) { "" }
-//        for (i in 0 until chartTypeArrayList.length()) {
-//            val objects: JSONObject = chartTypeArrayList.getJSONObject(i)
-//
-//
-//            modeType[i] = objects.getString("DashBoardName");
-//            modeTypeID[i] = objects.getString("DashMode");
-//            modeDashMode[i] = objects.getString("DashMode");
-//            //   ID_ChartMode = objects.getString("ID_Mode")
-//
-//            Log.e(TAG, "00000111   " + ID_ChartMode)
-//            Log.e(TAG, "85456214   " + modeType)
-//
-//            val adapter = CustomAdapter(this, R.layout.custom_dropdown_item, modeType)
-//            // val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, modeType)
-//            actv_mode!!.setAdapter(adapter)
-//            actv_mode!!.showDropDown()
-//
-//            actv_mode!!.setOnItemClickListener { parent, view, position, id ->
-//                ID_ChartMode = modeTypeID[position]
-//                DashMode = modeDashMode[position]
-//                Log.e(TAG, "0000011122   " + ID_ChartMode)
-//                ll_StagWise!!.visibility = View.GONE
-//                ll_ComplaintWise!!.visibility = View.GONE
-//                ll_ServiceWise!!.visibility = View.GONE
-//                ll_ServiceCountOfWPA!!.visibility = View.GONE
-//                ll_ServiceTop10Product!!.visibility = View.GONE
-//                ll_ServiceSlaStatus!!.visibility = View.GONE
-//                ll_ServiceChannelStatus!!.visibility = View.GONE
-//
-//
-//                if (ID_ChartMode.equals("10")){
-//                    // ll_StagWise!!.visibility = View.VISIBLE
-//                    tvv_head_StagWise!!.setText(modeType[position])
-//                    crmStagewiseCount   = 0
-//                    getCRMStagewiseData()
-//                }
-//                else if (ID_ChartMode.equals("11")){
-//                    //  ll_ComplaintWise!!.visibility = View.VISIBLE
-//                    tvv_head_Complaint!!.setText(modeType[position])
-//                    crmcomplaintwiseCount = 0
-//                    getCRMcomplaintwiseData()
-//                }
-//                else if (ID_ChartMode.equals("12")){
-//                    //   ll_ServiceWise!!.visibility = View.VISIBLE
-//                    tvv_head_ServiceWise!!.setText(modeType[position])
-//                    crmservicewiseCount = 0
-//                    getCRMservicewiseData()
-//                }
-//                else if (ID_ChartMode.equals("13")){
-//                    //  ll_ServiceCountOfWPA!!.visibility = View.VISIBLE
-//                    tvv_head_ServiceCountOfWPA!!.setText(modeType[position])
-//                    crmCountOfWPACount = 0
-//                    getCRMCountOfWPAData()
-//                }
-//                else if (ID_ChartMode.equals("14")){
-//                    // ll_ServiceTop10Product!!.visibility = View.VISIBLE
-//                    tvv_head_ServiceTop10Product!!.setText(modeType[position])
-//                    crmtop1oproductCount = 0
-//                    getCRMTop10Product()
-//                }
-//                else if (ID_ChartMode.equals("15")){
-//                    // ll_ServiceSlaStatus!!.visibility = View.VISIBLE
-//                    tvv_head_ServiceSlaStatus!!.setText(modeType[position])
-//                    crmslastatusCount = 0
-//                    getCRMSlaStatus()
-//                }
-//
-//                else if (ID_ChartMode.equals("16")){
-////                  SLA CHANNEL
-////                    ll_ServiceChannelStatus!!.visibility = View.VISIBLE
-//                    tvv_head_ServiceChannelStatus!!.setText(modeType[position])
-//                    crmchannelstatusCount = 0
-//                    getCRMChanelStatus()
-//                }
-//
-//                Log.e(TAG,"ID_ChartMode  253332   "+ID_ChartMode)
-//            }
-//
-//        }
-//    }
+    private fun showChartDrop(chartTypeArrayList: JSONArray) {
+
+        Log.e(TAG,"drop down 7877   "+chartTypeArrayList)
+
+        var modeType = Array<String>(chartTypeArrayList.length()) { "" }
+        var modeTypeID = Array<String>(chartTypeArrayList.length()) { "" }
+        var modeDashMode = Array<String>(chartTypeArrayList.length()) { "" }
+        for (i in 0 until chartTypeArrayList.length()) {
+            val objects: JSONObject = chartTypeArrayList.getJSONObject(i)
+
+
+            modeType[i] = objects.getString("DashBoardName");
+            modeTypeID[i] = objects.getString("DashMode");
+            modeDashMode[i] = objects.getString("DashMode");
+            //   ID_ChartMode = objects.getString("ID_Mode")
+
+            Log.e(TAG, "00000111   " + ID_ChartMode)
+            Log.e(TAG, "85456214   " + modeType)
+
+            val adapter = CustomAdapter(this, R.layout.custom_dropdown_item, modeType)
+            // val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, modeType)
+            actv_mode!!.setAdapter(adapter)
+            actv_mode!!.showDropDown()
+
+            actv_mode!!.setOnItemClickListener { parent, view, position, id ->
+                ID_ChartMode = modeTypeID[position]
+                DashMode = modeDashMode[position]
+
+                Log.e(TAG, "0000011122   " + ID_ChartMode)
+                ll_MaterialShortage!!.visibility = View.GONE
+                ll_CompletedProducts!!.visibility = View.GONE
+                ll_UpcomingStock!!.visibility = View.GONE
+
+
+                if (ID_ChartMode.equals("34")){
+                    // ll_StagWise!!.visibility = View.VISIBLE
+                    tvv_head_UpcomingStock!!.setText(modeType[position])
+                    upcomingstockCount   = 0
+                    getUpcomingStock()
+                }
+                else if (ID_ChartMode.equals("35")){
+                    //  ll_ComplaintWise!!.visibility = View.VISIBLE
+                    tvv_head_MaterialShortage!!.setText(modeType[position])
+                    materialshortageCount = 0
+                    getMaterialShortage()
+                }
+                else if (ID_ChartMode.equals("36")){
+                    //   ll_ServiceWise!!.visibility = View.VISIBLE
+                    tvv_head_CompletedProducts!!.setText(modeType[position])
+                    completedproductsCount = 0
+                    getCompletedProducts()
+                }
+
+                Log.e(TAG,"ID_ChartMode  253332   "+ID_ChartMode)
+            }
+
+        }
+    }
 
 
     //////////////////UpcomingStock\\\\\\\\\\\\\\\\\
@@ -479,6 +452,8 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                         try {
                                             if (upcomingstockArrayList.length() > 0) {
+
+                                            //    ll_UpcomingStock!!.visibility = View.VISIBLE
 
                                                 setStockListBarchart()
 
@@ -770,6 +745,7 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
 //                                                completedproductsMode = 0
 //                                                hidelemocompletedProducts()
 
+                                                ll_CompletedProducts!!.visibility = View.VISIBLE
                                                 setCompletedProductsBarchart()
 
                                                 val lLayout = GridLayoutManager(this@ProductionGraphActivity, 2)
@@ -1069,6 +1045,7 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                         materialshortageArrayList=jobjt.getJSONArray("ProductionMaterialShortageList")
 
+                                        ll_MaterialShortage!!.visibility = View.VISIBLE
 
                                         if (materialshortageArrayList.length() > 0) {
                                             Log.e(TAG, "materialshortageArrayList 43434  =  "+materialshortageArrayList)
@@ -1341,8 +1318,32 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
             R.id.actv_mode->{
                 ChartMode      = 1
                 chartModeCount = 0
-//                getChartModeData()
+                getChartModeData()
             }
+
+            R.id.tvv_lemo_UpcomingStock->{
+
+                if (materialshortageMode == 0){
+                    materialshortageMode = 1
+                }else{
+                    materialshortageMode = 0
+                }
+                hidelemoupcomingstock()
+
+            }
+        }
+    }
+
+
+    private fun hidelemoupcomingstock() {
+        if (lemoupcomingstockMode == 0){
+            tvv_lemo_UpcomingStock!!.setText("More")
+            tvv_lemo_UpcomingStock!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_recyUpcomingStock!!.visibility = View.GONE
+        }else{
+            tvv_lemo_UpcomingStock!!.setText("Less")
+            tvv_lemo_UpcomingStock!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_recyUpcomingStock!!.visibility = View.VISIBLE
         }
     }
 }
