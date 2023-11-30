@@ -19,7 +19,37 @@ class StockValueBarChartAdapter(internal var context: Context, internal var json
 
     val color = intArrayOf(R.color.leadstages_color1, R.color.leadstages_color2, R.color.leadstages_color3,R.color.leadstages_color4,
         R.color.leadstages_color5, R.color.leadstages_color6, R.color.leadstages_color7,R.color.leadstages_color8,
+        R.color.leadstages_color9, R.color.leadstages_color10, R.color.leadstages_color11,R.color.leadstages_color12,
+
+        R.color.leadstages_color1, R.color.leadstages_color2, R.color.leadstages_color3,R.color.leadstages_color4,
+        R.color.leadstages_color5, R.color.leadstages_color6, R.color.leadstages_color7,R.color.leadstages_color8,
+        R.color.leadstages_color9, R.color.leadstages_color10, R.color.leadstages_color11,R.color.leadstages_color12,
+
+        R.color.leadstages_color1, R.color.leadstages_color2, R.color.leadstages_color3,R.color.leadstages_color4,
+        R.color.leadstages_color5, R.color.leadstages_color6, R.color.leadstages_color7,R.color.leadstages_color8,
+        R.color.leadstages_color9, R.color.leadstages_color10, R.color.leadstages_color11,R.color.leadstages_color12,
+
+        R.color.leadstages_color1, R.color.leadstages_color2, R.color.leadstages_color3,R.color.leadstages_color4,
+        R.color.leadstages_color5, R.color.leadstages_color6, R.color.leadstages_color7,R.color.leadstages_color8,
+        R.color.leadstages_color9, R.color.leadstages_color10, R.color.leadstages_color11,R.color.leadstages_color12,
+
+        R.color.leadstages_color1, R.color.leadstages_color2, R.color.leadstages_color3,R.color.leadstages_color4,
+        R.color.leadstages_color5, R.color.leadstages_color6, R.color.leadstages_color7,R.color.leadstages_color8,
+        R.color.leadstages_color9, R.color.leadstages_color10, R.color.leadstages_color11,R.color.leadstages_color12,
+
+        R.color.leadstages_color1, R.color.leadstages_color2, R.color.leadstages_color3,R.color.leadstages_color4,
+        R.color.leadstages_color5, R.color.leadstages_color6, R.color.leadstages_color7,R.color.leadstages_color8,
+        R.color.leadstages_color9, R.color.leadstages_color10, R.color.leadstages_color11,R.color.leadstages_color12,
+
+        R.color.leadstages_color1, R.color.leadstages_color2, R.color.leadstages_color3,R.color.leadstages_color4,
+        R.color.leadstages_color5, R.color.leadstages_color6, R.color.leadstages_color7,R.color.leadstages_color8,
+        R.color.leadstages_color9, R.color.leadstages_color10, R.color.leadstages_color11,R.color.leadstages_color12,
+
+        R.color.leadstages_color1, R.color.leadstages_color2, R.color.leadstages_color3,R.color.leadstages_color4,
+        R.color.leadstages_color5, R.color.leadstages_color6, R.color.leadstages_color7,R.color.leadstages_color8,
         R.color.leadstages_color9, R.color.leadstages_color10, R.color.leadstages_color11,R.color.leadstages_color12
+
+
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

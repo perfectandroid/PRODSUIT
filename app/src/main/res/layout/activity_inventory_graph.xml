@@ -210,701 +210,1191 @@
                                             android:orientation="vertical"
                                             android:visibility="visible">
 
-                                            <LinearLayout
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:orientation="vertical">
-
-                                                <AutoCompleteTextView
-                                                    android:id="@+id/actv_mode"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:layout_marginTop="20dp"
-                                                    android:layout_marginLeft="20dp"
-                                                    android:layout_marginRight="20dp"
-                                                    android:fontFamily="@font/myfont"
-                                                    android:padding="10dp"
-                                                    android:hint="Please Select"
-                                                    android:focusableInTouchMode="false"
-                                                    android:drawableEnd="@drawable/down_arrows"
-                                                    android:text=""
-                                                    android:background="@drawable/bg_dash2"
-                                                    android:layout_gravity="center"/>
-                                            </LinearLayout>
-
-                                            <!--monthly sale-->
-                                            <LinearLayout
-                                                android:id="@+id/ll_monthlygraph"
-                                                android:layout_marginTop="10dp"
+                                            <androidx.cardview.widget.CardView
+                                                android:id="@+id/card_followup"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
-                                                android:background="@color/white"
-                                                android:orientation="vertical"
-                                                android:visibility="gone">
-
-
-                                                <!-- one-->
-                                                <LinearLayout
-                                                    android:layout_weight="1"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:orientation="vertical">
-
-
-
-                                                    <LinearLayout
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="match_parent"
-                                                        android:orientation="vertical">
-
-                                                        <LinearLayout
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:layout_gravity="center"
-                                                            android:orientation="vertical"
-                                                            android:paddingLeft="10dp"
-                                                            android:paddingTop="8dp">
-                                                            <!--                                android:background="@color/purple_700"-->
-                                                            <TextView
-                                                                android:layout_width="wrap_content"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_weight=".8"
-                                                                android:fontFamily="@font/myfont"
-                                                                android:gravity="center"
-                                                                android:text="Monthly sale graph"
-                                                                android:textAllCaps="true"
-                                                                android:textColor="@color/black"
-                                                                android:textSize="14dp"
-                                                                android:textStyle="bold" />
-
-                                                            <TextView
-                                                                android:visibility="gone"
-                                                                android:layout_width="wrap_content"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_marginTop="-8dp"
-                                                                android:layout_weight=".8"
-                                                                android:fontFamily="@font/myfont"
-                                                                android:gravity="center"
-                                                                android:text="IN PERCENTAGE"
-                                                                android:textAllCaps="true"
-                                                                android:textColor="@color/greydark"
-                                                                android:textSize="8dp"
-                                                                android:textStyle="bold" />
-
-                                                            <TextView
-                                                                android:id="@+id/tv_leadStageTotal"
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="30dp"
-                                                                android:layout_gravity="center"
-                                                                android:layout_weight="1"
-                                                                android:fontFamily="@font/myfont"
-                                                                android:gravity="center"
-                                                                android:textColor="@color/white"
-                                                                android:textSize="20dp"
-                                                                android:textStyle="bold"
-                                                                android:visibility="gone" />
-
-                                                            <ImageView
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_gravity="center"
-                                                                android:layout_weight="1"
-                                                                android:gravity="center"
-                                                                android:padding="15dp"
-                                                                android:src="@drawable/dash2"
-                                                                android:tint="@color/white"
-                                                                android:visibility="gone"
-                                                                tools:ignore="UseAppTint" />
-                                                        </LinearLayout>
-
-                                                        <LinearLayout
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="match_parent"
-                                                            android:orientation="vertical">
-
-                                                            <com.github.mikephil.charting.charts.BarChart
-                                                                android:id="@+id/MonthlybarChart"
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="match_parent"
-                                                                android:layout_margin="2dp"
-                                                                android:layout_weight="1"
-                                                                android:visibility="visible" />
-                                                            <LinearLayout
-                                                                android:padding="5dp"
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content">
-                                                                <com.perfect.prodsuit.Helper.FullLenghRecyclertview
-                                                                    android:id="@+id/recyColors"
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="match_parent"
-                                                                    android:background="@drawable/svg_dashrect">
-
-                                                                </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
-                                                            </LinearLayout>
-
-
-                                                        </LinearLayout>
-
-
-
-                                                    </LinearLayout>
-
-
-                                                </LinearLayout>
-
-                                                <!-- second-->
-                                                <View
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="1dp"
-                                                    android:background="@color/grey"/>
-
-
-
-
-
-
-                                            </LinearLayout>
-
-                                            <!--stock list-->
-                                            <LinearLayout
-                                                android:id="@+id/ll_stock"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:background="@color/white"
-                                                android:orientation="vertical"
-                                                android:visibility="gone">
-
-
-                                                <!-- one-->
-                                                <LinearLayout
-                                                    android:layout_weight="1"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:orientation="vertical">
-
-
-
-                                                    <LinearLayout
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="match_parent"
-                                                        android:orientation="vertical">
-
-                                                        <LinearLayout
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:layout_gravity="center"
-                                                            android:orientation="vertical"
-                                                            android:paddingLeft="10dp"
-                                                            android:paddingTop="8dp">
-                                                            <!--                                android:background="@color/purple_700"-->
-                                                            <TextView
-                                                                android:layout_width="wrap_content"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_weight=".8"
-                                                                android:fontFamily="@font/myfont"
-                                                                android:gravity="center"
-                                                                android:text="Stock List ( category )"
-                                                                android:textAllCaps="true"
-                                                                android:textColor="@color/black"
-                                                                android:textSize="14dp"
-                                                                android:textStyle="bold" />
-
-                                                            <TextView
-                                                                android:visibility="gone"
-                                                                android:layout_width="wrap_content"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_marginTop="-8dp"
-                                                                android:layout_weight=".8"
-                                                                android:fontFamily="@font/myfont"
-                                                                android:gravity="center"
-                                                                android:text="IN PERCENTAGE"
-                                                                android:textAllCaps="true"
-                                                                android:textColor="@color/greydark"
-                                                                android:textSize="8dp"
-                                                                android:textStyle="bold" />
-
-                                                            <TextView
-
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="30dp"
-                                                                android:layout_gravity="center"
-                                                                android:layout_weight="1"
-                                                                android:fontFamily="@font/myfont"
-                                                                android:gravity="center"
-                                                                android:textColor="@color/white"
-                                                                android:textSize="20dp"
-                                                                android:textStyle="bold"
-                                                                android:visibility="gone" />
-
-                                                            <ImageView
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_gravity="center"
-                                                                android:layout_weight="1"
-                                                                android:gravity="center"
-                                                                android:padding="15dp"
-                                                                android:src="@drawable/dash2"
-                                                                android:tint="@color/white"
-                                                                android:visibility="gone"
-                                                                tools:ignore="UseAppTint" />
-                                                        </LinearLayout>
-
-                                                        <LinearLayout
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="match_parent"
-                                                            android:orientation="vertical">
-
-                                                            <com.github.mikephil.charting.charts.BarChart
-                                                                android:id="@+id/stockListBarChart"
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="400dp"
-                                                                android:layout_margin="2dp"
-                                                                android:visibility="visible" />
-                                                            <LinearLayout
-                                                                android:padding="5dp"
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content">
-                                                                <com.perfect.prodsuit.Helper.FullLenghRecyclertview
-                                                                    android:id="@+id/recyColorsStockList"
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:background="@drawable/svg_dashrect">
-
-                                                                </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
-                                                            </LinearLayout>
-
-
-                                                        </LinearLayout>
-
-
-
-                                                    </LinearLayout>
-
-
-                                                </LinearLayout>
-
-                                                <!-- second-->
-                                                <View
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="1dp"
-                                                    android:background="@color/grey"/>
-
-
-
-
-
-
-                                            </LinearLayout>
-
-                                            <!--comarison list-->
-                                            <LinearLayout
-                                                android:id="@+id/ll_comparison"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:background="@color/white"
-                                                android:orientation="vertical"
-                                                android:visibility="gone">
-
-
-
-                                                <LinearLayout
-                                                    android:layout_weight="1"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:orientation="vertical">
-
-
-
-                                                    <LinearLayout
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="match_parent"
-                                                        android:orientation="vertical">
-
-                                                        <LinearLayout
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:layout_gravity="center"
-                                                            android:orientation="vertical"
-                                                            android:paddingLeft="10dp"
-                                                            android:paddingTop="8dp">
-                                                            <!--                                android:background="@color/purple_700"-->
-                                                            <TextView
-                                                                android:layout_width="wrap_content"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_weight=".8"
-                                                                android:fontFamily="@font/myfont"
-                                                                android:gravity="center"
-                                                                android:text="Sales comparison"
-                                                                android:textAllCaps="true"
-                                                                android:textColor="@color/black"
-                                                                android:textSize="14dp"
-                                                                android:textStyle="bold" />
-
-                                                            <TextView
-                                                                android:visibility="gone"
-                                                                android:layout_width="wrap_content"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_marginTop="-8dp"
-                                                                android:layout_weight=".8"
-                                                                android:fontFamily="@font/myfont"
-                                                                android:gravity="center"
-                                                                android:text="IN PERCENTAGE"
-                                                                android:textAllCaps="true"
-                                                                android:textColor="@color/greydark"
-                                                                android:textSize="8dp"
-                                                                android:textStyle="bold" />
-
-                                                        </LinearLayout>
-
-                                                        <LinearLayout
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="match_parent"
-                                                            android:orientation="vertical">
-
-                                                            <com.github.mikephil.charting.charts.BarChart
-                                                                android:id="@+id/comparisonListBarChart"
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_margin="2dp"
-                                                                android:layout_weight="1.8"
-                                                                android:visibility="visible" />
-                                                            <LinearLayout
-                                                                android:layout_weight="1"
-                                                                android:padding="5dp"
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content">
-                                                                <com.perfect.prodsuit.Helper.FullLenghRecyclertview
-
-                                                                    android:id="@+id/recy_comparisonColor"
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:background="@drawable/svg_dashrect">
-
-                                                                </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
-                                                            </LinearLayout>
-
-
-                                                        </LinearLayout>
-
-
-
-                                                    </LinearLayout>
-
-
-                                                </LinearLayout>
-
-                                            </LinearLayout>
-
-                                            <!--Supplier Wise Purchase-->
-                                            <LinearLayout
-                                                android:id="@+id/ll_SupplierWisePurchase"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:background="@color/white"
-                                                android:orientation="vertical"
-                                                android:visibility="gone">
-
-
-                                                <!-- one-->
-                                                <LinearLayout
-                                                    android:layout_weight="1"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:orientation="vertical">
-
-
-
-                                                    <LinearLayout
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="match_parent"
-                                                        android:orientation="vertical">
-
-                                                        <LinearLayout
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
-                                                            android:layout_gravity="center"
-                                                            android:orientation="vertical"
-                                                            android:paddingLeft="10dp"
-                                                            android:paddingTop="8dp">
-                                                            <!--                                android:background="@color/purple_700"-->
-                                                            <TextView
-                                                                android:layout_width="wrap_content"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_weight=".8"
-                                                                android:fontFamily="@font/myfont"
-                                                                android:gravity="center"
-                                                                android:text="Supplier Wise Purchase"
-                                                                android:textAllCaps="true"
-                                                                android:textColor="@color/black"
-                                                                android:textSize="14dp"
-                                                                android:textStyle="bold" />
-
-                                                            <TextView
-                                                                android:visibility="gone"
-                                                                android:layout_width="wrap_content"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_marginTop="-8dp"
-                                                                android:layout_weight=".8"
-                                                                android:fontFamily="@font/myfont"
-                                                                android:gravity="center"
-                                                                android:text="IN PERCENTAGE"
-                                                                android:textAllCaps="true"
-                                                                android:textColor="@color/greydark"
-                                                                android:textSize="8dp"
-                                                                android:textStyle="bold" />
-
-                                                            <TextView
-
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="30dp"
-                                                                android:layout_gravity="center"
-                                                                android:layout_weight="1"
-                                                                android:fontFamily="@font/myfont"
-                                                                android:gravity="center"
-                                                                android:textColor="@color/white"
-                                                                android:textSize="20dp"
-                                                                android:textStyle="bold"
-                                                                android:visibility="gone" />
-
-                                                            <ImageView
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_gravity="center"
-                                                                android:layout_weight="1"
-                                                                android:gravity="center"
-                                                                android:padding="15dp"
-                                                                android:src="@drawable/dash2"
-                                                                android:tint="@color/white"
-                                                                android:visibility="gone"
-                                                                tools:ignore="UseAppTint" />
-                                                        </LinearLayout>
-
-                                                        <LinearLayout
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="match_parent"
-                                                            android:orientation="vertical">
-
-                                                            <com.github.mikephil.charting.charts.BarChart
-                                                                android:id="@+id/supplierwisepurchaseBarChart"
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_margin="2dp"
-                                                                android:layout_weight="1"
-                                                                android:visibility="visible" />
-                                                            <LinearLayout
-                                                                android:padding="5dp"
-                                                                android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content">
-                                                                <com.perfect.prodsuit.Helper.FullLenghRecyclertview
-                                                                    android:id="@+id/recysupplierwisepurchase"
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:background="@drawable/svg_dashrect">
-
-                                                                </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
-                                                            </LinearLayout>
-
-
-                                                        </LinearLayout>
-
-
-
-                                                    </LinearLayout>
-
-
-                                                </LinearLayout>
-
-                                                <!-- second-->
-                                                <View
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="1dp"
-                                                    android:background="@color/grey"/>
-
-
-
-
-
-
-                                            </LinearLayout>
-
-                                            <!--Product Reorder Level-->
-                                            <LinearLayout
-                                                android:id="@+id/ll_product_reorder"
-                                                android:layout_marginTop="10dp"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:background="@color/white"
-                                                android:orientation="vertical"
+                                                android:layout_margin="3dp"
+                                                app:cardBackgroundColor="@color/white"
                                                 android:visibility="visible">
 
-                                                <LinearLayout
-                                                    android:layout_weight="1"
+                                                <ScrollView
                                                     android:layout_width="match_parent"
-                                                    android:layout_height="wrap_content"
-                                                    android:orientation="vertical">
-
-
+                                                    android:layout_height="match_parent"
+                                                    android:fillViewport="true">
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
+                                                        android:layout_height="match_parent"
                                                         android:orientation="vertical">
 
                                                         <LinearLayout
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
-                                                            android:layout_gravity="center"
-                                                            android:orientation="vertical"
-                                                            android:paddingLeft="10dp"
-                                                            android:paddingTop="8dp">
-                                                            <!--                                android:background="@color/purple_700"-->
-                                                            <TextView
-                                                                android:layout_width="wrap_content"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_weight=".8"
-                                                                android:fontFamily="@font/myfont"
-                                                                android:gravity="center"
-                                                                android:text="Product Reorder Level"
-                                                                android:textAllCaps="true"
-                                                                android:textColor="@color/black"
-                                                                android:textSize="13dp"
-                                                                android:textStyle="bold" />
-
-                                                            <TextView
-                                                                android:visibility="gone"
-                                                                android:layout_width="wrap_content"
-                                                                android:layout_height="wrap_content"
-                                                                android:layout_marginTop="-8dp"
-                                                                android:layout_weight=".8"
-                                                                android:fontFamily="@font/myfont"
-                                                                android:gravity="center"
-                                                                android:text="IN PERCENTAGE"
-                                                                android:textAllCaps="true"
-                                                                android:textColor="@color/greydark"
-                                                                android:textSize="8dp"
-                                                                android:textStyle="bold" />
-
-
-
-                                                        </LinearLayout>
-
-                                                        <LinearLayout
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="1dp"
-                                                            android:background="@color/grey"/>
-                                                        <LinearLayout
-                                                            android:layout_width="match_parent"
-                                                            android:layout_height="wrap_content"
                                                             android:orientation="vertical">
 
-                                                            <com.github.mikephil.charting.charts.BarChart
+                                                            <AutoCompleteTextView
+                                                                android:id="@+id/actv_mode"
                                                                 android:layout_width="match_parent"
-                                                                android:layout_height="150dp"
-                                                                android:layout_margin="2dp"
-                                                                android:layout_weight="1"
-                                                                android:visibility="gone" />
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_marginTop="20dp"
+                                                                android:layout_marginLeft="13dp"
+                                                                android:layout_marginRight="13dp"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:padding="10dp"
+                                                                android:hint="Please Select"
+                                                                android:drawablePadding="5dp"
+                                                                android:drawableStart="@drawable/dash_icon"
+                                                                android:focusableInTouchMode="false"
+                                                                android:textSize="16sp"
+                                                                android:drawableEnd="@drawable/down_arrows"
+                                                                android:text=""
+                                                                android:background="@drawable/bg_dash2"
+                                                                android:layout_gravity="center"/>
+                                                        </LinearLayout>
+
+
 
                                                             <LinearLayout
-                                                                android:visibility="visible"
+                                                                android:id="@+id/ll_monthlygraph"
+                                                                android:layout_marginTop="10dp"
                                                                 android:layout_width="match_parent"
                                                                 android:layout_height="match_parent"
-                                                                android:layout_weight="3"
-                                                                android:background="@color/leadbg_color"
-                                                                android:gravity="center"
-                                                                android:orientation="horizontal">
+                                                                android:background="@color/white"
+                                                                android:orientation="vertical"
+                                                                android:visibility="gone">
 
-                                                                <LinearLayout
-                                                                    android:layout_width="1dp"
-                                                                    android:layout_height="40dp"
-                                                                    android:background="@color/grey"/>
-                                                                <TextView
-                                                                    android:id="@+id/tvv_prl_slnmbr"
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:paddingStart="5dp"
-                                                                    android:fontFamily="@font/myfont"
-                                                                    android:gravity="center"
-                                                                    android:layout_weight="1.3"
-                                                                    android:textSize="13dp"
-                                                                    android:textColor="@color/black"
-                                                                    android:text="Sl.No"/>
 
+                                                                <!-- one-->
                                                                 <LinearLayout
-                                                                    android:layout_width="1dp"
-                                                                    android:layout_height="40dp"
-                                                                    android:background="@color/grey"/>
-                                                                <TextView
-                                                                    android:id="@+id/tvv_prl_product"
-                                                                    android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:paddingStart="5dp"
-                                                                    android:gravity="center"
-                                                                    android:fontFamily="@font/myfont"
                                                                     android:layout_weight="1"
-                                                                    android:textSize="13dp"
-                                                                    android:textColor="@color/black"
-                                                                    android:text="Product"/>
-
-                                                                <LinearLayout
-                                                                    android:layout_width="1dp"
-                                                                    android:layout_height="40dp"
-                                                                    android:background="@color/grey"/>
-                                                                <TextView
-                                                                    android:id="@+id/tvv_prl_reorderlevel"
                                                                     android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:layout_weight="1"
-                                                                    android:gravity="center"
-                                                                    android:paddingStart="5dp"
-                                                                    android:text="Reorder level"
-                                                                    android:textSize="13dp"
-                                                                    android:textColor="@color/black"
-                                                                    android:fontFamily="@font/myfont"/>
+                                                                    android:layout_height="match_parent"
+                                                                    android:orientation="vertical">
 
-                                                                <LinearLayout
-                                                                    android:layout_width="1dp"
-                                                                    android:layout_height="40dp"
-                                                                    android:background="@color/grey"/>
-                                                                <TextView
-                                                                    android:id="@+id/tvv_prl_currentstock"
+                                                                    <LinearLayout
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:orientation="vertical"
+                                                                        android:background="#E6F1F2">
+
+                                                                        <LinearLayout
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:orientation="horizontal">
+
+                                                                            <TextView
+                                                                                android:id="@+id/tvv_head_monthly"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:layout_weight="1"
+                                                                                android:text=""
+                                                                                android:textColor="@color/colorPrimary"
+                                                                                android:gravity="start"
+                                                                                android:paddingLeft="5dp"
+                                                                                android:paddingTop="5dp"
+                                                                                android:layout_gravity="center"
+                                                                                android:fontFamily="@font/myfont"
+                                                                                android:textStyle="bold"
+                                                                                android:textAllCaps="false"
+                                                                                android:textSize="16dp"
+                                                                                android:visibility="visible"/>
+
+                                                                            <TextView
+                                                                                android:id="@+id/tvv_monthly_more"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:paddingTop="2dp"
+                                                                                android:paddingBottom="2dp"
+                                                                                android:layout_gravity="center"
+                                                                                android:layout_margin="5dp"
+                                                                                android:layout_weight="2.8"
+                                                                                android:background="@drawable/btn_bgcolour"
+                                                                                android:drawableRight="@drawable/dash_more"
+                                                                                android:fontFamily="@font/myfont"
+                                                                                android:gravity="center"
+                                                                                android:paddingEnd="10dp"
+                                                                                android:text="More"
+                                                                                android:textAllCaps="false"
+                                                                                android:textColor="@color/white"
+                                                                                android:textSize="15sp"
+                                                                                android:textStyle="bold"
+                                                                                android:visibility="visible" />
+
+
+                                                                        </LinearLayout>
+
+
+
+                                                                        <TextView
+                                                                            android:id="@+id/tv_remarkMonthly"
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_gravity="center_vertical"
+                                                                            android:paddingLeft="5dp"
+                                                                            android:layout_marginTop="-7dp"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center_vertical"
+                                                                            android:text=""
+                                                                            android:textAllCaps="false"
+                                                                            android:textColor="@color/colorPrimary"
+                                                                            android:textSize="13dp"
+                                                                            android:textStyle="normal"
+                                                                            android:tint="@color/black" />
+
+
+                                                                    </LinearLayout>
+
+                                                                    <LinearLayout
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="match_parent"
+                                                                        android:orientation="vertical">
+
+                                                                        <LinearLayout
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_gravity="center"
+                                                                            android:orientation="vertical"
+                                                                            android:paddingLeft="10dp"
+                                                                            android:paddingTop="8dp">
+                                                                            <!--                                android:background="@color/purple_700"-->
+                                                                            <TextView
+                                                                                android:layout_width="wrap_content"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:layout_weight=".8"
+                                                                                android:fontFamily="@font/myfont"
+                                                                                android:gravity="center"
+                                                                                android:text="Monthly sale graph"
+                                                                                android:textAllCaps="true"
+                                                                                android:visibility="gone"
+                                                                                android:textColor="@color/black"
+                                                                                android:textSize="14dp"
+                                                                                android:textStyle="bold" />
+
+                                                                            <TextView
+                                                                                android:visibility="gone"
+                                                                                android:layout_width="wrap_content"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:layout_marginTop="-8dp"
+                                                                                android:layout_weight=".8"
+                                                                                android:fontFamily="@font/myfont"
+                                                                                android:gravity="center"
+                                                                                android:text="IN PERCENTAGE"
+                                                                                android:textAllCaps="true"
+                                                                                android:textColor="@color/greydark"
+                                                                                android:textSize="8dp"
+                                                                                android:textStyle="bold" />
+
+                                                                            <TextView
+                                                                                android:id="@+id/tv_leadStageTotal"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="30dp"
+                                                                                android:layout_gravity="center"
+                                                                                android:layout_weight="1"
+                                                                                android:fontFamily="@font/myfont"
+                                                                                android:gravity="center"
+                                                                                android:textColor="@color/white"
+                                                                                android:textSize="20dp"
+                                                                                android:textStyle="bold"
+                                                                                android:visibility="gone" />
+
+                                                                            <ImageView
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:layout_gravity="center"
+                                                                                android:layout_weight="1"
+                                                                                android:gravity="center"
+                                                                                android:padding="15dp"
+                                                                                android:src="@drawable/dash2"
+                                                                                android:tint="@color/white"
+                                                                                android:visibility="gone"
+                                                                                tools:ignore="UseAppTint" />
+                                                                        </LinearLayout>
+
+                                                                        <LinearLayout
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="match_parent"
+                                                                            android:orientation="vertical">
+
+                                                                            <com.github.mikephil.charting.charts.BarChart
+                                                                                android:id="@+id/MonthlybarChart"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="match_parent"
+                                                                                android:layout_margin="2dp"
+                                                                                android:layout_weight="1"
+                                                                                android:visibility="visible" />
+                                                                            <LinearLayout
+                                                                                android:id="@+id/ll_monthlyRecy"
+                                                                                android:padding="5dp"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="wrap_content">
+                                                                                <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                                                                                    android:id="@+id/recyColors"
+                                                                                    android:layout_width="match_parent"
+                                                                                    android:layout_height="match_parent"
+                                                                                    android:background="@drawable/svg_dashrect">
+
+                                                                                </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                                            </LinearLayout>
+
+
+                                                                        </LinearLayout>
+
+
+
+                                                                    </LinearLayout>
+
+
+                                                                </LinearLayout>
+
+                                                                <!-- second-->
+                                                                <View
                                                                     android:layout_width="match_parent"
-                                                                    android:layout_height="wrap_content"
-                                                                    android:layout_weight="1.2"
-                                                                    android:gravity="center"
-                                                                    android:paddingStart="5dp"
-                                                                    android:text="Current Stock"
-                                                                    android:textSize="13dp"
-                                                                    android:textColor="@color/black"
-                                                                    android:fontFamily="@font/myfont"/>
-                                                                <LinearLayout
-                                                                    android:layout_width="1dp"
-                                                                    android:layout_height="40dp"
+                                                                    android:layout_height="1dp"
                                                                     android:background="@color/grey"/>
+
+
+
+
 
 
                                                             </LinearLayout>
 
-                                                            <androidx.recyclerview.widget.RecyclerView
-                                                                android:id="@+id/recyclr_colom"
+
+                                                        <!--monthly sale-->
+
+
+                                                        <!--stock list-->
+
+
+
+                                                            <LinearLayout
+                                                                android:id="@+id/ll_stock"
+                                                                android:layout_marginTop="10dp"
                                                                 android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"/>
-                                                        </LinearLayout>
+                                                                android:layout_height="match_parent"
+                                                                android:background="@color/white"
+                                                                android:orientation="vertical"
+                                                                android:visibility="visible">
+
+
+                                                                <!-- one-->
+                                                                <LinearLayout
+                                                                    android:layout_weight="1"
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="match_parent"
+                                                                    android:orientation="vertical">
+
+                                                                    <LinearLayout
+                                                                        android:visibility="gone"
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:orientation="vertical"
+                                                                        android:background="#E6F1F2">
+
+                                                                        <LinearLayout
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:orientation="horizontal">
+
+                                                                            <TextView
+                                                                                android:id="@+id/tvv_topSellingHead1"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:layout_weight="1"
+                                                                                android:text=""
+                                                                                android:textColor="@color/colorPrimary"
+                                                                                android:gravity="start"
+                                                                                android:paddingLeft="5dp"
+                                                                                android:paddingTop="5dp"
+                                                                                android:layout_gravity="center"
+                                                                                android:fontFamily="@font/myfont"
+                                                                                android:textStyle="bold"
+                                                                                android:textAllCaps="false"
+                                                                                android:textSize="16dp"
+                                                                                android:visibility="visible"/>
+
+                                                                            <TextView
+                                                                                android:id="@+id/tvv_topselling_more1"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:paddingTop="2dp"
+                                                                                android:paddingBottom="2dp"
+                                                                                android:layout_gravity="center"
+                                                                                android:layout_margin="5dp"
+                                                                                android:layout_weight="2.8"
+                                                                                android:background="@drawable/btn_bgcolour"
+                                                                                android:drawableRight="@drawable/dash_more"
+                                                                                android:fontFamily="@font/myfont"
+                                                                                android:gravity="center"
+                                                                                android:paddingEnd="10dp"
+                                                                                android:text="More"
+                                                                                android:textAllCaps="false"
+                                                                                android:textColor="@color/white"
+                                                                                android:textSize="15sp"
+                                                                                android:textStyle="bold"
+                                                                                android:visibility="visible" />
+
+
+                                                                        </LinearLayout>
+
+
+
+                                                                        <TextView
+                                                                            android:id="@+id/tv_remarkTopselling1"
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_gravity="center_vertical"
+                                                                            android:paddingLeft="5dp"
+                                                                            android:layout_marginTop="-7dp"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center_vertical"
+                                                                            android:text=""
+                                                                            android:textAllCaps="false"
+                                                                            android:textColor="@color/colorPrimary"
+                                                                            android:textSize="13dp"
+                                                                            android:textStyle="normal"
+                                                                            android:tint="@color/black" />
+
+
+                                                                    </LinearLayout>
+
+
+
+                                                                    <LinearLayout
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="match_parent"
+                                                                        android:orientation="vertical">
+
+                                                                        <LinearLayout
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_gravity="center"
+                                                                            android:orientation="vertical"
+                                                                            android:paddingLeft="10dp"
+                                                                            android:paddingTop="8dp">
+                                                                            <!--                                android:background="@color/purple_700"-->
+                                                                            <TextView
+                                                                                android:layout_width="wrap_content"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:layout_weight=".8"
+                                                                                android:fontFamily="@font/myfont"
+                                                                                android:gravity="center"
+                                                                                android:text="Stock List ( category )"
+                                                                                android:textAllCaps="true"
+                                                                                android:visibility="gone"
+                                                                                android:textColor="@color/black"
+                                                                                android:textSize="14dp"
+                                                                                android:textStyle="bold" />
+
+                                                                            <TextView
+                                                                                android:visibility="gone"
+                                                                                android:layout_width="wrap_content"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:layout_marginTop="-8dp"
+                                                                                android:layout_weight=".8"
+                                                                                android:fontFamily="@font/myfont"
+                                                                                android:gravity="center"
+                                                                                android:text="IN PERCENTAGE"
+                                                                                android:textAllCaps="true"
+                                                                                android:textColor="@color/greydark"
+                                                                                android:textSize="8dp"
+                                                                                android:textStyle="bold" />
+
+                                                                            <TextView
+
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="30dp"
+                                                                                android:layout_gravity="center"
+                                                                                android:layout_weight="1"
+                                                                                android:fontFamily="@font/myfont"
+                                                                                android:gravity="center"
+                                                                                android:textColor="@color/white"
+                                                                                android:textSize="20dp"
+                                                                                android:textStyle="bold"
+                                                                                android:visibility="gone" />
+
+                                                                            <ImageView
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:layout_gravity="center"
+                                                                                android:layout_weight="1"
+                                                                                android:gravity="center"
+                                                                                android:padding="15dp"
+                                                                                android:src="@drawable/dash2"
+                                                                                android:tint="@color/white"
+                                                                                android:visibility="gone"
+                                                                                tools:ignore="UseAppTint" />
+                                                                        </LinearLayout>
+
+                                                                        <LinearLayout
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="match_parent"
+                                                                            android:orientation="vertical">
+
+                                                                            <com.github.mikephil.charting.charts.BarChart
+                                                                                android:id="@+id/stockListBarChart"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="400dp"
+                                                                                android:layout_margin="2dp"
+                                                                                android:visibility="visible" />
+                                                                            <LinearLayout
+                                                                                android:id="@+id/ll_topselling1"
+                                                                                android:padding="5dp"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="match_parent"
+                                                                                android:layout_margin="5dp">
+                                                                                <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                                                                                    android:id="@+id/recyColorsStockList"
+                                                                                    android:layout_width="match_parent"
+                                                                                    android:layout_height="wrap_content"
+                                                                                    android:background="@drawable/svg_dashrect">
+
+                                                                                </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                                            </LinearLayout>
+
+
+                                                                        </LinearLayout>
+
+
+
+                                                                    </LinearLayout>
+
+
+                                                                </LinearLayout>
+
+                                                                <!-- second-->
+                                                                <View
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="1dp"
+                                                                    android:background="@color/grey"/>
+
+
+
+
+
+
+                                                            </LinearLayout>
+
+
+
+
+                                                        <!--comarison list-->
                                                         <LinearLayout
+                                                            android:id="@+id/ll_comparison"
+                                                            android:layout_marginTop="10dp"
                                                             android:layout_width="match_parent"
-                                                            android:layout_height="1dp"
-                                                            android:background="@color/grey"/>
+                                                            android:layout_height="match_parent"
+                                                            android:background="@color/white"
+                                                            android:orientation="vertical"
+                                                            android:visibility="gone">
+
+
+
+                                                            <LinearLayout
+                                                                android:layout_weight="1"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="match_parent"
+                                                                android:orientation="vertical">
+
+
+
+                                                                <LinearLayout
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="match_parent"
+                                                                    android:orientation="vertical">
+
+                                                                    <LinearLayout
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:layout_gravity="center"
+                                                                        android:orientation="vertical"
+                                                                        android:paddingLeft="10dp"
+                                                                        android:paddingTop="8dp">
+                                                                        <!--                                android:background="@color/purple_700"-->
+                                                                        <TextView
+                                                                            android:layout_width="wrap_content"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_weight=".8"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center"
+                                                                            android:text="Sales comparison"
+                                                                            android:textAllCaps="true"
+                                                                            android:textColor="@color/black"
+                                                                            android:textSize="14dp"
+                                                                            android:textStyle="bold" />
+
+                                                                        <TextView
+                                                                            android:visibility="gone"
+                                                                            android:layout_width="wrap_content"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_marginTop="-8dp"
+                                                                            android:layout_weight=".8"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center"
+                                                                            android:text="IN PERCENTAGE"
+                                                                            android:textAllCaps="true"
+                                                                            android:textColor="@color/greydark"
+                                                                            android:textSize="8dp"
+                                                                            android:textStyle="bold" />
+
+                                                                    </LinearLayout>
+
+                                                                    <LinearLayout
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="match_parent"
+                                                                        android:orientation="vertical">
+
+                                                                        <com.github.mikephil.charting.charts.BarChart
+                                                                            android:id="@+id/comparisonListBarChart"
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_margin="2dp"
+                                                                            android:layout_weight="1.8"
+                                                                            android:visibility="visible" />
+                                                                        <LinearLayout
+                                                                            android:layout_weight="1"
+                                                                            android:padding="5dp"
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content">
+                                                                            <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+
+                                                                                android:id="@+id/recy_comparisonColor"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:background="@drawable/svg_dashrect">
+
+                                                                            </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                                        </LinearLayout>
+
+
+                                                                    </LinearLayout>
+
+
+
+                                                                </LinearLayout>
+
+
+                                                            </LinearLayout>
+
+                                                        </LinearLayout>
+
+                                                        <!--Supplier Wise Purchase-->
+                                                        <LinearLayout
+                                                            android:id="@+id/ll_SupplierWisePurchase"
+                                                            android:layout_marginTop="10dp"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:background="@color/white"
+                                                            android:orientation="vertical"
+                                                            android:visibility="gone">
+
+
+                                                            <!-- one-->
+                                                            <LinearLayout
+                                                                android:layout_weight="1"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="match_parent"
+                                                                android:orientation="vertical">
+
+
+
+                                                                <LinearLayout
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="match_parent"
+                                                                    android:orientation="vertical">
+
+                                                                    <LinearLayout
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:layout_gravity="center"
+                                                                        android:orientation="vertical"
+                                                                        android:paddingLeft="10dp"
+                                                                        android:paddingTop="8dp">
+                                                                        <!--                                android:background="@color/purple_700"-->
+                                                                        <TextView
+                                                                            android:layout_width="wrap_content"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_weight=".8"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center"
+                                                                            android:text="Supplier Wise Purchase"
+                                                                            android:textAllCaps="true"
+                                                                            android:textColor="@color/black"
+                                                                            android:textSize="14dp"
+                                                                            android:textStyle="bold" />
+
+                                                                        <TextView
+                                                                            android:visibility="gone"
+                                                                            android:layout_width="wrap_content"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_marginTop="-8dp"
+                                                                            android:layout_weight=".8"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center"
+                                                                            android:text="IN PERCENTAGE"
+                                                                            android:textAllCaps="true"
+                                                                            android:textColor="@color/greydark"
+                                                                            android:textSize="8dp"
+                                                                            android:textStyle="bold" />
+
+                                                                        <TextView
+
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="30dp"
+                                                                            android:layout_gravity="center"
+                                                                            android:layout_weight="1"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center"
+                                                                            android:textColor="@color/white"
+                                                                            android:textSize="20dp"
+                                                                            android:textStyle="bold"
+                                                                            android:visibility="gone" />
+
+                                                                        <ImageView
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_gravity="center"
+                                                                            android:layout_weight="1"
+                                                                            android:gravity="center"
+                                                                            android:padding="15dp"
+                                                                            android:src="@drawable/dash2"
+                                                                            android:tint="@color/white"
+                                                                            android:visibility="gone"
+                                                                            tools:ignore="UseAppTint" />
+                                                                    </LinearLayout>
+
+                                                                    <LinearLayout
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="match_parent"
+                                                                        android:orientation="vertical">
+
+                                                                        <com.github.mikephil.charting.charts.BarChart
+                                                                            android:id="@+id/supplierwisepurchaseBarChart"
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_margin="2dp"
+                                                                            android:layout_weight="1"
+                                                                            android:visibility="visible" />
+                                                                        <LinearLayout
+                                                                            android:padding="5dp"
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content">
+                                                                            <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                                                                                android:id="@+id/recysupplierwisepurchase"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:background="@drawable/svg_dashrect">
+
+                                                                            </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                                        </LinearLayout>
+
+
+                                                                    </LinearLayout>
+
+
+
+                                                                </LinearLayout>
+
+
+                                                            </LinearLayout>
+
+                                                            <!-- second-->
+                                                            <View
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="1dp"
+                                                                android:background="@color/grey"/>
+
+
+
+
+
+
+                                                        </LinearLayout>
+
+                                                        <!--Product Reorder Level-->
+                                                        <LinearLayout
+                                                            android:id="@+id/ll_product_reorder"
+                                                            android:layout_marginTop="10dp"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:background="@color/white"
+                                                            android:orientation="vertical"
+                                                            android:visibility="gone">
+
+                                                            <LinearLayout
+                                                                android:layout_weight="1"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:orientation="vertical">
+
+
+
+                                                                <LinearLayout
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:orientation="vertical">
+
+                                                                    <LinearLayout
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:layout_gravity="center"
+                                                                        android:orientation="vertical"
+                                                                        android:paddingLeft="10dp"
+                                                                        android:paddingTop="8dp">
+                                                                        <!--                                android:background="@color/purple_700"-->
+                                                                        <TextView
+                                                                            android:layout_width="wrap_content"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_weight=".8"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center"
+                                                                            android:text="Product Reorder Level"
+                                                                            android:textAllCaps="true"
+                                                                            android:textColor="@color/black"
+                                                                            android:textSize="13dp"
+                                                                            android:textStyle="bold" />
+
+                                                                        <TextView
+                                                                            android:visibility="gone"
+                                                                            android:layout_width="wrap_content"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_marginTop="-8dp"
+                                                                            android:layout_weight=".8"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center"
+                                                                            android:text="IN PERCENTAGE"
+                                                                            android:textAllCaps="true"
+                                                                            android:textColor="@color/greydark"
+                                                                            android:textSize="8dp"
+                                                                            android:textStyle="bold" />
+
+
+
+                                                                    </LinearLayout>
+
+                                                                    <LinearLayout
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="1dp"
+                                                                        android:background="@color/grey"/>
+                                                                    <LinearLayout
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:orientation="vertical">
+
+                                                                        <com.github.mikephil.charting.charts.BarChart
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="150dp"
+                                                                            android:layout_margin="2dp"
+                                                                            android:layout_weight="1"
+                                                                            android:visibility="gone" />
+
+                                                                        <LinearLayout
+                                                                            android:visibility="visible"
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="match_parent"
+                                                                            android:layout_weight="3"
+                                                                            android:background="@color/leadbg_color"
+                                                                            android:gravity="center"
+                                                                            android:orientation="horizontal">
+
+                                                                            <LinearLayout
+                                                                                android:layout_width="1dp"
+                                                                                android:layout_height="40dp"
+                                                                                android:background="@color/grey"/>
+                                                                            <TextView
+                                                                                android:id="@+id/tvv_prl_slnmbr"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:paddingStart="5dp"
+                                                                                android:fontFamily="@font/myfont"
+                                                                                android:gravity="center"
+                                                                                android:layout_weight="1.3"
+                                                                                android:textSize="13dp"
+                                                                                android:textColor="@color/black"
+                                                                                android:text="Sl.No"/>
+
+                                                                            <LinearLayout
+                                                                                android:layout_width="1dp"
+                                                                                android:layout_height="40dp"
+                                                                                android:background="@color/grey"/>
+                                                                            <TextView
+                                                                                android:id="@+id/tvv_prl_product"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:paddingStart="5dp"
+                                                                                android:gravity="center"
+                                                                                android:fontFamily="@font/myfont"
+                                                                                android:layout_weight="1"
+                                                                                android:textSize="13dp"
+                                                                                android:textColor="@color/black"
+                                                                                android:text="Product"/>
+
+                                                                            <LinearLayout
+                                                                                android:layout_width="1dp"
+                                                                                android:layout_height="40dp"
+                                                                                android:background="@color/grey"/>
+                                                                            <TextView
+                                                                                android:id="@+id/tvv_prl_reorderlevel"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:layout_weight="1"
+                                                                                android:gravity="center"
+                                                                                android:paddingStart="5dp"
+                                                                                android:text="Reorder level"
+                                                                                android:textSize="13dp"
+                                                                                android:textColor="@color/black"
+                                                                                android:fontFamily="@font/myfont"/>
+
+                                                                            <LinearLayout
+                                                                                android:layout_width="1dp"
+                                                                                android:layout_height="40dp"
+                                                                                android:background="@color/grey"/>
+                                                                            <TextView
+                                                                                android:id="@+id/tvv_prl_currentstock"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:layout_weight="1.2"
+                                                                                android:gravity="center"
+                                                                                android:paddingStart="5dp"
+                                                                                android:text="Current Stock"
+                                                                                android:textSize="13dp"
+                                                                                android:textColor="@color/black"
+                                                                                android:fontFamily="@font/myfont"/>
+                                                                            <LinearLayout
+                                                                                android:layout_width="1dp"
+                                                                                android:layout_height="40dp"
+                                                                                android:background="@color/grey"/>
+
+
+                                                                        </LinearLayout>
+
+                                                                        <androidx.recyclerview.widget.RecyclerView
+                                                                            android:id="@+id/recyclr_colom"
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content"/>
+                                                                    </LinearLayout>
+                                                                    <LinearLayout
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="1dp"
+                                                                        android:background="@color/grey"/>
+
+                                                                </LinearLayout>
+
+
+                                                            </LinearLayout>
+
+
+
+                                                        </LinearLayout>
+
+                                                        <!--Top Selling Item Graph-->
+                                                        <LinearLayout
+                                                            android:id="@+id/ll_topsellingItem"
+                                                            android:layout_marginTop="10dp"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:background="@color/white"
+                                                            android:orientation="vertical"
+                                                            android:visibility="gone">
+
+
+                                                            <!-- one-->
+                                                            <LinearLayout
+                                                                android:layout_weight="1"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="match_parent"
+                                                                android:orientation="vertical">
+
+
+
+                                                                <LinearLayout
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="match_parent"
+                                                                    android:orientation="vertical">
+
+                                                                    <LinearLayout
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:layout_gravity="center"
+                                                                        android:orientation="vertical"
+                                                                        android:paddingLeft="10dp"
+                                                                        android:paddingTop="8dp">
+                                                                        <!--                                android:background="@color/purple_700"-->
+                                                                        <TextView
+                                                                            android:layout_width="wrap_content"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_weight=".8"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center"
+                                                                            android:text=""
+                                                                            android:textAllCaps="true"
+                                                                            android:textColor="@color/black"
+                                                                            android:textSize="14dp"
+                                                                            android:textStyle="bold" />
+
+                                                                        <TextView
+                                                                            android:visibility="gone"
+                                                                            android:layout_width="wrap_content"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_marginTop="-8dp"
+                                                                            android:layout_weight=".8"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center"
+                                                                            android:text="IN PERCENTAGE"
+                                                                            android:textAllCaps="true"
+                                                                            android:textColor="@color/greydark"
+                                                                            android:textSize="8dp"
+                                                                            android:textStyle="bold" />
+
+                                                                        <TextView
+
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="30dp"
+                                                                            android:layout_gravity="center"
+                                                                            android:layout_weight="1"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center"
+                                                                            android:textColor="@color/white"
+                                                                            android:textSize="20dp"
+                                                                            android:textStyle="bold"
+                                                                            android:visibility="gone" />
+
+                                                                        <ImageView
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_gravity="center"
+                                                                            android:layout_weight="1"
+                                                                            android:gravity="center"
+                                                                            android:padding="15dp"
+                                                                            android:src="@drawable/dash2"
+                                                                            android:tint="@color/white"
+                                                                            android:visibility="gone"
+                                                                            tools:ignore="UseAppTint" />
+                                                                    </LinearLayout>
+
+                                                                    <LinearLayout
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="match_parent"
+                                                                        android:orientation="vertical">
+
+                                                                        <com.github.mikephil.charting.charts.BarChart
+                                                                            android:id="@+id/topSellingbarChart"
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="400dp"
+                                                                            android:layout_margin="2dp"
+                                                                            android:visibility="visible" />
+                                                                        <TextView
+                                                                            android:id="@+id/tv_topselling"
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_gravity="center_vertical"
+                                                                            android:layout_marginLeft="10dp"
+                                                                            android:layout_marginTop="10dp"
+                                                                            android:layout_marginRight="10dp"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center_vertical"
+                                                                            android:text=""
+                                                                            android:textAllCaps="false"
+                                                                            android:textColor="@color/black"
+                                                                            android:textSize="14dp"
+                                                                            android:textStyle="bold"
+                                                                            android:tint="@color/black" />
+                                                                        <LinearLayout
+                                                                            android:padding="5dp"
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content">
+                                                                            <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                                                                                android:id="@+id/recyColors_topselling"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:layout_margin="5dp"
+                                                                                android:padding="5dp"
+                                                                                android:background="@drawable/svg_dashrect">
+
+                                                                            </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                                        </LinearLayout>
+
+
+                                                                    </LinearLayout>
+
+
+
+                                                                </LinearLayout>
+
+
+                                                            </LinearLayout>
+
+                                                            <!-- second-->
+                                                            <View
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="1dp"
+                                                                android:background="@color/grey"/>
+
+
+
+
+
+
+                                                        </LinearLayout>
+
+                                                        <!--Top Supplier Graph-->
+                                                        <LinearLayout
+                                                            android:id="@+id/ll_topSupplier"
+                                                            android:layout_marginTop="10dp"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="match_parent"
+                                                            android:background="@color/white"
+                                                            android:orientation="vertical"
+                                                            android:visibility="gone">
+
+
+                                                            <!-- one-->
+                                                            <LinearLayout
+                                                                android:layout_weight="1"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="match_parent"
+                                                                android:orientation="vertical">
+
+
+
+                                                                <LinearLayout
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="match_parent"
+                                                                    android:orientation="vertical">
+
+                                                                    <LinearLayout
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:layout_gravity="center"
+                                                                        android:orientation="vertical"
+                                                                        android:paddingLeft="10dp"
+                                                                        android:paddingTop="8dp">
+                                                                        <!--                                android:background="@color/purple_700"-->
+                                                                        <TextView
+                                                                            android:layout_width="wrap_content"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_weight=".8"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center"
+                                                                            android:text="Top Supplier List"
+                                                                            android:textAllCaps="true"
+                                                                            android:textColor="@color/black"
+                                                                            android:textSize="14dp"
+                                                                            android:textStyle="bold" />
+
+                                                                        <TextView
+                                                                            android:visibility="gone"
+                                                                            android:layout_width="wrap_content"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_marginTop="-8dp"
+                                                                            android:layout_weight=".8"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center"
+                                                                            android:text="IN PERCENTAGE"
+                                                                            android:textAllCaps="true"
+                                                                            android:textColor="@color/greydark"
+                                                                            android:textSize="8dp"
+                                                                            android:textStyle="bold" />
+
+                                                                        <TextView
+
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="30dp"
+                                                                            android:layout_gravity="center"
+                                                                            android:layout_weight="1"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center"
+                                                                            android:textColor="@color/white"
+                                                                            android:textSize="20dp"
+                                                                            android:textStyle="bold"
+                                                                            android:visibility="gone" />
+
+                                                                        <ImageView
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_gravity="center"
+                                                                            android:layout_weight="1"
+                                                                            android:gravity="center"
+                                                                            android:padding="15dp"
+                                                                            android:src="@drawable/dash2"
+                                                                            android:tint="@color/white"
+                                                                            android:visibility="gone"
+                                                                            tools:ignore="UseAppTint" />
+                                                                    </LinearLayout>
+
+                                                                    <LinearLayout
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="match_parent"
+                                                                        android:orientation="vertical">
+
+                                                                        <com.github.mikephil.charting.charts.BarChart
+                                                                            android:id="@+id/topSupplierbarChart"
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="400dp"
+                                                                            android:layout_margin="2dp"
+                                                                            android:visibility="visible" />
+                                                                        <TextView
+                                                                            android:id="@+id/tv_topsupplier"
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content"
+                                                                            android:layout_gravity="center_vertical"
+                                                                            android:layout_marginLeft="10dp"
+                                                                            android:layout_marginTop="10dp"
+                                                                            android:layout_marginRight="10dp"
+                                                                            android:fontFamily="@font/myfont"
+                                                                            android:gravity="center_vertical"
+                                                                            android:text=""
+                                                                            android:textAllCaps="false"
+                                                                            android:textColor="@color/black"
+                                                                            android:textSize="14dp"
+                                                                            android:textStyle="bold"
+                                                                            android:tint="@color/black" />
+                                                                        <LinearLayout
+                                                                            android:padding="5dp"
+                                                                            android:layout_width="match_parent"
+                                                                            android:layout_height="wrap_content">
+                                                                            <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                                                                                android:id="@+id/recyColors_topSupplier"
+                                                                                android:layout_width="match_parent"
+                                                                                android:layout_height="wrap_content"
+                                                                                android:layout_margin="5dp"
+                                                                                android:padding="5dp"
+                                                                                android:background="@drawable/svg_dashrect">
+
+                                                                            </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                                        </LinearLayout>
+
+
+                                                                    </LinearLayout>
+
+
+
+                                                                </LinearLayout>
+
+
+                                                            </LinearLayout>
+
+                                                            <!-- second-->
+                                                            <View
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="1dp"
+                                                                android:background="@color/grey"/>
+
+
+
+
+
+
+                                                        </LinearLayout>
 
                                                     </LinearLayout>
 
+                                                </ScrollView>
 
-                                                </LinearLayout>
+                                            </androidx.cardview.widget.CardView>
 
 
-
-                                            </LinearLayout>
 
                                         </LinearLayout>
                                         <!--Tile-->

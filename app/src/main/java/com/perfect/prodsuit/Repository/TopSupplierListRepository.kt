@@ -9,10 +9,11 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.LeadCountFollowupModel
-import com.perfect.prodsuit.Model.LeadTileModel
-import com.perfect.prodsuit.Model.ServiceCountModel
+import com.perfect.prodsuit.Model.TopSupplierListModel
+
+
 import com.perfect.prodsuit.R
+
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -23,20 +24,20 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
-object LeadCountFollowupRepository {
+object TopSupplierListRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val leadCountFollowupSetterGetter = MutableLiveData<LeadCountFollowupModel>()
-    val TAG: String = "LeadCountFollowupRepository"
+    val topSupplierSetterGetter = MutableLiveData<TopSupplierListModel>()
+    val TAG: String = "TopSupplierListRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<LeadCountFollowupModel> {
-        getLeadCountFollowup(context)
-        return leadCountFollowupSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<TopSupplierListModel> {
+        getTopSupplierList(context)
+        return topSupplierSetterGetter
     }
 
-    private fun getLeadCountFollowup(context: Context) {
+    private fun getTopSupplierList(context: Context) {
         try {
-            leadCountFollowupSetterGetter.value = LeadCountFollowupModel("")
+            topSupplierSetterGetter.value = TopSupplierListModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -71,29 +72,29 @@ object LeadCountFollowupRepository {
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
 
-             /*   requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("15"))*/
+
                 val sdf = SimpleDateFormat("yyyy-MM-dd")
                 val currentDate = sdf.format(Date())
                 System.out.println(" C DATE is  "+currentDate)
 
-                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
-                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+
+
 
               requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-              //  requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart("40"))
+
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
                 requestObject1.put("FK_Department", ProdsuitApplication.encryptStart(FK_DepartmentSP.getString("FK_Department", null)))
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
+//                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
                 requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-08"))
-                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("8"))
-                requestObject1.put("DashType", ProdsuitApplication.encryptStart("1"))
+                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("29"))
+                requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))
 
 
 
-                Log.e(TAG,"78  getTile  "+requestObject1)
+                Log.e(TAG,"78546  topsellinglist  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -102,8 +103,8 @@ object LeadCountFollowupRepository {
                 requestObject1.toString()
             )
 
-           // val call = apiService.getDashboardDetails(body)
-            val call = apiService.getDashboardTileDetails(body)
+
+            val call = apiService.getTopSupplierList(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -112,11 +113,11 @@ object LeadCountFollowupRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        Log.e(TAG,"  LEAD SCENARIO "+response.body())
-                        val leads = ArrayList<LeadTileModel>()
-                        leads.add(LeadTileModel(response.body()))
-                        val msg = leads[0].message
-                        leadCountFollowupSetterGetter.value = LeadCountFollowupModel(msg)
+                        Log.e(TAG,"  stocklistcategory "+response.body())
+                        val stocklistcategory = ArrayList<TopSupplierListModel>()
+                        stocklistcategory.add(TopSupplierListModel(response.body()))
+                        val msg = stocklistcategory[0].message
+                        topSupplierSetterGetter.value = TopSupplierListModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                         Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
@@ -130,7 +131,7 @@ object LeadCountFollowupRepository {
         }catch (e : Exception){
             e.printStackTrace()
             Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
-           progressDialog!!.dismiss()
+            progressDialog!!.dismiss()
         }
     }
 

@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -38,6 +39,29 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
+
+    private var tvv_head_monthly: TextView? = null
+    private var tvv_monthly_more: TextView? = null
+    private var tv_remarkMonthly: TextView? = null
+    private var ll_monthlyRecy: LinearLayout? = null
+    var monthlyMode    = 0  // 0=more , 1 = less
+
+    private var tvv_topSellingHead: TextView? = null
+    private var tvv_topselling_more: TextView? = null
+    private var tv_remarkTopselling: TextView? = null
+    private var ll_topselling: LinearLayout? = null
+    var topSellingMode    = 0  // 0=more , 1 = less
+
+
+
+
+
+    var drawableMore : Drawable? = null
+    var drawableLess : Drawable? = null
+
+
+
+
     var TAG  ="InventoryGraphActivity"
     lateinit var context: Context
     lateinit var inventoryViewModel: InventoryMonthlySaleViewModel
@@ -93,6 +117,23 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var comparisonListBarChart: BarChart
     var recy_comparisonColor: RecyclerView? = null
 
+    //top selling
+    var topsellingCount = 0
+    var tv_topselling: TextView? = null
+    var recyColors_topselling: RecyclerView? = null
+    private lateinit var topSellingbarChart: BarChart
+    lateinit var topSellingViewModel: TopSellingViewModel
+    lateinit var topSellingItemArrayList: JSONArray
+    private var topSellingGraphBar = ArrayList<TopSellingItemBar>()
+
+    //top supplier
+    var topSupplierCount = 0
+    private lateinit var topSupplierbarChart: BarChart
+    var recyColors_topSupplier: RecyclerView? = null
+    lateinit var topSupplierItemArrayList: JSONArray
+    lateinit var topSupplierViewModel: TopSupplierViewModel
+    private var topSupplierGraphBar = ArrayList<TopSupplierItemBar>()
+
     //Tail
 
     var stockValueDataCount = 0
@@ -113,6 +154,8 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
     private var ll_comparison                 : LinearLayout? = null
     private var ll_SupplierWisePurchase       : LinearLayout? = null
     private var ll_product_reorder            : LinearLayout? = null
+    private var ll_topsellingItem            : LinearLayout? = null
+    private var ll_topSupplier            : LinearLayout? = null
 
     private var tvv_dash: TextView? = null
     private var tvv_tile: TextView? = null
@@ -144,15 +187,30 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
         salesComparisonViewModel = ViewModelProvider(this).get(SalesComparisonViewModel::class.java)
         stockValueDataViewModel = ViewModelProvider(this).get(StockValueDataViewModel::class.java)
         chartTypeViewModel = ViewModelProvider(this).get(ChartTypeViewModel::class.java)
+        topSellingViewModel = ViewModelProvider(this).get(TopSellingViewModel::class.java)
+        topSupplierViewModel = ViewModelProvider(this).get(TopSupplierViewModel::class.java)
 
 
         setRegViews()
         TabMode       = 0
         ContinueMode  = 0
-        hideViews()
+        hideViews()    //......important
 
-        inventorysale = 0
-        getInventorySale()
+
+        //topselling method
+//        topsellingCount = 0
+//        getTopSellingData()
+
+        //top selling
+//        topSupplierCount=0
+//        getTopSupplierData()
+
+//        inventorysale = 0
+//        getInventorySale()
+
+
+
+
 //        getStckListCategory()
 //        getProductReorderLevel()
 //        getStockValueData()
@@ -164,13 +222,39 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+
+
     private fun setRegViews() {
+        ll_monthlyRecy             = findViewById(R.id.ll_monthlyRecy)
+        tvv_head_monthly             = findViewById(R.id.tvv_head_monthly)
+        tvv_monthly_more             = findViewById(R.id.tvv_monthly_more)
+        tv_remarkMonthly             = findViewById(R.id.tv_remarkMonthly)
+
+//        tvv_topSellingHead             = findViewById(R.id.tvv_topSellingHead)
+//        tvv_topselling_more             = findViewById(R.id.tvv_topselling_more)
+//        ll_topselling             = findViewById(R.id.ll_topselling)
+//        tv_remarkTopselling             = findViewById(R.id.tv_remarkTopselling)
+
+
+
+        drawableMore = resources.getDrawable(R.drawable.dash_more, null)
+        drawableLess = resources.getDrawable(R.drawable.dash_less, null)
+
+
         monthlyBarChart             = findViewById<BarChart>(R.id.MonthlybarChart)
         stockListBarChart           = findViewById<BarChart>(R.id.stockListBarChart)
         supplierwisepurchaseBarChart= findViewById<BarChart>(R.id.supplierwisepurchaseBarChart)
+        topSellingbarChart= findViewById<BarChart>(R.id.topSellingbarChart)
+        topSupplierbarChart= findViewById<BarChart>(R.id.topSupplierbarChart)
+
+
+
+
         recysupplierwisepurchase    = findViewById<RecyclerView>(R.id.recysupplierwisepurchase)
         recycColorMonthly           = findViewById<RecyclerView>(R.id.recyColors)
         recyColorsStockList         = findViewById<RecyclerView>(R.id.recyColorsStockList)
+        recyColors_topselling         = findViewById<RecyclerView>(R.id.recyColors_topselling)
+        recyColors_topSupplier         = findViewById<RecyclerView>(R.id.recyColors_topSupplier)
         recyclr_colom               = findViewById(R.id.recyclr_colom)
 
         actv_mode= findViewById<AutoCompleteTextView>(R.id.actv_mode)
@@ -180,8 +264,12 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
         ll_comparison               = findViewById(R.id.ll_comparison)
         ll_SupplierWisePurchase     = findViewById(R.id.ll_SupplierWisePurchase)
         ll_product_reorder          = findViewById(R.id.ll_product_reorder)
+        ll_topsellingItem          = findViewById(R.id.ll_topsellingItem)
+        ll_topSupplier          = findViewById(R.id.ll_topSupplier)
+
         tvv_count                   = findViewById(R.id.tvv_count)
         tvv_tileName                = findViewById(R.id.tvv_tileName)
+        tv_topselling                = findViewById(R.id.tv_topselling)
 
         tvv_dash = findViewById<TextView>(R.id.tvv_dash)
         tvv_tile = findViewById<TextView>(R.id.tvv_tile)
@@ -197,6 +285,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
         tvv_dash!!.setOnClickListener(this)
         tvv_tile!!.setOnClickListener(this)
         actv_mode!!.setOnClickListener(this)
+        tvv_monthly_more!!.setOnClickListener(this)
 //        tvv_prl_slnmbr              = findViewById(R.id.tvv_prl_slnmbr)
 //        tvv_prl_product             = findViewById(R.id.tvv_prl_product)
 //        tvv_prl_reorderlevel        = findViewById(R.id.tvv_prl_reorderlevel)
@@ -209,7 +298,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun getChartModeData() {
         var ReqMode = ""
-        var SubMode = ""
+        var SubMode = "4"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -229,21 +318,74 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   1777   "+msg)
-                                if (jObject.getString("StatusCode") == "-2") {
+                                if (jObject.getString("StatusCode") == "0") {
 
-                                    val jobjt = jObject.getJSONObject("checkDetails")
-                                    chartTypeArrayList = jobjt.getJSONArray("checkDetailsList")
+                                    val jobjt = jObject.getJSONObject("DashBoardNameDetails")
+                                    chartTypeArrayList = jobjt.getJSONArray("DashBoardNameDetailsList")
+                                    Log.e(TAG," 56765657657  "+chartTypeArrayList)
                                     if (chartTypeArrayList.length() > 0){
                                         if (ChartMode == 0){
                                             val jsonObject = chartTypeArrayList.getJSONObject(0)
-                                            ID_ChartMode = jsonObject.getString("ID_Mode")
-                                            actv_mode!!.setText(jsonObject.getString("Mode_Name"))
-                                            Log.e(TAG,"ID_ChartMode  253331   "+ID_ChartMode)
+                                            ID_ChartMode = jsonObject.getString("DashMode")
+                                            actv_mode!!.setText(jsonObject.getString("DashBoardName"))
+                                            Log.e(TAG,"ID_ChartMode  26653331   "+ID_ChartMode)
 //                                            Log.e(TAG,"ID_ChartMode  253331   "+actv_mode)
+                                            DashMode =  jsonObject.getString("DashMode")
+                                            Log.e(TAG,"DashMode  253331   "+DashMode)
+                                            ll_monthlygraph!!.visibility         = View.GONE
+                                            ll_stock!!.visibility                = View.GONE
+                                            ll_comparison!!.visibility           = View.GONE
+                                            ll_SupplierWisePurchase!!.visibility = View.GONE
+                                            ll_product_reorder!!.visibility      = View.GONE
 
-                                            ll_monthlygraph!!.visibility = View.VISIBLE
-                                            inventorysale   = 0
-                                            getInventorySale()
+                                            ll_topsellingItem!!.visibility      = View.GONE
+
+                                            ll_topSupplier!!.visibility      = View.GONE
+
+                                            if (ID_ChartMode.equals("23")){
+                                                tvv_head_monthly!!.setText(jsonObject.getString("DashBoardName"))
+                                                ll_monthlygraph!!.visibility = View.VISIBLE
+                                                inventorysale   = 0
+                                                getInventorySale()
+
+                                            }
+                                            else if (ID_ChartMode.equals("24")){
+
+                                                ll_topsellingItem!!.visibility = View.VISIBLE
+                                                topsellingCount = 0
+                                                getTopSellingData()
+
+                                            }
+                                            else if (ID_ChartMode.equals("25")){
+
+                                                ll_comparison!!.visibility = View.VISIBLE
+                                                comparisonList = 0
+                                                getSalesComparisonList()
+                                            }
+                                            else if (ID_ChartMode.equals("26")){
+                                                ll_stock!!.visibility = View.VISIBLE
+                                                stockList = 0
+                                                getStckListCategory()
+                                            }
+
+                                            else if (ID_ChartMode.equals("27")){
+                                                ll_product_reorder!!.visibility = View.VISIBLE
+                                                ProductReorderLevelCount = 0
+                                                getProductReorderLevel()
+                                            }
+                                            else if (ID_ChartMode.equals("28")){
+                                                ll_SupplierWisePurchase!!.visibility = View.VISIBLE
+                                                supplierwisePurchaseCount = 0
+                                                getSupplierWisePurchase()
+
+                                            }
+                                            else if (ID_ChartMode.equals("29")){
+                                                ll_topSupplier!!.visibility = View.VISIBLE
+                                                topSupplierCount=0
+                                                getTopSupplierData()
+
+                                            }
+
 
                                         }else{
                                             showChartDrop(chartTypeArrayList)
@@ -283,15 +425,26 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun showChartDrop(chartTypeArrayList: JSONArray) {
 
+        Log.e(TAG,"drop down 7877   "+chartTypeArrayList)
+
+//        var modeType = Array<String>(chartTypeArrayList.length()) { "" }
+//        var modeTypeID = Array<String>(chartTypeArrayList.length()) { "" }
+
         var modeType = Array<String>(chartTypeArrayList.length()) { "" }
         var modeTypeID = Array<String>(chartTypeArrayList.length()) { "" }
+        var modeDashMode = Array<String>(chartTypeArrayList.length()) { "" }
+
         for (i in 0 until chartTypeArrayList.length()) {
             val objects: JSONObject = chartTypeArrayList.getJSONObject(i)
 
+//
+//            modeType[i] = objects.getString("Mode_Name");
+//            modeTypeID[i] = objects.getString("ID_Mode");
+//            //   ID_ChartMode = objects.getString("ID_Mode")
 
-            modeType[i] = objects.getString("Mode_Name");
-            modeTypeID[i] = objects.getString("ID_Mode");
-            //   ID_ChartMode = objects.getString("ID_Mode")
+            modeType[i] = objects.getString("DashBoardName");
+            modeTypeID[i] = objects.getString("DashMode");
+            modeDashMode[i] = objects.getString("DashMode");
 
             Log.e(TAG, "00000111   " + ID_ChartMode)
             Log.e(TAG, "85456214   " + modeType)
@@ -302,7 +455,10 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
             actv_mode!!.showDropDown()
 
             actv_mode!!.setOnItemClickListener { parent, view, position, id ->
+            //    ID_ChartMode = modeTypeID[position]
+
                 ID_ChartMode = modeTypeID[position]
+                DashMode = modeDashMode[position]
 
                 ll_monthlygraph!!.visibility         = View.GONE
                 ll_stock!!.visibility                = View.GONE
@@ -311,34 +467,625 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                 ll_product_reorder!!.visibility      = View.GONE
 
 
-                if (ID_ChartMode.equals("1")){
+
+                ll_topsellingItem!!.visibility      = View.GONE
+
+                ll_topSupplier!!.visibility      = View.GONE
+
+
+                if (ID_ChartMode.equals("23")){
+
+                    tvv_head_monthly!!.setText(modeType[position])
                     ll_monthlygraph!!.visibility = View.VISIBLE
                     inventorysale   = 0
                     getInventorySale()
                 }
-                else if (ID_ChartMode.equals("2")){
-                    ll_stock!!.visibility = View.VISIBLE
-                    stockList = 0
-                    getStckListCategory()
+                else if (ID_ChartMode.equals("24")){
+//                    ll_stock!!.visibility = View.VISIBLE
+//                    stockList = 0
+//                    getStckListCategory()
+                 //   tvv_topSellingHead!!.setText(modeType[position])
+                    ll_topsellingItem!!.visibility = View.VISIBLE
+                    topsellingCount = 0
+                    getTopSellingData()
+
                 }
-                else if (ID_ChartMode.equals("3")){
+                else if (ID_ChartMode.equals("25")){
+//                    ll_comparison!!.visibility = View.VISIBLE
+//                    comparisonList = 0
+//                    getSalesComparisonList()
+
                     ll_comparison!!.visibility = View.VISIBLE
                     comparisonList = 0
                     getSalesComparisonList()
-                }else if (ID_ChartMode.equals("4")){
-                    ll_SupplierWisePurchase!!.visibility = View.VISIBLE
-                    supplierwisePurchaseCount = 0
-                    getSupplierWisePurchase()
-                }else if (ID_ChartMode.equals("5")){
+
+
+
+
+                }else if (ID_ChartMode.equals("26")){
+//                    ll_SupplierWisePurchase!!.visibility = View.VISIBLE
+//                    supplierwisePurchaseCount = 0
+//                    getSupplierWisePurchase()
+
+                    ll_stock!!.visibility = View.VISIBLE
+                    stockList = 0
+                    getStckListCategory()
+
+                }else if (ID_ChartMode.equals("27")){
+//                    ll_product_reorder!!.visibility = View.VISIBLE
+//                    ProductReorderLevelCount = 0
+//                    getProductReorderLevel()
+
                     ll_product_reorder!!.visibility = View.VISIBLE
                     ProductReorderLevelCount = 0
                     getProductReorderLevel()
+
+                }
+
+                else if (ID_ChartMode.equals("28")){
+
+                    ll_SupplierWisePurchase!!.visibility = View.VISIBLE
+                    supplierwisePurchaseCount = 0
+                    getSupplierWisePurchase()
+
+                }
+                else if (ID_ChartMode.equals("29")){
+
+                    ll_topSupplier!!.visibility = View.VISIBLE
+                    topSupplierCount=0
+                    getTopSupplierData()
+
                 }
                 Log.e(TAG,"ID_ChartMode  253332   "+ID_ChartMode)
             }
 
         }
     }
+    private fun getTopSupplierData() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                topSupplierViewModel.getTopSupplierCategory(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+
+                        try {
+                            if (msg!!.length > 0) {
+
+                                if (topSupplierCount == 0){
+                                    topSupplierCount++
+                                    val jObject = JSONObject(msg)
+                                    //    Log.e(TAG, "msg   InventoryGraph   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        Log.e(TAG, "success and inside   ")
+                                        val jobjt = jObject.getJSONObject("InventoryTopSupplierList")
+                                        topSupplierItemArrayList=jobjt.getJSONArray("InventoryTopSupplierListDetails")
+                                        Log.e(TAG, "ArrayList 656656==   "+topSupplierItemArrayList)
+
+
+                                        try {
+                                            if (topSupplierItemArrayList.length() > 0)
+
+                                            {
+                                               setTopSupplierBarchart()
+
+                                                val lLayout = GridLayoutManager(this@InventoryGraphActivity, 2)
+                                                recyColors_topSupplier!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                                val adapter = TopSupplierChartAdapter(this@InventoryGraphActivity, topSupplierItemArrayList)
+                                                recyColors_topSupplier!!.adapter = adapter
+
+                                            }
+                                        }
+                                        catch (e:Exception)
+                                        {
+                                            Log.e(TAG,"exception 84488="+e)
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@InventoryGraphActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + e.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+
+    @SuppressLint("SuspiciousIndentation")
+    private fun getTopSellingData() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                topSellingViewModel.getTopSellingCategory(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+
+                        try {
+                            if (msg!!.length > 0) {
+
+                                if (topsellingCount == 0){
+                                    topsellingCount++
+                                    val jObject = JSONObject(msg)
+                                    //    Log.e(TAG, "msg   InventoryGraph   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        Log.e(TAG, "success and inside   ")
+                                        val jobjt = jObject.getJSONObject("InventoryTopSellingItem")
+                                        topSellingItemArrayList=jobjt.getJSONArray("InventoryTopSellingItemList")
+                                            Log.e(TAG, "ArrayList 656656==   "+topSellingItemArrayList)
+                                     //   tv_remarkTopselling!!.setText(jobjt.getString("Reamrk"))
+
+                                            try {
+                                                if (topSellingItemArrayList.length() > 0)
+
+                                                {
+
+                                              //      hideTopSellingGraph()
+                                                    setTopSellingBarchart()
+
+                                                    val lLayout = GridLayoutManager(this@InventoryGraphActivity, 2)
+                                                    recyColors_topselling!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                                    val adapter = TopSellingChartAdapter(this@InventoryGraphActivity, topSellingItemArrayList)
+                                                    recyColors_topselling!!.adapter = adapter
+
+                                                }
+                                            }
+                                            catch (e:Exception)
+                                            {
+                                                Log.e(TAG,"exception 84488="+e)
+                                            }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@InventoryGraphActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + e.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun setTopSupplierBarchart() {
+        topSupplierGraphBar.clear()
+        topSupplierGraphBar = getTopSupplierBarList()
+
+
+        topSupplierbarChart.axisLeft.setDrawGridLines(false)
+        val xAxis: XAxis = topSupplierbarChart.xAxis
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(false)
+
+        //remove right y-axis
+        topSupplierbarChart.axisRight.isEnabled = false
+        //remove legend
+        topSupplierbarChart.legend.isEnabled = false
+        topSupplierbarChart!!.setScaleEnabled(true)
+        //remove description label
+        topSupplierbarChart.description.isEnabled = false
+
+
+        //add animation
+        topSupplierbarChart.animateY(1000)
+
+
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.valueFormatter = MyAxisFormatterBar7()
+        xAxis.setDrawLabels(true)
+        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = +90f
+        xAxis.textSize = 15f
+        xAxis.textColor = Color.BLACK
+
+
+        //colors
+        val colors: ArrayList<Int> = ArrayList()
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        val entries: ArrayList<BarEntry> = ArrayList()
+        for (i in topSupplierGraphBar.indices) {
+            val score = topSupplierGraphBar[i]
+            entries.add(BarEntry(i.toFloat(), score.Amount.toFloat()))
+        }
+
+
+        val barDataSet = BarDataSet(entries, "Category")
+        // barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+        barDataSet.setColors(colors)
+        //barDataSet.setValueFormatter(DecimalRemover())
+        barDataSet.valueFormatter = DefaultValueFormatter(0)
+
+        val data = BarData(barDataSet)
+        data.setValueTextSize(15f)
+        data.setValueTextColor(Color.BLACK)
+        data.setDrawValues(false)
+        topSupplierbarChart.data = data
+
+
+        topSupplierbarChart.invalidate()
+
+
+    }
+
+
+
+    private fun setTopSellingBarchart() {
+        topSellingGraphBar.clear()
+        topSellingGraphBar = getTopSellingBarList()
+
+        topSellingbarChart.axisLeft.setDrawGridLines(false)
+        val xAxis: XAxis = topSellingbarChart.xAxis
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(false)
+
+        //remove right y-axis
+        topSellingbarChart.axisRight.isEnabled = false
+        //remove legend
+        topSellingbarChart.legend.isEnabled = false
+        topSellingbarChart!!.setScaleEnabled(true)
+        //remove description label
+        topSellingbarChart.description.isEnabled = false
+
+
+        //add animation
+        topSellingbarChart.animateY(1000)
+
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.valueFormatter = MyAxisFormatterBar6()
+        xAxis.setDrawLabels(true)
+        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = +90f
+        xAxis.textSize = 15f
+        xAxis.textColor = Color.BLACK
+
+
+        //colors
+        val colors: ArrayList<Int> = ArrayList()
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        val entries: ArrayList<BarEntry> = ArrayList()
+        for (i in topSellingGraphBar.indices) {
+            val score = topSellingGraphBar[i]
+            entries.add(BarEntry(i.toFloat(), score.ProductCount.toFloat()))
+        }
+
+
+
+
+        val barDataSet = BarDataSet(entries, "Category")
+        // barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+        barDataSet.setColors(colors)
+        //barDataSet.setValueFormatter(DecimalRemover())
+        barDataSet.valueFormatter = DefaultValueFormatter(0)
+
+        val data = BarData(barDataSet)
+        data.setValueTextSize(15f)
+        data.setValueTextColor(Color.BLACK)
+        data.setDrawValues(false)
+        topSellingbarChart.data = data
+
+
+        topSellingbarChart.invalidate()
+
+
+    }
+    private fun getTopSupplierBarList(): ArrayList<TopSupplierItemBar> {
+        for (i in 0 until topSupplierItemArrayList.length())
+        {
+            var jsonObject = topSupplierItemArrayList.getJSONObject(i)
+
+            //  saleGraphListBar.add(MonthlySaleBar(jsonObject.getString("Month").toString(),jsonObject.getString("Amount").toInt()))
+
+            topSupplierGraphBar.add(TopSupplierItemBar("",jsonObject.getString("Amount").toString()))
+        }
+
+        return topSupplierGraphBar
+    }
+
+    private fun getTopSellingBarList(): ArrayList<TopSellingItemBar> {
+
+        for (i in 0 until topSellingItemArrayList.length())
+        {
+            var jsonObject = topSellingItemArrayList.getJSONObject(i)
+
+            //  saleGraphListBar.add(MonthlySaleBar(jsonObject.getString("Month").toString(),jsonObject.getString("Amount").toInt()))
+
+            topSellingGraphBar.add(TopSellingItemBar("",jsonObject.getString("Count").toString()))
+        }
+
+        return topSellingGraphBar
+
+    }
+
     private fun getInventorySale() {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -360,12 +1107,13 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     inventorysale++
                                     val jObject = JSONObject(msg)
                                 //    Log.e(TAG, "msg   InventoryGraph   " + msg)
-                                    if (jObject.getString("StatusCode") == "-2") {
+                                    if (jObject.getString("StatusCode") == "0") {
                                         Log.e(TAG, "success and inside   ")
                                         val jobjt = jObject.getJSONObject("InventoryMonthlySaleGraph")
                                         inventoryMonthlySaleArrayList=jobjt.getJSONArray("InventoryMonthlySaleGraphList")
                                     //    Log.e(TAG, "ArrayList==   "+inventoryMonthlySaleArrayList)
 
+                                        tv_remarkMonthly!!.setText(jobjt.getString("Reamrk"))
                                         if (inventoryMonthlySaleArrayList.length() > 0) {
 
 
@@ -377,7 +1125,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         }
                                         Log.e(TAG, "inventorySaleSortArrayList==   "+inventorySaleSortArrayList)
 
-
+                                        hideMonthlyGraph()
                                        setMonthlyBarchart()    //setBarChart
 
                                         val lLayout = GridLayoutManager(this@InventoryGraphActivity, 2)
@@ -1437,6 +2185,30 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    inner class MyAxisFormatterBar7 : IndexAxisValueFormatter() {
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            val index = value.toInt()
+            Log.d("TAG", "getAxisLabel: index $index")
+            return if (index < topSupplierGraphBar.size) {
+                topSupplierGraphBar[index].SuppName
+            } else {
+                ""
+            }
+        }
+    }
+    inner class MyAxisFormatterBar6 : IndexAxisValueFormatter() {
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            val index = value.toInt()
+            Log.d("TAG", "getAxisLabel: index $index")
+            return if (index < topSellingGraphBar.size) {
+                topSellingGraphBar[index].ProductName
+            } else {
+                ""
+            }
+        }
+    }
     inner class MyAxisFormatterBar2 : IndexAxisValueFormatter() {
 
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
@@ -1530,7 +2302,8 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
             if (ContinueMode == 0){
                 ChartMode      = 0
                 chartModeCount = 0
-                getStockValueData()
+             //   getStockValueData()
+                getChartModeData()
             }
 
 
@@ -1539,7 +2312,8 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
             ll_Tile!!.visibility = View.VISIBLE
             tvv_dash!!.setBackgroundResource(R.drawable.btn_shape_reset)
             tvv_tile!!.setBackgroundResource(R.drawable.btn_dash)
-
+            stockValueDataCount = 0
+            getStockValueData()
         }
 
     }
@@ -1550,6 +2324,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                 finish()
             }
             R.id.actv_mode -> {
+                Log.e(TAG,"inside chart   ")
                 ChartMode = 1
                 chartModeCount = 0
                 getChartModeData()
@@ -1562,6 +2337,49 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                 TabMode = 1
                 hideViews()
             }
+            R.id.tvv_monthly_more->{
+                if (monthlyMode == 0){
+                    monthlyMode = 1
+                }else{
+                    monthlyMode = 0
+                }
+
+                hideMonthlyGraph()
+            }
+
+//            R.id.tvv_topselling_more->{
+//                if (topSellingMode == 0){
+//                    topSellingMode = 1
+//                }else{
+//                    topSellingMode = 0
+//                }
+//
+//                hideTopSellingGraph()
+//            }
+        }
+    }
+
+    private fun hideTopSellingGraph() {
+        if (topSellingMode == 0){
+            tvv_topselling_more!!.setText("More")
+            tvv_topselling_more!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_topselling!!.visibility = View.GONE
+        }else{
+            tvv_topselling_more!!.setText("Less")
+            tvv_topselling_more!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_topselling!!.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideMonthlyGraph() {
+        if (monthlyMode == 0){
+            tvv_monthly_more!!.setText("More")
+            tvv_monthly_more!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_monthlyRecy!!.visibility = View.GONE
+        }else{
+            tvv_monthly_more!!.setText("Less")
+            tvv_monthly_more!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_monthlyRecy!!.visibility = View.VISIBLE
         }
     }
 
