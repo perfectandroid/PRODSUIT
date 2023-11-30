@@ -415,7 +415,7 @@
                                             <com.github.mikephil.charting.charts.BarChart
                                                 android:id="@+id/top10_barchart"
                                                 android:layout_width="match_parent"
-                                                android:layout_height="500dp"
+                                                android:layout_height="400dp"
                                                 android:layout_marginLeft="10dp"
                                                 android:layout_marginRight="10dp"
                                                 android:layout_weight="1"
@@ -476,7 +476,7 @@
                                             <com.github.mikephil.charting.charts.BarChart
                                                 android:id="@+id/top_revenuebarchart"
                                                 android:layout_width="match_parent"
-                                                android:layout_height="500dp"
+                                                android:layout_height="400dp"
                                                 android:layout_marginLeft="10dp"
                                                 android:layout_marginRight="10dp"
                                                 android:layout_weight="1"
@@ -537,7 +537,7 @@
                                             <com.github.mikephil.charting.charts.BarChart
                                                 android:id="@+id/empwiseamt_barchart"
                                                 android:layout_width="match_parent"
-                                                android:layout_height="500dp"
+                                                android:layout_height="400dp"
                                                 android:layout_marginLeft="10dp"
                                                 android:layout_marginRight="10dp"
                                                 android:layout_weight="1"
@@ -598,8 +598,9 @@
                                             <com.github.mikephil.charting.charts.PieChart
                                                 android:id="@+id/empwise_barchart"
                                                 android:layout_width="match_parent"
-                                                android:layout_height="500dp"
-                                                android:layout_margin="2dp"
+                                                android:layout_height="400dp"
+                                                android:layout_marginRight="5dp"
+                                                android:layout_marginLeft="5dp"
                                                 android:layout_weight="1"
                                                 android:visibility="visible" />
 
@@ -687,7 +688,7 @@
                                                 <com.github.mikephil.charting.charts.HorizontalBarChart
                                                     android:id="@+id/leadSourse"
                                                     android:layout_width="match_parent"
-                                                    android:layout_height="150dp"
+                                                    android:layout_height="400dp"
                                                     android:layout_margin="2dp"
                                                     android:layout_weight="1"
                                                     android:visibility="visible"
@@ -867,7 +868,7 @@
                                                 <com.github.mikephil.charting.charts.HorizontalBarChart
                                                     android:id="@+id/employeewiseAvgChart"
                                                     android:layout_width="match_parent"
-                                                    android:layout_height="150dp"
+                                                    android:layout_height="400dp"
                                                     android:layout_margin="2dp"
                                                     android:layout_weight="1"
                                                     android:visibility="visible"

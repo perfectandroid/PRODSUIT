@@ -41,6 +41,12 @@
             app:iconTint="@color/red"
             android:title="Contact us"/>
         <item
+            android:id="@+id/nav_intimation"
+            android:icon="@drawable/ic_svg_messages"
+            android:fontFamily="@font/myfont"
+            app:iconTint="@color/red"
+            android:title="Intimation"/>
+        <item
             android:id="@+id/nav_share"
             android:icon="@drawable/ic_share"
             android:fontFamily="@font/myfont"
