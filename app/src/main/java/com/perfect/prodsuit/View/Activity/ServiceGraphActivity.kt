@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -33,6 +34,7 @@ import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.ref.WeakReference
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -41,6 +43,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     val TAG : String = "ServiceGraphActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
+
+    private var pieChartRef: WeakReference<PieChart>? = null
 
     var SubMode     :  String? = ""
     var label       :  String? = ""
@@ -65,6 +69,9 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     var TabMode    = 0 // 0 = Graph , 1 = Tile
     var ContinueMode    = 0 // 0 = First , 1 = Second
     var ChartMode    = 0 // 0 = First , 1 = Second
+
+
+
 
     private var tvv_dash: TextView? = null
     private var tvv_tile: TextView? = null
@@ -100,6 +107,41 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     private var tv_crmtile_Status_remark: TextView? = null
     private var tv_crmtile_outstandcount_remark: TextView? = null
     private var tv_crmtile_amcDue_remark: TextView? = null
+
+
+
+    var lemoStagWiseMode    = 0  // 0=more , 1 = less
+    var lemoComplaintWiseMode    = 0  // 0=more , 1 = less
+    var lemoCountOfWPAMode    = 0  // 0=more , 1 = less
+    var lemoServiceWiseMode    = 0  // 0=more , 1 = less
+    var lemoServiceTop10ProductMode    = 0  // 0=more , 1 = less
+    var lemoServiceSlaStatusMode    = 0  // 0=more , 1 = less
+    var lemoServiceChannelStatusMode    = 0  // 0=more , 1 = less
+
+
+    private var tvv_head_StagWise: TextView? = null
+    private var tvv_head_Complaint: TextView? = null
+    private var tvv_head_ServiceCountOfWPA: TextView? = null
+    private var tvv_head_ServiceWise: TextView? = null
+    private var tvv_head_ServiceTop10Product: TextView? = null
+    private var tvv_head_ServiceSlaStatus: TextView? = null
+    private var tvv_head_ServiceChannelStatus: TextView? = null
+
+    private var tvv_lemo_StagWise: TextView? = null
+    private var tvv_lemo_ComplaintWise: TextView? = null
+    private var tvv_lemo_ServiceCountOfWPA: TextView? = null
+    private var tvv_lemo_ServiceWise: TextView? = null
+    private var tvv_lemo_ServiceTop10Product: TextView? = null
+    private var tvv_lemo_ServiceSlaStatus: TextView? = null
+    private var tvv_lemo_ServiceChannelStatus: TextView? = null
+
+    private var ll_StagWiseRecyc: LinearLayout? = null
+    private var ll_ComplaintWiseRecyc: LinearLayout? = null
+    private var ll_ServiceCountOfWPARecyc: LinearLayout? = null
+    private var ll_ServiceWiseRecyc: LinearLayout? = null
+    private var ll_ServiceTop10ProductRecyc: LinearLayout? = null
+    private var ll_ServiceSlaStatusRecyc: LinearLayout? = null
+    private var ll_ServiceChannelStatusRecyc: LinearLayout? = null
 
 
 
@@ -157,6 +199,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var slaStatusArrayList: JSONArray
     var recycServiceSlaStatus: RecyclerView? = null
 
+    private lateinit var ServiceSlaStatusChart: BarChart
+
     //CRMChannelWise In CRM BarChart
     private lateinit var ServiceChannelStatusChart: BarChart
     private var modeCRMChannelWise = ArrayList<ModeCRMChannelWise>()  // change key word in Model class
@@ -185,6 +229,9 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var crmStatusArrayList : JSONArray
     lateinit var crmoutstandingCountArrayList : JSONArray
     lateinit var crmAmcDueStatusArrayList : JSONArray
+
+    var drawableMore : Drawable? = null
+    var drawableLess : Drawable? = null
 
 
 
@@ -267,6 +314,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
+        drawableMore = resources.getDrawable(R.drawable.dash_more, null)
+        drawableLess = resources.getDrawable(R.drawable.dash_less, null)
 
         tvv_dash = findViewById<TextView>(R.id.tvv_dash)
         tvv_tile = findViewById<TextView>(R.id.tvv_tile)
@@ -291,6 +340,40 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         tv_crmtile_outstandcount_remark      = findViewById<TextView>(R.id.tv_crmtile_outstandcount_remark)
         tv_crmtile_amcDue_remark      = findViewById<TextView>(R.id.tv_crmtile_amcDue_remark)
 
+        tvv_head_StagWise      = findViewById<TextView>(R.id.tvv_head_StagWise)
+        tvv_head_Complaint      = findViewById<TextView>(R.id.tvv_head_Complaint)
+        tvv_head_ServiceCountOfWPA      = findViewById<TextView>(R.id.tvv_head_ServiceCountOfWPA)
+        tvv_head_ServiceWise      = findViewById<TextView>(R.id.tvv_head_ServiceWise)
+        tvv_head_ServiceTop10Product      = findViewById<TextView>(R.id.tvv_head_ServiceTop10Product)
+        tvv_head_ServiceSlaStatus      = findViewById<TextView>(R.id.tvv_head_ServiceSlaStatus)
+        tvv_head_ServiceChannelStatus      = findViewById<TextView>(R.id.tvv_head_ServiceChannelStatus)
+
+        tvv_lemo_StagWise      = findViewById<TextView>(R.id.tvv_lemo_StagWise)
+        tvv_lemo_ComplaintWise      = findViewById<TextView>(R.id.tvv_lemo_ComplaintWise)
+        tvv_lemo_ServiceCountOfWPA      = findViewById<TextView>(R.id.tvv_lemo_ServiceCountOfWPA)
+        tvv_lemo_ServiceWise      = findViewById<TextView>(R.id.tvv_lemo_ServiceWise)
+        tvv_lemo_ServiceTop10Product      = findViewById<TextView>(R.id.tvv_lemo_ServiceTop10Product)
+        tvv_lemo_ServiceSlaStatus      = findViewById<TextView>(R.id.tvv_lemo_ServiceSlaStatus)
+        tvv_lemo_ServiceChannelStatus      = findViewById<TextView>(R.id.tvv_lemo_ServiceChannelStatus)
+
+        ll_StagWiseRecyc      = findViewById<LinearLayout>(R.id.ll_StagWiseRecyc)
+        ll_ComplaintWiseRecyc      = findViewById<LinearLayout>(R.id.ll_ComplaintWiseRecyc)
+        ll_ServiceCountOfWPARecyc      = findViewById<LinearLayout>(R.id.ll_ServiceCountOfWPARecyc)
+        ll_ServiceWiseRecyc      = findViewById<LinearLayout>(R.id.ll_ServiceWiseRecyc)
+        ll_ServiceTop10ProductRecyc      = findViewById<LinearLayout>(R.id.ll_ServiceTop10ProductRecyc)
+        ll_ServiceSlaStatusRecyc      = findViewById<LinearLayout>(R.id.ll_ServiceSlaStatusRecyc)
+        ll_ServiceChannelStatusRecyc      = findViewById<LinearLayout>(R.id.ll_ServiceChannelStatusRecyc)
+
+    //    tvv_lemo_StagWise!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+
+        tvv_lemo_StagWise!!.setOnClickListener(this)
+        tvv_lemo_ComplaintWise!!.setOnClickListener(this)
+        tvv_lemo_ServiceCountOfWPA!!.setOnClickListener(this)
+        tvv_lemo_ServiceWise!!.setOnClickListener(this)
+        tvv_lemo_ServiceTop10Product!!.setOnClickListener(this)
+        tvv_lemo_ServiceSlaStatus!!.setOnClickListener(this)
+        tvv_lemo_ServiceChannelStatus!!.setOnClickListener(this)
+
 
         actv_mode= findViewById<AutoCompleteTextView>(R.id.actv_mode)
 
@@ -314,6 +397,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         ServiceChannelStatusChart    = findViewById<BarChart>(R.id.ServiceChannelStatusChart)
 
         slaStatusPieChart    = findViewById<PieChart>(R.id.slaStatusPieChart)
+        ServiceSlaStatusChart    = findViewById<BarChart>(R.id.ServiceSlaStatusChart)
 
         recycStagWise       = findViewById<RecyclerView>(R.id.recycStagWise)
         recycServiceWise    = findViewById<RecyclerView>(R.id.recycServiceWise)
@@ -417,6 +501,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                             val jsonObject = chartTypeArrayList.getJSONObject(0)
                                             ID_ChartMode = jsonObject.getString("DashMode")
                                             actv_mode!!.setText(jsonObject.getString("DashBoardName"))
+
                                             Log.e(TAG,"ID_ChartMode  253331   "+ID_ChartMode)
                                             DashMode =  jsonObject.getString("DashMode")
 
@@ -429,39 +514,46 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                             ll_ServiceChannelStatus!!.visibility = View.GONE
 
                                             if (ID_ChartMode.equals("10")){
-                                                ll_StagWise!!.visibility = View.VISIBLE
+
+                                                tvv_head_StagWise!!.setText(jsonObject.getString("DashBoardName"))
                                                 crmStagewiseCount   = 0
                                                 getCRMStagewiseData()
                                             }
                                             else if (ID_ChartMode.equals("11")){
-                                                ll_ComplaintWise!!.visibility = View.VISIBLE
+                                               // ll_ComplaintWise!!.visibility = View.VISIBLE
+                                                tvv_head_Complaint!!.setText(jsonObject.getString("DashBoardName"))
                                                 crmcomplaintwiseCount = 0
                                                 getCRMcomplaintwiseData()
                                             }
                                             else if (ID_ChartMode.equals("12")){
-                                                ll_ServiceWise!!.visibility = View.VISIBLE
+                                               // ll_ServiceWise!!.visibility = View.VISIBLE
+                                                tvv_head_ServiceWise!!.setText(jsonObject.getString("DashBoardName"))
                                                 crmservicewiseCount = 0
                                                 getCRMservicewiseData()
                                             }
                                             else if (ID_ChartMode.equals("13")){
-                                                ll_ServiceCountOfWPA!!.visibility = View.VISIBLE
+                                              //  ll_ServiceCountOfWPA!!.visibility = View.VISIBLE
+                                                tvv_head_ServiceCountOfWPA!!.setText(jsonObject.getString("DashBoardName"))
                                                 crmCountOfWPACount = 0
                                                 getCRMCountOfWPAData()
                                             }
 
                                             else if (ID_ChartMode.equals("14")){
-                                                ll_ServiceTop10Product!!.visibility = View.VISIBLE
+                                              //  ll_ServiceTop10Product!!.visibility = View.VISIBLE
+                                                tvv_head_ServiceTop10Product!!.setText(jsonObject.getString("DashBoardName"))
                                                 crmtop1oproductCount = 0
                                                 getCRMTop10Product()
                                             }
                                             else if (ID_ChartMode.equals("15")){
-                                                ll_ServiceSlaStatus!!.visibility = View.VISIBLE
+                                               // ll_ServiceSlaStatus!!.visibility = View.VISIBLE
+                                                tvv_head_ServiceSlaStatus!!.setText(jsonObject.getString("DashBoardName"))
                                                 crmslastatusCount = 0
                                                 getCRMSlaStatus()
                                             }
                                             else if (ID_ChartMode.equals("16")){
 //                                                SLA CHANNEL
-                                                ll_ServiceChannelStatus!!.visibility = View.VISIBLE
+//                                                ll_ServiceChannelStatus!!.visibility = View.VISIBLE
+                                                tvv_head_ServiceChannelStatus!!.setText(jsonObject.getString("DashBoardName"))
                                                 crmchannelstatusCount = 0
                                                 getCRMChanelStatus()
                                             }
@@ -521,8 +613,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
             Log.e(TAG, "00000111   " + ID_ChartMode)
             Log.e(TAG, "85456214   " + modeType)
 
-
-            val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, modeType)
+            val adapter = CustomAdapter(this, R.layout.custom_dropdown_item, modeType)
+           // val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, modeType)
             actv_mode!!.setAdapter(adapter)
             actv_mode!!.showDropDown()
 
@@ -540,39 +632,46 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
                 if (ID_ChartMode.equals("10")){
-                    ll_StagWise!!.visibility = View.VISIBLE
+                   // ll_StagWise!!.visibility = View.VISIBLE
+                    tvv_head_StagWise!!.setText(modeType[position])
                     crmStagewiseCount   = 0
                     getCRMStagewiseData()
                 }
                 else if (ID_ChartMode.equals("11")){
-                    ll_ComplaintWise!!.visibility = View.VISIBLE
+                  //  ll_ComplaintWise!!.visibility = View.VISIBLE
+                    tvv_head_Complaint!!.setText(modeType[position])
                     crmcomplaintwiseCount = 0
                     getCRMcomplaintwiseData()
                 }
                 else if (ID_ChartMode.equals("12")){
-                    ll_ServiceWise!!.visibility = View.VISIBLE
+                 //   ll_ServiceWise!!.visibility = View.VISIBLE
+                    tvv_head_ServiceWise!!.setText(modeType[position])
                     crmservicewiseCount = 0
                     getCRMservicewiseData()
                 }
                 else if (ID_ChartMode.equals("13")){
-                    ll_ServiceCountOfWPA!!.visibility = View.VISIBLE
+                  //  ll_ServiceCountOfWPA!!.visibility = View.VISIBLE
+                    tvv_head_ServiceCountOfWPA!!.setText(modeType[position])
                     crmCountOfWPACount = 0
                     getCRMCountOfWPAData()
                 }
                 else if (ID_ChartMode.equals("14")){
-                    ll_ServiceTop10Product!!.visibility = View.VISIBLE
+                   // ll_ServiceTop10Product!!.visibility = View.VISIBLE
+                    tvv_head_ServiceTop10Product!!.setText(modeType[position])
                     crmtop1oproductCount = 0
                     getCRMTop10Product()
                 }
                 else if (ID_ChartMode.equals("15")){
-                    ll_ServiceSlaStatus!!.visibility = View.VISIBLE
+                   // ll_ServiceSlaStatus!!.visibility = View.VISIBLE
+                    tvv_head_ServiceSlaStatus!!.setText(modeType[position])
                     crmslastatusCount = 0
                     getCRMSlaStatus()
                 }
 
                 else if (ID_ChartMode.equals("16")){
 //                  SLA CHANNEL
-                    ll_ServiceChannelStatus!!.visibility = View.VISIBLE
+//                    ll_ServiceChannelStatus!!.visibility = View.VISIBLE
+                    tvv_head_ServiceChannelStatus!!.setText(modeType[position])
                     crmchannelstatusCount = 0
                     getCRMChanelStatus()
                 }
@@ -613,8 +712,13 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     Log.e(TAG,"3913 serviceWiseArrayList  "+serviceWiseArrayList)
                                     tv_ServiceRemark!!.setText(jobjt.getString("Reamrk"))
                                     if (serviceWiseArrayList.length() > 0){
+                                        ll_ServiceWise!!.visibility = View.VISIBLE
+                                        lemoServiceWiseMode = 0
+
+                                        hideServiceWise()
 
                                         setServiceBarchart()
+
 
                                         val lLayout = GridLayoutManager(this@ServiceGraphActivity, 2)
                                         recycServiceWise!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -679,12 +783,15 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                     val jobjt = jObject.getJSONObject("CRMStagewiseDetails")
                                     stageWiseArrayList=jobjt.getJSONArray("CRMStagewiseDetailsList")
-
+                                    tv_StagWiseRemark!!.setText(jobjt.getString("Reamrk"))
                                     Log.e(TAG,"3911 stageWiseArrayList  "+stageWiseArrayList)
 
                                     if (stageWiseArrayList.length() > 0){
-
+                                        ll_StagWise!!.visibility = View.VISIBLE
                                         setStageBarchart()
+                                        lemoStagWiseMode = 0
+
+                                        hideStageWise()
 
                                         val lLayout = GridLayoutManager(this@ServiceGraphActivity, 2)
                                         recycStagWise!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -723,6 +830,91 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun hideStageWise() {
+        if (lemoStagWiseMode == 0){
+            tvv_lemo_StagWise!!.setText("More")
+            tvv_lemo_StagWise!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_StagWiseRecyc!!.visibility = View.GONE
+        }else{
+            tvv_lemo_StagWise!!.setText("Less")
+            tvv_lemo_StagWise!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_StagWiseRecyc!!.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideComplaintWise() {
+        if (lemoComplaintWiseMode == 0){
+            tvv_lemo_ComplaintWise!!.setText("More")
+            tvv_lemo_ComplaintWise!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_ComplaintWiseRecyc!!.visibility = View.GONE
+        }else{
+            tvv_lemo_ComplaintWise!!.setText("Less")
+            tvv_lemo_ComplaintWise!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_ComplaintWiseRecyc!!.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideCountOfWPA() {
+        if (lemoCountOfWPAMode == 0){
+            tvv_lemo_ServiceCountOfWPA!!.setText("More")
+            tvv_lemo_ServiceCountOfWPA!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_ServiceCountOfWPARecyc!!.visibility = View.GONE
+        }else{
+            tvv_lemo_ServiceCountOfWPA!!.setText("Less")
+            tvv_lemo_ServiceCountOfWPA!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_ServiceCountOfWPARecyc!!.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideServiceWise() {
+        if (lemoServiceWiseMode == 0){
+            tvv_lemo_ServiceWise!!.setText("More")
+            tvv_lemo_ServiceWise!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_ServiceWiseRecyc!!.visibility = View.GONE
+        }else{
+            tvv_lemo_ServiceWise!!.setText("Less")
+            tvv_lemo_ServiceWise!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_ServiceWiseRecyc!!.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideServiceTop10Product() {
+        if (lemoServiceTop10ProductMode == 0){
+            tvv_lemo_ServiceTop10Product!!.setText("More")
+            tvv_lemo_ServiceTop10Product!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_ServiceTop10ProductRecyc!!.visibility = View.GONE
+        }else{
+            tvv_lemo_ServiceTop10Product!!.setText("Less")
+            tvv_lemo_ServiceTop10Product!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_ServiceTop10ProductRecyc!!.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideServiceSlaStatus() {
+        if (lemoServiceSlaStatusMode == 0){
+            tvv_lemo_ServiceSlaStatus!!.setText("More")
+            tvv_lemo_ServiceSlaStatus!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_ServiceSlaStatusRecyc!!.visibility = View.GONE
+        }else{
+            tvv_lemo_ServiceSlaStatus!!.setText("Less")
+            tvv_lemo_ServiceSlaStatus!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_ServiceSlaStatusRecyc!!.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideServiceChannelStatus()
+    {
+        if (lemoServiceChannelStatusMode == 0){
+            tvv_lemo_ServiceChannelStatus!!.setText("More")
+            tvv_lemo_ServiceChannelStatus!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_ServiceChannelStatusRecyc!!.visibility = View.GONE
+        }else{
+            tvv_lemo_ServiceChannelStatus!!.setText("Less")
+            tvv_lemo_ServiceChannelStatus!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_ServiceChannelStatusRecyc!!.visibility = View.VISIBLE
+        }
+    }
+
     private fun getCRMCountOfWPAData() {
 
        // DashMode = "11"
@@ -754,6 +946,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     Log.e(TAG,"70444 countOfWPAArrayList  "+countOfWPAArrayList)
 
                                     if (countOfWPAArrayList.length() > 0){
+
+                                        ll_ServiceCountOfWPA!!.visibility = View.VISIBLE
+                                        lemoCountOfWPAMode = 0
+
+                                        hideCountOfWPA()
 
                                         setCountOfWPABarchart()
 
@@ -822,7 +1019,10 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     Log.e(TAG,"3912 complaintWiseArrayList  "+complaintWiseArrayList)
 
                                     if (complaintWiseArrayList.length() > 0){
+                                        ll_ComplaintWise!!.visibility = View.VISIBLE
+                                        lemoComplaintWiseMode = 0
 
+                                        hideComplaintWise()
                                         setComplaintBarchart()
 
                                         val lLayout = GridLayoutManager(this@ServiceGraphActivity, 2)
@@ -892,6 +1092,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                     if (top10ProductArrayList.length() > 0){
 
+                                        ll_ServiceTop10Product!!.visibility = View.VISIBLE
+                                        lemoServiceTop10ProductMode = 0
+
+                                        hideServiceTop10Product()
+
                                         setTop10ProductBarchart()
 
                                         val lLayout = GridLayoutManager(this@ServiceGraphActivity, 2)
@@ -931,7 +1136,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun getCRMSlaStatus() {
-        DashMode = "11"
+        DashMode = "15"
         DashType = "2"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -941,7 +1146,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                crmSLAStatusViewModel.getCRMSLAStatusData(this,TransDate!!,DashMode!!,DashType!!)!!.observe(
+                crmSLAStatusViewModel.getCRMSLAStatusData(this,TransDate!!,ID_ChartMode!!,DashType!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -950,22 +1155,26 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                 crmslastatusCount++
 
                                 val jObject = JSONObject(msg)
-                                Log.e(TAG,"msg   164423   "+msg)
+                                Log.e(TAG,"msg   1644231   "+msg)
                                 if (jObject.getString("StatusCode").equals("0")) {
 
-//                                    val jobjt = jObject.getJSONObject("CRMcomplaintwise")
-//                                    slaStatusArrayList=jobjt.getJSONArray("CRMcomplaintwiseList")
-//                                    tv_ServiceSlaStatus!!.setText(jobjt.getString("Reamrk"))
-//                                    Log.e(TAG,"39123 slaStatusArrayList  "+slaStatusArrayList)
+                                    val jobjt = jObject.getJSONObject("CRMSLAViolationStatus")
+                                    slaStatusArrayList=jobjt.getJSONArray("CRMSLAViolationStatusList")
+                                    tv_ServiceSlaStatus!!.setText(jobjt.getString("Reamrk"))
+                                    Log.e(TAG,"1644232 slaStatusArrayList  "+slaStatusArrayList)
 
                                     if (slaStatusArrayList.length() > 0){
+                                        ll_ServiceSlaStatus!!.visibility = View.VISIBLE
+                                        lemoServiceSlaStatusMode = 0
 
+                                        hideServiceSlaStatus()
 //                                        setSlaStatusPiechart()
-//
-//                                        val lLayout = GridLayoutManager(this@ServiceGraphActivity, 2)
-//                                        recycServiceSlaStatus!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                        val adapter = CrmComplaintChartAdapter(this@ServiceGraphActivity, slaStatusArrayList)
-//                                        recycServiceSlaStatus!!.adapter = adapter
+                                        setSlaStatusPiechart1()
+
+                                        val lLayout = GridLayoutManager(this@ServiceGraphActivity, 2)
+                                        recycServiceSlaStatus!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = CrmSlaStatusChartAdapter(this@ServiceGraphActivity, slaStatusArrayList)
+                                        recycServiceSlaStatus!!.adapter = adapter
                                     }
 
                                 } else {
@@ -1029,7 +1238,10 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     Log.e(TAG,"39123 slaStatusArrayList  "+crmChannelWiseArrayList)
 
                                     if (crmChannelWiseArrayList.length() > 0){
+                                        ll_ServiceChannelStatus!!.visibility = View.VISIBLE
+                                        lemoServiceChannelStatusMode = 0
 
+                                        hideServiceChannelStatus()
                                         setChannelStatusBarchart()
 
                                         val lLayout = GridLayoutManager(this@ServiceGraphActivity, 2)
@@ -1730,7 +1942,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         {
             var jsonObject = serviceWiseArrayList.getJSONObject(i)
             // modelCRMStageBar.add(ModelCRMStageBar(jsonObject.getString("StatusName"),jsonObject.getString("StatusCount")))
-            modelCRMServiceBar.add(ModelCRMServiceBar("",jsonObject.getString("TotalCount"),jsonObject.getString("ActualPercent")))
+            modelCRMServiceBar.add(ModelCRMServiceBar("",jsonObject.getString("ServiceCount"),""))
         }
 
         return modelCRMServiceBar
@@ -2282,15 +2494,187 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         return modelCRMTop10
     }
 
-    private fun setSlaStatusPiechart() {
+    private fun setSlaStatusPiechart1() {
 
+
+        modelCRMSlaStatus.clear()
+        modelCRMSlaStatus = getSlaStatus()  // Change Model data
+
+        ServiceSlaStatusChart.axisLeft.setDrawGridLines(false)
+        val xAxis: XAxis = ServiceSlaStatusChart.xAxis
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(false)
+
+        //remove right y-axis
+        ServiceSlaStatusChart.axisRight.isEnabled = false
+        //remove legend
+        ServiceSlaStatusChart.legend.isEnabled = false
+        ServiceSlaStatusChart!!.setScaleEnabled(true)
+        //remove description label
+        ServiceSlaStatusChart.description.isEnabled = false
+
+
+        //add animation
+        ServiceSlaStatusChart.animateY(1000)
+
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.valueFormatter = MyAxisFormatterBar2()
+        xAxis.setDrawLabels(true)
+        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = +325f
+        xAxis.textSize = 15f
+        xAxis.textColor = Color.BLACK
+
+        //colors
+        val colors: ArrayList<Int> = ArrayList()
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+        colors.add(resources.getColor(R.color.leadstages_color3))
+
+        colors.add(resources.getColor(R.color.leadstages_color4))
+        colors.add(resources.getColor(R.color.leadstages_color5))
+        colors.add(resources.getColor(R.color.leadstages_color6))
+
+        colors.add(resources.getColor(R.color.leadstages_color7))
+        colors.add(resources.getColor(R.color.leadstages_color8))
+        colors.add(resources.getColor(R.color.leadstages_color9))
+
+        colors.add(resources.getColor(R.color.leadstages_color10))
+        colors.add(resources.getColor(R.color.leadstages_color11))
+        colors.add(resources.getColor(R.color.leadstages_color12))
+
+        /////////////////////////////////////
+
+        val entries: ArrayList<BarEntry> = ArrayList()
+        for (i in modelCRMSlaStatus.indices) {
+            val score = modelCRMSlaStatus[i]
+            entries.add(BarEntry(i.toFloat(), score.Count.toFloat()))
+        }
+
+
+
+        val barDataSet = BarDataSet(entries, "Category")
+        // barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+        barDataSet.setColors(colors)
+        //barDataSet.setValueFormatter(DecimalRemover())
+        barDataSet.valueFormatter = DefaultValueFormatter(0)
+
+        val data = BarData(barDataSet)
+        data.setValueTextSize(15f)
+        data.setValueTextColor(Color.BLACK)
+        data.setDrawValues(false)
+        ServiceSlaStatusChart.data = data
+
+
+        ServiceSlaStatusChart.invalidate()
+    }
+
+    private fun setSlaStatusPiechart() {
+        pieChartRef = WeakReference(slaStatusPieChart)
+        val slaStatusPieChart = pieChartRef?.get()
         modelCRMSlaStatus.clear()
         modelCRMSlaStatus = getSlaStatus()
         Log.v("asdasdssss", "size  " + modelCRMSlaStatus.size)
 
         val pieEntries: ArrayList<PieEntry> = ArrayList()
         val label = "%"
-        slaStatusPieChart.setUsePercentValues(false)
+        slaStatusPieChart!!.setUsePercentValues(false)
         slaStatusPieChart.description.text = ""
         slaStatusPieChart.isDrawHoleEnabled = true
         slaStatusPieChart.setTouchEnabled(false)
@@ -2315,14 +2699,124 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         for (i in 0 until modelCRMSlaStatus.size) {
             val score = modelCRMSlaStatus[i]
             //typeAmountMap[""] = score.Piescore
-            pieEntries.add(PieEntry(score.ActualPercent.toFloat(), "%"))
+            pieEntries.add(PieEntry(score.Count.toFloat(), "%"))
 
         }
 
         val colorsStage: ArrayList<Int> = ArrayList()
-        colorsStage.add(resources.getColor(R.color.leadstatus_color1))
-        colorsStage.add(resources.getColor(R.color.leadstatus_color2))
-        colorsStage.add(resources.getColor(R.color.leadstatus_color3))
+
+
+        colorsStage.add(resources.getColor(R.color.leadstages_color1))
+        colorsStage.add(resources.getColor(R.color.leadstages_color2))
+        colorsStage.add(resources.getColor(R.color.leadstages_color3))
+
+        colorsStage.add(resources.getColor(R.color.leadstages_color4))
+        colorsStage.add(resources.getColor(R.color.leadstages_color5))
+        colorsStage.add(resources.getColor(R.color.leadstages_color6))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color7))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color8))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color9))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color10))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color11))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color12))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color1))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color2))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color3))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color4))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color5))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color6))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color7))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color8))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color9))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color10))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color11))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color12))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color1))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color2))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color3))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color4))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color5))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color6))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color7))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color8))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color9))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color10))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color11))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color12))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color1))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color2))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color3))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color4))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color5))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color6))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color7))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color8))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color9))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color10))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color11))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color12))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color1))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color2))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color3))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color4))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color5))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color6))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color7))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color8))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color9))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color10))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color11))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color12))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color1))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color2))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color3))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color4))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color5))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color6))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color7))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color8))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color9))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color10))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color11))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color12))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color1))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color2))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color3))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color4))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color5))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color6))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color7))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color8))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color9))
+//
+//        colorsStage.add(resources.getColor(R.color.leadstages_color10))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color11))
+//        colorsStage.add(resources.getColor(R.color.leadstages_color12))
 
         val pieDataSet = PieDataSet(pieEntries, label)
         pieDataSet.setValueFormatter(DecimalRemover())
@@ -2335,11 +2829,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
         val l: Legend = slaStatusPieChart.getLegend()
         l.isEnabled = false
-
+//
         slaStatusPieChart.data = pieData
-        slaStatusPieChart.setOnClickListener(View.OnClickListener {
-            //ShowEnalargeGraph(pieEntries, 2)
-        })
+//        slaStatusPieChart.setOnClickListener(View.OnClickListener {
+//            //ShowEnalargeGraph(pieEntries, 2)
+//        })
 
         slaStatusPieChart.invalidate()
 
@@ -2351,7 +2845,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         for (i in 0 until slaStatusArrayList.length()) {
             //apply your logic
             var jsonObject = slaStatusArrayList.getJSONObject(i)
-            modelCRMSlaStatus.add(ModelCRMSlaStatus("", jsonObject.getString("Percentage"),""))
+            modelCRMSlaStatus.add(ModelCRMSlaStatus("", jsonObject.getString("Count")))
         }
 
         return modelCRMSlaStatus
@@ -2559,6 +3053,86 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                 chartModeCount = 0
                 getChartModeData()
             }
+
+            R.id.tvv_lemo_StagWise->{
+
+                if (lemoStagWiseMode == 0){
+                    lemoStagWiseMode = 1
+                }else{
+                    lemoStagWiseMode = 0
+                }
+
+                hideStageWise()
+            }
+
+            R.id.tvv_lemo_ComplaintWise->{
+
+                if (lemoComplaintWiseMode == 0){
+                    lemoComplaintWiseMode = 1
+                }else{
+                    lemoComplaintWiseMode = 0
+                }
+
+                hideComplaintWise()
+            }
+
+            R.id.tvv_lemo_ServiceCountOfWPA->{
+
+                if (lemoCountOfWPAMode == 0){
+                    lemoCountOfWPAMode = 1
+                }else{
+                    lemoCountOfWPAMode = 0
+                }
+
+                hideCountOfWPA()
+            }
+
+            R.id.tvv_lemo_ServiceWise->{
+
+                if (lemoServiceWiseMode == 0){
+                    lemoServiceWiseMode = 1
+                }else{
+                    lemoServiceWiseMode = 0
+                }
+
+                hideServiceWise()
+            }
+
+            R.id.tvv_lemo_ServiceTop10Product->{
+
+                if (lemoServiceTop10ProductMode == 0){
+                    lemoServiceTop10ProductMode = 1
+                }else{
+                    lemoServiceTop10ProductMode = 0
+                }
+
+                hideServiceTop10Product()
+            }
+
+            R.id.tvv_lemo_ServiceSlaStatus->{
+
+                if (lemoServiceSlaStatusMode == 0){
+                    lemoServiceSlaStatusMode = 1
+                }else{
+                    lemoServiceSlaStatusMode = 0
+                }
+
+                hideServiceSlaStatus()
+            }
+
+            R.id.tvv_lemo_ServiceChannelStatus->{
+
+                if (lemoServiceChannelStatusMode == 0){
+                    lemoServiceChannelStatusMode = 1
+                }else{
+                    lemoServiceChannelStatusMode = 0
+                }
+
+                hideServiceChannelStatus()
+            }
+
         }
     }
+
+
 }

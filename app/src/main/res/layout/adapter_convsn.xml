@@ -35,7 +35,7 @@
             android:layout_marginTop="5dp"
             android:fontFamily="@font/myfont"
             android:textStyle="bold"
-            android:text="trtr"
+            android:text=""
             android:layout_gravity="center_horizontal" />
         <TextView
             android:id="@+id/tv_newCount"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/myfont"
             android:layout_marginLeft="5dp"
-            android:text="rggg"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="12dp"
             android:textStyle="bold"

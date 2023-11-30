@@ -54,7 +54,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/myfont"
                 android:gravity="center"
-                android:text="Dashboard"
+                android:text=""
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="20dp"
@@ -120,7 +120,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_weight="1"
-                                android:text="DashBoard"
+                                android:text="Chart"
                                 android:textColor="@color/colorPrimary"
                                 android:gravity="center"
                                 android:layout_gravity="center"
@@ -162,13 +162,7 @@
                             android:layout_height="match_parent"
                             android:orientation="vertical">
 
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/card_followup"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_margin="3dp"
-                                app:cardBackgroundColor="@color/white"
-                                android:visibility="visible">
+
                                 <ScrollView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -188,18 +182,98 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="20dp"
-                                            android:layout_marginLeft="20dp"
-                                            android:layout_marginRight="20dp"
+                                            android:layout_marginLeft="13dp"
+                                            android:layout_marginRight="13dp"
                                             android:fontFamily="@font/myfont"
                                             android:padding="10dp"
                                             android:hint="Please Select"
+                                            android:drawablePadding="5dp"
+                                            android:drawableStart="@drawable/dash_icon"
                                             android:focusableInTouchMode="false"
+                                            android:textSize="16sp"
                                             android:drawableEnd="@drawable/down_arrows"
                                             android:text=""
                                             android:background="@drawable/bg_dash2"
                                             android:layout_gravity="center"/>
                                     </LinearLayout>
 
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginLeft="13dp"
+                                        android:layout_marginRight="13dp"
+                                        android:layout_marginTop="10dp"
+                                        app:cardBackgroundColor="@color/white"
+                                        android:visibility="visible">
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="vertical"
+                                        android:fillViewport="true">
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@color/tileclick"
+                                            android:padding="10dp"
+                                            android:orientation="vertical">
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="horizontal">
+                                                <TextView
+                                                    android:id="@+id/txt_chartlabel"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_weight="1"
+                                                    android:text=""
+                                                    android:textColor="@color/colorPrimary"
+                                                    android:gravity="start"
+                                                    android:paddingLeft="5dp"
+                                                    android:paddingTop="5dp"
+                                                    android:layout_gravity="center"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:textStyle="bold"
+                                                    android:textAllCaps="false"
+                                                    android:textSize="16dp"
+                                                    android:visibility="visible" />
+                                                <TextView
+                                                    android:id="@+id/tvv_lemo_StagWise"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:paddingTop="2dp"
+                                                    android:paddingBottom="2dp"
+                                                    android:layout_gravity="center"
+                                                    android:layout_margin="5dp"
+                                                    android:layout_weight="2.8"
+                                                    android:background="@drawable/btn_bgcolour"
+                                                    android:drawableRight="@drawable/dash_more"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="center"
+                                                    android:paddingEnd="10dp"
+                                                    android:text="More"
+                                                    android:textAllCaps="false"
+                                                    android:textColor="@color/white"
+                                                    android:textSize="15sp"
+                                                    android:textStyle="bold"
+                                                    android:visibility="gone" />
+                                            </LinearLayout>
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical">
+                                                <TextView
+                                                    android:id="@+id/txt_chartremark"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:text=""
+                                                    android:textColor="@color/colorPrimary"
+                                                    android:gravity="left"
+                                                    android:layout_gravity="center"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:textStyle="normal"
+                                                    android:textSize="13dp" />
+                                            </LinearLayout>
+                                        </LinearLayout>
                                     <!--Stage wise -->
                                     <LinearLayout
                                         android:id="@+id/ll_barchart"
@@ -218,7 +292,7 @@
                                             <com.github.mikephil.charting.charts.BarChart
                                                 android:id="@+id/empwise_chart"
                                                 android:layout_width="match_parent"
-                                                android:layout_height="350dp"
+                                                android:layout_height="500dp"
                                                 android:layout_marginLeft="10dp"
                                                 android:layout_marginRight="10dp"
                                                 android:layout_weight="1"
@@ -240,6 +314,7 @@
                                                 android:textStyle="bold"
                                                 android:tint="@color/black" />
                                             <LinearLayout
+                                                android:id="@+id/ll_empwisebarchart"
                                                 android:padding="5dp"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
@@ -261,7 +336,6 @@
                                         </LinearLayout>
 
                                     </LinearLayout>
-
                                     <!--complaint wise -->
                                     <LinearLayout
                                         android:id="@+id/ll_Piechart"
@@ -280,7 +354,7 @@
                                             <com.github.mikephil.charting.charts.PieChart
                                                 android:id="@+id/leadstage_forecsast"
                                                 android:layout_width="match_parent"
-                                                android:layout_height="350dp"
+                                                android:layout_height="500dp"
                                                 android:layout_margin="2dp"
                                                 android:layout_weight="1"
                                                 android:visibility="visible" />
@@ -323,11 +397,10 @@
                                         </LinearLayout>
 
                                     </LinearLayout>
-
                                     <!--service wise -->
                                     <LinearLayout
                                         android:id="@+id/ll_top10"
-                                        android:layout_marginTop="10dp"
+                                        android:layout_marginTop="5dp"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@color/white"
@@ -342,7 +415,7 @@
                                             <com.github.mikephil.charting.charts.BarChart
                                                 android:id="@+id/top10_barchart"
                                                 android:layout_width="match_parent"
-                                                android:layout_height="350dp"
+                                                android:layout_height="500dp"
                                                 android:layout_marginLeft="10dp"
                                                 android:layout_marginRight="10dp"
                                                 android:layout_weight="1"
@@ -387,7 +460,7 @@
                                     </LinearLayout>
                                     <LinearLayout
                                         android:id="@+id/card_toprevenue"
-                                        android:layout_marginTop="10dp"
+                                        android:layout_marginTop="5dp"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@color/white"
@@ -402,8 +475,9 @@
                                             <com.github.mikephil.charting.charts.BarChart
                                                 android:id="@+id/top_revenuebarchart"
                                                 android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
-                                                android:layout_margin="2dp"
+                                                android:layout_height="500dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
                                                 android:layout_weight="1"
                                                 android:visibility="visible" />
                                             <TextView
@@ -417,6 +491,7 @@
                                                 android:fontFamily="@font/myfont"
                                                 android:gravity="center_vertical"
                                                 android:text=""
+                                                android:visibility="gone"
                                                 android:textAllCaps="false"
                                                 android:textColor="@color/black"
                                                 android:textSize="14dp"
@@ -426,7 +501,6 @@
                                                 android:padding="5dp"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
-                                                android:layout_weight="2.5"
                                                 android:layout_margin="5dp">
                                                 <com.perfect.prodsuit.Helper.FullLenghRecyclertview
 
@@ -461,7 +535,7 @@
                                             <com.github.mikephil.charting.charts.BarChart
                                                 android:id="@+id/empwiseamt_barchart"
                                                 android:layout_width="match_parent"
-                                                android:layout_height="350dp"
+                                                android:layout_height="500dp"
                                                 android:layout_marginLeft="10dp"
                                                 android:layout_marginRight="10dp"
                                                 android:layout_weight="1"
@@ -495,7 +569,7 @@
                                                     android:layout_height="wrap_content"
                                                     android:layout_margin="5dp"
                                                     android:padding="5dp"
-                                                    android:visibility="gone"
+                                                    android:visibility="visible"
                                                     android:background="@drawable/svg_dashrect">
 
                                                 </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
@@ -521,7 +595,7 @@
                                             <com.github.mikephil.charting.charts.PieChart
                                                 android:id="@+id/empwise_barchart"
                                                 android:layout_width="match_parent"
-                                                android:layout_height="match_parent"
+                                                android:layout_height="500dp"
                                                 android:layout_margin="2dp"
                                                 android:layout_weight="1"
                                                 android:visibility="visible" />
@@ -576,6 +650,7 @@
                                                 android:paddingTop="8dp">
 
                                                 <TextView
+
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:layout_weight=".8"
@@ -1148,7 +1223,7 @@
                                                     android:visibility="visible"
                                                     app:fontSizeF="15dp"
                                                     android:id="@+id/funnelChart"
-                                                    android:layout_height="wrap_content"
+                                                    android:layout_height="350dp"
                                                     tools:ignore="MissingConstraints" />
 
                                                 <LinearLayout
@@ -1264,12 +1339,11 @@
 
 
                                     </LinearLayout>
-
-
+                                    </LinearLayout>
+                                    </androidx.cardview.widget.CardView>
 
                                 </LinearLayout>
                                 </ScrollView>
-                            </androidx.cardview.widget.CardView>
 
 
                         </LinearLayout>
@@ -1498,7 +1572,67 @@
 
                                     </androidx.cardview.widget.CardView>
 
+                                    <androidx.cardview.widget.CardView
+                                        android:id="@+id/crdv_leadcountscenario"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="5dp"
+                                        android:layout_marginRight="5dp"
+                                        android:layout_marginBottom="5dp"
+                                        android:background="@color/white"
+                                        app:cardCornerRadius="5dp"
+                                        android:visibility="gone"
+                                        app:cardElevation="1dp"
+                                        app:cardPreventCornerOverlap="true"
+                                        app:cardUseCompatPadding="true"
+                                        tools:ignore="DuplicateIds">
 
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content">
+                                                <TextView
+                                                    android:id="@+id/txt_leadcountscenario"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="50dp"
+                                                    android:layout_weight="1"
+                                                    android:text=""
+                                                    android:textAllCaps="true"
+                                                    android:textColor="@color/white"
+                                                    android:gravity="left|center"
+                                                    android:paddingLeft="15dp"
+                                                    android:layout_gravity="center"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:background="@color/colorPrimary"
+                                                    android:textStyle="bold"
+                                                    android:textSize="@dimen/header_text1"
+                                                    android:visibility="visible"/>
+
+                                            </LinearLayout>
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:background="#ffffff"
+                                                android:layout_weight="1"
+                                                android:gravity="center"
+                                                android:layout_gravity="center"
+                                                tools:ignore="Orientation">
+                                                <androidx.recyclerview.widget.RecyclerView
+                                                    android:id="@+id/rclrvw_leadcountscenario"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center"
+                                                    android:layout_margin="10dp"
+                                                    android:gravity="center"
+                                                    android:visibility="visible" />
+                                            </LinearLayout>
+
+
+                                        </LinearLayout>
+                                    </androidx.cardview.widget.CardView>
 
                                 </LinearLayout>
                             </ScrollView>
