@@ -867,4 +867,16 @@ interface ApiInterface {
     @POST("DashBoard/ProductionTileDashBoard")
     fun getProductionTileDashBoard(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/SendIntimationModule")
+    fun getIntimationModules(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/Channel")
+    fun getChannel(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/ScheduleType")
+    fun getSheduleType(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/UpdateSendIntimation")
+    fun sentIntimation(@Body body: RequestBody): Call<String>
+
 }
