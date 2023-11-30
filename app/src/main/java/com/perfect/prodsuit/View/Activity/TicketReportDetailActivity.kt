@@ -408,6 +408,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG, "msg   1701   " + msg.length)
                                 Log.e(TAG, "msg   1702   " + msg)
+                                Log.v("sfsdfsdfdsfdd","msg "+msg)
                                 if (jObject.getString("StatusCode") == "0") {
                                     val jobjt = jObject.getJSONObject("SummaryWiseReport")
                                     actionListReportArrayList =
@@ -470,11 +471,11 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                 }
                             }
                         } else {
-                            Toast.makeText(
-                                applicationContext,
-                                "Some Technical Issues.",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                         }
                     })
                 progressDialog!!.dismiss()

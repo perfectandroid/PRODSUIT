@@ -9,7 +9,9 @@ import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.DetailedReportModel
+import com.perfect.prodsuit.Model.DocumentListModel
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Repository.DocumentListRepository.documentlistSetterGetter
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -62,6 +64,7 @@ object DetailedReportRepository {
         ID_Category: String?
     ) {
         try {
+            actionListTicketReportSetterGetter.value = DetailedReportModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -107,6 +110,7 @@ object DetailedReportRepository {
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
                 Log.e(TAG,"ReportMode   456745   "+ReportMode)
                 Log.e(TAG,"requestObject1   456745   "+requestObject1)
+                Log.v("sfsdfsdfdsfdd","requestObject1 "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()
