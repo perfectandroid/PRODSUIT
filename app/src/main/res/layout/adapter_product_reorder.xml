@@ -11,8 +11,157 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/llback"
+            android:layout_weight="3"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_weight="1.3"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tvv_slnmbr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center"
+                    android:text="Sl.No"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black1"
+                    android:textSize="10dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/grey"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvv_product1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Product"
+                    android:textColor="@color/black1"
+                    android:textAllCaps="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/myfont" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/grey"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvv_Reorderlevel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Reorder level"
+                    android:textColor="@color/black1"
+                    android:textAllCaps="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/myfont" />
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/grey"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.1"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvv_CurrentStock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+
+                    android:gravity="center"
+                    android:text="Current Stock"
+                    android:textColor="@color/black1"
+                    android:textAllCaps="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:textSize="10dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/myfont" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/grey"/>
+
+
+
+
+
+
+
+
+
+        </LinearLayout>
     <LinearLayout
-        android:id="@+id/llback"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -24,7 +173,7 @@
             android:background="@color/grey"/>
 
         <TextView
-            android:id="@+id/tvv_slnmbr"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
@@ -38,7 +187,7 @@
             android:layout_height="35dp"
             android:background="@color/grey"/>
         <TextView
-            android:id="@+id/tvv_product1"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/myfont"
@@ -51,7 +200,7 @@
             android:layout_height="35dp"
             android:background="@color/grey"/>
         <TextView
-            android:id="@+id/tvv_Reorderlevel"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/myfont"
@@ -66,7 +215,7 @@
             android:background="@color/grey"/>
 
         <TextView
-            android:id="@+id/tvv_CurrentStock"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/myfont"
@@ -74,7 +223,7 @@
             android:gravity="center"
             android:text="hedftsrh"
             android:textSize="12dp"
-            android:layout_weight="1.2"/>
+            android:layout_weight="1.1"/>
         <LinearLayout
             android:layout_width="1dp"
             android:layout_height="35dp"

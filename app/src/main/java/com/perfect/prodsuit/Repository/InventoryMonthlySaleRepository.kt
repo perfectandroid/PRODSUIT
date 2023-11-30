@@ -79,7 +79,7 @@ object InventoryMonthlySaleRepository {
                 System.out.println(" C DATE is  "+currentDate)
 
 
-
+                Log.e(TAG,"  current date===787887 "+currentDate)
 
               requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
 
