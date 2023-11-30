@@ -30,6 +30,7 @@ import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.AccountBankBalanceDashAdapter
 import com.perfect.prodsuit.View.Adapter.AccountCashBalanceDashAdapter
 import com.perfect.prodsuit.View.Adapter.AccountsTileAdapter
+import com.perfect.prodsuit.View.Adapter.CustomAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -499,8 +500,8 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
             Log.e(TAG, "00000111   " + ID_ChartMode)
             Log.e(TAG, "85456214   " + modeType)
 
-
-            val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, modeType)
+            val adapter = CustomAdapter(this, R.layout.custom_dropdown_item, modeType)
+          //  val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, modeType)
             actv_mode!!.setAdapter(adapter)
             actv_mode!!.showDropDown()
 

@@ -115,6 +115,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     var lemoCountOfWPAMode    = 0  // 0=more , 1 = less
     var lemoServiceWiseMode    = 0  // 0=more , 1 = less
     var lemoServiceTop10ProductMode    = 0  // 0=more , 1 = less
+    var lemoServiceSlaStatusMode    = 0  // 0=more , 1 = less
+    var lemoServiceChannelStatusMode    = 0  // 0=more , 1 = less
 
 
     private var tvv_head_StagWise: TextView? = null
@@ -122,18 +124,24 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     private var tvv_head_ServiceCountOfWPA: TextView? = null
     private var tvv_head_ServiceWise: TextView? = null
     private var tvv_head_ServiceTop10Product: TextView? = null
+    private var tvv_head_ServiceSlaStatus: TextView? = null
+    private var tvv_head_ServiceChannelStatus: TextView? = null
 
     private var tvv_lemo_StagWise: TextView? = null
     private var tvv_lemo_ComplaintWise: TextView? = null
     private var tvv_lemo_ServiceCountOfWPA: TextView? = null
     private var tvv_lemo_ServiceWise: TextView? = null
     private var tvv_lemo_ServiceTop10Product: TextView? = null
+    private var tvv_lemo_ServiceSlaStatus: TextView? = null
+    private var tvv_lemo_ServiceChannelStatus: TextView? = null
 
     private var ll_StagWiseRecyc: LinearLayout? = null
     private var ll_ComplaintWiseRecyc: LinearLayout? = null
     private var ll_ServiceCountOfWPARecyc: LinearLayout? = null
     private var ll_ServiceWiseRecyc: LinearLayout? = null
     private var ll_ServiceTop10ProductRecyc: LinearLayout? = null
+    private var ll_ServiceSlaStatusRecyc: LinearLayout? = null
+    private var ll_ServiceChannelStatusRecyc: LinearLayout? = null
 
 
 
@@ -337,18 +345,24 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         tvv_head_ServiceCountOfWPA      = findViewById<TextView>(R.id.tvv_head_ServiceCountOfWPA)
         tvv_head_ServiceWise      = findViewById<TextView>(R.id.tvv_head_ServiceWise)
         tvv_head_ServiceTop10Product      = findViewById<TextView>(R.id.tvv_head_ServiceTop10Product)
+        tvv_head_ServiceSlaStatus      = findViewById<TextView>(R.id.tvv_head_ServiceSlaStatus)
+        tvv_head_ServiceChannelStatus      = findViewById<TextView>(R.id.tvv_head_ServiceChannelStatus)
 
         tvv_lemo_StagWise      = findViewById<TextView>(R.id.tvv_lemo_StagWise)
         tvv_lemo_ComplaintWise      = findViewById<TextView>(R.id.tvv_lemo_ComplaintWise)
         tvv_lemo_ServiceCountOfWPA      = findViewById<TextView>(R.id.tvv_lemo_ServiceCountOfWPA)
         tvv_lemo_ServiceWise      = findViewById<TextView>(R.id.tvv_lemo_ServiceWise)
         tvv_lemo_ServiceTop10Product      = findViewById<TextView>(R.id.tvv_lemo_ServiceTop10Product)
+        tvv_lemo_ServiceSlaStatus      = findViewById<TextView>(R.id.tvv_lemo_ServiceSlaStatus)
+        tvv_lemo_ServiceChannelStatus      = findViewById<TextView>(R.id.tvv_lemo_ServiceChannelStatus)
 
         ll_StagWiseRecyc      = findViewById<LinearLayout>(R.id.ll_StagWiseRecyc)
         ll_ComplaintWiseRecyc      = findViewById<LinearLayout>(R.id.ll_ComplaintWiseRecyc)
         ll_ServiceCountOfWPARecyc      = findViewById<LinearLayout>(R.id.ll_ServiceCountOfWPARecyc)
         ll_ServiceWiseRecyc      = findViewById<LinearLayout>(R.id.ll_ServiceWiseRecyc)
         ll_ServiceTop10ProductRecyc      = findViewById<LinearLayout>(R.id.ll_ServiceTop10ProductRecyc)
+        ll_ServiceSlaStatusRecyc      = findViewById<LinearLayout>(R.id.ll_ServiceSlaStatusRecyc)
+        ll_ServiceChannelStatusRecyc      = findViewById<LinearLayout>(R.id.ll_ServiceChannelStatusRecyc)
 
     //    tvv_lemo_StagWise!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
 
@@ -357,6 +371,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
         tvv_lemo_ServiceCountOfWPA!!.setOnClickListener(this)
         tvv_lemo_ServiceWise!!.setOnClickListener(this)
         tvv_lemo_ServiceTop10Product!!.setOnClickListener(this)
+        tvv_lemo_ServiceSlaStatus!!.setOnClickListener(this)
+        tvv_lemo_ServiceChannelStatus!!.setOnClickListener(this)
 
 
         actv_mode= findViewById<AutoCompleteTextView>(R.id.actv_mode)
@@ -529,13 +545,15 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                                 getCRMTop10Product()
                                             }
                                             else if (ID_ChartMode.equals("15")){
-                                                ll_ServiceSlaStatus!!.visibility = View.VISIBLE
+                                               // ll_ServiceSlaStatus!!.visibility = View.VISIBLE
+                                                tvv_head_ServiceSlaStatus!!.setText(jsonObject.getString("DashBoardName"))
                                                 crmslastatusCount = 0
                                                 getCRMSlaStatus()
                                             }
                                             else if (ID_ChartMode.equals("16")){
 //                                                SLA CHANNEL
-                                                ll_ServiceChannelStatus!!.visibility = View.VISIBLE
+//                                                ll_ServiceChannelStatus!!.visibility = View.VISIBLE
+                                                tvv_head_ServiceChannelStatus!!.setText(jsonObject.getString("DashBoardName"))
                                                 crmchannelstatusCount = 0
                                                 getCRMChanelStatus()
                                             }
@@ -644,14 +662,16 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                     getCRMTop10Product()
                 }
                 else if (ID_ChartMode.equals("15")){
-                    ll_ServiceSlaStatus!!.visibility = View.VISIBLE
+                   // ll_ServiceSlaStatus!!.visibility = View.VISIBLE
+                    tvv_head_ServiceSlaStatus!!.setText(modeType[position])
                     crmslastatusCount = 0
                     getCRMSlaStatus()
                 }
 
                 else if (ID_ChartMode.equals("16")){
 //                  SLA CHANNEL
-                    ll_ServiceChannelStatus!!.visibility = View.VISIBLE
+//                    ll_ServiceChannelStatus!!.visibility = View.VISIBLE
+                    tvv_head_ServiceChannelStatus!!.setText(modeType[position])
                     crmchannelstatusCount = 0
                     getCRMChanelStatus()
                 }
@@ -867,6 +887,31 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
             tvv_lemo_ServiceTop10Product!!.setText("Less")
             tvv_lemo_ServiceTop10Product!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
             ll_ServiceTop10ProductRecyc!!.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideServiceSlaStatus() {
+        if (lemoServiceSlaStatusMode == 0){
+            tvv_lemo_ServiceSlaStatus!!.setText("More")
+            tvv_lemo_ServiceSlaStatus!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_ServiceSlaStatusRecyc!!.visibility = View.GONE
+        }else{
+            tvv_lemo_ServiceSlaStatus!!.setText("Less")
+            tvv_lemo_ServiceSlaStatus!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_ServiceSlaStatusRecyc!!.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideServiceChannelStatus()
+    {
+        if (lemoServiceChannelStatusMode == 0){
+            tvv_lemo_ServiceChannelStatus!!.setText("More")
+            tvv_lemo_ServiceChannelStatus!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_ServiceChannelStatusRecyc!!.visibility = View.GONE
+        }else{
+            tvv_lemo_ServiceChannelStatus!!.setText("Less")
+            tvv_lemo_ServiceChannelStatus!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_ServiceChannelStatusRecyc!!.visibility = View.VISIBLE
         }
     }
 
@@ -1119,7 +1164,10 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     Log.e(TAG,"1644232 slaStatusArrayList  "+slaStatusArrayList)
 
                                     if (slaStatusArrayList.length() > 0){
+                                        ll_ServiceSlaStatus!!.visibility = View.VISIBLE
+                                        lemoServiceSlaStatusMode = 0
 
+                                        hideServiceSlaStatus()
 //                                        setSlaStatusPiechart()
                                         setSlaStatusPiechart1()
 
@@ -1190,7 +1238,10 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     Log.e(TAG,"39123 slaStatusArrayList  "+crmChannelWiseArrayList)
 
                                     if (crmChannelWiseArrayList.length() > 0){
+                                        ll_ServiceChannelStatus!!.visibility = View.VISIBLE
+                                        lemoServiceChannelStatusMode = 0
 
+                                        hideServiceChannelStatus()
                                         setChannelStatusBarchart()
 
                                         val lLayout = GridLayoutManager(this@ServiceGraphActivity, 2)
@@ -3058,11 +3109,30 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                 hideServiceTop10Product()
             }
 
+            R.id.tvv_lemo_ServiceSlaStatus->{
+
+                if (lemoServiceSlaStatusMode == 0){
+                    lemoServiceSlaStatusMode = 1
+                }else{
+                    lemoServiceSlaStatusMode = 0
+                }
+
+                hideServiceSlaStatus()
+            }
+
+            R.id.tvv_lemo_ServiceChannelStatus->{
+
+                if (lemoServiceChannelStatusMode == 0){
+                    lemoServiceChannelStatusMode = 1
+                }else{
+                    lemoServiceChannelStatusMode = 0
+                }
+
+                hideServiceChannelStatus()
+            }
 
         }
     }
-
-
 
 
 }
