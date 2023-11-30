@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -51,11 +52,13 @@ class NewListTicketReportAdapter(internal var context: Context, internal var jso
 //                    clickListener!!.onClick(position, "districtdetail")
 //                })
 
-                holder.txtLead.text          = jsonObject!!.getString("LeadNo")+" ("+jsonObject!!.getString("LeadDate")+")"
-                holder.txtCustomer.text      = jsonObject!!.getString("Customer")
-                holder.txtCollectedBy.text      = jsonObject!!.getString("LgCollectedBy")
+                holder.txtLead.text = "Lead No : "+jsonObject!!.getString("LeadNo")
+                holder.tv_date.text = "Date : "+jsonObject!!.getString("LeadDate")
+                holder.tv_priority.text      = jsonObject!!.getString("Priority")
+                holder.txtCustomer.text      = "Customer : "+jsonObject!!.getString("Customer")
+                holder.txtCollectedBy.text      = "Collected By : "+jsonObject!!.getString("LgCollectedBy")
                 var  strCat = ""
-                var  strProd = jsonObject!!.getString("Product")
+                var  strProd = "Product : "+jsonObject!!.getString("Product")
                 holder.txtProduct.text = strProd
 //                if (!strProd.equals("")){
 //                    holder.txtProduct.text = jsonObject!!.getString("Category")+"/"+jsonObject!!.getString("Product")
@@ -109,8 +112,10 @@ class NewListTicketReportAdapter(internal var context: Context, internal var jso
         internal var txtLead             : TextView
         internal var txtCustomer         : TextView
         internal var txtProduct          : TextView
+        internal var tv_priority          : TextView
         internal var txtCollectedBy      : TextView
-        internal var ll_newList          : LinearLayout
+        internal var tv_date      : TextView
+        internal var ll_newList          : CardView
 
         //        internal var llDistrict      : LinearLayout
         init {
@@ -129,7 +134,9 @@ class NewListTicketReportAdapter(internal var context: Context, internal var jso
             txtCustomer        = v.findViewById<View>(R.id.txtCustomer) as TextView
             txtProduct         = v.findViewById<View>(R.id.txtProduct) as TextView
             txtCollectedBy     = v.findViewById<View>(R.id.txtCollectedBy) as TextView
-            ll_newList         = v.findViewById<View>(R.id.ll_newList) as LinearLayout
+            tv_date     = v.findViewById<View>(R.id.tv_date) as TextView
+            tv_priority     = v.findViewById<View>(R.id.tv_priority) as TextView
+            ll_newList         = v.findViewById<View>(R.id.ll_newList) as CardView
 
 
         }

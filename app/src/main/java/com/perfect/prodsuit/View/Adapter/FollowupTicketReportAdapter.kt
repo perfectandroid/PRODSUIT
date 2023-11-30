@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
@@ -60,17 +61,22 @@ class FollowupTicketReportAdapter(internal var context: Context, internal var js
 ////                holder.llDistrict!!.setOnClickListener(View.OnClickListener {
 ////                    clickListener!!.onClick(position, "districtdetail")
 ////                })
+                holder.tv_status.text      = jsonObject!!.getString("Status")
+                holder.txtLead.text = "Lead No : "+jsonObject!!.getString("LeadNo")
+                holder.tv_date.text = "Date : "+jsonObject!!.getString("LeadDate")
+                holder.txtCustomer.text      = "Customer : "+jsonObject!!.getString("Customer")
 
+//                holder.txtLead.text          = jsonObject!!.getString("LeadNo")+" ("+jsonObject!!.getString("LeadDate")+")"
 
-                holder.txtLead.text          = jsonObject!!.getString("LeadNo")+" ("+jsonObject!!.getString("LeadDate")+")"
-                holder.txtCustomer.text      = jsonObject!!.getString("Customer")
-                holder.txtCollectedBy.text      = jsonObject!!.getString("LgCollectedBy")
+                holder.txtCollectedBy.text      = "Collected By : "+jsonObject!!.getString("LgCollectedBy")
+
                 var  strCat = ""
                 var  strProd = jsonObject!!.getString("Product")
                 if (!strProd.equals("")){
-                    holder.txtProduct.text = jsonObject!!.getString("Category")+"/"+jsonObject!!.getString("Product")
+
+                    holder.txtProduct.text = "Category/Product : "+jsonObject!!.getString("Category")+"/"+jsonObject!!.getString("Product")
                 }else{
-                    holder.txtProduct.text = jsonObject!!.getString("Category")
+                    holder.txtProduct.text = "Category : "+jsonObject!!.getString("Category")
                 }
 
                 holder.ll_followList!!.setTag(position)
@@ -127,7 +133,9 @@ class FollowupTicketReportAdapter(internal var context: Context, internal var js
         internal var txtCustomer         : TextView
         internal var txtProduct          : TextView
         internal var txtCollectedBy      : TextView
-        internal var ll_followList       : LinearLayout
+        internal var tv_date      : TextView
+        internal var tv_status      : TextView
+        internal var ll_followList       : CardView
 
 
         init {
@@ -150,8 +158,10 @@ class FollowupTicketReportAdapter(internal var context: Context, internal var js
             txtLead            = v.findViewById<View>(R.id.txtLead) as TextView
             txtCustomer        = v.findViewById<View>(R.id.txtCustomer) as TextView
             txtProduct         = v.findViewById<View>(R.id.txtProduct) as TextView
+            tv_status         = v.findViewById<View>(R.id.tv_status) as TextView
+            tv_date         = v.findViewById<View>(R.id.tv_date) as TextView
             txtCollectedBy     = v.findViewById<View>(R.id.txtCollectedBy) as TextView
-            ll_followList      = v.findViewById<View>(R.id.ll_followList) as LinearLayout
+            ll_followList      = v.findViewById<View>(R.id.ll_followList) as CardView
 
 
         }
