@@ -1390,7 +1390,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private fun siteVisitValidation(v : View){
 
         strLeadno          = tie_LeadNo!!.text.toString()
-        strVisitdate       = tie_VisitTime!!.text.toString()
+        strVisitdate       = tie_VisitDate!!.text.toString()
         visitTime          = tie_VisitTime!!.text.toString()
         strInspectionNote1 = tie_InspectionNotes1!!.text.toString()
         strInspectionNote2 = tie_InspectionNotes2!!.text.toString()

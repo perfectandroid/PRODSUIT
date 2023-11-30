@@ -48,7 +48,7 @@ class ServiceOutstandingReportAdapter (internal var context: Context, internal v
                     Log.e(TAG,"serviceReportClick   5091")
                     clickListener!!.onClick(
                         position,
-                        "serviceReportNewListClick"
+                        "serviceReportOutstandingListClick"
                     )
                 })
             }

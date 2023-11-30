@@ -402,6 +402,9 @@ interface ApiInterface {
     @POST("Service/GetComplaints")
     fun getComplaints(@Body body: RequestBody): Call<String>
 
+    @POST("Report/ComplaintService")
+    fun getComplaintService(@Body body: RequestBody): Call<String>
+
     @POST("Service/GetMedia")
     fun getServiceMedia(@Body body: RequestBody): Call<String>
 
@@ -808,6 +811,9 @@ interface ApiInterface {
     @POST("DashBoard/ExpenseChart")
     fun getDashAccExpenseChart(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/SupplierOutstanding")
+    fun getDashAccSupplierOutstandingChart(@Body body: RequestBody): Call<String>
+
     @POST("DashBoard/AccountTileData")
     fun getAccountsTilePLStatus(@Body body: RequestBody): Call<String>
 
@@ -836,5 +842,11 @@ interface ApiInterface {
 
     @POST("DashBoard/UpcomingStageDueDates")
     fun getUpcomingStageDueDates(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/InventoryTopSellingItem")
+    fun getTopSellingItem(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/InventoryTopSupplierList")
+    fun getTopSupplierList(@Body body: RequestBody): Call<String>
 
 }

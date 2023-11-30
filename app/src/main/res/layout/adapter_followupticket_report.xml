@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="0dp"
+    android:orientation="vertical"
     android:backgroundTint="@color/homebgcolor"
     app:cardCornerRadius="0dp"
     app:cardElevation="0dp"
    >
 
     <LinearLayout
-        android:id="@+id/ll_followList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:visibility="gone"
         android:background="@color/white"
         android:gravity="center_vertical">
 
@@ -63,7 +64,7 @@
                     android:textStyle="normal" />
 
                 <TextView
-                    android:id="@+id/txtLead"
+
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2.4"
@@ -115,7 +116,6 @@
                     android:textStyle="normal" />
 
                 <TextView
-                    android:id="@+id/txtCustomer"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2.4"
@@ -167,7 +167,6 @@
                     android:textStyle="normal" />
 
                 <TextView
-                    android:id="@+id/txtProduct"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2.4"
@@ -219,7 +218,6 @@
                     android:textStyle="normal" />
 
                 <TextView
-                    android:id="@+id/txtCollectedBy"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2.4"
@@ -251,6 +249,149 @@
 
 
     </LinearLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ll_followList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        app:cardCornerRadius="10dp"
+        app:cardUseCompatPadding="true">
+        <LinearLayout
+            android:id="@+id/lToDoList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_leadNo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="10"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:background="@color/colorPrimarylite"
+                android:orientation="vertical">
+
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:id="@+id/txtLead"
+                        android:fontFamily="@font/myfont"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="5dp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="12dp"
+                    android:text=""
+                    android:textStyle="bold"
+                    android:textAllCaps="true"
+                    android:background="@drawable/btn_bgcolouryellow"
+                    android:textColor="@color/black"/>
+
+                <!--                android:drawableLeft="@drawable/addressicon"-->
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left|center"
+                    android:textSize="12dp"
+                    android:layout_marginTop="2dp"
+                    android:drawableLeft="@drawable/calendar_svglist"
+                    android:drawableTint="@color/greydark"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/txtCustomer"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:textSize="12dp"
+                    android:drawableLeft="@drawable/svg_action_type"
+                    android:drawableTint="@color/greydark"
+                    android:drawablePadding="10dp"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/grey"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/txtProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:drawableLeft="@drawable/product_svglist"
+                    android:drawableTint="@color/greydark"
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="left|center"
+                    android:textColor="@color/black"
+                    android:textSize="12dp"
+                    android:visibility="visible"/>
+                <!--                android:drawableLeft="@drawable/deadline"-->
+
+                <TextView
+                    android:id="@+id/txtCollectedBy"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left|center"
+                    android:textSize="12dp"
+                    android:layout_marginTop="2dp"
+                    android:drawableLeft="@drawable/svg_action_type"
+                    android:drawableTint="@color/greydark"
+                    android:drawablePadding="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:textColor="@color/black"
+                    android:visibility="visible"/>
+
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -555,6 +696,6 @@
 
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+</LinearLayout>
 
 

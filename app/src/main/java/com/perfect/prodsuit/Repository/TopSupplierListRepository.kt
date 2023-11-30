@@ -9,12 +9,11 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.InventoryMonthlySaleModel
-import com.perfect.prodsuit.Model.LeadOutstandTileModel
-import com.perfect.prodsuit.Model.LeadTileModel
-import com.perfect.prodsuit.Model.ServiceCountModel
+import com.perfect.prodsuit.Model.TopSupplierListModel
+
+
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Viewmodel.LeadTileViewModel
+
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -25,20 +24,20 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
-object InventoryMonthlySaleRepository {
+object TopSupplierListRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val inventoryMonthlySaleSetterGetter = MutableLiveData<InventoryMonthlySaleModel>()
-    val TAG: String = "InventoryMonthlySaleRepository"
+    val topSupplierSetterGetter = MutableLiveData<TopSupplierListModel>()
+    val TAG: String = "TopSupplierListRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<InventoryMonthlySaleModel> {
-        getInventoryMonthlySale(context)
-        return inventoryMonthlySaleSetterGetter
+    fun getServicesApiCall(context: Context): MutableLiveData<TopSupplierListModel> {
+        getTopSupplierList(context)
+        return topSupplierSetterGetter
     }
 
-    private fun getInventoryMonthlySale(context: Context) {
+    private fun getTopSupplierList(context: Context) {
         try {
-            inventoryMonthlySaleSetterGetter.value = InventoryMonthlySaleModel("")
+            topSupplierSetterGetter.value = TopSupplierListModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -79,7 +78,7 @@ object InventoryMonthlySaleRepository {
                 System.out.println(" C DATE is  "+currentDate)
 
 
-                Log.e(TAG,"  current date===787887 "+currentDate)
+
 
               requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
 
@@ -89,13 +88,13 @@ object InventoryMonthlySaleRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
 //                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
-                requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-17"))
-                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("23"))
+                requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-08"))
+                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("29"))
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))
 
 
 
-                Log.e(TAG,"7856  inventory  "+requestObject1)
+                Log.e(TAG,"78546  topsellinglist  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -105,7 +104,7 @@ object InventoryMonthlySaleRepository {
             )
 
 
-            val call = apiService.getInventoryMonthlySaleDetails(body)
+            val call = apiService.getTopSupplierList(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -114,11 +113,11 @@ object InventoryMonthlySaleRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        Log.e(TAG,"  inventory "+response.body())
-                        val inventory = ArrayList<InventoryMonthlySaleModel>()
-                        inventory.add(InventoryMonthlySaleModel(response.body()))
-                        val msg = inventory[0].message
-                        inventoryMonthlySaleSetterGetter.value = InventoryMonthlySaleModel(msg)
+                        Log.e(TAG,"  stocklistcategory "+response.body())
+                        val stocklistcategory = ArrayList<TopSupplierListModel>()
+                        stocklistcategory.add(TopSupplierListModel(response.body()))
+                        val msg = stocklistcategory[0].message
+                        topSupplierSetterGetter.value = TopSupplierListModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                         Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()

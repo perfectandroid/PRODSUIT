@@ -30,8 +30,10 @@ object CompanyCodeRepository {
 
     private fun getCommonAppData(context: Context,companyCode : String) {
         try {
-            companyCodeSetterGetter.value = CompanyCodeModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
+            Log.e(TAG,"112322    "+BASE_URLSP.getString("BASE_URL", null))
+            companyCodeSetterGetter.value = CompanyCodeModel("")
+
             val client = OkHttpClient.Builder()
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
@@ -49,7 +51,8 @@ object CompanyCodeRepository {
             val requestObject1 = JSONObject()
             try {
 
-                requestObject1.put("CompanyCode", ProdsuitApplication.encryptStart(companyCode))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("122"))
+                requestObject1.put("ConfigCode", ProdsuitApplication.encryptStart(companyCode))
 
                 Log.e(TAG,"requestObject1   53   "+requestObject1)
 
