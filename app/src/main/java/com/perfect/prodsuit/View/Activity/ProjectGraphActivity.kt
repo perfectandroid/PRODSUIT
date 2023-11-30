@@ -36,7 +36,8 @@ import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
-import java.util.ArrayList
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
     val TAG: String = "ProjectGraphActivity"
@@ -100,11 +101,29 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
     lateinit var expenseanalysisViewModel     : ExpenseAnalysisViewModel
 
 
+    //UpcomingStageDueDates
     var UpcomingStageDueDatesCount                  = 0
     lateinit var upcomingstageDueDatesViewModel     : UpcomingStageDueDatesViewModel
     var recyclr_Upcoming_Stage_Due_Dates            : RecyclerView?   = null
-    lateinit var upcomingdatesArrayList     : JSONArray
+    lateinit var upcomingdatesArrayList             : JSONArray
+    var TransDate                                   = ""
 
+    //costmaterialusageAllocated
+    var costmaterialusageAllocatedCount                  = 0
+    private var costmaterialusageAllocatedUsedBar            = ArrayList<CostMaterialUsageAllocatedUsedBar>()
+    lateinit var costmaterialUsageAllocatedUsedViewModel     : CostMaterialUsageAllocatedUsedViewModel
+    lateinit var CostMaterialUsageArrayList                  : JSONArray
+    var recycCostMaterialUsageAllocate                       : RecyclerView?   = null
+    private lateinit var CostMaterialUsageAllocateChart      : BarChart
+
+
+    //totalstagewise
+    var totalstagewiseCount                       = 0
+    private var totalstagewisedueBar              = ArrayList<TotalStagewiseDueBar>()
+    lateinit var totalstagewiseDueBarViewModel    : TotalStagewiseDueBarViewModel
+    lateinit var totalstagewiseDueArrayList       : JSONArray
+    var recyTotalStagewiseDue                     : RecyclerView?   = null
+    private lateinit var TotalStagewiseDueChart   : BarChart
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,10 +139,12 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         top10projectViewModel      = ViewModelProvider(this).get(Top10ProjectViewModel::class.java)
         projectBillStatusViewModel = ViewModelProvider(this).get(ProjectBillStatusViewModel::class.java)
 
-        chartTypeViewModel                    = ViewModelProvider(this).get(ChartTypeViewModel::class.java)
-        projectDelayedViewModel               = ViewModelProvider(this).get(ProjectDelayedViewModel::class.java)
-        expenseanalysisViewModel               = ViewModelProvider(this).get(ExpenseAnalysisViewModel::class.java)
-        upcomingstageDueDatesViewModel               = ViewModelProvider(this).get(UpcomingStageDueDatesViewModel::class.java)
+        chartTypeViewModel                       = ViewModelProvider(this).get(ChartTypeViewModel::class.java)
+        projectDelayedViewModel                  = ViewModelProvider(this).get(ProjectDelayedViewModel::class.java)
+        expenseanalysisViewModel                 = ViewModelProvider(this).get(ExpenseAnalysisViewModel::class.java)
+        upcomingstageDueDatesViewModel           = ViewModelProvider(this).get(UpcomingStageDueDatesViewModel::class.java)
+        costmaterialUsageAllocatedUsedViewModel  = ViewModelProvider(this).get(CostMaterialUsageAllocatedUsedViewModel::class.java)
+        totalstagewiseDueBarViewModel            = ViewModelProvider(this).get(TotalStagewiseDueBarViewModel::class.java)
 
 
         setRegViews()
@@ -152,6 +173,10 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         ExpenseAnalysisChart       = findViewById(R.id.ExpenseAnalysisChart)
         recycExpenseAnalysis       = findViewById(R.id.recycExpenseAnalysis)
         recyclr_Upcoming_Stage_Due_Dates       = findViewById(R.id.recyclr_Upcoming_Stage_Due_Dates)
+        recycCostMaterialUsageAllocate         = findViewById(R.id.recycCostMaterialUsageAllocate)
+        CostMaterialUsageAllocateChart         = findViewById(R.id.CostMaterialUsageAllocateChart)
+        TotalStagewiseDueChart                 = findViewById(R.id.TotalStagewiseDueChart)
+        recyTotalStagewiseDue                  = findViewById(R.id.recyTotalStagewiseDue)
 
         tvv_dash!!.setOnClickListener(this)
         tvv_tile!!.setOnClickListener(this)
@@ -176,7 +201,9 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 //                getTop10Project()
 //                getProjectDelayed()
 //                getExpenseAnalysis()
-                getUpcomingStageDueDates()
+//                getUpcomingStageDueDates()
+//                getCostMaterialUsageAllocatedUsed()
+                getTotalStagewiseDue()
             }
 
 
@@ -193,7 +220,32 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
             getBillingStatus()
 
         }
+        getCurrentDate()
 
+    }
+
+
+    private fun getCurrentDate() {
+
+        val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
+        val currentDate = sdf.format(Date())
+
+        try {
+
+            Log.e(TAG,"DATE TIME  196  "+currentDate)
+            val newDate: Date = sdf.parse(currentDate)
+            Log.e(TAG,"newDate  196  "+newDate)
+            val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
+            val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
+            val sdfTime1 = SimpleDateFormat("hh:mm aa")
+            val sdfTime2 = SimpleDateFormat("HH:mm", Locale.US)
+
+            TransDate = sdfDate1.format(newDate)
+
+        }catch (e: Exception){
+
+            Log.e(TAG,"Exception 196  "+e.toString())
+        }
     }
 
     private fun getChartModeData() {
@@ -627,13 +679,13 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
     private fun getUpcomingStageDueDates() {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                AreaListRepository.progressDialog = ProgressDialog(context, R.style.Progress)
-                AreaListRepository.progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                AreaListRepository.progressDialog!!.setCancelable(false)
-                AreaListRepository.progressDialog!!.setIndeterminate(true)
-                AreaListRepository.progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
-                AreaListRepository.progressDialog!!.show()
-                upcomingstageDueDatesViewModel.getUpcomingStageDueDates(this)!!.observe(
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                upcomingstageDueDatesViewModel.getUpcomingStageDueDates(this,TransDate)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -644,18 +696,17 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                     UpcomingStageDueDatesCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   999101   " + msg)
-                                    if (jObject.getString("StatusCode") == "0") {
+                                    if (jObject.getString("StatusCode") == "-2") {
 
                                         val jobjt = jObject.getJSONObject("UpcomingStageDueDates")
-
-//                                        InventoryProductReorderLeveArray = jobjt.getJSONArray("InventoryProductReorderLevelList")
+                                        upcomingdatesArrayList = jobjt.getJSONArray("PUpcomingStageDueDatesList")
 //                                        Log.e(TAG, "InventoryProductReorderLeveArray   "+InventoryProductReorderLeveArray)
-                                        upcomingdatesArrayList.put(jobjt)
+//                                        upcomingdatesArrayList.put(jobjt)
 
-                                        Log.e(TAG, "InventoryProductReorderLeveArray   "+upcomingdatesArrayList)
+                                        Log.e(TAG, "upcomingdatesArrayList   "+upcomingdatesArrayList)
                                         val lLayout = GridLayoutManager(this@ProjectGraphActivity, 1)
                                         recyclr_Upcoming_Stage_Due_Dates!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        val adapter = ProductReorderLevelAdapter(this@ProjectGraphActivity, upcomingdatesArrayList)
+                                        val adapter = Upcoming_Due_Date_Adapter(this@ProjectGraphActivity, upcomingdatesArrayList)
                                         recyclr_Upcoming_Stage_Due_Dates!!.adapter = adapter
 
 
@@ -689,7 +740,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                         }
 
                     })
-                AreaListRepository.progressDialog!!.dismiss()
+                progressDialog!!.dismiss()
             }
             false -> {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
@@ -699,7 +750,405 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
     }
 
 
+    private fun getCostMaterialUsageAllocatedUsed() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                costmaterialUsageAllocatedUsedViewModel.getCostMaterialUsageAllocatedUsed(this,TransDate)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        Log.e(TAG, "msg project Delay Value==   " + msg)
+                        try {
+                            if (msg!!.length > 0) {
 
+                                if (costmaterialusageAllocatedCount == 0) {
+                                    costmaterialusageAllocatedCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   CostMaterialUsage   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt =
+                                            jObject.getJSONObject("CostofMaterialUsageAllocatedandUsed")
+                                        var remark =   jobjt.getString("Reamrk")
+
+                                        CostMaterialUsageArrayList=jobjt.getJSONArray("PCostofMaterialUsageAllocatedandUsedList")
+
+
+                                        if (CostMaterialUsageArrayList.length() > 0) {
+                                            Log.e(TAG, "CostMaterialUsage 43434  =  "+CostMaterialUsageArrayList)
+                                            setCostMaterialUsageAllocatedUsedBarchart()  //...........barchart here
+
+                                            val lLayout = GridLayoutManager(this@ProjectGraphActivity, 1)
+                                            recycCostMaterialUsageAllocate!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            val adapter = CostofMaterialUsageAllocatedandUsedAdapter(this@ProjectGraphActivity, CostMaterialUsageArrayList)
+                                            recycCostMaterialUsageAllocate!!.adapter = adapter
+
+                                        }
+
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectGraphActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "fffff" + e.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Log.e(TAG, "gggggg   "+e.toString() )
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun setCostMaterialUsageAllocatedUsedBarchart() {
+        costmaterialusageAllocatedUsedBar.clear()
+        costmaterialusageAllocatedUsedBar = getCostMaterialUsageAllocatedUsedBarList()
+
+        CostMaterialUsageAllocateChart.axisLeft.setDrawGridLines(false)
+        val xAxis: XAxis = CostMaterialUsageAllocateChart.xAxis
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(false)
+
+        //remove right y-axis
+        CostMaterialUsageAllocateChart.axisRight.isEnabled = false
+        //remove legend
+        CostMaterialUsageAllocateChart.legend.isEnabled = false
+        CostMaterialUsageAllocateChart!!.setScaleEnabled(true)
+        //remove description label
+        CostMaterialUsageAllocateChart.description.isEnabled = false
+
+
+        //add animation
+        CostMaterialUsageAllocateChart.animateY(1000)
+
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.valueFormatter = MyAxisFormatterBar2()
+        xAxis.setDrawLabels(true)
+        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = +90f
+        xAxis.textSize = 15f
+        xAxis.textColor = Color.BLUE
+        xAxis.setAxisMinimum(-0.5f);
+
+        val colors: ArrayList<Int> = ArrayList()
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+
+        /////////////////////////////////////
+
+        val entries1: ArrayList<BarEntry> = ArrayList()
+        for (i in costmaterialusageAllocatedUsedBar.indices) {
+            val score = costmaterialusageAllocatedUsedBar[i]
+            entries1.add(BarEntry(i.toFloat(), score.Allocated.toFloat()))
+        }
+
+
+        val entries2: ArrayList<BarEntry> = ArrayList()
+        for (i in costmaterialusageAllocatedUsedBar.indices) {
+            val score = costmaterialusageAllocatedUsedBar[i]
+            entries2.add(BarEntry(i.toFloat(), score.Usage.toFloat()))
+        }
+
+        val barDataSet1 = BarDataSet(entries1, "data1")
+        barDataSet1.setColors(Color.BLUE)
+        //barDataSet.setValueFormatter(DecimalRemover())
+        barDataSet1.valueFormatter = DefaultValueFormatter(0)
+
+        val barDataSet2 = BarDataSet(entries2, "data2")
+        barDataSet2.setColors(Color.RED)
+        //barDataSet.setValueFormatter(DecimalRemover())
+        barDataSet2.valueFormatter = DefaultValueFormatter(0)
+
+        Log.e(TAG, "entries 43434  =  " + entries1)
+        Log.e(TAG, "entries 43434  =  " + entries2)
+
+        val baraData=BarData(barDataSet1,barDataSet2)
+        baraData.barWidth=0.1f
+        //      projectDelayedChart.data=baraData
+
+//        val data = BarData(barDataSet1)
+//
+//        data.setValueTextSize(15f)
+//        data.setValueTextColor(Color.BLACK)
+//        data.setDrawValues(false)
+        CostMaterialUsageAllocateChart.data = baraData
+
+        //   projectDelayedChart.isDragEnabled=true
+        //   projectDelayedChart.setVisibleXRangeMaximum(3.0f)
+
+        var barspace=0.0f
+        var groupspace=0.3f
+        // projectDelayedChart.getAxis().axisMinimum= 0F
+        CostMaterialUsageAllocateChart.groupBars(0F,groupspace,barspace)
+
+//        projectDelayedChart.setFitBars(true);
+//        projectDelayedChart.setVisibleXRangeMaximum(3f);
+
+        CostMaterialUsageAllocateChart.invalidate()
+
+
+
+
+    }
+
+    inner class MyAxisFormatterBar2 : IndexAxisValueFormatter() {
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            val index = value.toInt()
+            Log.d("TAG", "getAxisLabel: index $index")
+            return if (index < costmaterialusageAllocatedUsedBar.size) {
+                costmaterialusageAllocatedUsedBar[index].Project
+            } else {
+                ""
+            }
+        }
+    }
+
+
+    private fun getCostMaterialUsageAllocatedUsedBarList(): ArrayList<CostMaterialUsageAllocatedUsedBar> {
+        for (i in 0 until CostMaterialUsageArrayList.length())
+        {
+            var jsonObject = CostMaterialUsageArrayList.getJSONObject(i)
+
+            //  saleGraphListBar.add(MonthlySaleBar(jsonObject.getString("Month").toString(),jsonObject.getString("Amount").toInt()))
+            costmaterialusageAllocatedUsedBar.add(CostMaterialUsageAllocatedUsedBar("",jsonObject.getString("Allocated").toFloat().toInt(),jsonObject.getString("Usage").toFloat().toInt()))
+        }
+
+        return costmaterialusageAllocatedUsedBar
+
+    }
+
+
+
+    private fun getTotalStagewiseDue() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                totalstagewiseDueBarViewModel.getTotalStagewiseDue(this,TransDate)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        Log.e(TAG, "msg project Delay Value==   " + msg)
+                        try {
+                            if (msg!!.length > 0) {
+
+                                if (totalstagewiseCount == 0) {
+                                    totalstagewiseCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   CostMaterialUsage   " + msg)
+                                    if (jObject.getString("StatusCode") == "-2") {
+
+                                        val jobjt =
+                                            jObject.getJSONObject("TotalStagewiseDue")
+                                        var remark =   jobjt.getString("Reamrk")
+
+                                        totalstagewiseDueArrayList=jobjt.getJSONArray("TotalStagewiseDueList")
+
+
+                                        if (totalstagewiseDueArrayList.length() > 0) {
+                                            Log.e(TAG, "CostMaterialUsage 43434  =  "+totalstagewiseDueArrayList)
+                                            setTotalStagewiseDueBarchart()  //...........barchart here
+
+                                            val lLayout = GridLayoutManager(this@ProjectGraphActivity, 1)
+                                            recyTotalStagewiseDue!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            val adapter = TotalStagewiseDueAdapter(this@ProjectGraphActivity, totalstagewiseDueArrayList)
+                                            recyTotalStagewiseDue!!.adapter = adapter
+
+                                        }
+
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectGraphActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "fffff" + e.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Log.e(TAG, "gggggg   "+e.toString() )
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun setTotalStagewiseDueBarchart() {
+        totalstagewisedueBar.clear()
+        totalstagewisedueBar = getTotalStagewiseDueBarList()
+
+        TotalStagewiseDueChart.axisLeft.setDrawGridLines(false)
+        val xAxis: XAxis = TotalStagewiseDueChart.xAxis
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(false)
+
+        //remove right y-axis
+        TotalStagewiseDueChart.axisRight.isEnabled = false
+        //remove legend
+        TotalStagewiseDueChart.legend.isEnabled = false
+        TotalStagewiseDueChart!!.setScaleEnabled(true)
+        //remove description label
+        TotalStagewiseDueChart.description.isEnabled = false
+
+
+        //add animation
+        TotalStagewiseDueChart.animateY(1000)
+
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.valueFormatter = MyAxisFormatterBar3()
+        xAxis.setDrawLabels(true)
+        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = +90f
+        xAxis.textSize = 15f
+        xAxis.textColor = Color.BLUE
+        xAxis.setAxisMinimum(-0.5f);
+
+        val colors: ArrayList<Int> = ArrayList()
+        colors.add(resources.getColor(R.color.leadstages_color1))
+        colors.add(resources.getColor(R.color.leadstages_color2))
+
+        /////////////////////////////////////
+
+        val entries1: ArrayList<BarEntry> = ArrayList()
+        for (i in totalstagewisedueBar.indices) {
+            val score = totalstagewisedueBar[i]
+            entries1.add(BarEntry(i.toFloat(), score.TotalCount.toFloat()))
+        }
+
+
+        val entries2: ArrayList<BarEntry> = ArrayList()
+        for (i in totalstagewisedueBar.indices) {
+            val score = totalstagewisedueBar[i]
+            entries2.add(BarEntry(i.toFloat(), score.TotalPercentage.toFloat()))
+        }
+
+        val barDataSet1 = BarDataSet(entries1, "data1")
+        barDataSet1.setColors(Color.BLUE)
+        //barDataSet.setValueFormatter(DecimalRemover())
+        barDataSet1.valueFormatter = DefaultValueFormatter(0)
+
+        val barDataSet2 = BarDataSet(entries2, "data2")
+        barDataSet2.setColors(Color.RED)
+        //barDataSet.setValueFormatter(DecimalRemover())
+        barDataSet2.valueFormatter = DefaultValueFormatter(0)
+
+        Log.e(TAG, "entries 43434  =  " + entries1)
+        Log.e(TAG, "entries 43434  =  " + entries2)
+
+        val baraData=BarData(barDataSet1,barDataSet2)
+        baraData.barWidth=0.1f
+        //      projectDelayedChart.data=baraData
+
+//        val data = BarData(barDataSet1)
+//
+//        data.setValueTextSize(15f)
+//        data.setValueTextColor(Color.BLACK)
+//        data.setDrawValues(false)
+        TotalStagewiseDueChart.data = baraData
+
+        //   projectDelayedChart.isDragEnabled=true
+        //   projectDelayedChart.setVisibleXRangeMaximum(3.0f)
+
+        var barspace=0.0f
+        var groupspace=0.3f
+        // projectDelayedChart.getAxis().axisMinimum= 0F
+        TotalStagewiseDueChart.groupBars(0F,groupspace,barspace)
+
+//        projectDelayedChart.setFitBars(true);
+//        projectDelayedChart.setVisibleXRangeMaximum(3f);
+
+        TotalStagewiseDueChart.invalidate()
+
+    }
+
+    inner class MyAxisFormatterBar3 : IndexAxisValueFormatter() {
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            val index = value.toInt()
+            Log.d("TAG", "getAxisLabel: index $index")
+            return if (index < totalstagewisedueBar.size) {
+                totalstagewisedueBar[index].Stages
+            } else {
+                ""
+            }
+        }
+    }
+
+    private fun getTotalStagewiseDueBarList(): ArrayList<TotalStagewiseDueBar> {
+        for (i in 0 until totalstagewiseDueArrayList.length())
+        {
+            var jsonObject = totalstagewiseDueArrayList.getJSONObject(i)
+
+            //  saleGraphListBar.add(MonthlySaleBar(jsonObject.getString("Month").toString(),jsonObject.getString("Amount").toInt()))
+            totalstagewisedueBar.add(TotalStagewiseDueBar("",jsonObject.getString("TotalCount").toFloat().toInt(),jsonObject.getString("TotalPercentage").toFloat().toInt()))
+        }
+
+        return totalstagewisedueBar
+
+    }
 
 
 

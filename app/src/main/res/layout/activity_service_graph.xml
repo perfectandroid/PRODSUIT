@@ -1101,7 +1101,7 @@
                                         android:layout_height="wrap_content"
                                         android:orientation="vertical">
 
-                                        // Ticket OustStanding
+<!--                                        // Ticket OustStanding-->
                                         <LinearLayout
                                             android:id="@+id/ll_crmtile_outstanding"
                                             android:layout_width="match_parent"
@@ -1192,7 +1192,7 @@
 
                                         </LinearLayout>
 
-                                        // Ticket status
+<!--                                        // Ticket status-->
                                         <LinearLayout
                                             android:id="@+id/ll_crmtile_status"
                                             android:layout_width="match_parent"
@@ -1283,7 +1283,7 @@
 
                                         </LinearLayout>
 
-                                        // Outstanding count
+<!--                                        // Outstanding count-->
                                         <LinearLayout
                                             android:id="@+id/ll_crmtile_outstandcount"
                                             android:layout_width="match_parent"

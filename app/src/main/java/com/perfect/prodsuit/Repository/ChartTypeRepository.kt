@@ -34,6 +34,8 @@ object ChartTypeRepository {
 
     private fun getChartType(context: Context, ReqMode: String, SubMode: String) {
 
+        Log.e(TAG,"dsadsdsdad  "+SubMode)
+
         try {
             chartTypeSetterGetter.value = ChartTypeModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
