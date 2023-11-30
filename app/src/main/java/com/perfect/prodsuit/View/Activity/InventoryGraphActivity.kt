@@ -134,7 +134,6 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
     var TransDate = ""
     var DashMode = ""
     var DashType = ""
-    var TransDate = ""
 
     //sales comparison
     lateinit var salesComparisonViewModel: SalesComparisonViewModel
@@ -720,29 +719,6 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                 Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
                     .show()
             }
-        }
-    }
-
-    private fun getCurrentDate() {
-
-        val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
-        val currentDate = sdf.format(Date())
-
-        try {
-
-            Log.e(TAG,"DATE TIME  196  "+currentDate)
-            val newDate: Date = sdf.parse(currentDate)
-            Log.e(TAG,"newDate  196  "+newDate)
-            val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
-            val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
-            val sdfTime1 = SimpleDateFormat("hh:mm aa")
-            val sdfTime2 = SimpleDateFormat("HH:mm", Locale.US)
-
-            TransDate = sdfDate1.format(newDate)
-
-        }catch (e: Exception){
-
-            Log.e(TAG,"Exception 196  "+e.toString())
         }
     }
 
