@@ -628,12 +628,12 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
                                             val BASE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF7, 0)
                                             val BASE_URLEditer = BASE_URLSP.edit()
-                                            BASE_URLEditer.putString("BASE_URL", BASE_URL)
+                                            BASE_URLEditer.putString("BASE_URL", jObject.getString("BASE_URL"))
                                             BASE_URLEditer.commit()
 
                                             val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
                                             val IMAGE_URLEditer = IMAGE_URLSP.edit()
-                                            IMAGE_URLEditer.putString("IMAGE_URL", IMAGE_URL)
+                                            IMAGE_URLEditer.putString("IMAGE_URL", jObject.getString("IMAGE_URL"))
                                             IMAGE_URLEditer.commit()
 
 

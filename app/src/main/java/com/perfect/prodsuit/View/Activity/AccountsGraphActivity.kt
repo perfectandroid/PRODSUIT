@@ -27,10 +27,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Model.ModelDashExpenseChart
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.AccountBankBalanceDashAdapter
-import com.perfect.prodsuit.View.Adapter.AccountCashBalanceDashAdapter
-import com.perfect.prodsuit.View.Adapter.AccountsTileAdapter
-import com.perfect.prodsuit.View.Adapter.CustomAdapter
+import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -55,6 +52,14 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
     private var tvv_dash        : TextView? = null
     private var tvv_tile        : TextView? = null
     private var tv_ExpenseChart : TextView? = null
+
+    private var tvv_head_CashBalance : TextView? = null
+    private var tvv_head_BankBalance : TextView? = null
+    private var tvv_head_Expense : TextView? = null
+
+    private var tv_CashBalanceRemark : TextView? = null
+    private var tv_BankBalanceRemark : TextView? = null
+    private var tv_ExpenseRemark : TextView? = null
 
     private var actv_mode: AutoCompleteTextView? = null
 
@@ -87,6 +92,7 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
 
     private var recycCashBalance: RecyclerView? = null
     private var recycBankBalance: RecyclerView? = null
+    private var recycExpense: RecyclerView? = null
 
     lateinit var cashBalanceArrayList  : JSONArray
     lateinit var bankBalanceArrayList  : JSONArray
@@ -167,6 +173,14 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
         tvv_tile        = findViewById<TextView>(R.id.tvv_tile)
         tv_ExpenseChart = findViewById<TextView>(R.id.tv_ExpenseChart)
 
+        tvv_head_CashBalance = findViewById<TextView>(R.id.tvv_head_CashBalance)
+        tvv_head_BankBalance = findViewById<TextView>(R.id.tvv_head_BankBalance)
+        tvv_head_Expense = findViewById<TextView>(R.id.tvv_head_Expense)
+
+        tv_CashBalanceRemark = findViewById<TextView>(R.id.tv_CashBalanceRemark)
+        tv_BankBalanceRemark = findViewById<TextView>(R.id.tv_BankBalanceRemark)
+        tv_ExpenseRemark = findViewById<TextView>(R.id.tv_ExpenseRemark)
+
 //        tv_StagWiseRemark      = findViewById<TextView>(R.id.tv_StagWiseRemark)
 //        tv_ComplaintRemark      = findViewById<TextView>(R.id.tv_ComplaintRemark)
 //        tv_ServiceRemark      = findViewById<TextView>(R.id.tv_ServiceRemark)
@@ -218,6 +232,7 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
 
         recycCashBalance       = findViewById<RecyclerView>(R.id.recycCashBalance)
         recycBankBalance    = findViewById<RecyclerView>(R.id.recycBankBalance)
+        recycExpense    = findViewById<RecyclerView>(R.id.recycExpense)
 //        recycComplaintWise    = findViewById<RecyclerView>(R.id.recycComplaintWise)
 //        recycServiceCountOfWPA    = findViewById<RecyclerView>(R.id.recycServiceCountOfWPA)
 //        recycServiceTop10Product    = findViewById<RecyclerView>(R.id.recycServiceTop10Product)
@@ -425,12 +440,14 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
                                             ll_ExpenseChart!!.visibility = View.GONE
 
                                             if (ID_ChartMode.equals("30")){
-                                                ll_CashBalance!!.visibility = View.VISIBLE
+                                               // ll_CashBalance!!.visibility = View.VISIBLE
+                                                tvv_head_CashBalance!!.setText(jsonObject.getString("DashBoardName"))
                                                 cashBalanceCount   = 0
                                                 getAccCashBalance()
                                             }
                                             else if (ID_ChartMode.equals("31")){
-                                                ll_BankBalance!!.visibility = View.VISIBLE
+                                             //   ll_BankBalance!!.visibility = View.VISIBLE
+                                                tvv_head_BankBalance!!.setText(jsonObject.getString("DashBoardName"))
                                                 bankBalanceCount = 0
                                                 getAccBankBalance()
                                             }
@@ -515,12 +532,12 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
                 ll_ExpenseChart!!.visibility = View.GONE
 
                 if (ID_ChartMode.equals("30")){
-
+                    tvv_head_CashBalance!!.setText(modeType[position])
                     cashBalanceCount   = 0
                     getAccCashBalance()
                 }
                 else if (ID_ChartMode.equals("31")){
-
+                    tvv_head_BankBalance!!.setText(modeType[position])
                     bankBalanceCount = 0
                     getAccBankBalance()
                 }
@@ -617,7 +634,7 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     cashBalanceArrayList=jobjt.getJSONArray("CashBalanceList")
                                    // tv_ServiceChannelStatus!!.setText(jobjt.getString("Reamrk"))
                                     Log.e(TAG,"39123 cashBalanceArrayList  "+cashBalanceArrayList)
-
+                                    tv_CashBalanceRemark!!.setText(jobjt.getString("Reamrk"))
                                     if (cashBalanceArrayList.length() > 0){
                                         ll_CashBalance!!.visibility = View.VISIBLE
                                         val lLayout = GridLayoutManager(this@AccountsGraphActivity, 1)
@@ -683,7 +700,8 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                     val jobjt = jObject.getJSONObject("BankBalance")
                                     bankBalanceArrayList=jobjt.getJSONArray("BankBalanceList")
-                                    // tv_ServiceChannelStatus!!.setText(jobjt.getString("Reamrk"))
+                                    Log.e(TAG,"msg   516663   "+jobjt.getString("Reamrk"))
+                                     tv_BankBalanceRemark!!.setText(jobjt.getString("Reamrk"))
                                     Log.e(TAG,"516662 bankBalanceArrayList  "+bankBalanceArrayList)
 
                                     if (bankBalanceArrayList.length() > 0){
@@ -753,13 +771,12 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                     if (expenseChartArrayList.length() > 0){
                                         ll_ExpenseChart!!.visibility = View.VISIBLE
-                                        setExpenseBarchart()
+//                                        setExpenseBarchart()
 
-//                                        ll_BankBalance!!.visibility = View.VISIBLE
-//                                        val lLayout = GridLayoutManager(this@AccountsGraphActivity, 1)
-//                                        recycBankBalance!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                        val adapter = AccountBankBalanceDashAdapter(this@AccountsGraphActivity, bankBalanceArrayList)
-//                                        recycBankBalance!!.adapter = adapter
+                                        val lLayout = GridLayoutManager(this@AccountsGraphActivity, 1)
+                                        recycExpense!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = AccountExpenseDashAdapter(this@AccountsGraphActivity, expenseChartArrayList)
+                                        recycExpense!!.adapter = adapter
                                     }
 
                                 } else {
