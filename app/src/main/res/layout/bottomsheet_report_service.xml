@@ -8,23 +8,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
+        <ImageView
+            android:id="@+id/imgClose"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/svg_closered"/>
 
         <LinearLayout
-            android:id="@+id/ll_followReport"
+            android:id="@+id/ll_newlistReport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imgClose"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/svg_closered"/>
 
             <LinearLayout
                 android:id="@+id/ll_TicketNo"
@@ -36,7 +34,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.2"
+                    android:layout_weight="1.5"
                     android:text="Ticket No"
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
@@ -61,7 +59,7 @@
                     android:textStyle="normal" />
 
                 <TextView
-                    android:id="@+id/txtTicketNo"
+                    android:id="@+id/TicketNo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -88,7 +86,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.2"
+                    android:layout_weight="1.5"
                     android:text="Ticket Date"
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
@@ -113,7 +111,7 @@
                     android:textStyle="normal" />
 
                 <TextView
-                    android:id="@+id/txtTicketDate"
+                    android:id="@+id/TicketDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -140,7 +138,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.2"
+                    android:layout_weight="1.5"
                     android:text="Customer"
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
@@ -165,7 +163,7 @@
                     android:textStyle="normal" />
 
                 <TextView
-                    android:id="@+id/txtCustomer"
+                    android:id="@+id/Customer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -186,14 +184,13 @@
                 android:id="@+id/ll_Product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="2.2"
+                    android:layout_weight="1.5"
                     android:text="Product"
                     android:fontFamily="@font/myfont"
                     android:singleLine="true"
@@ -218,7 +215,7 @@
                     android:textStyle="normal" />
 
                 <TextView
-                    android:id="@+id/txtProduct"
+                    android:id="@+id/Product"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -236,24 +233,21 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_followDisable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="visible">
 
                 <LinearLayout
-                    android:id="@+id/ll_Complaint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:orientation="horizontal">
 
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2.2"
+                        android:layout_weight="1.5"
                         android:text="Complaint"
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"
@@ -278,7 +272,1282 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:id="@+id/txtComplaint"
+                        android:id="@+id/Complaint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Current Status"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/CurrentStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Description"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/Description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Criteria"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/Criteria"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Mobile"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/Mobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Address"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/Address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Place"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/Place"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Post"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/Post"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Area"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/Area"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="District"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/District"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Pincode"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/Pincode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Category"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/Category"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Priority"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/Priority"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+ <!--       <LinearLayout
+            android:id="@+id/ll_OustandinglistReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Ticket No"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/TicketNo1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Ticket Date"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/TicketDate1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Customer"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/Customer1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.5"
+                    android:text="Product"
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" : "
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+                <TextView
+                    android:id="@+id/Product1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=""
+                    android:fontFamily="@font/myfont"
+                    android:singleLine="true"
+                    android:justificationMode="inter_word"
+                    android:paddingLeft="2dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="13dp"
+                    android:drawableTint="@color/black"
+                    android:textStyle="normal" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Complaint"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/Complaint1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.2"
+                        android:text="Services"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/txtServices"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_Mobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.2"
+                        android:text="Mobile"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/txtMobile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_Area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.2"
+                        android:text="Area"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/txtArea"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:id="@+id/ll_CurrentStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2.2"
+                        android:text="Current Status"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/txtCurrentStatus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Current Status"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/CurrentStatus1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -513,77 +1782,21 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_NewDisable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="visible">
 
                 <LinearLayout
-                    android:id="@+id/ll_Due"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:orientation="horizontal">
 
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2.2"
-                        android:text="Due"
-                        android:fontFamily="@font/myfont"
-                        android:singleLine="true"
-                        android:justificationMode="inter_word"
-                        android:paddingLeft="2dp"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="13dp"
-                        android:drawableTint="@color/black"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" : "
-                        android:fontFamily="@font/myfont"
-                        android:singleLine="true"
-                        android:justificationMode="inter_word"
-                        android:paddingLeft="2dp"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="13dp"
-                        android:drawableTint="@color/black"
-                        android:textStyle="normal" />
-
-                    <TextView
-                        android:id="@+id/txtDue"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text=""
-                        android:fontFamily="@font/myfont"
-                        android:singleLine="true"
-                        android:justificationMode="inter_word"
-                        android:paddingLeft="2dp"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="13dp"
-                        android:drawableTint="@color/black"
-                        android:textStyle="normal" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_Description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="2.2"
+                        android:layout_weight="1.5"
                         android:text="Description"
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"
@@ -608,7 +1821,7 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:id="@+id/txtDescription"
+                        android:id="@+id/Description1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -625,19 +1838,27 @@
 
                 </LinearLayout>
 
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
                 <LinearLayout
-                    android:id="@+id/ll_Employee"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:orientation="horizontal">
 
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2.2"
-                        android:text="Employee"
+                        android:layout_weight="1.5"
+                        android:text="Criteria"
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"
                         android:justificationMode="inter_word"
@@ -661,7 +1882,7 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:id="@+id/txtEmployee"
+                        android:id="@+id/Criteria1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -678,19 +1899,27 @@
 
                 </LinearLayout>
 
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
                 <LinearLayout
-                    android:id="@+id/ll_ServiceCost"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:orientation="horizontal">
 
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2.2"
-                        android:text="Service Cost"
+                        android:layout_weight="1.5"
+                        android:text="Mobile"
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"
                         android:justificationMode="inter_word"
@@ -714,7 +1943,7 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:id="@+id/txtServiceCost"
+                        android:id="@+id/Mobile1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -731,19 +1960,26 @@
 
                 </LinearLayout>
 
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
                 <LinearLayout
-                    android:id="@+id/ll_TaxAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:orientation="horizontal">
 
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2.2"
-                        android:text="Tax Amount"
+                        android:layout_weight="1.5"
+                        android:text="Address"
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"
                         android:justificationMode="inter_word"
@@ -767,7 +2003,7 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:id="@+id/txtTaxAmount"
+                        android:id="@+id/Address1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -784,19 +2020,26 @@
 
                 </LinearLayout>
 
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
                 <LinearLayout
-                    android:id="@+id/ll_TotalAmount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:orientation="horizontal">
 
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="2.2"
-                        android:text="Total Amount"
+                        android:layout_weight="1.5"
+                        android:text="Place"
                         android:fontFamily="@font/myfont"
                         android:singleLine="true"
                         android:justificationMode="inter_word"
@@ -820,7 +2063,367 @@
                         android:textStyle="normal" />
 
                     <TextView
-                        android:id="@+id/txtTotalAmount"
+                        android:id="@+id/Place1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Post"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/Post1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Area"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/Area1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="District"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/District1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Pincode"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/Pincode1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Category"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/Category1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=""
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:text="Priority"
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:fontFamily="@font/myfont"
+                        android:singleLine="true"
+                        android:justificationMode="inter_word"
+                        android:paddingLeft="2dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="13dp"
+                        android:drawableTint="@color/black"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/Priority1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -840,11 +2443,12 @@
             </LinearLayout>
 
 
-
-
-
-
         </LinearLayout>
+-->
+
+
+
+
 
 
 
