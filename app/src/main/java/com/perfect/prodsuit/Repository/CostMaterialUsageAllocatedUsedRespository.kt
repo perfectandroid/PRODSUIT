@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.UpcomingStageDueDatesModel
+import com.perfect.prodsuit.Model.CostMaterialUsageAllocatedUsedModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -18,23 +18,23 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.ArrayList
+import java.text.SimpleDateFormat
+import java.util.*
 
-object UpcomingStageDueDatesRespository {
+object CostMaterialUsageAllocatedUsedRespository {
 
     private var progressDialog: ProgressDialog? = null
-    val upcomingstageDueDatesRespositorysetterGetter = MutableLiveData<UpcomingStageDueDatesModel>()
-    val TAG: String = "UpcomingStageDueDatesRespository"
+    val costmaterialUsageAllocatedUsedSetterGetter = MutableLiveData<CostMaterialUsageAllocatedUsedModel>()
+    val TAG: String = "CostMaterialUsageAllocatedUsedRespository"
 
-    fun getServicesApiCall(context: Context,TransDate: String): MutableLiveData<UpcomingStageDueDatesModel> {
-        getUpcomingStageDueDates(context,TransDate)
-        return upcomingstageDueDatesRespositorysetterGetter
+    fun getServicesApiCall(context: Context, TransMode : String): MutableLiveData<CostMaterialUsageAllocatedUsedModel> {
+        getExpenseAnalysisGraph(context,TransMode)
+        return costmaterialUsageAllocatedUsedSetterGetter
     }
 
-
-    private fun getUpcomingStageDueDates(context: Context,TransDate: String) {
+    private fun getExpenseAnalysisGraph(context: Context, TransMode : String) {
         try {
-            upcomingstageDueDatesRespositorysetterGetter.value = UpcomingStageDueDatesModel("")
+            costmaterialUsageAllocatedUsedSetterGetter.value = CostMaterialUsageAllocatedUsedModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -71,11 +71,10 @@ object UpcomingStageDueDatesRespository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
 
 
-
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-//                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(TransDate))
-                requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-17"))
+//                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(TransMode))
+                requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-08"))
 
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
@@ -83,9 +82,9 @@ object UpcomingStageDueDatesRespository {
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
-                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("20"))
+                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("19"))
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))
-                Log.e(TAG,"requestObject1   top10   "+requestObject1)
+                Log.e(TAG,"requestObject1   getCostofMaterialUsageAllocatedandUsed   "+requestObject1)
 
 
             } catch (e: Exception) {
@@ -95,20 +94,20 @@ object UpcomingStageDueDatesRespository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getUpcomingStageDueDates(body)
+            val call = apiService.getCostofMaterialUsageAllocatedandUsed(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
                     Response<String>
                 ) {
                     try {
-                        Log.e(TAG,"response  top10   "+response.body())
+                        Log.e(TAG,"response  emp94   "+response.body())
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<UpcomingStageDueDatesModel>()
-                        leads.add(UpcomingStageDueDatesModel(response.body()))
+                        val leads = ArrayList<CostMaterialUsageAllocatedUsedModel>()
+                        leads.add(CostMaterialUsageAllocatedUsedModel(response.body()))
                         val msg = leads[0].message
-                        upcomingstageDueDatesRespositorysetterGetter.value = UpcomingStageDueDatesModel(msg)
+                        costmaterialUsageAllocatedUsedSetterGetter.value = CostMaterialUsageAllocatedUsedModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                         Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()

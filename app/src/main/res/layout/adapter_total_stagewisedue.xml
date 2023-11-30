@@ -38,7 +38,7 @@
                 android:layout_height="35dp"
                 android:background="@color/grey"/>
             <TextView
-                android:id="@+id/tvv_Project"
+                android:id="@+id/tvv_Stages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/myfont"
@@ -51,7 +51,7 @@
                 android:layout_height="35dp"
                 android:background="@color/grey"/>
             <TextView
-                android:id="@+id/tvv_Stages"
+                android:id="@+id/tvv_TotalCount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/myfont"
@@ -66,7 +66,7 @@
                 android:background="@color/grey"/>
 
             <TextView
-                android:id="@+id/tvv_DueDate"
+                android:id="@+id/tvv_TotalPercentage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/myfont"

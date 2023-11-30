@@ -373,7 +373,7 @@ interface ApiInterface {
     @POST("UserValidations/EmployeeAllDetails")
     fun getEmployeeAllDetails(@Body body: RequestBody): Call<String>
 
-    @POST("AppDetails/GetAppType")
+        @POST("AppDetails/GetAppType")
     fun getCommonAppData(@Body body: RequestBody): Call<String>
 
     @POST("AppDetails/GetCompanyCode")
@@ -848,5 +848,23 @@ interface ApiInterface {
 
     @POST("DashBoard/InventoryTopSupplierList")
     fun getTopSupplierList(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/CostofMaterialUsageAllocatedandUsed")
+    fun getCostofMaterialUsageAllocatedandUsed(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/TotalStagewiseDue")
+    fun getTotalStagewiseDue(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/ProductionUpcomingStock")
+    fun getProductionUpcomingStock(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/ProductionCompletedProducts")
+    fun getProductionCompletedProducts(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/ProductionMaterialShortage")
+    fun getProductionMaterialShortage(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/ProductionTileDashBoard")
+    fun getProductionTileDashBoard(@Body body: RequestBody): Call<String>
 
 }

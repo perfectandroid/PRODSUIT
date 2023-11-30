@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.UpcomingStageDueDatesModel
+import com.perfect.prodsuit.Model.TotalStagewiseDueModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -18,23 +18,23 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.ArrayList
+import java.text.SimpleDateFormat
+import java.util.*
 
-object UpcomingStageDueDatesRespository {
+object TotalStagewiseDueRespository {
 
     private var progressDialog: ProgressDialog? = null
-    val upcomingstageDueDatesRespositorysetterGetter = MutableLiveData<UpcomingStageDueDatesModel>()
-    val TAG: String = "UpcomingStageDueDatesRespository"
+    val totalstagewiseDueSetterGetter = MutableLiveData<TotalStagewiseDueModel>()
+    val TAG: String = "TotalStagewiseDueRespository"
 
-    fun getServicesApiCall(context: Context,TransDate: String): MutableLiveData<UpcomingStageDueDatesModel> {
-        getUpcomingStageDueDates(context,TransDate)
-        return upcomingstageDueDatesRespositorysetterGetter
+    fun getServicesApiCall(context: Context,TransDate: String): MutableLiveData<TotalStagewiseDueModel> {
+        getTopRevenueDashboard(context,TransDate)
+        return totalstagewiseDueSetterGetter
     }
 
-
-    private fun getUpcomingStageDueDates(context: Context,TransDate: String) {
+    private fun getTopRevenueDashboard(context: Context,TransDate: String) {
         try {
-            upcomingstageDueDatesRespositorysetterGetter.value = UpcomingStageDueDatesModel("")
+            totalstagewiseDueSetterGetter.value = TotalStagewiseDueModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -62,30 +62,31 @@ object UpcomingStageDueDatesRespository {
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-                val FK_DepartmentSP = context.getSharedPreferences(Config.SHARED_PREF55, 0)
+                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
-                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
-
+                val FK_DepartmentSP = context.getSharedPreferences(Config.SHARED_PREF55, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
-                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-
+                val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
 
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 //                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(TransDate))
-                requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-17"))
+                requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-08"))
 
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+                //  requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart("40"))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
                 requestObject1.put("FK_Department", ProdsuitApplication.encryptStart(FK_DepartmentSP.getString("FK_Department", null)))
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
-                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("20"))
+                // requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
+                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("21"))
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))
-                Log.e(TAG,"requestObject1   top10   "+requestObject1)
+
+                Log.e(LeadDashRepository.TAG,"requestObject1   TotalStagewiseDueModel   "+requestObject1)
 
 
             } catch (e: Exception) {
@@ -95,24 +96,23 @@ object UpcomingStageDueDatesRespository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getUpcomingStageDueDates(body)
+            val call = apiService.getTotalStagewiseDue(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
                     Response<String>
                 ) {
                     try {
-                        Log.e(TAG,"response  top10   "+response.body())
+                        Log.e(TAG,"response  toprevenue   "+response.body())
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<UpcomingStageDueDatesModel>()
-                        leads.add(UpcomingStageDueDatesModel(response.body()))
+                        val leads = ArrayList<TotalStagewiseDueModel>()
+                        leads.add(TotalStagewiseDueModel(response.body()))
                         val msg = leads[0].message
-                        upcomingstageDueDatesRespositorysetterGetter.value = UpcomingStageDueDatesModel(msg)
+                        totalstagewiseDueSetterGetter.value = TotalStagewiseDueModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                         Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
-
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {

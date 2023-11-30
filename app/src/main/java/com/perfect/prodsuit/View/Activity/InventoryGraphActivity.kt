@@ -723,6 +723,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
+
     @SuppressLint("SuspiciousIndentation")
     private fun getTopSellingData() {
         when (Config.ConnectivityUtils.isConnected(this)) {

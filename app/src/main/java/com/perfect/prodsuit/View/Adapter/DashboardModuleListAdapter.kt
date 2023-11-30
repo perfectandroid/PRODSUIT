@@ -220,6 +220,13 @@ class DashboardModuleListAdapter(
                         i.putExtra("label",label)
                         context.startActivity(i)
                     }
+                    if (submode=="6")
+                    {
+                        val i = Intent(context, ProductionGraphActivity::class.java)
+                        i.putExtra("SubMode",submode)
+                        i.putExtra("label",label)
+                        context.startActivity(i)
+                    }
 
 
 
