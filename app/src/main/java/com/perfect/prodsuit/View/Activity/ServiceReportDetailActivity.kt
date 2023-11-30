@@ -70,13 +70,13 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_service_report_detail)
+        setRegViews()
         context = this@ServiceReportDetailActivity
 
         serviceNewListReportViewModel = ViewModelProvider(this).get(ServiceNewListReportViewModel::class.java)
         serviceOutstandingListReportViewModel = ViewModelProvider(this).get(ServiceOutstandingListReportViewModel::class.java)
         serviceListReportViewModel = ViewModelProvider(this).get(ServiceListReportViewModel::class.java)
 
-        setRegViews()
 
         if (getIntent().hasExtra("ReportName")) {
             tv_ReportName!!.setText(intent.getStringExtra("ReportName"))
@@ -688,107 +688,75 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
         }
     }
 
-    override fun onClick(position: Int, data: String) {
-        if (data.equals("serviceReportClick")) {
-            Log.e(TAG,"serviceReportClick   5091")
-            if (ReportMode.equals("1")){
-                openBottomSheetReport(newListReportArrayList,position,ReportMode!!)
-            }
+  /*  override fun onClick(position: Int, data: String) {
+        Log.e(TAG,"serviceReportClick   50911222")
 
-            if (ReportMode.equals("3")){
-                openBottomSheetReport(outstandingListReportArrayList,position,ReportMode!!)
-            }
-
-            if (ReportMode.equals("6")){
-                openBottomSheetReport(serviceListReportArrayList,position,ReportMode!!)
-            }
-
+        if (data.equals("serviceReportNewListClick")) {
+            openBottomSheetReport(newListReportArrayList, position, "1")
+        }
+        if (data.equals("serviceReportOutstandingListClick")) {
+            openBottomSheetReport(outstandingListReportArrayList, position, "2")
         }
 
-    }
+    }*/
+  override fun onClick(position: Int, data: String) {
+      Log.e(TAG,"serviceReportClick   50911222")
+
+      if (data.equals("serviceReportNewListClick")) {
+          openBottomSheetReport(newListReportArrayList, position, "1")
+      }
+      if (data.equals("serviceReportOutstandingListClick")) {
+          openBottomSheetReport(outstandingListReportArrayList, position, "2")
+      }
+  }
 
     private fun openBottomSheetReport(jsonArray : JSONArray,position : Int,ReportMode : String) {
-        // BottomSheet
+        Log.e(TAG,"serviceReportClick   5091111")
 
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottomsheet_report_service, null)
 
         var jsonObject = jsonArray.getJSONObject(position)
 
-        val ll_Product = view.findViewById<LinearLayout>(R.id.ll_Product)
-        val ll_Complaint = view.findViewById<LinearLayout>(R.id.ll_Complaint)
-        val ll_Services = view.findViewById<LinearLayout>(R.id.ll_Services)
-        val ll_Mobile = view.findViewById<LinearLayout>(R.id.ll_Mobile)
-        val ll_Area = view.findViewById<LinearLayout>(R.id.ll_Area)
-        val ll_CurrentStatus = view.findViewById<LinearLayout>(R.id.ll_CurrentStatus)
-        val ll_Due = view.findViewById<LinearLayout>(R.id.ll_Due)
-        val ll_Description = view.findViewById<LinearLayout>(R.id.ll_Description)
-        val ll_Employee = view.findViewById<LinearLayout>(R.id.ll_Employee)
-        val ll_ServiceCost = view.findViewById<LinearLayout>(R.id.ll_ServiceCost)
-        val ll_TaxAmount = view.findViewById<LinearLayout>(R.id.ll_TaxAmount)
-        val ll_TotalAmount = view.findViewById<LinearLayout>(R.id.ll_TotalAmount)
-
-        val txtTicketNo = view.findViewById<TextView>(R.id.txtTicketNo)
-        val txtTicketDate = view.findViewById<TextView>(R.id.txtTicketDate)
-        val txtCustomer = view.findViewById<TextView>(R.id.txtCustomer)
-        val txtProduct = view.findViewById<TextView>(R.id.txtProduct)
-        val txtComplaint = view.findViewById<TextView>(R.id.txtComplaint)
-        val txtServices = view.findViewById<TextView>(R.id.txtServices)
-        val txtMobile = view.findViewById<TextView>(R.id.txtMobile)
-        val txtArea = view.findViewById<TextView>(R.id.txtArea)
-        val txtCurrentStatus = view.findViewById<TextView>(R.id.txtCurrentStatus)
-        val txtDue = view.findViewById<TextView>(R.id.txtDue)
-        val txtDescription = view.findViewById<TextView>(R.id.txtDescription)
-        val txtEmployee = view.findViewById<TextView>(R.id.txtEmployee)
-        val txtServiceCost = view.findViewById<TextView>(R.id.txtServiceCost)
-        val txtTaxAmount = view.findViewById<TextView>(R.id.txtTaxAmount)
-        val txtTotalAmount = view.findViewById<TextView>(R.id.txtTotalAmount)
+        val TicketNo = view.findViewById<TextView>(R.id.TicketNo)
+        val TicketDate = view.findViewById<TextView>(R.id.TicketDate)
+        val Customer = view.findViewById<TextView>(R.id.Customer)
+        val Product = view.findViewById<TextView>(R.id.Product)
+        val Complaint = view.findViewById<TextView>(R.id.Complaint)
+        val CurrentStatus = view.findViewById<TextView>(R.id.CurrentStatus)
+        val Description = view.findViewById<TextView>(R.id.Description)
+        val Criteria = view.findViewById<TextView>(R.id.Criteria)
+        val Mobile = view.findViewById<TextView>(R.id.Mobile)
+        val Address = view.findViewById<TextView>(R.id.Address)
+        val Place = view.findViewById<TextView>(R.id.Place)
+        val Post = view.findViewById<TextView>(R.id.Post)
+        val Area = view.findViewById<TextView>(R.id.Area)
+        val District = view.findViewById<TextView>(R.id.District)
+        val Pincode = view.findViewById<TextView>(R.id.Pincode)
+        val Category = view.findViewById<TextView>(R.id.Category)
+        val Priority = view.findViewById<TextView>(R.id.Priority)
 
         val imgClose = view.findViewById<ImageView>(R.id.imgClose)
 
-        txtTicketNo!!.setText(jsonObject.getString("TicketNo"))
-        txtTicketDate!!.setText(jsonObject.getString("TicketDate"))
-        txtCustomer!!.setText(jsonObject.getString("Customer"))
 
-        if (ReportMode.equals("1")){
-            ll_Product.visibility = View.VISIBLE
-            ll_Complaint.visibility = View.VISIBLE
-            ll_CurrentStatus.visibility = View.VISIBLE
-            ll_Description.visibility = View.VISIBLE
+        TicketNo!!.setText(jsonObject.getString("TicketNo"))
+        TicketDate!!.setText(jsonObject.getString("TicketDate"))
+        Customer!!.setText(jsonObject.getString("Customer"))
+        Product!!.setText(jsonObject.getString("Product"))
+        Complaint!!.setText(jsonObject.getString("Complaint"))
+        CurrentStatus!!.setText(jsonObject.getString("CurrentStatus"))
+        Description!!.setText(jsonObject.getString("Description"))
+        Criteria!!.setText(jsonObject.getString("Criteria"))
+        Mobile!!.setText(jsonObject.getString("Mobile"))
+        Address!!.setText(jsonObject.getString("Address"))
+        Place!!.setText(jsonObject.getString("Place"))
+        Post!!.setText(jsonObject.getString("Post"))
+        Area!!.setText(jsonObject.getString("Area"))
+        District!!.setText(jsonObject.getString("District"))
+        Pincode!!.setText(jsonObject.getString("Pincode"))
+        Category!!.setText(jsonObject.getString("Category"))
+        Priority!!.setText(jsonObject.getString("Priority"))
 
-            txtProduct!!.setText(jsonObject.getString("Product"))
-            txtComplaint!!.setText(jsonObject.getString("Complaint"))
-            txtCurrentStatus!!.setText(jsonObject.getString("CurrentStatus"))
-            txtDescription!!.setText(jsonObject.getString("Description"))
-        }
-        else if (ReportMode.equals("3")){
-            ll_Product.visibility = View.VISIBLE
-            ll_Complaint.visibility = View.VISIBLE
-            ll_Mobile.visibility = View.VISIBLE
-            ll_Area.visibility = View.VISIBLE
-            ll_CurrentStatus.visibility = View.VISIBLE
-            ll_Due.visibility = View.VISIBLE
-
-            txtProduct!!.setText(jsonObject.getString("Product"))
-            txtComplaint!!.setText(jsonObject.getString("Complaint"))
-            txtMobile!!.setText(jsonObject.getString("Mobile"))
-            txtArea!!.setText(jsonObject.getString("Area"))
-            txtCurrentStatus!!.setText(jsonObject.getString("CurrentStatus"))
-            txtDue!!.setText(jsonObject.getString("Due"))
-        }
-        else if (ReportMode.equals("6")){
-            ll_Services.visibility = View.VISIBLE
-            ll_Employee.visibility = View.VISIBLE
-            ll_ServiceCost.visibility = View.VISIBLE
-            ll_TaxAmount.visibility = View.VISIBLE
-            ll_TotalAmount.visibility = View.VISIBLE
-
-            txtServices!!.setText(jsonObject.getString("Services"))
-            txtEmployee!!.setText(jsonObject.getString("Employees"))
-            txtServiceCost!!.setText(jsonObject.getString("ServiceCost"))
-            txtTaxAmount!!.setText(jsonObject.getString("TaxAmount"))
-            txtTotalAmount!!.setText(jsonObject.getString("TotalAmount"))
-        }
 
         imgClose.setOnClickListener {
             dialog.dismiss()
@@ -799,6 +767,8 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
 
         dialog.show()
     }
+
+
 
 
 }

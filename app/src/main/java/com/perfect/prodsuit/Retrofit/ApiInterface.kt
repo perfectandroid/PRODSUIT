@@ -402,6 +402,9 @@ interface ApiInterface {
     @POST("Service/GetComplaints")
     fun getComplaints(@Body body: RequestBody): Call<String>
 
+    @POST("Report/ComplaintService")
+    fun getComplaintService(@Body body: RequestBody): Call<String>
+
     @POST("Service/GetMedia")
     fun getServiceMedia(@Body body: RequestBody): Call<String>
 

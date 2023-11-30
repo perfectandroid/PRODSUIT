@@ -67,7 +67,8 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
     private var dialogCompService: Dialog? = null
     var recyCompService: RecyclerView? = null
 
-    lateinit var serviceComplaintViewModel: ServiceComplaintViewModel
+    lateinit var serviceComplaintTypeViewModel: ServiceComplaintTypeViewModel
+  //  lateinit var serviceComplaintViewModel: ServiceComplaintViewModel
     lateinit var complaintArrayList : JSONArray
     lateinit var complaintSort : JSONArray
     private var dialogComplaint : Dialog? = null
@@ -110,7 +111,8 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         reportNameViewModel = ViewModelProvider(this).get(ReportNameViewModel::class.java)
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
         empByBranchViewModel = ViewModelProvider(this).get(EmpByBranchViewModel::class.java)
-        serviceComplaintViewModel = ViewModelProvider(this).get(ServiceComplaintViewModel::class.java)
+        serviceComplaintTypeViewModel = ViewModelProvider(this).get(ServiceComplaintTypeViewModel::class.java)
+        //serviceComplaintViewModel = ViewModelProvider(this).get(ServiceComplaintViewModel::class.java)
 
         setRegViews()
 
@@ -1109,6 +1111,7 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
         try {
 
+            Log.e(TAG, "Click " )
             dialogCompService = Dialog(this)
             dialogCompService!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogCompService!!.setContentView(R.layout.complaint_service_popup)
@@ -1144,7 +1147,7 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                serviceComplaintViewModel.getserviceComplaintData(this,ReqMode!!,SubMode!!,/*ID_Category*/ID_CompService!!)!!.observe(
+                serviceComplaintTypeViewModel.getserviceComplaintData(this,ReqMode!!,SubMode!!,/*ID_Category*/ID_CompService!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -1156,8 +1159,8 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                                     Log.e(TAG,"msg   1920   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
-                                        val jobjt = jObject.getJSONObject("ComplaintsDetails")
-                                        complaintArrayList = jobjt.getJSONArray("ComplaintDetailsList")
+                                        val jobjt = jObject.getJSONObject("ComplaintService")
+                                        complaintArrayList = jobjt.getJSONArray("ComplaintList")
                                         if (complaintArrayList.length()>0){
 
                                             complaintPopup(complaintArrayList)
@@ -1223,11 +1226,12 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             }
 
 
+            Log.e(TAG,"complaintSort    2203234    "+complaintSort)
             val lLayout = GridLayoutManager(this@ServiceReportActivity, 1)
             recyComplaint!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
 //            val adapter = ProductPriorityAdapter(this@FollowUpActivity, prodPriorityArrayList)
-            val adapter = ServiceComplaintAdapter(this@ServiceReportActivity, complaintSort)
+            val adapter = ServiceComplaintTypeAdapter(this@ServiceReportActivity, complaintSort)
             recyComplaint!!.adapter = adapter
             adapter.setClickListener(this@ServiceReportActivity)
 
@@ -1247,15 +1251,15 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
                     for (k in 0 until complaintArrayList.length()) {
                         val jsonObject = complaintArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("ComplaintName").length) {
-                            if (jsonObject.getString("ComplaintName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                        if (textlength <= jsonObject.getString("CompntName").length) {
+                            if (jsonObject.getString("CompntName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
                                 complaintSort.put(jsonObject)
                             }
 
                         }
                     }
 
-                    Log.e(TAG,"complaintSort               2203    "+complaintSort)
+                    Log.e(TAG,"complaintSort     dfgsdgsd          2203    "+complaintSort)
                     val adapter = ServiceComplaintAdapter(this@ServiceReportActivity, complaintSort)
                     recyComplaint!!.adapter = adapter
                     adapter.setClickListener(this@ServiceReportActivity)
