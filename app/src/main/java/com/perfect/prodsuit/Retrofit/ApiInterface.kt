@@ -811,6 +811,9 @@ interface ApiInterface {
     @POST("DashBoard/ExpenseChart")
     fun getDashAccExpenseChart(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/SupplierOutstanding")
+    fun getDashAccSupplierOutstandingChart(@Body body: RequestBody): Call<String>
+
     @POST("DashBoard/AccountTileData")
     fun getAccountsTilePLStatus(@Body body: RequestBody): Call<String>
 

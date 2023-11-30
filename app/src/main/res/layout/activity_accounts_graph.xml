@@ -454,12 +454,11 @@
                                                     <!--Expense Chart -->
                                                     <LinearLayout
                                                         android:id="@+id/ll_ExpenseChart"
-                                                        android:layout_marginTop="10dp"
                                                         android:layout_width="match_parent"
                                                         android:layout_height="match_parent"
                                                         android:background="@color/white"
                                                         android:orientation="vertical"
-                                                        android:visibility="visible">
+                                                        android:visibility="gone">
 
                                                         <LinearLayout
                                                             android:layout_width="match_parent"
@@ -518,6 +517,8 @@
                                                             android:layout_height="match_parent"
                                                             android:orientation="vertical">
 
+
+
                                                             <com.github.mikephil.charting.charts.BarChart
                                                                 android:id="@+id/ExpenseChart"
                                                                 android:layout_width="match_parent"
@@ -541,12 +542,47 @@
                                                                 android:textColor="@color/black"
                                                                 android:textSize="14dp"
                                                                 android:textStyle="bold"
-                                                                android:tint="@color/black" />
+                                                                android:tint="@color/black"
+                                                                android:visibility="gone"/>
 
                                                             <LinearLayout
                                                                 android:layout_width="match_parent"
                                                                 android:layout_height="match_parent"
-                                                                android:layout_margin="5dp">
+                                                                android:layout_margin="5dp"
+                                                                android:orientation="vertical">
+
+                                                                <LinearLayout
+                                                                    android:layout_width="match_parent"
+                                                                    android:layout_height="wrap_content"
+                                                                    android:padding="10dp"
+                                                                    android:layout_marginLeft="5dp"
+                                                                    android:layout_marginRight="5dp"
+                                                                    android:background="@color/colorPrimary"
+                                                                    android:orientation="horizontal">
+
+                                                                    <TextView
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:layout_weight="1"
+                                                                        android:text="Branch"
+                                                                        android:fontFamily="@font/myfont"
+                                                                        android:textSize="17dp"
+                                                                        android:textStyle="bold"
+                                                                        android:textColor="@color/white"/>
+
+                                                                    <TextView
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:layout_weight="2.5"
+                                                                        android:gravity="end"
+                                                                        android:text="Amount"
+                                                                        android:fontFamily="@font/myfont"
+                                                                        android:textSize="17dp"
+                                                                        android:textStyle="bold"
+                                                                        android:textColor="@color/white"/>
+
+                                                                </LinearLayout>
+
                                                                 <com.perfect.prodsuit.Helper.FullLenghRecyclertview
                                                                     android:id="@+id/recycExpense"
                                                                     android:layout_width="match_parent"
@@ -566,6 +602,128 @@
                                                 </LinearLayout>
 
                                             </ScrollView>
+
+                                            <!--SupplierOutstanding Chart -->
+                                            <LinearLayout
+                                                android:id="@+id/ll_SupplierChart"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:background="@color/white"
+                                                android:orientation="vertical"
+                                                android:visibility="gone">
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="vertical"
+                                                    android:background="#E6F1F2">
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:orientation="horizontal">
+
+                                                        <TextView
+                                                            android:id="@+id/tvv_head_Supplier"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_weight="1"
+                                                            android:text=""
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:gravity="start"
+                                                            android:paddingLeft="5dp"
+                                                            android:paddingTop="5dp"
+                                                            android:layout_gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textAllCaps="false"
+                                                            android:textSize="16dp"
+                                                            android:visibility="visible"/>
+
+
+                                                    </LinearLayout>
+
+
+
+                                                    <TextView
+                                                        android:id="@+id/tv_SupplierRemark"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_gravity="center_vertical"
+                                                        android:paddingLeft="5dp"
+                                                        android:layout_marginTop="-7dp"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:gravity="center_vertical"
+                                                        android:text=""
+                                                        android:textAllCaps="false"
+                                                        android:textColor="@color/colorPrimary"
+                                                        android:textSize="13dp"
+                                                        android:textStyle="normal"
+                                                        android:tint="@color/black" />
+
+
+                                                </LinearLayout>
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:orientation="vertical">
+
+
+
+
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:layout_margin="5dp"
+                                                        android:orientation="vertical">
+
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:padding="10dp"
+                                                            android:layout_marginLeft="5dp"
+                                                            android:layout_marginRight="5dp"
+                                                            android:background="@color/colorPrimary"
+                                                            android:orientation="horizontal">
+
+                                                            <TextView
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_weight="1"
+                                                                android:text="Supplier"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textSize="17dp"
+                                                                android:textStyle="bold"
+                                                                android:textColor="@color/white"/>
+
+                                                            <TextView
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:layout_weight="2.5"
+                                                                android:gravity="end"
+                                                                android:text="Amount"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textSize="17dp"
+                                                                android:textStyle="bold"
+                                                                android:textColor="@color/white"/>
+
+                                                        </LinearLayout>
+
+                                                        <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                                                            android:id="@+id/recycSupplier"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_marginLeft="5dp"
+                                                            android:layout_marginRight="5dp"
+                                                            android:background="@drawable/svg_dashrect">
+
+                                                        </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                    </LinearLayout>
+
+                                                </LinearLayout>
+
+                                            </LinearLayout>
 
                                         </LinearLayout>
 

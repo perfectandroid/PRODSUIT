@@ -45,7 +45,8 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
     var SubMode     :  String? = ""
     var label       :  String? = ""
 
-    var TransDate   :  String? = "08-11-2023"
+//    var TransDate   :  String? = "08-11-2023"
+    var TransDate   :  String? = ""
     var DashMode    :  String? = ""
     var DashType    :  String? = ""
 
@@ -56,10 +57,12 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
     private var tvv_head_CashBalance : TextView? = null
     private var tvv_head_BankBalance : TextView? = null
     private var tvv_head_Expense : TextView? = null
+    private var tvv_head_Supplier : TextView? = null
 
     private var tv_CashBalanceRemark : TextView? = null
     private var tv_BankBalanceRemark : TextView? = null
     private var tv_ExpenseRemark : TextView? = null
+    private var tv_SupplierRemark : TextView? = null
 
     private var actv_mode: AutoCompleteTextView? = null
 
@@ -75,6 +78,7 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var accCashBalanceViewModel          : AccCashBalanceViewModel
     lateinit var accBankBalanceViewModel          : AccBankBalanceViewModel
     lateinit var accExpenseChartViewModel         : AccExpenseChartViewModel
+    lateinit var accSupplierChartViewModel        : AccSupplierChartViewModel
 
     lateinit var chartTypeArrayList: JSONArray
     var ID_ChartMode    :  String? = ""
@@ -86,17 +90,20 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
     var expenseChartCount  = 0
     var supplierOutstandingCount  = 0
 
-    private var ll_CashBalance  : LinearLayout? = null
-    private var ll_BankBalance  : LinearLayout? = null
-    private var ll_ExpenseChart : LinearLayout? = null
+    private var ll_CashBalance    : LinearLayout? = null
+    private var ll_BankBalance    : LinearLayout? = null
+    private var ll_ExpenseChart   : LinearLayout? = null
+    private var ll_SupplierChart  : LinearLayout? = null
 
-    private var recycCashBalance: RecyclerView? = null
-    private var recycBankBalance: RecyclerView? = null
-    private var recycExpense: RecyclerView? = null
+    private var recycCashBalance : RecyclerView? = null
+    private var recycBankBalance : RecyclerView? = null
+    private var recycExpense     : RecyclerView? = null
+    private var recycSupplier    : RecyclerView? = null
 
     lateinit var cashBalanceArrayList  : JSONArray
     lateinit var bankBalanceArrayList  : JSONArray
     lateinit var expenseChartArrayList : JSONArray
+    lateinit var supplierChartArrayList : JSONArray
 
     //Expense Chart
     private lateinit var ExpenseChart: BarChart
@@ -124,7 +131,8 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
         chartTypeViewModel                    = ViewModelProvider(this).get(ChartTypeViewModel::class.java)
         accCashBalanceViewModel               = ViewModelProvider(this).get(AccCashBalanceViewModel::class.java)
         accBankBalanceViewModel               = ViewModelProvider(this).get(AccBankBalanceViewModel::class.java)
-        accExpenseChartViewModel               = ViewModelProvider(this).get(AccExpenseChartViewModel::class.java)
+        accExpenseChartViewModel              = ViewModelProvider(this).get(AccExpenseChartViewModel::class.java)
+        accSupplierChartViewModel             = ViewModelProvider(this).get(AccSupplierChartViewModel::class.java)
 
         accountsTileViewModel = ViewModelProvider(this).get(AccountsTileViewModel::class.java)
 
@@ -134,7 +142,7 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
         label   = intent.getStringExtra("label")
 
         Log.e(TAG,"3555   "+SubMode+"  :  "+label)
-      //  getCurrentDate()
+        getCurrentDate()
 
         TabMode       = 0
         ContinueMode  = 0
@@ -176,10 +184,12 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
         tvv_head_CashBalance = findViewById<TextView>(R.id.tvv_head_CashBalance)
         tvv_head_BankBalance = findViewById<TextView>(R.id.tvv_head_BankBalance)
         tvv_head_Expense = findViewById<TextView>(R.id.tvv_head_Expense)
+        tvv_head_Supplier = findViewById<TextView>(R.id.tvv_head_Supplier)
 
         tv_CashBalanceRemark = findViewById<TextView>(R.id.tv_CashBalanceRemark)
         tv_BankBalanceRemark = findViewById<TextView>(R.id.tv_BankBalanceRemark)
         tv_ExpenseRemark = findViewById<TextView>(R.id.tv_ExpenseRemark)
+        tv_SupplierRemark = findViewById<TextView>(R.id.tv_SupplierRemark)
 
 //        tv_StagWiseRemark      = findViewById<TextView>(R.id.tv_StagWiseRemark)
 //        tv_ComplaintRemark      = findViewById<TextView>(R.id.tv_ComplaintRemark)
@@ -210,6 +220,7 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
         ll_CashBalance      = findViewById<LinearLayout>(R.id.ll_CashBalance)
         ll_BankBalance      = findViewById<LinearLayout>(R.id.ll_BankBalance)
         ll_ExpenseChart     = findViewById<LinearLayout>(R.id.ll_ExpenseChart)
+        ll_SupplierChart         = findViewById<LinearLayout>(R.id.ll_SupplierChart)
 
         tv_acc_tileName = findViewById<TextView>(R.id.tv_acc_tileName)
         recyc_accountsTile    = findViewById<RecyclerView>(R.id.recyc_accountsTile)
@@ -233,6 +244,7 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
         recycCashBalance       = findViewById<RecyclerView>(R.id.recycCashBalance)
         recycBankBalance    = findViewById<RecyclerView>(R.id.recycBankBalance)
         recycExpense    = findViewById<RecyclerView>(R.id.recycExpense)
+        recycSupplier    = findViewById<RecyclerView>(R.id.recycSupplier)
 //        recycComplaintWise    = findViewById<RecyclerView>(R.id.recycComplaintWise)
 //        recycServiceCountOfWPA    = findViewById<RecyclerView>(R.id.recycServiceCountOfWPA)
 //        recycServiceTop10Product    = findViewById<RecyclerView>(R.id.recycServiceTop10Product)
@@ -453,13 +465,15 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
                                             }
                                             else if (ID_ChartMode.equals("32")){
 //                                                ll_BankBalance!!.visibility = View.VISIBLE
+                                                tvv_head_Expense!!.setText(jsonObject.getString("DashBoardName"))
                                                 expenseChartCount = 0
                                                 getAccExpenseChart()
                                             }
                                             else if (ID_ChartMode.equals("33")){
-//                                                ll_BankBalance!!.visibility = View.VISIBLE
-//                                                bankBalanceCount = 0
-//                                                getAccBankBalance()
+                                              //  ll_SupplierChart!!.visibility = View.VISIBLE
+                                                tvv_head_Supplier!!.setText(jsonObject.getString("DashBoardName"))
+                                                supplierOutstandingCount = 0
+                                                getAccSupplierOutstanding()
                                             }
 
                                         }else{
@@ -500,6 +514,7 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
+
     private fun showChartDrop(chartTypeArrayList: JSONArray) {
 
         var modeType = Array<String>(chartTypeArrayList.length()) { "" }
@@ -530,6 +545,7 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
                 ll_CashBalance!!.visibility = View.GONE
                 ll_BankBalance!!.visibility = View.GONE
                 ll_ExpenseChart!!.visibility = View.GONE
+                ll_SupplierChart!!.visibility = View.GONE
 
                 if (ID_ChartMode.equals("30")){
                     tvv_head_CashBalance!!.setText(modeType[position])
@@ -544,8 +560,15 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                 else if (ID_ChartMode.equals("32")){
                  //   ll_BankBalance!!.visibility = View.VISIBLE
+                    tvv_head_Expense!!.setText(modeType[position])
                     expenseChartCount = 0
                     getAccExpenseChart()
+                }
+                else if (ID_ChartMode.equals("33")){
+                   // ll_SupplierChart!!.visibility = View.VISIBLE
+                    tvv_head_Supplier!!.setText(modeType[position])
+                    supplierOutstandingCount = 0
+                    getAccSupplierOutstanding()
                 }
 
 
@@ -766,7 +789,7 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                     val jobjt = jObject.getJSONObject("ExpenseChart")
                                     expenseChartArrayList=jobjt.getJSONArray("ExpenseChartList")
-                                    // tv_ServiceChannelStatus!!.setText(jobjt.getString("Reamrk"))
+                                    tv_ExpenseRemark!!.setText(jobjt.getString("Reamrk"))
                                     Log.e(TAG,"516662 expenseChartArrayList  "+expenseChartArrayList)
 
                                     if (expenseChartArrayList.length() > 0){
@@ -808,6 +831,73 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
+    private fun getAccSupplierOutstanding() {
+        DashType = "2"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                accSupplierChartViewModel.getAccSupplierChart(this,TransDate!!,ID_ChartMode!!,DashType!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+                            if (supplierOutstandingCount == 0) {
+                                supplierOutstandingCount++
+
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   84331   "+msg)
+                                if (jObject.getString("StatusCode").equals("0")) {
+
+                                    val jobjt = jObject.getJSONObject("SupplierOutstanding")
+                                    supplierChartArrayList=jobjt.getJSONArray("SupplierOutstandingList")
+                                     tv_SupplierRemark!!.setText(jobjt.getString("Reamrk"))
+                                    Log.e(TAG,"84332 supplierChartArrayList  "+supplierChartArrayList)
+
+                                    if (supplierChartArrayList.length() > 0){
+                                        ll_SupplierChart!!.visibility = View.VISIBLE
+
+                                        val lLayout = GridLayoutManager(this@AccountsGraphActivity, 1)
+                                        recycSupplier!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = AccountSupplierDashAdapter(this@AccountsGraphActivity, supplierChartArrayList)
+                                        recycSupplier!!.adapter = adapter
+                                    }
+
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@AccountsGraphActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            }
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
 
     inner class MyAxisFormatterBar2 : IndexAxisValueFormatter() {
 
