@@ -1409,26 +1409,24 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:background="@color/colorPrimary"
                                                     android:textStyle="bold"
-                                                    android:textSize="@dimen/header_text1"
+                                                    android:textSize="15dp"
                                                     android:visibility="visible"/>
                                              <TextView
                                                  android:id="@+id/txtv_leadTileCount"
-                                                 android:layout_width="wrap_content"
-                                                 android:layout_height="wrap_content"
-                                                 android:layout_gravity="center"
-                                                 android:gravity="right"
-                                                 android:visibility="gone"
-                                                 android:tint="@color/white"
-                                                 android:background="@drawable/shape_circle_primary"
-                                                 android:backgroundTint="@color/white"
-                                                 android:textColor="@color/colorPrimaryDark"
-                                                 android:paddingLeft="5dp"
-                                                 android:paddingRight="5dp"
-                                                 android:text="0"
-                                                 android:textSize="12dp"
-                                                 android:textStyle="bold"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="50dp"
+                                                 android:layout_weight="0.5"
+                                                 android:text=""
                                                  android:textAllCaps="true"
-                                                 android:fontFamily="@font/myfont" />
+                                                 android:textColor="@color/white"
+                                                 android:gravity="right|center"
+                                                 android:paddingRight="15dp"
+                                                 android:layout_gravity="right|center"
+                                                 android:fontFamily="@font/myfont"
+                                                 android:background="@color/colorPrimary"
+                                                 android:textStyle="bold"
+                                                 android:textSize="15dp"
+                                                 android:visibility="visible"/>
 
 
 
@@ -1604,8 +1602,25 @@
                                                 android:fontFamily="@font/myfont"
                                                 android:background="@color/colorPrimary"
                                                 android:textStyle="bold"
-                                                android:textSize="@dimen/header_text1"
+                                                android:textSize="15dp"
                                                 android:visibility="visible"/>
+                                            <TextView
+                                                android:id="@+id/txtv_leadOutstandCount"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="50dp"
+                                                android:layout_weight="0.5"
+                                                android:text=""
+                                                android:textAllCaps="true"
+                                                android:textColor="@color/white"
+                                                android:gravity="right|center"
+                                                android:paddingRight="15dp"
+                                                android:layout_gravity="right|center"
+                                                android:fontFamily="@font/myfont"
+                                                android:background="@color/colorPrimary"
+                                                android:textStyle="bold"
+                                                android:textSize="15dp"
+                                                android:visibility="visible"/>
+
 
                                         </LinearLayout>
                                         <LinearLayout
@@ -1687,8 +1702,25 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:background="@color/colorPrimary"
                                                     android:textStyle="bold"
-                                                    android:textSize="@dimen/header_text1"
+                                                    android:textSize="15dp"
                                                     android:visibility="visible"/>
+                                                <TextView
+                                                    android:id="@+id/txtv_leadScenarioCount"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="50dp"
+                                                    android:layout_weight="0.5"
+                                                    android:text=""
+                                                    android:textAllCaps="true"
+                                                    android:textColor="@color/white"
+                                                    android:gravity="right|center"
+                                                    android:paddingRight="15dp"
+                                                    android:layout_gravity="right|center"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:background="@color/colorPrimary"
+                                                    android:textStyle="bold"
+                                                    android:textSize="15dp"
+                                                    android:visibility="gone"/>
+
 
                                             </LinearLayout>
                                             <LinearLayout

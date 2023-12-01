@@ -42,12 +42,10 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Repository.AreaListRepository
-import com.perfect.prodsuit.Repository.EmployeeWiseTargetAmountRepository
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
-import org.w3c.dom.Text
 
 class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     ItemClickListener {
@@ -69,6 +67,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     var txtv_leadTileCount: TextView? = null
 
     var txt_leadcountscenario: TextView? = null
+    var txtv_leadOutstandCount: TextView? = null
+
 
     private var tvv_lemo_StagWise: TextView? = null
     var drawableMore : Drawable? = null
@@ -87,7 +87,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     var leadstagecountwiseText: TextView? = null
     var txtv_EmpWiseRemark: TextView? = null
     var txtv_empamtRemrk: TextView? = null
-
+    var txtv_leadScenarioCount: TextView? = null
 
     var recycleemployeewiseAvg: FullLenghRecyclertview? = null
     var rclv_toprevenue: FullLenghRecyclertview? = null
@@ -355,15 +355,23 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
                                         leadOutstandArrayList = jobjt.getJSONArray("LeadTileData")
                                         if (leadOutstandArrayList.length() > 0) {
-
+                                            var totalleadoutstand: Int = 0
                                             crdv_leadoutstand!!.visibility=View.VISIBLE
                                             leadOutstandSort = JSONArray()
                                             for (k in 0 until leadOutstandArrayList.length()) {
                                                 val jsonObject = leadOutstandArrayList.getJSONObject(k)
                                                 // reportNamesort.put(k,jsonObject)
+
+                                                var totleadoutstand: String =
+                                                    jsonObject.optString("Value")
+                                                totalleadoutstand = totalleadoutstand + Integer.parseInt(totleadoutstand)
+
+
                                                 leadOutstandSort.put(jsonObject)
                                             }
-
+                                            System.out.println("Total Leadoutstand "+totalleadoutstand)
+                                            txtv_leadOutstandCount!!.visibility=View.VISIBLE
+                                            txtv_leadOutstandCount!!.text=totalleadoutstand.toString()
 
                                             val lLayout = GridLayoutManager(this@TileGraphActivity, 1)
                                             rclrvw_leadoutstand!!.setLayoutManager(
@@ -563,6 +571,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         ll_empwiseavgm= findViewById<LinearLayout>(R.id.ll_empwiseavgm)
         ll_empwiseamtt= findViewById<LinearLayout>(R.id.ll_empwiseamtt)
 
+        txtv_leadScenarioCount= findViewById<TextView>(R.id.txtv_leadScenarioCount)
+
         txt_leadcountscenario= findViewById<TextView>(R.id.txt_leadcountscenario)
         ll_empwisebarchart = findViewById<LinearLayout>(R.id.ll_empwisebarchart)
         txtv_leadTileCount= findViewById<TextView>(R.id.txtv_leadTileCount)
@@ -570,6 +580,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         txtv_leadoutstand= findViewById<TextView>(R.id.txtv_leadoutstand)
         txtv_avglead= findViewById<TextView>(R.id.txtv_avglead)
         txtv_lead= findViewById<TextView>(R.id.txtv_lead)
+        txtv_leadOutstandCount= findViewById<TextView>(R.id.txtv_leadOutstandCount)
 
 
         txtv_leadcountscenariormrk= findViewById<TextView>(R.id.txtv_leadcountscenariormrk)
@@ -913,16 +924,19 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
                                         ledaTileArrayList = jobjt.getJSONArray("LeadTileData")
                                         if (ledaTileArrayList.length() > 0) {
-
+                                            var totallead: Int = 0
                                             crdv_lead!!.visibility=View.VISIBLE
                                             leadTileSort = JSONArray()
                                             for (k in 0 until ledaTileArrayList.length()) {
                                                 val jsonObject = ledaTileArrayList.getJSONObject(k)
                                                 // reportNamesort.put(k,jsonObject)
+                                                var totleadcount: String =
+                                                    jsonObject.optString("Value")
+                                                totallead = totallead + Integer.parseInt(totleadcount)
                                                 leadTileSort.put(jsonObject)
                                             }
 
-
+                                            System.out.println("Total Count "+totallead)
                                             val lLayout = GridLayoutManager(this@TileGraphActivity, 1)
                                             rclrvw_lead!!.setLayoutManager(
                                                 LinearLayoutManager(
@@ -936,7 +950,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             rclrvw_lead!!.adapter = adapter
                                             adapter.setClickListener(this@TileGraphActivity)
 
-                                            txtv_leadTileCount!!.setText("" + leadTileSort.length())
+                                            txtv_leadTileCount!!.visibility=View.VISIBLE
+                                            txtv_leadTileCount!!.text=totallead.toString()
 
                                             /* val lLayout1 = GridLayoutManager(this@TileGraphActivity, 1)
                                              rclrvw_leadoutstand!!.layoutManager = lLayout1 as RecyclerView.LayoutManager?*/
@@ -1028,11 +1043,22 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
                                             crdv_leadcountscenario!!.visibility=View.VISIBLE
                                             leadcountscenariosort = JSONArray()
+
+                                            var total: Int = 0
+
                                             for (k in 0 until leadcountscenarioList.length()) {
                                                 val jsonObject = leadcountscenarioList.getJSONObject(k)
+                                                var totcount: String =
+                                                    jsonObject.optString("Value")
+                                                total = total + Integer.parseInt(totcount)
                                                 // reportNamesort.put(k,jsonObject)
                                                 leadcountscenariosort.put(jsonObject)
                                             }
+
+                                            System.out.println("Total Count "+total)
+
+                                            txtv_leadScenarioCount!!.visibility=View.VISIBLE
+                                            txtv_leadScenarioCount!!.text=total.toString()
 
 
                                             val lLayout = GridLayoutManager(this@TileGraphActivity, 1)

@@ -87,7 +87,7 @@ object LeadCountFollowupRepository {
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
-                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
+                requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-08"))
                 requestObject1.put("DashMode", ProdsuitApplication.encryptStart("8"))
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart("1"))
 
