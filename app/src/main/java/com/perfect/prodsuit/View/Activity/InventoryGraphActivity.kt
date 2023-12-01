@@ -40,6 +40,10 @@ import java.util.*
 
 class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
+
+    private var tv_tileName: TextView? = null
+    private var tv_remarkStockTle: TextView? = null
+
     private var tvv_head_monthly: TextView? = null
     private var tvv_monthly_more: TextView? = null
     private var tv_remarkMonthly: TextView? = null
@@ -255,6 +259,10 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun setRegViews() {
+        tv_tileName             = findViewById(R.id.tv_tileName)
+        tv_remarkStockTle             = findViewById(R.id.tv_remarkStockTle)
+
+
         ll_monthlyRecy             = findViewById(R.id.ll_monthlyRecy)
         tvv_head_monthly             = findViewById(R.id.tvv_head_monthly)
         tvv_monthly_more             = findViewById(R.id.tvv_monthly_more)
@@ -1577,6 +1585,11 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         Log.e(TAG, "353353 tileValue==   "+tileValue)
                                         Log.e(TAG, "353353 tileValue==   "+tileValue)
                                         Log.e(TAG, "353353 tileValue==   "+jobjt.getString("StockValue"))
+
+
+                                        tv_remarkStockTle!!.setText(jobjt.getString("Reamrk"))
+                                        tv_tileName!!.setText(jobjt.getString("ChartName"))
+
 //                                        Config.changeTwoDecimel(jobjt.getString("StockValue"))
                                         tvv_countValue=jobjt.getString("StockValue").toDouble()
                                       //  tvv_countValue=1649785634.18888

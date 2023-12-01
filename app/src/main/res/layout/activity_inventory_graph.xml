@@ -1997,7 +1997,7 @@
                                                                             android:layout_width="match_parent"
                                                                             android:layout_height="50dp"
                                                                             android:layout_weight="1"
-                                                                            android:text="Stock value"
+                                                                            android:text=""
                                                                             android:textAllCaps="true"
                                                                             android:textColor="@color/white"
                                                                             android:gravity="left|center"
@@ -2069,6 +2069,21 @@
 
 
                                                                     </LinearLayout>
+                                                                    <TextView
+                                                                        android:id="@+id/tv_remarkStockTle"
+                                                                        android:layout_width="match_parent"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:layout_weight="1"
+                                                                        android:text=""
+                                                                        android:textColor="@color/grey_dark"
+                                                                        android:gravity="left"
+                                                                        android:paddingLeft="15dp"
+                                                                        android:layout_gravity="center"
+                                                                        android:fontFamily="@font/myfont"
+
+                                                                        android:textStyle="bold"
+                                                                        android:textSize="13dp"
+                                                                        android:visibility="visible"/>
                                                                 </LinearLayout>
 
                                                             </androidx.cardview.widget.CardView>

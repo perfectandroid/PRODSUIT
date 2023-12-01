@@ -157,7 +157,7 @@
 
                         <!--Graph-->
                         <LinearLayout
-                            android:visibility="visible"
+                            android:visibility="gone"
                             android:id="@+id/ll_Graph"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -1535,7 +1535,7 @@
                         <!--Tile-->
                         <LinearLayout
                             android:id="@+id/ll_Tile"
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical">
