@@ -158,7 +158,7 @@
 
                         <!--Graph-->
                         <LinearLayout
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:id="@+id/ll_Graph"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -308,7 +308,7 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
                                                     android:layout_margin="5dp"
-                                                    android:visibility="gone">
+                                                   >
                                                     <com.perfect.prodsuit.Helper.FullLenghRecyclertview
                                                         android:id="@+id/recyUpcomingStock"
                                                         android:layout_width="match_parent"
@@ -332,7 +332,7 @@
                                             android:layout_height="match_parent"
                                             android:background="@color/white"
                                             android:orientation="vertical"
-                                            android:visibility="gone">
+                                            android:visibility="visible">
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
@@ -427,7 +427,7 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
                                                     android:layout_margin="5dp"
-                                                    android:visibility="visible">
+                                                   >
                                                     <com.perfect.prodsuit.Helper.FullLenghRecyclertview
                                                         android:id="@+id/recyCompletedProducts"
                                                         android:layout_width="match_parent"
@@ -451,7 +451,7 @@
                                             android:layout_height="match_parent"
                                             android:background="@color/white"
                                             android:orientation="vertical"
-                                            android:visibility="visible">
+                                            android:visibility="gone">
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
@@ -532,6 +532,7 @@
                                                 android:layout_height="match_parent"
                                                 android:orientation="vertical">
 
+
                                                 <com.github.mikephil.charting.charts.BarChart
                                                     android:id="@+id/MaterialShortageChart"
                                                     android:layout_width="match_parent"
@@ -541,6 +542,7 @@
                                                     android:visibility="visible" />
 
                                                 <LinearLayout
+                                                    android:id="@+id/ll_materialrecycview"
                                                     android:visibility="visible"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
@@ -598,7 +600,7 @@
                                                             android:paddingStart="5dp"
                                                             android:text="ActualQuantity"
                                                             android:textSize="13dp"
-                                                            android:textColor="@color/black"
+                                                            android:textColor="@color/blue"
                                                             android:fontFamily="@font/myfont"/>
 
                                                         <LinearLayout
@@ -614,7 +616,7 @@
                                                             android:paddingStart="5dp"
                                                             android:text="Shortage Qty"
                                                             android:textSize="13dp"
-                                                            android:textColor="@color/black"
+                                                            android:textColor="@color/red"
                                                             android:fontFamily="@font/myfont"/>
                                                         <LinearLayout
                                                             android:layout_width="1dp"

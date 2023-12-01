@@ -1150,6 +1150,10 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 val i = Intent(this@HomeActivity, ContactUsActivity::class.java)
                 startActivity(i)
             }
+            R.id.nav_intimation -> {
+                val i = Intent(this@HomeActivity, Intimation::class.java)
+                startActivity(i)
+            }
             R.id.nav_share -> {
                 val shareIntent = Intent()
                 shareIntent.action = Intent.ACTION_SEND

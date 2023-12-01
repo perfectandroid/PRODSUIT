@@ -12,7 +12,7 @@
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
         <LinearLayout
-            android:id="@+id/ll_main"
+            android:id="@+id/llback"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -32,7 +32,7 @@
                 android:gravity="center"
                 android:fontFamily="@font/myfont"
                 android:textSize="12dp"
-                android:layout_weight="1.3"/>
+                android:layout_weight="1.4"/>
             <LinearLayout
                 android:layout_width="1dp"
                 android:layout_height="35dp"
@@ -44,37 +44,39 @@
                 android:fontFamily="@font/myfont"
                 android:padding="5dp"
                 android:textSize="12dp"
-                android:text="hedftsrh"
+                android:text="Project"
                 android:layout_weight="1"/>
             <LinearLayout
                 android:layout_width="1dp"
                 android:layout_height="35dp"
                 android:background="@color/grey"/>
             <TextView
-                android:id="@+id/tvv_Stages"
+                android:id="@+id/tvv_ActualPeriod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/myfont"
                 android:padding="5dp"
                 android:textSize="12dp"
+                android:textColor="@color/blue"
                 android:gravity="center"
-                android:text="hedftsrh"
-                android:layout_weight="1"/>
+                android:text="ActualPeriod"
+                android:layout_weight="1.1"/>
             <LinearLayout
                 android:layout_width="1dp"
                 android:layout_height="35dp"
                 android:background="@color/grey"/>
 
             <TextView
-                android:id="@+id/tvv_DueDate"
+                android:id="@+id/tvv_CurrentPeriod"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/myfont"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="hedftsrh"
+                android:text="CurrentPeriod"
+                android:textColor="@color/red"
                 android:textSize="12dp"
-                android:layout_weight="1.2"/>
+                android:layout_weight="1.1"/>
             <LinearLayout
                 android:layout_width="1dp"
                 android:layout_height="35dp"

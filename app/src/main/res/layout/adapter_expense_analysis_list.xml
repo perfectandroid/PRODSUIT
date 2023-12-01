@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
 
     <LinearLayout
@@ -44,7 +44,7 @@
                 android:fontFamily="@font/myfont"
                 android:padding="5dp"
                 android:textSize="12dp"
-                android:textColor="@color/blue"
+
                 android:text="hedftsrh"
                 android:layout_weight="1"/>
             <LinearLayout
@@ -58,7 +58,8 @@
                 android:fontFamily="@font/myfont"
                 android:padding="5dp"
                 android:textSize="12dp"
-                android:textColor="@color/red"
+                android:textColor="@color/blue"
+
                 android:gravity="center"
                 android:text="hedftsrh"
                 android:layout_weight="1"/>
@@ -74,6 +75,7 @@
                 android:fontFamily="@font/myfont"
                 android:padding="5dp"
                 android:gravity="center"
+                android:textColor="@color/red"
                 android:text="hedftsrh"
                 android:textSize="12dp"
                 android:layout_weight="1.2"/>

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
@@ -18,6 +19,11 @@ class Upcoming_Due_Date_Adapter (internal var context: Context, internal var jso
     internal val TAG : String = "Upcoming_Due_Date_Adapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
+
+    val color = intArrayOf(
+        R.color.color_dash1, R.color.color_dash2, R.color.color_dash3, R.color.leadstages_color4,
+        R.color.leadstages_color5, R.color.leadstages_color6, R.color.leadstages_color7, R.color.leadstages_color8,
+        R.color.leadstages_color9, R.color.leadstages_color10, R.color.leadstages_color11, R.color.leadstages_color12)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
@@ -34,6 +40,16 @@ class Upcoming_Due_Date_Adapter (internal var context: Context, internal var jso
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
+
+//                if (position % 1 == 0){
+//                    holder.ll_main.setBackgroundResource(color[0])
+//                }
+//                if (position % 2 == 0){
+//                    holder.ll_main.setBackgroundResource(color[1])
+//                }
+//                if (position % 3 == 0){
+//                    holder.ll_main.setBackgroundResource(color[2])
+//                }
 
                 Log.e(TAG,"onBindViewHolder   1051   "+jsonObject)
                 holder.tvv_slnmbr.text        = pos.toString()
@@ -66,7 +82,9 @@ class Upcoming_Due_Date_Adapter (internal var context: Context, internal var jso
         internal var tvv_slnmbr             : TextView
         internal var tvv_Stages       : TextView
         internal var tvv_DueDate       : TextView
+        internal var ll_main          : LinearLayout
         init {
+            ll_main            = v.findViewById<View>(R.id.ll_main) as LinearLayout
             tvv_Project           = v.findViewById<View>(R.id.tvv_Project)     as TextView
             tvv_slnmbr             = v.findViewById<View>(R.id.tvv_slnmbr)       as TextView
             tvv_Stages       = v.findViewById<View>(R.id.tvv_Stages) as TextView

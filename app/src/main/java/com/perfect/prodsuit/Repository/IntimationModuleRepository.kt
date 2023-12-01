@@ -9,7 +9,8 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.TotalStagewiseDueModel
+import com.perfect.prodsuit.Model.IntimationModuleModel
+import com.perfect.prodsuit.Model.ReportNameModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -18,23 +19,23 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.text.SimpleDateFormat
-import java.util.*
+import java.util.ArrayList
 
-object TotalStagewiseDueRespository {
+object IntimationModuleRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val totalstagewiseDueSetterGetter = MutableLiveData<TotalStagewiseDueModel>()
-    val TAG: String = "TotalStagewiseDueRespository"
+    val reportNameSetterGetter = MutableLiveData<IntimationModuleModel>()
+    val TAG: String = "ReportNameRepository"
 
-    fun getServicesApiCall(context: Context,TransDate: String): MutableLiveData<TotalStagewiseDueModel> {
-        getTopRevenueDashboard(context,TransDate)
-        return totalstagewiseDueSetterGetter
+    fun getServicesApiCall(context: Context,SubMode : String): MutableLiveData<IntimationModuleModel> {
+        getReportName(context,SubMode)
+        return reportNameSetterGetter
     }
 
-    private fun getTopRevenueDashboard(context: Context,TransDate: String) {
+    private fun getReportName(context: Context,SubMode : String) {
+
         try {
-            totalstagewiseDueSetterGetter.value = TotalStagewiseDueModel("")
+            reportNameSetterGetter.value = IntimationModuleModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -60,35 +61,27 @@ object TotalStagewiseDueRespository {
             val requestObject1 = JSONObject()
             try {
 
+//                "ReqMode":"51",
+//                "BankKey":"-500",
+//                "FK_Employee":123,
+//                "Token":sfdsgdgdg,
+
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
-                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
-                val FK_DepartmentSP = context.getSharedPreferences(Config.SHARED_PREF55, 0)
-                val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
-                val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
-                val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
-
+                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("120"))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(TransDate))
-              //  requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-08"))
-
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
-                //  requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart("40"))
-                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
-                requestObject1.put("FK_Department", ProdsuitApplication.encryptStart(FK_DepartmentSP.getString("FK_Department", null)))
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
-                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
-
-                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("21"))
-                requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))
-
-                Log.e(LeadDashRepository.TAG,"requestObject1   TotalStagewiseDueModel   "+requestObject1)
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
 
 
+                Log.e(TAG,"78  getBranch  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -96,34 +89,34 @@ object TotalStagewiseDueRespository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getTotalStagewiseDue(body)
+            Log.i("responserrr","body=="+requestObject1.toString())
+            val call = apiService.getIntimationModules(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
                     Response<String>
                 ) {
                     try {
-                        Log.e(TAG,"response  toprevenue   "+response.body())
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<TotalStagewiseDueModel>()
-                        leads.add(TotalStagewiseDueModel(response.body()))
+                        val leads = ArrayList<ReportNameModel>()
+                        leads.add(ReportNameModel(response.body()))
                         val msg = leads[0].message
-                        totalstagewiseDueSetterGetter.value = TotalStagewiseDueModel(msg)
+                        reportNameSetterGetter.value = IntimationModuleModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
-                        Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
-                    Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
-            Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
         }
     }
 }

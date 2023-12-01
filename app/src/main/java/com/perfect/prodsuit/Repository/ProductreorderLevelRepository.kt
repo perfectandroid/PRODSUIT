@@ -18,7 +18,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.ArrayList
+import java.text.SimpleDateFormat
+import java.util.*
 
 object ProductreorderLevelRepository {
 
@@ -57,6 +58,11 @@ object ProductreorderLevelRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+
+                val sdf = SimpleDateFormat("yyyy-MM-dd")
+                val currentDate = sdf.format(Date())
+                System.out.println(" C DATE is  "+currentDate)
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
@@ -76,7 +82,8 @@ object ProductreorderLevelRepository {
                 requestObject1.put("FK_Department", ProdsuitApplication.encryptStart(FK_DepartmentSP.getString("FK_Department", null)))
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
-                requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-17"))
+            //    requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-17"))
+                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
 
                 Log.e(TAG,"requestObject1   78   "+requestObject1)
             } catch (e: Exception) {
