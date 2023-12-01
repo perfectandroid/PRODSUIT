@@ -60,6 +60,10 @@ object Top10ProjectRepository {
             val requestObject1 = JSONObject()
             try {
 
+                val sdf = SimpleDateFormat("yyyy-MM-dd")
+                val currentDate = sdf.format(Date())
+                System.out.println(" C DATE is  "+currentDate)
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val FK_DepartmentSP = context.getSharedPreferences(Config.SHARED_PREF55, 0)
@@ -81,8 +85,31 @@ object Top10ProjectRepository {
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
-                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("5"))
+              //  requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-08"))
+                    requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
+                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("22"))
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))
+
+
+
+
+
+//                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+//                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+//
+//                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
+//
+//                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
+//                requestObject1.put("FK_Department", ProdsuitApplication.encryptStart(FK_DepartmentSP.getString("FK_Department", null)))
+//                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
+//                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+//                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
+//                 requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-08"))
+//            //    requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
+//                requestObject1.put("DashMode", ProdsuitApplication.encryptStart("22"))
+//                requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))
+
+
                 Log.e(TAG,"requestObject1   top10   "+requestObject1)
 
 
@@ -121,7 +148,7 @@ object Top10ProjectRepository {
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
-            Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"yyyyyyyyyyyyyy===="+e.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -74,8 +74,8 @@ object UpcomingStageDueDatesRespository {
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-//                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(TransDate))
-                requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-17"))
+                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(TransDate))
+             //   requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-17"))
 
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
@@ -85,7 +85,7 @@ object UpcomingStageDueDatesRespository {
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
                 requestObject1.put("DashMode", ProdsuitApplication.encryptStart("20"))
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))
-                Log.e(TAG,"requestObject1   top10   "+requestObject1)
+                Log.e(TAG,"requestObject1   top105656   "+requestObject1)
 
 
             } catch (e: Exception) {

@@ -55,13 +55,12 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/myfont"
                 android:gravity="center"
-                android:text="Dashboard"
+                android:text="project"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:tint="@color/black" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -121,7 +120,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_weight="1"
-                                android:text="DashBoard"
+                                android:text="chart"
                                 android:textColor="@color/colorPrimary"
                                 android:gravity="center"
                                 android:layout_gravity="center"
@@ -219,6 +218,8 @@
                                             android:visibility="gone">
 
                                             <LinearLayout
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:orientation="vertical"
@@ -306,17 +307,108 @@
 
                                                 <LinearLayout
                                                     android:id="@+id/ll_projectDelayedRecyc"
-                                                    android:padding="5dp"
-                                                    android:visibility="visible"
+                                                    android:paddingTop="5dp"
+                                                    android:orientation="vertical"
+                                                    android:visibility="gone"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
                                                     android:layout_margin="5dp">
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="1dp"
+                                                        android:background="@color/grey"/>
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:orientation="vertical"
+                                                        tools:ignore="MissingConstraints">
+                                                        <LinearLayout
+
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_alignParentTop="true"
+                                                            android:orientation="horizontal">
+
+                                                            <LinearLayout
+                                                                android:layout_width="1dp"
+                                                                android:layout_height="35dp"
+                                                                android:background="@color/grey"/>
+
+                                                            <TextView
+
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:padding="5dp"
+                                                                android:text="sln"
+                                                                android:textColor="@color/black"
+                                                                android:gravity="center"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textSize="12dp"
+                                                                android:layout_weight="1.4"/>
+                                                            <LinearLayout
+                                                                android:layout_width="1dp"
+                                                                android:layout_height="35dp"
+                                                                android:background="@color/grey"/>
+                                                            <TextView
+                                                                android:id="@+id/tvv_Project"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:padding="5dp"
+                                                                android:textSize="12dp"
+                                                                android:text="Project"
+                                                                android:textColor="@color/black"
+                                                                android:layout_weight="1"/>
+                                                            <LinearLayout
+                                                                android:layout_width="1dp"
+                                                                android:layout_height="35dp"
+                                                                android:background="@color/grey"/>
+                                                            <TextView
+                                                                android:id="@+id/tvv_ActualPeriod"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:padding="5dp"
+                                                                android:textSize="12dp"
+                                                                android:textColor="@color/black"
+                                                                android:gravity="center"
+                                                                android:text="ActualPeriod"
+                                                                android:layout_weight="1.1"/>
+                                                            <LinearLayout
+                                                                android:layout_width="1dp"
+                                                                android:layout_height="35dp"
+                                                                android:background="@color/grey"/>
+
+                                                            <TextView
+                                                                android:id="@+id/tvv_CurrentPeriod"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:padding="5dp"
+                                                                android:gravity="center"
+                                                                android:textColor="@color/black"
+                                                                android:text="Current Period"
+                                                                android:textSize="12dp"
+                                                                android:layout_weight="1.1"/>
+                                                            <LinearLayout
+                                                                android:layout_width="1dp"
+                                                                android:layout_height="35dp"
+                                                                android:background="@color/grey"/>
+
+
+                                                        </LinearLayout>
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="1dp"
+                                                            android:background="@color/grey"/>
+
+                                                    </LinearLayout>
                                                     <com.perfect.prodsuit.Helper.FullLenghRecyclertview
                                                         android:id="@+id/recycprojectDelayed"
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
-                                                        android:layout_margin="5dp"
-                                                        android:padding="5dp"
+
+
                                                         android:background="@drawable/svg_dashrect">
 
                                                     </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
@@ -459,6 +551,81 @@
                                             android:visibility="gone">
 
                                             <LinearLayout
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical"
+                                                android:background="#E6F1F2">
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="horizontal">
+
+                                                    <TextView
+                                                        android:id="@+id/tvv_head_topten"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:text=""
+                                                        android:textColor="@color/colorPrimary"
+                                                        android:gravity="start"
+                                                        android:paddingLeft="5dp"
+                                                        android:paddingTop="5dp"
+                                                        android:layout_gravity="center"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="16dp"
+                                                        android:visibility="visible"/>
+
+                                                    <TextView
+                                                        android:id="@+id/tvv_more_topten"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:paddingTop="2dp"
+                                                        android:paddingBottom="2dp"
+                                                        android:layout_gravity="center"
+                                                        android:layout_margin="5dp"
+                                                        android:layout_weight="2.8"
+                                                        android:background="@drawable/btn_bgcolour"
+                                                        android:drawableRight="@drawable/dash_more"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:gravity="center"
+                                                        android:paddingEnd="10dp"
+                                                        android:text="More"
+                                                        android:textAllCaps="false"
+                                                        android:textColor="@color/white"
+                                                        android:textSize="15sp"
+                                                        android:textStyle="bold"
+                                                        android:visibility="visible" />
+
+
+                                                </LinearLayout>
+
+
+
+                                                <TextView
+                                                    android:id="@+id/tv_topten_Remark"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center_vertical"
+                                                    android:paddingLeft="5dp"
+                                                    android:layout_marginTop="-7dp"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="center_vertical"
+                                                    android:text=""
+                                                    android:textAllCaps="false"
+                                                    android:textColor="@color/colorPrimary"
+                                                    android:textSize="13dp"
+                                                    android:textStyle="normal"
+                                                    android:tint="@color/black" />
+
+
+                                            </LinearLayout>
+
+                                            <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
                                                 android:orientation="vertical">
@@ -481,6 +648,7 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:gravity="center_vertical"
                                                     android:text=""
+                                                    android:visibility="gone"
                                                     android:textAllCaps="false"
                                                     android:textColor="@color/black"
                                                     android:textSize="14dp"
@@ -488,6 +656,8 @@
                                                     android:tint="@color/black" />
 
                                                 <LinearLayout
+                                                    android:visibility="gone"
+                                                    android:id="@+id/ll_topten_Recycler"
                                                     android:padding="5dp"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
@@ -516,6 +686,80 @@
                                             android:background="@color/white"
                                             android:orientation="vertical"
                                             android:visibility="gone">
+                                            <LinearLayout
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical"
+                                                android:background="#E6F1F2">
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="horizontal">
+
+                                                    <TextView
+                                                        android:id="@+id/tvv_head_expense"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:text=""
+                                                        android:textColor="@color/colorPrimary"
+                                                        android:gravity="start"
+                                                        android:paddingLeft="5dp"
+                                                        android:paddingTop="5dp"
+                                                        android:layout_gravity="center"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="16dp"
+                                                        android:visibility="visible"/>
+
+                                                    <TextView
+                                                        android:id="@+id/tvv_more_expense"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:paddingTop="2dp"
+                                                        android:paddingBottom="2dp"
+                                                        android:layout_gravity="center"
+                                                        android:layout_margin="5dp"
+                                                        android:layout_weight="2.8"
+                                                        android:background="@drawable/btn_bgcolour"
+                                                        android:drawableRight="@drawable/dash_more"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:gravity="center"
+                                                        android:paddingEnd="10dp"
+                                                        android:text="More"
+                                                        android:textAllCaps="false"
+                                                        android:textColor="@color/white"
+                                                        android:textSize="15sp"
+                                                        android:textStyle="bold"
+                                                        android:visibility="visible" />
+
+
+                                                </LinearLayout>
+
+
+
+                                                <TextView
+                                                    android:id="@+id/tvv_remark_expense"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center_vertical"
+                                                    android:paddingLeft="5dp"
+                                                    android:layout_marginTop="-7dp"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="center_vertical"
+                                                    android:text=""
+                                                    android:textAllCaps="false"
+                                                    android:textColor="@color/colorPrimary"
+                                                    android:textSize="13dp"
+                                                    android:textStyle="normal"
+                                                    android:tint="@color/black" />
+
+
+                                            </LinearLayout>
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
@@ -548,89 +792,95 @@
                                                     android:textStyle="bold"
                                                     android:tint="@color/black" />
 
-                                                <LinearLayout
-                                                    android:visibility="visible"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:layout_weight="3"
-                                                    android:background="@color/leadbg_color"
-                                                    android:gravity="center"
-                                                    android:orientation="horizontal">
-
-                                                    <LinearLayout
-                                                        android:layout_width="1dp"
-                                                        android:layout_height="40dp"
-                                                        android:background="@color/grey"/>
-                                                    <TextView
-                                                        android:id="@+id/tvv_prl_slnmbr"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:paddingStart="5dp"
-                                                        android:fontFamily="@font/myfont"
-                                                        android:gravity="center"
-                                                        android:layout_weight="1.3"
-                                                        android:textSize="13dp"
-                                                        android:textColor="@color/black"
-                                                        android:text="Sl.No"/>
-
-                                                    <LinearLayout
-                                                        android:layout_width="1dp"
-                                                        android:layout_height="40dp"
-                                                        android:background="@color/grey"/>
-                                                    <TextView
-                                                        android:id="@+id/tvv_prl_product"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:paddingStart="5dp"
-                                                        android:gravity="center"
-                                                        android:fontFamily="@font/myfont"
-                                                        android:layout_weight="1"
-                                                        android:textSize="13dp"
-                                                        android:textColor="@color/black"
-                                                        android:text="Project"/>
-
-                                                    <LinearLayout
-                                                        android:layout_width="1dp"
-                                                        android:layout_height="40dp"
-                                                        android:background="@color/grey"/>
-                                                    <TextView
-                                                        android:id="@+id/tvv_prl_reorderlevel"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_weight="1"
-                                                        android:gravity="center"
-                                                        android:paddingStart="5dp"
-                                                        android:text="Project Amount"
-                                                        android:textSize="13dp"
-                                                        android:textColor="@color/black"
-                                                        android:fontFamily="@font/myfont"/>
-
-                                                    <LinearLayout
-                                                        android:layout_width="1dp"
-                                                        android:layout_height="40dp"
-                                                        android:background="@color/grey"/>
-                                                    <TextView
-                                                        android:id="@+id/tvv_prl_currentstock"
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_weight="1.2"
-                                                        android:gravity="center"
-                                                        android:paddingStart="5dp"
-                                                        android:text="Expense"
-                                                        android:textSize="13dp"
-                                                        android:textColor="@color/black"
-                                                        android:fontFamily="@font/myfont"/>
-                                                    <LinearLayout
-                                                        android:layout_width="1dp"
-                                                        android:layout_height="40dp"
-                                                        android:background="@color/grey"/>
 
 
-                                                </LinearLayout>
 
                                                 <LinearLayout
+
+                                                    android:id="@+id/ll_expenseRecy"
+                                                    android:visibility="gone"
+                                                    android:orientation="vertical"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent">
+                                                    <LinearLayout
+                                                        android:visibility="visible"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:layout_weight="3"
+                                                        android:background="@color/leadbg_color"
+                                                        android:gravity="center"
+                                                        android:orientation="horizontal">
+
+                                                        <LinearLayout
+                                                            android:layout_width="1dp"
+                                                            android:layout_height="40dp"
+                                                            android:background="@color/grey"/>
+                                                        <TextView
+                                                            android:id="@+id/tvv_prl_slnmbr"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:paddingStart="5dp"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center"
+                                                            android:layout_weight="1.3"
+                                                            android:textSize="13dp"
+                                                            android:textColor="@color/black"
+                                                            android:text="Sl.No"/>
+
+                                                        <LinearLayout
+                                                            android:layout_width="1dp"
+                                                            android:layout_height="40dp"
+                                                            android:background="@color/grey"/>
+                                                        <TextView
+                                                            android:id="@+id/tvv_prl_product"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:paddingStart="5dp"
+                                                            android:gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:layout_weight="1"
+                                                            android:textSize="13dp"
+                                                            android:textColor="@color/black"
+                                                            android:text="Project"/>
+
+                                                        <LinearLayout
+                                                            android:layout_width="1dp"
+                                                            android:layout_height="40dp"
+                                                            android:background="@color/grey"/>
+                                                        <TextView
+                                                            android:id="@+id/tvv_prl_reorderlevel"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_weight="1"
+                                                            android:gravity="center"
+                                                            android:paddingStart="5dp"
+                                                            android:text="Project Amount"
+                                                            android:textSize="13dp"
+                                                            android:textColor="@color/black"
+                                                            android:fontFamily="@font/myfont"/>
+
+                                                        <LinearLayout
+                                                            android:layout_width="1dp"
+                                                            android:layout_height="40dp"
+                                                            android:background="@color/grey"/>
+                                                        <TextView
+                                                            android:id="@+id/tvv_prl_currentstock"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_weight="1.2"
+                                                            android:gravity="center"
+                                                            android:paddingStart="5dp"
+                                                            android:text="Expense"
+                                                            android:textSize="13dp"
+                                                            android:textColor="@color/black"
+                                                            android:fontFamily="@font/myfont"/>
+                                                        <LinearLayout
+                                                            android:layout_width="1dp"
+                                                            android:layout_height="40dp"
+                                                            android:background="@color/grey"/>
+
+
+                                                    </LinearLayout>
 
                                                     <com.perfect.prodsuit.Helper.FullLenghRecyclertview
                                                         android:id="@+id/recycExpenseAnalysis"
@@ -654,6 +904,80 @@
                                             android:background="@color/white"
                                             android:orientation="vertical"
                                             android:visibility="gone">
+                                            <LinearLayout
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical"
+                                                android:background="#E6F1F2">
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="horizontal">
+
+                                                    <TextView
+                                                        android:id="@+id/tvv_head_costMaterial"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:text=""
+                                                        android:textColor="@color/colorPrimary"
+                                                        android:gravity="start"
+                                                        android:paddingLeft="5dp"
+                                                        android:paddingTop="5dp"
+                                                        android:layout_gravity="center"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="16dp"
+                                                        android:visibility="visible"/>
+
+                                                    <TextView
+                                                        android:id="@+id/tvv_more_costMaterial"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:paddingTop="2dp"
+                                                        android:paddingBottom="2dp"
+                                                        android:layout_gravity="center"
+                                                        android:layout_margin="5dp"
+                                                        android:layout_weight="2.8"
+                                                        android:background="@drawable/btn_bgcolour"
+                                                        android:drawableRight="@drawable/dash_more"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:gravity="center"
+                                                        android:paddingEnd="10dp"
+                                                        android:text="More"
+                                                        android:textAllCaps="false"
+                                                        android:textColor="@color/white"
+                                                        android:textSize="15sp"
+                                                        android:textStyle="bold"
+                                                        android:visibility="visible" />
+
+
+                                                </LinearLayout>
+
+
+
+                                                <TextView
+                                                    android:id="@+id/tvv_remark_costMaterial"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center_vertical"
+                                                    android:paddingLeft="5dp"
+                                                    android:layout_marginTop="-7dp"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="center_vertical"
+                                                    android:text=""
+                                                    android:textAllCaps="false"
+                                                    android:textColor="@color/colorPrimary"
+                                                    android:textSize="13dp"
+                                                    android:textStyle="normal"
+                                                    android:tint="@color/black" />
+
+
+                                            </LinearLayout>
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
@@ -668,6 +992,7 @@
                                                     android:visibility="visible" />
 
                                                 <TextView
+                                                    android:visibility="gone"
                                                     android:id="@+id/tv_CostMaterialUsageAllocate"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
@@ -685,84 +1010,88 @@
                                                     android:textStyle="bold"
                                                     android:tint="@color/black" />
 
-                                                <LinearLayout
-                                                    android:visibility="visible"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:background="@color/leadbg_color"
-                                                    android:gravity="center"
-                                                    android:orientation="horizontal">
 
-                                                    <LinearLayout
-                                                        android:layout_width="1dp"
-                                                        android:layout_height="40dp"
-                                                        android:background="@color/grey"/>
-                                                    <TextView
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:paddingStart="5dp"
-                                                        android:fontFamily="@font/myfont"
-                                                        android:gravity="center"
-                                                        android:layout_weight="1.3"
-                                                        android:textSize="13dp"
-                                                        android:textColor="@color/black"
-                                                        android:text="Sl.No"/>
-
-                                                    <LinearLayout
-                                                        android:layout_width="1dp"
-                                                        android:layout_height="40dp"
-                                                        android:background="@color/grey"/>
-                                                    <TextView
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:paddingStart="5dp"
-                                                        android:gravity="center"
-                                                        android:fontFamily="@font/myfont"
-                                                        android:layout_weight="1"
-                                                        android:textSize="13dp"
-                                                        android:textColor="@color/black"
-                                                        android:text="Project"/>
-
-                                                    <LinearLayout
-                                                        android:layout_width="1dp"
-                                                        android:layout_height="40dp"
-                                                        android:background="@color/grey"/>
-                                                    <TextView
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_weight="1"
-                                                        android:gravity="center"
-                                                        android:paddingStart="5dp"
-                                                        android:text="Allocated"
-                                                        android:textSize="13dp"
-                                                        android:textColor="@color/black"
-                                                        android:fontFamily="@font/myfont"/>
-
-                                                    <LinearLayout
-                                                        android:layout_width="1dp"
-                                                        android:layout_height="40dp"
-                                                        android:background="@color/grey"/>
-                                                    <TextView
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_weight="1.2"
-                                                        android:gravity="center"
-                                                        android:paddingStart="5dp"
-                                                        android:text="Usage"
-                                                        android:textSize="13dp"
-                                                        android:textColor="@color/black"
-                                                        android:fontFamily="@font/myfont"/>
-                                                    <LinearLayout
-                                                        android:layout_width="1dp"
-                                                        android:layout_height="40dp"
-                                                        android:background="@color/grey"/>
-
-
-                                                </LinearLayout>
 
                                                 <LinearLayout
+                                                    android:id="@+id/ll_costMaterialRecy"
+                                                    android:visibility="gone"
+                                                    android:orientation="vertical"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent">
+                                                    <LinearLayout
+                                                        android:visibility="visible"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:background="@color/leadbg_color"
+                                                        android:gravity="center"
+                                                        android:orientation="horizontal">
+
+                                                        <LinearLayout
+                                                            android:layout_width="1dp"
+                                                            android:layout_height="40dp"
+                                                            android:background="@color/grey"/>
+                                                        <TextView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:paddingStart="5dp"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center"
+                                                            android:layout_weight="1.3"
+                                                            android:textSize="13dp"
+                                                            android:textColor="@color/black"
+                                                            android:text="Sl.No"/>
+
+                                                        <LinearLayout
+                                                            android:layout_width="1dp"
+                                                            android:layout_height="40dp"
+                                                            android:background="@color/grey"/>
+                                                        <TextView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:paddingStart="5dp"
+                                                            android:gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:layout_weight="1"
+                                                            android:textSize="13dp"
+                                                            android:textColor="@color/black"
+                                                            android:text="Project"/>
+
+                                                        <LinearLayout
+                                                            android:layout_width="1dp"
+                                                            android:layout_height="40dp"
+                                                            android:background="@color/grey"/>
+                                                        <TextView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_weight="1"
+                                                            android:gravity="center"
+                                                            android:paddingStart="5dp"
+                                                            android:text="Allocated"
+                                                            android:textSize="13dp"
+                                                            android:textColor="@color/black"
+                                                            android:fontFamily="@font/myfont"/>
+
+                                                        <LinearLayout
+                                                            android:layout_width="1dp"
+                                                            android:layout_height="40dp"
+                                                            android:background="@color/grey"/>
+                                                        <TextView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_weight="1.2"
+                                                            android:gravity="center"
+                                                            android:paddingStart="5dp"
+                                                            android:text="Usage"
+                                                            android:textSize="13dp"
+                                                            android:textColor="@color/black"
+                                                            android:fontFamily="@font/myfont"/>
+                                                        <LinearLayout
+                                                            android:layout_width="1dp"
+                                                            android:layout_height="40dp"
+                                                            android:background="@color/grey"/>
+
+
+                                                    </LinearLayout>
 
                                                     <com.perfect.prodsuit.Helper.FullLenghRecyclertview
                                                         android:id="@+id/recycCostMaterialUsageAllocate"
@@ -788,6 +1117,80 @@
                                             android:visibility="gone">
 
                                             <LinearLayout
+                                                android:layout_margin="2dp"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical"
+                                                android:background="#E6F1F2">
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="horizontal">
+
+                                                    <TextView
+                                                        android:id="@+id/tvv_head_TotalStageWiseDue"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:text=""
+                                                        android:textColor="@color/colorPrimary"
+                                                        android:gravity="start"
+                                                        android:paddingLeft="5dp"
+                                                        android:paddingTop="5dp"
+                                                        android:layout_gravity="center"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="16dp"
+                                                        android:visibility="visible"/>
+
+                                                    <TextView
+                                                        android:id="@+id/tvv_more_TotalStageWiseDue"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:paddingTop="2dp"
+                                                        android:paddingBottom="2dp"
+                                                        android:layout_gravity="center"
+                                                        android:layout_margin="5dp"
+                                                        android:layout_weight="2.8"
+                                                        android:background="@drawable/btn_bgcolour"
+                                                        android:drawableRight="@drawable/dash_more"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:gravity="center"
+                                                        android:paddingEnd="10dp"
+                                                        android:text="More"
+                                                        android:textAllCaps="false"
+                                                        android:textColor="@color/white"
+                                                        android:textSize="15sp"
+                                                        android:textStyle="bold"
+                                                        android:visibility="visible" />
+
+
+                                                </LinearLayout>
+
+
+
+                                                <TextView
+                                                    android:id="@+id/tv_remark_TotalStageWiseDue"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center_vertical"
+                                                    android:paddingLeft="5dp"
+                                                    android:layout_marginTop="-7dp"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="center_vertical"
+                                                    android:text=""
+                                                    android:textAllCaps="false"
+                                                    android:textColor="@color/colorPrimary"
+                                                    android:textSize="13dp"
+                                                    android:textStyle="normal"
+                                                    android:tint="@color/black" />
+
+
+                                            </LinearLayout>
+
+                                            <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:orientation="vertical">
@@ -810,6 +1213,7 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:gravity="center_vertical"
                                                     android:text=""
+                                                    android:visibility="gone"
                                                     android:layout_marginBottom="10dp"
                                                     android:textAllCaps="false"
                                                     android:textColor="@color/black"
@@ -817,84 +1221,90 @@
                                                     android:textStyle="bold"
                                                     android:tint="@color/black" />
 
+
+
                                                 <LinearLayout
+                                                    android:layout_marginTop="5dp"
+                                                    android:id="@+id/ll_TotalStageWiseDue_Recycl"
                                                     android:visibility="visible"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:background="@color/leadbg_color"
-                                                    android:gravity="center"
-                                                    android:orientation="horizontal">
-
-                                                    <LinearLayout
-                                                        android:layout_width="1dp"
-                                                        android:layout_height="40dp"
-                                                        android:background="@color/grey"/>
-                                                    <TextView
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:paddingStart="5dp"
-                                                        android:fontFamily="@font/myfont"
-                                                        android:gravity="center"
-                                                        android:layout_weight="1.3"
-                                                        android:textSize="13dp"
-                                                        android:textColor="@color/black"
-                                                        android:text="Sl.No"/>
-
-                                                    <LinearLayout
-                                                        android:layout_width="1dp"
-                                                        android:layout_height="40dp"
-                                                        android:background="@color/grey"/>
-                                                    <TextView
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:paddingStart="5dp"
-                                                        android:gravity="center"
-                                                        android:fontFamily="@font/myfont"
-                                                        android:layout_weight="1"
-                                                        android:textSize="13dp"
-                                                        android:textColor="@color/black"
-                                                        android:text="Stages"/>
-
-                                                    <LinearLayout
-                                                        android:layout_width="1dp"
-                                                        android:layout_height="40dp"
-                                                        android:background="@color/grey"/>
-                                                    <TextView
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_weight="1"
-                                                        android:gravity="center"
-                                                        android:paddingStart="5dp"
-                                                        android:text="TotalCount"
-                                                        android:textSize="13dp"
-                                                        android:textColor="@color/blue"
-                                                        android:fontFamily="@font/myfont"/>
-
-                                                    <LinearLayout
-                                                        android:layout_width="1dp"
-                                                        android:layout_height="40dp"
-                                                        android:background="@color/grey"/>
-                                                    <TextView
-                                                        android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:layout_weight="1.2"
-                                                        android:gravity="center"
-                                                        android:paddingStart="5dp"
-                                                        android:text="Total %"
-                                                        android:textSize="13dp"
-                                                        android:textColor="@color/red"
-                                                        android:fontFamily="@font/myfont"/>
-                                                    <LinearLayout
-                                                        android:layout_width="1dp"
-                                                        android:layout_height="40dp"
-                                                        android:background="@color/grey"/>
-
-
-                                                </LinearLayout>
-
-                                                <LinearLayout
+                                                    android:orientation="vertical"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent">
+
+                                                    <LinearLayout
+                                                        android:visibility="visible"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:background="@color/leadbg_color"
+                                                        android:gravity="center"
+                                                        android:orientation="horizontal">
+
+                                                        <LinearLayout
+                                                            android:layout_width="1dp"
+                                                            android:layout_height="40dp"
+                                                            android:background="@color/grey"/>
+                                                        <TextView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:paddingStart="5dp"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:gravity="center"
+                                                            android:layout_weight="1.3"
+                                                            android:textSize="13dp"
+                                                            android:textColor="@color/black"
+                                                            android:text="Sl.No"/>
+
+                                                        <LinearLayout
+                                                            android:layout_width="1dp"
+                                                            android:layout_height="40dp"
+                                                            android:background="@color/grey"/>
+                                                        <TextView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:paddingStart="5dp"
+                                                            android:gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:layout_weight="1"
+                                                            android:textSize="13dp"
+                                                            android:textColor="@color/black"
+                                                            android:text="Stages"/>
+
+                                                        <LinearLayout
+                                                            android:layout_width="1dp"
+                                                            android:layout_height="40dp"
+                                                            android:background="@color/grey"/>
+                                                        <TextView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_weight="1"
+                                                            android:gravity="center"
+                                                            android:paddingStart="5dp"
+                                                            android:text="TotalCount"
+                                                            android:textSize="13dp"
+                                                            android:textColor="@color/blue"
+                                                            android:fontFamily="@font/myfont"/>
+
+                                                        <LinearLayout
+                                                            android:layout_width="1dp"
+                                                            android:layout_height="40dp"
+                                                            android:background="@color/grey"/>
+                                                        <TextView
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_weight="1.2"
+                                                            android:gravity="center"
+                                                            android:paddingStart="5dp"
+                                                            android:text="Total %"
+                                                            android:textSize="13dp"
+                                                            android:textColor="@color/red"
+                                                            android:fontFamily="@font/myfont"/>
+                                                        <LinearLayout
+                                                            android:layout_width="1dp"
+                                                            android:layout_height="40dp"
+                                                            android:background="@color/grey"/>
+
+
+                                                    </LinearLayout>
 
                                                     <com.perfect.prodsuit.Helper.FullLenghRecyclertview
                                                         android:id="@+id/recyTotalStagewiseDue"
@@ -924,56 +1334,87 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:orientation="vertical">
-
-
-
                                                 <LinearLayout
+
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:orientation="vertical">
+                                                    android:orientation="vertical"
+                                                    android:background="#E6F1F2">
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
-                                                        android:layout_gravity="center"
-                                                        android:orientation="vertical"
-                                                        android:paddingLeft="10dp"
-                                                        android:paddingTop="8dp">
-                                                        <!--                                android:background="@color/purple_700"-->
+                                                        android:orientation="horizontal">
+
                                                         <TextView
-                                                            android:layout_width="wrap_content"
+                                                            android:id="@+id/tvv_head_UpDueDates"
+                                                            android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
-                                                            android:layout_weight=".8"
-                                                            android:fontFamily="@font/myfont"
-                                                            android:gravity="center"
+                                                            android:layout_weight="1"
                                                             android:text=""
-                                                            android:textAllCaps="true"
-                                                            android:textColor="@color/black"
-                                                            android:textSize="13dp"
-                                                            android:textStyle="bold" />
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:gravity="start"
+                                                            android:paddingLeft="5dp"
+                                                            android:paddingTop="5dp"
+                                                            android:layout_gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textAllCaps="false"
+                                                            android:textSize="16dp"
+                                                            android:visibility="visible"/>
 
                                                         <TextView
-                                                            android:visibility="gone"
-                                                            android:layout_width="wrap_content"
+
+                                                            android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
-                                                            android:layout_marginTop="-8dp"
-                                                            android:layout_weight=".8"
+                                                            android:paddingTop="2dp"
+                                                            android:paddingBottom="2dp"
+                                                            android:layout_gravity="center"
+                                                            android:layout_margin="5dp"
+                                                            android:layout_weight="2.8"
+                                                            android:background="@drawable/btn_bgcolour"
+                                                            android:drawableRight="@drawable/dash_more"
                                                             android:fontFamily="@font/myfont"
                                                             android:gravity="center"
-                                                            android:text="IN PERCENTAGE"
-                                                            android:textAllCaps="true"
-                                                            android:textColor="@color/greydark"
-                                                            android:textSize="8dp"
-                                                            android:textStyle="bold" />
-
+                                                            android:paddingEnd="10dp"
+                                                            android:text="More"
+                                                            android:textAllCaps="false"
+                                                            android:textColor="@color/white"
+                                                            android:textSize="15sp"
+                                                            android:textStyle="bold"
+                                                            android:visibility="gone" />
 
 
                                                     </LinearLayout>
 
-                                                    <LinearLayout
+
+
+                                                    <TextView
+                                                        android:id="@+id/tvv_remark_UpDueDates"
                                                         android:layout_width="match_parent"
-                                                        android:layout_height="1dp"
-                                                        android:background="@color/grey"/>
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_gravity="center_vertical"
+                                                        android:paddingLeft="5dp"
+                                                        android:layout_marginTop="-7dp"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:gravity="center_vertical"
+                                                        android:text=""
+                                                        android:textAllCaps="false"
+                                                        android:textColor="@color/colorPrimary"
+                                                        android:textSize="13dp"
+                                                        android:textStyle="normal"
+                                                        android:tint="@color/black" />
+
+
+                                                </LinearLayout>
+
+
+                                                <LinearLayout
+                                                    android:layout_marginTop="10dp"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="vertical">
+
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
@@ -1065,6 +1506,7 @@
                                                         <androidx.recyclerview.widget.RecyclerView
                                                             android:id="@+id/recyclr_Upcoming_Stage_Due_Dates"
                                                             android:layout_width="match_parent"
+                                                            android:background="@drawable/svg_dashrect"
                                                             android:layout_height="wrap_content"/>
                                                     </LinearLayout>
                                                     <LinearLayout
@@ -1153,11 +1595,11 @@
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content">
                                                         <TextView
-
+                                                            android:id="@+id/tv_nameProjectTle"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="50dp"
                                                             android:layout_weight="1"
-                                                            android:text="Project Status"
+                                                            android:text=""
                                                             android:textColor="@color/white"
                                                             android:gravity="left|center"
                                                             android:paddingLeft="15dp"
@@ -1175,10 +1617,10 @@
                                                         android:layout_height="wrap_content"
                                                         android:background="#ffffff"
                                                         android:layout_weight="1"
-
+                                                        android:orientation="vertical"
                                                         android:gravity="center"
                                                         android:layout_gravity="center"
-                                                        tools:ignore="Orientation">
+                                                     >
 
                                                         <androidx.recyclerview.widget.RecyclerView
                                                             android:id="@+id/recycler_project_tile"
@@ -1190,6 +1632,21 @@
                                                             android:layout_margin="0dp"
                                                             android:gravity="center"
                                                             android:visibility="visible" />
+                                                        <TextView
+                                                            android:id="@+id/tv_remarkProjectTle"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_weight="1"
+                                                            android:text=""
+                                                            android:textColor="@color/grey_dark"
+                                                            android:gravity="left"
+                                                            android:paddingLeft="15dp"
+                                                            android:layout_gravity="center"
+                                                            android:fontFamily="@font/myfont"
+
+                                                            android:textStyle="bold"
+                                                            android:textSize="13dp"
+                                                            android:visibility="visible"/>
 
 
                                                     </LinearLayout>
@@ -1234,11 +1691,11 @@
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content">
                                                         <TextView
-
+                                                            android:id="@+id/tv_nameBillingStatus"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="50dp"
                                                             android:layout_weight="1"
-                                                            android:text="Billing Status"
+                                                            android:text=""
                                                             android:textColor="@color/white"
                                                             android:gravity="left|center"
                                                             android:paddingLeft="15dp"
@@ -1256,10 +1713,10 @@
                                                         android:layout_height="wrap_content"
                                                         android:background="#ffffff"
                                                         android:layout_weight="1"
-
+                                                        android:orientation="vertical"
                                                         android:gravity="center"
                                                         android:layout_gravity="center"
-                                                        tools:ignore="Orientation">
+                                                        >
 
                                                         <androidx.recyclerview.widget.RecyclerView
                                                             android:id="@+id/recycler_billing_status"
@@ -1271,6 +1728,21 @@
                                                             android:layout_margin="0dp"
                                                             android:gravity="center"
                                                             android:visibility="visible" />
+                                                        <TextView
+                                                            android:id="@+id/tv_remarkBilling"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_weight="1"
+                                                            android:text=""
+                                                            android:textColor="@color/grey_dark"
+                                                            android:gravity="left"
+                                                            android:paddingLeft="15dp"
+                                                            android:layout_gravity="center"
+                                                            android:fontFamily="@font/myfont"
+
+                                                            android:textStyle="bold"
+                                                            android:textSize="13dp"
+                                                            android:visibility="visible"/>
 
 
                                                     </LinearLayout>

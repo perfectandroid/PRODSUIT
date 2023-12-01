@@ -22,7 +22,7 @@ class ProjectDelayedAdapter (internal var context: Context, internal var jsonArr
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_costofmaterialusage, parent, false
+            R.layout.adapter_project_delayed, parent, false
         )
         vh = MainViewHolder(v)
         return vh

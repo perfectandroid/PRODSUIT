@@ -1,9 +1,11 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -41,6 +43,53 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
+
+    private var tv_nameProjectTle: TextView? = null
+    private var tv_remarkProjectTle: TextView? = null
+
+    private var tv_nameBillingStatus: TextView? = null
+    private var tv_remarkBilling: TextView? = null
+
+    var Amount_top    = ""
+    private var tvv_head_projectDelayed: TextView? = null
+    private var tvv_lemo_projectDelayed: TextView? = null
+    private var tv_projectDelayedRemark: TextView? = null
+    var ll_projectDelayedRecyc                     : LinearLayout?   = null
+    var projectDelayedMode    = 0
+
+
+    private var tvv_head_expense: TextView? = null
+    private var tvv_more_expense: TextView? = null
+    private var tvv_remark_expense: TextView? = null
+    var ll_expenseRecy                     : LinearLayout?   = null
+    var ExpenseMode    = 0
+
+    private var tvv_head_costMaterial: TextView? = null
+    private var tvv_more_costMaterial: TextView? = null
+    private var tvv_remark_costMaterial: TextView? = null
+    var ll_costMaterialRecy                     : LinearLayout?   = null
+    var costMaterialMode    = 0
+
+    private var tvv_remark_UpDueDates: TextView? = null
+    private var tvv_head_UpDueDates: TextView? = null
+
+
+    private var tvv_head_TotalStageWiseDue: TextView? = null
+    private var tvv_more_TotalStageWiseDue: TextView? = null
+    private var tv_remark_TotalStageWiseDue: TextView? = null
+    var ll_TotalStageWiseDue_Recycl                     : LinearLayout?   = null
+    var totalStageWiseMode    = 0
+
+    private var tvv_head_topten: TextView? = null
+    private var tvv_more_topten: TextView? = null
+    private var tv_topten_Remark: TextView? = null
+    var ll_topten_Recycler                     : LinearLayout?   = null
+    var topTenMode    = 0
+
+    var drawableMore : Drawable? = null
+    var drawableLess : Drawable? = null
+
+
     val TAG: String = "ProjectGraphActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
@@ -132,10 +181,10 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
     var recyTotalStagewiseDue                     : RecyclerView?   = null
     private lateinit var TotalStagewiseDueChart   : BarChart
 
-    private var tvv_head_projectDelayed: TextView? = null
-    private var tvv_lemo_projectDelayed: TextView? = null
 
-    var ll_projectDelayedRecyc                     : LinearLayout?   = null
+
+
+
 
     var DashMode    :  String? = ""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -169,6 +218,10 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
     }
 
     private fun setRegViews() {
+
+        drawableMore = resources.getDrawable(R.drawable.dash_more, null)
+        drawableLess = resources.getDrawable(R.drawable.dash_less, null)
+
         val imback = findViewById<ImageView>(R.id.imback_project)
         imback!!.setOnClickListener(this)
         ll_Graph = findViewById<LinearLayout>(R.id.ll_Graph)
@@ -184,7 +237,9 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         ll_projectDelayed          = findViewById<LinearLayout>(R.id.ll_projectDelayed)
         projectDelayedChart        = findViewById(R.id.projectDelayedChart)
         ExpenseAnalysisChart       = findViewById(R.id.ExpenseAnalysisChart)
+        top10ProjectChart       = findViewById(R.id.top10ProjectChart)
         recycExpenseAnalysis       = findViewById(R.id.recycExpenseAnalysis)
+        recyctop10Project       = findViewById(R.id.recyctop10Project)
         recyclr_Upcoming_Stage_Due_Dates       = findViewById(R.id.recyclr_Upcoming_Stage_Due_Dates)
         recycCostMaterialUsageAllocate         = findViewById(R.id.recycCostMaterialUsageAllocate)
         CostMaterialUsageAllocateChart         = findViewById(R.id.CostMaterialUsageAllocateChart)
@@ -197,14 +252,61 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         ll_CostMaterialUsageAllocate                  = findViewById(R.id.ll_CostMaterialUsageAllocate)
         ll_TotalStagewiseDue                  = findViewById(R.id.ll_TotalStagewiseDue)
         ll_Upcoming_Stage_Due_Dates                  = findViewById(R.id.ll_Upcoming_Stage_Due_Dates)
+
+
+
+        recycprojectDelayed                  = findViewById(R.id.recycprojectDelayed)
+
+
+
+
         tvv_head_projectDelayed                  = findViewById(R.id.tvv_head_projectDelayed)
         tvv_lemo_projectDelayed                  = findViewById(R.id.tvv_lemo_projectDelayed)
+        tv_projectDelayedRemark                  = findViewById(R.id.tv_projectDelayedRemark)
         ll_projectDelayedRecyc                  = findViewById(R.id.ll_projectDelayedRecyc)
-        recycprojectDelayed                  = findViewById(R.id.recycprojectDelayed)
+
+
+        tvv_head_expense                  = findViewById(R.id.tvv_head_expense)
+        tvv_more_expense                  = findViewById(R.id.tvv_more_expense)
+        tvv_remark_expense                  = findViewById(R.id.tvv_remark_expense)
+        ll_expenseRecy                  = findViewById(R.id.ll_expenseRecy)
+
+
+        tvv_head_costMaterial                  = findViewById(R.id.tvv_head_costMaterial)
+        tvv_more_costMaterial                  = findViewById(R.id.tvv_more_costMaterial)
+        tvv_remark_costMaterial                  = findViewById(R.id.tvv_remark_costMaterial)
+        ll_costMaterialRecy                  = findViewById(R.id.ll_costMaterialRecy)
+
+        tvv_remark_UpDueDates                  = findViewById(R.id.tvv_remark_UpDueDates)
+        tvv_head_UpDueDates                  = findViewById(R.id.tvv_head_UpDueDates)
+
+        tvv_head_TotalStageWiseDue                  = findViewById(R.id.tvv_head_TotalStageWiseDue)
+        tvv_more_TotalStageWiseDue                  = findViewById(R.id.tvv_more_TotalStageWiseDue)
+        tv_remark_TotalStageWiseDue                  = findViewById(R.id.tv_remark_TotalStageWiseDue)
+        ll_TotalStageWiseDue_Recycl                  = findViewById(R.id.ll_TotalStageWiseDue_Recycl)
+
+
+        tv_nameProjectTle                  = findViewById(R.id.tv_nameProjectTle)
+        tv_remarkProjectTle                  = findViewById(R.id.tv_remarkProjectTle)
+
+        tv_nameBillingStatus                  = findViewById(R.id.tv_nameBillingStatus)
+        tv_remarkBilling                  = findViewById(R.id.tv_remarkBilling)
+
+
+        tvv_head_topten                  = findViewById(R.id.tvv_head_topten)
+        tvv_more_topten                  = findViewById(R.id.tvv_more_topten)
+        tv_topten_Remark                  = findViewById(R.id.tv_topten_Remark)
+        ll_topten_Recycler                  = findViewById(R.id.ll_topten_Recycler)
 
         tvv_dash!!.setOnClickListener(this)
         tvv_tile!!.setOnClickListener(this)
         actv_mode!!.setOnClickListener(this)
+        tvv_lemo_projectDelayed!!.setOnClickListener(this)
+        tvv_more_expense!!.setOnClickListener(this)
+        tvv_more_costMaterial!!.setOnClickListener(this)
+        tvv_more_TotalStageWiseDue!!.setOnClickListener(this)
+        tvv_more_topten!!.setOnClickListener(this)
+
     }
 
 
@@ -222,12 +324,12 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                 ChartMode = 0
                 chartModeCount = 0
                getChartModeData()
-//                getTop10Project()
+           //     getTop10Project()
 //                getProjectDelayed()
-//                getExpenseAnalysis()
-//                getUpcomingStageDueDates()
-//                getCostMaterialUsageAllocatedUsed()
-          //      getTotalStagewiseDue()
+            //    getExpenseAnalysis()
+           //     getUpcomingStageDueDates()
+         //      getCostMaterialUsageAllocatedUsed()
+           //     getTotalStagewiseDue()
             }
 
 
@@ -314,29 +416,39 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                             ll_ExpenseAnalysis!!.visibility = View.GONE
                                             ll_TotalStagewiseDue!!.visibility = View.GONE
                                             ll_Upcoming_Stage_Due_Dates!!.visibility = View.GONE
+                                            ll_CostMaterialUsageAllocate!!.visibility = View.GONE
+
+                                            ll_projectDelayedRecyc!!.visibility = View.GONE
+                                            ll_expenseRecy!!.visibility = View.GONE
+                                            ll_costMaterialRecy!!.visibility = View.GONE
+                                            ll_TotalStageWiseDue_Recycl!!.visibility = View.GONE
+                                            ll_topten_Recycler!!.visibility = View.GONE
 
                                             if (ID_ChartMode.equals("17")){
 
-//                                                tvv_head_StagWise!!.setText(jsonObject.getString("DashBoardName"))
+//
+                                                tvv_head_projectDelayed!!.setText(jsonObject.getString("DashBoardName"))
                                                 projectdelayCount   = 0
                                                 getProjectDelayed()
                                             }
                                             else if (ID_ChartMode.equals("18")){
                                                 // ll_ComplaintWise!!.visibility = View.VISIBLE
 //                                                tvv_head_Complaint!!.setText(jsonObject.getString("DashBoardName"))
+                                                tvv_head_expense!!.setText(jsonObject.getString("DashBoardName"))
                                                 ExpenseAnalysisCount = 0
                                                 getExpenseAnalysis()
                                             }
                                             else if (ID_ChartMode.equals("19")){
                                                 // ll_ServiceWise!!.visibility = View.VISIBLE
 //                                                tvv_head_ServiceWise!!.setText(jsonObject.getString("DashBoardName"))
+                                                tvv_head_costMaterial!!.setText(jsonObject.getString("DashBoardName"))
                                                 costmaterialusageAllocatedCount = 0
                                                 getCostMaterialUsageAllocatedUsed()
                                             }
                                             else if (ID_ChartMode.equals("20")){
                                                 //  ll_ServiceCountOfWPA!!.visibility = View.VISIBLE
 //                                                tvv_head_ServiceCountOfWPA!!.setText(jsonObject.getString("DashBoardName"))
-
+                                                tvv_head_UpDueDates!!.setText(jsonObject.getString("DashBoardName"))
                                                 UpcomingStageDueDatesCount = 0
                                                 getUpcomingStageDueDates()
 
@@ -345,12 +457,14 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                             else if (ID_ChartMode.equals("21")){
                                                 //  ll_ServiceTop10Product!!.visibility = View.VISIBLE
 //                                                tvv_head_ServiceTop10Product!!.setText(jsonObject.getString("DashBoardName"))
+                                                tvv_head_TotalStageWiseDue!!.setText(jsonObject.getString("DashBoardName"))
                                                 totalstagewiseCount = 0
                                                 getTotalStagewiseDue()
                                             }
                                             else if (ID_ChartMode.equals("22")){
                                                 // ll_ServiceSlaStatus!!.visibility = View.VISIBLE
 //                                                tvv_head_ServiceSlaStatus!!.setText(jsonObject.getString("DashBoardName"))
+                                                tvv_head_topten!!.setText(jsonObject.getString("DashBoardName"))
                                                 Top10ProjectCount = 0
                                                 getTop10Project()
                                             }
@@ -427,42 +541,53 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                 ll_Upcoming_Stage_Due_Dates!!.visibility = View.GONE
 
 
+
+                ll_CostMaterialUsageAllocate!!.visibility = View.GONE
+
+                ll_projectDelayedRecyc!!.visibility = View.GONE
+                ll_expenseRecy!!.visibility = View.GONE
+                ll_costMaterialRecy!!.visibility = View.GONE
+                ll_TotalStageWiseDue_Recycl!!.visibility = View.GONE
+                ll_topten_Recycler!!.visibility = View.GONE
+
                 if (ID_ChartMode.equals("17")){
 
-//                                                tvv_head_StagWise!!.setText(jsonObject.getString("DashBoardName"))
+
+                    tvv_head_projectDelayed!!.setText(modeType[position])
                     projectdelayCount   = 0
                     getProjectDelayed()
                 }
                 else if (ID_ChartMode.equals("18")){
-                    // ll_ComplaintWise!!.visibility = View.VISIBLE
-//                                                tvv_head_Complaint!!.setText(jsonObject.getString("DashBoardName"))
+
+                    tvv_head_expense!!.setText(modeType[position])
                     ExpenseAnalysisCount = 0
                     getExpenseAnalysis()
                 }
                 else if (ID_ChartMode.equals("19")){
-                    // ll_ServiceWise!!.visibility = View.VISIBLE
-//                                                tvv_head_ServiceWise!!.setText(jsonObject.getString("DashBoardName"))
+
+                    tvv_head_costMaterial!!.setText(modeType[position])
                     costmaterialusageAllocatedCount = 0
                     getCostMaterialUsageAllocatedUsed()
                 }
                 else if (ID_ChartMode.equals("20")){
-                    //  ll_ServiceCountOfWPA!!.visibility = View.VISIBLE
-//                                                tvv_head_ServiceCountOfWPA!!.setText(jsonObject.getString("DashBoardName"))
 
+                    tvv_head_UpDueDates!!.setText(modeType[position])
                     UpcomingStageDueDatesCount = 0
                     getUpcomingStageDueDates()
 
                 }
 
                 else if (ID_ChartMode.equals("21")){
-                    //  ll_ServiceTop10Product!!.visibility = View.VISIBLE
-//                                                tvv_head_ServiceTop10Product!!.setText(jsonObject.getString("DashBoardName"))
+
+                    tvv_head_TotalStageWiseDue!!.setText(modeType[position])
                     totalstagewiseCount = 0
                     getTotalStagewiseDue()
                 }
                 else if (ID_ChartMode.equals("22")){
                     // ll_ServiceSlaStatus!!.visibility = View.VISIBLE
 //                                                tvv_head_ServiceSlaStatus!!.setText(jsonObject.getString("DashBoardName"))
+
+                    tvv_head_topten!!.setText(modeType[position])
                     Top10ProjectCount = 0
                     getTop10Project()
                 }
@@ -494,17 +619,24 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                     Top10ProjectCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   project bill   " + msg)
-                                    if (jObject.getString("StatusCode") == "0") {
+                                    if (jObject.getString("StatusCode") == "0")
+                                    {
 
                                         val jobjt = jObject.getJSONObject("Top10Projects")
                                         var remark =   jobjt.getString("Reamrk")
                                         Top10ProjectArrayList=jobjt.getJSONArray("Top10ProjectsList")
-                                        Log.e(TAG, "Top10ProjectArrayList 43434  =  "+Top10ProjectArrayList)
+
+                                        tv_topten_Remark!!.setText(jobjt.getString("Reamrk"))
+                                    //    Log.e(TAG, "Top10ProjectArrayList 43434  =  "+Top10ProjectArrayList)
 
                                         if (Top10ProjectArrayList.length() > 0) {
 
-                                            setTop10ProjectBarchart()  //...........barchart here
+                                            ll_top10Project!!.visibility = View.VISIBLE
 
+                                            hideTopTenMore()
+
+                                            setTop10ProjectBarchart()  //...........barchart here
+                                            Log.e(TAG, "Top10ProjectArrayList 43434  =  "+Top10ProjectArrayList)
                                             val lLayout = GridLayoutManager(this@ProjectGraphActivity, 2)
                                             recyctop10Project!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                             val adapter = Top10ProjectAdapter(this@ProjectGraphActivity, Top10ProjectArrayList)
@@ -533,7 +665,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 //                                Toast.LENGTH_LONG
 //                            ).show()
                             }
-                        } catch (e: Exception) {
+                        }
+                        catch (e: Exception) {
                             Toast.makeText(
                                 applicationContext,
                                 "" + e.toString(),
@@ -551,10 +684,11 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
             }
         }
     }
+    @SuppressLint("SuspiciousIndentation")
     private fun setTop10ProjectBarchart() {
         top10projectBar.clear()
         top10projectBar = getTop10Projecte()
-        //   Log.e(TAG, "saleGraphListBar==   "+saleGraphListBar)
+         //  Log.e(TAG, "top10projectBar==   "+top10projectBar)
 
 
         top10ProjectChart.axisLeft.setDrawGridLines(false)
@@ -605,7 +739,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         val entries: ArrayList<BarEntry> = ArrayList()
         for (i in top10projectBar.indices) {
             val score = top10projectBar[i]
-            entries.add(BarEntry(i.toFloat(), score.Project.toFloat()))
+            Log.e(TAG,"5656565 ll="+score)
+            entries.add(BarEntry(i.toFloat(), score.Amount.toFloat()))
         }
 
         val barDataSet = BarDataSet(entries, "Project")
@@ -654,9 +789,16 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
                                         ExpenseAnalysisArrayList=jobjt.getJSONArray("ProjectExpenseAnalysisList")
 
+                                        tvv_remark_expense!!.setText(jobjt.getString("Reamrk"))
+
 
                                         if (ExpenseAnalysisArrayList.length() > 0) {
+
+
+                                            ll_ExpenseAnalysis!!.visibility = View.VISIBLE
                                             Log.e(TAG, "projectDelayedArrayList 43434  =  "+ExpenseAnalysisArrayList)
+
+                                            hideExpenseMore()
                                             setExpenseAnalysisBarchart()  //...........barchart here
 
                                             val lLayout = GridLayoutManager(this@ProjectGraphActivity, 1)
@@ -848,12 +990,16 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                     UpcomingStageDueDatesCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   999101   " + msg)
-                                    if (jObject.getString("StatusCode") == "-2") {
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        ll_Upcoming_Stage_Due_Dates!!.visibility = View.VISIBLE
 
                                         val jobjt = jObject.getJSONObject("UpcomingStageDueDates")
                                         upcomingdatesArrayList = jobjt.getJSONArray("PUpcomingStageDueDatesList")
 //                                        Log.e(TAG, "InventoryProductReorderLeveArray   "+InventoryProductReorderLeveArray)
 //                                        upcomingdatesArrayList.put(jobjt)
+
+                                        tvv_remark_UpDueDates!!.setText(jobjt.getString("Reamrk"))
 
                                         Log.e(TAG, "upcomingdatesArrayList   "+upcomingdatesArrayList)
                                         val lLayout = GridLayoutManager(this@ProjectGraphActivity, 1)
@@ -931,9 +1077,10 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
                                         CostMaterialUsageArrayList=jobjt.getJSONArray("PCostofMaterialUsageAllocatedandUsedList")
 
-
+                                        tvv_remark_costMaterial!!.setText(jobjt.getString("Reamrk"))
                                         if (CostMaterialUsageArrayList.length() > 0) {
                                             Log.e(TAG, "CostMaterialUsage 43434  =  "+CostMaterialUsageArrayList)
+                                            ll_CostMaterialUsageAllocate!!.visibility = View.VISIBLE
                                             setCostMaterialUsageAllocatedUsedBarchart()  //...........barchart here
 
                                             val lLayout = GridLayoutManager(this@ProjectGraphActivity, 1)
@@ -1134,9 +1281,12 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
                                         totalstagewiseDueArrayList=jobjt.getJSONArray("TotalStagewiseDueList")
 
-
+                                        tv_remark_TotalStageWiseDue!!.setText(jobjt.getString("Reamrk"))
                                         if (totalstagewiseDueArrayList.length() > 0) {
+                                            ll_TotalStagewiseDue!!.visibility = View.VISIBLE
                                             Log.e(TAG, "CostMaterialUsage 43434  =  "+totalstagewiseDueArrayList)
+
+                                            hideTotalStageWiseDueMore()
                                             setTotalStagewiseDueBarchart()  //...........barchart here
 
                                             val lLayout = GridLayoutManager(this@ProjectGraphActivity, 1)
@@ -1336,14 +1486,16 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                         var remark =   jobjt.getString("Reamrk")
 
                                         projectDelayArrayList=jobjt.getJSONArray("ProjectDelayedStatusList")
+                                        tv_projectDelayedRemark!!.setText(jobjt.getString("Reamrk"))
 
 
                                         if (projectDelayArrayList.length() > 0) {
+                                            ll_projectDelayed!!.visibility = View.VISIBLE
                                             Log.e(TAG, "projectDelayedArrayList 43434  =  "+projectDelayArrayList)
-
+                                            hideProjectDelayMore()
                                             setProjectDelayBarchart()  //...........barchart here
 
-                                            val lLayout = GridLayoutManager(this@ProjectGraphActivity, 2)
+                                            val lLayout = GridLayoutManager(this@ProjectGraphActivity, 1)
                                             recycprojectDelayed!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                             val adapter = ProjectDelayedAdapter(this@ProjectGraphActivity, projectDelayArrayList)
                                             recycprojectDelayed!!.adapter = adapter
@@ -1406,6 +1558,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         xAxis.setDrawAxisLine(false)
 
         //remove right y-axis
+
         projectDelayedChart.axisRight.isEnabled = false
         //remove legend
         projectDelayedChart.legend.isEnabled = false
@@ -1419,7 +1572,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.valueFormatter = MyAxisFormatterBar66()
-        xAxis.setDrawLabels(true)
+        xAxis.setDrawLabels(false)
         xAxis.granularity = 1f
         xAxis.labelRotationAngle = +70f
         xAxis.textSize = 15f
@@ -1523,15 +1676,29 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
 
     private fun getTop10Projecte(): ArrayList<Top10ProjectBar> {
-        for (i in 0 until Top10ProjectArrayList.length())
-        {
-            var jsonObject = Top10ProjectArrayList.getJSONObject(i)
 
-            //  saleGraphListBar.add(MonthlySaleBar(jsonObject.getString("Month").toString(),jsonObject.getString("Amount").toInt()))
-            top10projectBar.add(Top10ProjectBar("",jsonObject.getString("Amount").toFloat().toInt()))
-        }
+
+            for (i in 0 until Top10ProjectArrayList.length())
+            {
+                var jsonObject = Top10ProjectArrayList.getJSONObject(i)
+                Amount_top=jsonObject.getString("Amount").toString()
+                Log.e(TAG,"343443 check="+jsonObject.getString("Amount").toString())
+                //  saleGraphListBar.add(MonthlySaleBar(jsonObject.getString("Month").toString(),jsonObject.getString("Amount").toInt()))
+                try {
+                    top10projectBar.add(Top10ProjectBar("",jsonObject.getString("Amount").toDouble()))
+                }
+                catch (e:Exception)
+                {
+                    top10projectBar.add(Top10ProjectBar("",0.00))
+                }
+
+            }
+
+
 
         return top10projectBar
+
+
 
     }
 
@@ -1578,6 +1745,11 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
                                         val jobjt = jObject.getJSONObject("ProjectTileDashBoardDetails")
                                         var remark =   jobjt.getString("Reamrk")
+
+
+                                        tv_remarkBilling!!.setText(jobjt.getString("Reamrk"))
+                                        tv_nameBillingStatus!!.setText(jobjt.getString("ChartName"))
+
                                         projectBillArrayList=jobjt.getJSONArray("ProjectTileDashBoardDetailsList")
                                         Log.e(TAG, "projectBillArrayList 43434  =  "+projectBillArrayList)
 
@@ -1662,6 +1834,9 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
                                         projectStatusArrayList = jobjt.getJSONArray("ProjectTileDashBoardDetailsList")
                                         Log.e(TAG, "projectStatusArrayList 4343  =  " + projectStatusArrayList)
+                                        tv_remarkProjectTle!!.setText(jobjt.getString("Reamrk"))
+                                        tv_nameProjectTle!!.setText(jobjt.getString("ChartName"))
+
 
 //                                        recycler_project_tile!!.setLayoutManager(
 //                                        LinearLayoutManager(this, RecyclerView.HORIZONTAL, false))
@@ -1743,6 +1918,115 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                 getChartModeData()
             }
 
+            R.id.tvv_lemo_projectDelayed->{
+                if (projectDelayedMode == 0){
+                    projectDelayedMode = 1
+                }else{
+                    projectDelayedMode = 0
+                }
+
+                hideProjectDelayMore()
+            }
+
+            R.id.tvv_more_expense->{
+                if (ExpenseMode == 0){
+                    ExpenseMode = 1
+                }else{
+                    ExpenseMode = 0
+                }
+
+                hideExpenseMore()
+            }
+            R.id.tvv_more_costMaterial->{
+                if (costMaterialMode == 0){
+                    costMaterialMode = 1
+                }else{
+                    costMaterialMode = 0
+                }
+
+                hideCostMaterialMore()
+            }
+
+            R.id.tvv_more_TotalStageWiseDue->{
+                if (totalStageWiseMode == 0){
+                    totalStageWiseMode = 1
+                }else{
+                    totalStageWiseMode = 0
+                }
+
+                hideTotalStageWiseDueMore()
+            }
+            R.id.tvv_more_topten->{
+                if (topTenMode == 0){
+                    topTenMode = 1
+                }else{
+                    topTenMode = 0
+                }
+
+                hideTopTenMore()
+            }
+
+        }
+    }
+
+    private fun hideTopTenMore() {
+        if (topTenMode == 0){
+            tvv_more_topten!!.setText("More")
+            tvv_more_topten!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_topten_Recycler!!.visibility = View.GONE
+        }else{
+            tvv_more_topten!!.setText("Less")
+            tvv_more_topten!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_topten_Recycler!!.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideTotalStageWiseDueMore() {
+        if (totalStageWiseMode == 0){
+            tvv_more_TotalStageWiseDue!!.setText("More")
+            tvv_more_TotalStageWiseDue!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_TotalStageWiseDue_Recycl!!.visibility = View.GONE
+        }else{
+            tvv_more_TotalStageWiseDue!!.setText("Less")
+            tvv_more_TotalStageWiseDue!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_TotalStageWiseDue_Recycl!!.visibility = View.VISIBLE
+        }
+
+    }
+
+    private fun hideCostMaterialMore() {
+        if (costMaterialMode == 0){
+            tvv_more_costMaterial!!.setText("More")
+            tvv_more_costMaterial!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_costMaterialRecy!!.visibility = View.GONE
+        }else{
+            tvv_more_costMaterial!!.setText("Less")
+            tvv_more_costMaterial!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_costMaterialRecy!!.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideExpenseMore() {
+        if (ExpenseMode == 0){
+            tvv_more_expense!!.setText("More")
+            tvv_more_expense!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_expenseRecy!!.visibility = View.GONE
+        }else{
+            tvv_more_expense!!.setText("Less")
+            tvv_more_expense!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_expenseRecy!!.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideProjectDelayMore() {
+        if (projectDelayedMode == 0){
+            tvv_lemo_projectDelayed!!.setText("More")
+            tvv_lemo_projectDelayed!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_projectDelayedRecyc!!.visibility = View.GONE
+        }else{
+            tvv_lemo_projectDelayed!!.setText("Less")
+            tvv_lemo_projectDelayed!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_projectDelayedRecyc!!.visibility = View.VISIBLE
         }
     }
 
