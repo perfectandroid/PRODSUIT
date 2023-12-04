@@ -13,6 +13,7 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.DecimalFormat
 
 
 class ProjectBillStatusAdapter(
@@ -20,13 +21,15 @@ class ProjectBillStatusAdapter(
     internal var jsonArray: JSONArray,
     internal var remark: String
 
+
+
     ):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG : String = "ProjectTileStatusAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
-
+    var tvv_countValue=0.00
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
@@ -45,10 +48,22 @@ class ProjectBillStatusAdapter(
                 val pos = position+1
 
 
+                tvv_countValue=jsonObject!!.getString("Value").toDouble()
+                //  tvv_countValue=1649785634.18888
+                val forM= String.format("%2f",tvv_countValue)
+                val deciForm= DecimalFormat("##0.00")
+                val forMatNo=deciForm.format(tvv_countValue)
 
+                Log.e(TAG, "353353 forMatNo==   "+forMatNo)
+
+
+
+                //   tvv_count!!.text=   Config.changeTwoDecimel(jobjt.getString("StockValue"))
+            //    tvv_count!!.text=   forMatNo.toString()
 
                 holder.txtv_label.text        = jsonObject!!.getString("Label")
-                holder.tv_newCount.text        = jsonObject!!.getString("Value").toDouble().toInt().toString()
+          //     holder.tv_newCount.text        = jsonObject!!.getString("Value").toDouble().toInt().toString()
+                holder.tv_newCount.text        = forMatNo.toString()
              //   var mode = jsonObject!!.getString("ModuleMode")
 
                 if (jsonObject!!.getString("Label").equals("Bill Amount")){
