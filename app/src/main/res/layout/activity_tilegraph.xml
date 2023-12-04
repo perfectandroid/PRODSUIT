@@ -211,11 +211,13 @@
                                         android:orientation="vertical"
                                         android:fillViewport="true">
                                         <LinearLayout
+
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:background="@color/tileclick"
                                             android:padding="10dp"
-                                            android:orientation="vertical">
+                                            android:orientation="vertical"
+                                           >
                                             <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
@@ -235,7 +237,7 @@
                                                     android:textStyle="bold"
                                                     android:textAllCaps="false"
                                                     android:textSize="16dp"
-                                                    android:visibility="visible" />
+                                                    android:visibility="gone" />
                                                 <TextView
                                                     android:id="@+id/tvv_lemo_StagWise"
                                                     android:layout_width="match_parent"
@@ -266,6 +268,7 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:text=""
+                                                    android:visibility="gone"
                                                     android:textColor="@color/colorPrimary"
                                                     android:gravity="left"
                                                     android:layout_gravity="center"

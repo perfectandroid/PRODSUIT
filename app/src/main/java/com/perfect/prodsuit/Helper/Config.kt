@@ -994,13 +994,13 @@ object Config {
             obj.put("count","0")
             array.put(obj)
 
-            obj = JSONObject()
+         /*   obj = JSONObject()
             obj.put("grid_id", "3")
             obj.put("grid_name", "Authorization")
             // obj.put("image",context.resources.getDrawable(R.drawable.agntremrk) )
             obj.put("image","athorization_home")
             obj.put("count","0")
-            array.put(obj)
+            array.put(obj)*/
 
 //            obj = JSONObject()
 //            obj.put("grid_id", "3")

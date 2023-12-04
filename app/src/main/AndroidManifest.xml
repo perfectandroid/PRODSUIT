@@ -836,10 +836,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+<!--commonapp-->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.perfect.prodsuite_employee.fileprovider"
+            android:authorities="com.perfect.prodsuite.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

@@ -2871,7 +2871,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //                        strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
                 }
 
-            }else if (ActionMode.equals("2")){
+            }
+/*
+            else if (ActionMode.equals("2")){
                 strCallDuration = "00:00:00"
                 strLongitude =tie_Longitude!!.text.toString();
                 strLatitude=tie_Latitude!!.text.toString();
@@ -2924,6 +2926,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //                        strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
                 }
             }
+*/
             else{
 //                saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
 //                    strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,

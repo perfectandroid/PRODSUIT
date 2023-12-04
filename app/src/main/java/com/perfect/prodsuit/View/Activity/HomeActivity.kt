@@ -2445,7 +2445,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
         }
 
-        if (data.equals("homeDashClicks")) {
+        /*if (data.equals("homeDashClicks")) {
             Log.e(TAG,"2385    "+position)
             val jsonObject = dashCountArrayList.getJSONObject(position)
             // Task is Unique
@@ -2515,7 +2515,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
             }
 
-        }
+        }*/
     }
 
     override fun onServiceCallback(data: String) {

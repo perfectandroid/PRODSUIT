@@ -934,6 +934,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
             txtPriority!!.setText(jsonObject.getString("Priority"))
             txtLeadFrom!!.setText(jsonObject.getString("LeadFrom"))
             txtLeadSource!!.setText(jsonObject.getString("LeadByName"))
+            //txtCollectedBy!!.setText(jsonObject.getString("CollectedBy"))
             txtCollectedBy!!.setText(jsonObject.getString("CollectedBy"))
             txtCurrentAssignee!!.setText(jsonObject.getString("AssignedTo"))
             txtStatus!!.setText(jsonObject.getString("CurrentStatus"))

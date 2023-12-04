@@ -25,7 +25,7 @@ object DetailedReportRepository {
 
     private var progressDialog: ProgressDialog? = null
     val actionListTicketReportSetterGetter = MutableLiveData<DetailedReportModel>()
-    val TAG: String = "ActionListTicketReportRepository"
+    val TAG: String = "DetailReportRepository"
 
     fun getServicesApiCall(
         context: Context,

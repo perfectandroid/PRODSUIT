@@ -105,6 +105,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     internal var etdis: EditText? = null
     internal var tile1: LinearLayout? = null
     internal var tile2: LinearLayout? = null
+    internal var ll_rmkbl: LinearLayout? = null
+
     internal var ll_leadstagewiseforecast: LinearLayout? = null
 
     internal var ll_leadcount: LinearLayout? = null
@@ -579,6 +581,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         ll_empwisebarchart = findViewById<LinearLayout>(R.id.ll_empwisebarchart)
         txtv_leadTileCount= findViewById<TextView>(R.id.txtv_leadTileCount)
 
+
+
         txtv_leadoutstand= findViewById<TextView>(R.id.txtv_leadoutstand)
         txtv_avglead= findViewById<TextView>(R.id.txtv_avglead)
         txtv_lead= findViewById<TextView>(R.id.txtv_lead)
@@ -935,7 +939,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                                 // reportNamesort.put(k,jsonObject)
                                                 var totleadcount: String =
                                                     jsonObject1.optString("Value")
-                                                totallead = totallead + Integer.parseInt(totleadcount)
+                                                totallead =  Integer.parseInt(totleadcount)
                                                 leadTileSort.put(jsonObject)
                                             }
 
@@ -1174,6 +1178,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     val remark =
                                         jobjt.getString("Reamrk")
                                     txtv_EmpWiseRemark!!.visibility=View.GONE
+                                    txt_chartlabel!!.visibility=View.VISIBLE
+                                    txt_chartremark!!.visibility=View.VISIBLE
                                    // txtv_EmpWiseRemark!!.setText(remark)
                                     txt_chartlabel!!.text="EMPLOYEE WISE TARGET LIST"
                                     txt_chartremark!!.text=remark
@@ -1200,8 +1206,10 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     }
                                     else
                                     {
+                                        txt_chartlabel!!.visibility=View.GONE
+                                        txt_chartremark!!.visibility=View.GONE
                                         rclv_barchart!!.visibility=View.GONE
-                                       /* val builder = AlertDialog.Builder(
+                                        val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
                                             R.style.MyDialogTheme
                                         )
@@ -1211,7 +1219,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         val alertDialog: AlertDialog = builder.create()
                                         alertDialog.setCancelable(false)
                                         alertDialog.show()
-*/
+
                                     }
                                     // setPieChart()
 
@@ -2293,6 +2301,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     val remark =
                                         jobjt.getString("Reamrk")
                                     txtv_LeadForecastRemark!!.visibility=View.GONE
+                                    txt_chartlabel!!.visibility=View.VISIBLE
+                                    txt_chartremark!!.visibility=View.VISIBLE
                                   //  txtv_LeadForecastRemark!!.setText(remark)
                                     txt_chartlabel!!.text="LEAD PROGRESS REPORT"
                                     txt_chartremark!!.text=remark
@@ -2316,9 +2326,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
 //
                                 } else {
+                                    txt_chartlabel!!.visibility=View.GONE
+                                    txt_chartremark!!.visibility=View.GONE
                                     rclv_leadStagewiseforecast!!.visibility=View.GONE
                                     txtv_LeadForecastRemark!!.visibility=View.GONE
-                                   /* val builder = AlertDialog.Builder(
+                                    val builder = AlertDialog.Builder(
                                         this@TileGraphActivity,
                                         R.style.MyDialogTheme
                                     )
@@ -2327,7 +2339,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     }
                                     val alertDialog: AlertDialog = builder.create()
                                     alertDialog.setCancelable(false)
-                                    alertDialog.show()*/
+                                    alertDialog.show()
                                 }
                             } }else {
                                 rclv_leadStagewiseforecast!!.visibility=View.GONE
@@ -2828,6 +2840,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         jobjt.getString("Reamrk")
                                  //   txtv_top10Remrk!!.setText(remark)
                                     txtv_top10Remrk!!.visibility=View.GONE
+                                    txt_chartlabel!!.visibility=View.VISIBLE
+                                    txt_chartremark!!.visibility=View.VISIBLE
                                     txt_chartlabel!!.text="TOP 10 ENQUIRY PRODUCTS IN LEAD"
                                     txt_chartremark!!.text=remark
                                     top10mode=0
@@ -2850,7 +2864,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     }
                                     else
                                     {
-
+                                        txt_chartlabel!!.visibility=View.GONE
+                                        txt_chartremark!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
                                             R.style.MyDialogTheme
@@ -2928,6 +2943,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         jobjt.getJSONArray("ExpenseVSGainList")
                                     val remark =
                                         jobjt.getString("Reamrk")
+                                    txt_chartlabel!!.visibility=View.VISIBLE
+                                    txt_chartremark!!.visibility=View.VISIBLE
                                     txt_chartlabel!!.text="TOP REVENUE GENERATED CAMPAIGN"
                                     txt_chartremark!!.text=remark
                                     //  tv_leadStageTotal!!.setText(jobjt.getString("TotalCount"))
@@ -2957,7 +2974,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     }
                                     else
                                     {
-
+                                        txt_chartlabel!!.visibility=View.GONE
+                                        txt_chartremark!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
                                             R.style.MyDialogTheme
@@ -3041,6 +3059,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             jobjt.getString("Reamrk")
                                      //   leadSourseSubText!!.setText(remark)
                                         leadSourseSubText!!.visibility=View.GONE
+                                        txt_chartlabel!!.visibility=View.VISIBLE
+                                        txt_chartremark!!.visibility=View.VISIBLE
                                         txt_chartlabel!!.text="LEAD SOURCE"
                                         txt_chartremark!!.text=remark
                                         leadSourseBarList =
@@ -3068,6 +3088,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             Log.e("exceptionStock344", "" + e.toString())
                                         }
                                     } else {
+                                        txt_chartlabel!!.visibility=View.GONE
+                                        txt_chartremark!!.visibility=View.GONE
                                         recycleLeadSourse!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
@@ -3310,7 +3332,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         employeewiseAvgText!!.visibility=View.GONE
                                         empwise_avgmode=0
                                         hideEmpwiseavgconsn()
-
+                                        txt_chartlabel!!.visibility=View.VISIBLE
+                                        txt_chartremark!!.visibility=View.VISIBLE
                                         txt_chartlabel!!.text="EMPLOYEE WISE AVERAGE CONVERSION"
                                         txt_chartremark!!.text=remark
 
@@ -3432,6 +3455,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             Log.e("exceptionStock344", "" + e.toString())
                                         }
                                     } else {
+                                        txt_chartlabel!!.visibility=View.GONE
+                                        txt_chartremark!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
                                             R.style.MyDialogTheme
@@ -3552,7 +3577,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             jobjt.getString("Reamrk")
                                        // leadstagecountwiseText!!.setText(remark)
                                         leadstagecountwiseText!!.visibility=View.GONE
-
+                                        txt_chartlabel!!.visibility=View.VISIBLE
+                                        txt_chartremark!!.visibility=View.VISIBLE
                                         txt_chartlabel!!.text="LEAD FUNNEL"
                                         txt_chartremark!!.text=remark
                                         leadstagecountwiseListBarList =
@@ -3572,6 +3598,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         } catch (e: Exception) {
                                         }
                                     } else {
+                                        txt_chartlabel!!.visibility=View.GONE
+                                        txt_chartremark!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
                                             R.style.MyDialogTheme
@@ -3661,6 +3689,9 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         leadActivityText!!.visibility=View.VISIBLE
                                         leadActivityText!!.visibility=View.GONE
                                        // leadActivityText!!.setText(remark)
+
+                                        txt_chartlabel!!.visibility=View.VISIBLE
+                                        txt_chartremark!!.visibility=View.VISIBLE
                                         txt_chartlabel!!.text="LEAD ACTIVITIES"
                                         txt_chartremark!!.text=remark
 
@@ -3682,8 +3713,10 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             Log.e("exceptionStock344", "" + e.toString())
                                         }
                                     } else {
+                                        txt_chartlabel!!.text=""
+                                        txt_chartremark!!.text=""
                                         leadActivityText!!.visibility=View.GONE
-                                       /* val builder = AlertDialog.Builder(
+                                        val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
                                             R.style.MyDialogTheme
                                         )
@@ -3692,7 +3725,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         }
                                         val alertDialog: AlertDialog = builder.create()
                                         alertDialog.setCancelable(false)
-                                        alertDialog.show()*/
+                                        alertDialog.show()
                                     }
                                 }
 
