@@ -234,6 +234,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     var drawableLess : Drawable? = null
 
 
+    //count Tile
+    var txtv_serviceTktTile_one: TextView? = null
+    var txtv_ServiceTktFollowUpTile_two: TextView? = null
+    var txtv_ServiceTktTile_three: TextView? = null
+    var txtv_amcDueTile_four: TextView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -312,6 +317,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun setRegViews() {
+
+        txtv_serviceTktTile_one= findViewById<TextView>(R.id.txtv_serviceTktTile_one)
+        txtv_ServiceTktFollowUpTile_two= findViewById<TextView>(R.id.txtv_ServiceTktFollowUpTile_two)
+        txtv_ServiceTktTile_three= findViewById<TextView>(R.id.txtv_ServiceTktTile_three)
+        txtv_amcDueTile_four= findViewById<TextView>(R.id.txtv_amcDueTile_four)
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
         drawableMore = resources.getDrawable(R.drawable.dash_more, null)
@@ -1313,8 +1323,28 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     tv_crmtile_Outstanding!!.setText(jobjt.getString("ChartName"))
                                     tv_crmtile_Outstanding_remark!!.setText(jobjt.getString("Reamrk"))
                                     crmOutstandingArrayList = jobjt.getJSONArray("CRMTileDashBoardDetailsList")
+
+//                                    var totalSerciceTkt: Int = 0
+
                                     if (crmOutstandingArrayList.length() > 0){
                                         ll_crmtile_outstanding!!.visibility = View.VISIBLE
+                                        var totalSerciceTkt: Int = 0
+                                  //      for (k in 0 until crmOutstandingArrayList.length()) {
+
+
+                                     //       val jsonObject = crmOutstandingArrayList.getJSONObject(k)
+                                            val jsonObject = crmOutstandingArrayList.getJSONObject(0)
+
+                                            var totlSerTktStatus: String =
+                                                jsonObject.optString("Value")
+                                            totalSerciceTkt = totalSerciceTkt + Integer.parseInt(totlSerTktStatus)
+
+                                 //       }
+                                        Log.e(TAG,"count first 456756="+totalSerciceTkt)
+                                        txtv_serviceTktTile_one!!.text=totalSerciceTkt.toString()
+
+
+
                                         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                                         recyc_crmtile_Outstanding!!.layoutManager = layoutManager
                                         crmOutstandingAdapter = CrmOutstandingAdapter(this@ServiceGraphActivity, crmOutstandingArrayList)
@@ -1383,8 +1413,28 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     tv_crmtile_Status!!.setText(jobjt.getString("ChartName"))
                                     tv_crmtile_Status_remark!!.setText(jobjt.getString("Reamrk"))
                                     crmStatusArrayList = jobjt.getJSONArray("CRMTileDashBoardDetailsList")
+
+                                    var totalSerciceTktFollowUp: Int = 0
                                     if (crmStatusArrayList.length() > 0){
                                         ll_crmtile_status!!.visibility = View.VISIBLE
+
+
+
+                                            val jsonObject = crmStatusArrayList.getJSONObject(0)
+
+                                            var totlSerTktFollo: String =
+                                                jsonObject.getString("Value")
+                                            totalSerciceTktFollowUp = totalSerciceTktFollowUp + Integer.parseInt(totlSerTktFollo)
+
+
+                                        Log.e(TAG,"count first 456756="+totalSerciceTktFollowUp)
+                                        txtv_ServiceTktFollowUpTile_two!!.text=totalSerciceTktFollowUp.toString()
+
+
+
+
+
+
                                         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                                         recyc_crmtile_Status!!.layoutManager = layoutManager
                                         crmStatusAdapter = CrmStatusAdapter(this@ServiceGraphActivity, crmStatusArrayList)
@@ -1454,8 +1504,21 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     tv_crmtile_outstandcount!!.setText(jobjt.getString("ChartName"))
                                     tv_crmtile_outstandcount_remark!!.setText(jobjt.getString("Reamrk"))
                                     crmoutstandingCountArrayList = jobjt.getJSONArray("CRMTileDashBoardDetailsList")
+                                    var totalSerciceTkt: Int = 0
                                     if (crmoutstandingCountArrayList.length() > 0){
                                         ll_crmtile_outstandcount!!.visibility = View.VISIBLE
+
+                                            val jsonObject = crmoutstandingCountArrayList.getJSONObject(0)
+
+                                            var totlSerTkt: String =
+                                                jsonObject.optString("Value")
+                                            totalSerciceTkt = totalSerciceTkt + Integer.parseInt(totlSerTkt)
+
+
+                                        Log.e(TAG,"count first 456756="+totalSerciceTkt)
+                                        txtv_ServiceTktTile_three!!.text=totalSerciceTkt.toString()
+
+
                                         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                                         recyc_crmtile_outstandcount!!.layoutManager = layoutManager
                                         crmOutstandingCountAdapter = CrmOutstandingCountAdapter(this@ServiceGraphActivity, crmoutstandingCountArrayList)
@@ -1525,9 +1588,25 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     tv_crmtile_amcDue!!.setText(jobjt.getString("ChartName"))
                                     tv_crmtile_amcDue_remark!!.setText(jobjt.getString("Reamrk"))
                                     crmAmcDueStatusArrayList = jobjt.getJSONArray("CRMTileDashBoardDetailsList")
+
+                                    var totalamcOverDueTile: Int = 0
+
                                     Log.e(TAG,"msg   884441   "+crmAmcDueStatusArrayList)
                                     if (crmAmcDueStatusArrayList.length() > 0){
                                         ll_crmtile_amcDue!!.visibility = View.VISIBLE
+
+
+
+                                            val jsonObject = crmAmcDueStatusArrayList.getJSONObject(0)
+
+                                            var totalamcOverDue: String =
+                                                jsonObject.optString("Value")
+                                            totalamcOverDueTile = totalamcOverDueTile + Integer.parseInt(totalamcOverDue)
+
+                                        Log.e(TAG,"count first 456756="+totalamcOverDueTile)
+                                        txtv_amcDueTile_four!!.text=totalamcOverDueTile.toString()
+
+
                                         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                                         recyc_crmtile_amcDue!!.layoutManager = layoutManager
                                         crmAmcDueStatusAdapter = CrmAmcDueStatusAdapter(this@ServiceGraphActivity, crmAmcDueStatusArrayList)
