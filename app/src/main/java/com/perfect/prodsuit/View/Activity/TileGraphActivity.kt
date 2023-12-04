@@ -361,14 +361,15 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             for (k in 0 until leadOutstandArrayList.length()) {
                                                 val jsonObject = leadOutstandArrayList.getJSONObject(k)
                                                 // reportNamesort.put(k,jsonObject)
-
+                                                val jsonObject1 = leadOutstandArrayList.getJSONObject(0)
                                                 var totleadoutstand: String =
-                                                    jsonObject.optString("Value")
-                                                totalleadoutstand = totalleadoutstand + Integer.parseInt(totleadoutstand)
+                                                    jsonObject1.optString("Value")
+                                                totalleadoutstand = Integer.parseInt(totleadoutstand)
 
 
                                                 leadOutstandSort.put(jsonObject)
                                             }
+
                                             System.out.println("Total Leadoutstand "+totalleadoutstand)
                                             txtv_leadOutstandCount!!.visibility=View.VISIBLE
                                             txtv_leadOutstandCount!!.text=totalleadoutstand.toString()
@@ -479,6 +480,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             avgLeadConvsnSort = JSONArray()
                                             for (k in 0 until avgconvsnleadArrayList.length()) {
                                                 val jsonObject = avgconvsnleadArrayList.getJSONObject(k)
+
                                                 // reportNamesort.put(k,jsonObject)
                                                 avgLeadConvsnSort.put(jsonObject)
                                             }
@@ -929,9 +931,10 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             leadTileSort = JSONArray()
                                             for (k in 0 until ledaTileArrayList.length()) {
                                                 val jsonObject = ledaTileArrayList.getJSONObject(k)
+                                                val jsonObject1 = ledaTileArrayList.getJSONObject(0)
                                                 // reportNamesort.put(k,jsonObject)
                                                 var totleadcount: String =
-                                                    jsonObject.optString("Value")
+                                                    jsonObject1.optString("Value")
                                                 totallead = totallead + Integer.parseInt(totleadcount)
                                                 leadTileSort.put(jsonObject)
                                             }
@@ -1048,9 +1051,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
                                             for (k in 0 until leadcountscenarioList.length()) {
                                                 val jsonObject = leadcountscenarioList.getJSONObject(k)
+                                                val jsonObject1 = leadcountscenarioList.getJSONObject(0)
                                                 var totcount: String =
-                                                    jsonObject.optString("Value")
-                                                total = total + Integer.parseInt(totcount)
+                                                    jsonObject1.optString("Value")
+                                               // total = total + Integer.parseInt(totcount)
+                                                total = Integer.parseInt(totcount)
                                                 // reportNamesort.put(k,jsonObject)
                                                 leadcountscenariosort.put(jsonObject)
                                             }

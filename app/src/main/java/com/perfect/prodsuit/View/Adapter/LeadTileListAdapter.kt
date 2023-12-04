@@ -20,6 +20,7 @@ class LeadTileListAdapter(
     internal var jsonArray: JSONArray,
     internal var remark: String
 
+
     ):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -50,7 +51,11 @@ class LeadTileListAdapter(
 //                else{
 //                    holder.llServiceList.setBackgroundDrawable(context.resources.getDrawable(R.drawable.svg_list_2))
 //                }
+                if(position==0)
+                {
+                    holder.ll2.visibility=View.GONE
 
+                }
 
                 holder.txtv_label.text        = jsonObject!!.getString("Label")
                 holder.tv_newCount.text        = jsonObject!!.getString("Value")
@@ -181,13 +186,14 @@ class LeadTileListAdapter(
         internal var txtv_label          : TextView
         internal var tv_newCount          : TextView
         internal var ll_new          : LinearLayout
+        internal var ll2          : LinearLayout
 
 
         init {
            txtv_label        = v.findViewById<View>(R.id.txtv_label) as TextView
            tv_newCount        = v.findViewById<View>(R.id.tv_newCount) as TextView
            ll_new        = v.findViewById<View>(R.id.ll_new) as LinearLayout
-
+            ll2        = v.findViewById<View>(R.id.ll2) as LinearLayout
 
         }
     }
