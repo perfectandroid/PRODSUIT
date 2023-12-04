@@ -121,6 +121,7 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
     private var ll_production: LinearLayout? = null
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_production_graph)
@@ -192,6 +193,8 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
         tvv_tile!!.setOnClickListener(this)
         actv_mode!!.setOnClickListener(this)
         tvv_lemo_UpcomingStock!!.setOnClickListener(this)
+        tvv_lemo_CompletedProducts!!.setOnClickListener(this)
+        tvv_lemo_MaterialShortage!!.setOnClickListener(this)
 
 
     }
@@ -453,9 +456,11 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         try {
                                             if (upcomingstockArrayList.length() > 0) {
 
-                                            //    ll_UpcomingStock!!.visibility = View.VISIBLE
+                                                ll_UpcomingStock!!.visibility = View.VISIBLE
+                                                lemoupcomingstockMode = 0
+                                                hidelemoupcomingstock()
 
-                                                setStockListBarchart()
+                                                setUpcomingStockListBarchart()
 
                                                 val lLayout = GridLayoutManager(this@ProductionGraphActivity, 2)
                                                 recyUpcomingStock!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -512,9 +517,9 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-    private fun setStockListBarchart() {
+    private fun setUpcomingStockListBarchart() {
         upcomingstockBar.clear()
-        upcomingstockBar = getStockBarList()
+        upcomingstockBar = getUpcomingStockBarList()
         UpcomingStockChart.axisLeft.setDrawGridLines(false)
         val xAxis: XAxis = UpcomingStockChart.xAxis
         xAxis.setDrawGridLines(false)
@@ -681,7 +686,7 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun getStockBarList(): ArrayList<UpcomingStockBar> {
+    private fun getUpcomingStockBarList(): ArrayList<UpcomingStockBar> {
         for (i in 0 until upcomingstockArrayList.length())
         {
             var jsonObject = upcomingstockArrayList.getJSONObject(i)
@@ -707,7 +712,17 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-
+    private fun hidelemoupcomingstock() {
+        if (lemoupcomingstockMode == 0){
+            tvv_lemo_UpcomingStock!!.setText("More")
+            tvv_lemo_UpcomingStock!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_recyUpcomingStock!!.visibility = View.GONE
+        }else{
+            tvv_lemo_UpcomingStock!!.setText("Less")
+            tvv_lemo_UpcomingStock!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_recyUpcomingStock!!.visibility = View.VISIBLE
+        }
+    }
 
 
     ////////////////CompletedProducts\\\\\\\\\\\\
@@ -741,11 +756,11 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                         try {
                                             if (completedproductsArrayList.length() > 0) {
-
-//                                                completedproductsMode = 0
-//                                                hidelemocompletedProducts()
-
                                                 ll_CompletedProducts!!.visibility = View.VISIBLE
+
+                                                completedproductsMode = 0
+                                                hidelemocompletedProducts()
+
                                                 setCompletedProductsBarchart()
 
                                                 val lLayout = GridLayoutManager(this@ProductionGraphActivity, 2)
@@ -1042,13 +1057,14 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         val jobjt =
                                             jObject.getJSONObject("ProductionMaterialShortage")
                                         tv_MaterialShortageRemark!!.setText(jobjt.getString("Reamrk"))
-
                                         materialshortageArrayList=jobjt.getJSONArray("ProductionMaterialShortageList")
-
-                                        ll_MaterialShortage!!.visibility = View.VISIBLE
 
                                         if (materialshortageArrayList.length() > 0) {
                                             Log.e(TAG, "materialshortageArrayList 43434  =  "+materialshortageArrayList)
+                                            ll_MaterialShortage!!.visibility = View.VISIBLE
+
+                                            materialshortageMode = 0
+                                            hidelemomaterialshortage()
                                             setgetMaterialShortageBarchart()  //...........barchart here
 
                                             val lLayout = GridLayoutManager(this@ProductionGraphActivity, 1)
@@ -1219,14 +1235,14 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun hidelemomaterialshortage() {
-        if (completedproductsMode == 0){
-            tvv_lemo_CompletedProducts!!.setText("More")
-            tvv_lemo_CompletedProducts!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
-            ll_recyCompletedProducts!!.visibility = View.GONE
+        if (materialshortageMode == 0){
+            tvv_lemo_MaterialShortage!!.setText("More")
+            tvv_lemo_MaterialShortage!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+            ll_materialrecycview!!.visibility = View.GONE
         }else{
-            tvv_lemo_CompletedProducts!!.setText("Less")
-            tvv_lemo_CompletedProducts!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
-            ll_recyCompletedProducts!!.visibility = View.VISIBLE
+            tvv_lemo_MaterialShortage!!.setText("Less")
+            tvv_lemo_MaterialShortage!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+            ll_materialrecycview!!.visibility = View.VISIBLE
         }
     }
 
@@ -1323,27 +1339,47 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
 
             R.id.tvv_lemo_UpcomingStock->{
 
+                if (lemoupcomingstockMode == 0){
+                    lemoupcomingstockMode = 1
+                }else{
+                    lemoupcomingstockMode = 0
+                }
+                hidelemoupcomingstock()
+
+            }
+            R.id.tvv_lemo_CompletedProducts->{
+
+                if (completedproductsMode == 0){
+                    completedproductsMode = 1
+                }else{
+                    completedproductsMode = 0
+                }
+                hidelemocompletedProducts()
+
+            }
+            R.id.tvv_lemo_MaterialShortage->{
+
                 if (materialshortageMode == 0){
                     materialshortageMode = 1
                 }else{
                     materialshortageMode = 0
                 }
-                hidelemoupcomingstock()
+                hidelemomaterialshortage()
 
             }
         }
     }
 
 
-    private fun hidelemoupcomingstock() {
-        if (lemoupcomingstockMode == 0){
-            tvv_lemo_UpcomingStock!!.setText("More")
-            tvv_lemo_UpcomingStock!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
-            ll_recyUpcomingStock!!.visibility = View.GONE
-        }else{
-            tvv_lemo_UpcomingStock!!.setText("Less")
-            tvv_lemo_UpcomingStock!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
-            ll_recyUpcomingStock!!.visibility = View.VISIBLE
-        }
-    }
+//    private fun hidelemoupcomingstock() {
+//        if (lemoupcomingstockMode == 0){
+//            tvv_lemo_UpcomingStock!!.setText("More")
+//            tvv_lemo_UpcomingStock!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableMore, null)
+//            ll_recyUpcomingStock!!.visibility = View.GONE
+//        }else{
+//            tvv_lemo_UpcomingStock!!.setText("Less")
+//            tvv_lemo_UpcomingStock!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
+//            ll_recyUpcomingStock!!.visibility = View.VISIBLE
+//        }
+//    }
 }

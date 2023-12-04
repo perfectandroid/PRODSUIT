@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
@@ -34,8 +35,33 @@ class CrmOutstandingCountAdapter(internal var context: Context, internal var jso
             if (holder is MainViewHolder) {
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
+                if(position==0)
+                {
+                    holder.ll2.visibility=View.GONE
+
+                }
+
+
                 holder.tv_Count.text        = jsonObject!!.getString("Value")
                 holder.tv_label.text        = jsonObject!!.getString("Label")
+
+                if (position == 1) {
+                    holder.tv_label.setTextColor(context.getColor(R.color.green))
+
+                }
+                if (position == 2) {
+                    holder.tv_label.setTextColor(context.getColor(R.color.ongoing))
+
+                }
+                if (position == 3) {
+                    holder.tv_label.setTextColor(context.getColor(R.color.warm))
+
+                }
+                if (position == 4) {
+                    holder.tv_label.setTextColor(context.getColor(R.color.bluecolr))
+
+                }
+
 
             }
         } catch (e: Exception) {
@@ -59,10 +85,12 @@ class CrmOutstandingCountAdapter(internal var context: Context, internal var jso
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         internal var tv_Count   : TextView
         internal var tv_label         : TextView
+        internal var ll2          : LinearLayout
         //        internal var llbranch    : LinearLayout
         init {
             tv_Count          = v.findViewById<View>(R.id.tv_Count) as TextView
             tv_label            = v.findViewById<View>(R.id.tv_label) as TextView
+            ll2        = v.findViewById<View>(R.id.ll2) as LinearLayout
 //            llbranch           = v.findViewById<View>(R.id.llbranch) as LinearLayout
         }
     }

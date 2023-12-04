@@ -27,7 +27,7 @@ android {
     defaultConfig {
 //        applicationId "com.perfect.prodsuit"
 //        applicationId "com.mscore.calicuttownbank"
-        applicationId "com.perfect.prodsuite"  // commonapp
+        applicationId "com.perfect.prodsuite"  // Sunitha
 //        applicationId "com.perfect.sheetal"
 //        applicationId "com.perfect.prodsuite_demo"
 //        applicationId "com.perfect.prodsuite"  // upload
@@ -36,7 +36,7 @@ android {
 //        applicationId "com.perfect.verminator"
 //        applicationId "com.perfect.supportdemo"
 //        applicationId "com.perfect.marketing_demo"
-       // applicationId "com.perfect.prodsuite_employee"
+//        applicationId "com.perfect.prodsuite_employee"
 
 
         minSdkVersion 26
