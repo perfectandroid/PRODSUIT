@@ -913,14 +913,14 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         Log.e(TAG, "entries 43434  =  " + entries2)
 
         val baraData=BarData(barDataSet1,barDataSet2)
-        baraData.barWidth=0.1f
+        baraData.barWidth=0.3f
         //      projectDelayedChart.data=baraData
 
 //        val data = BarData(barDataSet1)
 //
 //        data.setValueTextSize(15f)
 //        data.setValueTextColor(Color.BLACK)
-//        data.setDrawValues(false)
+        baraData.setDrawValues(false)
         ExpenseAnalysisChart.data = baraData
 
         //   projectDelayedChart.isDragEnabled=true
@@ -1195,21 +1195,21 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         Log.e(TAG, "entries 43434  =  " + entries2)
 
         val baraData=BarData(barDataSet1,barDataSet2)
-        baraData.barWidth=0.1f
+        baraData.barWidth=0.2f
         //      projectDelayedChart.data=baraData
 
 //        val data = BarData(barDataSet1)
 //
 //        data.setValueTextSize(15f)
 //        data.setValueTextColor(Color.BLACK)
-//        data.setDrawValues(false)
+        baraData.setDrawValues(false)
         CostMaterialUsageAllocateChart.data = baraData
 
         //   projectDelayedChart.isDragEnabled=true
         //   projectDelayedChart.setVisibleXRangeMaximum(3.0f)
 
         var barspace=0.0f
-        var groupspace=0.3f
+        var groupspace=0.2f
         // projectDelayedChart.getAxis().axisMinimum= 0F
         CostMaterialUsageAllocateChart.groupBars(0F,groupspace,barspace)
 
@@ -1401,14 +1401,14 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         Log.e(TAG, "entries 43434  =  " + entries2)
 
         val baraData=BarData(barDataSet1,barDataSet2)
-        baraData.barWidth=0.1f
+        baraData.barWidth=0.2f
         //      projectDelayedChart.data=baraData
 
 //        val data = BarData(barDataSet1)
 //
 //        data.setValueTextSize(15f)
 //        data.setValueTextColor(Color.BLACK)
-//        data.setDrawValues(false)
+        baraData.setDrawValues(false)
         TotalStagewiseDueChart.data = baraData
 
         //   projectDelayedChart.isDragEnabled=true
@@ -1618,14 +1618,14 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         )
 
         val baraData=BarData(barDataSet1,barDataSet2)
-        baraData.barWidth=0.1f
+        baraData.barWidth=0.3f
         //      projectDelayedChart.data=baraData
 
 //        val data = BarData(barDataSet1)
 //
 //        data.setValueTextSize(15f)
 //        data.setValueTextColor(Color.BLACK)
-//        data.setDrawValues(false)
+        baraData.setDrawValues(false)
         projectDelayedChart.data = baraData
 
         //   projectDelayedChart.isDragEnabled=true

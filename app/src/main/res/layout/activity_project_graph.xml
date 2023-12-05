@@ -25,7 +25,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_weight="2"
+                android:layout_weight="4"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
@@ -33,7 +33,7 @@
                     android:id="@+id/imback_project"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_gravity="left"
+                    android:layout_gravity="center"
                     android:background="@color/color_activity_transparent"
                     android:padding="10dp"
                     android:src="@drawable/back_arro"
@@ -48,29 +48,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
                 android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/myfont"
-                android:gravity="center"
-                android:text="project"
+                android:gravity="left"
+                android:text="project  dashboard"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:tint="@color/black" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_weight="2"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
 
-
-            </LinearLayout>
 
         </LinearLayout>
 
@@ -157,7 +149,7 @@
 
                         <!--Graph-->
                         <LinearLayout
-                            android:visibility="gone"
+                            android:visibility="visible"
                             android:id="@+id/ll_Graph"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -318,6 +310,7 @@
                                                         android:layout_height="1dp"
                                                         android:background="@color/grey"/>
                                                     <LinearLayout
+                                                        android:background="@color/greylight"
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
                                                         android:orientation="vertical"
@@ -370,7 +363,7 @@
                                                                 android:fontFamily="@font/myfont"
                                                                 android:padding="5dp"
                                                                 android:textSize="12dp"
-                                                                android:textColor="@color/black"
+                                                                android:textColor="@color/blue"
                                                                 android:gravity="center"
                                                                 android:text="ActualPeriod"
                                                                 android:layout_weight="1.1"/>
@@ -386,7 +379,7 @@
                                                                 android:fontFamily="@font/myfont"
                                                                 android:padding="5dp"
                                                                 android:gravity="center"
-                                                                android:textColor="@color/black"
+                                                                android:textColor="@color/red"
                                                                 android:text="Current Period"
                                                                 android:textSize="12dp"
                                                                 android:layout_weight="1.1"/>
@@ -407,9 +400,9 @@
                                                         android:id="@+id/recycprojectDelayed"
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
+                                                        android:background="@drawable/svg_dashrect"
 
-
-                                                        android:background="@drawable/svg_dashrect">
+                                                   >
 
                                                     </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
                                                 </LinearLayout>
@@ -856,7 +849,7 @@
                                                             android:paddingStart="5dp"
                                                             android:text="Project Amount"
                                                             android:textSize="13dp"
-                                                            android:textColor="@color/black"
+                                                            android:textColor="@color/blue"
                                                             android:fontFamily="@font/myfont"/>
 
                                                         <LinearLayout
@@ -872,7 +865,7 @@
                                                             android:paddingStart="5dp"
                                                             android:text="Expense"
                                                             android:textSize="13dp"
-                                                            android:textColor="@color/black"
+                                                            android:textColor="@color/red"
                                                             android:fontFamily="@font/myfont"/>
                                                         <LinearLayout
                                                             android:layout_width="1dp"
@@ -1068,7 +1061,7 @@
                                                             android:paddingStart="5dp"
                                                             android:text="Allocated"
                                                             android:textSize="13dp"
-                                                            android:textColor="@color/black"
+                                                            android:textColor="@color/blue"
                                                             android:fontFamily="@font/myfont"/>
 
                                                         <LinearLayout
@@ -1083,7 +1076,7 @@
                                                             android:paddingStart="5dp"
                                                             android:text="Usage"
                                                             android:textSize="13dp"
-                                                            android:textColor="@color/black"
+                                                            android:textColor="@color/red"
                                                             android:fontFamily="@font/myfont"/>
                                                         <LinearLayout
                                                             android:layout_width="1dp"
@@ -1535,7 +1528,7 @@
                         <!--Tile-->
                         <LinearLayout
                             android:id="@+id/ll_Tile"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical">
