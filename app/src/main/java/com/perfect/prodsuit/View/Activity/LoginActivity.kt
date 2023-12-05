@@ -396,6 +396,11 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
                                             )
                                             IsAdminEditer.commit()
 
+                                            val IsManagerSP = applicationContext.getSharedPreferences(Config.SHARED_PREF75, 0)
+                                            val IsManagerEditer = IsManagerSP.edit()
+                                            IsManagerEditer.putString("IsManager",jobj.getString("IsManager"))
+                                            IsManagerEditer.commit()
+
                                             val ID_UserSP = applicationContext.getSharedPreferences(
                                                 Config.SHARED_PREF44,
                                                 0

@@ -27,9 +27,10 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.EmployeeAllAdapter
-import com.perfect.prodsuit.View.Adapter.EmployeeAllDetailAdapter
+import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.AgendaCountViewModel
+import com.perfect.prodsuit.Viewmodel.BranchViewModel
+import com.perfect.prodsuit.Viewmodel.EmpByBranchViewModel
 import com.perfect.prodsuit.Viewmodel.LeadAllDetailsViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -55,6 +56,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
     private var mHour:Int = 0
     private var mMinute:Int = 0
     private var ID_Employee = ""
+    private var ID_Employee1 = ""
     private var ID_employee2 = ""
     private var emp_name = ""
     private var emp_name2 = ""
@@ -65,11 +67,20 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
     private var lloverUpcoming: LinearLayout? = null
     private var llmyLead: LinearLayout? = null
     private var tie_Employee: TextInputEditText? = null
+    private var tie_Branch: TextInputEditText? = null
     lateinit var employeeArrayList : JSONArray
     private var dialogEmployeeAllDetails : Dialog? = null
     private var recyEmployeeAllDetails : RecyclerView? = null
     lateinit var employeeAllDetailSort : JSONArray
     var leadDetailsAll = 0
+
+    private var ID_Branch = ""
+
+    private var ID_Branch1 = ""
+    private var branchName1 = ""
+
+    private var ID_Branch2 = ""
+    private var branchName2 = ""
 
 
 
@@ -89,6 +100,20 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
     lateinit var agendaCountViewModel: AgendaCountViewModel
     lateinit var leadAllDetailsViewModel: LeadAllDetailsViewModel
 
+    lateinit var branchViewModel: BranchViewModel
+    lateinit var branchArrayList: JSONArray
+    lateinit var branchsort: JSONArray
+    private var dialogBranch: Dialog? = null
+    var recyBranch: RecyclerView? = null
+    var branch = 0
+
+    var empUseBranch = 0
+    lateinit var empByBranchViewModel: EmpByBranchViewModel
+    lateinit var employeeAllArrayList: JSONArray
+    lateinit var employeeAllSort: JSONArray
+    private var dialogEmployeeAll: Dialog? = null
+    var recyEmployeeAll: RecyclerView? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,15 +124,24 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
         context = this@LeadManagemnetActivity
         agendaCountViewModel = ViewModelProvider(this).get(AgendaCountViewModel::class.java)
         leadAllDetailsViewModel = ViewModelProvider(this).get(LeadAllDetailsViewModel::class.java)
+        branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
+        empByBranchViewModel = ViewModelProvider(this).get(EmpByBranchViewModel::class.java)
 
         bottombarnav()
         getCalendarId(context)
         val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
         ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+        ID_Employee1 = FK_EmployeeSP.getString("FK_Employee", null).toString()
 
         val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
         UserName = UserNameSP.getString("UserName", null).toString()
 
+        val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
+        val BranchSP = context.getSharedPreferences(Config.SHARED_PREF45, 0)
+        ID_Branch = FK_BranchSP.getString("FK_Branch", null).toString()
+
+        ID_Branch1 = FK_BranchSP.getString("FK_Branch", null).toString()
+        branchName1 = BranchSP.getString("BranchName", null).toString()
 
         Log.e(TAG,"")
         getCounts()
@@ -286,16 +320,36 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
 
 
             tie_Employee = layout1.findViewById(R.id.tie_Employee) as TextInputEditText
+            tie_Branch = layout1.findViewById(R.id.tie_Branch) as TextInputEditText
 
             val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
             var isAdmin = IsAdminSP.getString("IsAdmin", null)
-            Log.e(TAG, "isAdmin 796  " + isAdmin)
-            if (isAdmin.equals("1")) {
+
+            val IsManagerSP = applicationContext.getSharedPreferences(Config.SHARED_PREF75, 0)
+            var IsManager = IsManagerSP.getString("IsManager", null)
+
+            if (isAdmin.equals("1") && IsManager.equals("0")) {
                 ll_admin_staff!!.visibility = View.VISIBLE
-                tie_Employee!!.isEnabled = true
-            }else{
-                tie_Employee!!.isEnabled = false
+//                tie_Branch!!.isEnabled = true
+//                tie_Employee!!.isEnabled = true
             }
+            else if (isAdmin.equals("0") && IsManager.equals("1")){
+                ll_admin_staff!!.visibility = View.VISIBLE
+//                tie_Branch!!.isEnabled = false
+//                tie_Employee!!.isEnabled = true
+            }else{
+//                tie_Branch!!.isEnabled = false
+//                tie_Employee!!.isEnabled = false
+            }
+
+
+//            Log.e(TAG, "isAdmin 796  " + isAdmin)
+//            if (isAdmin.equals("1")) {
+//                ll_admin_staff!!.visibility = View.VISIBLE
+//                tie_Employee!!.isEnabled = true
+//            }else{
+//                tie_Employee!!.isEnabled = false
+//            }
 
             val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
             val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
@@ -312,9 +366,22 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                 tie_Employee!!.setText(emp_name)
             }
 
-            if (!ID_employee2.equals("")){
-
+            if (ID_employee2.equals("")){
+                ID_Employee  =ID_Employee1
+            }else{
                 ID_Employee  =ID_employee2
+            }
+
+            if (ID_Branch2.equals("")){
+                ID_Branch = ID_Branch1
+            }else{
+                ID_Branch = ID_Branch2
+            }
+
+            if (branchName2.equals("")){
+                tie_Branch!!.setText(branchName1)
+            }else{
+                tie_Branch!!.setText(branchName2)
             }
 
             txtCancel.setOnClickListener {
@@ -348,6 +415,12 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
             refresh.setOnClickListener {
 //                dialog.dismiss()
 
+                ID_Branch2 = ""
+                branchName2 = ""
+
+                ID_Branch = ID_Branch1
+                tie_Branch!!.setText(branchName1)
+
                     ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
                     emp_name2 = ""
                     ID_employee2 = ""
@@ -367,13 +440,33 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
 //            tie_LeadValue!!.setText("")
 //            til_LeadValue!!.setHint("")
 
+            tie_Branch!!.setOnClickListener(View.OnClickListener {
+                Config.disableClick(it)
+
+                if (isAdmin.equals("1") && IsManager.equals("0")) {
+                    branch = 0
+                    getBranch()
+                }
+
+            })
+
 
             tie_Employee!!.setOnClickListener(View.OnClickListener {
                 Config.disableClick(it)
 //                ID_Employee = ""
-                leadDetailsAll = 0
-                getEmployeeAllD()
+//                leadDetailsAll = 0
+//                getEmployeeAllD()
                 Log.e(TAG," 796   tie_Employee"+ID_Employee)
+
+
+                if (isAdmin.equals("1") && IsManager.equals("0")) {
+                    empUseBranch = 0
+                    getEmpByBranch(0)
+                }
+                else if (isAdmin.equals("0") && IsManager.equals("1")){
+                    empUseBranch = 0
+                    getEmpByBranch(0)
+                }
 
             })
 
@@ -391,6 +484,140 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
 
     }
 
+
+    private fun getBranch() {
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                branchViewModel.getBranch(this, "0")!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        try {
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG, "msg   1062   " + msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("BranchDetails")
+                                    branchArrayList = jobjt.getJSONArray("BranchDetailsList")
+                                    if (branchArrayList.length() > 0) {
+                                        if (branch == 0) {
+                                            branch++
+                                            branchPopup(branchArrayList)
+                                        }
+
+                                    }
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@LeadManagemnetActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + e.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun branchPopup(branchArrayList: JSONArray) {
+
+        try {
+
+            dialogBranch = Dialog(this)
+            dialogBranch!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogBranch!!.setContentView(R.layout.branch_popup)
+            dialogBranch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyBranch = dialogBranch!!.findViewById(R.id.recyBranch) as RecyclerView
+            val etsearch = dialogBranch!!.findViewById(R.id.etsearch) as EditText
+
+            branchsort = JSONArray()
+            for (k in 0 until branchArrayList.length()) {
+                val jsonObject = branchArrayList.getJSONObject(k)
+                branchsort.put(jsonObject)
+            }
+
+
+            val lLayout = GridLayoutManager(this@LeadManagemnetActivity, 1)
+            recyBranch!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+            //  val adapter = BranchAdapter(this@TicketReportActivity, branchArrayList)
+            val adapter = BranchAdapter(this@LeadManagemnetActivity, branchsort)
+            recyBranch!!.adapter = adapter
+            adapter.setClickListener(this@LeadManagemnetActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    branchsort = JSONArray()
+
+                    for (k in 0 until branchArrayList.length()) {
+                        val jsonObject = branchArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("BranchName").length) {
+                            if (jsonObject.getString("BranchName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                branchsort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "branchsort               7103    " + branchsort)
+                    val adapter = BranchAdapter(this@LeadManagemnetActivity, branchsort)
+                    recyBranch!!.adapter = adapter
+                    adapter.setClickListener(this@LeadManagemnetActivity)
+                }
+            })
+
+            dialogBranch!!.show()
+            dialogBranch!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG, "Exception  1132   " + e.toString())
+        }
+    }
 
 
     fun timeSelector() {
@@ -625,7 +852,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                agendaCountViewModel.getAgendaCount(this,ID_Employee)!!.observe(
+                agendaCountViewModel.getAgendaCount(this,ID_Branch,ID_Employee)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -793,7 +1020,191 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
         getCounts()
     }
 
+    private fun getEmpByBranch(i: Int) {
+//         var branch = 0
+        Log.v("sfsdfsdfdf", "branch" + ID_Branch)
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                empByBranchViewModel.getEmpByBranch(this, ID_Branch)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (empUseBranch == 0) {
+                                    empUseBranch++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   1224   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("EmployeeDetails")
+                                        employeeAllArrayList =
+                                            jobjt.getJSONArray("EmployeeDetailsList")
+                                        if (employeeAllArrayList.length() > 0) {
+
+                                            employeeAllPopup(employeeAllArrayList, i)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@LeadManagemnetActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun employeeAllPopup(employeeAllArrayList: JSONArray, i: Int) {
+        try {
+
+            dialogEmployeeAll = Dialog(this)
+            dialogEmployeeAll!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogEmployeeAll!!.setContentView(R.layout.employeeall_popup)
+            dialogEmployeeAll!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyEmployeeAll = dialogEmployeeAll!!.findViewById(R.id.recyEmployeeAll) as RecyclerView
+            val etsearch = dialogEmployeeAll!!.findViewById(R.id.etsearch) as EditText
+
+
+            employeeAllSort = JSONArray()
+            for (k in 0 until employeeAllArrayList.length()) {
+                val jsonObject = employeeAllArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                employeeAllSort.put(jsonObject)
+            }
+
+            if (i == 0) {
+                val lLayout = GridLayoutManager(this@LeadManagemnetActivity, 1)
+                recyEmployeeAll!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = EmployeeAllAdapter(this@FollowUpActivity, employeeAllArrayList)
+                val adapter = EmployeeAllAdapter(this@LeadManagemnetActivity, employeeAllSort)
+                recyEmployeeAll!!.adapter = adapter
+                adapter.setClickListener(this@LeadManagemnetActivity)
+            } else {
+                val lLayout = GridLayoutManager(this@LeadManagemnetActivity, 1)
+                recyEmployeeAll!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = EmployeeAllAdapter(this@FollowUpActivity, employeeAllArrayList)
+                val adapter = AssignedListAdapter(this@LeadManagemnetActivity, employeeAllSort)
+                recyEmployeeAll!!.adapter = adapter
+                adapter.setClickListener(this@LeadManagemnetActivity)
+            }
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    employeeAllSort = JSONArray()
+
+                    for (k in 0 until employeeAllArrayList.length()) {
+                        val jsonObject = employeeAllArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("EmpName").length) {
+                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                employeeAllSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "employeeAllSort               7103    " + employeeAllSort)
+                    val adapter = EmployeeAllAdapter(this@LeadManagemnetActivity, employeeAllSort)
+                    recyEmployeeAll!!.adapter = adapter
+                    adapter.setClickListener(this@LeadManagemnetActivity)
+                }
+            })
+
+            dialogEmployeeAll!!.show()
+            dialogEmployeeAll!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
+
     override fun onClick(position: Int, data: String) {
+
+        if (data.equals("branch")) {
+            dialogBranch!!.dismiss()
+            //   val jsonObject = branchArrayList.getJSONObject(position)
+            val jsonObject = branchsort.getJSONObject(position)
+            Log.e(TAG, "ID_Branch   " + jsonObject.getString("ID_Branch"))
+            ID_Branch = jsonObject.getString("ID_Branch")
+            tie_Branch!!.setText(jsonObject.getString("BranchName"))
+
+            ID_Branch2 = jsonObject.getString("ID_Branch")
+            branchName2= jsonObject.getString("BranchName")
+
+            emp_name2 = ""
+            ID_employee2 = ""
+
+            ID_Employee = ""
+            tie_Employee!!.setText("")
+
+        }
+
+        if (data.equals("employeeAll")) {
+            dialogEmployeeAll!!.dismiss()
+//            val jsonObject = employeeAllArrayList.getJSONObject(position)
+            val jsonObject = employeeAllSort.getJSONObject(position)
+
+            tie_Employee!!.setText(jsonObject.getString("EmpName"))
+            ID_Employee = jsonObject.getString("ID_Employee")
+            emp_name = jsonObject.getString("EmpName")
+            ID_employee2 = jsonObject.getString("ID_Employee")
+            Log.e(TAG,"iddddd "+jsonObject.getString("ID_Employee"))
+
+
+        }
+
         if (data.equals("EmpName")){
             dialogEmployeeAllDetails!!.dismiss()
             val jsonObject = employeeAllDetailSort.getJSONObject(position)

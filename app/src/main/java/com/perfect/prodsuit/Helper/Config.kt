@@ -94,6 +94,7 @@ object Config {
     const val SHARED_PREF41 = "FK_UserRole"  // UserGroup
     const val SHARED_PREF42 = "UserRole"
     const val SHARED_PREF43 = "IsAdmin"
+    const val SHARED_PREF75 = "IsManager"
     const val SHARED_PREF44 = "ID_User"  // FK_User
     const val SHARED_PREF45 = "BranchName"
     const val SHARED_PREF46 = "CompanyCategory"

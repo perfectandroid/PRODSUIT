@@ -293,8 +293,17 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         tie_ReportName!!.setOnClickListener(this)
         val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
         var isAdmin = IsAdminSP.getString("IsAdmin", null)
-        if (isAdmin.equals("1")) {
+
+        val IsManagerSP = applicationContext.getSharedPreferences(Config.SHARED_PREF75, 0)
+        var IsManager = IsManagerSP.getString("IsManager", null)
+
+        if (isAdmin.equals("1") && IsManager.equals("0")) {
             tie_Branch!!.setOnClickListener(this)
+            tie_EmployeeName!!.setOnClickListener(this)
+            tie_AssignedTo!!.setOnClickListener(this)
+            tie_CollectedBy!!.setOnClickListener(this)
+        }
+        else if (isAdmin.equals("0") && IsManager.equals("1")){
             tie_EmployeeName!!.setOnClickListener(this)
             tie_AssignedTo!!.setOnClickListener(this)
             tie_CollectedBy!!.setOnClickListener(this)

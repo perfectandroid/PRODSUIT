@@ -786,6 +786,12 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                 IsAdminEditer.putString("IsAdmin", jobj.getString("IsAdmin"))
                                 IsAdminEditer.commit()
 
+                                val IsManagerSP = applicationContext.getSharedPreferences(Config.SHARED_PREF75, 0)
+                                val IsManagerEditer = IsManagerSP.edit()
+                                IsManagerEditer.putString("IsManager",jobj.getString("IsManager"))
+                                IsManagerEditer.commit()
+
+
                                 val ID_UserSP =
                                     applicationContext.getSharedPreferences(Config.SHARED_PREF44, 0)
                                 val ID_UserEditer = ID_UserSP.edit()

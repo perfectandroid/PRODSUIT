@@ -27,12 +27,12 @@ object AgendaCountRepository {
     val agendaCountSetterGetter = MutableLiveData<AgendaCountModel>()
     val TAG: String = "AgendaCountRepository"
 
-    fun getServicesApiCall(context: Context,ID_Employee: String): MutableLiveData<AgendaCountModel> {
-        getAgendaCount(context,ID_Employee)
+    fun getServicesApiCall(context: Context,ID_Branch : String ,ID_Employee: String): MutableLiveData<AgendaCountModel> {
+        getAgendaCount(context,ID_Branch,ID_Employee)
         return agendaCountSetterGetter
     }
 
-    private fun getAgendaCount(context: Context,ID_Employee: String) {
+    private fun getAgendaCount(context: Context,ID_Branch : String ,ID_Employee: String) {
         try {
             agendaCountSetterGetter.value = AgendaCountModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -76,6 +76,7 @@ object AgendaCountRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
 //                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("FK_Employee",ProdsuitApplication.encryptStart(ID_Employee))
+                requestObject1.put("ID_Branch",ProdsuitApplication.encryptStart(ID_Branch))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
                 Log.e(TAG,"requestObject1   7711   "+requestObject1)

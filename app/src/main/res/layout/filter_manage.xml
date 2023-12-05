@@ -91,7 +91,7 @@
                             android:drawableTint="@color/textColor"
                             android:fontFamily="@font/myfont"
                             android:hint="Branch"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/tie_Branch"
