@@ -25,12 +25,12 @@ object AuthorizationMixedRepository {
     val authorizationMixedSetterGetter = MutableLiveData<AuthorizationMixedModel>()
     val TAG: String = "AuthorizationMixedRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<AuthorizationMixedModel> {
-        getAuthorizationMixed(context)
+    fun getServicesApiCall(context: Context,SubMode: String): MutableLiveData<AuthorizationMixedModel> {
+        getAuthorizationMixed(context,SubMode)
         return authorizationMixedSetterGetter
     }
 
-    private fun getAuthorizationMixed(context: Context) {
+    private fun getAuthorizationMixed(context: Context,SubMode: String) {
 
         try {
             authorizationMixedSetterGetter.value = AuthorizationMixedModel("")
@@ -71,6 +71,7 @@ object AuthorizationMixedRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(FK_UserCodeSP.getString("UserCode", null)))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
 
 
                 Log.e(TAG,"78 getAuthorizationModuleList  "+requestObject1)

@@ -12,8 +12,8 @@ class AuthorizationMixedViewModel  : ViewModel() {
 
     var authorizationMixedData: MutableLiveData<AuthorizationMixedModel>? = null
 
-    fun getAuthorizationMixed(context: Context) : LiveData<AuthorizationMixedModel>? {
-        authorizationMixedData = AuthorizationMixedRepository.getServicesApiCall(context)
+    fun getAuthorizationMixed(context: Context,SubMode: String) : LiveData<AuthorizationMixedModel>? {
+        authorizationMixedData = AuthorizationMixedRepository.getServicesApiCall(context,SubMode)
         return authorizationMixedData
     }
 }
