@@ -2534,6 +2534,8 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 //                NewListTicket
 //                til_FollowUpAction!!.visibility = View.GONE
                 til_FollowUpType!!.visibility = View.GONE
+                til_Status!!.visibility = View.GONE
+
             }
 
             if (ReportMode.equals("6")) {

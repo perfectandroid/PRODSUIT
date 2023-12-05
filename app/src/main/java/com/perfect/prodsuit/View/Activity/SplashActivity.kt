@@ -23,10 +23,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
-import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONObject
 
@@ -40,10 +40,10 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://202.164.150.65:14262/ProdSuitAPI/"
 //    val BANK_KEY = "-500"
 
-    val CERT_NAME = "expo.pem"
-    val BASE_URL  = "https://45.118.163.44:15010/ExpoLiveapi/api/"
-    val IMAGE_URL = "https://45.118.163.44:15010/ExpoLiveapi/"
-    val BANK_KEY  = "-500"
+//    val CERT_NAME = "expo.pem"
+//    val BASE_URL  = "https://45.118.163.44:15010/ExpoLiveapi/api/"
+//    val IMAGE_URL = "https://45.118.163.44:15010/ExpoLiveapi/"
+//    val BANK_KEY  = "-500"
 
 
   /* val CERT_NAME = "development.pem"
@@ -184,13 +184,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
 
     ////    DEVELOPMENT 30.11.2022
-/*
+
     val CERT_NAME = "prodsuiteapi.pem"
     val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
     val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
     val BANK_KEY  = "-500"
-*/
-
 
 
     ///verminatorERP 30.9.2023
