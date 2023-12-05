@@ -47,6 +47,7 @@ class AuthorizationMiniDashboardActivity : AppCompatActivity(), View.OnClickList
     var subList : MutableList<ChildDataModel> = ArrayList()
 //    var subList                : JSONArray
     var authMixCount           = 0
+    var SubMode           = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +62,9 @@ class AuthorizationMiniDashboardActivity : AppCompatActivity(), View.OnClickList
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
         tv_header!!.setText(jsonObj!!.getString("label"))
+        SubMode = (jsonObj!!.getString("mode"))
 
+        Log.e(TAG,"dsddfsfa  "+SubMode)
         getList()
     }
 
@@ -75,7 +78,7 @@ class AuthorizationMiniDashboardActivity : AppCompatActivity(), View.OnClickList
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                authorizationMixedViewModel.getAuthorizationMixed(this)!!.observe(
+                authorizationMixedViewModel.getAuthorizationMixed(this,SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
