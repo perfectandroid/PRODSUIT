@@ -1642,12 +1642,12 @@
 
                                             <androidx.recyclerview.widget.RecyclerView
                                                 android:id="@+id/rclrvw_leadoutstand"
-                                                android:layout_width="match_parent"
+                                                android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:layout_gravity="center"
-                                                android:gravity="center"
                                                 android:layout_margin="10dp"
-                                                android:visibility="visible" />
+                                                android:gravity="center"
+                                                android:visibility="visible"  />
                                             <TextView
                                                 android:id="@+id/txtv_leadoutstand"
                                                 android:layout_width="match_parent"
@@ -1745,7 +1745,7 @@
                                                     android:layout_gravity="center"
                                                     android:layout_margin="10dp"
                                                     android:gravity="center"
-                                                    android:visibility="visible" />
+                                                    android:visibility="visible" /> />
                                                 <TextView
                                                     android:id="@+id/txtv_leadcountscenariormrk"
                                                     android:layout_width="match_parent"
