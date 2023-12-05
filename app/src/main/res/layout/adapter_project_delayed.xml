@@ -7,6 +7,7 @@
     android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -20,7 +21,7 @@
 
             <LinearLayout
                 android:layout_width="1dp"
-                android:layout_height="35dp"
+                android:layout_height="match_parent"
                 android:background="@color/grey"/>
 
             <TextView
@@ -29,13 +30,14 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="1"
+                android:textColor="@color/black"
                 android:gravity="center"
                 android:fontFamily="@font/myfont"
                 android:textSize="12dp"
                 android:layout_weight="1.4"/>
             <LinearLayout
                 android:layout_width="1dp"
-                android:layout_height="35dp"
+                android:layout_height="match_parent"
                 android:background="@color/grey"/>
             <TextView
                 android:id="@+id/tvv_Project"
@@ -43,12 +45,13 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/myfont"
                 android:padding="5dp"
+                android:textColor="@color/black"
                 android:textSize="12dp"
                 android:text="Project"
                 android:layout_weight="1"/>
             <LinearLayout
                 android:layout_width="1dp"
-                android:layout_height="35dp"
+                android:layout_height="match_parent"
                 android:background="@color/grey"/>
             <TextView
                 android:id="@+id/tvv_ActualPeriod"
@@ -57,13 +60,13 @@
                 android:fontFamily="@font/myfont"
                 android:padding="5dp"
                 android:textSize="12dp"
-                android:textColor="@color/blue"
+                android:textColor="@color/black"
                 android:gravity="center"
                 android:text="ActualPeriod"
                 android:layout_weight="1.1"/>
             <LinearLayout
                 android:layout_width="1dp"
-                android:layout_height="35dp"
+                android:layout_height="match_parent"
                 android:background="@color/grey"/>
 
             <TextView
@@ -74,12 +77,12 @@
                 android:padding="5dp"
                 android:gravity="center"
                 android:text="CurrentPeriod"
-                android:textColor="@color/red"
+                android:textColor="@color/black"
                 android:textSize="12dp"
                 android:layout_weight="1.1"/>
             <LinearLayout
                 android:layout_width="1dp"
-                android:layout_height="35dp"
+                android:layout_height="match_parent"
                 android:background="@color/grey"/>
 
 
