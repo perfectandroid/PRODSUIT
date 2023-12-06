@@ -357,7 +357,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                                     Intent.ACTION_PICK,
                                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                                 )
-                                startActivityForResult(pickPhoto, PICK_IMAGE_GALLERY)
+                                startActivityForResult(pickPhoto,  PICK_IMAGE_GALLERY)
                             } else if (options[item] == "Choose Document") {
                                 browseDocuments()
                             } else if (options[item] == "Cancel") {
@@ -576,15 +576,29 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                 val selectedImage = data.data
                 try {
                     val fileName = UriUtil.getFileName(this,data!!.data!!)
-                    Log.e(TAG,"561 fileName :   "+fileName)
+                    Log.e(TAG,"5615565 fileName :   "+fileName)
+                    Log.e(TAG,"5615565 selectedImage :   "+selectedImage)
                     bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImage)
-                    val bytes = ByteArrayOutputStream()
-                    bitmap!!.compress(Bitmap.CompressFormat.JPEG, 50, bytes)
+//                    val bytes = ByteArrayOutputStream()
+//                    Log.e(TAG,"5615565 bytes :   "+bytes)
+//                    bitmap!!.compress(Bitmap.CompressFormat.JPEG, 50, bytes)
                     imgPath = getRealPathFromURI(selectedImage)
                     destination = File(imgPath.toString())
+
+
+                    val nh = (bitmap!!.getHeight() * (512.0 / bitmap!!.getWidth()))
+                    val scaled = Bitmap.createScaledBitmap(bitmap!!, 512, nh.toInt(), true)
+                    Log.e(TAG,"5615565 scaled :   "+scaled)
+                    val fo: FileOutputStream
+                    fo = FileOutputStream(destination)
+                    scaled.compress(Bitmap.CompressFormat.PNG, 90, fo);
+
+                    fo.flush()
+                    fo.close()
+
                     documentPath = imgPath!!
                     txtAttachmentPath!!.setText(imgPath)
-                 //   tie_Attachment!!.setText(imgPath)
+                    //   tie_Attachment!!.setText(imgPath)
                     tie_Attachment!!.setText(fileName)
                 } catch (e: Exception) {
                     e.printStackTrace()
