@@ -40,6 +40,7 @@ class ProjectLeadListAdapter (internal var context: Context, internal var jsonAr
                 holder.tv_Name.text        = jsonObject!!.getString("CustomeName")
                 holder.tv_Mobile.text        = jsonObject!!.getString("MobileNo")
                 holder.tv_Address.text        = jsonObject!!.getString("CusAddress")
+                holder.tv_VisitDate.text        = jsonObject!!.getString("SiteVisitDate")
 
                 if (jsonObject!!.getString("IsSiteVisit").equals("1")){
                     holder.img_visited.visibility = View.VISIBLE
@@ -77,6 +78,7 @@ class ProjectLeadListAdapter (internal var context: Context, internal var jsonAr
         internal var tv_Mobile   : TextView
         internal var tv_Name   : TextView
         internal var tv_Address   : TextView
+        internal var tv_VisitDate   : TextView
         internal var img_visited   : ImageView
         internal var ll_leadlist   : LinearLayout
         init {
@@ -85,6 +87,7 @@ class ProjectLeadListAdapter (internal var context: Context, internal var jsonAr
             tv_Mobile          = v.findViewById<View>(R.id.tv_Mobile) as TextView
             tv_Name          = v.findViewById<View>(R.id.tv_Name) as TextView
             tv_Address          = v.findViewById<View>(R.id.tv_Address) as TextView
+            tv_VisitDate          = v.findViewById<View>(R.id.tv_VisitDate) as TextView
             img_visited          = v.findViewById<View>(R.id.img_visited) as ImageView
             ll_leadlist          = v.findViewById<View>(R.id.ll_leadlist) as LinearLayout
 
