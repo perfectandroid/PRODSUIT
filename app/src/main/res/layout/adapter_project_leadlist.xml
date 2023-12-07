@@ -186,6 +186,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:gravity="center_vertical"
                                 android:orientation="horizontal">
 
                                 <TextView
@@ -199,7 +200,17 @@
                                     android:text=""
                                     android:textStyle="bold"
                                     android:textColor="@color/black"
-                                    android:layout_centerVertical="true" />
+                                    android:layout_weight="1" />
+
+                                <ImageView
+                                    android:id="@+id/img_visited"
+                                    android:layout_width="70dp"
+                                    android:layout_height="24dp"
+                                    android:gravity="center_vertical"
+                                    android:src="@drawable/isvg_visitedd"
+                                    android:layout_alignParentLeft="true"
+                                    android:visibility="gone" />
+
 
                             </LinearLayout>
 

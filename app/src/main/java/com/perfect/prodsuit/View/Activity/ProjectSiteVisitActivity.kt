@@ -254,6 +254,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     var IncludeTaxCalc   = ""
     var AmountTaxCalc   = ""
 
+    var strInspectCharge = ""
+
     val modelProjectEmpDetails = ArrayList<ModelProjectEmpDetails>()
 
     var jsonObj: JSONObject? = null
@@ -337,10 +339,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             tie_LeadNo!!.isEnabled = true
         }else{
             Log.e(TAG,"23112   ")
-
+            strInspectCharge = jsonObj!!.getString("ExpenseAmount")
             ID_LeadGenerate = jsonObj!!.getString("ID_LeadGenerate")
             tie_LeadNo!!.setText(""+jsonObj!!.getString("LeadNo"))
             tie_LeadNo!!.isEnabled = false
+            tie_InspectionCharge!!.setText(strInspectCharge)
         }
 
     }
@@ -1063,7 +1066,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private fun saveDocuments(strDescription: String, strImageName: String, encodeDoc: String?, extension: String) {
         var TransMode = "PRSV"
       //  FK_SiteVisit = "19"
-        Toast.makeText(applicationContext,""+FK_SiteVisit,Toast.LENGTH_SHORT).show()
+      //  Toast.makeText(applicationContext,""+FK_SiteVisit,Toast.LENGTH_SHORT).show()
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1301,11 +1304,14 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             tie_LeadNo!!.setText("")
             strID_FIELD = ""
             ID_LeadGenerate = ""
+            tie_InspectionCharge!!.setText("")
+        }else{
+            tie_InspectionCharge!!.setText(strInspectCharge)
         }
         tie_InspectionNotes1!!.setText("")
         tie_InspectionNotes2!!.setText("")
         tie_CustomerNotes!!.setText("")
-        tie_InspectionCharge!!.setText("")
+
 
 
         // Employee Details
@@ -3925,6 +3931,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             tie_LeadNo!!.setText(jsonObject.getString("LeadNo"))
             strID_FIELD = jsonObject.getString("ID_LeadGenerate")
             ID_LeadGenerate = jsonObject.getString("ID_LeadGenerate")
+            tie_InspectionCharge!!.setText(jsonObject.getString("ExpenseAmount"))
 
         }
 

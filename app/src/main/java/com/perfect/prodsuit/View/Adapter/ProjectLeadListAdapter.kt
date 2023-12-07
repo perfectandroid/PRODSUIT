@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -40,6 +41,12 @@ class ProjectLeadListAdapter (internal var context: Context, internal var jsonAr
                 holder.tv_Mobile.text        = jsonObject!!.getString("MobileNo")
                 holder.tv_Address.text        = jsonObject!!.getString("CusAddress")
 
+                if (jsonObject!!.getString("IsSiteVisit").equals("1")){
+                    holder.img_visited.visibility = View.VISIBLE
+                }else{
+                    holder.img_visited.visibility = View.GONE
+                }
+
 
                 holder.ll_leadlist!!.setTag(position)
                 holder.ll_leadlist!!.setOnClickListener(View.OnClickListener {
@@ -70,6 +77,7 @@ class ProjectLeadListAdapter (internal var context: Context, internal var jsonAr
         internal var tv_Mobile   : TextView
         internal var tv_Name   : TextView
         internal var tv_Address   : TextView
+        internal var img_visited   : ImageView
         internal var ll_leadlist   : LinearLayout
         init {
             tv_Date          = v.findViewById<View>(R.id.tv_Date) as TextView
@@ -77,6 +85,7 @@ class ProjectLeadListAdapter (internal var context: Context, internal var jsonAr
             tv_Mobile          = v.findViewById<View>(R.id.tv_Mobile) as TextView
             tv_Name          = v.findViewById<View>(R.id.tv_Name) as TextView
             tv_Address          = v.findViewById<View>(R.id.tv_Address) as TextView
+            img_visited          = v.findViewById<View>(R.id.img_visited) as ImageView
             ll_leadlist          = v.findViewById<View>(R.id.ll_leadlist) as LinearLayout
 
         }
