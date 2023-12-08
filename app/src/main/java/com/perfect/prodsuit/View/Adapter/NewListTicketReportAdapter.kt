@@ -57,6 +57,7 @@ class NewListTicketReportAdapter(internal var context: Context, internal var jso
                 holder.tv_priority.text      = jsonObject!!.getString("Priority")
                 holder.txtCustomer.text      = "Customer : "+jsonObject!!.getString("Customer")
                 holder.txtCollectedBy.text      = "Collected By : "+jsonObject!!.getString("LgCollectedBy")
+                holder.txtMobilenumber.text      = "Phone No : "+jsonObject!!.getString("PhnNo")
                 var  strCat = ""
                 var  strProd = "Product : "+jsonObject!!.getString("Product")
                 holder.txtProduct.text = strProd
@@ -114,6 +115,7 @@ class NewListTicketReportAdapter(internal var context: Context, internal var jso
         internal var txtProduct          : TextView
         internal var tv_priority          : TextView
         internal var txtCollectedBy      : TextView
+        internal var txtMobilenumber      : TextView
         internal var tv_date      : TextView
         internal var ll_newList          : CardView
 
@@ -135,6 +137,7 @@ class NewListTicketReportAdapter(internal var context: Context, internal var jso
             txtProduct         = v.findViewById<View>(R.id.txtProduct) as TextView
             txtCollectedBy     = v.findViewById<View>(R.id.txtCollectedBy) as TextView
             tv_date     = v.findViewById<View>(R.id.tv_date) as TextView
+            txtMobilenumber     = v.findViewById<View>(R.id.txtMobilenumber) as TextView
             tv_priority     = v.findViewById<View>(R.id.tv_priority) as TextView
             ll_newList         = v.findViewById<View>(R.id.ll_newList) as CardView
 

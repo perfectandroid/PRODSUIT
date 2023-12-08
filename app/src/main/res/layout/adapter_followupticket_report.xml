@@ -346,6 +346,20 @@
                     android:drawablePadding="10dp"
                     android:textAllCaps="true"
                     android:textColor="@color/black"/>
+                <TextView
+                    android:id="@+id/txtMobilenumber"
+                    android:fontFamily="@font/myfont"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:gravity="left|center"
+                    android:textSize="12dp"
+                    android:layout_marginTop="2dp"
+                    android:drawableLeft="@drawable/ic_mobile_24"
+                    android:drawableTint="@color/greydark"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/black"
+                    android:visibility="visible"/>
 
                 <View
                     android:layout_width="match_parent"
