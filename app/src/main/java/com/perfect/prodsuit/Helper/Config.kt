@@ -1,9 +1,12 @@
 package com.perfect.prodsuit.Helper
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.ConnectivityManager
 import android.util.Log
@@ -13,6 +16,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.gms.tasks.Task
@@ -1327,6 +1331,27 @@ object Config {
         val g = (0..255).random()
         val b = (0..255).random()
         return Color.rgb(r, g, b)
+    }
+
+     fun check13Permission(context : Context): Boolean {
+         var PERMISSION_CODE = 100
+         var readMediaAudio = Manifest.permission.READ_MEDIA_AUDIO
+         var readMediaVideo = Manifest.permission.READ_MEDIA_VIDEO
+         var readMediaImages = Manifest.permission.READ_MEDIA_IMAGES
+
+        var result = true
+        val pm = context.packageManager
+        val hasPerm1 = pm.checkPermission(readMediaAudio, context.packageName)
+        val hasPerm2 = pm.checkPermission(readMediaVideo, context.packageName)
+        val hasPerm3 = pm.checkPermission(readMediaImages, context.packageName)
+        if (hasPerm1 !=  PackageManager.PERMISSION_GRANTED || hasPerm2 !=  PackageManager.PERMISSION_GRANTED || hasPerm3 !=  PackageManager.PERMISSION_GRANTED ){
+            result  =false
+            ActivityCompat.requestPermissions(context!! as Activity, arrayOf(readMediaAudio,readMediaImages,readMediaVideo), PERMISSION_CODE)
+        }else{
+            result  =true
+        }
+
+        return result
     }
 
 

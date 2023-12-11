@@ -15,7 +15,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
 import android.provider.ContactsContract
@@ -26,6 +25,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -89,6 +89,8 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
     private val GALLERY = 1
     private val CAMERA = 2
     private val PERMISSION_REQUEST_CODE = 200
+    private val WRITE = 3
+    private val READ = 4
 
     private var ll_product_qty: LinearLayout? = null
     private var llfollowup: LinearLayout? = null
@@ -245,7 +247,37 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
     private var array_product_lead = JSONArray()
     lateinit var leadGenerateSaveViewModel: LeadGenerateSaveViewModel
     lateinit var saveLeadGenArrayList: JSONArray
+    var CAMERA_PERMISSION_REQUEST_CODE = 100
 
+    val multiplePermissionId = 14
+
+     private val multiplePermissionList = if (Build.VERSION.SDK_INT >= 33) {
+         arrayOf(
+             Manifest.permission.READ_MEDIA_VIDEO,
+             Manifest.permission.READ_MEDIA_AUDIO,
+             Manifest.permission.READ_MEDIA_IMAGES,
+             // Add other permissions as needed
+         )
+     }
+    else{
+        arrayOf(
+             Manifest.permission.WRITE_EXTERNAL_STORAGE,
+             Manifest.permission.READ_EXTERNAL_STORAGE
+         )
+     }
+
+    var PERMISSION_CODE = 100
+    var readMediaAudio = Manifest.permission.READ_MEDIA_AUDIO
+    var readMediaVideo = Manifest.permission.READ_MEDIA_VIDEO
+    var readMediaImages = Manifest.permission.READ_MEDIA_IMAGES
+
+
+//    private val permissions = arrayOf(
+//        Manifest.permission.CAMERA,
+//        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//        Manifest.permission.READ_EXTERNAL_STORAGE,
+//        // Add other permissions as needed
+//    )
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -287,7 +319,38 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         followUpType = 0
         getFollowupType()
 
+
+//        checkCameraPermissions()
+//        checkAndRequestStoragePermission()
+
+      //  checkAndRequestPermissions()
+        if(checkAndRequestPermissions1()) {
+            // carry on the normal flow, as the case of  permissions  granted.
+            Log.e(TAG,"325551     Granted")
+        }else{
+            Log.e(TAG,"325552     Not Granted")
+        }
+
     }
+
+    private fun checkAndRequestPermissions1(): Boolean {
+        val readVideo = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_VIDEO)
+        val readAudio = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_AUDIO)
+        val readImages = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)
+
+        val listPermissionsNeeded: List<String> = ArrayList()
+
+
+        if (!multiplePermissionList.isEmpty()) {
+            ActivityCompat.requestPermissions(this, multiplePermissionList,multiplePermissionId);
+            return false
+        }
+        return true
+
+    }
+
+
+
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
@@ -545,6 +608,8 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
             R.id.imgv_upload1 -> {
                 try {
+                    checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, 23)
+                    Log.e("TAG", "Exception  5465656   " )
                     Config.Utils.hideSoftKeyBoard(this@LeadGenerationQuickActivity, v)
                     strImage = "1"
                     showPictureDialog()
@@ -560,6 +625,8 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                     Config.Utils.hideSoftKeyBoard(this@LeadGenerationQuickActivity, v)
                     strImage = "2"
                     showPictureDialog()
+
+
                 } catch (e: java.lang.Exception) {
                     if (checkCamera()) {
                     } else {
@@ -1955,32 +2022,35 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         } else if (requestCode == CAMERA) {
 
             try {
+                Log.e(TAG,"2154441        ")
                 if (data != null) {
                     try {
-                        if (ContextCompat.checkSelfPermission(
-                                this,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE
-                            ) != PackageManager.PERMISSION_GRANTED
-                        ) {
-                            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                                    this,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                                )
-                            ) {
-                                // Show an explanation to the user *asynchronously* -- don't block
-                                // this thread waiting for the user's response! After the user
-                                // sees the explanation, try again to request the permission.
-
-                            } else {
-                                // No explanation needed; request the permission
-                                ActivityCompat.requestPermissions(
-                                    this,
-                                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                                    MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
-                                )
-                            }
-                        } else {
-
+                        Log.e(TAG,"2154442        ")
+//                        if (ContextCompat.checkSelfPermission(
+//                                this,
+//                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                            ) != PackageManager.PERMISSION_GRANTED
+//                        ) {
+//                            if (ActivityCompat.shouldShowRequestPermissionRationale(
+//                                    this,
+//                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                                )
+//                            ) {
+//                                // Show an explanation to the user *asynchronously* -- don't block
+//                                // this thread waiting for the user's response! After the user
+//                                // sees the explanation, try again to request the permission.
+//
+//                            } else {
+//                                // No explanation needed; request the permission
+//                                ActivityCompat.requestPermissions(
+//                                    this,
+//                                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+//                                    MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+//                                )
+//                                Log.e(TAG,"2154443        ")
+//                            }
+//                        } else {
+                            Log.e(TAG,"2154444        ")
                             val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
                             val bytes = ByteArrayOutputStream()
                             thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
@@ -1996,6 +2066,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 //                    val fo: FileOutputStream
 
                             try {
+                                Log.e(TAG,"2154445        ")
 //                        if (!destination!!.getParentFile().exists()) {
 //                            destination!!.getParentFile().mkdirs()
 //                        }
@@ -2033,31 +2104,38 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                             } catch (e: FileNotFoundException) {
                                 e.printStackTrace()
                                 Log.e(TAG, "FileNotFoundException   23671    " + e.toString())
+                                Log.e(TAG,"2154446        "+e.toString())
 
                             } catch (e: IOException) {
                                 e.printStackTrace()
+                                Log.e(TAG,"2154447        "+e.toString())
                                 Log.e(TAG, "FileNotFoundException   23672    " + e.toString())
                             }
 
                             if (strImage.equals("1")) {
+                                Log.e(TAG,"2154448        ")
                                 image1 = destination!!.getAbsolutePath()
                                 Log.e(TAG, "image1  20522    " + image1)
                                 destination = File(image1)
-
+                                Log.e(TAG,"21544481       "+destination)
 
                                 val myBitmap = BitmapFactory.decodeFile(destination.toString())
                                 val converetdImage = getResizedBitmap(myBitmap, 500)
                                 //  val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
                                 if (imgvupload1 != null) {
                                     imgvupload1!!.setImageBitmap(converetdImage)
+                                    Log.e(TAG,"215444821       "+converetdImage)
                                 }
+                                Log.e(TAG,"21544482       "+converetdImage)
                                 imgvupload1!!.setImageBitmap(converetdImage)
+
 
                                 if (image1 != null) {
 
                                 }
                             }
                             if (strImage.equals("2")) {
+                                Log.e(TAG,"2154449        ")
                                 image2 = destination!!.getAbsolutePath()
                                 Log.e(TAG, "image2  20522    " + image2)
                                 destination = File(image2)
@@ -2075,15 +2153,17 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                                 }
                             }
 
-                        }
+                     //   }
                     } catch (e: IOException) {
                         e.printStackTrace()
+                        Log.e(TAG,"21544410  Exception       "+e.toString())
                         Toast.makeText(this@LeadGenerationQuickActivity, "Failed!", Toast.LENGTH_SHORT)
                             .show()
                     }
                 }
             } catch (e: Exception) {
 
+                Log.e(TAG,"21544411  Exception       "+e.toString())
             }
 
 
@@ -2210,39 +2290,74 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         try {
             val pm = packageManager
             val hasPerm = pm.checkPermission(Manifest.permission.CAMERA, packageName)
+
+
             if (hasPerm == PackageManager.PERMISSION_GRANTED) {
-                if (ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ) !== PackageManager.PERMISSION_GRANTED
-                ) {
-                    // Permission is not granted
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+                Log.e(TAG, "22239991   ")
+
+
+                if (Build.VERSION.SDK_INT >= 33) {
+                    //ActivityCompat.requestPermissions(this,String[]{readMediaAudio},PERMISSION_CODE)
+                    Log.e(TAG, "222399912   ")
+                    if (Config.check13Permission(context)) {
+                        Log.e(TAG, "222399913   ")
+
+                        val pictureDialog = AlertDialog.Builder(this)
+                        pictureDialog.setTitle("Select From")
+                        val pictureDialogItems = arrayOf("Gallery", "Camera")
+                        pictureDialog.setItems(pictureDialogItems) { dialog, which ->
+                            when (which) {
+                                0 -> choosePhotoFromGallary()
+                                1 -> takePhotoFromCamera()
+                            }
+                        }
+                        pictureDialog.show()
+                    }
+//                    ActivityCompat.requestPermissions(this, arrayOf(readMediaAudio,readMediaImages,readMediaVideo), PERMISSION_CODE)
+
+
+                } else {
+                    Log.e(TAG, "222399914   ")
+
+
+
+                    if (ContextCompat.checkSelfPermission(
                             this,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        )
+                        ) !== PackageManager.PERMISSION_GRANTED
                     ) {
-                        // Show an explanation to the user *asynchronously* -- don't block
-                        // this thread waiting for the user's response! After the user
-                        // sees the explanation, try again to request the permission.
-                    } else {
-                        // No explanation needed; request the permission
-                        ActivityCompat.requestPermissions(
-                            this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
-                        )
-                    }
-                } else {
-                    val pictureDialog = AlertDialog.Builder(this)
-                    pictureDialog.setTitle("Select From")
-                    val pictureDialogItems = arrayOf("Gallery", "Camera")
-                    pictureDialog.setItems(pictureDialogItems) { dialog, which ->
-                        when (which) {
-                            0 -> choosePhotoFromGallary()
-                            1 -> takePhotoFromCamera()
+
+                        // Permission is not granted
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                                this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            )
+                        ) {
+                            Log.e(TAG, "22239992   ")
+                            // Show an explanation to the user *asynchronously* -- don't block
+                            // this thread waiting for the user's response! After the user
+                            // sees the explanation, try again to request the permission.
+                        } else {
+                            // No explanation needed; request the permission
+                            Log.e(TAG, "22239993   ")
+                            ActivityCompat.requestPermissions(
+                                this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                            )
                         }
+                    } else {
+                        Log.e(TAG, "22239994   ")
+                        val pictureDialog = AlertDialog.Builder(this)
+                        pictureDialog.setTitle("Select From")
+                        val pictureDialogItems = arrayOf("Gallery", "Camera")
+                        pictureDialog.setItems(pictureDialogItems) { dialog, which ->
+                            when (which) {
+                                0 -> choosePhotoFromGallary()
+                                1 -> takePhotoFromCamera()
+                            }
+                        }
+                        pictureDialog.show()
                     }
-                    pictureDialog.show()
                 }
             } else ActivityCompat.requestPermissions(
                 this, arrayOf(Manifest.permission.CAMERA),
@@ -2250,9 +2365,12 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             )
         } catch (e: Exception) {
 
+            Log.e(TAG,"2256    "+e)
         }
 
     }
+
+
 
     private fun checkCamera(): Boolean {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -3179,6 +3297,168 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         followUpType = 0
         getFollowupType()
 
+    }
+
+
+    private fun checkCameraPermissions() {
+        // Check if the camera permission is already granted
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            // Camera permission is already granted
+            // You can proceed with using the camera
+        } else {
+            // Camera permission has not been granted
+            // Request camera permission
+            requestCameraPermission()
+        }
+    }
+
+    private fun requestCameraPermission() {
+        // Check if the device is running Android 6.0 (Marshmallow) or higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Request camera permission
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.CAMERA),
+                CAMERA_PERMISSION_REQUEST_CODE
+            )
+        }
+        // If the device is running a version lower than Android 6.0,
+        // the permission is already granted in the manifest
+    }
+
+    // Override onRequestPermissionsResult to handle the result of the permission request
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//
+//        if (requestCode == CAMERA_PERMISSION_REQUEST_CODE) {
+//            // Check if the camera permission is granted
+//            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                // Camera permission granted
+//                // You can proceed with using the camera
+//            } else {
+//                // Camera permission denied
+//                // You may want to inform the user about the importance of the camera permission
+//            }
+//        }
+//    }
+//
+//    private fun checkAndRequestStoragePermission() {
+//        // Check if the WRITE_EXTERNAL_STORAGE permission is already granted
+//        val readImagePermission = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+//            Manifest.permission.READ_MEDIA_IMAGES
+//        else
+//            Manifest.permission.READ_EXTERNAL_STORAGE
+//
+//
+//
+//            checkAndRequestPermissions()
+//
+////        if(ContextCompat.checkSelfPermission(this, readImagePermission) == PackageManager.PERMISSION_GRANTED)
+////        {
+//////permission granted
+////            Log.e(TAG,"  325000    Permission Granted")
+////        } else {
+//////request permission here
+////            Log.e(TAG,"325000      request permission here")
+////        }
+//    }
+//
+//    private fun checkAndRequestPermissions() {
+//        val permissions = arrayOf(
+//            Manifest.permission.CAMERA,
+//            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+//            Manifest.permission.READ_EXTERNAL_STORAGE)
+//        // Check if any of the permissions are not granted
+//        val permissionsToRequest = permissions.filter {
+//            ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
+//        }
+//
+//        if (permissionsToRequest.isNotEmpty()) {
+//            // Request the permissions that are not granted
+//            requestMultiplePermissionsLauncher.launch(permissionsToRequest.toTypedArray())
+//            ActivityCompat.requestPermissions(this,
+//                arrayOf(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE), CAMERA_PERMISSION_REQUEST_CODE
+//            )
+//        } else {
+//            // All permissions are already granted
+//            // Proceed with your operations
+//            Log.e(TAG,"  32500033    Permission Granted")
+//        }
+//    }
+//
+//    private val requestMultiplePermissionsLauncher =
+//        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissionsMap ->
+//            // Check if all requested permissions are granted
+//            val allPermissionsGranted = permissionsMap.all { it.value }
+//
+//            if (allPermissionsGranted) {
+//                // All requested permissions are granted
+//                // Proceed with your operations
+//            } else {
+//                // Some permissions are not granted
+//                // You may want to inform the user about the importance of the permissions
+//            }
+//        }
+
+
+    private fun requestCamera1Permission() {
+        // Check if the device is running Android 6.0 (Marshmallow) or higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Request camera permission
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.CAMERA),
+                CAMERA_PERMISSION_REQUEST_CODE
+            )
+        }
+        // If the device is running a version lower than Android 6.0,
+        // the permission is already granted in the manifest
+    }
+
+    private fun requestReadPermission() {
+        // Check if the device is running Android 6.0 (Marshmallow) or higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Request camera permission
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                CAMERA_PERMISSION_REQUEST_CODE
+            )
+        }
+        // If the device is running a version lower than Android 6.0,
+        // the permission is already granted in the manifest
+    }
+
+    private fun requestWritePermission() {
+        // Check if the device is running Android 6.0 (Marshmallow) or higher
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Request camera permission
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                CAMERA_PERMISSION_REQUEST_CODE
+            )
+        }
+        // If the device is running a version lower than Android 6.0,
+        // the permission is already granted in the manifest
+    }
+
+    private fun checkPermission(permission: String, requestCode: Int) {
+        if (ContextCompat.checkSelfPermission(this@LeadGenerationQuickActivity, permission) == PackageManager.PERMISSION_DENIED) {
+           // Toast.makeText(this@LeadGenerationQuickActivity, "Requesting the permission", Toast.LENGTH_SHORT).show()
+            // Requesting the permission
+            ActivityCompat.requestPermissions(this@LeadGenerationQuickActivity, arrayOf(permission), requestCode)
+        } else {
+          //  Toast.makeText(this@LeadGenerationQuickActivity, "Permission already granted", Toast.LENGTH_SHORT).show()
+        }
     }
 
 }

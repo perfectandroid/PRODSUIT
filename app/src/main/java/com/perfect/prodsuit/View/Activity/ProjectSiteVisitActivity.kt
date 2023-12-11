@@ -3313,61 +3313,107 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             val pm = packageManager
             val hasPerm = pm.checkPermission(Manifest.permission.CAMERA, packageName)
             if (hasPerm == PackageManager.PERMISSION_GRANTED) {
-                if (ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ) !== PackageManager.PERMISSION_GRANTED
-                ) {
-                    // Permission is not granted
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+
+                if (Build.VERSION.SDK_INT >= 33) {
+                    //ActivityCompat.requestPermissions(this,String[]{readMediaAudio},PERMISSION_CODE)
+                    Log.e(TAG, "222399912   ")
+                    if (Config.check13Permission(context)) {
+                        Log.e(TAG, "222399913   ")
+
+                        val options = arrayOf<CharSequence>(
+                            "Take Photo",
+                            "Choose From Gallery",
+                            "Choose Document",
+                            "Cancel"
+                        )
+                        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                        builder.setTitle("Select Option")
+                        builder.setItems(options,
+                            DialogInterface.OnClickListener { dialog, item ->
+                                if (options[item] == "Take Photo") {
+                                    dialog.dismiss()
+                                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                                    startActivityForResult(intent, PICK_IMAGE_CAMERA)
+                                } else if (options[item] == "Choose From Gallery") {
+                                    dialog.dismiss()
+                                    val pickPhoto = Intent(
+                                        Intent.ACTION_PICK,
+                                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                                    )
+                                    startActivityForResult(pickPhoto, PICK_IMAGE_GALLERY)
+                                } else if (options[item] == "Choose Document") {
+                                    // browseDocuments()
+                                    //  browseFolders()
+
+                                    pickDocument()
+                                } else if (options[item] == "Cancel") {
+                                    dialog.dismiss()
+                                }
+                                dialog.dismiss()
+                            })
+                        builder.show()
+                    }
+//                    ActivityCompat.requestPermissions(this, arrayOf(readMediaAudio,readMediaImages,readMediaVideo), PERMISSION_CODE)
+
+
+                } else {
+                    if (ContextCompat.checkSelfPermission(
                             this,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        )
+                        ) !== PackageManager.PERMISSION_GRANTED
                     ) {
-                        // Show an explanation to the user *asynchronously* -- don't block
-                        // this thread waiting for the user's response! After the user
-                        // sees the explanation, try again to request the permission.
+                        // Permission is not granted
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                                this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            )
+                        ) {
+                            // Show an explanation to the user *asynchronously* -- don't block
+                            // this thread waiting for the user's response! After the user
+                            // sees the explanation, try again to request the permission.
+                        } else {
+                            // No explanation needed; request the permission
+                            ActivityCompat.requestPermissions(
+                                this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                            )
+                        }
                     } else {
-                        // No explanation needed; request the permission
-                        ActivityCompat.requestPermissions(
-                            this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                        val options = arrayOf<CharSequence>(
+                            "Take Photo",
+                            "Choose From Gallery",
+                            "Choose Document",
+                            "Cancel"
                         )
-                    }
-                } else {
-                    val options = arrayOf<CharSequence>(
-                        "Take Photo",
-                        "Choose From Gallery",
-                        "Choose Document",
-                        "Cancel"
-                    )
-                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                    builder.setTitle("Select Option")
-                    builder.setItems(options,
-                        DialogInterface.OnClickListener { dialog, item ->
-                            if (options[item] == "Take Photo") {
-                                dialog.dismiss()
-                                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                                startActivityForResult(intent, PICK_IMAGE_CAMERA)
-                            } else if (options[item] == "Choose From Gallery") {
-                                dialog.dismiss()
-                                val pickPhoto = Intent(
-                                    Intent.ACTION_PICK,
-                                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                                )
-                                startActivityForResult(pickPhoto, PICK_IMAGE_GALLERY)
-                            } else if (options[item] == "Choose Document") {
-                               // browseDocuments()
-                              //  browseFolders()
+                        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                        builder.setTitle("Select Option")
+                        builder.setItems(options,
+                            DialogInterface.OnClickListener { dialog, item ->
+                                if (options[item] == "Take Photo") {
+                                    dialog.dismiss()
+                                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                                    startActivityForResult(intent, PICK_IMAGE_CAMERA)
+                                } else if (options[item] == "Choose From Gallery") {
+                                    dialog.dismiss()
+                                    val pickPhoto = Intent(
+                                        Intent.ACTION_PICK,
+                                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                                    )
+                                    startActivityForResult(pickPhoto, PICK_IMAGE_GALLERY)
+                                } else if (options[item] == "Choose Document") {
+                                    // browseDocuments()
+                                    //  browseFolders()
 
-                                pickDocument()
-                            } else if (options[item] == "Cancel") {
+                                    pickDocument()
+                                } else if (options[item] == "Cancel") {
+                                    dialog.dismiss()
+                                }
                                 dialog.dismiss()
-                            }
-                            dialog.dismiss()
-                        })
-                    builder.show()
+                            })
+                        builder.show()
+                    }
                 }
+
             } else ActivityCompat.requestPermissions(
                 this, arrayOf(Manifest.permission.CAMERA),
                 PERMISSION_CAMERA
@@ -3599,29 +3645,29 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             try {
                 if (data != null) {
                     try {
-                        if (ContextCompat.checkSelfPermission(
-                                this,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE
-                            ) != PackageManager.PERMISSION_GRANTED
-                        ) {
-                            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                                    this,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                                )
-                            ) {
-                                // Show an explanation to the user *asynchronously* -- don't block
-                                // this thread waiting for the user's response! After the user
-                                // sees the explanation, try again to request the permission.
-
-                            } else {
-                                // No explanation needed; request the permission
-                                ActivityCompat.requestPermissions(
-                                    this,
-                                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                                    MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
-                                )
-                            }
-                        } else {
+//                        if (ContextCompat.checkSelfPermission(
+//                                this,
+//                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                            ) != PackageManager.PERMISSION_GRANTED
+//                        ) {
+//                            if (ActivityCompat.shouldShowRequestPermissionRationale(
+//                                    this,
+//                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                                )
+//                            ) {
+//                                // Show an explanation to the user *asynchronously* -- don't block
+//                                // this thread waiting for the user's response! After the user
+//                                // sees the explanation, try again to request the permission.
+//
+//                            } else {
+//                                // No explanation needed; request the permission
+//                                ActivityCompat.requestPermissions(
+//                                    this,
+//                                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+//                                    MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+//                                )
+//                            }
+//                        } else {
 
                             Log.e(TAG,"3961   "+data)
                             Log.e(TAG,"3962   "+data!!.getExtras()!!.get("data"))
@@ -3661,6 +3707,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                 fo = FileOutputStream(destination)
                                 fo.write(bytes.toByteArray())
                                 fo.close()
+
                             } catch (e: FileNotFoundException) {
                                 e.printStackTrace()
                                 Log.e(TAG, "FileNotFoundException   23671    " + e.toString())
@@ -3680,7 +3727,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                             tie_Attachments!!.setText(fileName)
 
 
-                        }
+                      //  }
                     } catch (e: IOException) {
                         e.printStackTrace()
                         Toast.makeText(this@ProjectSiteVisitActivity, "Failed!", Toast.LENGTH_SHORT)

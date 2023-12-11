@@ -4131,29 +4131,29 @@ private var custmoerAssignmentID : String? =null
             try {
                 if (data != null) {
                     try {
-                        if (ContextCompat.checkSelfPermission(
-                                this,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE
-                            ) != PackageManager.PERMISSION_GRANTED
-                        ) {
-                            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                                    this,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                                )
-                            ) {
-                                // Show an explanation to the user *asynchronously* -- don't block
-                                // this thread waiting for the user's response! After the user
-                                // sees the explanation, try again to request the permission.
-
-                            } else {
-                                // No explanation needed; request the permission
-                                ActivityCompat.requestPermissions(
-                                    this,
-                                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                                    MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
-                                )
-                            }
-                        } else {
+//                        if (ContextCompat.checkSelfPermission(
+//                                this,
+//                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                            ) != PackageManager.PERMISSION_GRANTED
+//                        ) {
+//                            if (ActivityCompat.shouldShowRequestPermissionRationale(
+//                                    this,
+//                                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                                )
+//                            ) {
+//                                // Show an explanation to the user *asynchronously* -- don't block
+//                                // this thread waiting for the user's response! After the user
+//                                // sees the explanation, try again to request the permission.
+//
+//                            } else {
+//                                // No explanation needed; request the permission
+//                                ActivityCompat.requestPermissions(
+//                                    this,
+//                                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+//                                    MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+//                                )
+//                            }
+//                        } else {
 
                             val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
                             val bytes = ByteArrayOutputStream()
@@ -4249,7 +4249,7 @@ private var custmoerAssignmentID : String? =null
                                 }
                             }
 
-                        }
+                     //   }
                     } catch (e: IOException) {
                         e.printStackTrace()
                         Toast.makeText(this@LeadGenerationActivity, "Failed!", Toast.LENGTH_SHORT)
@@ -4287,39 +4287,64 @@ private var custmoerAssignmentID : String? =null
             val pm = packageManager
             val hasPerm = pm.checkPermission(Manifest.permission.CAMERA, packageName)
             if (hasPerm == PackageManager.PERMISSION_GRANTED) {
-                if (ContextCompat.checkSelfPermission(
-                        this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ) !== PackageManager.PERMISSION_GRANTED
-                ) {
-                    // Permission is not granted
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+
+                if (Build.VERSION.SDK_INT >= 33) {
+                    //ActivityCompat.requestPermissions(this,String[]{readMediaAudio},PERMISSION_CODE)
+                    Log.e(TAG, "222399912   ")
+                    if (Config.check13Permission(context)) {
+                        Log.e(TAG, "222399913   ")
+
+                        val pictureDialog = AlertDialog.Builder(this)
+                        pictureDialog.setTitle("Select From")
+                        val pictureDialogItems = arrayOf("Gallery", "Camera")
+                        pictureDialog.setItems(pictureDialogItems) { dialog, which ->
+                            when (which) {
+                                0 -> choosePhotoFromGallary()
+                                1 -> takePhotoFromCamera()
+                            }
+                        }
+                        pictureDialog.show()
+                    }
+//                    ActivityCompat.requestPermissions(this, arrayOf(readMediaAudio,readMediaImages,readMediaVideo), PERMISSION_CODE)
+
+
+                } else {
+                    if (ContextCompat.checkSelfPermission(
                             this,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
-                        )
+                        ) !== PackageManager.PERMISSION_GRANTED
                     ) {
-                        // Show an explanation to the user *asynchronously* -- don't block
-                        // this thread waiting for the user's response! After the user
-                        // sees the explanation, try again to request the permission.
-                    } else {
-                        // No explanation needed; request the permission
-                        ActivityCompat.requestPermissions(
-                            this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
-                        )
-                    }
-                } else {
-                    val pictureDialog = AlertDialog.Builder(this)
-                    pictureDialog.setTitle("Select From")
-                    val pictureDialogItems = arrayOf("Gallery", "Camera")
-                    pictureDialog.setItems(pictureDialogItems) { dialog, which ->
-                        when (which) {
-                            0 -> choosePhotoFromGallary()
-                            1 -> takePhotoFromCamera()
+                        // Permission is not granted
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                                this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            )
+                        ) {
+                            // Show an explanation to the user *asynchronously* -- don't block
+                            // this thread waiting for the user's response! After the user
+                            // sees the explanation, try again to request the permission.
+                        } else {
+                            // No explanation needed; request the permission
+                            ActivityCompat.requestPermissions(
+                                this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                            )
                         }
+                    } else {
+                        val pictureDialog = AlertDialog.Builder(this)
+                        pictureDialog.setTitle("Select From")
+                        val pictureDialogItems = arrayOf("Gallery", "Camera")
+                        pictureDialog.setItems(pictureDialogItems) { dialog, which ->
+                            when (which) {
+                                0 -> choosePhotoFromGallary()
+                                1 -> takePhotoFromCamera()
+                            }
+                        }
+                        pictureDialog.show()
                     }
-                    pictureDialog.show()
+
                 }
+
             } else ActivityCompat.requestPermissions(
                 this, arrayOf(Manifest.permission.CAMERA),
                 CAMERA

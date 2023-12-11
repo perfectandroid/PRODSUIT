@@ -1515,28 +1515,50 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
 
             try {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),100)
-                }
-                else if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-                    ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),101)
-                }
-                else {
-
-                    Log.e(TAG,"1212  Permission Granted")
-                    val jsonObject = documentDetailArrayList.getJSONObject(position)
-                    ID_LeadDocumentDetails = jsonObject.getString("ID_LeadDocumentDetails")
-                    DocumentImageFormat = jsonObject.getString("DocumentImageFormat")
 
 
-                    if (DocumentImageFormat.equals("")){
-                        Toast.makeText(applicationContext,"Document not found",Toast.LENGTH_SHORT).show()
-                    }else{
-                        getDocumentView(ID_LeadGenerate,ID_LeadGenerateProduct,ID_LeadDocumentDetails)
+                Log.e(TAG,"1212  Permission Granted")
+                val jsonObject = documentDetailArrayList.getJSONObject(position)
+                ID_LeadDocumentDetails = jsonObject.getString("ID_LeadDocumentDetails")
+                DocumentImageFormat = jsonObject.getString("DocumentImageFormat")
+
+                if (Build.VERSION.SDK_INT >= 33) {
+                    //ActivityCompat.requestPermissions(this,String[]{readMediaAudio},PERMISSION_CODE)
+                    Log.e(TAG, "222399912   ")
+                    if (Config.check13Permission(context)) {
+                        Log.e(TAG, "222399913   ")
+
+                        if (DocumentImageFormat.equals("")){
+                            Toast.makeText(applicationContext,"Document not found",Toast.LENGTH_SHORT).show()
+                        }else{
+                            getDocumentView(ID_LeadGenerate,ID_LeadGenerateProduct,ID_LeadDocumentDetails)
+                        }
                     }
+//                    ActivityCompat.requestPermissions(this, arrayOf(readMediaAudio,readMediaImages,readMediaVideo), PERMISSION_CODE)
 
 
+                }else{
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),100)
+                    }
+                    else if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),101)
+                    }
+                    else {
+
+
+
+                        if (DocumentImageFormat.equals("")){
+                            Toast.makeText(applicationContext,"Document not found",Toast.LENGTH_SHORT).show()
+                        }else{
+                            getDocumentView(ID_LeadGenerate,ID_LeadGenerateProduct,ID_LeadDocumentDetails)
+                        }
+
+
+                    }
                 }
+
+
             } catch (e: IOException) {
                 e.printStackTrace()
                 Toast.makeText(this@AccountDetailsActivity, "Failed!", Toast.LENGTH_SHORT)
@@ -1710,30 +1732,30 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
 
                                             try {
-                                                if (ContextCompat.checkSelfPermission(
-                                                        this,
-                                                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                                                    ) != PackageManager.PERMISSION_GRANTED
-                                                ) {
-                                                    if (ActivityCompat.shouldShowRequestPermissionRationale(
-                                                            this,
-                                                            Manifest.permission.WRITE_EXTERNAL_STORAGE
-                                                        )
-                                                    ) {
-                                                        // Show an explanation to the user *asynchronously* -- don't block
-                                                        // this thread waiting for the user's response! After the user
-                                                        // sees the explanation, try again to request the permission.
-
-                                                    } else {
-                                                        // No explanation needed; request the permission
-                                                        ActivityCompat.requestPermissions(
-                                                            this,
-                                                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                                                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
-                                                        )
-                                                    }
-                                                }
-                                                else {
+//                                                if (ContextCompat.checkSelfPermission(
+//                                                        this,
+//                                                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                                                    ) != PackageManager.PERMISSION_GRANTED
+//                                                ) {
+//                                                    if (ActivityCompat.shouldShowRequestPermissionRationale(
+//                                                            this,
+//                                                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+//                                                        )
+//                                                    ) {
+//                                                        // Show an explanation to the user *asynchronously* -- don't block
+//                                                        // this thread waiting for the user's response! After the user
+//                                                        // sees the explanation, try again to request the permission.
+//
+//                                                    } else {
+//                                                        // No explanation needed; request the permission
+//                                                        ActivityCompat.requestPermissions(
+//                                                            this,
+//                                                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+//                                                            MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+//                                                        )
+//                                                    }
+//                                                }
+//                                                else {
 
 
                                                     try {
@@ -1804,7 +1826,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
 
 
-                                                }
+                                              //  }
                                             } catch (e: Exception) {
                                                 e.printStackTrace()
                                                 Toast.makeText(this@AccountDetailsActivity, "Failed!", Toast.LENGTH_SHORT)

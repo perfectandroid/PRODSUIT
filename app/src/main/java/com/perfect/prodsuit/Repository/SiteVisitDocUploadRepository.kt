@@ -93,6 +93,7 @@ object SiteVisitDocUploadRepository {
                 Log.e(TAG,"ProjImage  900004   "+ProjImage)
             } catch (e: Exception) {
                 e.printStackTrace()
+                Log.e(TAG,"126543    "+e.toString())
             }
             val body = RequestBody.create(
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
@@ -112,17 +113,20 @@ object SiteVisitDocUploadRepository {
                         val msg = leads[0].message
                         siteVisitDocUploadSetterGetter.value = SiteVisitDocUploadModel(msg)
                     } catch (e: Exception) {
+                        Log.e(TAG,"126541    "+e.toString())
                         progressDialog!!.dismiss()
                         Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
+                    Log.e(TAG,"126544    "+t.message)
                     progressDialog!!.dismiss()
                     Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
+            Log.e(TAG,"126542    "+e.toString())
             progressDialog!!.dismiss()
             Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
         }
