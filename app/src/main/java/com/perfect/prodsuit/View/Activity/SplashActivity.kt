@@ -254,6 +254,13 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://45.118.163.44:14005/ProdSuiteAPIASCO"
 //    val BANK_KEY  = "-518"
 
+//  sunitha_furniture 6.12.2023
+//    val CERT_NAME = "sunitha_furniture.pem"
+//    val BASE_URL  = "https://45.118.163.44:14004/PerSuiteSunithaFurniture/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14004/PerSuiteSunithaFurniture"
+//    val BANK_KEY  = "-511"
+
+
     var TAG = "SplashActivity"
     lateinit var splashresellerActivityViewModel: SplashresellerActivityViewModel
     lateinit var maintanceMessageViewModel: MaintanceMessageViewModel

@@ -65,6 +65,7 @@ class FollowupTicketReportAdapter(internal var context: Context, internal var js
                 holder.txtLead.text = "Lead No : "+jsonObject!!.getString("LeadNo")
                 holder.tv_date.text = "Date : "+jsonObject!!.getString("LeadDate")
                 holder.txtCustomer.text      = "Customer : "+jsonObject!!.getString("Customer")
+                holder.txtMobilenumber.text      = "Phone No : "+jsonObject!!.getString("PhnNo")
 
 //                holder.txtLead.text          = jsonObject!!.getString("LeadNo")+" ("+jsonObject!!.getString("LeadDate")+")"
 
@@ -133,6 +134,7 @@ class FollowupTicketReportAdapter(internal var context: Context, internal var js
         internal var txtCustomer         : TextView
         internal var txtProduct          : TextView
         internal var txtCollectedBy      : TextView
+        internal var txtMobilenumber     : TextView
         internal var tv_date      : TextView
         internal var tv_status      : TextView
         internal var ll_followList       : CardView
@@ -160,6 +162,7 @@ class FollowupTicketReportAdapter(internal var context: Context, internal var js
             txtProduct         = v.findViewById<View>(R.id.txtProduct) as TextView
             tv_status         = v.findViewById<View>(R.id.tv_status) as TextView
             tv_date         = v.findViewById<View>(R.id.tv_date) as TextView
+            txtMobilenumber         = v.findViewById<View>(R.id.txtMobilenumber) as TextView
             txtCollectedBy     = v.findViewById<View>(R.id.txtCollectedBy) as TextView
             ll_followList      = v.findViewById<View>(R.id.ll_followList) as CardView
 
