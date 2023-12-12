@@ -136,6 +136,10 @@ object Config {
     const val SHARED_PREF73 = "idcustsrvceregistproductdetail"
     const val SHARED_PREF74 = "mpin"
 
+    const val SHARED_PREF76 = "AudioClipEnabled"
+    const val SHARED_PREF77 = "IsLocationDistanceShowing"
+    const val SHARED_PREF78 = "EditMRPLead"  // Lead MRP Editable , When EditMRPLead = "true"
+
 
     var width = 0
     var height = 0
@@ -888,6 +892,21 @@ object Config {
             val deviceIDEditer = deviceIDSP.edit()
             deviceIDEditer.putString("deviceID", "")
             deviceIDEditer.commit()
+
+            val AudioClipEnabledSP = context.getSharedPreferences(Config.SHARED_PREF76, 0)
+            val AudioClipEnabledEditer = AudioClipEnabledSP.edit()
+            AudioClipEnabledEditer.putString("AudioClipEnabled", "")
+            AudioClipEnabledEditer.commit()
+
+            val IsLocationDistanceShowingSP = context.getSharedPreferences(Config.SHARED_PREF77, 0)
+            val IsLocationDistanceShowingEditer = IsLocationDistanceShowingSP.edit()
+            IsLocationDistanceShowingEditer.putString("IsLocationDistanceShowing", "")
+            IsLocationDistanceShowingEditer.commit()
+
+            val EditMRPLeadSP = context.getSharedPreferences(Config.SHARED_PREF78, 0)
+            val EditMRPLeadEditer = EditMRPLeadSP.edit()
+            EditMRPLeadEditer.putString("EditMRPLead", "")
+            EditMRPLeadEditer.commit()
 
 
             val isMyServiceRunning = isServiceRunning(context, NotificationLocationService::class.java)

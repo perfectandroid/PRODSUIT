@@ -353,7 +353,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private var addmore_btn: TextView? = null
     private var modeView = "0"
     private var lllistdetails: LinearLayout? = null
-    private var tv_Mrp: TextView? = null
+    private var tv_Mrp: EditText? = null
     private var edtAmount: EditText? = null
     private var MRP: String? = null
     var arrPosition: Int? = 0
@@ -365,6 +365,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     var MRRP = ""
     var Offerprice = ""
     var ID_AuthorizationData = ""
+    var ProductMRP = ""
 
     var recyRequest: RecyclerView? = null
 
@@ -520,6 +521,8 @@ private var custmoerAssignmentID : String? =null
     var boolAttendance = ""
     var arrupdateedit: String? = "0"
 
+    var editableMrp: String? = ""
+
     var saveAttendanceMark = false
     lateinit var itemSearchListViewModel: ItemSearchListViewModel
     private var barcodeCount = 0
@@ -572,7 +575,10 @@ private var custmoerAssignmentID : String? =null
         floorViewModel = ViewModelProvider(this).get(FloorViewModel::class.java)
 
 
+        val EditMRPLeadSP = context.getSharedPreferences(Config.SHARED_PREF78, 0)
+        editableMrp = EditMRPLeadSP.getString("EditMRPLead","0")
         setRegViews()
+
         searchType = resources.getStringArray(R.array.array_spinner)
         //   searchNameTitle = resources.getStringArray(R.array.array_NameTitle)
         searchNameTitle =
@@ -832,6 +838,7 @@ private var custmoerAssignmentID : String? =null
         locKnownName = ""
         strLatitude = ""
         strLongitue = ""
+        ProductMRP = ""
 
         txtLocation!!.setText("")
 
@@ -2272,6 +2279,7 @@ private var custmoerAssignmentID : String? =null
                 edtEmployee!!.setText("")
                 edtAmount!!.setText("")
                 tv_Mrp!!.setText("")
+                ProductMRP = ""
 
                 val sdf = SimpleDateFormat("dd-MM-yyyy")
                 val currentDate = sdf.format(Date())
@@ -6986,7 +6994,7 @@ private var custmoerAssignmentID : String? =null
                 arrPosition = position
                 val jsonObject = editProdcutListarray.getJSONObject(position)
 
-                Log.e(TAG, "1212122    " +position)
+                Log.e(TAG, "69971  editArrayList  " +position)
 
                 ID_Category = jsonObject.getString("ID_Category")
                 ID_Product = jsonObject.getString("ID_Product")
@@ -7008,11 +7016,38 @@ private var custmoerAssignmentID : String? =null
                 edtAmount!!.setText("" + jsonObject!!.getString("LgpSalesPrice"))
                 tv_Mrp!!.setText("" + jsonObject!!.getString("MRP"))
                 edtFloor!!.setText("" + jsonObject!!.getString("LocationName"))
+                ProductMRP = jsonObject!!.getString("ProductMRP")
 
                 Log.e(TAG, "12121   " +jsonObject.getString("ID_Status"))
                 Log.e(TAG, "12121   " +jsonObject.getString("ProdName"))
+                Log.e(TAG, "12121222   " +jsonObject.getString("AssignEmp"))
                 Log.e(TAG,"eeeeeeeeeee 22  "+ ID_ProductLocation)
                 Log.e(TAG, "12121    " +editProdcutListarray)
+
+                Log.e(TAG, "69972  editArrayList  " +editableMrp)
+
+                if (editableMrp.equals("true")){
+                    var strMrp =  jsonObject!!.getString("ProductMRP")
+                    Log.e(TAG, "69973  strMrp  " +strMrp)
+                    if (strMrp.equals("") || strMrp.equals(".")){
+                        strMrp = "0"
+                    }
+
+                    if (strMrp.toFloat() > 0){
+                        tv_Mrp!!.isEnabled = false
+                    }else{
+                        tv_Mrp!!.isEnabled = true
+                    }
+                }else {
+                    Log.e(TAG, "69974  editArrayList  " )
+                    tv_Mrp!!.isEnabled = false
+                }
+
+
+
+
+
+
 
                 if (jsonObject.getString("ID_Status").equals("1")){
 
@@ -7169,6 +7204,7 @@ private var custmoerAssignmentID : String? =null
             edtProjectName!!.setText("")
             edtAmount!!.setText("")
             tv_Mrp!!.setText("")
+            ProductMRP = ""
 
             Log.i("resperr","check data side="+checkProject)
             if (jsonObject.getString("Project").equals("0")) {
@@ -7195,12 +7231,28 @@ private var custmoerAssignmentID : String? =null
             MRP = jsonObject.getString("MRP")
             Log.e(TAG, "SalPrice 3333   " + MRP)
 
+            ProductMRP = jsonObject.getString("MRP")
             MRRP = jsonObject.getString("MRP")
             Offerprice = jsonObject.getString("SalPrice")
 
 //            if (MRRP >= Offerprice){
 //                edtAmount!!.isClickable.equals(false)
 //            }
+
+            if (editableMrp.equals("true")){
+                var strMrp =  jsonObject!!.getString("MRP")
+                if (strMrp.equals("") || strMrp.equals(".")){
+                    strMrp = "0"
+                }
+
+                if (strMrp.toFloat() > 0){
+                    tv_Mrp!!.isEnabled = false
+                }else{
+                    tv_Mrp!!.isEnabled = true
+                }
+            }else {
+                tv_Mrp!!.isEnabled = false
+            }
 
             tv_Mrp!!.setText(jsonObject.getString("MRP"))
             edtAmount!!.setText(jsonObject.getString("SalPrice"))
@@ -9665,8 +9717,8 @@ private var custmoerAssignmentID : String? =null
 
 //        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
 //        ID_CollectedBy = FK_EmployeeSP.getString("FK_Employee", null)
-        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
-        edtEmployee!!.setText(UserNameSP.getString("UserName", null))
+//        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+//        edtEmployee!!.setText(UserNameSP.getString("UserName", null))
         MRRP = tv_Mrp!!.text.toString()
         strQty = edtProdqty!!.text.toString()
         if (MRRP!!.equals("")) {
@@ -9822,6 +9874,7 @@ private var custmoerAssignmentID : String? =null
 
 //        strQty = edtProdqty!!.text.toString()
         Log.e("qqqqqqqqq", "in"  +  strQty)
+        Log.e("qqqqqqqqq", "9877777"  +  edtEmployee!!.text.toString())
 
 
 
@@ -9853,6 +9906,8 @@ private var custmoerAssignmentID : String? =null
             jObject.put("ID_CollectedBy", ID_CollectedBy)
             jObject.put("LgCollectedBy", ID_CollectedBy)
             jObject.put("FK_ProductLocation", ID_ProductLocation)
+            jObject.put("LocationName", edtFloor!!.text.toString())
+            jObject.put("ProductMRP", ProductMRP)
 
             Log.e(TAG,"eeeeeeeeeee01=  "+ ID_ProductLocation)
             Log.e(TAG,"eeeeeeeeeee3=  "+ ID_Category)
@@ -9889,6 +9944,8 @@ private var custmoerAssignmentID : String? =null
             jObject.put("ID_CollectedBy", ID_CollectedBy)
             jObject.put("LgCollectedBy", ID_CollectedBy)
             jObject.put("FK_ProductLocation", ID_ProductLocation)
+            jObject.put("LocationName", edtFloor!!.text.toString())
+            jObject.put("ProductMRP", ProductMRP)
 
             Log.e(TAG,"eeeeeeeeeee 45=  "+ ID_ProductLocation)
             Log.e(TAG,"eeeeeeeeeee8=  "+ strFollowupdate)
@@ -9921,6 +9978,7 @@ private var custmoerAssignmentID : String? =null
         ID_Priority = ""
         ID_ProductLocation = "0"
         strFollowupdate = ""
+        ProductMRP = ""
         hideViews()
 
 
@@ -10074,6 +10132,12 @@ private var custmoerAssignmentID : String? =null
         rcylisting!!.adapter = adapter
         adapter.setClickListener(this@LeadGenerationActivity)
 
+        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+
+        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+        edtEmployee!!.setText(UserNameSP.getString("UserName", null))
+
 
     }
 
@@ -10136,6 +10200,23 @@ private var custmoerAssignmentID : String? =null
                                             edtProdproduct!!.setText("" + jsonObject!!.getString("ProductName"))
                                             tv_Mrp!!.setText("" + jsonObject!!.getString("MRP"))
                                             edtAmount!!.setText("" + jsonObject!!.getString("Price"))
+
+                                            ProductMRP = jsonObject.getString("MRP")
+
+                                            if (editableMrp.equals("true")){
+                                                var strMrp =  jsonObject!!.getString("MRP")
+                                                if (strMrp.equals("") || strMrp.equals(".")){
+                                                    strMrp = "0"
+                                                }
+
+                                                if (strMrp.toFloat() > 0){
+                                                    tv_Mrp!!.isEnabled = false
+                                                }else{
+                                                    tv_Mrp!!.isEnabled = true
+                                                }
+                                            }else {
+                                                tv_Mrp!!.isEnabled = false
+                                            }
 
 
                                             Log.i(

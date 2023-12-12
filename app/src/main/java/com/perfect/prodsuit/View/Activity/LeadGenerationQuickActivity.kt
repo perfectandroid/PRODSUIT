@@ -55,7 +55,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
     private var progressDialog: ProgressDialog? = null
 
     private var txtDate: TextView? = null
-    private var tv_Mrp: TextView? = null
+    private var tv_Mrp: EditText? = null
     private var txtLocation: TextView? = null
 
     private var actv_nammob: AutoCompleteTextView? = null
@@ -243,6 +243,9 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
     var Customer_Type: String = ""
     var ID_AuthorizationData = ""
 
+    var ProductMRP = ""
+    var editableMrp: String? = ""
+
 
     private var array_product_lead = JSONArray()
     lateinit var leadGenerateSaveViewModel: LeadGenerateSaveViewModel
@@ -298,6 +301,9 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
         itemSearchListViewModel = ViewModelProvider(this).get(ItemSearchListViewModel::class.java)
         leadGenerateSaveViewModel = ViewModelProvider(this).get(LeadGenerateSaveViewModel::class.java)
+
+        val EditMRPLeadSP = context.getSharedPreferences(Config.SHARED_PREF78, 0)
+        editableMrp = EditMRPLeadSP.getString("EditMRPLead","0")
 
         setRegViews()
         getDefaultValueSettings()
@@ -356,7 +362,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
 
-        tv_Mrp = findViewById<TextView>(R.id.tv_Mrp)
+        tv_Mrp = findViewById<EditText>(R.id.tv_Mrp)
 
         actv_namTitle = findViewById<AutoCompleteTextView>(R.id.actv_namTitle)
         actv_nammob = findViewById<AutoCompleteTextView>(R.id.actv_nammob)
@@ -1177,6 +1183,25 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                                                 edtAmount!!.setText(jsonObject.getString("SalPrice"))
                                                 Log.e(TAG, "MRP 3333   " + jsonObject.getString("MRP"))
                                                 Log.e(TAG, "SalPrice 3333   " + jsonObject.getString("SalPrice"))
+
+                                                ProductMRP = jsonObject!!.getString("MRP")
+
+                                                if (editableMrp.equals("1")){
+                                                    var strMrp =  jsonObject!!.getString("MRP")
+                                                    Log.e(TAG, "69973  strMrp  " +strMrp)
+                                                    if (strMrp.equals("") || strMrp.equals(".")){
+                                                        strMrp = "0"
+                                                    }
+
+                                                    if (strMrp.toFloat() > 0){
+                                                        tv_Mrp!!.isEnabled = false
+                                                    }else{
+                                                        tv_Mrp!!.isEnabled = true
+                                                    }
+                                                }else {
+                                                    Log.e(TAG, "69974  editArrayList  " )
+                                                    tv_Mrp!!.isEnabled = false
+                                                }
 
                                             }else{
                                                 Log.v("sdfsdfsd4fgf", "in4")
@@ -2228,6 +2253,25 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                                             tv_Mrp!!.setText("" + jsonObject!!.getString("MRP"))
                                             edtAmount!!.setText("" + jsonObject!!.getString("Price"))
 
+                                            ProductMRP = jsonObject.getString("MRP")
+
+                                            if (editableMrp.equals("1")){
+                                                var strMrp =  jsonObject.getString("MRP")
+                                                Log.e(TAG, "69973  strMrp  " +strMrp)
+                                                if (strMrp.equals("") || strMrp.equals(".")){
+                                                    strMrp = "0"
+                                                }
+
+                                                if (strMrp.toFloat() > 0){
+                                                    tv_Mrp!!.isEnabled = false
+                                                }else{
+                                                    tv_Mrp!!.isEnabled = true
+                                                }
+                                            }else {
+                                                Log.e(TAG, "69974  editArrayList  " )
+                                                tv_Mrp!!.isEnabled = false
+                                            }
+
 
                                             Log.i(
                                                 "responseTry",
@@ -2481,6 +2525,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             edtProjectName!!.setText("")
             edtAmount!!.setText("")
             tv_Mrp!!.setText("")
+            ProductMRP = ""
             modeProjectProduct = jsonObject.getString("Project")
             if (jsonObject.getString("Project").equals("0")) {
                 ll_product_qty!!.visibility = View.VISIBLE
@@ -2520,6 +2565,25 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             edtAmount!!.setText(jsonObject.getString("SalPrice"))
             Log.e(TAG, "MRP 3333   " + jsonObject.getString("MRP"))
             Log.e(TAG, "SalPrice 3333   " + jsonObject.getString("SalPrice"))
+
+            ProductMRP = jsonObject.getString("MRP")
+
+            if (editableMrp.equals("true")){
+                var strMrp =  jsonObject.getString("MRP")
+                Log.e(TAG, "69973  strMrp  " +strMrp)
+                if (strMrp.equals("") || strMrp.equals(".")){
+                    strMrp = "0"
+                }
+
+                if (strMrp.toFloat() > 0){
+                    tv_Mrp!!.isEnabled = false
+                }else{
+                    tv_Mrp!!.isEnabled = true
+                }
+            }else {
+                Log.e(TAG, "69974  editArrayList  " )
+                tv_Mrp!!.isEnabled = false
+            }
 
         }
 
@@ -3245,6 +3309,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         edtAmount!!.setText("")
 
         tv_Mrp!!.setText("")
+        ProductMRP = ""
         strPincode = ""
 
         strLatitude = ""

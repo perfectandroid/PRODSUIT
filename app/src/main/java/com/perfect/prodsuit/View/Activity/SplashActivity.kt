@@ -853,6 +853,23 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                                     ABOUTUSEditer.putString("ABOUTUS", jobj.getString("AboutUs"))
                                     ABOUTUSEditer.commit()
 
+                                    val AudioClipEnabledSP = applicationContext.getSharedPreferences(Config.SHARED_PREF76, 0)
+                                    val AudioClipEnabledEditer = AudioClipEnabledSP.edit()
+                                    AudioClipEnabledEditer.putString("AudioClipEnabled", jobj.getString("AudioClipEnabled"))
+                                    AudioClipEnabledEditer.commit()
+
+                                    val IsLocationDistanceShowingSP = applicationContext.getSharedPreferences(Config.SHARED_PREF77, 0)
+                                    val IsLocationDistanceShowingEditer = IsLocationDistanceShowingSP.edit()
+                                    IsLocationDistanceShowingEditer.putString("IsLocationDistanceShowing", jobj.getString("IsLocationDistanceShowing"))
+                                    IsLocationDistanceShowingEditer.commit()
+
+                                    val EditMRPLeadSP = applicationContext.getSharedPreferences(Config.SHARED_PREF78, 0)
+                                    val EditMRPLeadEditer = EditMRPLeadSP.edit()
+                                    EditMRPLeadEditer.putString("EditMRPLead", jobj.getString("EditMRPLead"))
+                                    EditMRPLeadEditer.commit()
+
+
+
 //                                    val AUDIOSP = applicationContext.getSharedPreferences(Config.SHARED_PREF67, 0)
 //                                    val AUDIOEditer = AUDIOSP.edit()
 //                                    AUDIOEditer.putString("AUDIO", jobj.getString("AudioClipEnabled"))

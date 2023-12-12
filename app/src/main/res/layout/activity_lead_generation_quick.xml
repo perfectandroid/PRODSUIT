@@ -466,7 +466,7 @@
                                                     android:layout_marginTop="10dp"
                                                     android:orientation="horizontal">
 
-                                                    <TextView
+                                                    <EditText
                                                         android:id="@+id/tv_Mrp"
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
@@ -478,9 +478,10 @@
                                                         android:fontFamily="@font/myfont"
                                                         android:hint="MRP"
                                                         android:inputType="number"
-                                                        android:maxLength="20"
+                                                        android:maxLength="12"
                                                         android:padding="7dp"
                                                         android:singleLine="true"
+                                                        android:enabled="false"
                                                         android:text=""
                                                         android:textSize="15dp" />
 
@@ -503,7 +504,7 @@
                                                             android:drawableTint="@color/greydark"
                                                             android:fontFamily="@font/myfont"
                                                             android:hint="Offer Price"
-                                                            android:maxLength="20"
+                                                            android:maxLength="12"
                                                             android:numeric="decimal"
                                                             android:padding="7dp"
                                                             android:singleLine="true"
@@ -529,7 +530,7 @@
                                                         android:hint="Qty"
                                                         android:fontFamily="@font/myfont"
                                                         android:inputType="number"
-                                                        android:maxLength="3"
+                                                        android:maxLength="5"
                                                         android:padding="7dp"
                                                         android:singleLine="true"
                                                         android:text=""
