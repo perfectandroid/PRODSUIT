@@ -95,7 +95,7 @@ object ServiceCountRepository {
                 requestObject1.put("CusMobile", ProdsuitApplication.encryptStart(strMobile))
 
 
-                Log.e(TAG,"78  getBranch  "+requestObject1)
+                Log.e(TAG,"9888  getBranch  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

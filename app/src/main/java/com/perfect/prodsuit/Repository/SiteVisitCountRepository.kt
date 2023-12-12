@@ -24,7 +24,7 @@ object SiteVisitCountRepository {
 
     private var progressDialog: ProgressDialog? = null
     val siteVisitCountSetterGetter = MutableLiveData<SiteVisitCountModel>()
-    val TAG: String = "ServiceCountRepository"
+    val TAG: String = "SiteVisitCountRepository"
 
     fun getServicesApiCall(context: Context,ReqMode : String): MutableLiveData<SiteVisitCountModel> {
         getSiteVisitCount(context,ReqMode)
@@ -71,7 +71,7 @@ object SiteVisitCountRepository {
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
 
 
-                Log.e(TAG,"78  getBranch  "+requestObject1)
+                Log.e(TAG,"74444  getBranch  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
