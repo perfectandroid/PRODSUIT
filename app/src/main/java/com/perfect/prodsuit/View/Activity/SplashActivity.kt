@@ -69,13 +69,13 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://112.133.227.123:14020/ProdsuiteAPI/"
 //    val BANK_KEY = "-500"
 
-    ////    QA 12.10.2023
+    ////    QA 12.10.2023 Multiple Company
 //    val CERT_NAME = "certificate_qa.pem"
 //    val BASE_URL  = "https://112.133.227.123:14020/QAPersuiteAPI/api/"
 //    val IMAGE_URL = "https://112.133.227.123:14020/QAPersuiteAPI/"
 //    val BANK_KEY  = "-500"
 
-//  qa temp 30.11.2023
+//  qa temp 30.11.2023 Single Company
 //    val CERT_NAME = "persuitqa.pem"
 //    val BASE_URL  = "https://112.133.227.123:14020/PersuiteAPI/api/"
 //    val IMAGE_URL = "https://112.133.227.123:14020/PersuiteAPI/"
@@ -259,6 +259,12 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BASE_URL  = "https://45.118.163.44:14004/PerSuiteSunithaFurniture/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14004/PerSuiteSunithaFurniture"
 //    val BANK_KEY  = "-511"
+
+    //  Support Demo 12-12-2023
+//    val CERT_NAME = "support_demo.pem"
+//    val BASE_URL  = "https://45.118.163.44:14008/PerSuiteAPISupportDemo/api/"
+//    val IMAGE_URL = "https://45.118.163.44:14008/PerSuiteAPISupportDemo"
+//    val BANK_KEY  = "-521"
 
 
     var TAG = "SplashActivity"

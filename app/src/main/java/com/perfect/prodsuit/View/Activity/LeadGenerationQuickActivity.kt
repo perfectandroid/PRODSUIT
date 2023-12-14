@@ -1186,7 +1186,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
                                                 ProductMRP = jsonObject!!.getString("MRP")
 
-                                                if (editableMrp.equals("1")){
+                                                if (editableMrp.equals("true")){
                                                     var strMrp =  jsonObject!!.getString("MRP")
                                                     Log.e(TAG, "69973  strMrp  " +strMrp)
                                                     if (strMrp.equals("") || strMrp.equals(".")){
@@ -2255,7 +2255,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
                                             ProductMRP = jsonObject.getString("MRP")
 
-                                            if (editableMrp.equals("1")){
+                                            if (editableMrp.equals("true")){
                                                 var strMrp =  jsonObject.getString("MRP")
                                                 Log.e(TAG, "69973  strMrp  " +strMrp)
                                                 if (strMrp.equals("") || strMrp.equals(".")){
