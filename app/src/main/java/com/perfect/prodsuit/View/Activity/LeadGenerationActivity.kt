@@ -7026,7 +7026,12 @@ private var custmoerAssignmentID : String? =null
 
                 Log.e(TAG, "69972  editArrayList  " +editableMrp)
 
-                if (editableMrp.equals("true")){
+                /// 15-15-2023
+
+                if(checkProject.equals("0") && editableMrp.equals("true")){
+                    tv_Mrp!!.isEnabled = true
+                }
+                else if (checkProject.equals("1") && editableMrp.equals("true")){
                     var strMrp =  jsonObject!!.getString("ProductMRP")
                     Log.e(TAG, "69973  strMrp  " +strMrp)
                     if (strMrp.equals("") || strMrp.equals(".")){
@@ -7207,6 +7212,7 @@ private var custmoerAssignmentID : String? =null
             ProductMRP = ""
 
             Log.i("resperr","check data side="+checkProject)
+            Log.e(TAG,"12121212   Project   "+jsonObject.getString("Project"))
             if (jsonObject.getString("Project").equals("0")) {
                 ll_product_qty!!.visibility = View.VISIBLE
                 edtProjectName!!.visibility = View.GONE
@@ -7219,6 +7225,13 @@ private var custmoerAssignmentID : String? =null
                 checkProject="0"  // <-- visible
 
             }
+
+            if(editableMrp.equals("true")){
+                tv_Mrp!!.isEnabled = true
+            }else{
+                tv_Mrp!!.isEnabled = false
+            }
+
         }
         if (data.equals("proddetails")) {
             dialogProdDet!!.dismiss()
@@ -7239,8 +7252,14 @@ private var custmoerAssignmentID : String? =null
 //                edtAmount!!.isClickable.equals(false)
 //            }
 
-            if (editableMrp.equals("true")){
+            /// 15-15-2023
+
+            if(checkProject.equals("0") && editableMrp.equals("true")){
+                tv_Mrp!!.isEnabled = true
+            }
+            else if (checkProject.equals("1") && editableMrp.equals("true")){
                 var strMrp =  jsonObject!!.getString("MRP")
+                Log.e(TAG, "69973  strMrp  " +strMrp)
                 if (strMrp.equals("") || strMrp.equals(".")){
                     strMrp = "0"
                 }
@@ -7251,6 +7270,7 @@ private var custmoerAssignmentID : String? =null
                     tv_Mrp!!.isEnabled = true
                 }
             }else {
+                Log.e(TAG, "69974  editArrayList  " )
                 tv_Mrp!!.isEnabled = false
             }
 
@@ -9721,7 +9741,7 @@ private var custmoerAssignmentID : String? =null
 //        edtEmployee!!.setText(UserNameSP.getString("UserName", null))
         MRRP = tv_Mrp!!.text.toString()
         strQty = edtProdqty!!.text.toString()
-        if (MRRP!!.equals("")) {
+        if (MRRP!!.equals("") || MRRP!!.equals(".")) {
             MRRP = "0"
         }
 //        if (strQty.equals("")) {
@@ -9742,7 +9762,9 @@ private var custmoerAssignmentID : String? =null
         strFeedback = edtProdfeedback!!.text.toString()
         stramount = edtAmount!!.text.toString()
         strFollowupdate = edtFollowdate!!.text.toString()
-
+        if (stramount!!.equals("") || stramount!!.equals(".")) {
+            stramount = "0"
+        }
         Log.e(TAG, " strFollowupdate        " +strFollowupdate)
 
         Log.e(TAG, "   stramount        " + stramount + "===" + MRRP)
@@ -10203,8 +10225,14 @@ private var custmoerAssignmentID : String? =null
 
                                             ProductMRP = jsonObject.getString("MRP")
 
-                                            if (editableMrp.equals("true")){
+                                            /// 15-15-2023
+
+                                            if(checkProject.equals("0") && editableMrp.equals("true")){
+                                                tv_Mrp!!.isEnabled = true
+                                            }
+                                            else if (checkProject.equals("1") && editableMrp.equals("true")){
                                                 var strMrp =  jsonObject!!.getString("MRP")
+                                                Log.e(TAG, "69973  strMrp  " +strMrp)
                                                 if (strMrp.equals("") || strMrp.equals(".")){
                                                     strMrp = "0"
                                                 }
@@ -10215,9 +10243,9 @@ private var custmoerAssignmentID : String? =null
                                                     tv_Mrp!!.isEnabled = true
                                                 }
                                             }else {
+                                                Log.e(TAG, "69974  editArrayList  " )
                                                 tv_Mrp!!.isEnabled = false
                                             }
-
 
                                             Log.i(
                                                 "responseTry",
