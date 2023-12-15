@@ -41,11 +41,13 @@ import org.json.JSONObject
 import java.text.DecimalFormat
 
 class RootViewActivity : AppCompatActivity(), OnMapReadyCallback {
-    private var FK_Employee:String?=""
-    private var strDate:String? = ""
+    private var FK_Employee: String? = ""
+    private var item_response: String? = ""
+    private var strDate: String? = ""
     var TAG = "RootViewActivity"
     var apiKey = ""
-//    val apiKey = "AIzaSyBpV-dAr8kv728_st35n8XMmt9L3qrqwhc"
+
+    //    val apiKey = "AIzaSyBpV-dAr8kv728_st35n8XMmt9L3qrqwhc"
     lateinit var context: Context
     lateinit var employeeWiseLocationListViewModel: EmployeeWiseLocationListViewModel
     private var progressDialog: ProgressDialog? = null
@@ -55,44 +57,118 @@ class RootViewActivity : AppCompatActivity(), OnMapReadyCallback {
     private var originLongitude: Double = 75.93676204113171
     private var destinationLatitude: Double = 11.359364210989
     private var destinationLongitude: Double = 75.91139941434018
-    lateinit var locationList : JSONArray
-    lateinit var txt_distance : TextView
-    lateinit var lin_distance : LinearLayout
+    lateinit var locationList: JSONArray
+    lateinit var txt_distance: TextView
+    lateinit var lin_distance: LinearLayout
     var LocLattitudeStart = ""
     var LocLongitudeStart = ""
     var LocLattitudeEnd = ""
     var LocLongitudeEnd = ""
-    var DistanceTravelled=0.0
+    var DistanceTravelled = 0.0
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
         setContentView(R.layout.activity_root_view)
         context = this@RootViewActivity
-        apiKey=getString(R.string.google_maps_key)
-        Log.v("dfsdfdsfd","api Key "+apiKey)
-        employeeWiseLocationListViewModel = ViewModelProvider(this).get(EmployeeWiseLocationListViewModel::class.java)
-        if (getIntent().hasExtra("FK_Employee")) {
-            FK_Employee = intent.getStringExtra("FK_Employee")
-        }
-        if (getIntent().hasExtra("strDate")) {
-            strDate = intent.getStringExtra("strDate")
-        }
-
-        if (!FK_Employee.equals("") && !strDate.equals("")){
-            Log.e(TAG,"620   "+FK_Employee+" : "+strDate)
-            EmployeeLocation = 0
-            getEmployeeWiseList()
-        }
-
-        if (!Places.isInitialized()) {
-            Places.initialize(applicationContext, apiKey)
-        }
+        apiKey = getString(R.string.google_maps_key)
+        Log.v("dfsdfdsfd", "api Key " + apiKey)
+//        employeeWiseLocationListViewModel = ViewModelProvider(this).get(EmployeeWiseLocationListViewModel::class.java)
+//        if (getIntent().hasExtra("FK_Employee")) {
+//            FK_Employee = intent.getStringExtra("FK_Employee")
+//        }
+//        if (getIntent().hasExtra("strDate")) {
+//            strDate = intent.getStringExtra("strDate")
+//        }
+//
+//        if (!FK_Employee.equals("") && !strDate.equals("")){
+//            Log.e(TAG,"620   "+FK_Employee+" : "+strDate)
+//            EmployeeLocation = 0
+//            getEmployeeWiseList()
+//        }
+//
+//        if (!Places.isInitialized()) {
+//            Places.initialize(applicationContext, apiKey)
+//        }
         // Map Fragment
-        txt_distance=findViewById(R.id.txt_distance)
-        lin_distance=findViewById(R.id.lin_distance)
+        txt_distance = findViewById(R.id.txt_distance)
+        lin_distance = findViewById(R.id.lin_distance)
+        item_response = intent.getStringExtra("item_response")
+        loadTravelPath(item_response)
+
     }
+
+    private fun loadTravelPath(itemResponse: String?) {
+
+        var mapFragment =
+            supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+        mapFragment.getMapAsync {
+            Log.v("sfsdfdsddd", "getMapAsync")
+            Log.v("sdfsdfdeee", "LocLattitudeStart " + originLatitude)
+            Log.v("sdfsdfdeee", "LocLongitudeStart " + originLongitude)
+            mMap = it
+            val originLocation = LatLng(originLatitude.toDouble(), originLongitude.toDouble())
+            mMap.addMarker(MarkerOptions().position(originLocation))
+            val destinationLocation = LatLng(destinationLatitude.toDouble(), destinationLongitude.toDouble())
+            mMap.addMarker(MarkerOptions().position(destinationLocation))
+//            val urll = getDirectionURL(originLocation, destinationLocation, apiKey)
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 14F))
+            val result = ArrayList<List<LatLng>>()
+            try {
+                val respObj = Gson().fromJson(itemResponse, MapData::class.java)
+                Log.v("fdadasdsds", "size " + respObj.routes[0].legs.size)
+                val path = ArrayList<LatLng>()
+                for (i in 0 until respObj.routes[0].legs.size) {
+                    for (j in 0 until respObj.routes[0].legs[i].steps.size) {
+
+                        path.addAll(decodePolyline(respObj.routes[0].legs[i].steps[j].polyline.points))
+                    }
+                    var Dist = 0
+                    Log.v("fdadasdsds", "i " + i)
+                    Log.v("fdadasdsds", "valeu " + respObj.routes[0].legs[i].distance.value)
+                    try {
+                        var Dist = respObj.routes[0].legs[i].distance.value
+                        DistanceTravelled = DistanceTravelled + Dist
+                    } catch (e: Exception) {
+                        Dist = 0
+                        DistanceTravelled = DistanceTravelled + Dist
+                    }
+                }
+//
+//
+                result.add(path)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.v("sdfsfsdfds", "e " + e)
+            }
+            Log.v("sfsdfdsddd", "onPostExecute")
+            val lineoption = PolylineOptions()
+            for (i in result.indices) {
+                lineoption.addAll(result[i])
+                lineoption.width(10f)
+                lineoption.color(Color.GREEN)
+                lineoption.geodesic(true)
+            }
+            mMap.addPolyline(lineoption)
+            try {
+                var km = DistanceTravelled / 1000
+                val pattern = "###,###.#"
+                val decimalFormat = DecimalFormat(pattern)
+                val formattedNumber = decimalFormat.format(km)
+                txt_distance.setText("" + DistanceTravelled + " m / " + formattedNumber + " km")
+            } catch (e: java.lang.Exception) {
+                lin_distance.visibility = View.GONE
+            }
+        }
+    }
+
+
     private fun getEmployeeWiseList() {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -102,7 +178,11 @@ class RootViewActivity : AppCompatActivity(), OnMapReadyCallback {
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                employeeWiseLocationListViewModel.getEmployeeWiseLocationList(this, FK_Employee!!,strDate!!)!!.observe(
+                employeeWiseLocationListViewModel.getEmployeeWiseLocationList(
+                    this,
+                    FK_Employee!!,
+                    strDate!!
+                )!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -110,15 +190,17 @@ class RootViewActivity : AppCompatActivity(), OnMapReadyCallback {
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
 
-                                if (EmployeeLocation == 0){
+                                if (EmployeeLocation == 0) {
                                     EmployeeLocation++
 
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   1224   "+msg)
+                                    Log.e(TAG, "msg   1224   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("EmployeeWiseLocationList")
-                                        locationList = jobjt.getJSONArray("EmployeeWiseLocationListData")
-                                        if (locationList.length()>0){
+                                        val jobjt =
+                                            jObject.getJSONObject("EmployeeWiseLocationList")
+                                        locationList =
+                                            jobjt.getJSONArray("EmployeeWiseLocationListData")
+                                        if (locationList.length() > 0) {
 //                                            mapView!!.getMapAsync(this);
                                             loadArrayForDirection(locationList)
                                         }
@@ -143,10 +225,10 @@ class RootViewActivity : AppCompatActivity(), OnMapReadyCallback {
 //                                    Toast.LENGTH_LONG
 //                                ).show()
                             }
-                        }catch (e:Exception){
+                        } catch (e: Exception) {
                             Toast.makeText(
                                 applicationContext,
-                                ""+ Config.SOME_TECHNICAL_ISSUES,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -160,27 +242,25 @@ class RootViewActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
+
     private fun loadArrayForDirection(locationList: JSONArray) {
-        Log.v("sfsdfdsddd","locationList "+locationList.toString())
+        Log.v("sfsdfdsddd", "locationList " + locationList.toString())
         val locationListNonRepeat = JSONArray()
-        var LocLocationName1=""
+        var LocLocationName1 = ""
         for (i in 0 until locationList.length()) {
             val jsonObject = locationList.getJSONObject(i)
             val LocLocationName = jsonObject.getString("LocLocationName")
             val LocLattitude = jsonObject.getString("LocLattitude")
             val LocLongitude = jsonObject.getString("LocLongitude")
             val EnteredTime = jsonObject.getString("EnteredTime")
-            Log.v("sfsdfdsddd","LocLocationName "+LocLocationName)
-            Log.v("sfsdfdsddd","LocLocationName1 "+LocLocationName1)
-            Log.v("sfsdfdsddd","EnteredTime "+EnteredTime)
-            if(LocLocationName1==LocLocationName)
-            {
-                Log.v("sfsdfdsddd","in ")
-            }
-            else
-            {
-                Log.v("sfsdfdsddd","else ")
-                LocLocationName1=LocLocationName
+            Log.v("sfsdfdsddd", "LocLocationName " + LocLocationName)
+            Log.v("sfsdfdsddd", "LocLocationName1 " + LocLocationName1)
+            Log.v("sfsdfdsddd", "EnteredTime " + EnteredTime)
+            if (LocLocationName1 == LocLocationName) {
+                Log.v("sfsdfdsddd", "in ")
+            } else {
+                Log.v("sfsdfdsddd", "else ")
+                LocLocationName1 = LocLocationName
                 val jsonObject1 = JSONObject()
                 jsonObject1.put("LocLocationName", LocLocationName)
                 jsonObject1.put("LocLattitude", LocLattitude)
@@ -189,7 +269,7 @@ class RootViewActivity : AppCompatActivity(), OnMapReadyCallback {
                 locationListNonRepeat.put(jsonObject1)
             }
         }
-        Log.v("sfsdfdsddd","locationListNonRepeat "+locationListNonRepeat.toString())
+        Log.v("sfsdfdsddd", "locationListNonRepeat " + locationListNonRepeat.toString())
         loadPath(locationListNonRepeat)
     }
 
@@ -246,7 +326,7 @@ class RootViewActivity : AppCompatActivity(), OnMapReadyCallback {
             Log.v("sdfsdfsdddddd", "finalLocation " + finalLocation)
 
             var url =
-                "https://maps.googleapis.com/maps/api/directions/json?origin=" + locationStart + "&destination=" + locationEnd + "&waypoints=" + finalLocation + "&key="+apiKey
+                "https://maps.googleapis.com/maps/api/directions/json?origin=" + locationStart + "&destination=" + locationEnd + "&waypoints=" + finalLocation + "&key=" + apiKey
             Log.v("sdfsdfsdddddd", "url " + url)
 
 
@@ -258,70 +338,70 @@ class RootViewActivity : AppCompatActivity(), OnMapReadyCallback {
                 Log.v("sdfsdfdeee", "LocLattitudeStart " + LocLattitudeStart)
                 Log.v("sdfsdfdeee", "LocLongitudeStart " + LocLongitudeStart)
                 mMap = it
-                val originLocation = LatLng(LocLattitudeStart.toDouble(), LocLongitudeStart.toDouble())
+                val originLocation =
+                    LatLng(LocLattitudeStart.toDouble(), LocLongitudeStart.toDouble())
                 mMap.addMarker(MarkerOptions().position(originLocation))
-                val destinationLocation = LatLng(LocLattitudeEnd.toDouble(), LocLattitudeEnd.toDouble())
+                val destinationLocation =
+                    LatLng(LocLattitudeEnd.toDouble(), LocLattitudeEnd.toDouble())
                 mMap.addMarker(MarkerOptions().position(destinationLocation))
 //            val urll = getDirectionURL(originLocation, destinationLocation, apiKey)
                 GetDirection(url).execute()
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(originLocation, 14F))
             }
-        }catch (E:Exception)
-        {
+        } catch (E: Exception) {
 
         }
     }
 
-    private fun getDirectionURL(origin:LatLng, dest:LatLng, secret: String) : String{
+    private fun getDirectionURL(origin: LatLng, dest: LatLng, secret: String): String {
         return "https://maps.googleapis.com/maps/api/directions/json?origin=11.422496024404127,75.93676204113171&destination=11.359364210989, 75.91139941434018&waypoints=11.445178691625296, 75.84095010100347|11.450274967852131, 75.77304789552494|11.390013131801224, 75.75928393495496|11.421194983777168, 75.83360932203283|11.365425029726158, 75.86541936423899&key=AIzaSyBpV-dAr8kv728_st35n8XMmt9L3qrqwhc"
     }
 
     @SuppressLint("StaticFieldLeak")
-    private inner class GetDirection(val url : String) : AsyncTask<Void, Void, List<List<LatLng>>>(){
+    private inner class GetDirection(val url: String) :
+        AsyncTask<Void, Void, List<List<LatLng>>>() {
         override fun doInBackground(vararg params: Void?): List<List<LatLng>> {
-            Log.v("sfsdfdsddd","GetDirection")
+            Log.v("sfsdfdsddd", "GetDirection")
             val client = OkHttpClient()
             val request = Request.Builder().url(url).build()
             val response = client.newCall(request).execute()
             val data = response.body().string()
-            val result =  ArrayList<List<LatLng>>()
-            try{
+            val result = ArrayList<List<LatLng>>()
+            try {
                 val respObj = Gson().fromJson(data, MapData::class.java)
-                Log.v("fdadasdsds","size "+respObj.routes[0].legs.size)
-                val path =  ArrayList<LatLng>()
-                for (i in 0 until respObj.routes[0].legs.size){
-                    for (j in 0 until respObj.routes[0].legs[i].steps.size){
+                Log.v("fdadasdsds", "size " + respObj.routes[0].legs.size)
+                val path = ArrayList<LatLng>()
+                for (i in 0 until respObj.routes[0].legs.size) {
+                    for (j in 0 until respObj.routes[0].legs[i].steps.size) {
 
                         path.addAll(decodePolyline(respObj.routes[0].legs[i].steps[j].polyline.points))
                     }
-                    var Dist=0
-                    Log.v("fdadasdsds","i "+i)
-                    Log.v("fdadasdsds","valeu "+respObj.routes[0].legs[i].distance.value)
+                    var Dist = 0
+                    Log.v("fdadasdsds", "i " + i)
+                    Log.v("fdadasdsds", "valeu " + respObj.routes[0].legs[i].distance.value)
                     try {
-                        var Dist=respObj.routes[0].legs[i].distance.value
-                        DistanceTravelled=DistanceTravelled+Dist
-                    }
-                    catch (e:Exception)
-                    {
-                        Dist=0
-                        DistanceTravelled=DistanceTravelled+Dist
+                        var Dist = respObj.routes[0].legs[i].distance.value
+                        DistanceTravelled = DistanceTravelled + Dist
+                    } catch (e: Exception) {
+                        Dist = 0
+                        DistanceTravelled = DistanceTravelled + Dist
                     }
 
                 }
 //
 //
                 result.add(path)
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
-                Log.v("sdfsfsdfds","e "+e)
+                Log.v("sdfsfsdfds", "e " + e)
             }
             return result
         }
 
         override fun onPostExecute(result: List<List<LatLng>>) {
-            Log.v("sfsdfdsddd","onPostExecute")
+            Log.v("sfsdfdsddd", "onPostExecute")
             val lineoption = PolylineOptions()
-            for (i in result.indices){
+            for (i in result.indices) {
                 lineoption.addAll(result[i])
                 lineoption.width(10f)
                 lineoption.color(Color.GREEN)
@@ -329,22 +409,20 @@ class RootViewActivity : AppCompatActivity(), OnMapReadyCallback {
             }
             mMap.addPolyline(lineoption)
             try {
-                var km=DistanceTravelled/1000
+                var km = DistanceTravelled / 1000
                 val pattern = "###,###.#"
                 val decimalFormat = DecimalFormat(pattern)
                 val formattedNumber = decimalFormat.format(km)
-                txt_distance.setText(""+DistanceTravelled+" m / "+formattedNumber+" km")
-            }
-            catch (e:java.lang.Exception)
-            {
-                lin_distance.visibility=View.GONE
+                txt_distance.setText("" + DistanceTravelled + " m / " + formattedNumber + " km")
+            } catch (e: java.lang.Exception) {
+                lin_distance.visibility = View.GONE
             }
 
         }
     }
 
     fun decodePolyline(encoded: String): List<LatLng> {
-        Log.v("sfsdfdsddd","decodePolyline")
+        Log.v("sfsdfdsddd", "decodePolyline")
         val poly = ArrayList<LatLng>()
         var index = 0
         val len = encoded.length
@@ -370,7 +448,7 @@ class RootViewActivity : AppCompatActivity(), OnMapReadyCallback {
             } while (b >= 0x20)
             val dlng = if (result and 1 != 0) (result shr 1).inv() else result shr 1
             lng += dlng
-            val latLng = LatLng((lat.toDouble() / 1E5),(lng.toDouble() / 1E5))
+            val latLng = LatLng((lat.toDouble() / 1E5), (lng.toDouble() / 1E5))
             poly.add(latLng)
         }
         return poly

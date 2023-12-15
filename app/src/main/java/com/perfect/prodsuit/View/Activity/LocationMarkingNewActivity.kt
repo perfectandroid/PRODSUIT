@@ -16,11 +16,13 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
@@ -42,9 +44,10 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.coroutines.coroutineContext
 
 
-class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , View.OnClickListener,
+class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickListener,
     ItemClickListener {
 
     var TAG = "LocationMarkingNewActivity"
@@ -52,19 +55,26 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
     lateinit var context: Context
     private var mapView: MapView? = null
     private var googleMap: GoogleMap? = null
-    lateinit var locationList : JSONArray
+    lateinit var locationList: JSONArray
+    lateinit var view_root_view: View
+    lateinit var lin_root_view: LinearLayout
 
     var listMode: String? = "1"
     var detailMode: String? = "0"
+    var rootMode: String? = "0"
     private var tv_tab_StaffList: TextView? = null
     private var tv_tab_StaffDetails: TextView? = null
+    private var tv_tab_root: TextView? = null
     private var imgList: ImageView? = null
     private var imgMap: ImageView? = null
+    private var imgRoot: ImageView? = null
     private var ll_details: LinearLayout? = null
     private var ll_list: LinearLayout? = null
+    private var ll_rootView: LinearLayout? = null
     private var ll_select_list: LinearLayout? = null
     private var ll_select_map: LinearLayout? = null
     var recyStaffList: RecyclerView? = null
+    var recyRootview: RecyclerView? = null
 
     private var imgv_filter: ImageView? = null
     private var ll_StafAdmin: LinearLayout? = null
@@ -94,16 +104,16 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
     var designation = 0
     var EmployeeLocation = 0
 
-    var ID_Branch : String?= "0"
-    var ID_Department : String?= "0"
-    var ID_Designation : String?= "0"
-    var ID_Employee : String?= "0"
+    var ID_Branch: String? = "0"
+    var ID_Department: String? = "0"
+    var ID_Designation: String? = "0"
+    var ID_Employee: String? = "0"
 
-    var temp_Branch : String?= ""
-    var temp_Department : String?= ""
-    var temp_Designation : String?= ""
-    var temp_Employee : String?= ""
-    var temp_Date : String?= ""
+    var temp_Branch: String? = ""
+    var temp_Department: String? = ""
+    var temp_Designation: String? = ""
+    var temp_Employee: String? = ""
+    var temp_Date: String? = ""
 
     lateinit var branchViewModel: BranchViewModel
     lateinit var branchArrayList: JSONArray
@@ -112,36 +122,48 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
     var recyBranch: RecyclerView? = null
 
     lateinit var departmentViewModel: DepartmentViewModel
-    lateinit var departmentArrayList : JSONArray
-    lateinit var departmentSort : JSONArray
-    private var dialogDepartment : Dialog? = null
+    lateinit var departmentArrayList: JSONArray
+    lateinit var departmentSort: JSONArray
+    private var dialogDepartment: Dialog? = null
     var recyDeaprtment: RecyclerView? = null
 
     lateinit var employeeDetailsViewModel: EmployeeDetailsViewModel
-    lateinit var employeeArrayList : JSONArray
-    lateinit var employeeSort : JSONArray
-    private var dialogEmployee : Dialog? = null
+    lateinit var employeeArrayList: JSONArray
+    lateinit var employeeSort: JSONArray
+    private var dialogEmployee: Dialog? = null
     var recyEmployee: RecyclerView? = null
 
     lateinit var designationViewModel: DesignationViewModel
-    lateinit var designationArrayList : JSONArray
-    lateinit var designationtSort : JSONArray
-    private var dialogDesignation : Dialog? = null
+    lateinit var designationArrayList: JSONArray
+    lateinit var designationtSort: JSONArray
+    private var dialogDesignation: Dialog? = null
     var recyDesignation: RecyclerView? = null
+    var isRootviewAvailable: Boolean = true
 
     lateinit var employeeLocationListViewModel: EmployeeLocationListViewModel
+    lateinit var locationTravelListViewModel: LocationTravelListViewModel
+
+
+    var travelledDistanceList: JSONArray? = null
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
         setContentView(R.layout.activity_location_marking_new)
         context = this@LocationMarkingNewActivity
         branchViewModel = ViewModelProvider(this).get(BranchViewModel::class.java)
         departmentViewModel = ViewModelProvider(this).get(DepartmentViewModel::class.java)
         employeeDetailsViewModel = ViewModelProvider(this).get(EmployeeDetailsViewModel::class.java)
         designationViewModel = ViewModelProvider(this).get(DesignationViewModel::class.java)
-        employeeLocationListViewModel = ViewModelProvider(this).get(EmployeeLocationListViewModel::class.java)
+        employeeLocationListViewModel =
+            ViewModelProvider(this).get(EmployeeLocationListViewModel::class.java)
+        locationTravelListViewModel =
+            ViewModelProvider(this).get(LocationTravelListViewModel::class.java)
 
         setRegViews()
         hideViews()
@@ -163,21 +185,43 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
 
         EmployeeLocation = 0
         getEmployeeLocationList()
-    }
+        isRootviewAvailable=false
+        Log.v("dfsdfsdfsad",""+isRootviewAvailable)
+        if (isRootviewAvailable) {
+            view_root_view.visibility = View.VISIBLE
+            lin_root_view.visibility = View.VISIBLE
+        } else {
+            view_root_view.visibility = View.GONE
+            lin_root_view.visibility = View.GONE
+        }
 
+        swipeRefreshLayout.setOnRefreshListener {
+            Log.v("sdfsdfd", "indfdd")
+            Log.v("sdfsdfd", "isRefreshing " + swipeRefreshLayout.isRefreshing)
+            // Handle the refresh action here (e.g., fetch new data)
+            getTravelDetails()
+        }
+    }
 
 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
+        view_root_view = findViewById<View>(R.id.view_root_view)
+        ll_rootView = findViewById<LinearLayout>(R.id.ll_rootView)
+        lin_root_view = findViewById<LinearLayout>(R.id.lin_root_view)
         tv_tab_StaffList = findViewById<TextView>(R.id.tv_tab_StaffList)
         tv_tab_StaffDetails = findViewById<TextView>(R.id.tv_tab_StaffDetails)
+        tv_tab_root = findViewById<TextView>(R.id.tv_tab_root)
         imgList = findViewById<ImageView>(R.id.imgList)
         imgMap = findViewById<ImageView>(R.id.imgMap)
+        imgRoot = findViewById<ImageView>(R.id.imgRoot)
         ll_details = findViewById<LinearLayout>(R.id.ll_details)
         ll_list = findViewById<LinearLayout>(R.id.ll_list)
         ll_select_list = findViewById<LinearLayout>(R.id.ll_select_list)
         ll_select_map = findViewById<LinearLayout>(R.id.ll_select_map)
         recyStaffList = findViewById<RecyclerView>(R.id.recyStaffList)
+        recyRootview = findViewById<RecyclerView>(R.id.recyRootview)
         imgv_filter = findViewById<ImageView>(R.id.imgv_filter)
 
         tv_error = findViewById<TextView>(R.id.tv_error)
@@ -190,6 +234,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
         imgv_filter!!.setOnClickListener(this)
         ll_select_list!!.setOnClickListener(this)
         ll_select_map!!.setOnClickListener(this)
+        lin_root_view!!.setOnClickListener(this)
 
         getCurrentdate("0")
 
@@ -197,108 +242,222 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
     }
 
     override fun onClick(v: View) {
-        when(v.id){
-            R.id.imback->{
+        when (v.id) {
+            R.id.imback -> {
                 finish()
             }
-            R.id.tv_tab_StaffList->{
+            R.id.tv_tab_StaffList -> {
                 listMode = "1"
-                detailMode="0"
+                detailMode = "0"
+                rootMode = "0"
                 hideViews()
             }
-            R.id.tv_tab_StaffDetails->{
+            R.id.tv_tab_StaffDetails -> {
                 listMode = "0"
-                detailMode="1"
+                detailMode = "1"
+                rootMode = "0"
                 hideViews()
             }
-            R.id.ll_select_list->{
+            R.id.ll_select_list -> {
                 listMode = "1"
-                detailMode="0"
+                detailMode = "0"
+                rootMode = "0"
                 hideViews()
             }
-            R.id.ll_select_map->{
+            R.id.ll_select_map -> {
                 listMode = "0"
-                detailMode="1"
+                detailMode = "1"
+                rootMode = "0"
                 hideViews()
             }
-            R.id.imgv_filter->{
+            R.id.lin_root_view -> {
+                listMode = "0"
+                detailMode = "0"
+                rootMode = "1"
+                hideViews()
+            }
+            R.id.imgv_filter -> {
                 Config.disableClick(v)
                 filterBottomSheet()
             }
 
-            R.id.tie_Branch->{
+            R.id.tie_Branch -> {
                 Config.disableClick(v)
                 branchCount = 0
                 getBranch()
             }
 
-            R.id.tie_Department->{
+            R.id.tie_Department -> {
                 Config.disableClick(v)
                 department = 0
                 getDepartment()
             }
-            R.id.tie_Designation->{
+            R.id.tie_Designation -> {
                 Config.disableClick(v)
                 designation = 0
                 getDesignation()
             }
-            R.id.tie_Employee->{
-                if (ID_Department.equals("")){
+            R.id.tie_Employee -> {
+                if (ID_Department.equals("")) {
 
-                    Config.snackBars(context,v,"Select Department")
+                    Config.snackBars(context, v, "Select Department")
 
-                }else{
+                } else {
                     Config.disableClick(v)
                     employee = 0
                     getEmployee()
                 }
             }
-            R.id.tie_Date->{
+            R.id.tie_Date -> {
                 Config.disableClick(v)
                 openBottomDate()
             }
-
 
 
         }
     }
 
 
-
     private fun hideViews() {
         ll_list!!.visibility = View.GONE
         ll_details!!.visibility = View.GONE
-
+        ll_rootView!!.visibility = View.GONE
         val colorSelect = ContextCompat.getColor(this, R.color.colorPrimary)
         val colorUnSelect = ContextCompat.getColor(this, R.color.grey)
 
-        if (listMode.equals("1")){
+        if (listMode.equals("1")) {
             ll_list!!.visibility = View.VISIBLE
-        //    tv_tab_StaffList!!.setBackgroundResource(R.drawable.shape_rectangle_bg)
             tv_tab_StaffDetails!!.setBackgroundResource(R.drawable.shape_rectangle_trans)
-//            tv_tab_StaffList!!.setTextColor(Color.parseColor("#FFFFFF"))
-//            tv_tab_StaffDetails!!.setTextColor(Color.parseColor("#FFFFFF"))
-
-            tv_tab_StaffList!!.setTextColor( getResources().getColor(R.color.colorPrimary))
+            tv_tab_root!!.setBackgroundResource(R.drawable.shape_rectangle_trans)
+            tv_tab_StaffList!!.setTextColor(getResources().getColor(R.color.colorPrimary))
             tv_tab_StaffDetails!!.setTextColor(getResources().getColor(R.color.grey))
+            tv_tab_root!!.setTextColor(getResources().getColor(R.color.grey))
             imgList!!.setColorFilter(colorSelect, PorterDuff.Mode.SRC_IN)
             imgMap!!.setColorFilter(colorUnSelect, PorterDuff.Mode.SRC_IN)
-
-
+            imgRoot!!.setColorFilter(colorUnSelect, PorterDuff.Mode.SRC_IN)
         }
-        if (detailMode.equals("1")){
+        if (detailMode.equals("1")) {
             ll_details!!.visibility = View.VISIBLE
             tv_tab_StaffList!!.setBackgroundResource(R.drawable.shape_rectangle_trans)
-          //  tv_tab_StaffDetails!!.setBackgroundResource(R.drawable.shape_rectangle_bg)
-//            tv_tab_StaffList!!.setTextColor(Color.parseColor("#FFFFFF"))
-//            tv_tab_StaffDetails!!.setTextColor(Color.parseColor("#FFFFFF"))
-
-
-            tv_tab_StaffList!!.setTextColor( getResources().getColor(R.color.grey))
+            tv_tab_StaffList!!.setTextColor(getResources().getColor(R.color.grey))
+            tv_tab_root!!.setTextColor(getResources().getColor(R.color.grey))
+            tv_tab_root!!.setBackgroundResource(R.drawable.shape_rectangle_trans)
             tv_tab_StaffDetails!!.setTextColor(getResources().getColor(R.color.colorPrimary))
             imgList!!.setColorFilter(colorUnSelect, PorterDuff.Mode.SRC_IN)
             imgMap!!.setColorFilter(colorSelect, PorterDuff.Mode.SRC_IN)
+            imgRoot!!.setColorFilter(colorUnSelect, PorterDuff.Mode.SRC_IN)
+        }
+        if (rootMode.equals("1")) {
+            ll_rootView!!.visibility = View.VISIBLE
+            tv_tab_StaffList!!.setBackgroundResource(R.drawable.shape_rectangle_trans)
+            tv_tab_StaffDetails!!.setBackgroundResource(R.drawable.shape_rectangle_trans)
+            tv_tab_StaffList!!.setTextColor(getResources().getColor(R.color.grey))
+            tv_tab_StaffDetails!!.setTextColor(getResources().getColor(R.color.grey))
+            tv_tab_root!!.setTextColor(getResources().getColor(R.color.colorPrimary))
+            imgList!!.setColorFilter(colorUnSelect, PorterDuff.Mode.SRC_IN)
+            imgMap!!.setColorFilter(colorUnSelect, PorterDuff.Mode.SRC_IN)
+            imgRoot!!.setColorFilter(colorSelect, PorterDuff.Mode.SRC_IN)
+            if (travelledDistanceList == null || travelledDistanceList?.length() == 0) {
+                getTravelDetails()
+            }
+        }
+    }
 
+    private fun getTravelDetails() {
+
+        swipeRefreshLayout.isRefreshing = false
+
+        Log.v("dfsdfsdfd", "in ")
+        EmployeeLocation = 0
+        ll_data!!.visibility = View.GONE
+        ll_nodata!!.visibility = View.GONE
+        recyRootview!!.adapter = null
+        if (googleMap != null) {
+            googleMap!!.clear();
+        }
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                locationTravelListViewModel.getTravelDetails(
+                    this,
+                    strDate!!,
+                    ID_Department!!,
+                    ID_Designation!!,
+                    ID_Employee!!,
+                    ID_Branch!!
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (EmployeeLocation == 0) {
+                                    EmployeeLocation++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.v("sfsdfdsfd", "msg  " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("EmployeeLocationList")
+                                        travelledDistanceList =
+                                            jobjt.getJSONArray("EmployeeLocationListData")
+                                        if (travelledDistanceList?.length()!! > 0) {
+
+                                            ll_nodata!!.visibility = View.GONE
+                                            ll_data!!.visibility = View.VISIBLE
+
+                                            recyRootview!!.setLayoutManager(
+                                                LinearLayoutManager(
+                                                    this,
+                                                    LinearLayoutManager.VERTICAL,
+                                                    false
+                                                )
+                                            )
+                                            val adapter = TravelDistanceAdapter(
+                                                this@LocationMarkingNewActivity,
+                                                travelledDistanceList!!
+                                            )
+                                            recyRootview!!.adapter = adapter
+                                            adapter.setClickListener(this@LocationMarkingNewActivity)
+                                        }
+                                    } else {
+
+                                        ll_nodata!!.visibility = View.VISIBLE
+                                        ll_data!!.visibility = View.GONE
+                                        tv_error!!.setText(jObject.getString("EXMessage"))
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
         }
     }
 
@@ -306,12 +465,15 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
         try {
 
 
-            val dialog1 = BottomSheetDialog(this,R.style.BottomSheetDialog)
+            val dialog1 = BottomSheetDialog(this, R.style.BottomSheetDialog)
             val view = layoutInflater.inflate(R.layout.filter_location_bottom_sheet, null)
-            dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE)
             val window: Window? = dialog1.getWindow()
             window!!.setBackgroundDrawableResource(android.R.color.transparent);
-            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            window!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
             dialog1!!.setCanceledOnTouchOutside(false)
 
 
@@ -338,40 +500,39 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
             tie_Date!!.setOnClickListener(this)
 
 
-            if (!temp_Branch.equals("")){
+            if (!temp_Branch.equals("")) {
                 tie_Branch!!.setText(temp_Branch)
             }
 
-            if (!temp_Department.equals("")){
+            if (!temp_Department.equals("")) {
                 tie_Department!!.setText(temp_Department)
             }
-            if (!temp_Designation.equals("")){
+            if (!temp_Designation.equals("")) {
                 tie_Designation!!.setText(temp_Designation)
             }
-            if (!temp_Employee.equals("")){
+            if (!temp_Employee.equals("")) {
                 tie_Employee!!.setText(temp_Employee)
             }
-            if (!temp_Date.equals("")){
+            if (!temp_Date.equals("")) {
                 tie_Date!!.setText(temp_Date)
             }
-
 
 
 //            onTextChangedValues()
 
             val IsAdminSP = applicationContext.getSharedPreferences(Config.SHARED_PREF43, 0)
             var isAdmin = IsAdminSP.getString("IsAdmin", null)
-            Log.e(TAG,"isAdmin 796  "+isAdmin)
-            if (isAdmin.equals("1")){
-                ll_StafAdmin!!.visibility  =View.VISIBLE
-              //  tie_Designation!!.isEnabled  = true
-                tie_Employee!!.isEnabled  = true
-            }else{
-                ll_StafAdmin!!.visibility  =View.GONE
-              //  tie_Employee!!.isEnabled  = false
-                tie_Employee!!.isEnabled  = false
+            Log.e(TAG, "isAdmin 796  " + isAdmin)
+            if (isAdmin.equals("1")) {
+                ll_StafAdmin!!.visibility = View.VISIBLE
+                //  tie_Designation!!.isEnabled  = true
+                tie_Employee!!.isEnabled = true
+            } else {
+                ll_StafAdmin!!.visibility = View.GONE
+                //  tie_Employee!!.isEnabled  = false
+                tie_Employee!!.isEnabled = false
             }
-            if (tie_Date!!.text.toString().equals("")){
+            if (tie_Date!!.text.toString().equals("")) {
                 getCurrentdate("1")
             }
 
@@ -397,7 +558,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
 //            }
 
             txtReset!!.setOnClickListener {
-               // loadLoginEmpDetails("1")
+                // loadLoginEmpDetails("1")
                 ID_Department = "0"
                 temp_Department = ""
                 temp_Branch = ""
@@ -409,19 +570,22 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
                 temp_Employee = ""
                 tie_Employee!!.setText("")
                 getCurrentdate("1")
-               // getCurrentBranch()
+                // getCurrentBranch()
 
             }
             txtSearch!!.setOnClickListener {
 
-              //  validateData(dialog1)
+                //  validateData(dialog1)
                 dialog1.dismiss()
+
                 EmployeeLocation = 0
                 getEmployeeLocationList()
+                travelledDistanceList=null
+                listMode = "1"
+                detailMode = "0"
+                rootMode = "0"
+                hideViews()
             }
-
-
-
 
 
 //            dialog1!!.setCancelable(false)
@@ -431,11 +595,10 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
             //      tabLayout = view.findViewById(R.id.tabLayout)
 
 
-
             dialog1!!.setContentView(view)
             dialog1.show()
 
-        }catch (e: Exception){
+        } catch (e: Exception) {
 
         }
     }
@@ -444,7 +607,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
         val FK_BranchSP = applicationContext.getSharedPreferences(Config.SHARED_PREF37, 0)
         val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
         ID_Branch = FK_BranchSP.getString("FK_Branch", null)
-        tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
+        tie_Branch!!.setText(BranchNameSP.getString("BranchName", null))
 
     }
 
@@ -477,27 +640,25 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
                 //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
                 val day: Int = date_Picker1!!.getDayOfMonth()
                 val mon: Int = date_Picker1!!.getMonth()
-                val month: Int = mon+1
+                val month: Int = mon + 1
                 val year: Int = date_Picker1!!.getYear()
                 var strDay = day.toString()
                 var strMonth = month.toString()
                 var strYear = year.toString()
-                if (strDay.length == 1){
-                    strDay ="0"+day
+                if (strDay.length == 1) {
+                    strDay = "0" + day
                 }
-                if (strMonth.length == 1){
-                    strMonth ="0"+strMonth
+                if (strMonth.length == 1) {
+                    strMonth = "0" + strMonth
                 }
 
-                tie_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
-                strDate = ""+strYear+"-"+strMonth+"-"+strDay
-                temp_Date = ""+strDay+"-"+strMonth+"-"+strYear
+                tie_Date!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                strDate = "" + strYear + "-" + strMonth + "-" + strDay
+                temp_Date = "" + strDay + "-" + strMonth + "-" + strYear
 
 
-
-            }
-            catch (e: Exception){
-                Log.e(TAG,"Exception   428   "+e.toString())
+            } catch (e: Exception) {
+                Log.e(TAG, "Exception   428   " + e.toString())
             }
         }
         dialog.setCancelable(false)
@@ -506,23 +667,23 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
         dialog.show()
     }
 
-    private fun getCurrentdate(mode  :String) {
+    private fun getCurrentdate(mode: String) {
 
         try {
             val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
             val currentDate = sdf.format(Date())
-            Log.e(TAG,"DATE TIME  196  "+currentDate)
+            Log.e(TAG, "DATE TIME  196  " + currentDate)
             val newDate: Date = sdf.parse(currentDate)
-            Log.e(TAG,"newDate  196  "+newDate)
+            Log.e(TAG, "newDate  196  " + newDate)
             val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
             val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
 
 
             val FK_BranchSP = applicationContext.getSharedPreferences(Config.SHARED_PREF37, 0)
             val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
-            if (mode.equals("1")){
-                tie_Date!!.setText(""+sdfDate1.format(newDate))
-                tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
+            if (mode.equals("1")) {
+                tie_Date!!.setText("" + sdfDate1.format(newDate))
+                tie_Branch!!.setText(BranchNameSP.getString("BranchName", null))
             }
             strDate = sdfDate2.format(newDate)
             ID_Branch = FK_BranchSP.getString("FK_Branch", null)
@@ -530,14 +691,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
             temp_Date = sdfDate1.format(newDate)
 
 
-
-
-
-
-
-
-
-        }catch (e :Exception){
+        } catch (e: Exception) {
 
         }
     }
@@ -560,15 +714,16 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
 
-                                if (designation == 0){
+                                if (designation == 0) {
                                     designation++
 
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   1142   "+msg)
+                                    Log.e(TAG, "msg   1142   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("DesignationList")
-                                        designationArrayList = jobjt.getJSONArray("DesignationDetails")
-                                        if (designationArrayList.length()>0){
+                                        designationArrayList =
+                                            jobjt.getJSONArray("DesignationDetails")
+                                        if (designationArrayList.length() > 0) {
 
                                             designationPopup(designationArrayList)
 
@@ -594,10 +749,10 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
 //                                    Toast.LENGTH_LONG
 //                                ).show()
                             }
-                        }catch (e : Exception){
+                        } catch (e: Exception) {
                             Toast.makeText(
                                 applicationContext,
-                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -617,10 +772,10 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
 
             dialogDesignation = Dialog(this)
             dialogDesignation!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogDesignation!! .setContentView(R.layout.designation_popup)
+            dialogDesignation!!.setContentView(R.layout.designation_popup)
             dialogDesignation!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-            recyDesignation = dialogDesignation!! .findViewById(R.id.recyDesignation) as RecyclerView
-            val etsearch = dialogDesignation!! .findViewById(R.id.etsearch) as EditText
+            recyDesignation = dialogDesignation!!.findViewById(R.id.recyDesignation) as RecyclerView
+            val etsearch = dialogDesignation!!.findViewById(R.id.etsearch) as EditText
 
             designationtSort = JSONArray()
             for (k in 0 until designationArrayList.length()) {
@@ -653,22 +808,28 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
                     for (k in 0 until designationArrayList.length()) {
                         val jsonObject = designationArrayList.getJSONObject(k)
                         if (textlength <= jsonObject.getString("DesignationName").length) {
-                            if (jsonObject.getString("DesignationName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                            if (jsonObject.getString("DesignationName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
                                 designationtSort.put(jsonObject)
                             }
 
                         }
                     }
 
-                    Log.e(TAG,"designationtSort               7103    "+designationtSort)
-                    val adapter = DesignationAdapter(this@LocationMarkingNewActivity, designationtSort)
+                    Log.e(TAG, "designationtSort               7103    " + designationtSort)
+                    val adapter =
+                        DesignationAdapter(this@LocationMarkingNewActivity, designationtSort)
                     recyDesignation!!.adapter = adapter
                     adapter.setClickListener(this@LocationMarkingNewActivity)
                 }
             })
 
             dialogDesignation!!.show()
-            dialogDesignation!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogDesignation!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -691,8 +852,8 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
                         try {
                             if (msg!!.length > 0) {
 
-                                if (branchCount == 0){
-                                    branchCount ++
+                                if (branchCount == 0) {
+                                    branchCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   1062   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
@@ -828,15 +989,16 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
 
-                                if (department == 0){
+                                if (department == 0) {
                                     department++
 
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   1142   "+msg)
+                                    Log.e(TAG, "msg   1142   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("DepartmentDetails")
-                                        departmentArrayList = jobjt.getJSONArray("DepartmentDetailsList")
-                                        if (departmentArrayList.length()>0){
+                                        departmentArrayList =
+                                            jobjt.getJSONArray("DepartmentDetailsList")
+                                        if (departmentArrayList.length() > 0) {
 
                                             departmentPopup(departmentArrayList)
 
@@ -862,10 +1024,10 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
 //                                    Toast.LENGTH_LONG
 //                                ).show()
                             }
-                        }catch (e : Exception){
+                        } catch (e: Exception) {
                             Toast.makeText(
                                 applicationContext,
-                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -885,10 +1047,10 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
 
             dialogDepartment = Dialog(this)
             dialogDepartment!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogDepartment!! .setContentView(R.layout.department_popup)
+            dialogDepartment!!.setContentView(R.layout.department_popup)
             dialogDepartment!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-            recyDeaprtment = dialogDepartment!! .findViewById(R.id.recyDeaprtment) as RecyclerView
-            val etsearch = dialogDepartment!! .findViewById(R.id.etsearch) as EditText
+            recyDeaprtment = dialogDepartment!!.findViewById(R.id.recyDeaprtment) as RecyclerView
+            val etsearch = dialogDepartment!!.findViewById(R.id.etsearch) as EditText
 
             departmentSort = JSONArray()
             for (k in 0 until departmentArrayList.length()) {
@@ -921,14 +1083,16 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
                     for (k in 0 until departmentArrayList.length()) {
                         val jsonObject = departmentArrayList.getJSONObject(k)
                         if (textlength <= jsonObject.getString("DeptName").length) {
-                            if (jsonObject.getString("DeptName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                            if (jsonObject.getString("DeptName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
                                 departmentSort.put(jsonObject)
                             }
 
                         }
                     }
 
-                    Log.e(TAG,"departmentSort               7103    "+departmentSort)
+                    Log.e(TAG, "departmentSort               7103    " + departmentSort)
                     val adapter = DepartmentAdapter(this@LocationMarkingNewActivity, departmentSort)
                     recyDeaprtment!!.adapter = adapter
                     adapter.setClickListener(this@LocationMarkingNewActivity)
@@ -936,7 +1100,10 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
             })
 
             dialogDepartment!!.show()
-            dialogDepartment!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogDepartment!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -952,58 +1119,60 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                employeeDetailsViewModel.getEmployee(this, ID_Department!!,ID_Designation!!)!!.observe(
-                    this,
-                    Observer { serviceSetterGetter ->
+                employeeDetailsViewModel.getEmployee(this, ID_Department!!, ID_Designation!!)!!
+                    .observe(
+                        this,
+                        Observer { serviceSetterGetter ->
 
-                        try {
-                            val msg = serviceSetterGetter.message
-                            if (msg!!.length > 0) {
+                            try {
+                                val msg = serviceSetterGetter.message
+                                if (msg!!.length > 0) {
 
-                                if (employee == 0){
-                                    employee++
+                                    if (employee == 0) {
+                                        employee++
 
-                                    val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   1224   "+msg)
-                                    if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("EmployeeDetails")
-                                        employeeArrayList = jobjt.getJSONArray("EmployeeDetailsList")
-                                        if (employeeArrayList.length()>0){
+                                        val jObject = JSONObject(msg)
+                                        Log.e(TAG, "msg   1224   " + msg)
+                                        if (jObject.getString("StatusCode") == "0") {
+                                            val jobjt = jObject.getJSONObject("EmployeeDetails")
+                                            employeeArrayList =
+                                                jobjt.getJSONArray("EmployeeDetailsList")
+                                            if (employeeArrayList.length() > 0) {
 
-                                            employeePopup(employeeArrayList)
+                                                employeePopup(employeeArrayList)
 
 
+                                            }
+                                        } else {
+                                            val builder = AlertDialog.Builder(
+                                                this@LocationMarkingNewActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage(jObject.getString("EXMessage"))
+                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
                                         }
-                                    } else {
-                                        val builder = AlertDialog.Builder(
-                                            this@LocationMarkingNewActivity,
-                                            R.style.MyDialogTheme
-                                        )
-                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                        }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()
                                     }
-                                }
 
-                            } else {
+                                } else {
 //                                Toast.makeText(
 //                                    applicationContext,
 //                                    "Some Technical Issues.",
 //                                    Toast.LENGTH_LONG
 //                                ).show()
+                                }
+                            } catch (e: Exception) {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "" + Config.SOME_TECHNICAL_ISSUES,
+                                    Toast.LENGTH_LONG
+                                ).show()
                             }
-                        }catch (e:Exception){
-                            Toast.makeText(
-                                applicationContext,
-                                ""+Config.SOME_TECHNICAL_ISSUES,
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
 
-                    })
+                        })
                 progressDialog!!.dismiss()
             }
             false -> {
@@ -1018,10 +1187,10 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
 
             dialogEmployee = Dialog(this)
             dialogEmployee!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogEmployee!! .setContentView(R.layout.employee_popup)
+            dialogEmployee!!.setContentView(R.layout.employee_popup)
             dialogEmployee!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-            recyEmployee = dialogEmployee!! .findViewById(R.id.recyEmployee) as RecyclerView
-            val etsearch = dialogEmployee!! .findViewById(R.id.etsearch) as EditText
+            recyEmployee = dialogEmployee!!.findViewById(R.id.recyEmployee) as RecyclerView
+            val etsearch = dialogEmployee!!.findViewById(R.id.etsearch) as EditText
 
             employeeSort = JSONArray()
             for (k in 0 until employeeArrayList.length()) {
@@ -1055,14 +1224,16 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
                     for (k in 0 until employeeArrayList.length()) {
                         val jsonObject = employeeArrayList.getJSONObject(k)
                         if (textlength <= jsonObject.getString("EmpName").length) {
-                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
                                 employeeSort.put(jsonObject)
                             }
 
                         }
                     }
 
-                    Log.e(TAG,"employeeSort               7103    "+employeeSort)
+                    Log.e(TAG, "employeeSort               7103    " + employeeSort)
                     val adapter = EmployeeAdapter(this@LocationMarkingNewActivity, employeeSort)
                     recyEmployee!!.adapter = adapter
                     adapter.setClickListener(this@LocationMarkingNewActivity)
@@ -1070,7 +1241,10 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
             })
 
             dialogEmployee!!.show()
-            dialogEmployee!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogEmployee!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -1082,13 +1256,25 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
         googleMap!!.uiSettings.isMapToolbarEnabled = false
         googleMap!!.setInfoWindowAdapter(null)
 
-        Log.e(TAG,"jobjt  610   :  "+locationList)
+        Log.e(TAG, "jobjt  610   :  " + locationList)
         for (i in 0 until locationList.length()) {
             val json = locationList.getJSONObject(i)
-            addMarkerWithIconAndTitle(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble()), json.getString("EmployeeName"), R.drawable.person_location,i)
-            if (i==0){
+            addMarkerWithIconAndTitle(
+                LatLng(
+                    json.getString("LocLattitude").toDouble(),
+                    json.getString("LocLongitude").toDouble()
+                ), json.getString("EmployeeName"), R.drawable.person_location, i
+            )
+            if (i == 0) {
                 googleMap!!.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
-                googleMap!!.moveCamera(CameraUpdateFactory.newLatLng(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble())))
+                googleMap!!.moveCamera(
+                    CameraUpdateFactory.newLatLng(
+                        LatLng(
+                            json.getString("LocLattitude").toDouble(),
+                            json.getString("LocLongitude").toDouble()
+                        )
+                    )
+                )
             }
         }
 
@@ -1096,20 +1282,22 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
             // which is clicked and displaying it in a toast message.
             marker.hideInfoWindow()
             var pos = marker.snippet!!.toInt()
-            Log.e(TAG,"902   "
-            +"\n   "+marker.id
-            +"\n   "+marker.snippet
-            +"\n   "+marker.tag
-            +"\n   "+marker.alpha)
+            Log.e(
+                TAG, "902   "
+                        + "\n   " + marker.id
+                        + "\n   " + marker.snippet
+                        + "\n   " + marker.tag
+                        + "\n   " + marker.alpha
+            )
 
             val jsonObject = locationList.getJSONObject(pos)
-            Log.e(TAG,"1062   Location List")
+            Log.e(TAG, "1062   Location List")
             val i = Intent(this@LocationMarkingNewActivity, MapRootActivity::class.java)
-            i.putExtra("FK_Employee",jsonObject.getString("FK_Employee"))
-            i.putExtra("strDate",strDate)
+            i.putExtra("FK_Employee", jsonObject.getString("FK_Employee"))
+            i.putExtra("strDate", strDate)
             startActivity(i)
 
-          //  Toast.makeText(this@LocationMarkingNewActivity, "Clicked location is $markerName", Toast.LENGTH_SHORT).show()
+            //  Toast.makeText(this@LocationMarkingNewActivity, "Clicked location is $markerName", Toast.LENGTH_SHORT).show()
             true
         })
 
@@ -1124,16 +1312,21 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
 //        googleMap!!.moveCamera(CameraUpdateFactory.newLatLng(LatLng(11.2590, 75.7863)))
     }
 
-    private fun addMarkerWithIconAndTitle(position: LatLng, title: String, iconResId: Int,pos : Int) {
+    private fun addMarkerWithIconAndTitle(
+        position: LatLng,
+        title: String,
+        iconResId: Int,
+        pos: Int
+    ) {
         val options = MarkerOptions()
             .position(position)
             .title(title)
-            .snippet(""+pos)
-
+            .snippet("" + pos)
 
 
         // Inflate the custom marker layout
-        val markerView: View = LayoutInflater.from(this).inflate(R.layout.custom_marker_layout, null)
+        val markerView: View =
+            LayoutInflater.from(this).inflate(R.layout.custom_marker_layout, null)
 
         // Set the icon
         val markerIconImageView: ImageView = markerView.findViewById(R.id.marker_icon)
@@ -1200,7 +1393,14 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                employeeLocationListViewModel.getEmployeeLocationList(this,strDate!!,ID_Department!!,ID_Designation!!,ID_Employee!!,ID_Branch!!)!!.observe(
+                employeeLocationListViewModel.getEmployeeLocationList(
+                    this,
+                    strDate!!,
+                    ID_Department!!,
+                    ID_Designation!!,
+                    ID_Employee!!,
+                    ID_Branch!!
+                )!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -1208,25 +1408,35 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
 
-                                if (EmployeeLocation == 0){
+                                if (EmployeeLocation == 0) {
                                     EmployeeLocation++
 
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   8620   "+msg)
+                                    Log.e(TAG, "msg   8620   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
                                         val jobjt = jObject.getJSONObject("EmployeeLocationList")
-                                        locationList = jobjt.getJSONArray("EmployeeLocationListData")
-                                        if (locationList.length()>0){
+                                        locationList =
+                                            jobjt.getJSONArray("EmployeeLocationListData")
+                                        if (locationList.length() > 0) {
 
                                             ll_nodata!!.visibility = View.GONE
                                             ll_data!!.visibility = View.VISIBLE
-                                                mapView!!.getMapAsync(this);
+                                            mapView!!.getMapAsync(this);
 
-                                                recyStaffList!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
-                                                val adapter = LocationMarkingAdapter(this@LocationMarkingNewActivity, locationList)
-                                                recyStaffList!!.adapter = adapter
-                                                adapter.setClickListener(this@LocationMarkingNewActivity)
+                                            recyStaffList!!.setLayoutManager(
+                                                LinearLayoutManager(
+                                                    this,
+                                                    LinearLayoutManager.VERTICAL,
+                                                    false
+                                                )
+                                            )
+                                            val adapter = LocationMarkingAdapter(
+                                                this@LocationMarkingNewActivity,
+                                                locationList
+                                            )
+                                            recyStaffList!!.adapter = adapter
+                                            adapter.setClickListener(this@LocationMarkingNewActivity)
 
 
                                         }
@@ -1256,10 +1466,10 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
 //                                    Toast.LENGTH_LONG
 //                                ).show()
                             }
-                        }catch (e : Exception){
+                        } catch (e: Exception) {
                             Toast.makeText(
                                 applicationContext,
-                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
                                 Toast.LENGTH_LONG
                             ).show()
                         }
@@ -1287,11 +1497,11 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
             temp_Branch = jsonObject.getString("BranchName")
         }
 
-        if (data.equals("department")){
+        if (data.equals("department")) {
             dialogDepartment!!.dismiss()
 //            val jsonObject = departmentArrayList.getJSONObject(position)
             val jsonObject = departmentSort.getJSONObject(position)
-            Log.e(TAG,"ID_Department   "+jsonObject.getString("ID_Department"))
+            Log.e(TAG, "ID_Department   " + jsonObject.getString("ID_Department"))
             ID_Department = jsonObject.getString("ID_Department")
             tie_Department!!.setText(jsonObject.getString("DeptName"))
 
@@ -1302,11 +1512,11 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
 
         }
 
-        if (data.equals("designation")){
+        if (data.equals("designation")) {
             dialogDesignation!!.dismiss()
 //            val jsonObject = employeeArrayList.getJSONObject(position)
             val jsonObject = designationtSort.getJSONObject(position)
-            Log.e(TAG,"ID_Designation   "+jsonObject.getString("ID_Designation"))
+            Log.e(TAG, "ID_Designation   " + jsonObject.getString("ID_Designation"))
             ID_Designation = jsonObject.getString("ID_Designation")
             tie_Designation!!.setText(jsonObject.getString("DesignationName"))
 
@@ -1317,11 +1527,11 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
 
         }
 
-        if (data.equals("employee")){
+        if (data.equals("employee")) {
             dialogEmployee!!.dismiss()
 //            val jsonObject = employeeArrayList.getJSONObject(position)
             val jsonObject = employeeSort.getJSONObject(position)
-            Log.e(TAG,"ID_Employee   "+jsonObject.getString("ID_Employee"))
+            Log.e(TAG, "ID_Employee   " + jsonObject.getString("ID_Employee"))
             ID_Employee = jsonObject.getString("ID_Employee")
             tie_Employee!!.setText(jsonObject.getString("EmpName"))
 
@@ -1329,31 +1539,32 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback , Vie
 
 
         }
-        if (data.equals("rootView")){
+        if (data.equals("rootView")) {
             val jsonObject = locationList.getJSONObject(position)
-            Log.e(TAG,"1062   Location List")
+            Log.e(TAG, "1062   Location List")
             val i = Intent(this@LocationMarkingNewActivity, RootViewActivity::class.java)
-            i.putExtra("FK_Employee",jsonObject.getString("FK_Employee"))
-            i.putExtra("strDate",strDate)
+            i.putExtra("FK_Employee", jsonObject.getString("FK_Employee"))
+            i.putExtra("strDate", strDate)
             startActivity(i)
         }
 
-        if (data.equals("LocList")){
+        if (data.equals("LocList")) {
             val jsonObject = locationList.getJSONObject(position)
-            Log.e(TAG,"1062   Location List")
+            Log.e(TAG, "1062   Location List")
             val i = Intent(this@LocationMarkingNewActivity, MapRootActivity::class.java)
-            i.putExtra("FK_Employee",jsonObject.getString("FK_Employee"))
-            i.putExtra("strDate",strDate)
+            i.putExtra("FK_Employee", jsonObject.getString("FK_Employee"))
+            i.putExtra("strDate", strDate)
             startActivity(i)
         }
 
-        if (data.equals("LocDetails")){
+        if (data.equals("LocDetails")) {
             val jsonObject = locationList.getJSONObject(position)
-            Log.e(TAG,"1062   Location List")
+            Log.e(TAG, "1062   Location List")
             val i = Intent(this@LocationMarkingNewActivity, MapRootDetailActivity::class.java)
-            i.putExtra("FK_Employee",jsonObject.getString("FK_Employee"))
-            i.putExtra("strDate",strDate)
+            i.putExtra("FK_Employee", jsonObject.getString("FK_Employee"))
+            i.putExtra("strDate", strDate)
             startActivity(i)
         }
     }
+
 }

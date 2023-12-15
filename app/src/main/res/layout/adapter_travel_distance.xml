@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:backgroundTint="@color/white"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp">
+    <!--    app:cardUseCompatPadding="true"-->
+
+    <LinearLayout
+        android:id="@+id/llLocationMarking"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/round_border_trans"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="0dp">
+
+                    <TextView
+                        android:id="@+id/txtName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.5"
+                        android:drawableLeft="@drawable/icon_svg_customer"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/black"
+                        android:fontFamily="@font/myfont"
+                        android:gravity="start"
+                        android:singleLine="true"
+                        android:text="SONA"
+                        android:textColor="@color/black"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="5dp"
+                android:background="@color/grey"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1.5"
+                android:drawableTint="@color/black"
+                android:fontFamily="@font/myfont"
+                android:gravity="start"
+                android:singleLine="true"
+                android:text="Distance Travelled"
+                android:textColor="@color/black"
+                android:textSize="9dp"
+                android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_travelled"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:layout_marginTop="-5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1.5"
+                    android:drawableTint="@color/black"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="start"
+                    android:singleLine="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/til_Channel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="1.5"
+                android:drawableTint="@color/black"
+                android:fontFamily="@font/myfont"
+                android:gravity="start"
+                android:singleLine="true"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
