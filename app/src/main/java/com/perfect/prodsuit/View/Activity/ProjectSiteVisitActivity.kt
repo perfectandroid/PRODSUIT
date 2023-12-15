@@ -295,6 +295,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     var strDescription   = ""
     var strImageName   = ""
     var encodeDoc : String = ""
+    var ID_SiteVisitAssignment : String = ""
 
     var updateDocscount   = 0
     lateinit var siteVisitDocUploadViewModel  : SiteVisitDocUploadViewModel
@@ -333,6 +334,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         ReqMode = intent.getStringExtra("ReqMode").toString()
         SubMode = intent.getStringExtra("SubMode").toString()
 
+
         Log.e(TAG,"Mode  32555   "+mode)
         if (mode.equals("0")){
             Log.e(TAG,"23111   ")
@@ -344,6 +346,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             tie_LeadNo!!.setText(""+jsonObj!!.getString("LeadNo"))
             tie_LeadNo!!.isEnabled = false
             tie_InspectionCharge!!.setText(strInspectCharge)
+            ID_SiteVisitAssignment = jsonObj!!.getString("ID_SiteVisitAssignment")
         }
 
     }
@@ -1304,6 +1307,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             tie_LeadNo!!.setText("")
             strID_FIELD = ""
             ID_LeadGenerate = ""
+            ID_SiteVisitAssignment = ""
             tie_InspectionCharge!!.setText("")
         }else{
             tie_InspectionCharge!!.setText(strInspectCharge)
@@ -1571,6 +1575,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private fun saveUpadateSiteVisit() {
         var UserAction = "1"
 
+        Log.e(TAG,"ID_SiteVisitAssignment   157888    "+ID_SiteVisitAssignment)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1579,7 +1584,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                upadateSiteVisitViewModel.getUpadateSiteVisit(this,UserAction,ID_LeadGenerate,strVisitdate!!,visitTime,strInspectionNote1,strInspectionNote2,
+                upadateSiteVisitViewModel.getUpadateSiteVisit(this,UserAction,ID_LeadGenerate,ID_SiteVisitAssignment,strVisitdate!!,visitTime,strInspectionNote1,strInspectionNote2,
                     strCustomerNotes,strExpenseAmount,strCommonRemark,strInspectionCharge,saveEmployeeDetails,saveMeasurementDetails,saveCheckedDetails,
                     pssOtherCharge,pssOtherChargeTax)!!.observe(
                     this,
@@ -3978,6 +3983,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             tie_LeadNo!!.setText(jsonObject.getString("LeadNo"))
             strID_FIELD = jsonObject.getString("ID_LeadGenerate")
             ID_LeadGenerate = jsonObject.getString("ID_LeadGenerate")
+            ID_SiteVisitAssignment = jsonObject.getString("ID_SiteVisitAssignment")
             tie_InspectionCharge!!.setText(jsonObject.getString("ExpenseAmount"))
 
         }

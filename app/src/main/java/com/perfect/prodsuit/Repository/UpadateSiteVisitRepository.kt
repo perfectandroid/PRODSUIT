@@ -27,18 +27,18 @@ object UpadateSiteVisitRepository {
     val upadateSiteVisitSetterGetter = MutableLiveData<UpadateSiteVisitModel>()
     val TAG: String = "UpadateSiteVisitRepository"
 
-    fun getServicesApiCall(context: Context, UserAction : String, strLeadno : String, strVisitdate : String, visitTime : String, strInspectionNote1 : String,
+    fun getServicesApiCall(context: Context, UserAction : String, strLeadno : String,ID_SiteVisitAssignment: String , strVisitdate : String, visitTime : String, strInspectionNote1 : String,
                            strInspectionNote2 : String, strCustomerNotes : String, strExpenseAmount : String, strCommonRemark : String, strInspectionCharge : String,
                            saveEmployeeDetails : JSONArray, saveMeasurementDetails : JSONArray, saveCheckedDetails : JSONArray, pssOtherCharge : JSONArray,
                            pssOtherChargeTax : JSONArray
     ): MutableLiveData<UpadateSiteVisitModel> {
-        UpadateSiteVisitRep(context,UserAction,strLeadno,strVisitdate,visitTime,strInspectionNote1,strInspectionNote2,
+        UpadateSiteVisitRep(context,UserAction,strLeadno,ID_SiteVisitAssignment,strVisitdate,visitTime,strInspectionNote1,strInspectionNote2,
             strCustomerNotes,strExpenseAmount,strCommonRemark,strInspectionCharge,saveEmployeeDetails,saveMeasurementDetails,saveCheckedDetails,
             pssOtherCharge,pssOtherChargeTax)
         return upadateSiteVisitSetterGetter
     }
 
-    private fun UpadateSiteVisitRep(context: Context, UserAction : String, strLeadno : String, strVisitdate : String, visitTime : String, strInspectionNote1 : String,
+    private fun UpadateSiteVisitRep(context: Context, UserAction : String, strLeadno : String,ID_SiteVisitAssignment: String , strVisitdate : String, visitTime : String, strInspectionNote1 : String,
                                     strInspectionNote2 : String, strCustomerNotes : String, strExpenseAmount : String, strCommonRemark : String, strInspectionCharge : String,
                                     saveEmployeeDetails : JSONArray, saveMeasurementDetails : JSONArray, saveCheckedDetails : JSONArray, pssOtherCharge : JSONArray,
                                     pssOtherChargeTax : JSONArray) {
@@ -92,6 +92,7 @@ object UpadateSiteVisitRepository {
                 requestObject1.put("ExpenseAmount", ProdsuitApplication.encryptStart(strExpenseAmount))
                 requestObject1.put("Inspectioncharge", ProdsuitApplication.encryptStart(strInspectionCharge))
                 requestObject1.put("Remarks", ProdsuitApplication.encryptStart(strCommonRemark))
+                requestObject1.put("FK_SiteVisitAssignment", ProdsuitApplication.encryptStart(ID_SiteVisitAssignment))
 
                 requestObject1.put("EmployeeDetails", saveEmployeeDetails)
                 requestObject1.put("MeasurementDetails", saveMeasurementDetails)

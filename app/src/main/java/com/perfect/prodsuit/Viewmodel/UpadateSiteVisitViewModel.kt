@@ -13,11 +13,11 @@ class UpadateSiteVisitViewModel : ViewModel() {
 
     var upadateSiteVisitData: MutableLiveData<UpadateSiteVisitModel>? = null
 
-    fun getUpadateSiteVisit(context: Context, UserAction : String, strLeadno : String, strVisitdate : String, visitTime : String, strInspectionNote1 : String,
+    fun getUpadateSiteVisit(context: Context, UserAction : String, strLeadno : String, ID_SiteVisitAssignment: String ,strVisitdate : String, visitTime : String, strInspectionNote1 : String,
                             strInspectionNote2 : String, strCustomerNotes : String, strExpenseAmount : String, strCommonRemark : String, strInspectionCharge : String,
                             saveEmployeeDetails : JSONArray, saveMeasurementDetails : JSONArray, saveCheckedDetails : JSONArray, pssOtherCharge : JSONArray,
                             pssOtherChargeTax : JSONArray) : LiveData<UpadateSiteVisitModel>? {
-        upadateSiteVisitData = UpadateSiteVisitRepository.getServicesApiCall(context,UserAction,strLeadno,strVisitdate,visitTime,strInspectionNote1,strInspectionNote2,
+        upadateSiteVisitData = UpadateSiteVisitRepository.getServicesApiCall(context,UserAction,strLeadno,ID_SiteVisitAssignment,strVisitdate,visitTime,strInspectionNote1,strInspectionNote2,
             strCustomerNotes,strExpenseAmount,strCommonRemark,strInspectionCharge,saveEmployeeDetails,saveMeasurementDetails,saveCheckedDetails,
             pssOtherCharge,pssOtherChargeTax)
         return upadateSiteVisitData
