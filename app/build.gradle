@@ -27,14 +27,14 @@ android {
     defaultConfig {
 //        applicationId "com.perfect.prodsuit"
 //        applicationId "com.mscore.calicuttownbank"
-//        applicationId "com.perfect.prodsuite"  // Sunitha
+        applicationId "com.perfect.prodsuite"  // Sunitha
 //        applicationId "com.perfect.sheetal"
 //        applicationId "com.perfect.prodsuite_demo"
 //        applicationId "com.perfect.prodsuite"  // upload
 //        applicationId "com.perfect.sheetal"
 //        applicationId "com.perfect.asco"
 //        applicationId "com.perfect.verminator"
-        applicationId "com.perfect.supportdemo"
+//        applicationId "com.perfect.supportdemo"
 //        applicationId "com.perfect.marketing_demo"
 //        applicationId "com.perfect.prodsuite_employee"
 

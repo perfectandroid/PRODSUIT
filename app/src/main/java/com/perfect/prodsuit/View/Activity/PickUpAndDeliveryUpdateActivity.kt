@@ -1332,17 +1332,19 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 }
             }else if (SubMode!!.equals("2")) {
 
+                llbilltype!!.visibility = View.GONE
+                lladdProduct!!.visibility = View.GONE
+                ll_standbytotal.visibility = View.GONE
+
 //                if (TransMode!!.equals("INDA")){
 //
 //                }else if (TransMode!!.equals("CUSA")){
 //
 //                }
-                tv_header1!!.text = "Delivery Information"
+//                tv_header1!!.text = "Delivery Information"
 
 
-                llbilltype!!.visibility = View.GONE
-                lladdProduct!!.visibility = View.GONE
-                ll_standbytotal.visibility = View.GONE
+
 
 
                 if (prodInformationArrayList2.length() == 0) {
