@@ -1,32 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DesignSurface">
-    <option name="filePathToZoomLevelMap">
-      <map>
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_customer_search.xml" value="0.20416666666666666" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_dash_board.xml" value="0.13541666666666666" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_home.xml" value="0.13541666666666666" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_homemain.xml" value="0.12314814814814815" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.18" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/activity_leads.xml" value="0.13541666666666666" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/adapter_customer_details.xml" value="0.17239583333333333" />
-        <entry key="..\:/Project/PRODSUIT/app/src/main/res/layout/custom_marker_view.xml" value="0.20416666666666666" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_inventory.xml" value="0.3104166666666667" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_lead_generation_quick.xml" value="0.3104166666666667" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leadgeneration.xml" value="0.25" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_leadmanagement.xml" value="0.2625" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_project_site_visit.xml" value="0.3421875" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_assign.xml" value="0.24596143824908806" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_service_assign_list.xml" value="0.3145833333333333" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_stock_transfer.xml" value="0.3104166666666667" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/activity_ticketreport.xml" value="0.22" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_followup_type.xml" value="0.33177083333333335" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/adapter_project_leadlist.xml" value="0.5" />
-        <entry key="..\:/Working/PRODSUIT/app/src/main/res/layout/filter_manage.xml" value="0.25885416666666666" />
-      </map>
-    </option>
-  </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

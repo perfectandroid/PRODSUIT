@@ -474,7 +474,7 @@
                                 android:layout_marginRight="15dp"
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
-                                android:hint="Complaint Type"
+                                android:hint="Complaint/Service Type"
                                 android:textColorHint="@color/greydarks">
 
                                 <com.google.android.material.textfield.TextInputEditText

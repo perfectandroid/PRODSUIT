@@ -90,6 +90,7 @@ class LocationViewActivity : AppCompatActivity() , OnMapReadyCallback, LocationL
         latitude  = intent.getStringExtra("latitude")
         longitude  = intent.getStringExtra("longitude")
         setId()
+        Log.e(TAG,"mode   93333   "+mode+"   latitude  :  "+latitude+"   longitude  :  "+longitude)
 
         if (mode.equals("0")){
             ll_Close!!.visibility = View.GONE

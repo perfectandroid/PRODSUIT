@@ -74,6 +74,11 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
     private var dialogComplaint : Dialog? = null
     var recyComplaint: RecyclerView? = null
 
+    lateinit var serviceArrayList : JSONArray
+    lateinit var serviceSort : JSONArray
+    private var dialogService : Dialog? = null
+    var recyService: RecyclerView? = null
+
     var btnSubmit: Button? = null
     var btnReset: Button? = null
 
@@ -203,12 +208,20 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             }
 
             R.id.tie_ComplaintType -> {
-                Config.disableClick(v)
-                complaintDet = 0
-                ReqMode = "70"
-                SubMode = ""
 
-                getComplaints(ReqMode!!,SubMode!!)
+                if (ID_CompService.equals("")){
+                    Config.snackBars(context,v,"Select Complaint/Service")
+                }else{
+                    Config.disableClick(v)
+                    complaintDet = 0
+                    ReqMode = "70"
+                    SubMode = ""
+
+                    Log.e(TAG,"2111   "+ID_CompService+"  "+ReqMode+"   "+SubMode)
+
+                    getComplaints(ReqMode!!,SubMode!!)
+                }
+
 
             }
 
@@ -1160,13 +1173,23 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                                     if (jObject.getString("StatusCode") == "0") {
 
                                         val jobjt = jObject.getJSONObject("ComplaintService")
-                                        complaintArrayList = jobjt.getJSONArray("ComplaintList")
-                                        if (complaintArrayList.length()>0){
 
-                                            complaintPopup(complaintArrayList)
+                                        if (ID_CompService.equals("1")){
+                                            complaintArrayList = jobjt.getJSONArray("ComplaintList")
+                                            if (complaintArrayList.length()>0){
 
+                                                complaintPopup(complaintArrayList)
 
+                                            }
+                                        }else if (ID_CompService.equals("2")){
+                                            serviceArrayList = jobjt.getJSONArray("ServiceList")
+                                            if (serviceArrayList.length()>0){
+
+                                                servicePopup(serviceArrayList)
+                                            }
                                         }
+
+
 
                                     } else {
                                         val builder = AlertDialog.Builder(
@@ -1206,6 +1229,8 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             }
         }
     }
+
+
 
     private fun complaintPopup(complaintArrayList: JSONArray) {
 
@@ -1268,6 +1293,72 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
             dialogComplaint!!.show()
             dialogComplaint!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"Exception  1394    "+e.toString())
+
+        }
+    }
+
+    private fun servicePopup(serviceArrayList: JSONArray) {
+        try {
+
+            dialogService = Dialog(this)
+            dialogService!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogService!! .setContentView(R.layout.service_popup)
+            dialogService!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyService = dialogService!! .findViewById(R.id.recyService) as RecyclerView
+            val etsearch = dialogService!! .findViewById(R.id.etsearch) as EditText
+
+            serviceSort = JSONArray()
+            for (k in 0 until serviceArrayList.length()) {
+                val jsonObject = serviceArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                serviceSort.put(jsonObject)
+            }
+
+
+            val lLayout = GridLayoutManager(this@ServiceReportActivity, 1)
+            recyService!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = ProductPriorityAdapter(this@FollowUpActivity, prodPriorityArrayList)
+            val adapter = ServiceAdapter1(this@ServiceReportActivity, serviceSort)
+            recyService!!.adapter = adapter
+            adapter.setClickListener(this@ServiceReportActivity)
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    serviceSort = JSONArray()
+
+                    for (k in 0 until serviceArrayList.length()) {
+                        val jsonObject = serviceArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("ServiceName").length) {
+                            if (jsonObject.getString("ServiceName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                serviceSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"serviceSort               1556    "+serviceSort)
+                    val adapter = ServiceAdapter1(this@ServiceReportActivity, serviceSort)
+                    recyService!!.adapter = adapter
+                    adapter.setClickListener(this@ServiceReportActivity)
+                }
+            })
+
+            dialogService!!.show()
+            dialogService!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception  1394    "+e.toString())
@@ -1338,6 +1429,10 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
             ID_CompService = jsonObject.getString("compService_id")
             tie_ComplaintService!!.setText(jsonObject.getString("compService_name"))
 
+            ID_ComplaintList = ""
+            tie_ComplaintType!!.setText("")
+
+
         }
         if (data.equals("compalint")) {
 
@@ -1345,9 +1440,20 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 //            val jsonObject = prodPriorityArrayList.getJSONObject(position)
             val jsonObject = complaintSort.getJSONObject(position)
             Log.e(TAG,"ID_ComplaintList   "+jsonObject.getString("ID_ComplaintList"))
-
             ID_ComplaintList = jsonObject.getString("ID_ComplaintList")
-            tie_ComplaintType!!.setText(jsonObject.getString("ComplaintName"))
+            tie_ComplaintType!!.setText(jsonObject.getString("CompntName"))
+
+        }
+
+        if (data.equals("service")) {
+
+            dialogService!!.dismiss()
+//            val jsonObject = prodPriorityArrayList.getJSONObject(position)
+            val jsonObject = serviceSort.getJSONObject(position)
+            Log.e(TAG,"ID_Service   "+jsonObject.getString("ID_Service"))
+
+            ID_ComplaintList = jsonObject.getString("ID_Service")
+            tie_ComplaintType!!.setText(jsonObject.getString("ServiceName"))
 
         }
 

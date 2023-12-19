@@ -70,6 +70,12 @@ object ServiceOutstandingListReportRepository {
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
 
+//                {"Token":"02350582-6179-4097-93F6-17FEFB46CC83","FK_Company":"1","FK_BranchCodeUser":"3","Fk_Branch":"3","EntrBy":"SONAKM",
+//                    "FK_Employee":"0","FromDate":"2023-10-28","FK_Employee":"0","ToDate":"2023-11-28","FK_Area":"0","FK_Product":"0",
+//                    "FK_Priority":"0","ReportMode":"3","FK_Machine":"10","Criteria":"0","TableCount":"1","Status":"5","ComplaintType":"0",
+//                    "FK_Category":"0","DueCriteria":"1","FK_NextAction":"0","DueDaysFrom":"0","DueDaysTo":"0","ComplaintService":"0",
+//                    "ReplacementType":"0","TicketNo":""}
+
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(ID_Branch))

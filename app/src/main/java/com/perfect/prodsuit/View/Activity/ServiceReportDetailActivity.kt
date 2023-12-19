@@ -106,6 +106,8 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
             ID_ComplaintList = intent.getStringExtra("ID_ComplaintList")
         }
 
+        Log.e(TAG,"76001 ReportMode    "+ReportMode)
+
         if (ReportMode.equals("1")){
             //New List
             newList = 0
@@ -743,7 +745,7 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
         TicketDate!!.setText(jsonObject.getString("TicketDate"))
         Customer!!.setText(jsonObject.getString("Customer"))
         Product!!.setText(jsonObject.getString("Product"))
-        Complaint!!.setText(jsonObject.getString("Complaint"))
+
         CurrentStatus!!.setText(jsonObject.getString("CurrentStatus"))
         Description!!.setText(jsonObject.getString("Description"))
         Criteria!!.setText(jsonObject.getString("Criteria"))
@@ -756,6 +758,14 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
         Pincode!!.setText(jsonObject.getString("Pincode"))
         Category!!.setText(jsonObject.getString("Category"))
         Priority!!.setText(jsonObject.getString("Priority"))
+
+        Log.e(TAG,"7600 ReportMode    "+ReportMode)
+
+        if (ReportMode.equals("1")){
+            Complaint!!.setText(jsonObject.getString("Complaint"))
+        }else if (ReportMode.equals("2")){
+            Complaint!!.setText(jsonObject.getString("ComplaintorService"))
+        }
 
 
         imgClose.setOnClickListener {

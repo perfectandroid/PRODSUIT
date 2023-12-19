@@ -5,7 +5,7 @@
 
     <uses-sdk
         android:minSdkVersion="26"
-        android:targetSdkVersion="31" />
+        android:targetSdkVersion="33" />
 
     <queries>
         <package android:name="com.google.android.apps.maps" />

@@ -63,6 +63,17 @@ object ServiceNewListReportRepository {
             val requestObject1 = JSONObject()
             try {
 
+//                {"BankKey":"-500","Token":"02350582-6179-4097-93F6-17FEFB46CC83","FK_Company":"1","FK_BranchCodeUser":"3",
+//                    "Fk_Branch":"3","EntrBy":"SONAKM","FK_Employee":"0","FromDate":"2023-10-28","FK_Employee":"0",
+//                    "ToDate":"2023-11-28","FK_Area":"0","FK_Product":"0","FK_Priority":"0","ReportMode":"1","FK_Machine":"10",
+//                    "Criteria":"0","TableCount":"1","Status":"5","ComplaintType":"0","FK_Category":"0","DueCriteria":"1",
+//                    "FK_NextAction":"0","DueDaysFrom":"0","DueDaysTo":"0","ComplaintService":"0","ReplacementType":"0","TicketNo":""}
+
+//                {"Token":"EB36FFC6-9A47-49FC-A8D2-C3995ED9074D","FK_Branch":"3","FK_Company":"1","FK_BranchCodeUser":"3","EntrBy":"SONAKM",
+//                    "FK_Employee":"10044","FromDate":"2023-12-01","ToDate":"2023-12-31","FK_Area":"0","FK_Product":"0","FK_Priority":"0",
+//                    "ReportMode":"1","FK_Machine":"10","Criteria":"0","TableCount":"1","Status":"5","ComplaintType":"1","DueCriteria":"1",
+//                    "FK_NextAction":"0","DueDaysFrom":"0","DueDaysTo":"0","ComplaintService":"1","ReplacementType":"0","TicketNo":"0"}
+
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
@@ -87,9 +98,16 @@ object ServiceNewListReportRepository {
                 requestObject1.put("FK_Machine", "10")
                 requestObject1.put("Criteria", "0")
                 requestObject1.put("TableCount", "1")
-                requestObject1.put("Status", "5")
+                requestObject1.put("Status", "0")
+                requestObject1.put("ComplaintType", ID_ComplaintList)
+              //  requestObject1.put("FK_Category", "0")
                 requestObject1.put("DueCriteria", "1")
-                requestObject1.put("TicketNo", "")
+                requestObject1.put("FK_NextAction", "0")
+                requestObject1.put("DueDaysFrom", "0")
+                requestObject1.put("DueDaysTo", "0")
+                requestObject1.put("ComplaintService", ID_CompService)
+                requestObject1.put("ReplacementType", "0")
+                requestObject1.put("TicketNo", "0")
 
 
                 Log.e(BranchRepository.TAG,"78  getBranch  "+requestObject1)
