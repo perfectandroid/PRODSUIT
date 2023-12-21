@@ -405,8 +405,8 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     }
 
     private fun loadlayout() {
-        ll_service_Attended_category!!.visibility = View.GONE
-       // ll_service_Attended!!.visibility = View.GONE
+      //  ll_service_Attended_category!!.visibility = View.GONE
+        ll_service_Attended!!.visibility = View.GONE
         ll_part_repaced2!!.visibility = View.GONE
 //        ll_top_bar!!.visibility = View.GONE
 //        ll_Service3!!.visibility = View.GONE
@@ -419,8 +419,8 @@ Log.v("adasdasds","modeTab "+modeTab)
         if (modeTab == 0){
             Log.v("adasdasds","modeTab0 ")
 
-          //  ll_service_Attended!!.visibility = View.VISIBLE
-            ll_service_Attended_category!!.visibility = View.VISIBLE
+            ll_service_Attended!!.visibility = View.VISIBLE
+           // ll_service_Attended_category!!.visibility = View.VISIBLE
             txt_previous!!.visibility = View.GONE
             vw_previous!!.visibility = View.GONE
             txt_next!!.visibility = View.VISIBLE
