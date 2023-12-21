@@ -44,6 +44,13 @@ import java.util.*
 
 class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
+
+
+    var projectDelay_xaxis: TextView? = null
+    var projectDelay_yaxis: TextView? = null
+    var ll_ProjectDelay_XY: LinearLayout? = null
+    var ll_ProjectDelayColor: LinearLayout? = null
+
     private var tv_nameProjectTle: TextView? = null
     private var tv_remarkProjectTle: TextView? = null
 
@@ -218,6 +225,10 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
     }
 
     private fun setRegViews() {
+        projectDelay_xaxis = findViewById<TextView>(R.id.projectDelay_xaxis)
+        projectDelay_yaxis = findViewById<TextView>(R.id.projectDelay_yaxis)
+        ll_ProjectDelay_XY = findViewById<LinearLayout>(R.id.ll_ProjectDelay_XY)
+        ll_ProjectDelayColor = findViewById<LinearLayout>(R.id.ll_ProjectDelayColor)
 
         drawableMore = resources.getDrawable(R.drawable.dash_more, null)
         drawableLess = resources.getDrawable(R.drawable.dash_less, null)
@@ -326,7 +337,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                getChartModeData()
            //     getTop10Project()
 //                getProjectDelayed()
-            //    getExpenseAnalysis()
+          //      getExpenseAnalysis()
            //     getUpcomingStageDueDates()
          //      getCostMaterialUsageAllocatedUsed()
            //     getTotalStagewiseDue()
@@ -1480,13 +1491,16 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   projectDelayed   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
-
+                                        ll_ProjectDelay_XY!!.visibility = View.VISIBLE
+                                        ll_ProjectDelayColor!!.visibility = View.VISIBLE
                                         val jobjt =
                                             jObject.getJSONObject("ProjectDelayedStatus")
                                         var remark =   jobjt.getString("Reamrk")
 
                                         projectDelayArrayList=jobjt.getJSONArray("ProjectDelayedStatusList")
                                         tv_projectDelayedRemark!!.setText(jobjt.getString("Reamrk"))
+                                        projectDelay_xaxis!!.setText(jobjt.getString("XAxis"))
+                                        projectDelay_yaxis!!.setText(jobjt.getString("YAxis"))
 
 
                                         if (projectDelayArrayList.length() > 0) {
@@ -1599,12 +1613,12 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         }
 
         val barDataSet1 = BarDataSet(entries1, "data1")
-        barDataSet1.setColors(Color.BLUE)
+        barDataSet1.setColors(resources.getColor(R.color.expense_color1))
         //barDataSet.setValueFormatter(DecimalRemover())
         barDataSet1.valueFormatter = DefaultValueFormatter(0)
 
         val barDataSet2 = BarDataSet(entries2, "data2")
-        barDataSet2.setColors(Color.RED)
+        barDataSet2.setColors(resources.getColor(R.color.gain_color1))
         //barDataSet.setValueFormatter(DecimalRemover())
         barDataSet2.valueFormatter = DefaultValueFormatter(0)
 

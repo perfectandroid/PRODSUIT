@@ -155,7 +155,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:visibility="gone">
+                            android:visibility="visible">
 
 
                             <androidx.cardview.widget.CardView
@@ -227,7 +227,7 @@
                                                     android:layout_height="match_parent"
                                                     android:background="@color/white"
                                                     android:orientation="vertical"
-                                                    android:visibility="visible">
+                                                    android:visibility="gone">
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
@@ -298,6 +298,74 @@
                                                             android:textSize="13dp"
                                                             android:textStyle="normal"
                                                             android:tint="@color/black" />
+
+
+                                                    </LinearLayout>
+                                                    <LinearLayout
+                                                        android:id="@+id/ll_ServiceTicketAction_XY"
+                                                        android:visibility="gone"
+
+                                                        android:gravity="center"
+                                                        android:layout_gravity="center"
+                                                        android:orientation="horizontal"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content">
+                                                        <TextView
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textAllCaps="false"
+                                                            android:textSize="14dp"
+                                                            android:text="X axis : "
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+                                                        </TextView>
+                                                        <TextView
+                                                            android:id="@+id/ServiceTicketAction_xaxis"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textAllCaps="false"
+                                                            android:textSize="14dp"
+                                                            android:text=""
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+                                                        </TextView>
+
+                                                        <LinearLayout
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:orientation="horizontal"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+
+                                                            <TextView
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="14dp"
+                                                                android:text="Y axis : "
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content">
+
+                                                            </TextView>
+                                                            <TextView
+                                                                android:id="@+id/ServiceTicketAction_yaxis"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="14dp"
+                                                                android:text=""
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content">
+
+                                                            </TextView>
+                                                        </LinearLayout>
 
 
                                                     </LinearLayout>
@@ -421,7 +489,74 @@
 
 
                                                     </LinearLayout>
+                                                    <LinearLayout
+                                                        android:id="@+id/ll_cmplntwise_XY"
+                                                        android:visibility="gone"
 
+                                                        android:gravity="center"
+                                                        android:layout_gravity="center"
+                                                        android:orientation="horizontal"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content">
+                                                        <TextView
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textAllCaps="false"
+                                                            android:textSize="14dp"
+                                                            android:text="X axis : "
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+                                                        </TextView>
+                                                        <TextView
+                                                            android:id="@+id/cmplntwise_xaxis"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textAllCaps="false"
+                                                            android:textSize="14dp"
+                                                            android:text=""
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+                                                        </TextView>
+
+                                                        <LinearLayout
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:orientation="horizontal"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+
+                                                            <TextView
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="14dp"
+                                                                android:text="Y axis : "
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content">
+
+                                                            </TextView>
+                                                            <TextView
+                                                                android:id="@+id/cmplntwise_yaxis"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="14dp"
+                                                                android:text=""
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content">
+
+                                                            </TextView>
+                                                        </LinearLayout>
+
+
+                                                    </LinearLayout>
 
                                                     <LinearLayout
                                                         android:layout_width="match_parent"
@@ -542,6 +677,75 @@
                                                     </LinearLayout>
 
                                                     <LinearLayout
+                                                        android:id="@+id/ll_Tktcmplntwise_XY"
+                                                        android:visibility="gone"
+
+                                                        android:gravity="center"
+                                                        android:layout_gravity="center"
+                                                        android:orientation="horizontal"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content">
+                                                        <TextView
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textAllCaps="false"
+                                                            android:textSize="14dp"
+                                                            android:text="X axis : "
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+                                                        </TextView>
+                                                        <TextView
+                                                            android:id="@+id/Tktcmplntwise_xaxis"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textAllCaps="false"
+                                                            android:textSize="14dp"
+                                                            android:text=""
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+                                                        </TextView>
+
+                                                        <LinearLayout
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:orientation="horizontal"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+
+                                                            <TextView
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="14dp"
+                                                                android:text="Y axis : "
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content">
+
+                                                            </TextView>
+                                                            <TextView
+                                                                android:id="@+id/Tktcmplntwise_yaxis"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="14dp"
+                                                                android:text=""
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content">
+
+                                                            </TextView>
+                                                        </LinearLayout>
+
+
+                                                    </LinearLayout>
+
+                                                    <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="match_parent"
                                                         android:gravity="center"
@@ -654,6 +858,75 @@
                                                             android:textSize="13dp"
                                                             android:textStyle="normal"
                                                             android:tint="@color/black" />
+
+
+                                                    </LinearLayout>
+
+                                                    <LinearLayout
+                                                        android:id="@+id/ll_WarrantyPaid_XY"
+                                                        android:visibility="gone"
+
+                                                        android:gravity="center"
+                                                        android:layout_gravity="center"
+                                                        android:orientation="horizontal"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content">
+                                                        <TextView
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textAllCaps="false"
+                                                            android:textSize="14dp"
+                                                            android:text="X axis : "
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+                                                        </TextView>
+                                                        <TextView
+                                                            android:id="@+id/WarrantyPaid_xaxis"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textAllCaps="false"
+                                                            android:textSize="14dp"
+                                                            android:text=""
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+                                                        </TextView>
+
+                                                        <LinearLayout
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:orientation="horizontal"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+
+                                                            <TextView
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="14dp"
+                                                                android:text="Y axis : "
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content">
+
+                                                            </TextView>
+                                                            <TextView
+                                                                android:id="@+id/WarrantyPaid_yaxis"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="14dp"
+                                                                android:text=""
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content">
+
+                                                            </TextView>
+                                                        </LinearLayout>
 
 
                                                     </LinearLayout>
@@ -777,6 +1050,75 @@
                                                     </LinearLayout>
 
                                                     <LinearLayout
+                                                        android:id="@+id/ll_top10complaint_XY"
+                                                        android:visibility="gone"
+
+                                                        android:gravity="center"
+                                                        android:layout_gravity="center"
+                                                        android:orientation="horizontal"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content">
+                                                        <TextView
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textAllCaps="false"
+                                                            android:textSize="14dp"
+                                                            android:text="X axis : "
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+                                                        </TextView>
+                                                        <TextView
+                                                            android:id="@+id/top10complaint_xaxis"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textAllCaps="false"
+                                                            android:textSize="14dp"
+                                                            android:text=""
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+                                                        </TextView>
+
+                                                        <LinearLayout
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:orientation="horizontal"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+
+                                                            <TextView
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="14dp"
+                                                                android:text="Y axis : "
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content">
+
+                                                            </TextView>
+                                                            <TextView
+                                                                android:id="@+id/top10complaint_yaxis"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="14dp"
+                                                                android:text=""
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content">
+
+                                                            </TextView>
+                                                        </LinearLayout>
+
+
+                                                    </LinearLayout>
+
+                                                    <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="match_parent"
                                                         android:orientation="vertical">
@@ -889,6 +1231,75 @@
                                                             android:textStyle="normal"
                                                             android:tint="@color/black" />
 
+
+
+                                                    </LinearLayout>
+
+                                                    <LinearLayout
+                                                        android:id="@+id/ll_SLA_XY"
+                                                        android:visibility="gone"
+
+                                                        android:gravity="center"
+                                                        android:layout_gravity="center"
+                                                        android:orientation="horizontal"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content">
+                                                        <TextView
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textAllCaps="false"
+                                                            android:textSize="14dp"
+                                                            android:text="X axis : "
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+                                                        </TextView>
+                                                        <TextView
+                                                            android:id="@+id/SLA_xaxis"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textAllCaps="false"
+                                                            android:textSize="14dp"
+                                                            android:text=""
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+                                                        </TextView>
+
+                                                        <LinearLayout
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:orientation="horizontal"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+
+                                                            <TextView
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="14dp"
+                                                                android:text="Y axis : "
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content">
+
+                                                            </TextView>
+                                                            <TextView
+                                                                android:id="@+id/SLA_yaxis"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="14dp"
+                                                                android:text=""
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content">
+
+                                                            </TextView>
+                                                        </LinearLayout>
 
 
                                                     </LinearLayout>
@@ -1020,6 +1431,75 @@
                                                     </LinearLayout>
 
                                                     <LinearLayout
+                                                        android:id="@+id/ll_ChanelWiseService_XY"
+                                                        android:visibility="gone"
+
+                                                        android:gravity="center"
+                                                        android:layout_gravity="center"
+                                                        android:orientation="horizontal"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content">
+                                                        <TextView
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textAllCaps="false"
+                                                            android:textSize="14dp"
+                                                            android:text="X axis : "
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+                                                        </TextView>
+                                                        <TextView
+                                                            android:id="@+id/ChanelWiseService_xaxis"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textAllCaps="false"
+                                                            android:textSize="14dp"
+                                                            android:text=""
+                                                            android:textColor="@color/colorPrimary"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+                                                        </TextView>
+
+                                                        <LinearLayout
+                                                            android:layout_marginLeft="10dp"
+                                                            android:layout_marginRight="10dp"
+                                                            android:orientation="horizontal"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content">
+
+
+                                                            <TextView
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="14dp"
+                                                                android:text="Y axis : "
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content">
+
+                                                            </TextView>
+                                                            <TextView
+                                                                android:id="@+id/ChanelWiseService_yaxis"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textStyle="bold"
+                                                                android:textAllCaps="false"
+                                                                android:textSize="14dp"
+                                                                android:text=""
+                                                                android:textColor="@color/colorPrimary"
+                                                                android:layout_width="wrap_content"
+                                                                android:layout_height="wrap_content">
+
+                                                            </TextView>
+                                                        </LinearLayout>
+
+
+                                                    </LinearLayout>
+
+                                                    <LinearLayout
                                                         android:layout_width="match_parent"
                                                         android:layout_height="match_parent"
                                                         android:orientation="vertical">
@@ -1074,7 +1554,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:gravity="center"
