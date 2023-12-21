@@ -879,4 +879,10 @@ interface ApiInterface {
     @POST("UserValidations/UpdateSendIntimation")
     fun sentIntimation(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/SubCategoryDetailsList")
+    fun getSuCategoryategory(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/BrandDetails")
+    fun getBrands(@Body body: RequestBody): Call<String>
+
 }

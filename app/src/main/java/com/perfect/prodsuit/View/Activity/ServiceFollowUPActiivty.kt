@@ -50,6 +50,12 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     lateinit var serviceFollowUpInfoViewModel         : ServiceFollowUpInfoViewModel
     lateinit var serviceFollowUpMoreServiceViewModel  : ServiceFollowUpMoreServiceViewModel
     lateinit var addServiceViewModel                  : AddServiceViewModel
+
+    private var edtCategory                           : TextInputEditText?   = null
+    private var edtSubCategory                        : TextInputEditText?   = null
+    private var edtBrand                              : TextInputEditText?   = null
+    private var edtCompany                            : TextInputEditText?   = null
+
     internal var jsonObjectList                       : JSONObject?     = null
     private var tv_followupticket                     : TextView?       = null
     private var txt_next                              : TextView?       = null
@@ -65,6 +71,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     private var rcyler_service3                       : RecyclerView?   = null
     private var recyCompService                       : RecyclerView?   = null
     private var ll_service_Attended                   : LinearLayout?   = null
+    private var ll_service_Attended_category          : LinearLayout?   = null
     private var ll_Service3                           : LinearLayout?   = null
     private var progressDialog                        : ProgressDialog? = null
     private var add_Product                           : FloatingActionButton?= null
@@ -274,6 +281,40 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var saveAttendanceMark = false
 
 
+    var categoryDet = 0
+    var subCategoryDet = 0
+    var brandDet = 0
+    var companyDet = 0
+
+    var ReqMode: String? = ""
+
+    lateinit var productCategoryViewModel: ProductCategoryViewModel
+    lateinit var categoryArrayList : JSONArray
+    lateinit var categorySort : JSONArray
+    private var dialogCategory : Dialog? = null
+    var recyCategory: RecyclerView? = null
+
+    lateinit var subCategoryViewModel: SubCategoryViewModel
+    lateinit var subCategoryArrayList : JSONArray
+    lateinit var subCategorySort : JSONArray
+    private var dialogSubCategory : Dialog? = null
+
+    lateinit var brandViewModel: BrandViewModel
+    lateinit var brandArrayList : JSONArray
+    lateinit var brandSort : JSONArray
+    private var dialogBrand : Dialog? = null
+    var recyBrand: RecyclerView? = null
+
+    lateinit var commonViewModel: CommonViewModel
+    lateinit var companyArrayList : JSONArray
+    lateinit var companySort : JSONArray
+    private var dialogCompany : Dialog? = null
+    var recyCompany: RecyclerView? = null
+
+    var ID_SubCategory: String? = ""
+    var ID_Brand: String? = ""
+    var ID_Company: String? = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -310,6 +351,10 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         employeeViewModel = ViewModelProvider(this).get(EmployeeViewModel::class.java)
         allProductViewModel = ViewModelProvider(this).get(AllProductViewModel::class.java)
         mainSubProductViewModel = ViewModelProvider(this).get(MainSubProductViewModel::class.java)
+        productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
+        subCategoryViewModel = ViewModelProvider(this).get(SubCategoryViewModel::class.java)
+        brandViewModel = ViewModelProvider(this).get(BrandViewModel::class.java)
+        commonViewModel = ViewModelProvider(this).get(CommonViewModel::class.java)
 
         db_helper = DBHelper(this,null)
         try {
@@ -320,6 +365,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 
             ID_Product = jsonObjectList!!.getString("FK_Product")
             ID_Category = jsonObjectList!!.getString("FK_Category")
+
         }catch (e : Exception){
 
         }
@@ -359,7 +405,8 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     }
 
     private fun loadlayout() {
-        ll_service_Attended!!.visibility = View.GONE
+        ll_service_Attended_category!!.visibility = View.GONE
+       // ll_service_Attended!!.visibility = View.GONE
         ll_part_repaced2!!.visibility = View.GONE
 //        ll_top_bar!!.visibility = View.GONE
 //        ll_Service3!!.visibility = View.GONE
@@ -371,7 +418,9 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 Log.v("adasdasds","modeTab "+modeTab)
         if (modeTab == 0){
             Log.v("adasdasds","modeTab0 ")
-            ll_service_Attended!!.visibility = View.VISIBLE
+
+          //  ll_service_Attended!!.visibility = View.VISIBLE
+            ll_service_Attended_category!!.visibility = View.VISIBLE
             txt_previous!!.visibility = View.GONE
             vw_previous!!.visibility = View.GONE
             txt_next!!.visibility = View.VISIBLE
@@ -669,6 +718,11 @@ Log.v("adasdasds","modeTab "+modeTab)
         imback               = findViewById(R.id.imback)
         recyCompService      = findViewById(R.id.recyCompService)
 
+        edtCategory          = findViewById(R.id.edtCategory)
+        edtSubCategory       = findViewById(R.id.edtSubCategory)
+        edtBrand             = findViewById(R.id.edtBrand)
+        edtCompany           = findViewById(R.id.edtCompany)
+
 
         recy_main_product_topbar      = findViewById(R.id.recy_main_product_topbar)
         ll_ProdWarrantyAmc     = findViewById(R.id.ll_ProdWarrantyAmc)
@@ -680,6 +734,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         recy_parts_replaced    = findViewById(R.id.recy_parts_replaced)
 
         ll_service_Attended      = findViewById(R.id.ll_service_Attended)
+        ll_service_Attended_category      = findViewById(R.id.ll_service_Attended_category)
 //        ll_Service3      = findViewById(R.id.ll_Service3)
 
         tie_Selectbilltype = findViewById(R.id.tie_Selectbilltype) as AutoCompleteTextView
@@ -713,6 +768,11 @@ Log.v("adasdasds","modeTab "+modeTab)
         imback!!.setOnClickListener(this)
         txt_next!!.setOnClickListener(this)
         txt_previous!!.setOnClickListener(this)
+
+        edtCategory!!.setOnClickListener(this)
+        edtSubCategory!!.setOnClickListener(this)
+        edtBrand!!.setOnClickListener(this)
+        edtCompany!!.setOnClickListener(this)
 
         DecimelFormatters.setDecimelPlace(edtdiscountAmount!!)
 
@@ -2863,6 +2923,37 @@ Log.v("adasdasds","modeTab "+modeTab)
 //                ll_Service3!!.visibility = View.GONE
             }
 
+            R.id.edtCategory -> {
+                categoryDet = 0
+                ReqMode = "77"
+                getCategory(ReqMode!!,"0")
+            }
+            R.id.edtSubCategory -> {
+                Config.disableClick(v)
+                if(ID_Category.equals("")){
+                    Config.snackBars(context,v,"Select Category")
+                }
+                else{
+                    subCategoryDet = 0
+                    ReqMode = "125"
+                    getSubCategory(ReqMode!!,ID_Category!!)
+                }
+            }
+            R.id.edtBrand -> {
+                Config.disableClick(v)
+                brandDet = 0
+                ReqMode = "126"
+                getBrands(ReqMode!!)
+            }
+            R.id.edtCompany -> {
+                Config.disableClick(v)
+                companyDet = 0
+                ReqMode = "67"
+               // SubMode = ""
+                getCompany(ReqMode!!,""!!)
+            }
+
+
         }
     }
 
@@ -3842,6 +3933,48 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
 
+
+        }
+
+        if (data.equals("category")){
+            dialogCategory!!.dismiss()
+//            val jsonObject = prodPriorityArrayList.getJSONObject(position)
+            val jsonObject = categorySort.getJSONObject(position)
+            Log.e(TAG,"ID_Category   "+jsonObject.getString("ID_Category"))
+
+            ID_Category = jsonObject.getString("ID_Category")
+            edtCategory!!.setText(jsonObject.getString("CategoryName"))
+        }
+
+        if (data.equals("SubCategoryClick")) {
+            dialogSubCategory!!.dismiss()
+            val jsonObject = subCategorySort.getJSONObject(position)
+            Log.e(TAG,"ID_SubCategory   "+jsonObject.getString("ID_SubCategory"))
+
+            ID_SubCategory = jsonObject.getString("ID_SubCategory")
+            edtSubCategory!!.setText(jsonObject.getString("SubCatName"))
+
+            ID_Brand = ""
+            edtBrand!!.setText("")
+        }
+
+        if (data.equals("BrandClick")) {
+            dialogBrand!!.dismiss()
+            val jsonObject = brandSort.getJSONObject(position)
+            Log.e(TAG,"ID_Brand   "+jsonObject.getString("ID_Brand"))
+
+            ID_Brand = jsonObject.getString("ID_Brand")
+            edtBrand!!.setText(jsonObject.getString("BrandName"))
+        }
+        if (data.equals("company")) {
+
+            dialogCompany!!.dismiss()
+//            val jsonObject = prodPriorityArrayList.getJSONObject(position)
+            val jsonObject = companySort.getJSONObject(position)
+            Log.e(TAG,"Code   "+jsonObject.getString("Code"))
+
+            ID_Company = jsonObject.getString("Code")
+            edtCompany!!.setText(jsonObject.getString("Description"))
 
         }
 
@@ -5558,4 +5691,570 @@ Log.v("adasdasds","modeTab "+modeTab)
             loadlayout()
         }
     }
+
+
+
+    private fun getCategory(ReqMode : String,ID_CompCategory : String) {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productCategoryViewModel.getProductCategory(this,ReqMode,ID_CompCategory)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (categoryDet == 0){
+                                    categoryDet++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1278   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("CategoryDetailsList")
+                                        categoryArrayList = jobjt.getJSONArray("CategoryList")
+                                        if (categoryArrayList.length()>0){
+
+                                            categoryPopup(categoryArrayList)
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun categoryPopup(categoryArrayList: JSONArray) {
+
+
+        try {
+
+            dialogCategory = Dialog(this)
+            dialogCategory!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogCategory!! .setContentView(R.layout.category_popup)
+            dialogCategory!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyCategory = dialogCategory!! .findViewById(R.id.recyCategory) as RecyclerView
+            val etsearch = dialogCategory!! .findViewById(R.id.etsearch) as EditText
+
+            categorySort = JSONArray()
+            for (k in 0 until categoryArrayList.length()) {
+                val jsonObject = categoryArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                categorySort.put(jsonObject)
+            }
+
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+            recyCategory!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = ProductPriorityAdapter(this@FollowUpActivity, prodPriorityArrayList)
+            val adapter = CategoryAdapter(this@ServiceFollowUPActiivty, categorySort)
+            recyCategory!!.adapter = adapter
+            adapter.setClickListener(this@ServiceFollowUPActiivty)
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    categorySort = JSONArray()
+
+                    for (k in 0 until categoryArrayList.length()) {
+                        val jsonObject = categoryArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("CategoryName").length) {
+                            if (jsonObject.getString("CategoryName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                categorySort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"categorySort               7103    "+categorySort)
+                    val adapter = CategoryAdapter(this@ServiceFollowUPActiivty, categorySort)
+                    recyCategory!!.adapter = adapter
+                    adapter.setClickListener(this@ServiceFollowUPActiivty)
+                }
+            })
+
+            dialogCategory!!.show()
+            dialogCategory!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"Exception  1394    "+e.toString())
+
+        }
+
+    }
+
+    private fun getSubCategory(ReqMode : String,ID_Category : String) {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                subCategoryViewModel.getSubCategory(this,ReqMode,ID_Category)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (subCategoryDet == 0){
+                                    subCategoryDet++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   3572   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("SubCategoryDetailsList")
+                                        subCategoryArrayList = jobjt.getJSONArray("SubCategoryList")
+                                        if (subCategoryArrayList.length()>0){
+
+                                            // productPriorityPopup(prodPriorityArrayList)
+                                            subCategoryPopup(subCategoryArrayList)
+
+
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+
+    private fun subCategoryPopup(subCategoryArrayList: JSONArray) {
+
+
+        try {
+
+            dialogSubCategory = Dialog(this)
+            dialogSubCategory!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogSubCategory!! .setContentView(R.layout.category_popup)
+            dialogSubCategory!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyCategory = dialogSubCategory!! .findViewById(R.id.recyCategory) as RecyclerView
+            val etsearch = dialogSubCategory!! .findViewById(R.id.etsearch) as EditText
+            val tv_header = dialogSubCategory!! .findViewById(R.id.tv_header) as TextView
+
+            tv_header.setText("Sub Category")
+
+            subCategorySort = JSONArray()
+            for (k in 0 until subCategoryArrayList.length()) {
+                val jsonObject = subCategoryArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                subCategorySort.put(jsonObject)
+            }
+
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+            recyCategory!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = ProductPriorityAdapter(this@FollowUpActivity, prodPriorityArrayList)
+            val adapter = SubCategoryAdapter(this@ServiceFollowUPActiivty, subCategorySort)
+            recyCategory!!.adapter = adapter
+            adapter.setClickListener(this@ServiceFollowUPActiivty)
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    subCategorySort = JSONArray()
+
+                    for (k in 0 until subCategoryArrayList.length()) {
+                        val jsonObject = subCategoryArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("SubCatName").length) {
+                            if (jsonObject.getString("SubCatName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                subCategorySort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"categorySort               7103    "+subCategorySort)
+                    val adapter = SubCategoryAdapter(this@ServiceFollowUPActiivty, subCategorySort)
+                    recyCategory!!.adapter = adapter
+                    adapter.setClickListener(this@ServiceFollowUPActiivty)
+                }
+            })
+
+            dialogSubCategory!!.show()
+            dialogSubCategory!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"Exception  1394    "+e.toString())
+
+        }
+
+    }
+
+
+    private fun getBrands(ReqMode: String) {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                brandViewModel.getBrands(this,ReqMode!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (brandDet == 0){
+                                    brandDet++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   3747   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("BrandDetails")
+                                        brandArrayList = jobjt.getJSONArray("BrandDetailsList")
+                                        if (brandArrayList.length()>0){
+
+                                            // productPriorityPopup(prodPriorityArrayList)
+                                            brandPopup(brandArrayList)
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun brandPopup(brandArrayList: JSONArray) {
+
+        try {
+
+            dialogBrand = Dialog(this)
+            dialogBrand!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogBrand!! .setContentView(R.layout.brand_popup)
+            dialogBrand!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyBrand = dialogBrand!! .findViewById(R.id.recyBrand) as RecyclerView
+            val etsearch = dialogBrand!! .findViewById(R.id.etsearch) as EditText
+            val tv_header = dialogBrand!! .findViewById(R.id.tv_header) as TextView
+
+
+            brandSort = JSONArray()
+            for (k in 0 until brandArrayList.length()) {
+                val jsonObject = brandArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                brandSort.put(jsonObject)
+            }
+
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+            recyBrand!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = ProductPriorityAdapter(this@FollowUpActivity, prodPriorityArrayList)
+            val adapter = BrandAdapter(this@ServiceFollowUPActiivty, brandSort)
+            recyBrand!!.adapter = adapter
+            adapter.setClickListener(this@ServiceFollowUPActiivty)
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    brandSort = JSONArray()
+
+                    for (k in 0 until brandArrayList.length()) {
+                        val jsonObject = brandArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("BrandName").length) {
+                            if (jsonObject.getString("BrandName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                brandSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"brandSort               7103    "+brandSort)
+                    val adapter = BrandAdapter(this@ServiceFollowUPActiivty, brandSort)
+                    recyBrand!!.adapter = adapter
+                    adapter.setClickListener(this@ServiceFollowUPActiivty)
+                }
+            })
+
+            dialogBrand!!.show()
+            dialogBrand!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"Exception  1394    "+e.toString())
+
+        }
+    }
+
+    private fun getCompany(ReqMode: String, SubMode: String) {
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                commonViewModel.getCommonViewModel(this,ReqMode,SubMode)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (companyDet == 0){
+                                    companyDet++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1438   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("CommonPopupDetails")
+                                        companyArrayList = jobjt.getJSONArray("CommonPopupList")
+                                        if (companyArrayList.length()>0){
+
+                                            // productPriorityPopup(prodPriorityArrayList)
+                                            companyPopup(companyArrayList)
+
+
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceFollowUPActiivty,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun companyPopup(companyArrayList: JSONArray) {
+
+        try {
+
+            dialogCompany = Dialog(this)
+            dialogCompany!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogCompany!! .setContentView(R.layout.company_popup)
+            dialogCompany!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyCompany = dialogCompany!! .findViewById(R.id.recyCompany) as RecyclerView
+            val etsearch = dialogCompany!! .findViewById(R.id.etsearch) as EditText
+
+            companySort = JSONArray()
+            for (k in 0 until companyArrayList.length()) {
+                val jsonObject = companyArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                companySort.put(jsonObject)
+            }
+
+
+            val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+            recyCompany!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = ProductPriorityAdapter(this@FollowUpActivity, prodPriorityArrayList)
+            val adapter = CompanyAdapter(this@ServiceFollowUPActiivty, companySort)
+            recyCompany!!.adapter = adapter
+            adapter.setClickListener(this@ServiceFollowUPActiivty)
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    companySort = JSONArray()
+
+                    for (k in 0 until companyArrayList.length()) {
+                        val jsonObject = companyArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("Description").length) {
+                            if (jsonObject.getString("Description")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                companySort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"companySort               1556    "+companySort)
+                    val adapter = CompanyAdapter(this@ServiceFollowUPActiivty, companySort)
+                    recyCompany!!.adapter = adapter
+                    adapter.setClickListener(this@ServiceFollowUPActiivty)
+                }
+            })
+
+            dialogCompany!!.show()
+            dialogCompany!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"Exception  1394    "+e.toString())
+
+        }
+    }
+
+
 }

@@ -16,7 +16,7 @@
         android:background="@drawable/shape_gradient_pop"
         android:padding="10dp"
         android:fontFamily="@font/myfont"
-        android:text="Category"/>
+        android:text="Brand"/>
 
     <LinearLayout
         android:id="@+id/llsearch"
@@ -62,7 +62,7 @@
         android:background="@color/grey"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyCategory"
+        android:id="@+id/recyBrand"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible" />

@@ -688,6 +688,16 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                         StatusEditer.putString("Status", jobj.getString("Status"))
                                         StatusEditer.commit()
 
+                                        val CRMDetailsSP = applicationContext.getSharedPreferences(Config.SHARED_PREF79, 0)
+                                        val CRMDetailsEditer = CRMDetailsSP.edit()
+                                        CRMDetailsEditer.putString("CRMDetails", jobj.getString("CRMDetails"))
+                                        CRMDetailsEditer.commit()
+
+                                        val FollowUpDetailsSP = applicationContext.getSharedPreferences(Config.SHARED_PREF80, 0)
+                                        val FollowUpDetailsEditer = FollowUpDetailsSP.edit()
+                                        FollowUpDetailsEditer.putString("FollowUpDetails", jobj.getString("FollowUpDetails"))
+                                        FollowUpDetailsEditer.commit()
+
                                         val i = Intent(this@OTPActivity, SetMpinActivity::class.java)
                                         startActivity(i)
                                         finish()

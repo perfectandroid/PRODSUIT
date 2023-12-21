@@ -761,6 +761,79 @@
 
                                         </com.google.android.material.textfield.TextInputLayout>
 
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_SubCategory"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint="Sub Category"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/vtr_subcategory"
+                                            app:startIconTint="@color/colorPrimaryDark"
+                                            app:endIconDrawable="@drawable/arrow_down"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_SubCategory"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:backgroundTint="@color/greydark"
+                                                android:drawablePadding="-10dp"
+                                                android:drawableTint="@color/textColor"
+                                                android:editable="false"
+                                                android:focusableInTouchMode="false"
+                                                android:fontFamily="@font/myfont"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:textColor="@color/greydarks"
+                                                android:textSize="14dp"
+                                                android:textStyle="normal" />
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            android:id="@+id/til_Brand"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:hint="Brand"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginRight="15dp"
+                                            android:drawableTint="@color/textColor"
+                                            android:fontFamily="@font/myfont"
+                                            app:endIconMode="custom"
+                                            app:startIconDrawable="@drawable/vtr_brand"
+                                            app:startIconTint="@color/colorPrimaryDark"
+                                            app:endIconDrawable="@drawable/arrow_down"
+                                            style="@style/Widget.App.TextInputLayout">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/tie_Brand"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center_vertical"
+                                                android:paddingLeft="10dp"
+                                                android:paddingTop="1dp"
+                                                android:paddingBottom="1dp"
+                                                android:drawableLeft="@drawable/vtr_brand"
+                                                android:backgroundTint="@color/greydark"
+                                                android:textSize="14dp"
+                                                android:focusableInTouchMode="false"
+                                                android:editable="false"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                android:textColor="@color/greydarks"
+                                                android:drawablePadding="-10dp"
+                                                android:textStyle="normal"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
 
 
                                         <com.google.android.material.textfield.TextInputLayout

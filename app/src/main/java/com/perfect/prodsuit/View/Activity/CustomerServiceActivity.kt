@@ -125,6 +125,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     private var tie_CompCategory: TextInputEditText? = null
     private var tie_Category: TextInputEditText? = null
+    private var tie_SubCategory: TextInputEditText? = null
+    private var tie_Brand: TextInputEditText? = null
     private var tie_Company: TextInputEditText? = null
     private var tie_Product: TextInputEditText? = null
     private var tie_Service: TextInputEditText? = null
@@ -133,6 +135,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     private var til_CompCategory: TextInputLayout? = null
     private var til_Category: TextInputLayout? = null
+    private var til_SubCategory: TextInputLayout? = null
+    private var til_Brand: TextInputLayout? = null
     private var til_Company: TextInputLayout? = null
     private var til_Product: TextInputLayout? = null
     private var til_Service: TextInputLayout? = null
@@ -267,6 +271,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var empMediaDet = 0
     var CompcategoryDet = 0
     var categoryDet = 0
+    var subCategoryDet = 0
+    var brandDet = 0
     var companyDet = 0
     var productDet = 0
     var serviceDet = 0
@@ -360,6 +366,21 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     lateinit var customerServiceRegisterViewModel: CustomerServiceRegisterViewModel
 
+    lateinit var subCategoryViewModel: SubCategoryViewModel
+    lateinit var subCategoryArrayList : JSONArray
+    lateinit var subCategorySort : JSONArray
+    private var dialogSubCategory : Dialog? = null
+ //   var recyCategory: RecyclerView? = null
+
+
+    lateinit var brandViewModel: BrandViewModel
+    lateinit var brandArrayList : JSONArray
+    lateinit var brandSort : JSONArray
+    private var dialogBrand : Dialog? = null
+    var recyBrand: RecyclerView? = null
+
+
+
 
 
     var Customer_Type: String? = ""
@@ -371,6 +392,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     var ID_EmpMedia: String? = ""
     var ID_CompCategory: String? = ""
     var ID_Category: String? = ""
+    var ID_SubCategory: String? = ""
+    var ID_Brand: String? = ""
     var ID_Company: String? = ""
     var ID_Product: String? = ""
     var ID_Services: String? = ""
@@ -457,6 +480,10 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     var currentDate11=""
 
+    var flagSubCategory = ""
+    var flagBrand = ""
+    var flagProduct = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -490,7 +517,13 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         areaViewModel = ViewModelProvider(this).get(AreaViewModel::class.java)
         postViewModel = ViewModelProvider(this).get(PostViewModel::class.java)
 
+        subCategoryViewModel = ViewModelProvider(this).get(SubCategoryViewModel::class.java)
+        brandViewModel = ViewModelProvider(this).get(BrandViewModel::class.java)
+
+
+
         setRegViews()
+        getCrmFlags()
 
         Log.i("TAG Cust","132"+tie_CustomerName!!.text.toString())
 
@@ -553,7 +586,66 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     }
 
+    private fun getCrmFlags() {
 
+        try {
+
+            val CRMDetailsSP = context.getSharedPreferences(Config.SHARED_PREF79, 0)
+            val strCRMDetails = CRMDetailsSP.getString("CRMDetails", "")
+            Log.e(Config.TAG,"139666    "+strCRMDetails)
+
+            val jsonArray: JSONArray = JSONArray(strCRMDetails)
+
+            for (k in 0 until jsonArray.length()) {
+                var jsonObject = jsonArray.getJSONObject(k)
+                if (jsonObject.getString("PSField").equals("10")){
+//                Sub Category
+                    flagSubCategory = jsonObject.getString("PSValue")
+                    Log.e(Config.TAG,"13966610    "+flagSubCategory)
+                }
+                else if (jsonObject.getString("PSField").equals("11")){
+//                Brand
+                    flagBrand = jsonObject.getString("PSValue")
+                    Log.e(Config.TAG,"13966611    "+flagBrand)
+                }
+                else if (jsonObject.getString("PSField").equals("12")){
+//                Product
+                    flagProduct = jsonObject.getString("PSValue")
+                    Log.e(Config.TAG,"13966612    "+flagProduct)
+                }
+            }
+
+//            flagSubCategory = Config.getCrmFlags(context,"10")
+//            flagBrand       = Config.getCrmFlags(context,"11")
+//            flagProduct     = Config.getCrmFlags(context,"12")
+
+            Log.e(TAG,"getFlags  57222   flagSubCategory :  "+flagSubCategory+"  flagBrand :   "+flagBrand+"   flagProduct  :   "+flagProduct)
+            if (flagSubCategory.equals("0")){
+                til_SubCategory!!.visibility = View.GONE
+            }
+            else if (flagSubCategory.equals("1")){
+                til_SubCategory!!.visibility = View.VISIBLE
+            }
+
+            if (flagBrand.equals("0")){
+                til_Brand!!.visibility = View.GONE
+            }
+            else if (flagBrand.equals("1")){
+                til_Brand!!.visibility = View.VISIBLE
+            }
+
+            if (flagProduct.equals("0")){
+                til_Product!!.visibility = View.GONE
+            }
+            else if (flagProduct.equals("1")){
+                til_Product!!.visibility = View.VISIBLE
+            }
+        }catch (e:Exception){
+            Log.e(TAG,"57222  Exception   "+e.toString())
+        }
+
+
+    }
 
 
     private fun setRegViews() {
@@ -629,6 +721,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         tie_CompCategory = findViewById<TextInputEditText>(R.id.tie_CompCategory)
         tie_Category = findViewById<TextInputEditText>(R.id.tie_Category)
+        tie_SubCategory = findViewById<TextInputEditText>(R.id.tie_SubCategory)
+        tie_Brand = findViewById<TextInputEditText>(R.id.tie_Brand)
         tie_Company = findViewById<TextInputEditText>(R.id.tie_Company)
         tie_Product = findViewById<TextInputEditText>(R.id.tie_Product)
         tie_Service = findViewById<TextInputEditText>(R.id.tie_Service)
@@ -637,6 +731,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         til_CompCategory = findViewById<TextInputLayout>(R.id.til_CompCategory)
         til_Category = findViewById<TextInputLayout>(R.id.til_Category)
+        til_SubCategory = findViewById<TextInputLayout>(R.id.til_SubCategory)
+        til_Brand = findViewById<TextInputLayout>(R.id.til_Brand)
         til_Company = findViewById<TextInputLayout>(R.id.til_Company)
         til_Product = findViewById<TextInputLayout>(R.id.til_Product)
         til_Service = findViewById<TextInputLayout>(R.id.til_Service)
@@ -646,6 +742,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         tie_CompCategory!!.setOnClickListener(this)
         tie_Category!!.setOnClickListener(this)
+        tie_SubCategory!!.setOnClickListener(this)
+        tie_Brand!!.setOnClickListener(this)
         tie_Company!!.setOnClickListener(this)
         tie_Product!!.setOnClickListener(this)
         tie_Service!!.setOnClickListener(this)
@@ -699,7 +797,14 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         onTextChangedValues()
         getCurrentDate()
+        enableUsingFlags()
 
+    }
+
+    private fun enableUsingFlags() {
+        til_SubCategory!!.visibility = View.GONE
+        til_Brand!!.visibility = View.GONE
+        til_Product!!.visibility = View.GONE
     }
 
     private fun getCurrentDate() {
@@ -942,6 +1047,30 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                     getCategory(ReqMode!!,ID_CompCategory!!)
                 }
 
+
+            }
+
+            R.id.tie_SubCategory->{
+                Config.disableClick(v)
+                if(ID_Category.equals("")){
+                    til_Category!!.setError("Select Category");
+                    til_Category!!.setErrorIconDrawable(null)
+                }
+                else{
+                    subCategoryDet = 0
+                    ReqMode = "125"
+                    getSubCategory(ReqMode!!,ID_Category!!)
+                }
+
+
+            }
+
+            R.id.tie_Brand->{
+
+                Config.disableClick(v)
+                brandDet = 0
+                ReqMode = "126"
+                getBrands(ReqMode!!)
 
             }
 
@@ -1188,6 +1317,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         }
     }
+
+
 
 
     private fun checkAttendance() {
@@ -1514,6 +1645,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         ID_CompCategory = ""
         ID_Category = ""
+        ID_SubCategory = ""
         ID_Company = ""
         ID_Product = ""
         ID_Services = ""
@@ -1521,11 +1653,15 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
      //   tie_CompCategory!!.setText("")
         tie_Category!!.setText("")
+        tie_SubCategory!!.setText("")
         tie_Company!!.setText("")
         tie_Product!!.setText("")
         tie_Service!!.setText("")
         tie_Complaint!!.setText("")
         tie_Description!!.setText("")
+
+        ID_Brand = ""
+        tie_Brand!!.setText("")
 
         til_Company!!.visibility = View.GONE
         til_Service!!.visibility = View.GONE
@@ -2009,6 +2145,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                     Log.e(TAG,"DATE   1302   "+strToTime)
                 }
 
+
                 Log.e(TAG,"Validation   9373"
                         +"\n"+"Customer Type        :  "+Customer_Type
                         +"\n"+"FK_Customer          :  "+ID_Customer
@@ -2016,6 +2153,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                         +"\n"+"CSRChannelID         :  "+ID_Channel
                         +"\n"+"CSRPriority          :  "+ID_Priority
                         +"\n"+"CSRPCategory         :  "+ID_Category
+                        +"\n"+"ID_SubCategory       :  "+ID_SubCategory
+                        +"\n"+"ID_Brand             :  "+ID_Brand
                         +"\n"+"FK_OtherCompany      :  "+ID_Company
                         +"\n"+"FK_ComplaintList     :  "+ID_ComplaintList
                         +"\n"+"FK_ServiceList       :  "+ID_Services
@@ -2041,7 +2180,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                 strUserAction = "1"
                 saveOrupdate = 0
-                saveCustomerService()
+              //  saveCustomerService()
             }
 
 
@@ -3161,7 +3300,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
 
                                                 ID_Category = ""
+                                                ID_SubCategory = ""
                                                 tie_Category!!.setText("")
+                                                tie_SubCategory!!.setText("")
                                                 tie_Product!!.setText("")
                                                 ID_Product = ""
                                                 tie_Company!!.setText("")
@@ -3170,6 +3311,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                                 ID_Services = ""
                                                 tie_Complaint!!.setText("")
                                                 ID_ComplaintList = ""
+                                                ID_Brand = ""
+                                                tie_Brand!!.setText("")
 
                                                 if (ID_CompCategory.equals("1")){
                                                     til_Company!!.visibility = View.GONE
@@ -3445,6 +3588,290 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         }
 
+    }
+
+    private fun getSubCategory(ReqMode : String,ID_Category : String) {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                subCategoryViewModel.getSubCategory(this,ReqMode,ID_Category)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (subCategoryDet == 0){
+                                    subCategoryDet++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   3572   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("SubCategoryDetailsList")
+                                        subCategoryArrayList = jobjt.getJSONArray("SubCategoryList")
+                                        if (subCategoryArrayList.length()>0){
+
+                                            // productPriorityPopup(prodPriorityArrayList)
+                                            subCategoryPopup(subCategoryArrayList)
+
+
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@CustomerServiceActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun subCategoryPopup(subCategoryArrayList: JSONArray) {
+
+
+        try {
+
+            dialogSubCategory = Dialog(this)
+            dialogSubCategory!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogSubCategory!! .setContentView(R.layout.category_popup)
+            dialogSubCategory!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyCategory = dialogSubCategory!! .findViewById(R.id.recyCategory) as RecyclerView
+            val etsearch = dialogSubCategory!! .findViewById(R.id.etsearch) as EditText
+            val tv_header = dialogSubCategory!! .findViewById(R.id.tv_header) as TextView
+
+            tv_header.setText("Sub Category")
+
+            subCategorySort = JSONArray()
+            for (k in 0 until subCategoryArrayList.length()) {
+                val jsonObject = subCategoryArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                subCategorySort.put(jsonObject)
+            }
+
+
+            val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+            recyCategory!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = ProductPriorityAdapter(this@FollowUpActivity, prodPriorityArrayList)
+            val adapter = SubCategoryAdapter(this@CustomerServiceActivity, subCategorySort)
+            recyCategory!!.adapter = adapter
+            adapter.setClickListener(this@CustomerServiceActivity)
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    subCategorySort = JSONArray()
+
+                    for (k in 0 until subCategoryArrayList.length()) {
+                        val jsonObject = subCategoryArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("SubCatName").length) {
+                            if (jsonObject.getString("SubCatName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                subCategorySort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"categorySort               7103    "+subCategorySort)
+                    val adapter = SubCategoryAdapter(this@CustomerServiceActivity, subCategorySort)
+                    recyCategory!!.adapter = adapter
+                    adapter.setClickListener(this@CustomerServiceActivity)
+                }
+            })
+
+            dialogSubCategory!!.show()
+            dialogSubCategory!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"Exception  1394    "+e.toString())
+
+        }
+
+    }
+
+
+    private fun getBrands(ReqMode: String) {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                brandViewModel.getBrands(this,ReqMode!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (brandDet == 0){
+                                    brandDet++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   3747   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("BrandDetails")
+                                        brandArrayList = jobjt.getJSONArray("BrandDetailsList")
+                                        if (brandArrayList.length()>0){
+
+                                            // productPriorityPopup(prodPriorityArrayList)
+                                            brandPopup(brandArrayList)
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@CustomerServiceActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun brandPopup(brandArrayList: JSONArray) {
+
+        try {
+
+            dialogBrand = Dialog(this)
+            dialogBrand!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogBrand!! .setContentView(R.layout.brand_popup)
+            dialogBrand!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyBrand = dialogBrand!! .findViewById(R.id.recyBrand) as RecyclerView
+            val etsearch = dialogBrand!! .findViewById(R.id.etsearch) as EditText
+            val tv_header = dialogBrand!! .findViewById(R.id.tv_header) as TextView
+
+
+            brandSort = JSONArray()
+            for (k in 0 until brandArrayList.length()) {
+                val jsonObject = brandArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                brandSort.put(jsonObject)
+            }
+
+
+            val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
+            recyBrand!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//            val adapter = ProductPriorityAdapter(this@FollowUpActivity, prodPriorityArrayList)
+            val adapter = BrandAdapter(this@CustomerServiceActivity, brandSort)
+            recyBrand!!.adapter = adapter
+            adapter.setClickListener(this@CustomerServiceActivity)
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    brandSort = JSONArray()
+
+                    for (k in 0 until brandArrayList.length()) {
+                        val jsonObject = brandArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("BrandName").length) {
+                            if (jsonObject.getString("BrandName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                brandSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG,"brandSort               7103    "+brandSort)
+                    val adapter = BrandAdapter(this@CustomerServiceActivity, brandSort)
+                    recyBrand!!.adapter = adapter
+                    adapter.setClickListener(this@CustomerServiceActivity)
+                }
+            })
+
+            dialogBrand!!.show()
+            dialogBrand!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e(TAG,"Exception  1394    "+e.toString())
+
+        }
     }
 
     private fun getCompany(ReqMode: String, SubMode: String) {
@@ -5594,7 +6021,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             tie_CompCategory!!.setText(jsonObject.getString("Description"))
 
             ID_Category = ""
+            ID_SubCategory = ""
             tie_Category!!.setText("")
+            tie_SubCategory!!.setText("")
             tie_Product!!.setText("")
             ID_Product = ""
             tie_Company!!.setText("")
@@ -5603,6 +6032,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             ID_Services = ""
             tie_Complaint!!.setText("")
             ID_ComplaintList = ""
+            ID_Brand = ""
+            tie_Brand!!.setText("")
 
             if (ID_CompCategory.equals("1")){
                 til_Company!!.visibility = View.GONE
@@ -5640,12 +6071,18 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             tie_Product!!.setText("")
             ID_Product = ""
+
             tie_Company!!.setText("")
             ID_Company = ""
             tie_Service!!.setText("")
             ID_Services = ""
             tie_Complaint!!.setText("")
             ID_ComplaintList = ""
+
+            ID_SubCategory = ""
+            tie_SubCategory!!.setText("")
+            ID_Brand = ""
+            tie_Brand!!.setText("")
 
 //            if (ID_Category.equals("1")){
 //                til_Company!!.visibility = View.GONE
@@ -5676,6 +6113,27 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //                til_Company!!.visibility = View.GONE
 //            }
 
+        }
+
+        if (data.equals("SubCategoryClick")) {
+            dialogSubCategory!!.dismiss()
+            val jsonObject = subCategorySort.getJSONObject(position)
+            Log.e(TAG,"ID_SubCategory   "+jsonObject.getString("ID_SubCategory"))
+
+            ID_SubCategory = jsonObject.getString("ID_SubCategory")
+            tie_SubCategory!!.setText(jsonObject.getString("SubCatName"))
+
+            ID_Brand = ""
+            tie_Brand!!.setText("")
+        }
+
+        if (data.equals("BrandClick")) {
+            dialogBrand!!.dismiss()
+            val jsonObject = brandSort.getJSONObject(position)
+            Log.e(TAG,"ID_Brand   "+jsonObject.getString("ID_Brand"))
+
+            ID_Brand = jsonObject.getString("ID_Brand")
+            tie_Brand!!.setText(jsonObject.getString("BrandName"))
         }
 
         if (data.equals("company")) {

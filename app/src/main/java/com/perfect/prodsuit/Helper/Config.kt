@@ -40,6 +40,7 @@ import javax.net.ssl.*
 
 object Config {
 
+    var TAG = "Config"
     var CODE_STOCK_LIST: Int? = 1001
 
     const val SHARED_PREF = "loginsession"
@@ -139,6 +140,9 @@ object Config {
     const val SHARED_PREF76 = "AudioClipEnabled"
     const val SHARED_PREF77 = "IsLocationDistanceShowing"
     const val SHARED_PREF78 = "EditMRPLead"  // Lead MRP Editable , When EditMRPLead = "true"
+
+    const val SHARED_PREF79 = "CRMDetails"  //
+    const val SHARED_PREF80 = "FollowUpDetails"  //
 
 
     var width = 0
@@ -908,6 +912,16 @@ object Config {
             EditMRPLeadEditer.putString("EditMRPLead", "")
             EditMRPLeadEditer.commit()
 
+            val CRMDetailsSP = context.getSharedPreferences(Config.SHARED_PREF79, 0)
+            val CRMDetailsEditer = CRMDetailsSP.edit()
+            CRMDetailsEditer.putString("CRMDetails", "")
+            CRMDetailsEditer.commit()
+
+            val FollowUpDetailsSP = context.getSharedPreferences(Config.SHARED_PREF80, 0)
+            val FollowUpDetailsEditer = FollowUpDetailsSP.edit()
+            FollowUpDetailsEditer.putString("FollowUpDetails", "")
+            FollowUpDetailsEditer.commit()
+
 
             val isMyServiceRunning = isServiceRunning(context, NotificationLocationService::class.java)
             if (isMyServiceRunning){
@@ -1368,6 +1382,39 @@ object Config {
             ActivityCompat.requestPermissions(context!! as Activity, arrayOf(readMediaAudio,readMediaImages,readMediaVideo), PERMISSION_CODE)
         }else{
             result  =true
+        }
+
+        return result
+    }
+
+    fun getCrmFlags(context : Context,PSField : String): String {
+
+        var result = ""
+
+        val CRMDetailsSP = context.getSharedPreferences(SHARED_PREF79, 0)
+        val strCRMDetails = CRMDetailsSP.getString("CRMDetails", "")
+        Log.e(TAG,"139666    "+strCRMDetails)
+
+        val jsonArray: JSONArray = JSONArray(strCRMDetails)
+        Log.e(TAG,"139666222    "+jsonArray.length())
+
+        for (k in 0 until jsonArray.length()) {
+            var jsonObject = jsonArray.getJSONObject(k)
+            if (jsonObject.getString("PSField").equals("10")){
+//                Sub Category
+                result = jsonObject.getString("PSValue")
+                Log.e(TAG,"13966610    "+result)
+            }
+            else if (jsonObject.getString("PSField").equals("11")){
+//                Brand
+                result = jsonObject.getString("PSValue")
+                Log.e(TAG,"13966611    "+result)
+            }
+            else if (jsonObject.getString("PSField").equals("12")){
+//                Product
+                result = jsonObject.getString("PSValue")
+                Log.e(TAG,"13966612    "+result)
+            }
         }
 
         return result
