@@ -1176,7 +1176,7 @@
                                                         android:layout_weight="1"
                                                         android:gravity="center"
                                                         android:paddingStart="5dp"
-                                                        android:text="Actual Amnt"
+                                                        android:text="Actual"
                                                         android:textSize="13dp"
                                                         android:textColor="@color/expense_color1"
                                                         android:fontFamily="@font/myfont"/>
@@ -1192,7 +1192,7 @@
                                                         android:layout_weight="1.2"
                                                         android:gravity="center"
                                                         android:paddingStart="5dp"
-                                                        android:text="Targ.Amnt"
+                                                        android:text="Target "
                                                         android:textSize="13dp"
                                                         android:textColor="@color/gain_color1"
                                                         android:fontFamily="@font/myfont"/>
