@@ -54,7 +54,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     private var edtCategory                           : TextInputEditText?   = null
     private var edtSubCategory                        : TextInputEditText?   = null
     private var edtBrand                              : TextInputEditText?   = null
-    private var edtCompany                            : TextInputEditText?   = null
+    private var edtComplaint                          : TextInputEditText?   = null
 
     internal var jsonObjectList                       : JSONObject?     = null
     private var tv_followupticket                     : TextView?       = null
@@ -223,6 +223,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     internal var recyPaymentList: RecyclerView? = null
     internal var ll_paymentlist: LinearLayout? = null
     internal var ll_action_taken: LinearLayout? = null
+    internal var ll_infofiltradd: LinearLayout? = null
     var adapterPaymentList: PaymentListAdapter? = null
     var arrAddUpdate: String? = "0"
     var applyMode = 0
@@ -284,7 +285,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var categoryDet = 0
     var subCategoryDet = 0
     var brandDet = 0
-    var companyDet = 0
+    var complaintDet = 0
 
     var ReqMode: String? = ""
 
@@ -305,15 +306,17 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     private var dialogBrand : Dialog? = null
     var recyBrand: RecyclerView? = null
 
-    lateinit var commonViewModel: CommonViewModel
-    lateinit var companyArrayList : JSONArray
-    lateinit var companySort : JSONArray
-    private var dialogCompany : Dialog? = null
-    var recyCompany: RecyclerView? = null
+    lateinit var serviceComplaintViewModel: ServiceComplaintViewModel
+    lateinit var complaintArrayList : JSONArray
+    lateinit var complaintSort : JSONArray
+    private var dialogComplaint : Dialog? = null
+    var recyComplaint: RecyclerView? = null
 
     var ID_SubCategory: String? = ""
     var ID_Brand: String? = ""
-    var ID_Company: String? = ""
+    var ID_Complaint: String? = ""
+
+    var PSValue: String? = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -354,7 +357,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
         productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
         subCategoryViewModel = ViewModelProvider(this).get(SubCategoryViewModel::class.java)
         brandViewModel = ViewModelProvider(this).get(BrandViewModel::class.java)
-        commonViewModel = ViewModelProvider(this).get(CommonViewModel::class.java)
+        serviceComplaintViewModel = ViewModelProvider(this).get(ServiceComplaintViewModel::class.java)
 
         db_helper = DBHelper(this,null)
         try {
@@ -364,18 +367,27 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
             jsonObjectList = JSONObject(intent.getStringExtra("jsonObject").toString());
 
             ID_Product = jsonObjectList!!.getString("FK_Product")
-            ID_Category = jsonObjectList!!.getString("FK_Category")
+            if (PSValue.equals("1")){
+                ID_Category = jsonObjectList!!.getString("FK_Category")
+            }
+
 
         }catch (e : Exception){
 
         }
+
+        val PSValueSP = applicationContext.getSharedPreferences(Config.SHARED_PREF81, 0)
+        PSValue = PSValueSP.getString("PSValue", "")
         setRegviews()
         modeTab = 0
         loadlayout()
         leadShow = "1"
 
+
         serviceFollowUpInfo = 0
         loadInfo(ID_Customerserviceregister,ID_CustomerserviceregisterProductDetails)
+
+
         checkAttendance()
         clearData()
     }
@@ -405,7 +417,9 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     }
 
     private fun loadlayout() {
-      //  ll_service_Attended_category!!.visibility = View.GONE
+
+
+        ll_service_Attended_category!!.visibility = View.GONE
         ll_service_Attended!!.visibility = View.GONE
         ll_part_repaced2!!.visibility = View.GONE
 //        ll_top_bar!!.visibility = View.GONE
@@ -418,9 +432,18 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 Log.v("adasdasds","modeTab "+modeTab)
         if (modeTab == 0){
             Log.v("adasdasds","modeTab0 ")
+            Log.e(TAG,"MODE  421110   "+PSValue)
+            if (PSValue.equals("1")){
+                ll_service_Attended!!.visibility = View.VISIBLE
+                ll_service_Attended_category!!.visibility = View.GONE
+                ll_infofiltradd!!.visibility = View.VISIBLE
+            }else {
+                ll_service_Attended!!.visibility = View.GONE
+                ll_service_Attended_category!!.visibility = View.VISIBLE
+                ll_infofiltradd!!.visibility = View.GONE
+            }
 
-            ll_service_Attended!!.visibility = View.VISIBLE
-           // ll_service_Attended_category!!.visibility = View.VISIBLE
+           //
             txt_previous!!.visibility = View.GONE
             vw_previous!!.visibility = View.GONE
             txt_next!!.visibility = View.VISIBLE
@@ -430,6 +453,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             imv_addproduct!!.visibility = View.VISIBLE
         }
         if (modeTab == 1){
+            Log.e(TAG,"MODE  421111   ")
             ll_part_repaced2!!.visibility = View.VISIBLE
 
             txt_previous!!.visibility = View.VISIBLE
@@ -441,6 +465,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 
         }
         if (modeTab == 2){
+            Log.e(TAG,"MODE  421112   ")
             ll_top_bar!!.visibility = View.VISIBLE
 
             Log.v("adasdasds","modeTab1 ")
@@ -456,6 +481,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 //            ll_Service3!!.visibility = View.VISIBLE
 //        }
         if (modeTab == 3) {
+            Log.e(TAG,"MODE  421113   ")
 
             Log.v("adasdasds","modeTab4 ")
             ll_action_taken!!.visibility = View.VISIBLE
@@ -465,7 +491,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             loadActionTaken()
         }
         if (modeTab == 5) {
-
+            Log.e(TAG,"MODE  421114   ")
             Log.v("adasdasds","modeTab5 ")
             finalSave()
         }
@@ -492,6 +518,14 @@ Log.v("adasdasds","modeTab "+modeTab)
 
         }
         Log.v("sdfsdfsd","Actionproductdetails "+Actionproductdetails.toString())
+        Log.e(TAG, "serviceDetailsArray      1236541   " + serviceDetailsArray)
+        Log.e(TAG, "ProductSubDetails        1236542   " + ProductSubDetails)
+        Log.e(TAG, "Actionproductdetails     1236543   " + Actionproductdetails)
+        Log.e(TAG, "AttendedEmployeeDetails  1236544   " + AttendedEmployeeDetails)
+        Log.e(TAG, "serviceIncentiveArray    1236545   " + serviceIncentiveArray)
+        Log.e(TAG, "arrOtherChargeFinal      1236546   " + arrOtherChargeFinal)
+        Log.e(TAG, "arrPaymentFinal          1236547   " + arrPaymentFinal)
+        Log.e(TAG, "servicePartsArray        1236548   " + servicePartsArray)
         Log.v("sdfsdfsd", "payment  " + arrPaymentFinal.toString())
         Log.v("sdfsdfsd", "other  " + arrOtherChargeFinal.toString())
 
@@ -721,13 +755,14 @@ Log.v("adasdasds","modeTab "+modeTab)
         edtCategory          = findViewById(R.id.edtCategory)
         edtSubCategory       = findViewById(R.id.edtSubCategory)
         edtBrand             = findViewById(R.id.edtBrand)
-        edtCompany           = findViewById(R.id.edtCompany)
+        edtComplaint         = findViewById(R.id.edtComplaint)
 
 
         recy_main_product_topbar      = findViewById(R.id.recy_main_product_topbar)
         ll_ProdWarrantyAmc     = findViewById(R.id.ll_ProdWarrantyAmc)
         ll_partsReplaced       = findViewById(R.id.ll_partsReplaced)
         ll_action_taken        = findViewById(R.id.ll_action_taken)
+        ll_infofiltradd        = findViewById(R.id.ll_infofiltradd)
         ll_service             = findViewById(R.id.ll_service)
         ll_top_bar             = findViewById(R.id.ll_top_bar)
         ll_part_repaced2             = findViewById(R.id.ll_part_repaced2)
@@ -772,7 +807,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         edtCategory!!.setOnClickListener(this)
         edtSubCategory!!.setOnClickListener(this)
         edtBrand!!.setOnClickListener(this)
-        edtCompany!!.setOnClickListener(this)
+        edtComplaint!!.setOnClickListener(this)
 
         DecimelFormatters.setDecimelPlace(edtdiscountAmount!!)
 
@@ -1073,26 +1108,29 @@ Log.v("adasdasds","modeTab "+modeTab)
                                             var jsonObject = jsonArrayServiceType.getJSONObject(i)
                                             Log.e(TAG," 388...1  "+jsonObject.getString("Product"))
 
+                                            Log.e(TAG,"modelServicesListDetails Add   110881    ")
 
                                             modelServicesListDetails!!.add(ServiceDetailsFullListModel("0",jsonObject.getString("FK_Category"),jsonObject.getString("MasterProduct"),
                                                 jsonObject.getString("FK_Product"),jsonObject.getString("Product"),"-2",
                                                 jsonObject.getString("BindProduct"),jsonObject.getString("ComplaintProduct"),jsonObject.getString("Warranty"),
                                                 jsonObject.getString("ServiceWarrantyExpireDate"),jsonObject.getString("ReplacementWarrantyExpireDate"),
                                                 jsonObject.getString("ID_CustomerWiseProductDetails"),jsonObject.getString("ServiceWarrantyExpired"),
-                                                jsonObject.getString("ReplacementWarrantyExpired"),"0","","",false,"0"))
+                                                jsonObject.getString("ReplacementWarrantyExpired"),"0","","",false,"0",
+                                                ID_Category,edtCategory!!.text.toString(),ID_SubCategory!!,edtSubCategory!!.text.toString(),ID_Brand!!,edtBrand!!.text.toString(),ID_Complaint!!,edtComplaint!!.text.toString()))
 
                                             var ServiceAttendedListDet = jsonObject.getJSONArray("ServiceAttendedListDet")
 
                                             for (j in 0 until ServiceAttendedListDet.length()) {
                                                 var jsonObjectSub = ServiceAttendedListDet.getJSONObject(j)
                                                 Log.e(TAG," 388...2  "+jsonObjectSub.getString("Product"))
-
+                                                Log.e(TAG,"modelServicesListDetails Add   110882    ")
                                                 modelServicesListDetails!!.add(ServiceDetailsFullListModel("1",jsonObjectSub.getString("FK_Category"),jsonObjectSub.getString("MasterProduct"),
                                                     jsonObjectSub.getString("FK_Product"),jsonObjectSub.getString("Product"),jsonObjectSub.getString("SLNo"),
                                                     jsonObjectSub.getString("BindProduct"),jsonObjectSub.getString("ComplaintProduct"),jsonObjectSub.getString("Warranty"),
                                                     jsonObjectSub.getString("ServiceWarrantyExpireDate"),jsonObjectSub.getString("ReplacementWarrantyExpireDate"),
                                                     jsonObjectSub.getString("ID_CustomerWiseProductDetails"),jsonObjectSub.getString("ServiceWarrantyExpired"),
-                                                    jsonObjectSub.getString("ReplacementWarrantyExpired"),"0","","",false,"0"))
+                                                    jsonObjectSub.getString("ReplacementWarrantyExpired"),"0","","",false,"0",
+                                                    ID_Category,edtCategory!!.text.toString(),ID_SubCategory!!,edtSubCategory!!.text.toString(),ID_Brand!!,edtBrand!!.text.toString(),ID_Complaint!!,edtComplaint!!.text.toString()))
 
 
 //                                                jObject.put("FK_Category",jsonObjectSub.getString("FK_Category"))
@@ -1161,14 +1199,15 @@ Log.v("adasdasds","modeTab "+modeTab)
 //                                        }
 
                                     }else{
-                                        val builder = AlertDialog.Builder(
-                                            this@ServiceFollowUPActiivty, R.style.MyDialogTheme)
-                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                        }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()
+                                        Log.e(TAG,"1000fsdfds  ")
+//                                        val builder = AlertDialog.Builder(
+//                                            this@ServiceFollowUPActiivty, R.style.MyDialogTheme)
+//                                        builder.setMessage(jObject.getString("EXMessage"))
+//                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                        }
+//                                        val alertDialog: AlertDialog = builder.create()
+//                                        alertDialog.setCancelable(false)
+//                                        alertDialog.show()
                                     }
                                 }
                             } else {
@@ -1217,6 +1256,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             componentCharge=edtcomponentCharge!!.text.toString().toDouble()
         } catch (e: Exception) {
             componentCharge=0.0
+            Log.e(TAG,"12551")
         }
 
         try {
@@ -1342,6 +1382,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 
     private fun loadActionTaken() {
 
+        Log.e(TAG,"12552")
         edttotalServiceCost!!.setText(Config.changeTwoDecimel(totalServiceCost!!))
         edttotalSecurityAmount!!.setText((Config.changeTwoDecimel("0.00")))
         edtcomponentCharge!!.setText(Config.changeTwoDecimel(companantCharge!!))
@@ -1354,18 +1395,38 @@ Log.v("adasdasds","modeTab "+modeTab)
 
         Log.v("sdfsdfds", "modelServicesListDetails " + modelServicesListDetails.toString())
         actionTakenSelected.clear()
-        for (i in 0 until modelServicesListDetails.size) {
-            var empModel = modelServicesListDetails[i]
-            if (empModel.isChekecd) {
-                actionTakenSelected!!.add(
-                    ActionTakenMainModel(
-                        empModel.FK_Product, empModel.Product, "", "",
-                        "", "", false, "0.00", "", "0.00", "", empModel.ID_CustomerWiseProductDetails,"",
-                        "","","","","","","")
-                )
+
+
+        if (PSValue.equals("1")){
+            for (i in 0 until modelServicesListDetails.size) {
+                var empModel = modelServicesListDetails[i]
+                if (empModel.isChekecd) {
+                    actionTakenSelected!!.add(
+                        ActionTakenMainModel(
+                            empModel.FK_Product, empModel.Product, "", "",
+                            "", "", false, "0.00", "", "0.00", "", empModel.ID_CustomerWiseProductDetails,"",
+                            "","","","","","","",
+                            ID_Category,edtCategory!!.text.toString(),ID_SubCategory!!,ID_Brand!!,ID_Complaint!!)
+                    )
+                }
+
             }
+        }else{
+
+
+            actionTakenSelected!!.add(
+                ActionTakenMainModel(
+                    "", "", "", "",
+                    "", "", false, "0.00", "", "0.00", "", "","",
+                    "","","","","","","",
+                    ID_Category,edtCategory!!.text.toString(),ID_SubCategory!!,ID_Brand!!,ID_Complaint!!)
+            )
 
         }
+
+
+
+
         Log.v("sfsdfdfd", "act size  " + actionTakenSelected.size)
         val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
         rcyler_actionTaken!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -2708,7 +2769,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 
                                                 //    modelServicesListDetails.clear()
 
-
+                                                Log.e(TAG,"modelServicesListDetails Add   110883    ")
                                                 modelServicesListDetails!!.add(
                                                     ServiceDetailsFullListModel(
                                                         "0",
@@ -2729,7 +2790,11 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                         "",
                                                         "",
                                                         false,
-                                                        jsonObject.getString("SerchSerialNo")
+                                                        jsonObject.getString("SerchSerialNo"),
+                                                        ID_Category,edtCategory!!.text.toString(),
+                                                        ID_SubCategory!!,edtSubCategory!!.text.toString(),
+                                                        ID_Brand!!,edtBrand!!.text.toString(),
+                                                        ID_Complaint!!,edtComplaint!!.text.toString()
                                                     )
                                                 )
 
@@ -2743,7 +2808,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                         TAG,
                                                         " 388...2  " + jsonObjectSub.getString("Product")
                                                     )
-
+                                                    Log.e(TAG,"modelServicesListDetails Add   110884    ")
                                                     modelServicesListDetails!!.add(
                                                         ServiceDetailsFullListModel(
                                                             "1",
@@ -2764,7 +2829,11 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                             "",
                                                             "",
                                                             false,
-                                                            jsonObject.getString("SerchSerialNo")
+                                                            jsonObject.getString("SerchSerialNo"),
+                                                            ID_Category,edtCategory!!.text.toString(),
+                                                            ID_SubCategory!!,edtSubCategory!!.text.toString(),
+                                                            ID_Brand!!,edtBrand!!.text.toString(),
+                                                            ID_Complaint!!,edtComplaint!!.text.toString()
                                                         )
                                                     )
 
@@ -2945,12 +3014,15 @@ Log.v("adasdasds","modeTab "+modeTab)
                 ReqMode = "126"
                 getBrands(ReqMode!!)
             }
-            R.id.edtCompany -> {
+            R.id.edtComplaint -> {
                 Config.disableClick(v)
-                companyDet = 0
-                ReqMode = "67"
-               // SubMode = ""
-                getCompany(ReqMode!!,""!!)
+                complaintDet = 0
+                ReqMode = "70"
+                if (!ID_Category.equals("")){
+                    getComplaints(ReqMode!!,"")
+                }else{
+                    Config.snackBars(context,v,"Select Category")
+                }
             }
 
 
@@ -3146,50 +3218,102 @@ Log.v("adasdasds","modeTab "+modeTab)
 
         var hasId =  hasPartReplaced(servicepartsReplacedModel!!)
         Log.e(TAG,"20131  "+hasId)
-        if (hasId){
+
+        if (PSValue.equals("1")){
+            if (hasId){
+
+                companantCharge = "0"
+                servicePartsArray  = JSONArray()
+                for (i in 0 until servicepartsReplacedModel.size) {
+
+                    if (servicepartsReplacedModel[i].isChecked.equals("1")){
+                        Log.e(TAG,"32241  ID_MasterProduct                "+servicepartsReplacedModel[i].ID_MasterProduct)
+                        Log.e(TAG,"32242  ID_Product                      "+servicepartsReplacedModel[i].ID_Product)
+                        Log.e(TAG,"32243  WarrantyMode                    "+servicepartsReplacedModel[i].WarrantyMode)
+                        Log.e(TAG,"32244  ReplceMode                      "+servicepartsReplacedModel[i].ReplceMode)
+                        Log.e(TAG,"32244  Quantity                        "+servicepartsReplacedModel[i].Quantity)
+                        Log.e(TAG,"32244  ProductAmount                   "+servicepartsReplacedModel[i].ProductAmount)
+                        Log.e(TAG,"32244  FK_Stock                        "+servicepartsReplacedModel[i].FK_Stock)
+                        Log.e(TAG,"1416664  ID_CustomerWiseProductDetails   "+servicepartsReplacedModel[i].ID_CustomerWiseProductDetails)
 
 
+                        val jObject = JSONObject()
 
-            companantCharge = "0"
-            servicePartsArray  = JSONArray()
-            for (i in 0 until servicepartsReplacedModel.size) {
+                        jObject.put("ID_MasterProduct", (servicepartsReplacedModel[i].ID_MasterProduct))
+                        jObject.put("ID_Product", (servicepartsReplacedModel[i].ID_Product))
+                        jObject.put("ID_WarrantyMode", (servicepartsReplacedModel[i].WarrantyMode))
+                        jObject.put("ID_ReplaceMode", (servicepartsReplacedModel[i].ReplceMode))
+                        jObject.put("Quantity", (servicepartsReplacedModel[i].Quantity))
+                        jObject.put("ProductAmount", (servicepartsReplacedModel[i].ProductAmount))
+                        jObject.put("FK_Stock", (servicepartsReplacedModel[i].FK_Stock))
+                        jObject.put("ID_CustomerWiseProductDetails", (servicepartsReplacedModel[i].ID_CustomerWiseProductDetails))
+//                    jObject.put("FK_SubCategory", (servicepartsReplacedModel[i].FK_SubCategory))
+//                    jObject.put("FK_Brand", (servicepartsReplacedModel[i].FK_Brand))
+//                    jObject.put("FK_Category", (servicepartsReplacedModel[i].FK_Category))
 
-                if (servicepartsReplacedModel[i].isChecked.equals("1")){
-                    Log.e(TAG,"1416661  ID_MasterProduct                "+servicepartsReplacedModel[i].ID_MasterProduct)
-                    Log.e(TAG,"1416662  ID_Product                      "+servicepartsReplacedModel[i].ID_Product)
-                    Log.e(TAG,"1416663  WarrantyMode                    "+servicepartsReplacedModel[i].WarrantyMode)
-                    Log.e(TAG,"1416664  ReplceMode                      "+servicepartsReplacedModel[i].ReplceMode)
-                    Log.e(TAG,"1416664  Quantity                        "+servicepartsReplacedModel[i].Quantity)
-                    Log.e(TAG,"1416664  ProductAmount                   "+servicepartsReplacedModel[i].ProductAmount)
-                    Log.e(TAG,"1416664  FK_Stock                        "+servicepartsReplacedModel[i].FK_Stock)
-                    Log.e(TAG,"1416664  ID_CustomerWiseProductDetails   "+servicepartsReplacedModel[i].ID_CustomerWiseProductDetails)
+                        servicePartsArray.put(jObject)
 
-
-                    val jObject = JSONObject()
-
-                    jObject.put("ID_MasterProduct", (servicepartsReplacedModel[i].ID_MasterProduct))
-                    jObject.put("ID_Product", (servicepartsReplacedModel[i].ID_Product))
-                    jObject.put("ID_WarrantyMode", (servicepartsReplacedModel[i].WarrantyMode))
-                    jObject.put("ID_ReplaceMode", (servicepartsReplacedModel[i].ReplceMode))
-                    jObject.put("Quantity", (servicepartsReplacedModel[i].Quantity))
-                    jObject.put("ProductAmount", (servicepartsReplacedModel[i].ProductAmount))
-                    jObject.put("FK_Stock", (servicepartsReplacedModel[i].FK_Stock))
-                    jObject.put("ID_CustomerWiseProductDetails", (servicepartsReplacedModel[i].ID_CustomerWiseProductDetails))
-
-                    servicePartsArray.put(jObject)
-
-                    companantCharge = (companantCharge!!.toFloat() + ((servicepartsReplacedModel[i].Quantity.toFloat() * (servicepartsReplacedModel[i].ProductAmount).toFloat() ))).toString()
+                        companantCharge = (companantCharge!!.toFloat() + ((servicepartsReplacedModel[i].Quantity.toFloat() * (servicepartsReplacedModel[i].ProductAmount).toFloat() ))).toString()
+                    }
                 }
+
+                Log.e(TAG,"companantCharge  253411  "+companantCharge)
+
+                modeTab = modeTab+1
+                loadlayout()
+            }else{
+                Config.showCustomToast(strActiontakenStatusMessage,context)
+                // Toast.makeText(applicationContext,""+strActiontakenStatusMessage,Toast.LENGTH_SHORT).show()
             }
-
-            Log.e(TAG,"companantCharge  2534   "+companantCharge)
-
-            modeTab = modeTab+1
-            loadlayout()
         }else{
-            Config.showCustomToast(strActiontakenStatusMessage,context)
-           // Toast.makeText(applicationContext,""+strActiontakenStatusMessage,Toast.LENGTH_SHORT).show()
+            Log.e(TAG,"companantCharge  25342   "+companantCharge)
+            if (hasId){
+
+                companantCharge = "0"
+                servicePartsArray  = JSONArray()
+                for (i in 0 until servicepartsReplacedModel.size) {
+
+                    if (servicepartsReplacedModel[i].isChecked.equals("1")){
+                        Log.e(TAG,"32241  ID_MasterProduct                "+servicepartsReplacedModel[i].ID_MasterProduct)
+                        Log.e(TAG,"32242  ID_Product                      "+servicepartsReplacedModel[i].ID_Product)
+                        Log.e(TAG,"32243  WarrantyMode                    "+servicepartsReplacedModel[i].WarrantyMode)
+                        Log.e(TAG,"32244  ReplceMode                      "+servicepartsReplacedModel[i].ReplceMode)
+                        Log.e(TAG,"32244  Quantity                        "+servicepartsReplacedModel[i].Quantity)
+                        Log.e(TAG,"32244  ProductAmount                   "+servicepartsReplacedModel[i].ProductAmount)
+                        Log.e(TAG,"32244  FK_Stock                        "+servicepartsReplacedModel[i].FK_Stock)
+                        Log.e(TAG,"1416664  ID_CustomerWiseProductDetails   "+servicepartsReplacedModel[i].ID_CustomerWiseProductDetails)
+
+
+                        val jObject = JSONObject()
+
+                        jObject.put("ID_MasterProduct", (servicepartsReplacedModel[i].ID_MasterProduct))
+                        jObject.put("ID_Product", (servicepartsReplacedModel[i].ID_Product))
+                        jObject.put("ID_WarrantyMode", (servicepartsReplacedModel[i].WarrantyMode))
+                        jObject.put("ID_ReplaceMode", (servicepartsReplacedModel[i].ReplceMode))
+                        jObject.put("Quantity", (servicepartsReplacedModel[i].Quantity))
+                        jObject.put("ProductAmount", (servicepartsReplacedModel[i].ProductAmount))
+                        jObject.put("FK_Stock", (servicepartsReplacedModel[i].FK_Stock))
+                        jObject.put("ID_CustomerWiseProductDetails", (servicepartsReplacedModel[i].ID_CustomerWiseProductDetails))
+//                    jObject.put("FK_SubCategory", (servicepartsReplacedModel[i].FK_SubCategory))
+//                    jObject.put("FK_Brand", (servicepartsReplacedModel[i].FK_Brand))
+//                    jObject.put("FK_Category", (servicepartsReplacedModel[i].FK_Category))
+
+                        servicePartsArray.put(jObject)
+
+                        companantCharge = (companantCharge!!.toFloat() + ((servicepartsReplacedModel[i].Quantity.toFloat() * (servicepartsReplacedModel[i].ProductAmount).toFloat() ))).toString()
+                    }
+                }
+
+                Log.e(TAG,"companantCharge  253412   "+companantCharge)
+
+                modeTab = modeTab+1
+                loadlayout()
+            }else{
+                Config.showCustomToast(strActiontakenStatusMessage,context)
+                // Toast.makeText(applicationContext,""+strActiontakenStatusMessage,Toast.LENGTH_SHORT).show()
+            }
         }
+
     }
 
 //    private fun hasPartReplaced(servicepartsReplacedModel: ArrayList<ServicePartsReplacedModel>): Boolean {
@@ -3906,7 +4030,8 @@ Log.v("adasdasds","modeTab "+modeTab)
 
             servicepartsReplacedModel!!.add(posAdd,ServicePartsReplacedModel("0","1",empModel.ID_MasterProduct,empModel.MainProduct,
                 jsonObject.getString("ID_Product"),jsonObject.getString("Name"),"","0","",
-                jsonObject.getString("ProductAmount"),"0","","0","0",FK_CustomerWiseProductDetails_ID!!))
+                jsonObject.getString("ProductAmount"),"0","","0","0",FK_CustomerWiseProductDetails_ID!!,
+                ID_SubCategory!!,ID_Brand!!,ID_Category))
 
          //   recy_parts_replaced!!.adapter = servicePartsAdapter
             servicePartsAdapter!!.notifyItemInserted(posAdd)
@@ -3944,6 +4069,15 @@ Log.v("adasdasds","modeTab "+modeTab)
 
             ID_Category = jsonObject.getString("ID_Category")
             edtCategory!!.setText(jsonObject.getString("CategoryName"))
+
+            ID_SubCategory = ""
+            edtSubCategory!!.setText("")
+
+            ID_Brand = ""
+            edtBrand!!.setText("")
+
+            ID_Complaint = ""
+            edtComplaint!!.setText("")
         }
 
         if (data.equals("SubCategoryClick")) {
@@ -3956,6 +4090,9 @@ Log.v("adasdasds","modeTab "+modeTab)
 
             ID_Brand = ""
             edtBrand!!.setText("")
+
+            ID_Complaint = ""
+            edtComplaint!!.setText("")
         }
 
         if (data.equals("BrandClick")) {
@@ -3965,18 +4102,23 @@ Log.v("adasdasds","modeTab "+modeTab)
 
             ID_Brand = jsonObject.getString("ID_Brand")
             edtBrand!!.setText(jsonObject.getString("BrandName"))
-        }
-        if (data.equals("company")) {
 
-            dialogCompany!!.dismiss()
+            ID_Complaint = ""
+            edtComplaint!!.setText("")
+        }
+
+        if (data.equals("compalint")) {
+
+            dialogComplaint!!.dismiss()
 //            val jsonObject = prodPriorityArrayList.getJSONObject(position)
-            val jsonObject = companySort.getJSONObject(position)
-            Log.e(TAG,"Code   "+jsonObject.getString("Code"))
+            val jsonObject = complaintSort.getJSONObject(position)
+            Log.e(TAG,"ID_ComplaintList   "+jsonObject.getString("ID_ComplaintList"))
 
-            ID_Company = jsonObject.getString("Code")
-            edtCompany!!.setText(jsonObject.getString("Description"))
+            ID_Complaint = jsonObject.getString("ID_ComplaintList")
+            edtComplaint!!.setText(jsonObject.getString("ComplaintName"))
 
         }
+
 
 
 
@@ -4181,7 +4323,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                 )
 
                                                 //    modelServicesListDetails.clear()
-
+                                                Log.e(TAG,"modelServicesListDetails Add   110885    ")
 
                                                 modelServicesListDetails!!.add(
                                                     ServiceDetailsFullListModel(
@@ -4203,7 +4345,11 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                         "",
                                                         "",
                                                         false,
-                                                        "0"
+                                                        "0",
+                                                        ID_Category,edtCategory!!.text.toString(),
+                                                        ID_SubCategory!!,edtSubCategory!!.text.toString(),
+                                                        ID_Brand!!,edtBrand!!.text.toString(),
+                                                        ID_Complaint!!,edtComplaint!!.text.toString()
                                                     )
                                                 )
 
@@ -4220,7 +4366,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                     )
 
 
-
+                                                    Log.e(TAG,"modelServicesListDetails Add   110886    ")
                                                     modelServicesListDetails!!.add(
                                                         ServiceDetailsFullListModel(
                                                             "1",
@@ -4241,7 +4387,11 @@ Log.v("adasdasds","modeTab "+modeTab)
                                                             "",
                                                             "",
                                                             false,
-                                                            "0"
+                                                            "0",
+                                                            ID_Category,edtCategory!!.text.toString(),
+                                                            ID_SubCategory!!,edtSubCategory!!.text.toString(),
+                                                            ID_Brand!!,edtBrand!!.text.toString(),
+                                                            ID_Complaint!!,edtComplaint!!.text.toString()
                                                         )
                                                     )
 
@@ -4696,7 +4846,8 @@ Log.v("adasdasds","modeTab "+modeTab)
                             Log.e(TAG,"117111   "+addServiceDetailMode[i].Service)
                             serviceTab3MainModel!!.add(posAdd,ServiceTab3MainModel(empModel.FK_Product,empModel.Product,"1","1",
                                 empModelSub.ID_Services,empModelSub.Service,"0","","0.00","0.00",
-                                "0.00","",false,empModelSub.FK_TaxGroup,empModelSub.TaxPercentage,empModelSub.ServiceChargeIncludeTax))
+                                "0.00","",false,empModelSub.FK_TaxGroup,empModelSub.TaxPercentage,empModelSub.ServiceChargeIncludeTax,
+                                ID_Category,ID_SubCategory!!,ID_Brand!!,ID_Complaint!!))
                             serviceTab3Adapter!!.notifyItemInserted(posAdd)
                             posAdd++
 
@@ -4950,7 +5101,8 @@ Log.v("adasdasds","modeTab "+modeTab)
                                 Log.e(TAG,"117111   "+addServiceDetailMode[i].Service)
                                 serviceTab3MainModel!!.add(posAdd,ServiceTab3MainModel(empModel.FK_Product,empModel.Product,"1","1",
                                     empModelSub.ID_Services,empModelSub.Service,"0","","0.00","0.00",
-                                    "0.00","",false,empModelSub.FK_TaxGroup,empModelSub.TaxPercentage,empModelSub.ServiceChargeIncludeTax))
+                                    "0.00","",false,empModelSub.FK_TaxGroup,empModelSub.TaxPercentage,empModelSub.ServiceChargeIncludeTax,
+                                    ID_Category,ID_SubCategory!!,ID_Brand!!,ID_Complaint!!))
                                 serviceTab3Adapter!!.notifyItemInserted(posAdd)
                                 posAdd++
 
@@ -5039,103 +5191,207 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
         var hasId =  hasTrue(modelServicesListDetails!!)
-        Log.e(TAG,"1016661     "+hasId)
-        if (hasId){
-            Log.e(TAG,"10000666666   Checked Box MArked")
+        Log.e(TAG,"10166611     "+hasId)
+        Log.e(TAG,"101666112   PSValue  "+PSValue)
+
+        if (PSValue.equals("1")){
+            if (hasId){
+                Log.e(TAG,"10000666666   Checked Box MArked")
 //            ll_service_Attended!!.visibility = View.GONE
 //            ll_Service3!!.visibility = View.VISIBLE
 
-            modeTab = modeTab+1
-            Log.e(TAG,"1016661     modeTab "+modeTab)
-            loadlayout()
+                modeTab = modeTab+1
+                Log.e(TAG,"10166612     modeTab "+modeTab)
+                loadlayout()
 
-            // 24-10-2023 Ranjith
-            serviceTab3MainModel.clear()
-            Log.e(TAG,"1034441     "+modelServicesListDetails.size)
-            Log.e(TAG,"1034442     "+serviceTab3MainModel.size)
-            for (i in 0 until modelServicesListDetails.size) {
-                var empModel = modelServicesListDetails[i]
-                if (empModel.isChekecd){
-                    serviceTab3MainModel!!.add(ServiceTab3MainModel(empModel.FK_Product,empModel.Product,"1","",
-                        "0","","0","","0.00","0.00","0.00","",false,"0","0",false))
-                }
+                // 24-10-2023 Ranjith
+                serviceTab3MainModel.clear()
+                Log.e(TAG,"1034441     "+modelServicesListDetails.size)
+                Log.e(TAG,"1034442     "+serviceTab3MainModel.size)
+                for (i in 0 until modelServicesListDetails.size) {
 
-            }
+                    var empModel = modelServicesListDetails[i]
+                    Log.e(TAG,"1034442     "+empModel.isChekecd+"   :   "+empModel.Product)
+                    if (empModel.isChekecd){
+                        serviceTab3MainModel!!.add(ServiceTab3MainModel(empModel.FK_Product,empModel.Product,"1","",
+                            "0","","0","","0.00","0.00","0.00","",false,"0","0",false,
+                            ID_Category,ID_SubCategory!!,ID_Brand!!,ID_Complaint!!))
 
-            serviceDetailsArray = JSONArray()
-            ProductSubDetails  = JSONArray()
-            for (i in 0 until modelServicesListDetails.size) {
-                if (modelServicesListDetails[i].isChekecd){
-                    Log.e(TAG,"1416661  FK_Product                    "+modelServicesListDetails[i].FK_Product)
-                    Log.e(TAG,"1416662  Product                       "+modelServicesListDetails[i].Product)
-                    Log.e(TAG,"1416663  ID_ComplaintList              "+modelServicesListDetails[i].ID_ComplaintList)
-                    Log.e(TAG,"1416664  ID_CustomerWiseProductDetails "+modelServicesListDetails[i].ID_CustomerWiseProductDetails)
-                    Log.e(TAG,"1416664  ReplacementWarrantyExpireDate "+modelServicesListDetails[i].ReplacementWarrantyExpireDate)
-
-                    val jObject = JSONObject()
-                    val jObject1 = JSONObject()
-                    jObject.put("ID_Product", (modelServicesListDetails[i].FK_Product))
-                    jObject.put("Product", (modelServicesListDetails[i].Product))
-                    jObject.put("ID_ComplaintList", (modelServicesListDetails[i].ID_ComplaintList))
-                    jObject.put("Description", (modelServicesListDetails[i].Description))
-                    jObject.put("ID_CustomerWiseProductDetails", (modelServicesListDetails[i].ID_CustomerWiseProductDetails))
-                    jObject.put("FK_ProductNumberingDetails", ("0"))
-
-
-
-                    jObject1.put("FK_Product",modelServicesListDetails[i].FK_Product)
-                    if (modelServicesListDetails[i].ReplacementWarrantyExpireDate.equals("")){
-                        jObject1.put("ReplacementWarrantyExpireDate",modelServicesListDetails[i].ReplacementWarrantyExpireDate)
-                    }else{
-                       var date = Config.convertDate(modelServicesListDetails[i].ReplacementWarrantyExpireDate)
-                        jObject1.put("ReplacementWarrantyExpireDate",date)
+//                    ID_Category,edtCategory!!.text.toString(),ID_SubCategory!!,edtSubCategory!!.text.toString(),ID_Brand!!,edtCategory!!.text.toString(),ID_Complaint!!,edtCategory!!.text.toString()
                     }
-                    jObject1.put("ID_CustomerWiseProductDetails",modelServicesListDetails[i].ID_CustomerWiseProductDetails)
-                    serviceDetailsArray.put(jObject)
 
-                    ProductSubDetails.put(jObject1)
                 }
+
+                serviceDetailsArray = JSONArray()
+                ProductSubDetails  = JSONArray()
+
+                Log.e(TAG,"modelServicesListDetails    5156661   "+modelServicesListDetails.size)
+                for (i in 0 until modelServicesListDetails.size) {
+                    if (modelServicesListDetails[i].isChekecd){
+                        Log.e(TAG,"1416661  FK_Product                    "+modelServicesListDetails[i].FK_Product)
+                        Log.e(TAG,"1416662  Product                       "+modelServicesListDetails[i].Product)
+                        Log.e(TAG,"1416663  ID_ComplaintList              "+modelServicesListDetails[i].ID_ComplaintList)
+                        Log.e(TAG,"1416664  ID_CustomerWiseProductDetails "+modelServicesListDetails[i].ID_CustomerWiseProductDetails)
+                        Log.e(TAG,"1416664  ReplacementWarrantyExpireDate "+modelServicesListDetails[i].ReplacementWarrantyExpireDate)
+
+
+
+
+                        val jObject = JSONObject()
+                        val jObject1 = JSONObject()
+                        jObject.put("ID_Product", (modelServicesListDetails[i].FK_Product))
+                        jObject.put("Product", (modelServicesListDetails[i].Product))
+                        jObject.put("ID_ComplaintList", (modelServicesListDetails[i].ID_ComplaintList))
+                        jObject.put("Description", (modelServicesListDetails[i].Description))
+                        jObject.put("ID_CustomerWiseProductDetails", (modelServicesListDetails[i].ID_CustomerWiseProductDetails))
+                        jObject.put("FK_ProductNumberingDetails", ("0"))
+                        jObject.put("FK_SubCategory",modelServicesListDetails[i].ID_SubCategory)
+                        jObject.put("FK_Brand",modelServicesListDetails[i].ID_Brand)
+                        jObject.put("FK_Category",modelServicesListDetails[i].ID_Category)
+
+
+
+                        jObject1.put("FK_Product",modelServicesListDetails[i].FK_Product)
+                        if (modelServicesListDetails[i].ReplacementWarrantyExpireDate.equals("")){
+                            jObject1.put("ReplacementWarrantyExpireDate",modelServicesListDetails[i].ReplacementWarrantyExpireDate)
+                        }else{
+                            var date = Config.convertDate(modelServicesListDetails[i].ReplacementWarrantyExpireDate)
+                            jObject1.put("ReplacementWarrantyExpireDate",date)
+                        }
+                        jObject1.put("ID_CustomerWiseProductDetails",modelServicesListDetails[i].ID_CustomerWiseProductDetails)
+
+
+                        serviceDetailsArray.put(jObject)
+
+                        ProductSubDetails.put(jObject1)
+                    }
+                }
+
+                Log.e(TAG,"1034443     "+serviceTab3MainModel.size)
+                if (serviceTab3MainModel.size > 0){
+                    val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+                    rcyler_service3!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                    serviceTab3Adapter = ServiceTab3Adapter(this@ServiceFollowUPActiivty, serviceTab3MainModel)
+                    rcyler_service3!!.adapter = serviceTab3Adapter
+                    serviceTab3Adapter!!.setClickListener(this@ServiceFollowUPActiivty)
+
+                }
+
+                loadtab2()
+                // 24-10-2023 Ranjith
+            }else{
+                Log.e(TAG,"10000666666   No Checked Box MArked")
+                Config.showCustomToast("No Check box marked",context)
+                //Toast.makeText(applicationContext,"No Check box marked",Toast.LENGTH_SHORT).show()
             }
 
-            Log.e(TAG,"1034443     "+serviceTab3MainModel.size)
-            if (serviceTab3MainModel.size > 0){
-                val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
-                rcyler_service3!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                serviceTab3Adapter = ServiceTab3Adapter(this@ServiceFollowUPActiivty, serviceTab3MainModel)
-                rcyler_service3!!.adapter = serviceTab3Adapter
-                serviceTab3Adapter!!.setClickListener(this@ServiceFollowUPActiivty)
-
-            }
-
-            loadtab2()
-            // 24-10-2023 Ranjith
         }else{
-            Log.e(TAG,"10000666666   No Checked Box MArked")
-            Config.showCustomToast("No Check box marked",context)
-            //Toast.makeText(applicationContext,"No Check box marked",Toast.LENGTH_SHORT).show()
+
+
+            if (ID_Category.equals("")){
+                Config.showCustomToast("Select Category",context)
+            }else if (ID_Complaint.equals("")){
+                Config.showCustomToast("Select Complaint",context)
+            }else{
+                modeTab = modeTab+1
+                Log.e(TAG,"101666131111     modeTab "+modeTab)
+                loadlayout()
+
+
+
+                Log.e(TAG,"modelServicesListDetails    5156662   "+modelServicesListDetails.size)
+                serviceTab3MainModel.clear()
+
+                serviceTab3MainModel!!.add(ServiceTab3MainModel("",edtCategory!!.text.toString(),"1","",
+                    "0","","0","","0.00","0.00","0.00","",false,"0","0",false,
+                    ID_Category,ID_SubCategory!!,ID_Brand!!,ID_Complaint!!))
+
+
+
+
+                serviceDetailsArray = JSONArray()
+                ProductSubDetails  = JSONArray()
+//            for (i in 0 until modelServicesListDetails.size) {
+//                if (modelServicesListDetails[i].isChekecd){
+
+
+                val jObject = JSONObject()
+                val jObject1 = JSONObject()
+                jObject.put("ID_Product", "")
+                jObject.put("Product", "")
+                jObject.put("ID_ComplaintList",ID_Complaint)
+                jObject.put("Description","")
+                jObject.put("ID_CustomerWiseProductDetails", "")
+                jObject.put("FK_ProductNumberingDetails", ("0"))
+                jObject.put("FK_SubCategory",ID_SubCategory)
+                jObject.put("FK_Brand",ID_Brand)
+                jObject.put("FK_Category",ID_Category)
+
+                jObject1.put("ReplacementWarrantyExpireDate","")
+                jObject1.put("ID_CustomerWiseProductDetails","")
+
+
+                serviceDetailsArray.put(jObject)
+
+                ProductSubDetails.put(jObject1)
+//                }
+//            }
+
+                Log.e(TAG,"5197773     "+serviceTab3MainModel.size)
+                if (serviceTab3MainModel.size > 0){
+                    val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+                    rcyler_service3!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                    serviceTab3Adapter = ServiceTab3Adapter(this@ServiceFollowUPActiivty, serviceTab3MainModel)
+                    rcyler_service3!!.adapter = serviceTab3Adapter
+                    serviceTab3Adapter!!.setClickListener(this@ServiceFollowUPActiivty)
+
+                }
+
+
+                loadtab2()
+            }
+
         }
+
+
 
     }
 
     private fun loadtab2() {
-//        var jObject = JSONObject()
 
-//        jObject.put("FK_Product",  "557")
-//        jObject.put("ReplacementWarrantyExpireDate",  "")
-//
-//
-//        ProductSubDetails.put(jObject)
-//
-//        jObject = JSONObject()
-//
-//        jObject.put("FK_Product",  "591")
-//        jObject.put("ReplacementWarrantyExpireDate",  "")
-//        ProductSubDetails.put(jObject)
+        // Part Replaced
 
-        Log.e(TAG,"27666   "+ProductSubDetails)
-        mainProductInfo = 0
-        loadMainProduct()
+        if (PSValue.equals("1")){
+            Log.e(TAG,"276661   "+ProductSubDetails)
+            mainProductInfo = 0
+            loadMainProduct()
 //        valiadateServiceAttended()
+        }else{
+            Log.e(TAG,"276662   "+ProductSubDetails)
+            servicepartsReplacedModel.clear()
+            labelpartsreplaceModel.clear()
+
+            servicepartsReplacedModel!!.add(ServicePartsReplacedModel("1","0","",edtCategory!!.text.toString(),
+                "","","","","",
+                "","","","","0","",
+                ID_SubCategory!!,ID_Brand!!,ID_Category))
+
+            for (i in 0 until servicepartsReplacedModel.size) {
+                var empModel = servicepartsReplacedModel[i]
+                Log.e(TAG,"2989322  "+"   P:  "+i+"    "+empModel.MainProduct+"    M: "+empModel.is_Master+"  S:   "+empModel.is_Sub+"    C: "+empModel.Componant)
+            }
+
+            if (servicepartsReplacedModel.size > 0){
+
+                val lLayout1 = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
+                recy_parts_replaced!!.layoutManager = lLayout1 as RecyclerView.LayoutManager?
+                servicePartsAdapter = ServiceParts_replacedAdapter(this@ServiceFollowUPActiivty, servicepartsReplacedModel!!,"0")
+                recy_parts_replaced!!.adapter = servicePartsAdapter
+                servicePartsAdapter!!.setClickListener(this@ServiceFollowUPActiivty)
+            }
+
+        }
+
     }
 
     private fun validateService3() {
@@ -5297,7 +5553,8 @@ Log.v("adasdasds","modeTab "+modeTab)
 //                                                    if (modelServicesListDetails[i].isChekecd && modelServicesListDetails[i].FK_Product.equals(jsonObject.getString("ID_MasterProduct"))){
                                                         servicepartsReplacedModel!!.add(ServicePartsReplacedModel("1","0",jsonObject.getString("ID_MasterProduct"),jsonObject.getString("MainProduct"),
                                                             jsonObject.getString("ID_Product"),jsonObject.getString("Componant"),"",jsonObject.getString("WarrantyMode"),"",
-                                                            jsonObject.getString("ProductAmount"),jsonObject.getString("ReplceMode"),"",jsonObject.getString("FK_Stock"),"0",jsonObject.getString("ID_CustomerWiseProductDetails")))
+                                                            jsonObject.getString("ProductAmount"),jsonObject.getString("ReplceMode"),"",jsonObject.getString("FK_Stock"),"0",jsonObject.getString("ID_CustomerWiseProductDetails"),
+                                                            ID_SubCategory!!,ID_Brand!!,ID_Category))
 //                                                    }
 //                                                }
 
@@ -5320,7 +5577,8 @@ Log.v("adasdasds","modeTab "+modeTab)
 //                                                            if (modelServicesListDetails[i].isChekecd && modelServicesListDetails[i].FK_Product.equals(jsonObject.getString("ID_MasterProduct"))){
                                                                 servicepartsReplacedModel!!.add(ServicePartsReplacedModel("0","1",jsonObject1.getString("ID_MasterProduct"),jsonObject1.getString("MainProduct"),
                                                                     jsonObject1.getString("ID_Product"),jsonObject1.getString("Componant"),"",jsonObject1.getString("WarrantyMode"),"",
-                                                                    jsonObject1.getString("ProductAmount"),jsonObject1.getString("ReplceMode"),"",jsonObject1.getString("FK_Stock"),"0",jsonObject1.getString("ID_CustomerWiseProductDetails")))
+                                                                    jsonObject1.getString("ProductAmount"),jsonObject1.getString("ReplceMode"),"",jsonObject1.getString("FK_Stock"),"0",jsonObject1.getString("ID_CustomerWiseProductDetails"),
+                                                                    ID_SubCategory!!,ID_Brand!!,ID_Category))
 //                                                        modelServicesListDetails[k].ID_CustomerWiseProductDetails
 //                                                            }
 //                                                        }
@@ -6117,8 +6375,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         }
     }
 
-    private fun getCompany(ReqMode: String, SubMode: String) {
-
+    private fun getComplaints(ReqMode: String, SubMode: String) {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -6127,25 +6384,23 @@ Log.v("adasdasds","modeTab "+modeTab)
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                commonViewModel.getCommonViewModel(this,ReqMode,SubMode)!!.observe(
+                serviceComplaintViewModel.getserviceComplaintData(this,ReqMode!!,SubMode!!,ID_Category!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
-                                if (companyDet == 0){
-                                    companyDet++
+                                if (complaintDet == 0){
+                                    complaintDet++
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   1438   "+msg)
+                                    Log.e(TAG,"msg   1920   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
-                                        val jobjt = jObject.getJSONObject("CommonPopupDetails")
-                                        companyArrayList = jobjt.getJSONArray("CommonPopupList")
-                                        if (companyArrayList.length()>0){
+                                        val jobjt = jObject.getJSONObject("ComplaintsDetails")
+                                        complaintArrayList = jobjt.getJSONArray("ComplaintDetailsList")
+                                        if (complaintArrayList.length()>0){
 
-                                            // productPriorityPopup(prodPriorityArrayList)
-                                            companyPopup(companyArrayList)
-
+                                            complaintPopup(complaintArrayList)
 
 
                                         }
@@ -6189,31 +6444,31 @@ Log.v("adasdasds","modeTab "+modeTab)
         }
     }
 
-    private fun companyPopup(companyArrayList: JSONArray) {
+    private fun complaintPopup(complaintArrayList: JSONArray) {
 
         try {
 
-            dialogCompany = Dialog(this)
-            dialogCompany!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogCompany!! .setContentView(R.layout.company_popup)
-            dialogCompany!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-            recyCompany = dialogCompany!! .findViewById(R.id.recyCompany) as RecyclerView
-            val etsearch = dialogCompany!! .findViewById(R.id.etsearch) as EditText
+            dialogComplaint = Dialog(this)
+            dialogComplaint!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogComplaint!! .setContentView(R.layout.service_complaint_popup)
+            dialogComplaint!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyComplaint = dialogComplaint!! .findViewById(R.id.recyComplaint) as RecyclerView
+            val etsearch = dialogComplaint!! .findViewById(R.id.etsearch) as EditText
 
-            companySort = JSONArray()
-            for (k in 0 until companyArrayList.length()) {
-                val jsonObject = companyArrayList.getJSONObject(k)
+            complaintSort = JSONArray()
+            for (k in 0 until complaintArrayList.length()) {
+                val jsonObject = complaintArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
-                companySort.put(jsonObject)
+                complaintSort.put(jsonObject)
             }
 
 
             val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
-            recyCompany!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            recyComplaint!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
 //            val adapter = ProductPriorityAdapter(this@FollowUpActivity, prodPriorityArrayList)
-            val adapter = CompanyAdapter(this@ServiceFollowUPActiivty, companySort)
-            recyCompany!!.adapter = adapter
+            val adapter = ServiceComplaintAdapter(this@ServiceFollowUPActiivty, complaintSort)
+            recyComplaint!!.adapter = adapter
             adapter.setClickListener(this@ServiceFollowUPActiivty)
 
 
@@ -6228,27 +6483,27 @@ Log.v("adasdasds","modeTab "+modeTab)
 
                     //  list_view!!.setVisibility(View.VISIBLE)
                     val textlength = etsearch!!.text.length
-                    companySort = JSONArray()
+                    complaintSort = JSONArray()
 
-                    for (k in 0 until companyArrayList.length()) {
-                        val jsonObject = companyArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("Description").length) {
-                            if (jsonObject.getString("Description")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
-                                companySort.put(jsonObject)
+                    for (k in 0 until complaintArrayList.length()) {
+                        val jsonObject = complaintArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("ComplaintName").length) {
+                            if (jsonObject.getString("ComplaintName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                complaintSort.put(jsonObject)
                             }
 
                         }
                     }
 
-                    Log.e(TAG,"companySort               1556    "+companySort)
-                    val adapter = CompanyAdapter(this@ServiceFollowUPActiivty, companySort)
-                    recyCompany!!.adapter = adapter
+                    Log.e(TAG,"complaintSort               2203    "+complaintSort)
+                    val adapter = ServiceComplaintAdapter(this@ServiceFollowUPActiivty, complaintSort)
+                    recyComplaint!!.adapter = adapter
                     adapter.setClickListener(this@ServiceFollowUPActiivty)
                 }
             })
 
-            dialogCompany!!.show()
-            dialogCompany!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialogComplaint!!.show()
+            dialogComplaint!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception  1394    "+e.toString())

@@ -775,7 +775,8 @@
                                             app:startIconDrawable="@drawable/vtr_subcategory"
                                             app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/arrow_down"
-                                            style="@style/Widget.App.TextInputLayout">
+                                            style="@style/Widget.App.TextInputLayout"
+                                            android:visibility="gone">
 
                                             <com.google.android.material.textfield.TextInputEditText
                                                 android:id="@+id/tie_SubCategory"
@@ -811,7 +812,8 @@
                                             app:startIconDrawable="@drawable/vtr_brand"
                                             app:startIconTint="@color/colorPrimaryDark"
                                             app:endIconDrawable="@drawable/arrow_down"
-                                            style="@style/Widget.App.TextInputLayout">
+                                            style="@style/Widget.App.TextInputLayout"
+                                            android:visibility="gone">
 
                                             <com.google.android.material.textfield.TextInputEditText
                                                 android:id="@+id/tie_Brand"

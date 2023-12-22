@@ -592,54 +592,59 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
             val CRMDetailsSP = context.getSharedPreferences(Config.SHARED_PREF79, 0)
             val strCRMDetails = CRMDetailsSP.getString("CRMDetails", "")
-            Log.e(Config.TAG,"139666    "+strCRMDetails)
+            Log.e(TAG,"139666    "+strCRMDetails)
 
             val jsonArray: JSONArray = JSONArray(strCRMDetails)
-
-            for (k in 0 until jsonArray.length()) {
-                var jsonObject = jsonArray.getJSONObject(k)
-                if (jsonObject.getString("PSField").equals("10")){
+            Log.e(TAG,"139666 jsonArray   "+jsonArray.length())
+            if (jsonArray.length() != 0){
+                Log.e(TAG,"1396661 jsonArray   "+jsonArray.length())
+                for (k in 0 until jsonArray.length()) {
+                    var jsonObject = jsonArray.getJSONObject(k)
+                    if (jsonObject.getString("PSField").equals("10")){
 //                Sub Category
-                    flagSubCategory = jsonObject.getString("PSValue")
-                    Log.e(Config.TAG,"13966610    "+flagSubCategory)
-                }
-                else if (jsonObject.getString("PSField").equals("11")){
+                        flagSubCategory = jsonObject.getString("PSValue")
+                        Log.e(Config.TAG,"13966610    "+flagSubCategory)
+                    }
+                    else if (jsonObject.getString("PSField").equals("11")){
 //                Brand
-                    flagBrand = jsonObject.getString("PSValue")
-                    Log.e(Config.TAG,"13966611    "+flagBrand)
-                }
-                else if (jsonObject.getString("PSField").equals("12")){
+                        flagBrand = jsonObject.getString("PSValue")
+                        Log.e(Config.TAG,"13966611    "+flagBrand)
+                    }
+                    else if (jsonObject.getString("PSField").equals("12")){
 //                Product
-                    flagProduct = jsonObject.getString("PSValue")
-                    Log.e(Config.TAG,"13966612    "+flagProduct)
+                        flagProduct = jsonObject.getString("PSValue")
+                        Log.e(Config.TAG,"13966612    "+flagProduct)
+                    }
                 }
-            }
 
 //            flagSubCategory = Config.getCrmFlags(context,"10")
 //            flagBrand       = Config.getCrmFlags(context,"11")
 //            flagProduct     = Config.getCrmFlags(context,"12")
 
-            Log.e(TAG,"getFlags  57222   flagSubCategory :  "+flagSubCategory+"  flagBrand :   "+flagBrand+"   flagProduct  :   "+flagProduct)
-            if (flagSubCategory.equals("0")){
-                til_SubCategory!!.visibility = View.GONE
-            }
-            else if (flagSubCategory.equals("1")){
-                til_SubCategory!!.visibility = View.VISIBLE
+                Log.e(TAG,"getFlags  57222   flagSubCategory :  "+flagSubCategory+"  flagBrand :   "+flagBrand+"   flagProduct  :   "+flagProduct)
+                if (flagSubCategory.equals("0")){
+                    til_SubCategory!!.visibility = View.GONE
+                }
+                else if (flagSubCategory.equals("1")){
+                    til_SubCategory!!.visibility = View.VISIBLE
+                }
+
+                if (flagBrand.equals("0")){
+                    til_Brand!!.visibility = View.GONE
+                }
+                else if (flagBrand.equals("1")){
+                    til_Brand!!.visibility = View.VISIBLE
+                }
+
+                if (flagProduct.equals("0")){
+                    til_Product!!.visibility = View.GONE
+                }
+                else if (flagProduct.equals("1")){
+                    til_Product!!.visibility = View.VISIBLE
+                }
             }
 
-            if (flagBrand.equals("0")){
-                til_Brand!!.visibility = View.GONE
-            }
-            else if (flagBrand.equals("1")){
-                til_Brand!!.visibility = View.VISIBLE
-            }
 
-            if (flagProduct.equals("0")){
-                til_Product!!.visibility = View.GONE
-            }
-            else if (flagProduct.equals("1")){
-                til_Product!!.visibility = View.VISIBLE
-            }
         }catch (e:Exception){
             Log.e(TAG,"57222  Exception   "+e.toString())
         }
@@ -797,7 +802,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
         onTextChangedValues()
         getCurrentDate()
-        enableUsingFlags()
+       // enableUsingFlags()
 
     }
 
@@ -2180,7 +2185,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                 strUserAction = "1"
                 saveOrupdate = 0
-              //  saveCustomerService()
+                saveCustomerService()
             }
 
 
@@ -2210,7 +2215,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 customerServiceRegisterViewModel.getcusServRegister(this,strUserAction!!,Customer_Type!!,ID_Customer!!,ID_Channel!!,ID_Priority!!,ID_Category!!,
                     ID_Company!!,ID_ComplaintList!!,ID_Services!!,ID_EmpMedia!!,ID_Status!!,ID_AttendedBy!!,strCustomerName!!,strMobileNo!!,strAddress!!,strContactNo!!,
                     strLandMark!!,strFromDate!!,strToDate!!,strFromTime!!,strToTime!!,ID_Product!!,strDescription!!,strDate!!,strTime!!,
-                    FK_Country!!,FK_States!!,FK_District!!,FK_Area!!,FK_Post!!,FK_Place!!,ID_CompCategory!!,strLongitue!!,strLatitude!!,strLocationAddress!!)!!.observe(
+                    FK_Country!!,FK_States!!,FK_District!!,FK_Area!!,FK_Post!!,FK_Place!!,ID_CompCategory!!,strLongitue!!,strLatitude!!,strLocationAddress!!,
+                    ID_SubCategory!!,ID_Brand!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {

@@ -143,6 +143,7 @@ object Config {
 
     const val SHARED_PREF79 = "CRMDetails"  //
     const val SHARED_PREF80 = "FollowUpDetails"  //
+    const val SHARED_PREF81 = "PSValue"  //  Product Manadtory Followup
 
 
     var width = 0
@@ -921,6 +922,11 @@ object Config {
             val FollowUpDetailsEditer = FollowUpDetailsSP.edit()
             FollowUpDetailsEditer.putString("FollowUpDetails", "")
             FollowUpDetailsEditer.commit()
+
+            val PSValueSP = context.getSharedPreferences(Config.SHARED_PREF81, 0)
+            val PSValueEditer = PSValueSP.edit()
+            PSValueEditer.putString("PSValue", "")
+            PSValueEditer.commit()
 
 
             val isMyServiceRunning = isServiceRunning(context, NotificationLocationService::class.java)

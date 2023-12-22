@@ -870,6 +870,11 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                 FollowUpDetailsEditer.putString("FollowUpDetails", jobj.getString("FollowUpDetails"))
                                 FollowUpDetailsEditer.commit()
 
+                                val PSValueSP = applicationContext.getSharedPreferences(Config.SHARED_PREF81, 0)
+                                val PSValueEditer = PSValueSP.edit()
+                                PSValueEditer.putString("PSValue", jobj.getString("PSValue"))
+                                PSValueEditer.commit()
+
 
                                 val i = Intent(this@MpinActivity, HomeActivity::class.java)
                                 startActivity(i)

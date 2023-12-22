@@ -31,11 +31,12 @@ object CustomerServiceRegisterRepository {
                            ID_AttendedBy : String, strCustomerName : String,strMobileNo : String,strAddress : String,strContactNo : String, strLandMark : String,
                            strFromDate : String, strToDate : String,strFromTime : String,strToTime : String,ID_Product : String,strDescription : String,
                            strDate : String,strTime : String,FK_Country : String,FK_States : String,FK_District : String,FK_Area : String,FK_Post : String,
-                           FK_Place : String,ID_CompCategory :String,strLongitue :String,strLatitude :String,strLocationAddress :String): MutableLiveData<CustomerServiceRegisterModel> {
+                           FK_Place : String,ID_CompCategory :String,strLongitue :String,strLatitude :String,strLocationAddress :String,
+                           ID_SubCategory :String,ID_Brand :String): MutableLiveData<CustomerServiceRegisterModel> {
         getCustomerServiceRegister(context,strUserAction,Customer_Type,ID_Customer,ID_Channel,ID_Priority,ID_Category,
             ID_Company,ID_ComplaintList,ID_Services,ID_EmpMedia,ID_Status,ID_AttendedBy,strCustomerName,strMobileNo,strAddress,strContactNo,
             strLandMark,strFromDate,strToDate,strFromTime,strToTime,ID_Product,strDescription,strDate,strTime,FK_Country,FK_States,FK_District,FK_Area,FK_Post,FK_Place,ID_CompCategory,
-            strLongitue,strLatitude,strLocationAddress)
+            strLongitue,strLatitude,strLocationAddress,ID_SubCategory,ID_Brand)
         return cusServRegisterSetterGetter
     }
 
@@ -44,7 +45,8 @@ object CustomerServiceRegisterRepository {
                                            ID_AttendedBy : String, strCustomerName : String,strMobileNo : String,strAddress : String,strContactNo : String, strLandMark : String,
                                            strFromDate : String, strToDate : String,strFromTime : String,strToTime : String,ID_Product : String,strDescription : String,
                                            strDate : String,strTime : String,FK_Country : String,FK_States : String,FK_District : String,FK_Area : String,FK_Post : String,
-                                           FK_Place : String,ID_CompCategory :String,strLongitue :String,strLatitude :String,strLocationAddress :String) {
+                                           FK_Place : String,ID_CompCategory :String,strLongitue :String,strLatitude :String,strLocationAddress :String,
+                                           ID_SubCategory :String,ID_Brand :String) {
 
 //        Log.e(TAG,"Validation   93731"
 //                +"\n"+"Customer Type        :  "+Customer_Type
@@ -109,6 +111,9 @@ object CustomerServiceRegisterRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+
+//                FK_Brand":"1","FK_SubCategory":"2"
+
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
@@ -179,6 +184,8 @@ object CustomerServiceRegisterRepository {
                   requestObject1.put("Address",strLocationAddress)
                   requestObject1.put("LocationLandMark1","")
                   requestObject1.put("LocationLandMark2","")
+                  requestObject1.put("FK_Brand",ID_Brand)
+                  requestObject1.put("FK_SubCategory",ID_SubCategory)
 
                 Log.e(TAG,"requestObject1   1601   "+requestObject1)
 

@@ -93,17 +93,20 @@ object VersionRepository {
                         e.printStackTrace()
                         progressDialog!!.dismiss()
                         Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+                        Log.e(TAG,"966661   "+e.toString())
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
                     Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+                    Log.e(TAG,"966662   "+t.message)
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()
             Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+            Log.e(TAG,"966663   "+e.toString())
         }
     }
 }

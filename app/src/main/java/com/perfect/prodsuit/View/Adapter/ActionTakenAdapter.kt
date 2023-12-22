@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Model.ActionTakenMainModel
@@ -50,18 +51,30 @@ class ActionTakenAdapter(
 
             if (holder is MainViewHolder) {
                 Log.e(TAG, "onBindViewHolder   105100   ")
+
+                val PSValueSP = context.getSharedPreferences(Config.SHARED_PREF81, 0)
+                var PSValue = PSValueSP.getString("PSValue", "")
+
                 val empModel = mList[position]
                 holder.ll_checkbox.visibility = View.GONE
                 holder.ll_security_amount.visibility = View.GONE
                 holder.ll_leadAction.visibility = View.GONE
                 holder.ll_buy_back_amount.visibility = View.GONE
-                holder.tv_product.text = empModel.Product
+
                 holder.tv_action_action_taken.text = empModel.actionName
                 holder.tv_lead_action.text = empModel.leadAction
                 holder.edt_customer_note.setText(empModel.Customer_note)
                 holder.tv_lead_FollowupDate.setText(empModel.FollowupDate)
                 holder.tv_lead_ActionType.setText(empModel.ActionType)
                 holder.tv_lead_AssignedTo.setText(empModel.EmplloyeeName)
+
+                if (PSValue.equals("1")){
+                    holder.tv_product.text = empModel.Product
+                    holder.tv_label_product.text = "Product : "
+                }else{
+                    holder.tv_product.text = empModel.Category
+                    holder.tv_label_product.text = "Category : "
+                }
 
                 Log.v("sdfsdfdsfds","check value2 "+empModel.ProvideStandBy)
                 Log.v("sdfsdfdsfds","check action "+empModel.ID_Action)
@@ -451,6 +464,7 @@ class ActionTakenAdapter(
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         internal var tv_product: TextView
+        internal var tv_label_product: TextView
         internal var tv_action_action_taken: TextView
         internal var tv_lead_action: TextView
         internal var tv_lead_FollowupDate: TextView
@@ -470,6 +484,7 @@ class ActionTakenAdapter(
 
         init {
             tv_product = v.findViewById<View>(R.id.tv_product) as TextView
+            tv_label_product = v.findViewById<View>(R.id.tv_label_product) as TextView
             tv_action_action_taken = v.findViewById<View>(R.id.tv_action_action_taken) as TextView
             tv_lead_action = v.findViewById<View>(R.id.tv_lead_action) as TextView
             tv_lead_FollowupDate = v.findViewById<View>(R.id.tv_lead_FollowupDate) as TextView

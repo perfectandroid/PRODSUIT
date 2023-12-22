@@ -397,7 +397,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
                             } catch (e: Exception) {
 
-                                Log.e(TAG, "Exception  4133    " + e.toString())
+                                Log.e(TAG, "Exception  4000001    " + e.toString())
                                 Toast.makeText(
                                     applicationContext,
                                     "" + Config.SOME_TECHNICAL_ISSUES,
@@ -414,7 +414,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                 }
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Exception  226666    " + e.toString())
+            Log.e(TAG, "Exception  4000002    " + e.toString())
         }
 
     }
