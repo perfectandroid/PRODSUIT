@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PerSuite</string>
+    <string name="app_name">Persuite</string>
     <string name="title_activity_location_picker">LocationPickerActivity</string>
     <string name="title_activity_account_details">AccountDetailsActivity</string>
     <!-- Strings used for fragments for navigation -->
