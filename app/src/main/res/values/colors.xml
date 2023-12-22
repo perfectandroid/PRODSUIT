@@ -270,7 +270,14 @@
     <color name="service_header">#E4E3E3</color>
 <!--    <color name="service_header">#0f3460</color>-->
 
+    <color name="expense_color">#534FBE</color>
+    <color name="gain_color">#58ADF7</color>
 
+    <color name="expense_color1">#1A1C8A</color>
+    <color name="gain_color1">#C87B08</color>
+
+    <color name="expense_1">#6FB6DA</color>
+    <color name="gain_1">#DAAE63</color>
 
     <color name="alternate_color">#FCF6F7</color>
 <!--    <color name="alternate_color">#f4f4f6</color>-->
