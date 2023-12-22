@@ -3653,8 +3653,17 @@ Log.v("adasdasds","modeTab "+modeTab)
 
             Log.e(TAG,"3316   action_taken_action")
             modEditPosition = position
-            var FK_Category = modelServicesListDetails.get(position).FK_Category
-            var FK_Product = modelServicesListDetails.get(position).FK_Product
+
+            var FK_Category = "0"
+            var FK_Product = "0"
+
+            if (PSValue.equals("1")){
+                FK_Category = modelServicesListDetails.get(position).FK_Category
+                FK_Product = modelServicesListDetails.get(position).FK_Product
+            }else{
+                FK_Category = ID_Category
+                FK_Product = "0"
+            }
             actionTakenActioncouny = 0
             getActionTakenAction(FK_Category!!, FK_Product!!)
         }
