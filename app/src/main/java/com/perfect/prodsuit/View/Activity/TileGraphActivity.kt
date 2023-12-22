@@ -64,6 +64,38 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     var mainHeadingDash: TextView? = null
     var txt_chartlabel: TextView? = null
     var txt_chartremark: TextView? = null
+
+    //all x, y axis
+
+    var emp_xaxis: TextView? = null
+    var emp_yaxis: TextView? = null
+    var ll_emp_XY: LinearLayout? = null
+
+    var top10_xaxis: TextView? = null
+    var top10_yaxis: TextView? = null
+    var ll_top10_XY: LinearLayout? = null
+
+    var leadsource_xaxis: TextView? = null
+    var leadsource_yaxis: TextView? = null
+    var ll_leadSource_XY: LinearLayout? = null
+
+    var toprevenue_xaxis: TextView? = null
+    var toprevenue_yaxis: TextView? = null
+    var ll_toprevenue_XY: LinearLayout? = null
+    var ll_ExpenseGain: LinearLayout? = null
+
+
+    var empAVG_xaxis: TextView? = null
+    var empAVG_yaxis: TextView? = null
+    var ll_empAVG_XY: LinearLayout? = null
+
+    var EmpTarg_xaxis: TextView? = null
+    var EmpTarg_yaxis: TextView? = null
+    var ll_EmpTarg_XY: LinearLayout? = null
+   var ll_ActualTarg: LinearLayout? = null
+
+
+
     var txtv_leadTileCount: TextView? = null
 
     var txt_leadcountscenario: TextView? = null
@@ -91,6 +123,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
     var recycleemployeewiseAvg: FullLenghRecyclertview? = null
     var rclv_toprevenue: FullLenghRecyclertview? = null
+    var recycTopRevenue: FullLenghRecyclertview? = null
     var rclrvw_leadcountscenario: RecyclerView? = null
 
 
@@ -122,6 +155,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
     internal var ll_empwseamt: LinearLayout? = null
     var rclv_empwiseamt: FullLenghRecyclertview? = null
+    var recycEmpWiseTarg: FullLenghRecyclertview? = null
     private lateinit var empwiseamt_barchart: BarChart
 
 
@@ -262,7 +296,9 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     private var scoreListBar = ArrayList<EmployeewiseBarLead>()
     private var top10ListBar = ArrayList<Top10BarLead>()
     private var empwiseAmtBar = ArrayList<EmpwiseAmtBarLead>()
+    private var empwiseAmtBar1 = ArrayList<EmpwiseAmtBarLead1>()
     private var topRevenueBar = ArrayList<TopRevenueBarLead>()
+    private var topRevenueBar1 = ArrayList<TopRevenueBarLead1>()
     lateinit var chartBarArrayList: JSONArray
       lateinit var empwiseArrayList: JSONArray
     private var scoreListPie = ArrayList<ScorePie>()
@@ -565,6 +601,39 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
 
+        emp_xaxis= findViewById<TextView>(R.id.emp_xaxis)
+        emp_yaxis= findViewById<TextView>(R.id.emp_yaxis)
+        ll_emp_XY= findViewById<LinearLayout>(R.id.ll_emp_XY)
+
+
+        top10_xaxis= findViewById<TextView>(R.id.top10_xaxis)
+        top10_yaxis= findViewById<TextView>(R.id.top10_yaxis)
+        ll_top10_XY= findViewById<LinearLayout>(R.id.ll_top10_XY)
+
+        leadsource_xaxis= findViewById<TextView>(R.id.leadsource_xaxis)
+        leadsource_yaxis= findViewById<TextView>(R.id.leadsource_yaxis)
+        ll_leadSource_XY= findViewById<LinearLayout>(R.id.ll_leadSource_XY)
+
+
+        empAVG_xaxis= findViewById<TextView>(R.id.empAVG_xaxis)
+        empAVG_yaxis= findViewById<TextView>(R.id.empAVG_yaxis)
+        ll_empAVG_XY= findViewById<LinearLayout>(R.id.ll_empAVG_XY)
+
+        toprevenue_xaxis= findViewById<TextView>(R.id.toprevenue_xaxis)
+        toprevenue_yaxis= findViewById<TextView>(R.id.toprevenue_yaxis)
+
+        ll_toprevenue_XY= findViewById<LinearLayout>(R.id.ll_toprevenue_XY)
+        ll_ExpenseGain= findViewById<LinearLayout>(R.id.ll_ExpenseGain)
+
+
+        EmpTarg_xaxis= findViewById<TextView>(R.id.EmpTarg_xaxis)
+        EmpTarg_yaxis= findViewById<TextView>(R.id.EmpTarg_yaxis)
+        ll_EmpTarg_XY= findViewById<LinearLayout>(R.id.ll_EmpTarg_XY)
+        ll_ActualTarg= findViewById<LinearLayout>(R.id.ll_ActualTarg)
+
+
+
+
         drawableMore = resources.getDrawable(R.drawable.dash_more, null)
         drawableLess = resources.getDrawable(R.drawable.dash_less, null)
 
@@ -618,6 +687,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         txtv_top10Remrk=findViewById(R.id.txtv_top10Remrk)
 
         rclv_empwiseamt=findViewById(R.id.rclv_empwiseamt)
+        recycEmpWiseTarg=findViewById(R.id.recycEmpWiseTarg)
         ll_empwseamt            = findViewById<LinearLayout>(R.id.ll_empwseamt)
         empwiseamt_barchart = findViewById<BarChart>(R.id.empwiseamt_barchart)
 
@@ -634,6 +704,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
         rclrvw_avgleadconvsn=findViewById(R.id.rclrvw_avgleadconvsn)
         rclv_toprevenue=findViewById(R.id.rclv_toprevenue)
+        recycTopRevenue=findViewById(R.id.recycTopRevenue)
         tvv_dash = findViewById<TextView>(R.id.tvv_dash)
         tvv_tile = findViewById<TextView>(R.id.tvv_tile)
 
@@ -1177,12 +1248,20 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         jobjt.getJSONArray("EmployeeWiseTaegetDetails")
                                     val remark =
                                         jobjt.getString("Reamrk")
+
+                                    val xAxis =
+                                        jobjt.getString("XAxis")
+                                    val yAxis =
+                                        jobjt.getString("YAxis")
                                     txtv_EmpWiseRemark!!.visibility=View.GONE
                                     txt_chartlabel!!.visibility=View.VISIBLE
                                     txt_chartremark!!.visibility=View.VISIBLE
+                                    ll_emp_XY!!.visibility=View.VISIBLE
                                    // txtv_EmpWiseRemark!!.setText(remark)
                                     txt_chartlabel!!.text="EMPLOYEE WISE TARGET LIST"
                                     txt_chartremark!!.text=remark
+                                    emp_xaxis!!.text=xAxis
+                                    emp_yaxis!!.text=yAxis
 
                                   //  tv_leadStageTotal!!.setText(jobjt.getString("TotalCount"))
                                     Log.e(TAG, "array  empwise   " + empwiseArrayList)
@@ -1208,6 +1287,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     {
                                         txt_chartlabel!!.visibility=View.GONE
                                         txt_chartremark!!.visibility=View.GONE
+                                        ll_emp_XY!!.visibility=View.GONE
                                         rclv_barchart!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
@@ -1891,6 +1971,114 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
 
     }
+
+    private fun settoprevenuechartNew()
+    {
+        topRevenueBar1.clear()
+        topRevenueBar1 = getTopRevenueList1()
+
+        top_revenuebarchart.axisLeft.setDrawGridLines(false)
+        val xAxis: XAxis = top_revenuebarchart.xAxis
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(false)
+
+        //remove right y-axis
+        top_revenuebarchart.axisRight.isEnabled = false
+        //remove legend
+        top_revenuebarchart.legend.isEnabled = false
+        top_revenuebarchart!!.setScaleEnabled(true)
+        //remove description label
+        top_revenuebarchart.description.isEnabled = false
+
+
+        //add animation
+        top_revenuebarchart.animateY(1000)
+
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.valueFormatter = MyAxisFormatterBar1()
+        xAxis.setDrawLabels(false)
+        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = +90f
+        xAxis.textSize = 15f
+        xAxis.textColor = Color.BLUE
+        xAxis.setAxisMinimum(-0.5f);
+
+        /////////////////////////////////////
+
+        val entries1: ArrayList<BarEntry> = ArrayList()
+        for (i in topRevenueBar1.indices) {
+            val score = topRevenueBar1[i]
+            entries1.add(BarEntry(i.toFloat(), score.MediaAmount.toFloat()))
+        }
+
+
+        val entries2: ArrayList<BarEntry> = ArrayList()
+        for (i in topRevenueBar1.indices) {
+            val score = topRevenueBar1[i]
+            entries2.add(BarEntry(i.toFloat(), score.LeadAmount.toFloat()))
+        }
+
+        val barDataSet1 = BarDataSet(entries1, "data1")
+        barDataSet1.setColors(resources.getColor(R.color.expense_color))
+        //barDataSet.setValueFormatter(DecimalRemover())
+        barDataSet1.valueFormatter = DefaultValueFormatter(0)
+
+        val barDataSet2 = BarDataSet(entries2, "data2")
+        barDataSet2.setColors(resources.getColor(R.color.gain_color))
+        //barDataSet.setValueFormatter(DecimalRemover())
+        barDataSet2.valueFormatter = DefaultValueFormatter(0)
+
+        Log.e(TAG, "entries 43434  =  " + entries1)
+        Log.e(TAG, "entries 43434  =  " + entries2)
+
+        val baraData=BarData(barDataSet1,barDataSet2)
+        baraData.barWidth=0.1f
+        //      projectDelayedChart.data=baraData
+
+//        val data = BarData(barDataSet1)
+//
+//        data.setValueTextSize(15f)
+//        data.setValueTextColor(Color.BLACK)
+        baraData.setDrawValues(false)
+        top_revenuebarchart.data = baraData
+
+        //   projectDelayedChart.isDragEnabled=true
+        //   projectDelayedChart.setVisibleXRangeMaximum(3.0f)
+
+        var barspace=0.0f
+        var groupspace=0.3f
+        // projectDelayedChart.getAxis().axisMinimum= 0F
+        top_revenuebarchart.groupBars(0F,groupspace,barspace)
+
+//        projectDelayedChart.setFitBars(true);
+//        projectDelayedChart.setVisibleXRangeMaximum(3f);
+
+        top_revenuebarchart.invalidate()
+
+    }
+
+    private fun getTopRevenueList1(): ArrayList<TopRevenueBarLead1> {
+        for (i in 0 until topRevenueArrayList.length())
+        {
+            var jsonObject = topRevenueArrayList.getJSONObject(i)
+            topRevenueBar1.add(TopRevenueBarLead1(jsonObject.getString("MediaName"),jsonObject.getString("MediaAmount"),jsonObject.getString("LeadAmount")))
+        }
+
+        return topRevenueBar1
+    }
+
+    inner class MyAxisFormatterBar1 : IndexAxisValueFormatter() {
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            val index = value.toInt()
+            Log.d("TAG", "getAxisLabel: index $index")
+            return if (index < topRevenueBar1.size) {
+                topRevenueBar1[index].MediaName
+            } else {
+                ""
+            }
+        }
+    }
     private fun settoprevenuechart() {
         topRevenueBar.clear()
         topRevenueBar = getTopRevenueList()
@@ -2061,6 +2249,108 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
 
     }
+
+    private fun setempwiswtargetamtNew()
+    {
+        empwiseAmtBar1.clear()
+        empwiseAmtBar1 = getEmpAmtList1()
+
+        empwiseamt_barchart.axisLeft.setDrawGridLines(false)
+        val xAxis: XAxis = empwiseamt_barchart.xAxis
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(false)
+
+        //remove right y-axis
+        empwiseamt_barchart.axisRight.isEnabled = false
+        //remove legend
+        empwiseamt_barchart.legend.isEnabled = false
+        empwiseamt_barchart!!.setScaleEnabled(true)
+        //remove description label
+        empwiseamt_barchart.description.isEnabled = false
+
+
+        //add animation
+        empwiseamt_barchart.animateY(1000)
+
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.valueFormatter = MyAxisFormatterBar22()
+        xAxis.setDrawLabels(false)
+        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = +90f
+        xAxis.textSize = 15f
+        xAxis.textColor = Color.BLUE
+        xAxis.setAxisMinimum(-0.5f);
+
+
+
+        val entries1: ArrayList<BarEntry> = ArrayList()
+        for (i in empwiseAmtBar1.indices) {
+            val score = empwiseAmtBar1[i]
+            entries1.add(BarEntry(i.toFloat(), score.ActualAmount.toFloat()))
+        }
+
+
+        val entries2: ArrayList<BarEntry> = ArrayList()
+        for (i in empwiseAmtBar1.indices) {
+            val score = empwiseAmtBar1[i]
+            entries2.add(BarEntry(i.toFloat(), score.TargetAmount.toFloat()))
+        }
+
+
+        val barDataSet1 = BarDataSet(entries1, "data1")
+        barDataSet1.setColors(resources.getColor(R.color.expense_color1))
+        //barDataSet.setValueFormatter(DecimalRemover())
+        barDataSet1.valueFormatter = DefaultValueFormatter(0)
+
+        val barDataSet2 = BarDataSet(entries2, "data2")
+        barDataSet2.setColors(resources.getColor(R.color.gain_color1))
+        //barDataSet.setValueFormatter(DecimalRemover())
+        barDataSet2.valueFormatter = DefaultValueFormatter(0)
+
+        Log.e(TAG, "entries 43434  =  " + entries1)
+        Log.e(TAG, "entries 43434  =  " + entries2)
+
+        val baraData=BarData(barDataSet1,barDataSet2)
+        baraData.barWidth=0.2f
+        //      projectDelayedChart.data=baraData
+
+//        val data = BarData(barDataSet1)
+//
+//        data.setValueTextSize(15f)
+//        data.setValueTextColor(Color.BLACK)
+        baraData.setDrawValues(false)
+        empwiseamt_barchart.data = baraData
+
+        //   projectDelayedChart.isDragEnabled=true
+        //   projectDelayedChart.setVisibleXRangeMaximum(3.0f)
+
+        var barspace=0.0f
+        var groupspace=0.3f
+        // projectDelayedChart.getAxis().axisMinimum= 0F
+        empwiseamt_barchart.groupBars(0F,groupspace,barspace)
+
+//        projectDelayedChart.setFitBars(true);
+//        projectDelayedChart.setVisibleXRangeMaximum(3f);
+
+        empwiseamt_barchart.invalidate()
+
+
+
+    }
+
+    inner class MyAxisFormatterBar22 : IndexAxisValueFormatter() {
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            val index = value.toInt()
+            Log.d("TAG", "getAxisLabel: index $index")
+            return if (index < empwiseAmtBar1.size) {
+                empwiseAmtBar1[index].EmpFName
+            } else {
+                ""
+            }
+        }
+    }
+
     private fun setempwiswtargetamt() {
         empwiseAmtBar.clear()
         empwiseAmtBar = getEmpAmtList()
@@ -2239,6 +2529,22 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         }
 
         return scoreListBar
+    }
+
+
+    private fun getEmpAmtList1(): ArrayList<EmpwiseAmtBarLead1> {
+        for (i in 0 until emptargetamtArrayList.length())
+        {
+            var jsonObject = emptargetamtArrayList.getJSONObject(i)
+            empwiseAmtBar1.add(EmpwiseAmtBarLead1(jsonObject.getString("EmpFName"),
+                jsonObject.getString("ActualPercentage"),
+                jsonObject.getString("ActualAmount"),
+                jsonObject.getString("TargetAmount")
+            )
+            )
+        }
+
+        return empwiseAmtBar1
     }
 
     private fun getEmpAmtList(): ArrayList<EmpwiseAmtBarLead> {
@@ -2789,6 +3095,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
                 }
                 else if (ID_ChartMode.equals("9")){
+                    ll_empwiseamtt!!.visibility = View.GONE
                     ll_Piechart!!.visibility=View.GONE
                     ll_barchart!!.visibility=View.GONE
                     ll_top10!!.visibility=View.GONE
@@ -2801,6 +3108,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     getEmpwiseAmountTarget()
                     tvv_lemo_StagWise!!.visibility=View.VISIBLE
                     employeewisetargetamtList=0
+
 
                 }
                 Log.e(TAG,"ID_ChartMode  253332   "+position)
@@ -2838,12 +3146,19 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
                                     val remark =
                                         jobjt.getString("Reamrk")
+                                    val XAxis =
+                                        jobjt.getString("XAxis")
+                                    val YAxis =
+                                        jobjt.getString("YAxis")
                                  //   txtv_top10Remrk!!.setText(remark)
                                     txtv_top10Remrk!!.visibility=View.GONE
                                     txt_chartlabel!!.visibility=View.VISIBLE
                                     txt_chartremark!!.visibility=View.VISIBLE
+                                    ll_top10_XY!!.visibility=View.VISIBLE
                                     txt_chartlabel!!.text="TOP 10 ENQUIRY PRODUCTS IN LEAD"
                                     txt_chartremark!!.text=remark
+                                    top10_xaxis!!.text=XAxis
+                                    top10_yaxis!!.text=YAxis
                                     top10mode=0
                                     hidetop10()
 
@@ -2866,6 +3181,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     {
                                         txt_chartlabel!!.visibility=View.GONE
                                         txt_chartremark!!.visibility=View.GONE
+                                        ll_top10_XY!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
                                             R.style.MyDialogTheme
@@ -2943,39 +3259,57 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         jobjt.getJSONArray("ExpenseVSGainList")
                                     val remark =
                                         jobjt.getString("Reamrk")
+
+
+                                    val XAxis =
+                                        jobjt.getString("XAxis")
+                                    val YAxis =
+                                        jobjt.getString("YAxis")
+
                                     txt_chartlabel!!.visibility=View.VISIBLE
                                     txt_chartremark!!.visibility=View.VISIBLE
+                                    ll_toprevenue_XY!!.visibility=View.VISIBLE
+                                    ll_ExpenseGain!!.visibility=View.VISIBLE
                                     txt_chartlabel!!.text="TOP REVENUE GENERATED CAMPAIGN"
                                     txt_chartremark!!.text=remark
+
+                                    toprevenue_xaxis!!.text=XAxis
+                                    toprevenue_yaxis!!.text=YAxis
+
                                     //  tv_leadStageTotal!!.setText(jobjt.getString("TotalCount"))
                                     Log.e(TAG, "array  top10   " + topRevenueArrayList)
                                     if (topRevenueArrayList.length() > 0){
-                                        settoprevenuechart()
-//                                    val recycPieChart =
-//                                        findViewById(R.id.recycPieChart) as RecyclerView
-                                     /*   val lLayout = GridLayoutManager(this@TileGraphActivity, 2)
-                                        rclv_toprevenue!!.layoutManager =
-                                            lLayout as RecyclerView.LayoutManager?
-                                        val adapter = TopRevenueAdapter(
-                                            this@TileGraphActivity,
-                                            topRevenueArrayList
-                                        )
-                                        rclv_toprevenue!!.adapter = adapter
-*/
 
-                                        val lLayout = GridLayoutManager(this@TileGraphActivity, 2)
-                                        rclv_toprevenue!!.layoutManager =
-                                            lLayout as RecyclerView.LayoutManager?
-                                        val adapter = TopRevenueAdapter(
-                                            this@TileGraphActivity,
-                                            topRevenueArrayList
-                                        )
-                                        rclv_toprevenue!!.adapter = adapter
+                                        settoprevenuechartNew()  //new chart
+ //                                       settoprevenuechart()  //old chart
+
+
+
+
+//                                        val lLayout = GridLayoutManager(this@TileGraphActivity, 2)
+//                                        rclv_toprevenue!!.layoutManager =
+//                                            lLayout as RecyclerView.LayoutManager?
+//                                        val adapter = TopRevenueAdapter(
+//                                            this@TileGraphActivity,
+//                                            topRevenueArrayList
+//                                        )
+//                                        rclv_toprevenue!!.adapter = adapter
+
+
+                                        //............
+
+                                        val lLayout = GridLayoutManager(this@TileGraphActivity, 1)
+                                        recycTopRevenue!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapter = TopRevenueTableAdapter(this@TileGraphActivity, topRevenueArrayList)
+                                        recycTopRevenue!!.adapter = adapter
+                                        //............
                                     }
                                     else
                                     {
                                         txt_chartlabel!!.visibility=View.GONE
                                         txt_chartremark!!.visibility=View.GONE
+                                        ll_toprevenue_XY!!.visibility=View.GONE
+                                        ll_ExpenseGain!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
                                             R.style.MyDialogTheme
@@ -3057,12 +3391,23 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             jObject.getJSONObject("LeadSource")
                                         val remark =
                                             jobjt.getString("Reamrk")
+
+                                        val XAxis =
+                                            jobjt.getString("XAxis")
+                                        val YAxis =
+                                            jobjt.getString("YAxis")
+
                                      //   leadSourseSubText!!.setText(remark)
                                         leadSourseSubText!!.visibility=View.GONE
                                         txt_chartlabel!!.visibility=View.VISIBLE
                                         txt_chartremark!!.visibility=View.VISIBLE
+                                        ll_leadSource_XY!!.visibility=View.VISIBLE
                                         txt_chartlabel!!.text="LEAD SOURCE"
                                         txt_chartremark!!.text=remark
+
+                                        leadsource_xaxis!!.text=XAxis
+                                        leadsource_yaxis!!.text=YAxis
+
                                         leadSourseBarList =
                                             jobjt.getJSONArray("LeadSourceList")
                                         Log.e(TAG, "stockListArrayList==   " + leadSourseBarList)
@@ -3090,6 +3435,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     } else {
                                         txt_chartlabel!!.visibility=View.GONE
                                         txt_chartremark!!.visibility=View.GONE
+                                        ll_leadSource_XY!!.visibility=View.GONE
                                         recycleLeadSourse!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
@@ -3328,14 +3674,23 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             jObject.getJSONObject("EmployeeWiseConversionTime")
                                         val remark =
                                             jobjt.getString("Reamrk")
+
+                                        val XAxis =
+                                            jobjt.getString("XAxis")
+                                        val YAxis =
+                                            jobjt.getString("YAxis")
+
                                         //employeewiseAvgText!!.setText(remark)
                                         employeewiseAvgText!!.visibility=View.GONE
                                         empwise_avgmode=0
                                         hideEmpwiseavgconsn()
                                         txt_chartlabel!!.visibility=View.VISIBLE
                                         txt_chartremark!!.visibility=View.VISIBLE
+                                        ll_empAVG_XY!!.visibility=View.VISIBLE
                                         txt_chartlabel!!.text="EMPLOYEE WISE AVERAGE CONVERSION"
                                         txt_chartremark!!.text=remark
+                                        empAVG_xaxis!!.text=XAxis
+                                        empAVG_yaxis!!.text=YAxis
 
                                         employeewiseAvgBarList =
                                             jobjt.getJSONArray("EmployeeWiseConversionTimeList")
@@ -3355,6 +3710,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             Log.e("exceptionStock344", "" + e.toString())
                                         }
                                     } else {
+                                        ll_empAVG_XY!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
                                             R.style.MyDialogTheme
@@ -3427,12 +3783,22 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
                                         val remark =
                                             jobjt.getString("Reamrk")
+
+                                        val XAxis =
+                                            jobjt.getString("XAxis")
+                                        val YAxis =
+                                            jobjt.getString("YAxis")
+
                                       //  txtv_empamtRemrk!!.setText(remark)
                                         txtv_empamtRemrk!!.visibility=View.GONE
+                                        ll_EmpTarg_XY!!.visibility=View.VISIBLE
+                                        ll_ActualTarg!!.visibility=View.VISIBLE
                                         empwse_amtmode=0
                                         hideempwseamt()
                                         txt_chartlabel!!.text="EMPLOYEE WISE TARGET(IN AMOUNT)"
                                         txt_chartremark!!.text=remark
+                                        EmpTarg_xaxis!!.text=XAxis
+                                        EmpTarg_yaxis!!.text=YAxis
 
                                         emptargetamtArrayList =
                                             jobjt.getJSONArray("EmployeeWiseTaegetDetails")
@@ -3440,14 +3806,24 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                       //  Log.e(TAG, "remark==   " + remark)
                                         try {
                                             if (emptargetamtArrayList.length() > 0) {
-
-                                                setempwiswtargetamt()
+                                                setempwiswtargetamtNew()
+                                           //     setempwiswtargetamt()
                                                // setEmployeeAvgConversionBar(emptargetamtArrayList,remark)
                                              //   setEmployeeAvgConversionBar(emptargetamtArrayList)
-                                                val lLayout = GridLayoutManager(this@TileGraphActivity, 2)
-                                                rclv_empwiseamt!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                                val adapter = EmployeewiseAmountAdapter(this@TileGraphActivity, emptargetamtArrayList)
-                                                rclv_empwiseamt!!.adapter = adapter
+
+
+//                                                val lLayout = GridLayoutManager(this@TileGraphActivity, 2)
+//                                                rclv_empwiseamt!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                                val adapter = EmployeewiseAmountAdapter(this@TileGraphActivity, emptargetamtArrayList)
+//                                                rclv_empwiseamt!!.adapter = adapter
+
+                                                //............
+
+                                                val lLayout = GridLayoutManager(this@TileGraphActivity, 1)
+                                                recycEmpWiseTarg!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                                val adapter = EmpWiseTargTableAdapter(this@TileGraphActivity, emptargetamtArrayList)
+                                                recycEmpWiseTarg!!.adapter = adapter
+                                                //............
 
 
                                             }
@@ -3457,6 +3833,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     } else {
                                         txt_chartlabel!!.visibility=View.GONE
                                         txt_chartremark!!.visibility=View.GONE
+                                        ll_EmpTarg_XY!!.visibility=View.GONE
+                                        ll_ActualTarg!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
                                             R.style.MyDialogTheme

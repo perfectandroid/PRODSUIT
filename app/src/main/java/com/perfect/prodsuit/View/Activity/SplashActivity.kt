@@ -439,7 +439,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
             val txtCancel = dialog1.findViewById(R.id.txtCancel) as TextView
             val txtSubmit = dialog1.findViewById(R.id.txtSubmit) as TextView
 
-            txt_warning.setText("We're excited to bring you the latest version of " + getString(R.string.app_name) + "! In this update, we've worked hard to enhance your experience and introduce some exciting new features")
+            txt_warning.setText("We're excited to bring you the latest version of " + getString(R.string.app_name) + "! In this update, we've worked hard to enhance your experience and introduce some exciting new features.")
 
             txtCancel.setOnClickListener {
                 dialog1.dismiss()

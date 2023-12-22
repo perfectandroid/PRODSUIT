@@ -40,6 +40,35 @@ import java.util.*
 
 class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
+
+    var ServiceTicketAction_xaxis: TextView? = null
+    var ServiceTicketAction_yaxis: TextView? = null
+    var ll_ServiceTicketAction_XY: LinearLayout? = null
+
+    var cmplntwise_xaxis: TextView? = null
+    var cmplntwise_yaxis: TextView? = null
+    var ll_cmplntwise_XY: LinearLayout? = null
+
+    var Tktcmplntwise_xaxis: TextView? = null
+    var Tktcmplntwise_yaxis: TextView? = null
+    var ll_Tktcmplntwise_XY: LinearLayout? = null
+
+    var WarrantyPaid_xaxis: TextView? = null
+    var WarrantyPaid_yaxis: TextView? = null
+    var ll_WarrantyPaid_XY: LinearLayout? = null
+
+    var top10complaint_xaxis: TextView? = null
+    var top10complaint_yaxis: TextView? = null
+    var ll_top10complaint_XY: LinearLayout? = null
+
+    var SLA_xaxis: TextView? = null
+    var SLA_yaxis: TextView? = null
+    var ll_SLA_XY: LinearLayout? = null
+
+    var ChanelWiseService_xaxis: TextView? = null
+    var ChanelWiseService_yaxis: TextView? = null
+    var ll_ChanelWiseService_XY: LinearLayout? = null
+
     val TAG : String = "ServiceGraphActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
@@ -317,6 +346,34 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun setRegViews() {
+
+        ServiceTicketAction_xaxis      = findViewById<TextView>(R.id.ServiceTicketAction_xaxis)
+        ServiceTicketAction_yaxis      = findViewById<TextView>(R.id.ServiceTicketAction_yaxis)
+        ll_ServiceTicketAction_XY      = findViewById<LinearLayout>(R.id.ll_ServiceTicketAction_XY)
+
+        cmplntwise_xaxis      = findViewById<TextView>(R.id.cmplntwise_xaxis)
+        cmplntwise_yaxis      = findViewById<TextView>(R.id.cmplntwise_yaxis)
+        ll_cmplntwise_XY      = findViewById<LinearLayout>(R.id.ll_cmplntwise_XY)
+
+        Tktcmplntwise_xaxis      = findViewById<TextView>(R.id.Tktcmplntwise_xaxis)
+        Tktcmplntwise_yaxis      = findViewById<TextView>(R.id.Tktcmplntwise_yaxis)
+        ll_Tktcmplntwise_XY      = findViewById<LinearLayout>(R.id.ll_Tktcmplntwise_XY)
+
+        WarrantyPaid_xaxis      = findViewById<TextView>(R.id.WarrantyPaid_xaxis)
+        WarrantyPaid_yaxis      = findViewById<TextView>(R.id.WarrantyPaid_yaxis)
+        ll_WarrantyPaid_XY      = findViewById<LinearLayout>(R.id.ll_WarrantyPaid_XY)
+
+        top10complaint_xaxis      = findViewById<TextView>(R.id.top10complaint_xaxis)
+        top10complaint_yaxis      = findViewById<TextView>(R.id.top10complaint_yaxis)
+        ll_top10complaint_XY      = findViewById<LinearLayout>(R.id.ll_top10complaint_XY)
+
+        SLA_xaxis      = findViewById<TextView>(R.id.SLA_xaxis)
+        SLA_yaxis      = findViewById<TextView>(R.id.SLA_yaxis)
+        ll_SLA_XY      = findViewById<LinearLayout>(R.id.ll_SLA_XY)
+
+        ChanelWiseService_xaxis      = findViewById<TextView>(R.id.ChanelWiseService_xaxis)
+        ChanelWiseService_yaxis      = findViewById<TextView>(R.id.ChanelWiseService_yaxis)
+        ll_ChanelWiseService_XY      = findViewById<LinearLayout>(R.id.ll_ChanelWiseService_XY)
 
         txtv_serviceTktTile_one= findViewById<TextView>(R.id.txtv_serviceTktTile_one)
         txtv_ServiceTktFollowUpTile_two= findViewById<TextView>(R.id.txtv_ServiceTktFollowUpTile_two)
@@ -715,12 +772,14 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   1066   "+msg)
                                 if (jObject.getString("StatusCode") == "0") {
-
+                                    ll_Tktcmplntwise_XY!!.visibility = View.VISIBLE
                                     val jobjt = jObject.getJSONObject("CRMservicewise")
                                     serviceWiseArrayList=jobjt.getJSONArray("CRMservicewiseList")
 
                                     Log.e(TAG,"3913 serviceWiseArrayList  "+serviceWiseArrayList)
                                     tv_ServiceRemark!!.setText(jobjt.getString("Reamrk"))
+                                    Tktcmplntwise_xaxis!!.setText(jobjt.getString("XAxis"))
+                                    Tktcmplntwise_yaxis!!.setText(jobjt.getString("YAxis"))
                                     if (serviceWiseArrayList.length() > 0){
                                         ll_ServiceWise!!.visibility = View.VISIBLE
                                         lemoServiceWiseMode = 0
@@ -791,9 +850,13 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                 Log.e(TAG,"msg   16441   "+msg)
                                 if (jObject.getString("StatusCode").equals("0")) {
 
+                                    ll_ServiceTicketAction_XY!!.visibility = View.VISIBLE
+
                                     val jobjt = jObject.getJSONObject("CRMStagewiseDetails")
                                     stageWiseArrayList=jobjt.getJSONArray("CRMStagewiseDetailsList")
                                     tv_StagWiseRemark!!.setText(jobjt.getString("Reamrk"))
+                                    ServiceTicketAction_xaxis!!.setText(jobjt.getString("XAxis"))
+                                    ServiceTicketAction_yaxis!!.setText(jobjt.getString("YAxis"))
                                     Log.e(TAG,"3911 stageWiseArrayList  "+stageWiseArrayList)
 
                                     if (stageWiseArrayList.length() > 0){
@@ -949,10 +1012,12 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   70444   "+msg)
                                 if (jObject.getString("StatusCode").equals("0")) {
-
+                                    ll_WarrantyPaid_XY!!.visibility = View.VISIBLE
                                     val jobjt = jObject.getJSONObject("CRMCountofWarrantyPaidandAMC")
                                     countOfWPAArrayList=jobjt.getJSONArray("CRMCountofWarrantyPaidandAMCList")
                                     tv_ServiceCountOfWPA!!.setText(jobjt.getString("Reamrk"))
+                                    WarrantyPaid_xaxis!!.setText(jobjt.getString("XAxis"))
+                                    WarrantyPaid_yaxis!!.setText(jobjt.getString("YAxis"))
                                     Log.e(TAG,"70444 countOfWPAArrayList  "+countOfWPAArrayList)
 
                                     if (countOfWPAArrayList.length() > 0){
@@ -1022,10 +1087,12 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   1644   "+msg)
                                 if (jObject.getString("StatusCode").equals("0")) {
-
+                                    ll_cmplntwise_XY!!.visibility = View.VISIBLE
                                     val jobjt = jObject.getJSONObject("CRMcomplaintwise")
                                     complaintWiseArrayList=jobjt.getJSONArray("CRMcomplaintwiseList")
                                     tv_ComplaintRemark!!.setText(jobjt.getString("Reamrk"))
+                                    cmplntwise_xaxis!!.setText(jobjt.getString("XAxis"))
+                                    cmplntwise_yaxis!!.setText(jobjt.getString("YAxis"))
                                     Log.e(TAG,"3912 complaintWiseArrayList  "+complaintWiseArrayList)
 
                                     if (complaintWiseArrayList.length() > 0){
@@ -1094,10 +1161,12 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   8488   "+msg)
                                 if (jObject.getString("StatusCode").equals("0")) {
-
+                                    ll_top10complaint_XY!!.visibility = View.VISIBLE
                                     val jobjt = jObject.getJSONObject("CRMTop10Products")
                                     top10ProductArrayList=jobjt.getJSONArray("CRMTop10ProductsList")
                                     tv_ServiceTop10Product!!.setText(jobjt.getString("Reamrk"))
+                                    top10complaint_xaxis!!.setText(jobjt.getString("XAxis"))
+                                    top10complaint_yaxis!!.setText(jobjt.getString("YAxis"))
                                     Log.e(TAG,"8544 top10ProductArrayList  "+top10ProductArrayList)
 
                                     if (top10ProductArrayList.length() > 0){
@@ -1167,10 +1236,12 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   1644231   "+msg)
                                 if (jObject.getString("StatusCode").equals("0")) {
-
+                                    ll_SLA_XY!!.visibility = View.VISIBLE
                                     val jobjt = jObject.getJSONObject("CRMSLAViolationStatus")
                                     slaStatusArrayList=jobjt.getJSONArray("CRMSLAViolationStatusList")
                                     tv_ServiceSlaStatus!!.setText(jobjt.getString("Reamrk"))
+                                    SLA_xaxis!!.setText(jobjt.getString("XAxis"))
+                                    SLA_yaxis!!.setText(jobjt.getString("YAxis"))
                                     Log.e(TAG,"1644232 slaStatusArrayList  "+slaStatusArrayList)
 
                                     if (slaStatusArrayList.length() > 0){
@@ -1241,10 +1312,12 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   100055   "+msg)
                                 if (jObject.getString("StatusCode").equals("0")) {
-
+                                    ll_ChanelWiseService_XY!!.visibility = View.VISIBLE
                                     val jobjt = jObject.getJSONObject("CRMChannelWise")
                                     crmChannelWiseArrayList=jobjt.getJSONArray("CRMChannelWiseList")
                                     tv_ServiceChannelStatus!!.setText(jobjt.getString("Reamrk"))
+                                    ChanelWiseService_xaxis!!.setText(jobjt.getString("XAxis"))
+                                    ChanelWiseService_yaxis!!.setText(jobjt.getString("YAxis"))
                                     Log.e(TAG,"39123 slaStatusArrayList  "+crmChannelWiseArrayList)
 
                                     if (crmChannelWiseArrayList.length() > 0){

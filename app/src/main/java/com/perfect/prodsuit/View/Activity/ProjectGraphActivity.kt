@@ -44,6 +44,29 @@ import java.util.*
 
 class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
+    var stageWiseDue_xaxis: TextView? = null
+    var stageWiseDue_yaxis: TextView? = null
+    var ll_stageWiseDue_XY: LinearLayout? = null
+
+    var top10_xaxis: TextView? = null
+    var top10_yaxis: TextView? = null
+    var ll_top10_XY: LinearLayout? = null
+
+    var projectDelay_xaxis: TextView? = null
+    var projectDelay_yaxis: TextView? = null
+    var ll_ProjectDelay_XY: LinearLayout? = null
+    var ll_ProjectDelayColor: LinearLayout? = null
+
+    var exprense_xaxis: TextView? = null
+    var expense_yaxis: TextView? = null
+    var ll_exprense_XY: LinearLayout? = null
+    var ll_ExpenseColor: LinearLayout? = null
+
+    var costMaterialUsage_xaxis: TextView? = null
+    var costMaterialUsage_yaxis: TextView? = null
+    var ll_costMaterialUsage_XY: LinearLayout? = null
+    var ll_costMaterialUsageColor: LinearLayout? = null
+
     private var tv_nameProjectTle: TextView? = null
     private var tv_remarkProjectTle: TextView? = null
 
@@ -176,6 +199,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
     //totalstagewise
     var totalstagewiseCount                       = 0
     private var totalstagewisedueBar              = ArrayList<TotalStagewiseDueBar>()
+    private var totalstagewisedueBar1              = ArrayList<TotalStagewiseDueBar1>()
     lateinit var totalstagewiseDueBarViewModel    : TotalStagewiseDueBarViewModel
     lateinit var totalstagewiseDueArrayList       : JSONArray
     var recyTotalStagewiseDue                     : RecyclerView?   = null
@@ -218,6 +242,30 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
     }
 
     private fun setRegViews() {
+
+        stageWiseDue_xaxis = findViewById<TextView>(R.id.stageWiseDue_xaxis)
+        stageWiseDue_yaxis = findViewById<TextView>(R.id.stageWiseDue_yaxis)
+        ll_stageWiseDue_XY = findViewById<LinearLayout>(R.id.ll_stageWiseDue_XY)
+
+        top10_xaxis = findViewById<TextView>(R.id.top10_xaxis)
+        top10_yaxis = findViewById<TextView>(R.id.top10_yaxis)
+        ll_top10_XY = findViewById<LinearLayout>(R.id.ll_top10_XY)
+
+        projectDelay_xaxis = findViewById<TextView>(R.id.projectDelay_xaxis)
+        projectDelay_yaxis = findViewById<TextView>(R.id.projectDelay_yaxis)
+        ll_ProjectDelay_XY = findViewById<LinearLayout>(R.id.ll_ProjectDelay_XY)
+        ll_ProjectDelayColor = findViewById<LinearLayout>(R.id.ll_ProjectDelayColor)
+
+
+        exprense_xaxis = findViewById<TextView>(R.id.exprense_xaxis)
+        expense_yaxis = findViewById<TextView>(R.id.expense_yaxis)
+        ll_exprense_XY = findViewById<LinearLayout>(R.id.ll_exprense_XY)
+        ll_ExpenseColor = findViewById<LinearLayout>(R.id.ll_ExpenseColor)
+
+        costMaterialUsage_xaxis = findViewById<TextView>(R.id.costMaterialUsage_xaxis)
+        costMaterialUsage_yaxis = findViewById<TextView>(R.id.costMaterialUsage_yaxis)
+        ll_costMaterialUsage_XY = findViewById<LinearLayout>(R.id.ll_costMaterialUsage_XY)
+        ll_costMaterialUsageColor = findViewById<LinearLayout>(R.id.ll_costMaterialUsageColor)
 
         drawableMore = resources.getDrawable(R.drawable.dash_more, null)
         drawableLess = resources.getDrawable(R.drawable.dash_less, null)
@@ -326,7 +374,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                getChartModeData()
            //     getTop10Project()
 //                getProjectDelayed()
-            //    getExpenseAnalysis()
+          //      getExpenseAnalysis()
            //     getUpcomingStageDueDates()
          //      getCostMaterialUsageAllocatedUsed()
            //     getTotalStagewiseDue()
@@ -621,12 +669,15 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                     Log.e(TAG, "msg   project bill   " + msg)
                                     if (jObject.getString("StatusCode") == "0")
                                     {
+                                        ll_top10_XY!!.visibility = View.VISIBLE
 
                                         val jobjt = jObject.getJSONObject("Top10Projects")
                                         var remark =   jobjt.getString("Reamrk")
                                         Top10ProjectArrayList=jobjt.getJSONArray("Top10ProjectsList")
 
                                         tv_topten_Remark!!.setText(jobjt.getString("Reamrk"))
+                                        top10_xaxis!!.setText(jobjt.getString("XAxis"))
+                                        top10_yaxis!!.setText(jobjt.getString("YAxis"))
                                     //    Log.e(TAG, "Top10ProjectArrayList 43434  =  "+Top10ProjectArrayList)
 
                                         if (Top10ProjectArrayList.length() > 0) {
@@ -782,7 +833,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   projectDelayed   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
-
+                                        ll_ExpenseColor!!.visibility = View.VISIBLE
+                                        ll_exprense_XY!!.visibility = View.VISIBLE
                                         val jobjt =
                                             jObject.getJSONObject("ProjectExpenseAnalysis")
                                         var remark =   jobjt.getString("Reamrk")
@@ -790,6 +842,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                         ExpenseAnalysisArrayList=jobjt.getJSONArray("ProjectExpenseAnalysisList")
 
                                         tvv_remark_expense!!.setText(jobjt.getString("Reamrk"))
+                                        exprense_xaxis!!.setText(jobjt.getString("XAxis"))
+                                        expense_yaxis!!.setText(jobjt.getString("YAxis"))
 
 
                                         if (ExpenseAnalysisArrayList.length() > 0) {
@@ -900,12 +954,12 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         }
 
         val barDataSet1 = BarDataSet(entries1, "data1")
-        barDataSet1.setColors(Color.BLUE)
+        barDataSet1.setColors(resources.getColor(R.color.expense_1))
         //barDataSet.setValueFormatter(DecimalRemover())
         barDataSet1.valueFormatter = DefaultValueFormatter(0)
 
         val barDataSet2 = BarDataSet(entries2, "data2")
-        barDataSet2.setColors(Color.RED)
+        barDataSet2.setColors(resources.getColor(R.color.gain_1))
         //barDataSet.setValueFormatter(DecimalRemover())
         barDataSet2.valueFormatter = DefaultValueFormatter(0)
 
@@ -1070,7 +1124,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   CostMaterialUsage   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
-
+                                        ll_costMaterialUsageColor!!.visibility = View.VISIBLE
+                                        ll_costMaterialUsage_XY!!.visibility = View.VISIBLE
                                         val jobjt =
                                             jObject.getJSONObject("CostofMaterialUsageAllocatedandUsed")
                                         var remark =   jobjt.getString("Reamrk")
@@ -1078,6 +1133,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                         CostMaterialUsageArrayList=jobjt.getJSONArray("PCostofMaterialUsageAllocatedandUsedList")
 
                                         tvv_remark_costMaterial!!.setText(jobjt.getString("Reamrk"))
+                                        costMaterialUsage_xaxis!!.setText(jobjt.getString("XAxis"))
+                                        costMaterialUsage_yaxis!!.setText(jobjt.getString("YAxis"))
                                         if (CostMaterialUsageArrayList.length() > 0) {
                                             Log.e(TAG, "CostMaterialUsage 43434  =  "+CostMaterialUsageArrayList)
                                             ll_CostMaterialUsageAllocate!!.visibility = View.VISIBLE
@@ -1182,12 +1239,12 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         }
 
         val barDataSet1 = BarDataSet(entries1, "data1")
-        barDataSet1.setColors(Color.BLUE)
+        barDataSet1.setColors(resources.getColor(R.color.expense_color1))
         //barDataSet.setValueFormatter(DecimalRemover())
         barDataSet1.valueFormatter = DefaultValueFormatter(0)
 
         val barDataSet2 = BarDataSet(entries2, "data2")
-        barDataSet2.setColors(Color.RED)
+        barDataSet2.setColors(resources.getColor(R.color.gain_color1))
         //barDataSet.setValueFormatter(DecimalRemover())
         barDataSet2.valueFormatter = DefaultValueFormatter(0)
 
@@ -1275,6 +1332,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                     Log.e(TAG, "msg   CostMaterialUsage   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
+                                        ll_stageWiseDue_XY!!.visibility = View.VISIBLE
                                         val jobjt =
                                             jObject.getJSONObject("TotalStagewiseDue")
                                         var remark =   jobjt.getString("Reamrk")
@@ -1282,17 +1340,30 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                         totalstagewiseDueArrayList=jobjt.getJSONArray("TotalStagewiseDueList")
 
                                         tv_remark_TotalStageWiseDue!!.setText(jobjt.getString("Reamrk"))
+                                        stageWiseDue_xaxis!!.setText(jobjt.getString("XAxis"))
+                                        stageWiseDue_yaxis!!.setText(jobjt.getString("YAxis"))
                                         if (totalstagewiseDueArrayList.length() > 0) {
                                             ll_TotalStagewiseDue!!.visibility = View.VISIBLE
                                             Log.e(TAG, "CostMaterialUsage 43434  =  "+totalstagewiseDueArrayList)
 
                                             hideTotalStageWiseDueMore()
-                                            setTotalStagewiseDueBarchart()  //...........barchart here
+                                         //   setTotalStagewiseDueBarchart()  //...........barchart here
+                                            setTotalStagewiseDueBarchartNew()
 
-                                            val lLayout = GridLayoutManager(this@ProjectGraphActivity, 1)
+
+//                                            val lLayout = GridLayoutManager(this@ProjectGraphActivity, 1)
+//                                            recyTotalStagewiseDue!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                                            val adapter = TotalStagewiseDueAdapter(this@ProjectGraphActivity, totalstagewiseDueArrayList)
+//                                            recyTotalStagewiseDue!!.adapter = adapter
+
+                                            //....
+
+                                            val lLayout = GridLayoutManager(this@ProjectGraphActivity, 2)
                                             recyTotalStagewiseDue!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            val adapter = TotalStagewiseDueAdapter(this@ProjectGraphActivity, totalstagewiseDueArrayList)
+                                            val adapter = TotalStageWiseDueAdapterNew(this@ProjectGraphActivity, totalstagewiseDueArrayList)
                                             recyTotalStagewiseDue!!.adapter = adapter
+
+                                            //...
 
                                         }
 
@@ -1336,6 +1407,98 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                     .show()
             }
         }
+    }
+
+    private fun setTotalStagewiseDueBarchartNew()
+    {
+        totalstagewisedueBar1.clear()
+        totalstagewisedueBar1 = getTotalStagewiseDueBarList1()
+
+        //...................
+        TotalStagewiseDueChart.axisLeft.setDrawGridLines(false)
+        val xAxis: XAxis = TotalStagewiseDueChart.xAxis
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(false)
+
+        //remove right y-axis
+        TotalStagewiseDueChart.axisRight.isEnabled = false
+        //remove legend
+        TotalStagewiseDueChart.legend.isEnabled = false
+        TotalStagewiseDueChart!!.setScaleEnabled(true)
+        //remove description label
+        TotalStagewiseDueChart.description.isEnabled = false
+
+
+        //add animation
+        TotalStagewiseDueChart.animateY(1000)
+
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.valueFormatter = MyAxisFormatterBar10()
+        xAxis.setDrawLabels(true)
+        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = +90f
+        xAxis.textSize = 15f
+        xAxis.textColor = Color.BLUE
+        //.................
+
+
+//colors
+        val colors: ArrayList<Int> = ArrayList()
+        colors.add(resources.getColor(R.color.barchart_colors1))
+        colors.add(resources.getColor(R.color.barchart_colors2))
+        colors.add(resources.getColor(R.color.barchart_colors3))
+
+        colors.add(resources.getColor(R.color.barchart_colors4))
+        colors.add(resources.getColor(R.color.barchart_colors5))
+        colors.add(resources.getColor(R.color.barchart_colors6))
+
+        colors.add(resources.getColor(R.color.barchart_colors7))
+        colors.add(resources.getColor(R.color.barchart_colors8))
+        colors.add(resources.getColor(R.color.barchart_colors9))
+
+        colors.add(resources.getColor(R.color.barchart_colors10))
+        colors.add(resources.getColor(R.color.barchart_colors11))
+        colors.add(resources.getColor(R.color.barchart_colors12))
+
+        colors.add(resources.getColor(R.color.barchart_colors13))
+        colors.add(resources.getColor(R.color.barchart_colors14))
+        colors.add(resources.getColor(R.color.barchart_colors15))
+
+        colors.add(resources.getColor(R.color.barchart_colors16))
+        colors.add(resources.getColor(R.color.barchart_colors17))
+        colors.add(resources.getColor(R.color.barchart_colors18))
+
+        colors.add(resources.getColor(R.color.barchart_colors19))
+        colors.add(resources.getColor(R.color.barchart_colors20))
+        colors.add(resources.getColor(R.color.barchart_colors21))
+
+        colors.add(resources.getColor(R.color.barchart_colors22))
+        colors.add(resources.getColor(R.color.barchart_colors23))
+        colors.add(resources.getColor(R.color.barchart_colors24))
+
+        val entries: ArrayList<BarEntry> = ArrayList()
+        for (i in totalstagewisedueBar1.indices) {
+            val score = totalstagewisedueBar1[i]
+            entries.add(BarEntry(i.toFloat(), score.TotalCount.toFloat()))
+        }
+
+        val barDataSet = BarDataSet(entries, "Month")
+        // barDataSet.setColors(*ColorTemplate.COLORFUL_COLORS)
+        barDataSet.setColors(colors)
+        //barDataSet.setValueFormatter(DecimalRemover())
+        barDataSet.valueFormatter = DefaultValueFormatter(0)
+
+        val data = BarData(barDataSet)
+        data.setValueTextSize(15f)
+        data.setValueTextColor(Color.BLACK)
+        data.setDrawValues(false)
+        TotalStagewiseDueChart.data = data
+
+
+        TotalStagewiseDueChart.invalidate()
+
+
+
     }
 
     private fun setTotalStagewiseDueBarchart() {
@@ -1439,6 +1602,19 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         }
     }
 
+    private fun getTotalStagewiseDueBarList1(): ArrayList<TotalStagewiseDueBar1> {
+        for (i in 0 until totalstagewiseDueArrayList.length())
+        {
+            var jsonObject = totalstagewiseDueArrayList.getJSONObject(i)
+
+            //  saleGraphListBar.add(MonthlySaleBar(jsonObject.getString("Month").toString(),jsonObject.getString("Amount").toInt()))
+            totalstagewisedueBar1.add(TotalStagewiseDueBar1("",jsonObject.getString("TotalCount")))
+        }
+
+        return totalstagewisedueBar1
+
+    }
+
     private fun getTotalStagewiseDueBarList(): ArrayList<TotalStagewiseDueBar> {
         for (i in 0 until totalstagewiseDueArrayList.length())
         {
@@ -1480,13 +1656,16 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   projectDelayed   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
-
+                                        ll_ProjectDelay_XY!!.visibility = View.VISIBLE
+                                        ll_ProjectDelayColor!!.visibility = View.VISIBLE
                                         val jobjt =
                                             jObject.getJSONObject("ProjectDelayedStatus")
                                         var remark =   jobjt.getString("Reamrk")
 
                                         projectDelayArrayList=jobjt.getJSONArray("ProjectDelayedStatusList")
                                         tv_projectDelayedRemark!!.setText(jobjt.getString("Reamrk"))
+                                        projectDelay_xaxis!!.setText(jobjt.getString("XAxis"))
+                                        projectDelay_yaxis!!.setText(jobjt.getString("YAxis"))
 
 
                                         if (projectDelayArrayList.length() > 0) {
@@ -1599,12 +1778,12 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         }
 
         val barDataSet1 = BarDataSet(entries1, "data1")
-        barDataSet1.setColors(Color.BLUE)
+        barDataSet1.setColors(resources.getColor(R.color.expense_color1))
         //barDataSet.setValueFormatter(DecimalRemover())
         barDataSet1.valueFormatter = DefaultValueFormatter(0)
 
         val barDataSet2 = BarDataSet(entries2, "data2")
-        barDataSet2.setColors(Color.RED)
+        barDataSet2.setColors(resources.getColor(R.color.gain_color1))
         //barDataSet.setValueFormatter(DecimalRemover())
         barDataSet2.valueFormatter = DefaultValueFormatter(0)
 
@@ -1700,6 +1879,19 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
 
 
+    }
+
+    inner class MyAxisFormatterBar10 : IndexAxisValueFormatter() {
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            val index = value.toInt()
+            Log.d("TAG", "getAxisLabel: index $index")
+            return if (index < totalstagewisedueBar1.size) {
+                totalstagewisedueBar1[index].Stages
+            } else {
+                ""
+            }
+        }
     }
 
     inner class MyAxisFormatterBar : IndexAxisValueFormatter() {
