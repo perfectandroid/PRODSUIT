@@ -41,15 +41,15 @@ class Upcoming_Due_Date_Adapter (internal var context: Context, internal var jso
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
 
-//                if (position % 1 == 0){
-//                    holder.ll_main.setBackgroundResource(color[0])
-//                }
-//                if (position % 2 == 0){
-//                    holder.ll_main.setBackgroundResource(color[1])
-//                }
-//                if (position % 3 == 0){
-//                    holder.ll_main.setBackgroundResource(color[2])
-//                }
+                if (position % 1 == 0){
+                    holder.ll_main.setBackgroundResource(color[0])
+                }
+                if (position % 2 == 0){
+                    holder.ll_main.setBackgroundResource(color[1])
+                }
+                if (position % 3 == 0){
+                    holder.ll_main.setBackgroundResource(color[2])
+                }
 
                 Log.e(TAG,"onBindViewHolder   1051   "+jsonObject)
                 holder.tvv_slnmbr.text        = pos.toString()

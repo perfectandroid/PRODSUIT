@@ -39,7 +39,30 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
+    var purchase_xaxis: TextView? = null
+    var purchase_yaxis: TextView? = null
+    var ll_purchase_XY: LinearLayout? = null
 
+    var top10supplier_xaxis: TextView? = null
+    var top10supplier_yaxis: TextView? = null
+    var ll_top10supplier_XY: LinearLayout? = null
+
+
+    var salesComparison_xaxis: TextView? = null
+    var salesComparison_yaxis: TextView? = null
+    var ll_salesComparison_XY: LinearLayout? = null
+
+    var stoklist_xaxis: TextView? = null
+    var stoklist_yaxis: TextView? = null
+    var ll_stoklist_XY: LinearLayout? = null
+
+    var monthlysale_xaxis: TextView? = null
+    var monthlysale_yaxis: TextView? = null
+    var ll_monthlysale_XY: LinearLayout? = null
+
+    var topSelling_xaxis: TextView? = null
+    var topSelling_yaxis: TextView? = null
+    var ll_topSelling_XY: LinearLayout? = null
 
     private var tv_tileName: TextView? = null
     private var tv_remarkStockTle: TextView? = null
@@ -259,6 +282,32 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun setRegViews() {
+
+        top10supplier_xaxis = findViewById<TextView>(R.id.top10supplier_xaxis)
+        top10supplier_yaxis = findViewById<TextView>(R.id.top10supplier_yaxis)
+        ll_top10supplier_XY = findViewById<LinearLayout>(R.id.ll_top10supplier_XY)
+
+
+        purchase_xaxis = findViewById<TextView>(R.id.purchase_xaxis)
+        purchase_yaxis = findViewById<TextView>(R.id.purchase_yaxis)
+        ll_purchase_XY = findViewById<LinearLayout>(R.id.ll_purchase_XY)
+
+        stoklist_xaxis = findViewById<TextView>(R.id.stoklist_xaxis)
+        stoklist_yaxis = findViewById<TextView>(R.id.stoklist_yaxis)
+        ll_stoklist_XY = findViewById<LinearLayout>(R.id.ll_stoklist_XY)
+
+        salesComparison_xaxis = findViewById<TextView>(R.id.salesComparison_xaxis)
+        salesComparison_yaxis = findViewById<TextView>(R.id.salesComparison_yaxis)
+        ll_salesComparison_XY = findViewById<LinearLayout>(R.id.ll_salesComparison_XY)
+
+        topSelling_xaxis = findViewById<TextView>(R.id.topSelling_xaxis)
+        topSelling_yaxis = findViewById<TextView>(R.id.topSelling_yaxis)
+        ll_topSelling_XY = findViewById<LinearLayout>(R.id.ll_topSelling_XY)
+
+        monthlysale_xaxis = findViewById<TextView>(R.id.monthlysale_xaxis)
+        monthlysale_yaxis = findViewById<TextView>(R.id.monthlysale_yaxis)
+        ll_monthlysale_XY = findViewById<LinearLayout>(R.id.ll_monthlysale_XY)
+
         tv_tileName             = findViewById(R.id.tv_tileName)
         tv_remarkStockTle             = findViewById(R.id.tv_remarkStockTle)
 
@@ -434,7 +483,12 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                             ll_topSupplier!!.visibility      = View.GONE
 
+                                            ll_monthlyRecy!!.visibility = View.GONE
+
+                                            monthlyMode == 0
+
                                             if (ID_ChartMode.equals("23")){
+                                                ll_monthlyRecy!!.visibility = View.GONE
                                                 tvv_head_monthly!!.setText(jsonObject.getString("DashBoardName"))
 //                                                ll_monthlygraph!!.visibility = View.VISIBLE
                                                 inventorysale   = 0
@@ -443,14 +497,14 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                             }
                                             else if (ID_ChartMode.equals("24")){
                                                 tvv_head_topselling!!.setText(jsonObject.getString("DashBoardName"))
-                                            //    ll_topsellingItem!!.visibility = View.VISIBLE
+                                                //    ll_topsellingItem!!.visibility = View.VISIBLE
                                                 topsellingCount = 0
                                                 getTopSellingData()
 
                                             }
                                             else if (ID_ChartMode.equals("25")){
                                                 tvv_head_comparison!!.setText(jsonObject.getString("DashBoardName"))
-                                              //  ll_comparison!!.visibility = View.VISIBLE
+                                                //  ll_comparison!!.visibility = View.VISIBLE
                                                 comparisonList = 0
                                                 getSalesComparisonList()
                                             }
@@ -462,20 +516,20 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                             }
 
                                             else if (ID_ChartMode.equals("27")){
-                                            //    ll_product_reorder!!.visibility = View.VISIBLE
+                                                //    ll_product_reorder!!.visibility = View.VISIBLE
                                                 tvv_head_reorder!!.setText(jsonObject.getString("DashBoardName"))
                                                 ProductReorderLevelCount = 0
                                                 getProductReorderLevel()
                                             }
                                             else if (ID_ChartMode.equals("28")){
-                                             //   ll_SupplierWisePurchase!!.visibility = View.VISIBLE
+                                                //   ll_SupplierWisePurchase!!.visibility = View.VISIBLE
                                                 tvv_head_supPurchase!!.setText(jsonObject.getString("DashBoardName"))
                                                 supplierwisePurchaseCount = 0
                                                 getSupplierWisePurchase()
 
                                             }
                                             else if (ID_ChartMode.equals("29")){
-                                              //  ll_topSupplier!!.visibility = View.VISIBLE
+                                                //  ll_topSupplier!!.visibility = View.VISIBLE
                                                 tvv_head_supplier!!.setText(jsonObject.getString("DashBoardName"))
                                                 topSupplierCount=0
                                                 getTopSupplierData()
@@ -546,13 +600,13 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
             Log.e(TAG, "85456214   " + modeType)
 
 
-         //   val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, modeType)
+            //   val adapter = ArrayAdapter(context, R.layout.simple_spinner_dropdown_item, modeType)
             val adapter = CustomAdapter(this, R.layout.custom_dropdown_item, modeType)
             actv_mode!!.setAdapter(adapter)
             actv_mode!!.showDropDown()
 
             actv_mode!!.setOnItemClickListener { parent, view, position, id ->
-            //    ID_ChartMode = modeTypeID[position]
+                //    ID_ChartMode = modeTypeID[position]
 
                 ID_ChartMode = modeTypeID[position]
                 DashMode = modeDashMode[position]
@@ -569,67 +623,74 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                 ll_topSupplier!!.visibility      = View.GONE
 
-
+                ll_monthlyRecy!!.visibility = View.GONE
+                monthlyMode = 0
+                topSellingMode = 0
+                stockListMode = 0
+                supPurchaseMode = 0
+                supplierMode = 0
+//............1
                 if (ID_ChartMode.equals("23")){
 
                     tvv_head_monthly!!.setText(modeType[position])
-                 //   ll_monthlygraph!!.visibility = View.VISIBLE
+                    ll_monthlyRecy!!.visibility = View.GONE
+                    //   ll_monthlygraph!!.visibility = View.VISIBLE
                     inventorysale   = 0
                     getInventorySale()
                 }
-                else if (ID_ChartMode.equals("24")){
+                else if (ID_ChartMode.equals("24")){  //............2
 //                    ll_stock!!.visibility = View.VISIBLE
 //                    stockList = 0
 //                    getStckListCategory()
                     tvv_head_topselling!!.setText(modeType[position])
-                //    ll_topsellingItem!!.visibility = View.VISIBLE
+                    //    ll_topsellingItem!!.visibility = View.VISIBLE
                     topsellingCount = 0
                     getTopSellingData()
 
                 }
-                else if (ID_ChartMode.equals("25")){
+                else if (ID_ChartMode.equals("25")){//............3
 //                    ll_comparison!!.visibility = View.VISIBLE
 //                    comparisonList = 0
 //                    getSalesComparisonList()
                     tvv_head_comparison!!.setText(modeType[position])
-                  //  ll_comparison!!.visibility = View.VISIBLE
+                    //  ll_comparison!!.visibility = View.VISIBLE
                     comparisonList = 0
                     getSalesComparisonList()
 
 
 
 
-                }else if (ID_ChartMode.equals("26")){
+                }else if (ID_ChartMode.equals("26")){//............4
 //                    ll_SupplierWisePurchase!!.visibility = View.VISIBLE
 //                    supplierwisePurchaseCount = 0
 //                    getSupplierWisePurchase()
 
-                //    ll_stock!!.visibility = View.VISIBLE
+                    //    ll_stock!!.visibility = View.VISIBLE
                     tvv_head_stock!!.setText(modeType[position])
                     stockList = 0
                     getStckListCategory()
 
-                }else if (ID_ChartMode.equals("27")){
+                }else if (ID_ChartMode.equals("27")){//............5
 //                    ll_product_reorder!!.visibility = View.VISIBLE
 //                    ProductReorderLevelCount = 0
 //                    getProductReorderLevel()
 
-                //    ll_product_reorder!!.visibility = View.VISIBLE
+                    //    ll_product_reorder!!.visibility = View.VISIBLE
                     tvv_head_reorder!!.setText(modeType[position])
                     ProductReorderLevelCount = 0
                     getProductReorderLevel()
 
                 }
 
-                else if (ID_ChartMode.equals("28")){
+                else if (ID_ChartMode.equals("28")){//............6
 
-                //    ll_SupplierWisePurchase!!.visibility = View.VISIBLE
+                    //    ll_SupplierWisePurchase!!.visibility = View.VISIBLE
                     tvv_head_supPurchase!!.setText(modeType[position])
                     supplierwisePurchaseCount = 0
                     getSupplierWisePurchase()
 
                 }
-                else if (ID_ChartMode.equals("29")){
+                else if (ID_ChartMode.equals("29")){//............7
 
                     tvv_head_supplier!!.setText(modeType[position])
 
@@ -665,11 +726,15 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     val jObject = JSONObject(msg)
                                     //    Log.e(TAG, "msg   InventoryGraph   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
+
+                                        ll_top10supplier_XY!!.visibility = View.VISIBLE
                                         Log.e(TAG, "success and inside   ")
                                         val jobjt = jObject.getJSONObject("InventoryTopSupplierList")
                                         topSupplierItemArrayList=jobjt.getJSONArray("InventoryTopSupplierListDetails")
                                         Log.e(TAG, "ArrayList 656656==   "+topSupplierItemArrayList)
                                         tv_supplierRemark!!.setText(jobjt.getString("Reamrk"))
+                                        top10supplier_xaxis!!.setText(jobjt.getString("XAxis"))
+                                        top10supplier_yaxis!!.setText(jobjt.getString("YAxis"))
 
                                         try {
                                             if (topSupplierItemArrayList.length() > 0)
@@ -677,7 +742,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                             {
                                                 ll_topSupplier!!.visibility = View.VISIBLE
                                                 hideSupplierMore()
-                                               setTopSupplierBarchart()
+                                                setTopSupplierBarchart()
 
                                                 val lLayout = GridLayoutManager(this@InventoryGraphActivity, 2)
                                                 recyColors_topSupplier!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -755,34 +820,39 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     val jObject = JSONObject(msg)
                                     //    Log.e(TAG, "msg   InventoryGraph   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
+
+                                        ll_topSelling_XY!!.visibility = View.VISIBLE
+
                                         Log.e(TAG, "success and inside   ")
                                         val jobjt = jObject.getJSONObject("InventoryTopSellingItem")
                                         topSellingItemArrayList=jobjt.getJSONArray("InventoryTopSellingItemList")
-                                            Log.e(TAG, "ArrayList 656656==   "+topSellingItemArrayList)
-                                     //   tv_remarkTopselling!!.setText(jobjt.getString("Reamrk"))
+                                        Log.e(TAG, "ArrayList 656656==   "+topSellingItemArrayList)
+                                        //   tv_remarkTopselling!!.setText(jobjt.getString("Reamrk"))
 
                                         tv_remarkTopselling!!.setText(jobjt.getString("Reamrk"))
+                                        topSelling_xaxis!!.setText(jobjt.getString("XAxis"))
+                                        topSelling_yaxis!!.setText(jobjt.getString("YAxis"))
 
-                                            try {
-                                                if (topSellingItemArrayList.length() > 0)
+                                        try {
+                                            if (topSellingItemArrayList.length() > 0)
 
-                                                {
-                                                    ll_topsellingItem!!.visibility = View.VISIBLE
-
-                                                    hideTopSellingGraph()
-                                                    setTopSellingBarchart()
-
-                                                    val lLayout = GridLayoutManager(this@InventoryGraphActivity, 2)
-                                                    recyColors_topselling!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                                    val adapter = TopSellingChartAdapter(this@InventoryGraphActivity, topSellingItemArrayList)
-                                                    recyColors_topselling!!.adapter = adapter
-
-                                                }
-                                            }
-                                            catch (e:Exception)
                                             {
-                                                Log.e(TAG,"exception 84488="+e)
+                                                ll_topsellingItem!!.visibility = View.VISIBLE
+
+                                                hideTopSellingGraph()
+                                                setTopSellingBarchart()
+
+                                                val lLayout = GridLayoutManager(this@InventoryGraphActivity, 2)
+                                                recyColors_topselling!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                                val adapter = TopSellingChartAdapter(this@InventoryGraphActivity, topSellingItemArrayList)
+                                                recyColors_topselling!!.adapter = adapter
+
                                             }
+                                        }
+                                        catch (e:Exception)
+                                        {
+                                            Log.e(TAG,"exception 84488="+e)
+                                        }
 
                                     } else {
                                         val builder = AlertDialog.Builder(
@@ -1214,14 +1284,19 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                 if (inventorysale == 0){
                                     inventorysale++
                                     val jObject = JSONObject(msg)
-                                //    Log.e(TAG, "msg   InventoryGraph   " + msg)
+                                    //    Log.e(TAG, "msg   InventoryGraph   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
+
+                                        ll_monthlysale_XY!!.visibility = View.VISIBLE
+                                        ll_monthlyRecy!!.visibility = View.GONE
                                         Log.e(TAG, "success and inside   ")
                                         val jobjt = jObject.getJSONObject("InventoryMonthlySaleGraph")
                                         inventoryMonthlySaleArrayList=jobjt.getJSONArray("InventoryMonthlySaleGraphList")
-                                    //    Log.e(TAG, "ArrayList==   "+inventoryMonthlySaleArrayList)
+                                        //    Log.e(TAG, "ArrayList==   "+inventoryMonthlySaleArrayList)
 
                                         tv_remarkMonthly!!.setText(jobjt.getString("Reamrk"))
+                                        monthlysale_xaxis!!.setText(jobjt.getString("XAxis"))
+                                        monthlysale_yaxis!!.setText(jobjt.getString("YAxis"))
                                         if (inventoryMonthlySaleArrayList.length() > 0) {
 
 
@@ -1231,9 +1306,10 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                                 inventorySaleSortArrayList.put(jsonObject)
                                             }
 
-
+                                            monthlyMode = 0
                                             Log.e(TAG, "inventorySaleSortArrayList==   "+inventorySaleSortArrayList)
                                             ll_monthlygraph!!.visibility = View.VISIBLE
+
                                             hideMonthlyGraph()
                                             setMonthlyBarchart()    //setBarChart
 
@@ -1298,7 +1374,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                Log.e(TAG, "msg stock==   "+msg)
+                        Log.e(TAG, "msg stock==   "+msg)
                         try {
                             if (msg!!.length > 0) {
 
@@ -1307,35 +1383,39 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     val jObject = JSONObject(msg)
                                     //    Log.e(TAG, "msg   InventoryGraph   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
+
+                                        ll_stoklist_XY!!.visibility = View.VISIBLE
                                         Log.e(TAG, "success and inside   ")
                                         val jobjt = jObject.getJSONObject("InventoryStockListCategory")
                                         stockListArrayList=jobjt.getJSONArray("InventoryStockListCategoryDetails")
-                                            Log.e(TAG, "stockListArrayList==   "+stockListArrayList)
+                                        Log.e(TAG, "stockListArrayList==   "+stockListArrayList)
 
                                         tv_remark_stock!!.setText(jobjt.getString("Reamrk"))
+                                        stoklist_xaxis!!.setText(jobjt.getString("XAxis"))
+                                        stoklist_yaxis!!.setText(jobjt.getString("YAxis"))
                                         try {
 
 
-                                        if (stockListArrayList.length() > 0) {
+                                            if (stockListArrayList.length() > 0) {
 
-                                            stockListSortArrayList = JSONArray()
-                                            for (k in 0 until stockListArrayList.length()) {
-                                                val jsonObject = stockListArrayList.getJSONObject(k)
-                                                stockListSortArrayList.put(jsonObject)
+                                                stockListSortArrayList = JSONArray()
+                                                for (k in 0 until stockListArrayList.length()) {
+                                                    val jsonObject = stockListArrayList.getJSONObject(k)
+                                                    stockListSortArrayList.put(jsonObject)
+                                                }
+
+                                                ll_stock!!.visibility = View.VISIBLE
+                                                hideStockListMore()
+
+                                                setStockListBarchart()
+
+                                                val lLayout = GridLayoutManager(this@InventoryGraphActivity, 2)
+                                                recyColorsStockList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                                val adapter = StockValueBarChartAdapter(this@InventoryGraphActivity, stockListSortArrayList)
+                                                recyColorsStockList!!.adapter = adapter
+
                                             }
-
-                                            ll_stock!!.visibility = View.VISIBLE
-                                            hideStockListMore()
-
-                                            setStockListBarchart()
-
-                                            val lLayout = GridLayoutManager(this@InventoryGraphActivity, 2)
-                                            recyColorsStockList!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            val adapter = StockValueBarChartAdapter(this@InventoryGraphActivity, stockListSortArrayList)
-                                            recyColorsStockList!!.adapter = adapter
-
-                                        }
-                                        Log.e(TAG, "stockListSortArrayList==   "+stockListSortArrayList)
+                                            Log.e(TAG, "stockListSortArrayList==   "+stockListSortArrayList)
                                         }
                                         catch (e:Exception)
                                         {
@@ -1406,10 +1486,14 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     Log.e(TAG, "msg   999101   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
+                                        ll_purchase_XY!!.visibility = View.VISIBLE
+
                                         val jobjt = jObject.getJSONObject("InventorySupplierWisePurchase")
                                         SupplierWisePurchaseArray = jobjt.getJSONArray("InventorySupplierWisePurchaseList")
                                         Log.e(TAG, "SupplierWisePurchaseArray   "+SupplierWisePurchaseArray)
                                         tv_supPurchaseRemark!!.setText(jobjt.getString("Reamrk"))
+                                        purchase_xaxis!!.setText(jobjt.getString("XAxis"))
+                                        purchase_yaxis!!.setText(jobjt.getString("YAxis"))
 
                                         try {
                                             if (SupplierWisePurchaseArray.length() > 0) {
@@ -1592,7 +1676,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 //                                        Config.changeTwoDecimel(jobjt.getString("StockValue"))
                                         tvv_countValue=jobjt.getString("StockValue").toDouble()
-                                      //  tvv_countValue=1649785634.18888
+                                        //  tvv_countValue=1649785634.18888
                                         val forM= String.format("%2f",tvv_countValue)
                                         val deciForm=DecimalFormat("##0.00")
                                         val forMatNo=deciForm.format(tvv_countValue)
@@ -1601,7 +1685,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         Log.e(TAG, "353353 forMatNo==  "+Config.changeTwoDecimel(jobjt.getString("StockValue")))
 
 
-                                     //   tvv_count!!.text=   Config.changeTwoDecimel(jobjt.getString("StockValue"))
+                                        //   tvv_count!!.text=   Config.changeTwoDecimel(jobjt.getString("StockValue"))
                                         tvv_count!!.text=   forMatNo.toString()
                                         tv_stockNameChart!!.text=  jobjt.getString("ChartName")
 
@@ -1668,11 +1752,15 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     val jObject = JSONObject(msg)
                                     //    Log.e(TAG, "msg   InventoryGraph   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
+
+                                        //      ll_salesComparison_XY!!.visibility = View.VISIBLE
                                         Log.e(TAG, "success and inside   ")
                                         val jobjt = jObject.getJSONObject("SalesComparison")
                                         salesComparisonArrayList=jobjt.getJSONArray("SalesComparisonData")
                                         //  Log.e(TAG, "salesComparisonArrayList==   "+salesComparisonArrayList)
                                         tv_remark_Comparison!!.setText(jobjt.getString("Reamrk"))
+                                        salesComparison_xaxis!!.setText(jobjt.getString("XAxis"))
+                                        salesComparison_yaxis!!.setText(jobjt.getString("YAxis"))
 
                                         try {
 
@@ -1691,7 +1779,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                                 ll_comparison!!.visibility = View.VISIBLE
 //                                                hideComparisonMore()
-//                                                setComparisonBarchart() // set comparison barchart here
+                                                //             setComparisonBarchart() // set comparison barchart here
 
 
 
@@ -1776,7 +1864,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
         comparisonListBarChart.animateY(1000)
 
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.valueFormatter = MyAxisFormatterBar3()
+        xAxis.valueFormatter = MyAxisFormatterBar33()
 
         xAxis.setDrawLabels(true)
         xAxis.granularity = 1f
@@ -1787,7 +1875,8 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
         val yAxis: YAxis = comparisonListBarChart.getAxisLeft()
 
-        yAxis.valueFormatter = MyAxisFormatterBar4()
+//        yAxis.valueFormatter = MyAxisFormatterBar4()
+        //    yAxis.valueFormatter = MyAxisFormatterBar333()
 
 
 
@@ -1819,7 +1908,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
             val score = comparisonListGraphBar[i]
 
             // Log.e(TAG, "entriesList5555== score   "+score)
-            entries.add(BarEntry(i.toFloat(),score.Value.toFloat()/1000))
+            entries.add(BarEntry(i.toFloat(),score.Value))
         }
 
 
@@ -2047,7 +2136,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
     private fun setMonthlyBarchart() {
         saleGraphListBar.clear()
         saleGraphListBar = getSaleBarList()
-    //   Log.e(TAG, "saleGraphListBar==   "+saleGraphListBar)
+        //   Log.e(TAG, "saleGraphListBar==   "+saleGraphListBar)
 
 
         monthlyBarChart.axisLeft.setDrawGridLines(false)
@@ -2123,7 +2212,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
         {
             var jsonObject = inventorySaleSortArrayList.getJSONObject(i)
 
-          //  saleGraphListBar.add(MonthlySaleBar(jsonObject.getString("Month").toString(),jsonObject.getString("Amount").toInt()))
+            //  saleGraphListBar.add(MonthlySaleBar(jsonObject.getString("Month").toString(),jsonObject.getString("Amount").toInt()))
             saleGraphListBar.add(MonthlySaleBar("",jsonObject.getString("Amount").toFloat().toInt()))
         }
 
@@ -2376,6 +2465,32 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    inner class MyAxisFormatterBar33 : IndexAxisValueFormatter() {
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            val index = value.toInt()
+            Log.d("TAG", "getAxisLabel: index $index")
+            return if (index < comparisonListGraphBar.size) {
+                comparisonListGraphBar[index].Label
+            } else {
+                ""
+            }
+        }
+    }
+    inner class MyAxisFormatterBar333 : IndexAxisValueFormatter() {
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            val index = value.toInt()
+            Log.d("TAG", "getAxisLabel: index $index")
+            return if (index < comparisonListGraphBar.size) {
+                comparisonListGraphBar[index].Label
+            } else {
+                ""
+            }
+        }
+    }
+
+
 
     inner class MyAxisFormatterBar4 : IndexAxisValueFormatter() {
         private var mSuffix = arrayOf(
@@ -2444,7 +2559,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
             if (ContinueMode == 0){
                 ChartMode      = 0
                 chartModeCount = 0
-             //   getStockValueData()
+                //   getStockValueData()
                 getChartModeData()
             }
 

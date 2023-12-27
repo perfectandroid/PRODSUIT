@@ -280,6 +280,76 @@
 
                                             </LinearLayout>
 
+                                            <LinearLayout
+                                                android:id="@+id/ll_upcommingstock_XY"
+                                                android:visibility="gone"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:gravity="center"
+                                                android:layout_gravity="center"
+                                                android:orientation="horizontal"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content">
+                                                <TextView
+                                                    android:fontFamily="@font/myfont"
+                                                    android:textStyle="bold"
+                                                    android:textAllCaps="false"
+                                                    android:textSize="14dp"
+                                                    android:text="X axis : "
+                                                    android:textColor="@color/colorPrimary"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+                                                </TextView>
+                                                <TextView
+                                                    android:id="@+id/upcommingstock_xaxis"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:textStyle="bold"
+                                                    android:textAllCaps="false"
+                                                    android:textSize="14dp"
+                                                    android:text=""
+                                                    android:textColor="@color/colorPrimary"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+                                                </TextView>
+
+                                                <LinearLayout
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:orientation="horizontal"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+
+                                                    <TextView
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="14dp"
+                                                        android:text="Y axis : "
+                                                        android:textColor="@color/colorPrimary"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content">
+
+                                                    </TextView>
+                                                    <TextView
+                                                        android:id="@+id/upcommingstock_yaxis"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="14dp"
+                                                        android:text=""
+                                                        android:textColor="@color/colorPrimary"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content">
+
+                                                    </TextView>
+                                                </LinearLayout>
+
+
+                                            </LinearLayout>
+
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
@@ -297,11 +367,11 @@
                                                 <LinearLayout
                                                     android:id="@+id/ll_recyUpcomingStock"
                                                     android:padding="5dp"
-                                                    android:visibility="visible"
+                                                    android:visibility="gone"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
                                                     android:layout_margin="5dp"
-                                                   >
+                                                    >
                                                     <com.perfect.prodsuit.Helper.FullLenghRecyclertview
                                                         android:id="@+id/recyUpcomingStock"
                                                         android:layout_width="match_parent"
@@ -400,6 +470,76 @@
 
                                             </LinearLayout>
 
+                                            <LinearLayout
+                                                android:id="@+id/ll_completed_XY"
+                                                android:visibility="gone"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:gravity="center"
+                                                android:layout_gravity="center"
+                                                android:orientation="horizontal"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content">
+                                                <TextView
+                                                    android:fontFamily="@font/myfont"
+                                                    android:textStyle="bold"
+                                                    android:textAllCaps="false"
+                                                    android:textSize="14dp"
+                                                    android:text="X axis : "
+                                                    android:textColor="@color/colorPrimary"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+                                                </TextView>
+                                                <TextView
+                                                    android:id="@+id/completed_xaxis"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:textStyle="bold"
+                                                    android:textAllCaps="false"
+                                                    android:textSize="14dp"
+                                                    android:text=""
+                                                    android:textColor="@color/colorPrimary"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+                                                </TextView>
+
+                                                <LinearLayout
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:orientation="horizontal"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+
+                                                    <TextView
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="14dp"
+                                                        android:text="Y axis : "
+                                                        android:textColor="@color/colorPrimary"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content">
+
+                                                    </TextView>
+                                                    <TextView
+                                                        android:id="@+id/completed_yaxis"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="14dp"
+                                                        android:text=""
+                                                        android:textColor="@color/colorPrimary"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content">
+
+                                                    </TextView>
+                                                </LinearLayout>
+
+
+                                            </LinearLayout>
+
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
@@ -417,11 +557,11 @@
                                                 <LinearLayout
                                                     android:id="@+id/ll_recyCompletedProducts"
                                                     android:padding="5dp"
-                                                    android:visibility="visible"
+                                                    android:visibility="gone"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="match_parent"
                                                     android:layout_margin="5dp"
-                                                   >
+                                                    >
                                                     <com.perfect.prodsuit.Helper.FullLenghRecyclertview
                                                         android:id="@+id/recyCompletedProducts"
                                                         android:layout_width="match_parent"
@@ -520,6 +660,157 @@
 
                                             </LinearLayout>
 
+                                            <LinearLayout
+                                                android:id="@+id/ll_materialShortage_XY"
+                                                android:visibility="gone"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:gravity="center"
+                                                android:layout_gravity="center"
+                                                android:orientation="horizontal"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content">
+                                                <TextView
+                                                    android:fontFamily="@font/myfont"
+                                                    android:textStyle="bold"
+                                                    android:textAllCaps="false"
+                                                    android:textSize="14dp"
+                                                    android:text="X axis : "
+                                                    android:textColor="@color/colorPrimary"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+                                                </TextView>
+                                                <TextView
+                                                    android:id="@+id/materialShortage_xaxis"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:textStyle="bold"
+                                                    android:textAllCaps="false"
+                                                    android:textSize="14dp"
+                                                    android:text=""
+                                                    android:textColor="@color/colorPrimary"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+                                                </TextView>
+
+                                                <LinearLayout
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:orientation="horizontal"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+
+                                                    <TextView
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="14dp"
+                                                        android:text="Y axis : "
+                                                        android:textColor="@color/colorPrimary"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content">
+
+                                                    </TextView>
+                                                    <TextView
+                                                        android:id="@+id/materialShortage_yaxis"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="14dp"
+                                                        android:text=""
+                                                        android:textColor="@color/colorPrimary"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content">
+
+                                                    </TextView>
+                                                </LinearLayout>
+
+
+                                            </LinearLayout>
+                                            <LinearLayout
+                                                android:id="@+id/ll_materialShortageColor"
+                                                android:visibility="gone"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:gravity="center"
+                                                android:layout_gravity="center"
+                                                android:orientation="horizontal"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content">
+
+
+                                                <LinearLayout
+                                                    android:gravity="center"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:orientation="horizontal"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+                                                    <TextView
+
+                                                        android:layout_width="20dp"
+                                                        android:layout_height="12dp"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textSize="14dp"
+                                                        android:textStyle="bold"
+                                                        android:background="@color/expense_color1"
+                                                        />
+                                                    <TextView
+
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="14dp"
+                                                        android:text=" Actual Qty "
+                                                        android:textColor="@color/black"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content">
+
+                                                    </TextView>
+
+                                                </LinearLayout>
+
+
+
+                                                <LinearLayout
+                                                    android:gravity="center"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:orientation="horizontal"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+
+                                                    <TextView
+
+                                                        android:layout_width="20dp"
+                                                        android:layout_height="12dp"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textSize="14dp"
+                                                        android:textStyle="bold"
+                                                        android:background="@color/gain_color1"
+                                                        android:textColor="@color/black"/>
+                                                    <TextView
+
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="14dp"
+                                                        android:text=" Shortage Qty "
+                                                        android:textColor="@color/black"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content">
+
+                                                    </TextView>
+                                                </LinearLayout>
+
+
+                                            </LinearLayout>
+
+
 
                                             <LinearLayout
                                                 android:layout_width="match_parent"
@@ -537,7 +828,7 @@
 
                                                 <LinearLayout
                                                     android:id="@+id/ll_materialrecycview"
-                                                    android:visibility="visible"
+                                                    android:visibility="gone"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:orientation="vertical">
@@ -592,9 +883,9 @@
                                                             android:layout_weight="1"
                                                             android:gravity="center"
                                                             android:paddingStart="5dp"
-                                                            android:text="ActualQuantity"
+                                                            android:text="Actual Qty"
                                                             android:textSize="13dp"
-                                                            android:textColor="@color/blue"
+                                                            android:textColor="@color/expense_color1"
                                                             android:fontFamily="@font/myfont"/>
 
                                                         <LinearLayout
@@ -610,7 +901,7 @@
                                                             android:paddingStart="5dp"
                                                             android:text="Shortage Qty"
                                                             android:textSize="13dp"
-                                                            android:textColor="@color/red"
+                                                            android:textColor="@color/gain_color1"
                                                             android:fontFamily="@font/myfont"/>
                                                         <LinearLayout
                                                             android:layout_width="1dp"
@@ -620,19 +911,19 @@
 
                                                     </LinearLayout>
 
-                                                <LinearLayout
-                                                    android:id="@+id/ll_recyMaterialShortage"
-                                                    android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
-                                                    android:visibility="visible">
-                                                    <com.perfect.prodsuit.Helper.FullLenghRecyclertview
-                                                        android:id="@+id/recyMaterialShortage"
+                                                    <LinearLayout
+                                                        android:id="@+id/ll_recyMaterialShortage"
                                                         android:layout_width="match_parent"
-                                                        android:layout_height="wrap_content"
-                                                        android:background="@drawable/svg_dashrect">
+                                                        android:layout_height="match_parent"
+                                                        android:visibility="visible">
+                                                        <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                                                            android:id="@+id/recyMaterialShortage"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:background="@drawable/svg_dashrect">
 
-                                                    </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
-                                                </LinearLayout>
+                                                        </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                    </LinearLayout>
                                                 </LinearLayout>
                                             </LinearLayout>
 

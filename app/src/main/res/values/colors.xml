@@ -599,5 +599,10 @@
     <color name="color_dash2">#A4CFCB</color>
     <color name="color_dash3">#D9D9F3</color>
 
+    <color name="color_head1">#1f6096</color>
+    <color name="color_head2">#163d5c</color>
+    <color name="color_head3">#21A194</color>
+    <color name="color_head4">#4C5554</color>
+
 
 </resources>

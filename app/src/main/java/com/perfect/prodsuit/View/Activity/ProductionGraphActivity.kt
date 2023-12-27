@@ -37,6 +37,19 @@ import java.util.*
 
 class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
 
+    var completed_xaxis: TextView? = null
+    var completed_yaxis: TextView? = null
+    var ll_completed_XY: LinearLayout? = null
+
+    var materialShortage_xaxis: TextView? = null
+    var materialShortage_yaxis: TextView? = null
+    var ll_materialShortage_XY: LinearLayout? = null
+    var ll_materialShortageColor: LinearLayout? = null
+
+    var upcommingstock_xaxis: TextView? = null
+    var upcommingstock_yaxis: TextView? = null
+    var ll_upcommingstock_XY: LinearLayout? = null
+
     val TAG: String = "ProductionGraphActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
@@ -62,7 +75,7 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
     var DashMode    :  String? = ""
     var DashType    :  String? = ""
 
-//  upcomingstock
+    //  upcomingstock
     var upcomingstockCount = 0
     lateinit var upcomingstockViewModel     : UpcomingStockViewModel
     lateinit var upcomingstockArrayList     : JSONArray
@@ -77,13 +90,13 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
     private var card_tile: CardView? = null
     private var ll_tile: LinearLayout? = null
 
-//  chartType
+    //  chartType
     lateinit var chartTypeViewModel               : ChartTypeViewModel
     lateinit var chartTypeArrayList               : JSONArray
     var ID_ChartMode                              :  String? = ""
 
 
-//  completedproducts
+    //  completedproducts
     var completedproductsCount = 0
     lateinit var completedproductsViewModel     : CompletedProductsViewModel
     lateinit var completedproductsArrayList     : JSONArray
@@ -145,6 +158,20 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setRegViews() {
+
+        completed_xaxis = findViewById<TextView>(R.id.completed_xaxis)
+        completed_yaxis = findViewById<TextView>(R.id.completed_yaxis)
+        ll_completed_XY = findViewById<LinearLayout>(R.id.ll_completed_XY)
+
+        materialShortage_xaxis = findViewById<TextView>(R.id.materialShortage_xaxis)
+        materialShortage_yaxis = findViewById<TextView>(R.id.materialShortage_yaxis)
+        ll_materialShortage_XY = findViewById<LinearLayout>(R.id.ll_materialShortage_XY)
+        ll_materialShortageColor = findViewById<LinearLayout>(R.id.ll_materialShortageColor)
+
+        upcommingstock_xaxis = findViewById<TextView>(R.id.upcommingstock_xaxis)
+        upcommingstock_yaxis = findViewById<TextView>(R.id.upcommingstock_yaxis)
+        ll_upcommingstock_XY = findViewById<LinearLayout>(R.id.ll_upcommingstock_XY)
+
         val imback = findViewById<ImageView>(R.id.imback_project)
         imback!!.setOnClickListener(this)
         drawableMore = resources.getDrawable(R.drawable.dash_more, null)
@@ -306,7 +333,7 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                             if (ID_ChartMode.equals("34")){
 
-                                               ll_UpcomingStock!!.visibility = View.VISIBLE
+                                                ll_UpcomingStock!!.visibility = View.VISIBLE
                                                 tvv_head_UpcomingStock!!.setText(jsonObject.getString("DashBoardName"))
                                                 upcomingstockCount   = 0
                                                 getUpcomingStock()
@@ -394,7 +421,9 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
                 ll_MaterialShortage!!.visibility = View.GONE
                 ll_CompletedProducts!!.visibility = View.GONE
                 ll_UpcomingStock!!.visibility = View.GONE
-
+                lemoupcomingstockMode = 0
+                materialshortageMode = 0
+                completedproductsMode = 0
 
                 if (ID_ChartMode.equals("34")){
                     // ll_StagWise!!.visibility = View.VISIBLE
@@ -446,9 +475,14 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     val jObject = JSONObject(msg)
                                     //    Log.e(TAG, "msg   InventoryGraph   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
+
+                                        ll_upcommingstock_XY!!.visibility = View.VISIBLE
                                         Log.e(TAG, "success and inside   ")
                                         val jobjt = jObject.getJSONObject("ProductionUpcomingStock")
                                         tv_UpcomingStockRemark!!.setText(jobjt.getString("Reamrk"))
+                                        upcommingstock_xaxis!!.setText(jobjt.getString("XAxis"))
+                                        upcommingstock_yaxis!!.setText(jobjt.getString("YAxis"))
+
                                         upcomingstockArrayList=jobjt.getJSONArray("ProductionUpcomingStockList")
                                         Log.e(TAG, "upcomingstockArrayList==   "+upcomingstockArrayList)
 
@@ -749,9 +783,13 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     val jObject = JSONObject(msg)
                                     //    Log.e(TAG, "msg   InventoryGraph   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
+
+                                        ll_completed_XY!!.visibility = View.VISIBLE
                                         Log.e(TAG, "success and inside   ")
                                         val jobjt = jObject.getJSONObject("ProductionCompletedProducts")
                                         tv_CompletedProductsRemark!!.setText(jobjt.getString("Reamrk"))
+                                        completed_xaxis!!.setText(jobjt.getString("XAxis"))
+                                        completed_yaxis!!.setText(jobjt.getString("YAxis"))
                                         completedproductsArrayList=jobjt.getJSONArray("ProductionCompletedProductsList")
 
                                         try {
@@ -1054,9 +1092,15 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     Log.e(TAG, "msg   materialshortageArrayList   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
+                                        ll_materialShortage_XY!!.visibility = View.VISIBLE
+                                        ll_materialShortageColor!!.visibility = View.VISIBLE
+
                                         val jobjt =
                                             jObject.getJSONObject("ProductionMaterialShortage")
                                         tv_MaterialShortageRemark!!.setText(jobjt.getString("Reamrk"))
+                                        materialShortage_xaxis!!.setText(jobjt.getString("XAxis"))
+                                        materialShortage_yaxis!!.setText(jobjt.getString("YAxis"))
+
                                         materialshortageArrayList=jobjt.getJSONArray("ProductionMaterialShortageList")
 
                                         if (materialshortageArrayList.length() > 0) {
@@ -1166,12 +1210,12 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         val barDataSet1 = BarDataSet(entries1, "data1")
-        barDataSet1.setColors(Color.BLUE)
+        barDataSet1.setColors(resources.getColor(R.color.expense_color1))
         //barDataSet.setValueFormatter(DecimalRemover())
         barDataSet1.valueFormatter = DefaultValueFormatter(0)
 
         val barDataSet2 = BarDataSet(entries2, "data2")
-        barDataSet2.setColors(Color.RED)
+        barDataSet2.setColors(resources.getColor(R.color.gain_color1))
         //barDataSet.setValueFormatter(DecimalRemover())
         barDataSet2.valueFormatter = DefaultValueFormatter(0)
 
@@ -1186,7 +1230,7 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
 //
 //        data.setValueTextSize(15f)
 //        data.setValueTextColor(Color.BLACK)
-//        data.setDrawValues(false)
+        baraData.setDrawValues(false)
         MaterialShortageChart.data = baraData
 
         //   projectDelayedChart.isDragEnabled=true

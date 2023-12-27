@@ -833,12 +833,13 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 {
                     if (leadcountmode == 0){
                         leadcountmode = 1
-                        hideLeadCount()
+                   //     hideLeadCount()
 
                     }else{
                         leadcountmode = 0
-                        hideLeadCount()
+                   //     hideLeadCount()
                     }
+                    hideLeadCount()
                 }
                 if(ID_ChartMode.equals("5"))
                 {
@@ -2971,7 +2972,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 ll_top10!!.visibility=View.GONE
                 ll_empwseamt!!.visibility = View.GONE
 */
-
+                leadcountmode = 0
                 if (ID_ChartMode.equals("2")){
                     ll_barchart!!.visibility=View.VISIBLE
                     ll_Piechart!!.visibility=View.GONE
@@ -2984,6 +2985,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     card_toprevenue!!.visibility = View.GONE
                     ll_empwseamt!!.visibility = View.GONE
                     empwiselist = 0
+
                     getEmployeewiseChart()
 
 
@@ -3031,6 +3033,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     card_toprevenue!!.visibility = View.GONE
                     ll_empwseamt!!.visibility = View.GONE
                     leadstagecountwiseList = 0
+                    hideLeadCount()
                     getLeadStageCountWise()
 
                 }
@@ -3966,6 +3969,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         try {
                                             if (leadstagecountwiseListBarList.length() > 0) {
                                                 setFunnelData(leadstagecountwiseListBarList)
+                                                hideLeadCount()
                                                 val lLayout = GridLayoutManager(this@TileGraphActivity, 2)
                                                 recycleleadstagecountwise!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                                                 val adapter = LeadStageCountWiseAdapter(this@TileGraphActivity, leadstagecountwiseListBarList,colorgroup())

@@ -145,7 +145,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        setContentView(R.layout.activity_project_transaction)
+        setContentView(R.layout.activity_project_transactionnew)
         context = this@ProjectTransactionActivity
 
         materialusageProjectViewModel   = ViewModelProvider(this).get(MaterialUsageProjectViewModel::class.java)
@@ -157,12 +157,12 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         updateProjectTransactionViewModel = ViewModelProvider(this).get(UpdateProjectTransactionViewModel::class.java)
 
         setRegViews()
-        var jsonObject: String? = intent.getStringExtra("jsonObject")
-        jsonObj = JSONObject(jsonObject)
-
-        CreatedDate = jsonObj!!.getString("CreateDate")
-        ID_Project = jsonObj!!.getString("ID_Project")
-        tie_Project!!.setText(jsonObj!!.getString("ProjName"))
+//        var jsonObject: String? = intent.getStringExtra("jsonObject")
+//        jsonObj = JSONObject(jsonObject)
+//
+//        CreatedDate = jsonObj!!.getString("CreateDate")
+//        ID_Project = jsonObj!!.getString("ID_Project")
+//        tie_Project!!.setText(jsonObj!!.getString("ProjName"))
 
 
     }
