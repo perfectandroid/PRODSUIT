@@ -85,11 +85,11 @@ class ProjectActivity : AppCompatActivity() , View.OnClickListener  {
                 startActivity(i)
             }
             R.id.llProjectTransaction->{
-//                val i = Intent(this@ProjectActivity, ProjectTransactionActivity::class.java)
-//                startActivity(i)
-
-                val i = Intent(this@ProjectActivity, ProjectListActivity::class.java)
+                val i = Intent(this@ProjectActivity, ProjectTransactionActivity::class.java)
                 startActivity(i)
+
+//                val i = Intent(this@ProjectActivity, ProjectListActivity::class.java)
+//                startActivity(i)
 
 
             }

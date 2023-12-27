@@ -443,7 +443,7 @@
                                         android:padding="1dp"
                                         android:background="@drawable/service_border"
                                         android:orientation="horizontal"
-                                        android:visibility="gone">
+                                        android:visibility="visible">
 
                                         <LinearLayout
                                             android:layout_width="90dp"
