@@ -552,7 +552,7 @@
                                                         android:layout_height="wrap_content"
                                                         android:background="@drawable/svg_dashrect"
 
-                                                   >
+                                                        >
 
                                                     </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
                                                 </LinearLayout>
@@ -1951,13 +1951,14 @@
                                                                 android:background="@color/grey"/>
                                                             <TextView
                                                                 android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
+                                                                android:layout_height="match_parent"
                                                                 android:paddingStart="5dp"
                                                                 android:fontFamily="@font/myfont"
                                                                 android:gravity="center"
                                                                 android:layout_weight="1.3"
                                                                 android:textSize="13dp"
-                                                                android:textColor="@color/black"
+                                                                android:background="@color/color_head1"
+                                                                android:textColor="@color/white"
                                                                 android:text="Sl.No"/>
 
                                                             <LinearLayout
@@ -1966,13 +1967,14 @@
                                                                 android:background="@color/grey"/>
                                                             <TextView
                                                                 android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
+                                                                android:layout_height="match_parent"
                                                                 android:paddingStart="5dp"
                                                                 android:gravity="center"
+                                                                android:background="@color/color_head2"
                                                                 android:fontFamily="@font/myfont"
                                                                 android:layout_weight="1"
                                                                 android:textSize="13dp"
-                                                                android:textColor="@color/black"
+                                                                android:textColor="@color/white"
                                                                 android:text="Project"/>
 
                                                             <LinearLayout
@@ -1981,13 +1983,14 @@
                                                                 android:background="@color/grey"/>
                                                             <TextView
                                                                 android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
+                                                                android:layout_height="match_parent"
                                                                 android:layout_weight="1"
                                                                 android:gravity="center"
                                                                 android:paddingStart="5dp"
                                                                 android:text="Stages"
                                                                 android:textSize="13dp"
-                                                                android:textColor="@color/black"
+                                                                android:background="@color/color_head3"
+                                                                android:textColor="@color/white"
                                                                 android:fontFamily="@font/myfont"/>
 
                                                             <LinearLayout
@@ -1996,13 +1999,14 @@
                                                                 android:background="@color/grey"/>
                                                             <TextView
                                                                 android:layout_width="match_parent"
-                                                                android:layout_height="wrap_content"
+                                                                android:layout_height="match_parent"
                                                                 android:layout_weight="1.2"
                                                                 android:gravity="center"
                                                                 android:paddingStart="5dp"
                                                                 android:text="DueDate"
                                                                 android:textSize="13dp"
-                                                                android:textColor="@color/black"
+                                                                android:background="@color/color_head4"
+                                                                android:textColor="@color/white"
                                                                 android:fontFamily="@font/myfont"/>
                                                             <LinearLayout
                                                                 android:layout_width="1dp"
@@ -2129,7 +2133,7 @@
                                                         android:orientation="vertical"
                                                         android:gravity="center"
                                                         android:layout_gravity="center"
-                                                     >
+                                                        >
 
                                                         <androidx.recyclerview.widget.RecyclerView
                                                             android:id="@+id/recycler_project_tile"

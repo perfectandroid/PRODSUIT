@@ -50,15 +50,15 @@ class ComparisonNewAdapter (internal var context: Context, internal var jsonArra
 
                 val pos = position+1
 
-//                if (pos % 1 == 0){
-//                    holder.ll_main.setBackgroundResource(color[0])
-//                }
-//                if (pos % 2 == 0){
-//                    holder.ll_main.setBackgroundResource(color[1])
-//                }
-//                if (pos % 3 == 0){
-//                    holder.ll_main.setBackgroundResource(color[2])
-//                }
+                if (position % 1 == 0){
+                    holder.ll_main_compa.setBackgroundResource(color[0])
+                }
+                if (position % 2 == 0){
+                    holder.ll_main_compa.setBackgroundResource(color[1])
+                }
+                if (position % 3 == 0){
+                    holder.ll_main_compa.setBackgroundResource(color[2])
+                }
 
                 holder.tvv_slnmbr.text        = pos.toString()
                 holder.label_comparison.text      = jsonObject!!.getString("Label")
@@ -92,10 +92,10 @@ class ComparisonNewAdapter (internal var context: Context, internal var jsonArra
         internal var tvv_slnmbr             : TextView
         internal var label_comparison       : TextView
         internal var lvalue_comparison       : TextView
-        internal var ll_main          : LinearLayout
+        internal var ll_main_compa          : LinearLayout
 
         init {
-            ll_main            = v.findViewById<View>(R.id.ll_main) as LinearLayout
+            ll_main_compa            = v.findViewById<View>(R.id.ll_main_compa) as LinearLayout
             tvv_slnmbr             = v.findViewById<View>(R.id.tvv_slnmbr)       as TextView
             label_comparison       = v.findViewById<View>(R.id.label_comparison) as TextView
             lvalue_comparison       = v.findViewById<View>(R.id.lvalue_comparison) as TextView

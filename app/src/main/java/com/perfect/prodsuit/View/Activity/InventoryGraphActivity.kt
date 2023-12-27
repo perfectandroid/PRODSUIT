@@ -629,7 +629,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                 stockListMode = 0
                 supPurchaseMode = 0
                 supplierMode = 0
-
+//............1
                 if (ID_ChartMode.equals("23")){
 
                     tvv_head_monthly!!.setText(modeType[position])
@@ -638,7 +638,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                     inventorysale   = 0
                     getInventorySale()
                 }
-                else if (ID_ChartMode.equals("24")){
+                else if (ID_ChartMode.equals("24")){  //............2
 //                    ll_stock!!.visibility = View.VISIBLE
 //                    stockList = 0
 //                    getStckListCategory()
@@ -648,7 +648,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                     getTopSellingData()
 
                 }
-                else if (ID_ChartMode.equals("25")){
+                else if (ID_ChartMode.equals("25")){//............3
 //                    ll_comparison!!.visibility = View.VISIBLE
 //                    comparisonList = 0
 //                    getSalesComparisonList()
@@ -660,7 +660,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
-                }else if (ID_ChartMode.equals("26")){
+                }else if (ID_ChartMode.equals("26")){//............4
 //                    ll_SupplierWisePurchase!!.visibility = View.VISIBLE
 //                    supplierwisePurchaseCount = 0
 //                    getSupplierWisePurchase()
@@ -670,7 +670,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                     stockList = 0
                     getStckListCategory()
 
-                }else if (ID_ChartMode.equals("27")){
+                }else if (ID_ChartMode.equals("27")){//............5
 //                    ll_product_reorder!!.visibility = View.VISIBLE
 //                    ProductReorderLevelCount = 0
 //                    getProductReorderLevel()
@@ -682,7 +682,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                 }
 
-                else if (ID_ChartMode.equals("28")){
+                else if (ID_ChartMode.equals("28")){//............6
 
                     //    ll_SupplierWisePurchase!!.visibility = View.VISIBLE
                     tvv_head_supPurchase!!.setText(modeType[position])
@@ -690,7 +690,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                     getSupplierWisePurchase()
 
                 }
-                else if (ID_ChartMode.equals("29")){
+                else if (ID_ChartMode.equals("29")){//............7
 
                     tvv_head_supplier!!.setText(modeType[position])
 
