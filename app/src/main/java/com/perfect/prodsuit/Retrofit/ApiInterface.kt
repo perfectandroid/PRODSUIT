@@ -885,4 +885,10 @@ interface ApiInterface {
     @POST("UserValidations/BrandDetails")
     fun getBrands(@Body body: RequestBody): Call<String>
 
+    @POST("Project/ProjectTransactionEmployeeDetails")
+    fun getProjectTransactionEmployeeDetails(@Body body: RequestBody): Call<String>
+
+    @POST("Project/TransactionTypeDetails")
+    fun getTransactionTypeDetails(@Body body: RequestBody): Call<String>
+
 }

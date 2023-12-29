@@ -1314,6 +1314,7 @@ object Config {
 
         var result = false
         try {
+            Log.e("TAG","13140    "+date1+"  :  "+date2)
             val sdf = SimpleDateFormat("yyyy-MM-dd")
             val mDate1 = sdf.parse(date1)
             val timeInMilliseconds1 = mDate1.time
@@ -1331,13 +1332,8 @@ object Config {
 
 
 
-
-
-
-
-
         }catch (e:Exception){
-            Log.e("TAG","123456   "+e)
+            Log.e("TAG","13143   "+e)
         }
        return  result
     }

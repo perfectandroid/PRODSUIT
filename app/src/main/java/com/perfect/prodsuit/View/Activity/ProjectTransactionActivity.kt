@@ -29,6 +29,8 @@ import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,12 +40,26 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     lateinit var context: Context
     private var progressDialog    : ProgressDialog?    = null
 
+    private var tie_TransactionType       : TextInputEditText? = null
     private var tie_Project       : TextInputEditText? = null
     private var tie_Stage       : TextInputEditText? = null
     private var tie_Date       : TextInputEditText? = null
     private var tie_OtherCharges       : TextInputEditText? = null
     private var tie_PaymentMethod       : TextInputEditText? = null
     private var tie_Remarks       : TextInputEditText? = null
+    private var tie_NetAmount       : TextInputEditText? = null
+
+    private var tie_Bill_Type       : TextInputEditText? = null
+    private var tie_Petty_Cashier       : TextInputEditText? = null
+    private var tie_Employee       : TextInputEditText? = null
+    private var tie_RoundOff       : TextInputEditText? = null
+
+    private var til_TransactionType       : TextInputLayout?   = null
+    private var til_Bill_Type       : TextInputLayout?   = null
+    private var til_Petty_Cashier       : TextInputLayout?   = null
+    private var til_Employee       : TextInputLayout?   = null
+    private var til_RoundOff       : TextInputLayout?   = null
+    private var til_NetAmount       : TextInputLayout?   = null
 
     private var til_Project       : TextInputLayout?   = null
     private var til_Stage       : TextInputLayout?   = null
@@ -59,6 +75,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     var usageMode: String? = "1"
     var managementMode: String? = "0"
 
+    var transtypecount = 0
     var projectcount = 0
     var stagecount   = 0
     var otherchargecount   = 0
@@ -67,6 +84,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     var otherChargeCalcPosition   = 0
     var otherChargeClickPosition   = 0
 
+    lateinit var transTypeArrayList  : JSONArray
     lateinit var projectArrayList  : JSONArray
     lateinit var stageArrayList    : JSONArray
     lateinit var otherChargeArrayList : JSONArray
@@ -78,6 +96,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
     val modelOtherCharges = ArrayList<ModelOtherCharges>()
 
+    private var dialogTransType     : Dialog?            = null
     private var dialogProject     : Dialog?            = null
     private var dialogStage       : Dialog?            = null
 
@@ -86,8 +105,12 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
     private var tvv_list_name     : TextView?          = null
 
+    var ID_TransactionType   = ""
     var ID_Project   = ""
     var ID_Stage   = ""
+    var ID_BillType   = ""
+    var ID_PettyCashier   = ""
+    var ID_Employee   = ""
     var FK_TaxGroup   = ""
     var IncludeTaxCalc   = ""
     var AmountTaxCalc   = ""
@@ -141,6 +164,24 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
     var CreatedDate                                       = ""
 
+    lateinit var projectTransactionTypeViewModel: ProjectTransactionTypeViewModel
+
+    var billtypeCount = 0
+    lateinit var billtTypeViewModel: BilltTypeViewModel
+    lateinit var billtTypeArrayList: JSONArray
+    private var dialogBilltType: Dialog? = null
+    //var recyPaymentMethod: RecyclerView? = null
+
+    var pettCashierCount = 0
+    lateinit var pettyCashierViewModel: PettyCashierViewModel
+    lateinit var pettyCashierArrayList: JSONArray
+    private var dialogPettyCashier: Dialog? = null
+
+    var employeeCount = 0
+    lateinit var projectWiseEmployeeViewModel: ProjectWiseEmployeeViewModel
+    lateinit var projectWiseEmployeeArrayList: JSONArray
+    private var dialogProjectWiseEmployee: Dialog? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -155,6 +196,10 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             OtherChargeTaxCalculationViewModel::class.java)
         paymentMethodeViewModel = ViewModelProvider(this).get(PaymentMethodViewModel::class.java)
         updateProjectTransactionViewModel = ViewModelProvider(this).get(UpdateProjectTransactionViewModel::class.java)
+        projectTransactionTypeViewModel = ViewModelProvider(this).get(ProjectTransactionTypeViewModel::class.java)
+        billtTypeViewModel = ViewModelProvider(this).get(BilltTypeViewModel::class.java)
+        pettyCashierViewModel = ViewModelProvider(this).get(PettyCashierViewModel::class.java)
+        projectWiseEmployeeViewModel = ViewModelProvider(this).get(ProjectWiseEmployeeViewModel::class.java)
 
         setRegViews()
 //        var jsonObject: String? = intent.getStringExtra("jsonObject")
@@ -164,6 +209,15 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 //        ID_Project = jsonObj!!.getString("ID_Project")
 //        tie_Project!!.setText(jsonObj!!.getString("ProjName"))
 
+        // Create Model Class
+//        ProjectPayInfoViewModel
+//        ProjectTransactionTypeViewModel
+//        BilltTypeViewModel
+//        PettyCashierViewModel
+
+        hideShow("0")
+        setMandatoryField("0")
+
 
     }
 
@@ -171,12 +225,27 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
 
+        tie_TransactionType      = findViewById(R.id.tie_TransactionType)
         tie_Project      = findViewById(R.id.tie_Project)
         tie_Stage    = findViewById(R.id.tie_Stage)
         tie_Date    = findViewById(R.id.tie_Date)
         tie_OtherCharges    = findViewById(R.id.tie_OtherCharges)
         tie_PaymentMethod    = findViewById(R.id.tie_PaymentMethod)
         tie_Remarks    = findViewById(R.id.tie_Remarks)
+        tie_NetAmount    = findViewById(R.id.tie_NetAmount)
+
+        tie_Bill_Type    = findViewById(R.id.tie_Bill_Type)
+        tie_Petty_Cashier    = findViewById(R.id.tie_Petty_Cashier)
+        tie_Employee    = findViewById(R.id.tie_Employee)
+        tie_RoundOff    = findViewById(R.id.tie_RoundOff)
+
+
+        til_TransactionType      = findViewById(R.id.til_TransactionType)
+        til_Bill_Type      = findViewById(R.id.til_Bill_Type)
+        til_Petty_Cashier      = findViewById(R.id.til_Petty_Cashier)
+        til_Employee      = findViewById(R.id.til_Employee)
+        til_RoundOff      = findViewById(R.id.til_RoundOff)
+        til_NetAmount      = findViewById(R.id.til_NetAmount)
 
         til_Project      = findViewById(R.id.til_Project)
         til_Stage    = findViewById(R.id.til_Stage)
@@ -185,9 +254,13 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         btnReset = findViewById(R.id.btnReset)
         btnSubmit = findViewById(R.id.btnSubmit)
 
+        tie_TransactionType!!.setOnClickListener(this)
         tie_Project!!.setOnClickListener(this)
         tie_Stage!!.setOnClickListener(this)
         tie_Date!!.setOnClickListener(this)
+        tie_Bill_Type!!.setOnClickListener(this)
+        tie_Petty_Cashier!!.setOnClickListener(this)
+        tie_Employee!!.setOnClickListener(this)
         tie_OtherCharges!!.setOnClickListener(this)
         tie_PaymentMethod!!.setOnClickListener(this)
         btnReset!!.setOnClickListener(this)
@@ -199,8 +272,12 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
         DecimelFormatters.setDecimelPlace(tie_OtherCharges!!)
 
+        til_TransactionType!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_Project!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_Date!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_Bill_Type!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_Petty_Cashier!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_Employee!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.color_mandatory)
 
         onTextChangedValues()
 
@@ -238,6 +315,12 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             R.id.imback->{
                 finish()
             }
+            R.id.tie_TransactionType->{
+                Config.disableClick(v)
+                transtypecount = 0
+                getTransactionType()
+
+            }
             R.id.tie_Project->{
                Config.disableClick(v)
                 projectcount = 0
@@ -257,15 +340,49 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
                 }
             }
+
+            R.id.tie_Bill_Type->{
+
+                Config.disableClick(v)
+                billtypeCount = 0
+                getBillType()
+            }
+
+            R.id.tie_Petty_Cashier->{
+
+                Config.disableClick(v)
+                pettCashierCount = 0
+                getPettyCashier()
+
+            }
+
+            R.id.tie_Employee->{
+
+                if (ID_Project.equals("") && !ID_TransactionType.equals("1")){
+                    til_Project!!.setError("Select Project")
+                    til_Project!!.setErrorIconDrawable(null)
+                }else{
+                    Config.disableClick(v)
+                    employeeCount = 0
+                    getProjectWiseEmployee()
+                }
+            }
+
+
             R.id.tie_Date->{
                 Config.disableClick(v)
                 openBottomSheet()
             }
 
             R.id.tie_OtherCharges->{
-                Config.disableClick(v)
-                otherchargecount = 0
-                getOtherCharges()
+
+                Log.e(TAG,"3777   "+ID_TransactionType)
+                if (ID_TransactionType.equals("2") || ID_TransactionType.equals("4")){
+                    Config.disableClick(v)
+                    otherchargecount = 0
+                    getOtherCharges()
+                }
+
             }
             R.id.tie_PaymentMethod->{
                 Config.disableClick(v)
@@ -283,6 +400,9 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             }
         }
     }
+
+
+
 
     private fun clearData() {
 
@@ -310,15 +430,48 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         strOtherAmount = tie_OtherCharges!!.text.toString()
         strRemark = tie_Remarks!!.text.toString()
 
-        val date1 = Config.convertDate(CreatedDate)
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
+        val currentDate = sdf.format(Date())
+        Log.e(TAG, "DATE TIME  196  " + currentDate)
+        Log.e(TAG, "DATE TIME  375  " + ID_BillType)
+
+       // val date1 = Config.convertDate(CreatedDate)
+        val date1 = Config.convertDate(currentDate)
         val date2 = Config.convertDate(tie_Date!!.text.toString())
 
         var isValid1 = Config.convertTimemills(date1,date2)
 
-        if (ID_Project.equals("")){
-            Config.snackBars(context, v, "Select Project")
-        }else if(strDate.equals("") || !isValid1){
-            Config.snackBars(context, v, "Date should be greater than or equal to Created date and less than or equal to Current date")
+        if (ID_TransactionType.equals("")){
+            til_TransactionType!!.setError("Select Transaction Type")
+            til_TransactionType!!.setErrorIconDrawable(null)
+        }
+        else if(strDate.equals("")){
+            Config.snackBars(context, v, "Date should be less than or equal to Current date")
+        }
+        else if (ID_Project.equals("") && (ID_TransactionType.equals("2") || ID_TransactionType.equals("3") || ID_TransactionType.equals("4"))){
+           // Config.snackBars(context, v, "Select Project")
+            til_Project!!.setError("Select Project")
+            til_Project!!.setErrorIconDrawable(null)
+        }
+
+        else if (ID_Employee.equals("") && (ID_TransactionType.equals("1") || ID_TransactionType.equals("2") || ID_TransactionType.equals("3"))){
+            // Config.snackBars(context, v, "Select Project")
+            til_Employee!!.setError("Select Employee")
+            til_Employee!!.setErrorIconDrawable(null)
+        }
+
+//        else if(strDate.equals("") || !isValid1){
+//            Config.snackBars(context, v, "Date should be greater than or equal to Created date and less than or equal to Current date")
+//        }
+        else if((ID_BillType.equals("")) && (ID_TransactionType.equals("1") || ID_TransactionType.equals("2") || ID_TransactionType.equals("3") || ID_TransactionType.equals("4"))){
+           // Config.snackBars(context, v, "Select Bill Type")
+            til_Bill_Type!!.setError("Select Bill Type")
+            til_Bill_Type!!.setErrorIconDrawable(null)
+        }
+        else if((ID_PettyCashier.equals("")) && (ID_TransactionType.equals("1") || ID_TransactionType.equals("3") || ID_TransactionType.equals("5") || ID_TransactionType.equals("6"))){
+            // Config.snackBars(context, v, "Select Bill Type")
+            til_Petty_Cashier!!.setError("Select Petty cashier")
+            til_Petty_Cashier!!.setErrorIconDrawable(null)
         }
         else if(strOtherAmount.equals("")){
             Config.snackBars(context, v, "Other Amount cannot be zero")
@@ -856,6 +1009,309 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         adapterPaymentList!!.setClickListener(this@ProjectTransactionActivity)
     }
 
+    private fun getBillType() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                billtTypeViewModel.getBilltType(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (billtypeCount == 0){
+                                    billtypeCount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   9788   "+msg)
+
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("BillDetails")
+                                        billtTypeArrayList = jobjt.getJSONArray("BillList")
+
+                                        if (billtTypeArrayList.length() > 0){
+                                            billtypePopup(billtTypeArrayList)
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectTransactionActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun billtypePopup(billtTypeArrayList: JSONArray) {
+
+        try {
+            dialogBilltType = Dialog(this)
+            dialogBilltType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogBilltType!! .setContentView(R.layout.list_popup)
+            dialogBilltType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recylist = dialogBilltType!! .findViewById(R.id.recylist) as RecyclerView
+            tvv_list_name = dialogBilltType!! .findViewById(R.id.tvv_list_name) as TextView
+            var llsearch = dialogBilltType!! .findViewById(R.id.llsearch) as LinearLayout
+            val etsearch = dialogBilltType!! .findViewById(R.id.etsearch) as EditText
+
+            llsearch.visibility = View.GONE
+            tvv_list_name!!.setText("Bill Type")
+
+
+
+            val lLayout = GridLayoutManager(this@ProjectTransactionActivity, 1)
+            recylist!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapter = ProjectBillTypeAdapter(this@ProjectTransactionActivity, billtTypeArrayList)
+            recylist!!.adapter = adapter
+            adapter.setClickListener(this@ProjectTransactionActivity)
+
+
+            dialogBilltType!!.show()
+            dialogBilltType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun getPettyCashier() {
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                pettyCashierViewModel.getPettyCashierData(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (pettCashierCount == 0){
+                                    pettCashierCount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1095   "+msg)
+
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("PettyCashierDetails")
+                                        pettyCashierArrayList = jobjt.getJSONArray("PettyCashierList")
+
+                                        if (pettyCashierArrayList.length() > 0){
+                                            pettyCashierPopup(pettyCashierArrayList)
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectTransactionActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun pettyCashierPopup(pettyCashierArrayList: JSONArray) {
+
+        try {
+            dialogPettyCashier = Dialog(this)
+            dialogPettyCashier!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogPettyCashier!! .setContentView(R.layout.list_popup)
+            dialogPettyCashier!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recylist = dialogPettyCashier!! .findViewById(R.id.recylist) as RecyclerView
+            tvv_list_name = dialogPettyCashier!! .findViewById(R.id.tvv_list_name) as TextView
+            var llsearch = dialogPettyCashier!! .findViewById(R.id.llsearch) as LinearLayout
+            val etsearch = dialogPettyCashier!! .findViewById(R.id.etsearch) as EditText
+
+            llsearch.visibility = View.GONE
+            tvv_list_name!!.setText("Petty cashier")
+
+            val lLayout = GridLayoutManager(this@ProjectTransactionActivity, 1)
+            recylist!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapter = PettyCashierAdapter(this@ProjectTransactionActivity, pettyCashierArrayList)
+            recylist!!.adapter = adapter
+            adapter.setClickListener(this@ProjectTransactionActivity)
+
+
+            dialogPettyCashier!!.show()
+            dialogPettyCashier!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getProjectWiseEmployee() {
+
+        var ReqMode = "159"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                projectWiseEmployeeViewModel.getProjectWiseEmployee(this,ID_Project,ID_Stage,"0",ReqMode)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (employeeCount == 0){
+                                    employeeCount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1095   "+msg)
+
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("ProjectTransactionEmployeeDetails")
+                                        projectWiseEmployeeArrayList = jobjt.getJSONArray("ProjectTransactionEmployeeDetailsList")
+
+                                        if (projectWiseEmployeeArrayList.length() > 0){
+                                            projectWiseEmployeePopup(projectWiseEmployeeArrayList)
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectTransactionActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun projectWiseEmployeePopup(projectWiseEmployeeArrayList: JSONArray) {
+
+        try {
+            dialogProjectWiseEmployee = Dialog(this)
+            dialogProjectWiseEmployee!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProjectWiseEmployee!! .setContentView(R.layout.list_popup)
+            dialogProjectWiseEmployee!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recylist = dialogProjectWiseEmployee!! .findViewById(R.id.recylist) as RecyclerView
+            tvv_list_name = dialogProjectWiseEmployee!! .findViewById(R.id.tvv_list_name) as TextView
+            var llsearch = dialogProjectWiseEmployee!! .findViewById(R.id.llsearch) as LinearLayout
+            val etsearch = dialogProjectWiseEmployee!! .findViewById(R.id.etsearch) as EditText
+
+            llsearch.visibility = View.GONE
+            tvv_list_name!!.setText("Employee")
+//
+            val lLayout = GridLayoutManager(this@ProjectTransactionActivity, 1)
+            recylist!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapter = ProjectWiseEmployeeAdapter(this@ProjectTransactionActivity, projectWiseEmployeeArrayList)
+            recylist!!.adapter = adapter
+            adapter.setClickListener(this@ProjectTransactionActivity)
+
+
+            dialogProjectWiseEmployee!!.show()
+            dialogProjectWiseEmployee!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
     private fun getOtherCharges() {
         var ReqMode = "117"
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -1010,6 +1466,43 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
                 tie_OtherCharges!!.setText(Config.changeTwoDecimel(otherCharge.toString()))
                 dialogOtherChargesSheet!!.dismiss()
+
+                if (ID_TransactionType.equals("2") || ID_TransactionType.equals("4")){
+
+                    var othCharge = Config.changeTwoDecimel(otherCharge.toString())
+                    var othChargeAfterDot = othCharge.substringAfter(".")
+                    var othNetAmont = ""
+                    var roundOffAmont = ""
+                    othChargeAfterDot = (DecimalToWordsConverter.getDecimelFormate("."+othChargeAfterDot)).toString()
+                    Log.e(TAG,"147331   "+othChargeAfterDot)
+                    roundOffAmont  = (1-othChargeAfterDot.toDouble()).toString()
+                    Log.e(TAG,"147332   "+roundOffAmont)
+
+
+                    ////
+                    Log.e(TAG,"14831   "+otherCharge)
+                    val decimalPlaces = 0
+
+                    if (othChargeAfterDot.toFloat() < .50){
+                        roundOffAmont = othChargeAfterDot
+                        tie_RoundOff!!.setText("-"+DecimalToWordsConverter.getDecimelFormate(roundOffAmont))
+                        othNetAmont = (BigDecimal(otherCharge.toDouble()).setScale(decimalPlaces, RoundingMode.DOWN)).toString()
+                        Log.e(TAG,"14832   "+othNetAmont)
+                        Log.e(TAG,"14833   "+roundOffAmont)
+                       // Log.e(TAG,"147332  -"+DecimalToWordsConverter.getDecimelFormate("."+othChargeAfterDot))
+                        //othNetAmont = Config.changeTwoDecimel((othCharge.toFloat() - othChargeAfterDot.toFloat()).toString())
+                    }else{
+                        tie_RoundOff!!.setText(DecimalToWordsConverter.getDecimelFormate(roundOffAmont))
+                        othNetAmont = (BigDecimal(otherCharge.toDouble()).setScale(decimalPlaces, RoundingMode.HALF_UP)).toString()
+                        Log.e(TAG,"14834   "+othNetAmont)
+                       // Log.e(TAG,"147333  +"+DecimalToWordsConverter.getDecimelFormate("."+othChargeAfterDot))
+                       // othNetAmont = Config.changeTwoDecimel((othCharge.toFloat() + othChargeAfterDot.toFloat()).toString())
+                    }
+                   // othNetAmont = Config.changeTwoDecimel((othCharge.toFloat() + roundOffAmont.toFloat()).toString())
+                    Log.e(TAG,"14835   "+othCharge+"  :  "+othChargeAfterDot+"  :  "+othNetAmont)
+
+                    tie_NetAmount!!.setText(DecimalToWordsConverter.getDecimelFormate(othNetAmont))
+                }
 
             }
 
@@ -1202,8 +1695,12 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     }
 
     private fun onTextChangedValues() {
+        tie_TransactionType!!.addTextChangedListener(watcher)
         tie_Project!!.addTextChangedListener(watcher)
         tie_Date!!.addTextChangedListener(watcher)
+        tie_Bill_Type!!.addTextChangedListener(watcher)
+        tie_Petty_Cashier!!.addTextChangedListener(watcher)
+        tie_Employee!!.addTextChangedListener(watcher)
     }
 
     var watcher: TextWatcher = object : TextWatcher {
@@ -1222,6 +1719,18 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             Log.e(TAG,"28302    ")
 
             when {
+
+                editable === tie_TransactionType!!.editableText -> {
+                    Log.e(TAG,"283020    ")
+                    if (tie_TransactionType!!.text.toString().equals("")){
+                        til_TransactionType!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_TransactionType!!.isErrorEnabled = false
+                        til_TransactionType!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+
+                }
+
                 editable === tie_Project!!.editableText -> {
                     Log.e(TAG,"283021    ")
                     if (tie_Project!!.text.toString().equals("")){
@@ -1243,10 +1752,145 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
                 }
 
+                editable === tie_Bill_Type!!.editableText -> {
+                    Log.e(TAG,"283021    ")
+                    if (tie_Bill_Type!!.text.toString().equals("")){
+                        til_Bill_Type!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Bill_Type!!.isErrorEnabled = false
+                        til_Bill_Type!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+
+                }
+
+                editable === tie_Petty_Cashier!!.editableText -> {
+                    Log.e(TAG,"283021    ")
+                    if (tie_Petty_Cashier!!.text.toString().equals("")){
+                        til_Petty_Cashier!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Petty_Cashier!!.isErrorEnabled = false
+                        til_Petty_Cashier!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+
+                }
+
+                editable === tie_Employee!!.editableText -> {
+                    Log.e(TAG,"283021    ")
+                    if (tie_Employee!!.text.toString().equals("")){
+                        til_Employee!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_Employee!!.isErrorEnabled = false
+                        til_Employee!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+
+                }
+
             }
 
         }
     }
+
+    private fun getTransactionType() {
+
+        var ReqMode = "127"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                projectTransactionTypeViewModel.getProjectTransactionType(this,ReqMode)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (transtypecount == 0){
+                                    transtypecount++
+
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   114455   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("TransactionTypeDetails")
+                                        transTypeArrayList = jobjt.getJSONArray("TransactionTypeList")
+                                        if (transTypeArrayList.length()>0){
+
+                                            projectTransTypePopup(transTypeArrayList)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectTransactionActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+ Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun projectTransTypePopup(transTypeArrayList: JSONArray) {
+        try {
+
+            dialogTransType = Dialog(this)
+            dialogTransType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogTransType!! .setContentView(R.layout.list_popup)
+            dialogTransType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recylist = dialogTransType!! .findViewById(R.id.recylist) as RecyclerView
+            tvv_list_name = dialogTransType!! .findViewById(R.id.tvv_list_name) as TextView
+            val llsearch = dialogTransType!! .findViewById(R.id.llsearch) as LinearLayout
+            val etsearch = dialogTransType!! .findViewById(R.id.etsearch) as EditText
+
+            llsearch!!.visibility = View.GONE
+            tvv_list_name!!.setText("Transaction Type")
+
+
+            val lLayout = GridLayoutManager(this@ProjectTransactionActivity, 1)
+            recylist!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapter = ProjectTransactionTypeAdapter(this@ProjectTransactionActivity, transTypeArrayList)
+            recylist!!.adapter = adapter
+            adapter.setClickListener(this@ProjectTransactionActivity)
+
+
+            dialogTransType!!.show()
+            dialogTransType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 
     private fun getProject() {
         // var leadInfo = 0
@@ -1590,16 +2234,54 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     }
 
     override fun onClick(position: Int, data: String) {
+
+        if (data.equals("TransTypeClick")){
+
+            dialogTransType!!.dismiss()
+            val jsonObject = transTypeArrayList.getJSONObject(position)
+
+            ID_TransactionType = jsonObject.getString("FK_TransactionType")
+            tie_TransactionType!!.setText(jsonObject.getString("TransactionTypename"))
+
+            ID_Project = ""
+            tie_Project!!.setText("")
+
+            ID_Stage = ""
+            tie_Stage!!.setText("")
+
+            ID_BillType = ""
+            tie_Bill_Type!!.setText("")
+
+            ID_PettyCashier = ""
+            tie_Petty_Cashier!!.setText("")
+
+            ID_Employee = ""
+            tie_Employee!!.setText("")
+
+            tie_Remarks!!.setText("")
+            tie_OtherCharges!!.setText("")
+
+            hideShow(ID_TransactionType)
+            setMandatoryField(ID_TransactionType)
+        }
+
+
         if (data.equals("projectClick")){
 
             dialogProject!!.dismiss()
             val jsonObject = projectSort.getJSONObject(position)
 
-            ID_Project = jsonObject.getString("ID_FIELD")
+            ID_Project = jsonObject.getString("ID_Project")
             tie_Project!!.setText(jsonObject.getString("ProjName"))
 
             ID_Stage = ""
             tie_Stage!!.setText("")
+
+            ID_PettyCashier = ""
+            tie_Petty_Cashier!!.setText("")
+
+            ID_Employee = ""
+            tie_Employee!!.setText("")
 
         }
         if (data.equals("stageCliik")){
@@ -1609,6 +2291,42 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             ID_Stage = jsonObject.getString("ProjectStagesID")
             tie_Stage!!.setText(jsonObject.getString("StageName"))
 
+
+            ID_PettyCashier = ""
+            tie_Petty_Cashier!!.setText("")
+
+            ID_Employee = ""
+            tie_Employee!!.setText("")
+
+
+        }
+
+        if (data.equals("projectBillTypeClick")){
+
+            dialogBilltType!!.dismiss()
+            val jsonObject = billtTypeArrayList.getJSONObject(position)
+            ID_BillType = jsonObject.getString("ID_BillType")
+            tie_Bill_Type!!.setText(jsonObject.getString("BillType"))
+
+
+        }
+
+        if (data.equals("PettycashierClick")){
+
+            dialogPettyCashier!!.dismiss()
+            val jsonObject = pettyCashierArrayList.getJSONObject(position)
+            ID_PettyCashier = jsonObject.getString("ID_PettyCashier")
+            tie_Petty_Cashier!!.setText(jsonObject.getString("PettyCashier"))
+
+
+        }
+
+        if (data.equals("ProjectEmployeeClick")){
+
+            dialogProjectWiseEmployee!!.dismiss()
+            val jsonObject = projectWiseEmployeeArrayList.getJSONObject(position)
+            ID_Employee = jsonObject.getString("FK_Employee")
+            tie_Employee!!.setText(jsonObject.getString("EmployeeName"))
 
         }
 
@@ -1747,7 +2465,120 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
     }
 
+    private fun setMandatoryField(ID_TransactionType: String) {
+        if (ID_TransactionType.equals("0")){
+            Log.e(TAG,"19522 0  ")
+            til_Project!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.grey_dark)
+            til_Project!!.setHint("Project")
+        }
 
+        else if (ID_TransactionType.equals("1")){
+            Log.e(TAG,"19522 1  ")
+            til_Project!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.grey_dark)
+            til_Project!!.setHint("Project")
+        }
+        else if (ID_TransactionType.equals("2")){
+            Log.e(TAG,"19522 2  ")
+            til_Project!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+            til_Project!!.setHint("Project *")
+        }
+        else if (ID_TransactionType.equals("3")){
+            Log.e(TAG,"19522  3 ")
+            til_Project!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+            til_Project!!.setHint("Project *")
+        }
+
+        else if (ID_TransactionType.equals("4")){
+            Log.e(TAG,"19522 4  ")
+            til_Project!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+            til_Project!!.setHint("Project *")
+        }
+
+        else if (ID_TransactionType.equals("5")){
+            Log.e(TAG,"19522 5  ")
+            til_Project!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.grey_dark)
+            til_Project!!.setHint("Project")
+        }
+
+        else if (ID_TransactionType.equals("6")){
+            Log.e(TAG,"19522 6 ")
+            til_Project!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.grey_dark)
+            til_Project!!.setHint("Project")
+        }
+    }
+
+    private fun hideShow(ID_TransactionType: String) {
+
+        til_Project!!.visibility = View.VISIBLE
+        til_Stage!!.visibility = View.VISIBLE
+        til_Employee!!.visibility = View.VISIBLE
+        til_Bill_Type!!.visibility = View.VISIBLE
+        til_RoundOff!!.visibility = View.VISIBLE
+        til_NetAmount!!.visibility = View.VISIBLE
+        til_Petty_Cashier!!.visibility = View.VISIBLE
+
+        if (ID_TransactionType.equals("0")){
+            Log.e(TAG,"19533 0  ")
+            til_NetAmount!!.visibility = View.GONE
+        }
+
+        else if (ID_TransactionType.equals("1")){
+            Log.e(TAG,"19533 1  ")
+            til_RoundOff!!.visibility = View.GONE
+            til_NetAmount!!.visibility = View.GONE
+
+            tie_OtherCharges!!.isFocusableInTouchMode = true
+            tie_OtherCharges!!.isEnabled = true
+        }
+        else if (ID_TransactionType.equals("2")){
+            Log.e(TAG,"19533 2  ")
+            til_Petty_Cashier!!.visibility = View.GONE
+            tie_OtherCharges!!.isFocusableInTouchMode = false
+            tie_OtherCharges!!.isEnabled = true
+        }
+        else if (ID_TransactionType.equals("3")){
+            Log.e(TAG,"19533  3 ")
+            til_RoundOff!!.visibility = View.GONE
+            til_NetAmount!!.visibility = View.GONE
+            tie_OtherCharges!!.isFocusableInTouchMode = true
+            tie_OtherCharges!!.isEnabled = true
+
+        }
+
+        else if (ID_TransactionType.equals("4")){
+            Log.e(TAG,"19533 4  ")
+            til_Petty_Cashier!!.visibility = View.GONE
+            til_Employee!!.visibility = View.GONE
+            tie_OtherCharges!!.isFocusableInTouchMode = false
+            tie_OtherCharges!!.isEnabled = true
+        }
+
+        else if (ID_TransactionType.equals("5")){
+            Log.e(TAG,"19533 5  ")
+            til_Project!!.visibility = View.GONE
+            til_Stage!!.visibility = View.GONE
+            til_Employee!!.visibility = View.GONE
+            til_Bill_Type!!.visibility = View.GONE
+            til_RoundOff!!.visibility = View.GONE
+            til_NetAmount!!.visibility = View.GONE
+            tie_OtherCharges!!.isFocusableInTouchMode = false
+            tie_OtherCharges!!.isEnabled = true
+        }
+
+        else if (ID_TransactionType.equals("6")){
+            Log.e(TAG,"19533 6 ")
+            til_Project!!.visibility = View.GONE
+            til_Stage!!.visibility = View.GONE
+            til_Employee!!.visibility = View.GONE
+            til_Bill_Type!!.visibility = View.GONE
+            til_RoundOff!!.visibility = View.GONE
+            til_NetAmount!!.visibility = View.GONE
+            tie_OtherCharges!!.isFocusableInTouchMode = false
+            tie_OtherCharges!!.isEnabled = true
+        }
+
+
+    }
 
 
 }

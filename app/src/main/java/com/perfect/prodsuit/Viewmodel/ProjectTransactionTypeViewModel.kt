@@ -10,8 +10,8 @@ import com.perfect.prodsuit.Repository.ProjectTransactionTypeRepository
 class ProjectTransactionTypeViewModel : ViewModel() {
 
     var projectTransactionTypeData: MutableLiveData<ProjectTransactionTypeModel>? = null
-    fun getProjectTransactionType(context: Context) : LiveData<ProjectTransactionTypeModel>? {
-        projectTransactionTypeData = ProjectTransactionTypeRepository.getServicesApiCall(context)
+    fun getProjectTransactionType(context: Context,ReqMode : String) : LiveData<ProjectTransactionTypeModel>? {
+        projectTransactionTypeData = ProjectTransactionTypeRepository.getServicesApiCall(context,ReqMode)
         return projectTransactionTypeData
     }
 }

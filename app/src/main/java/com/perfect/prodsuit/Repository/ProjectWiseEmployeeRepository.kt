@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.ProjectTransactionTypeModel
+import com.perfect.prodsuit.Model.ProjectWiseEmployeeModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -20,21 +20,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
 
-object ProjectTransactionTypeRepository {
+object ProjectWiseEmployeeRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val projectTransactionTypeSetGet = MutableLiveData<ProjectTransactionTypeModel>()
-    val TAG: String = "ProjectTransactionTypeRepository"
+    val projectWiseEmployeeSetGet = MutableLiveData<ProjectWiseEmployeeModel>()
+    val TAG: String = "ProjectWiseEmployeeRepository"
 
-    fun getServicesApiCall(context: Context,ReqMode : String): MutableLiveData<ProjectTransactionTypeModel> {
-        getProjectTransactionType(context,ReqMode)
-        return projectTransactionTypeSetGet
+    fun getServicesApiCall(context: Context,  ID_Project: String, ID_Stage: String, Criteria: String, ReqMode: String): MutableLiveData<ProjectWiseEmployeeModel> {
+        getProjectWiseEmployee(context,ID_Project,ID_Stage,Criteria,ReqMode)
+        return projectWiseEmployeeSetGet
     }
 
-    private fun getProjectTransactionType(context: Context,ReqMode : String) {
+    private fun getProjectWiseEmployee(context: Context, ID_Project: String, ID_Stage: String, Criteria: String, ReqMode: String) {
 
         try {
-            projectTransactionTypeSetGet.value= ProjectTransactionTypeModel("")
+            projectWiseEmployeeSetGet.value= ProjectWiseEmployeeModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -61,7 +61,7 @@ object ProjectTransactionTypeRepository {
 
             try {
 
-                // {"ReqMode":"127","BankKey":"-500","Token":"F513239B-E6F7-4CB9-AFF9-58C54FEE3CE5","FK_Company":"1"}
+               // {"ReqMode":"159","FK_Project":"0","BankKey":"-500","FK_Company":"1","FK_Stages":"0"}
 
 
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
@@ -74,8 +74,10 @@ object ProjectTransactionTypeRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("FK_Project", ProdsuitApplication.encryptStart(ID_Project))
+                requestObject1.put("FK_Stages", ProdsuitApplication.encryptStart(ID_Stage))
 
-                Log.e(TAG,"requestObject1   78000    "+requestObject1)
+                Log.e(TAG,"requestObject1   80000    "+requestObject1)
 
 
             } catch (e: Exception) {
@@ -85,7 +87,7 @@ object ProjectTransactionTypeRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getTransactionTypeDetails(body)
+            val call = apiService.getProjectTransactionEmployeeDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -95,10 +97,10 @@ object ProjectTransactionTypeRepository {
                         progressDialog!!.dismiss()
                         Log.e(TAG,"101    "+response.body())
                         val jObject = JSONObject(response.body())
-                        val leads = ArrayList<ProjectTransactionTypeModel>()
-                        leads.add(ProjectTransactionTypeModel(response.body()))
+                        val leads = ArrayList<ProjectWiseEmployeeModel>()
+                        leads.add(ProjectWiseEmployeeModel(response.body()))
                         val msg = leads[0].message
-                        projectTransactionTypeSetGet.value = ProjectTransactionTypeModel(msg)
+                        projectWiseEmployeeSetGet.value = ProjectWiseEmployeeModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
                         Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
@@ -119,35 +121,33 @@ object ProjectTransactionTypeRepository {
         }
 
 //        try {
-//            Log.e(TAG,"366666  ")
-//            projectTransactionTypeSetGet.value = ProjectTransactionTypeModel("")
-//
+//            projectWiseEmployeeSetGet.value= ProjectWiseEmployeeModel("")
 //            val msg = "{\n" +
-//                    "  \"TransTypeDetails\": {\n" +
-//                    "    \"TransTypeList\": [\n" +
+//                    "  \"EmployeeDetails\": {\n" +
+//                    "    \"EmployeeList\": [\n" +
 //                    "      {\n" +
-//                    "        \"ID_TransType\": \"1\",\n" +
-//                    "        \"TransType\": \"Fund Allocation\"\n" +
+//                    "        \"ID_Employee\": \"1\",\n" +
+//                    "        \"Employee\": \"Amritha\",\n" +
+//                    "        \"Department\": \"Customer Service\",\n" +
+//                    "        \"Dessignation\": \"Service Engineer\"\n" +
 //                    "      },\n" +
 //                    "      {\n" +
-//                    "        \"ID_TransType\": \"2\",\n" +
-//                    "        \"TransType\": \"Fund Spend\"\n" +
+//                    "        \"ID_Employee\": \"2\",\n" +
+//                    "        \"Employee\": \"Sachin\",\n" +
+//                    "        \"Department\": \"Sales\",\n" +
+//                    "        \"Dessignation\": \"Service Manager\"\n" +
 //                    "      },\n" +
 //                    "      {\n" +
-//                    "        \"ID_TransType\": \"3\",\n" +
-//                    "        \"TransType\": \"Fund Return\"\n" +
+//                    "        \"ID_Employee\": \"3\",\n" +
+//                    "        \"Employee\": \"Sona\",\n" +
+//                    "        \"Department\": \"Customer Service\",\n" +
+//                    "        \"Dessignation\": \"Service specialist\"\n" +
 //                    "      },\n" +
 //                    "      {\n" +
-//                    "        \"ID_TransType\": \"4\",\n" +
-//                    "        \"TransType\": \"Project Transaction\"\n" +
-//                    "      },\n" +
-//                    "      {\n" +
-//                    "        \"ID_TransType\": \"5\",\n" +
-//                    "        \"TransType\": \"Petty Cash Inward\"\n" +
-//                    "      },\n" +
-//                    "      {\n" +
-//                    "        \"ID_TransType\": \"6\",\n" +
-//                    "        \"TransType\": \"Petty Cash Outward\"\n" +
+//                    "        \"ID_Employee\": \"4\",\n" +
+//                    "        \"Employee\": \"Shan\",\n" +
+//                    "        \"Department\": \"HR Account\",\n" +
+//                    "        \"Dessignation\": \"HR\"\n" +
 //                    "      }\n" +
 //                    "    ],\n" +
 //                    "    \"ResponseCode\": \"0\",\n" +
@@ -156,13 +156,9 @@ object ProjectTransactionTypeRepository {
 //                    "  \"StatusCode\": 0,\n" +
 //                    "  \"EXMessage\": \"Transaction Verified\"\n" +
 //                    "}"
-//            projectTransactionTypeSetGet.value = ProjectTransactionTypeModel(msg)
+//            projectWiseEmployeeSetGet.value = ProjectWiseEmployeeModel(msg)
 //        }catch (e : Exception){
 //
 //        }
-
-
-
     }
-
 }

@@ -152,20 +152,20 @@
                                                     android:id="@+id/tie_TransactionType"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
+                                                    android:drawableLeft="@drawable/svg_fd_actiontype"
+                                                    android:drawablePadding="5dp"
+                                                    android:drawableTint="@color/textColor"
+                                                    android:editable="false"
+                                                    android:enabled="true"
+                                                    android:focusableInTouchMode="false"
+                                                    android:fontFamily="@font/myfont"
                                                     android:gravity="center_vertical"
                                                     android:paddingLeft="10dp"
                                                     android:paddingTop="8dp"
                                                     android:paddingBottom="8dp"
-                                                    android:drawableLeft="@drawable/svg_fd_actiontype"
-                                                    android:drawablePadding="5dp"
-                                                    android:drawableTint="@color/textColor"
-                                                    android:textSize="14dp"
-                                                    android:focusableInTouchMode="false"
-                                                    android:enabled="false"
-                                                    android:editable="false"
-                                                    android:fontFamily="@font/myfont"
                                                     android:textColor="@color/greydarks"
-                                                    android:textStyle="normal"/>
+                                                    android:textSize="14dp"
+                                                    android:textStyle="normal" />
 
                                             </com.google.android.material.textfield.TextInputLayout>
 
@@ -195,7 +195,7 @@
                                                     android:drawableTint="@color/textColor"
                                                     android:textSize="14dp"
                                                     android:focusableInTouchMode="false"
-                                                    android:enabled="false"
+                                                    android:enabled="true"
                                                     android:editable="false"
                                                     android:fontFamily="@font/myfont"
                                                     android:textColor="@color/greydarks"
@@ -215,7 +215,7 @@
                                                 android:layout_width="0dp"
                                                 android:layout_weight="1"
                                                 android:layout_height="wrap_content"
-                                                android:hint="Project *"
+                                                android:hint="Project"
                                                 android:layout_marginTop="10dp"
                                                 android:layout_marginLeft="5dp"
                                                 android:layout_marginRight="5dp"
@@ -236,7 +236,7 @@
                                                     android:drawableTint="@color/textColor"
                                                     android:textSize="14dp"
                                                     android:focusableInTouchMode="false"
-                                                    android:enabled="false"
+                                                    android:enabled="true"
                                                     android:editable="false"
                                                     android:fontFamily="@font/myfont"
                                                     android:textColor="@color/greydarks"
@@ -249,7 +249,7 @@
                                                 android:layout_width="0dp"
                                                 android:layout_weight="1"
                                                 android:layout_height="wrap_content"
-                                                android:hint="Stage *"
+                                                android:hint="Stage"
                                                 android:layout_marginTop="10dp"
                                                 android:layout_marginLeft="5dp"
                                                 android:layout_marginRight="5dp"
@@ -270,7 +270,7 @@
                                                     android:drawableTint="@color/textColor"
                                                     android:textSize="14dp"
                                                     android:focusableInTouchMode="false"
-                                                    android:enabled="false"
+                                                    android:enabled="true"
                                                     android:editable="false"
                                                     android:fontFamily="@font/myfont"
                                                     android:textColor="@color/greydarks"
@@ -286,7 +286,7 @@
                                             android:layout_height="wrap_content">
 
                                             <com.google.android.material.textfield.TextInputLayout
-
+                                                android:id="@+id/til_Bill_Type"
                                                 android:layout_width="0dp"
                                                 android:layout_weight="1"
                                                 android:layout_height="wrap_content"
@@ -299,7 +299,7 @@
                                                 style="@style/Widget.App.TextInputLayout">
 
                                                 <com.google.android.material.textfield.TextInputEditText
-
+                                                    android:id="@+id/tie_Bill_Type"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:gravity="center_vertical"
@@ -311,7 +311,7 @@
                                                     android:drawableTint="@color/textColor"
                                                     android:textSize="14dp"
                                                     android:focusableInTouchMode="false"
-                                                    android:enabled="false"
+                                                    android:enabled="true"
                                                     android:editable="false"
                                                     android:fontFamily="@font/myfont"
                                                     android:textColor="@color/greydarks"
@@ -320,7 +320,7 @@
                                             </com.google.android.material.textfield.TextInputLayout>
 
                                             <com.google.android.material.textfield.TextInputLayout
-
+                                                android:id="@+id/til_Petty_Cashier"
                                                 android:layout_width="0dp"
                                                 android:layout_weight="1"
                                                 android:layout_height="wrap_content"
@@ -330,10 +330,11 @@
                                                 android:layout_marginRight="5dp"
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
-                                                style="@style/Widget.App.TextInputLayout">
+                                                style="@style/Widget.App.TextInputLayout"
+                                                tools:ignore="InvalidId">
 
                                                 <com.google.android.material.textfield.TextInputEditText
-
+                                                    android:id="@+id/tie_Petty_Cashier"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:gravity="center_vertical"
@@ -345,7 +346,7 @@
                                                     android:drawableTint="@color/textColor"
                                                     android:textSize="14dp"
                                                     android:focusableInTouchMode="false"
-                                                    android:enabled="false"
+                                                    android:enabled="true"
                                                     android:editable="false"
                                                     android:fontFamily="@font/myfont"
                                                     android:textColor="@color/greydarks"
@@ -361,36 +362,36 @@
                                             android:layout_height="wrap_content">
 
                                             <com.google.android.material.textfield.TextInputLayout
-
+                                                android:id="@+id/til_Employee"
+                                                style="@style/Widget.App.TextInputLayout"
                                                 android:layout_width="0dp"
-                                                android:layout_weight="1"
                                                 android:layout_height="wrap_content"
-                                                android:hint="Employee *"
-                                                android:layout_marginTop="10dp"
                                                 android:layout_marginLeft="5dp"
+                                                android:layout_marginTop="10dp"
                                                 android:layout_marginRight="5dp"
+                                                android:layout_weight="1"
                                                 android:drawableTint="@color/textColor"
                                                 android:fontFamily="@font/myfont"
-                                                style="@style/Widget.App.TextInputLayout">
+                                                android:hint="Employee *">
 
                                                 <com.google.android.material.textfield.TextInputEditText
-
+                                                    android:id="@+id/tie_Employee"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
+                                                    android:drawableLeft="@drawable/svg_fd_actiontype"
+                                                    android:drawablePadding="5dp"
+                                                    android:drawableTint="@color/textColor"
+                                                    android:editable="false"
+                                                    android:enabled="true"
+                                                    android:focusableInTouchMode="false"
+                                                    android:fontFamily="@font/myfont"
                                                     android:gravity="center_vertical"
                                                     android:paddingLeft="10dp"
                                                     android:paddingTop="8dp"
                                                     android:paddingBottom="8dp"
-                                                    android:drawableLeft="@drawable/svg_fd_actiontype"
-                                                    android:drawablePadding="5dp"
-                                                    android:drawableTint="@color/textColor"
-                                                    android:textSize="14dp"
-                                                    android:focusableInTouchMode="false"
-                                                    android:enabled="false"
-                                                    android:editable="false"
-                                                    android:fontFamily="@font/myfont"
                                                     android:textColor="@color/greydarks"
-                                                    android:textStyle="normal"/>
+                                                    android:textSize="14dp"
+                                                    android:textStyle="normal" />
 
                                             </com.google.android.material.textfield.TextInputLayout>
 
@@ -399,7 +400,7 @@
                                                 android:layout_width="0dp"
                                                 android:layout_weight="1"
                                                 android:layout_height="wrap_content"
-                                                android:hint="Amount *"
+                                                android:hint="Amount "
                                                 android:layout_marginTop="10dp"
                                                 android:layout_marginLeft="5dp"
                                                 android:layout_marginRight="5dp"
@@ -419,8 +420,8 @@
                                                     android:drawablePadding="5dp"
                                                     android:drawableTint="@color/textColor"
                                                     android:textSize="14dp"
-                                                    android:focusableInTouchMode="false"
-                                                    android:enabled="false"
+                                                    android:inputType="numberDecimal"
+                                                    android:maxLength="10"
                                                     android:editable="false"
                                                     android:fontFamily="@font/myfont"
                                                     android:textColor="@color/greydarks"
@@ -436,7 +437,7 @@
                                             android:layout_height="wrap_content">
 
                                             <com.google.android.material.textfield.TextInputLayout
-
+                                                android:id="@+id/til_RoundOff"
                                                 android:layout_width="0dp"
                                                 android:layout_weight="1"
                                                 android:layout_height="wrap_content"
@@ -449,7 +450,7 @@
                                                 style="@style/Widget.App.TextInputLayout">
 
                                                 <com.google.android.material.textfield.TextInputEditText
-
+                                                    android:id="@+id/tie_RoundOff"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:gravity="center_vertical"
@@ -460,9 +461,11 @@
                                                     android:drawablePadding="5dp"
                                                     android:drawableTint="@color/textColor"
                                                     android:textSize="14dp"
-                                                    android:focusableInTouchMode="false"
-                                                    android:enabled="false"
-                                                    android:editable="false"
+                                                    android:focusableInTouchMode="true"
+                                                    android:enabled="true"
+                                                    android:editable="true"
+                                                    android:inputType="numberDecimal"
+                                                    android:maxLength="10"
                                                     android:fontFamily="@font/myfont"
                                                     android:textColor="@color/greydarks"
                                                     android:textStyle="normal"/>
@@ -495,7 +498,7 @@
                                                     android:drawableTint="@color/textColor"
                                                     android:textSize="14dp"
                                                     android:focusableInTouchMode="false"
-                                                    android:enabled="false"
+                                                    android:enabled="true"
                                                     android:editable="false"
                                                     android:fontFamily="@font/myfont"
                                                     android:textColor="@color/greydarks"
@@ -504,6 +507,55 @@
                                             </com.google.android.material.textfield.TextInputLayout>
 
                                         </LinearLayout>
+
+                                        <LinearLayout
+                                            android:orientation="horizontal"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content">
+
+
+
+
+
+                                            <com.google.android.material.textfield.TextInputLayout
+                                                android:id="@+id/til_NetAmount"
+                                                android:layout_width="0dp"
+                                                android:layout_weight="1"
+                                                android:layout_height="wrap_content"
+                                                android:hint="Net Amount"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_marginLeft="5dp"
+                                                android:layout_marginRight="5dp"
+                                                android:drawableTint="@color/textColor"
+                                                android:fontFamily="@font/myfont"
+                                                style="@style/Widget.App.TextInputLayout">
+
+                                                <com.google.android.material.textfield.TextInputEditText
+                                                    android:id="@+id/tie_NetAmount"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:gravity="center_vertical"
+                                                    android:paddingLeft="10dp"
+                                                    android:paddingTop="8dp"
+                                                    android:paddingBottom="8dp"
+                                                    android:drawableLeft="@drawable/svg_fd_actiontype"
+                                                    android:drawablePadding="5dp"
+                                                    android:drawableTint="@color/textColor"
+                                                    android:textSize="14dp"
+                                                    android:focusableInTouchMode="false"
+
+                                                    android:editable="false"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:textColor="@color/greydarks"
+                                                    android:textStyle="normal"/>
+
+                                            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                                        </LinearLayout>
+
+
 
                                         <LinearLayout
                                             android:orientation="horizontal"
@@ -535,9 +587,11 @@
                                                     android:drawablePadding="5dp"
                                                     android:drawableTint="@color/textColor"
                                                     android:textSize="14dp"
-                                                    android:focusableInTouchMode="false"
-                                                    android:enabled="false"
-                                                    android:editable="false"
+                                                    android:focusableInTouchMode="true"
+                                                    android:enabled="true"
+                                                    android:editable="true"
+                                                    android:maxLength="250"
+                                                    android:maxLines="4"
                                                     android:fontFamily="@font/myfont"
                                                     android:textColor="@color/greydarks"
                                                     android:textStyle="normal"/>
