@@ -57,6 +57,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     private var til_TransactionType       : TextInputLayout?   = null
     private var til_Bill_Type       : TextInputLayout?   = null
     private var til_Petty_Cashier       : TextInputLayout?   = null
+    private var til_PaymentMethod       : TextInputLayout?   = null
     private var til_Employee       : TextInputLayout?   = null
     private var til_RoundOff       : TextInputLayout?   = null
     private var til_NetAmount       : TextInputLayout?   = null
@@ -180,6 +181,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     var employeeCount = 0
     lateinit var projectWiseEmployeeViewModel: ProjectWiseEmployeeViewModel
     lateinit var projectWiseEmployeeArrayList: JSONArray
+    lateinit var projectWiseEmployeeSort: JSONArray
     private var dialogProjectWiseEmployee: Dialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -243,6 +245,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         til_TransactionType      = findViewById(R.id.til_TransactionType)
         til_Bill_Type      = findViewById(R.id.til_Bill_Type)
         til_Petty_Cashier      = findViewById(R.id.til_Petty_Cashier)
+        til_PaymentMethod      = findViewById(R.id.til_PaymentMethod)
         til_Employee      = findViewById(R.id.til_Employee)
         til_RoundOff      = findViewById(R.id.til_RoundOff)
         til_NetAmount      = findViewById(R.id.til_NetAmount)
@@ -721,9 +724,14 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
             ll_paymentlist = dialogPaymentSheet!! .findViewById(R.id.ll_paymentlist) as LinearLayout
             recyPaymentList = dialogPaymentSheet!! .findViewById(R.id.recyPaymentList) as RecyclerView
+            var otheAmount = ""
+            if (ID_TransactionType.equals("4")){
+                otheAmount = tie_NetAmount!!.text.toString()
+            }else{
+                otheAmount = tie_OtherCharges!!.text.toString()
+            }
 
 
-            var otheAmount = tie_OtherCharges!!.text.toString()
             if (otheAmount.equals("") || otheAmount.equals(".")){
                 otheAmount = "0.00"
             }
@@ -1018,7 +1026,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                billtTypeViewModel.getBilltType(this)!!.observe(
+                billtTypeViewModel.getBilltType(this,ID_Project,ID_Employee)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -1033,8 +1041,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                     Log.e(TAG,"msg   9788   "+msg)
 
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("BillDetails")
-                                        billtTypeArrayList = jobjt.getJSONArray("BillList")
+                                        val jobjt = jObject.getJSONObject("BillTypeDetails")
+                                        billtTypeArrayList = jobjt.getJSONArray("BillTypeDetailsList")
 
                                         if (billtTypeArrayList.length() > 0){
                                             billtypePopup(billtTypeArrayList)
@@ -1120,7 +1128,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                pettyCashierViewModel.getPettyCashierData(this)!!.observe(
+                pettyCashierViewModel.getPettyCashierData(this,ID_Project,ID_Employee)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -1135,8 +1143,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                     Log.e(TAG,"msg   1095   "+msg)
 
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("PettyCashierDetails")
-                                        pettyCashierArrayList = jobjt.getJSONArray("PettyCashierList")
+                                        val jobjt = jObject.getJSONObject("PettyCashieDetails")
+                                        pettyCashierArrayList = jobjt.getJSONArray("PettyCashieList")
 
                                         if (pettyCashierArrayList.length() > 0){
                                             pettyCashierPopup(pettyCashierArrayList)
@@ -1283,7 +1291,6 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     }
 
     private fun projectWiseEmployeePopup(projectWiseEmployeeArrayList: JSONArray) {
-
         try {
             dialogProjectWiseEmployee = Dialog(this)
             dialogProjectWiseEmployee!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -1294,14 +1301,59 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             var llsearch = dialogProjectWiseEmployee!! .findViewById(R.id.llsearch) as LinearLayout
             val etsearch = dialogProjectWiseEmployee!! .findViewById(R.id.etsearch) as EditText
 
-            llsearch.visibility = View.GONE
+          //  llsearch.visibility = View.GONE
             tvv_list_name!!.setText("Employee")
+
+            projectWiseEmployeeSort = JSONArray()
+            for (k in 0 until projectWiseEmployeeArrayList.length()) {
+                val jsonObject = projectWiseEmployeeArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                projectWiseEmployeeSort.put(jsonObject)
+            }
 //
             val lLayout = GridLayoutManager(this@ProjectTransactionActivity, 1)
             recylist!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-            val adapter = ProjectWiseEmployeeAdapter(this@ProjectTransactionActivity, projectWiseEmployeeArrayList)
+            val adapter = ProjectWiseEmployeeAdapter(this@ProjectTransactionActivity, projectWiseEmployeeSort)
             recylist!!.adapter = adapter
             adapter.setClickListener(this@ProjectTransactionActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    projectWiseEmployeeSort = JSONArray()
+
+                    for (k in 0 until projectWiseEmployeeArrayList.length()) {
+                        val jsonObject = projectWiseEmployeeArrayList.getJSONObject(k)
+//                        if (textlength <= jsonObject.getString("ProjName").length) {
+//
+//
+//                        }
+
+//                        if (jsonObject.getString("EmployeeName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+//                            projectWiseEmployeeSort.put(jsonObject)
+//                        }
+
+                        if (jsonObject.getString("EmployeeName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())
+                            || jsonObject.getString("Department")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())
+                            || jsonObject.getString("Designation")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                            projectWiseEmployeeSort.put(jsonObject)
+                        }
+                    }
+
+                    Log.e(TAG,"projectWiseEmployeeSort               1399    "+projectWiseEmployeeSort)
+                    val adapter = ProjectWiseEmployeeAdapter(this@ProjectTransactionActivity, projectWiseEmployeeSort)
+                    recylist!!.adapter = adapter
+                    adapter.setClickListener(this@ProjectTransactionActivity)
+                }
+            })
 
 
             dialogProjectWiseEmployee!!.show()
@@ -1701,6 +1753,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         tie_Bill_Type!!.addTextChangedListener(watcher)
         tie_Petty_Cashier!!.addTextChangedListener(watcher)
         tie_Employee!!.addTextChangedListener(watcher)
+        tie_RoundOff!!.addTextChangedListener(watcher)
+
     }
 
     var watcher: TextWatcher = object : TextWatcher {
@@ -1783,6 +1837,28 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                         til_Employee!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
                     }
 
+                }
+
+                editable === tie_RoundOff!!.editableText -> {
+                    Log.e(TAG,"17891  tie_RoundOff  ")
+                    if (ID_TransactionType.equals("2") || ID_TransactionType.equals("4")){
+
+                        Log.e(TAG,"179444   "+tie_RoundOff!!.text.toString())
+
+                        var othCharge = tie_OtherCharges!!.text.toString()
+                        var roundCharge = tie_RoundOff!!.text.toString()
+
+                        if (othCharge.equals("") || othCharge.equals(".")){
+                            othCharge = "0.0"
+                        }
+                        if (roundCharge.equals("") || roundCharge.equals(".")){
+                            roundCharge = "0.0"
+                        }
+
+                        tie_NetAmount!!.setText(DecimalToWordsConverter.getDecimelFormate((othCharge.toFloat()+roundCharge.toFloat()).toString()))
+                    }else{
+                        tie_NetAmount!!.setText("0.00")
+                    }
                 }
 
             }
@@ -2306,7 +2382,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             dialogBilltType!!.dismiss()
             val jsonObject = billtTypeArrayList.getJSONObject(position)
             ID_BillType = jsonObject.getString("ID_BillType")
-            tie_Bill_Type!!.setText(jsonObject.getString("BillType"))
+            tie_Bill_Type!!.setText(jsonObject.getString("BTName"))
 
 
         }
@@ -2316,7 +2392,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             dialogPettyCashier!!.dismiss()
             val jsonObject = pettyCashierArrayList.getJSONObject(position)
             ID_PettyCashier = jsonObject.getString("ID_PettyCashier")
-            tie_Petty_Cashier!!.setText(jsonObject.getString("PettyCashier"))
+            tie_Petty_Cashier!!.setText(jsonObject.getString("PtyCshrName"))
 
 
         }
@@ -2324,7 +2400,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         if (data.equals("ProjectEmployeeClick")){
 
             dialogProjectWiseEmployee!!.dismiss()
-            val jsonObject = projectWiseEmployeeArrayList.getJSONObject(position)
+            val jsonObject = projectWiseEmployeeSort.getJSONObject(position)
             ID_Employee = jsonObject.getString("FK_Employee")
             tie_Employee!!.setText(jsonObject.getString("EmployeeName"))
 
@@ -2516,6 +2592,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         til_RoundOff!!.visibility = View.VISIBLE
         til_NetAmount!!.visibility = View.VISIBLE
         til_Petty_Cashier!!.visibility = View.VISIBLE
+        til_PaymentMethod!!.visibility = View.VISIBLE
 
         if (ID_TransactionType.equals("0")){
             Log.e(TAG,"19533 0  ")
@@ -2533,6 +2610,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         else if (ID_TransactionType.equals("2")){
             Log.e(TAG,"19533 2  ")
             til_Petty_Cashier!!.visibility = View.GONE
+            til_PaymentMethod!!.visibility = View.GONE
             tie_OtherCharges!!.isFocusableInTouchMode = false
             tie_OtherCharges!!.isEnabled = true
         }

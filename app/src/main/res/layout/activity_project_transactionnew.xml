@@ -422,7 +422,6 @@
                                                     android:textSize="14dp"
                                                     android:inputType="numberDecimal"
                                                     android:maxLength="10"
-                                                    android:editable="false"
                                                     android:fontFamily="@font/myfont"
                                                     android:textColor="@color/greydarks"
                                                     android:textStyle="normal"/>

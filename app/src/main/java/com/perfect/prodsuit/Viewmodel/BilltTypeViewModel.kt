@@ -11,8 +11,8 @@ class BilltTypeViewModel : ViewModel() {
 
     var billtTypeData: MutableLiveData<BilltTypeModel>? = null
 
-    fun getBilltType(context: Context) : LiveData<BilltTypeModel>? {
-        billtTypeData = BillTypeRepository.getServicesApiCall(context)
+    fun getBilltType(context: Context,ID_Project : String,ID_Employee : String) : LiveData<BilltTypeModel>? {
+        billtTypeData = BillTypeRepository.getServicesApiCall(context,ID_Project,ID_Employee)
         return billtTypeData
     }
 }

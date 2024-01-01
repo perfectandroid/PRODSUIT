@@ -11,8 +11,8 @@ class PettyCashierViewModel : ViewModel() {
 
     var pettyCashierData: MutableLiveData<PettyCashierModel>? = null
 
-    fun getPettyCashierData(context: Context) : LiveData<PettyCashierModel>? {
-        pettyCashierData = PettyCashierRepository.getServicesApiCall(context)
+    fun getPettyCashierData(context: Context,ID_Project : String,ID_Employee : String) : LiveData<PettyCashierModel>? {
+        pettyCashierData = PettyCashierRepository.getServicesApiCall(context,ID_Project,ID_Employee)
         return pettyCashierData
     }
 }

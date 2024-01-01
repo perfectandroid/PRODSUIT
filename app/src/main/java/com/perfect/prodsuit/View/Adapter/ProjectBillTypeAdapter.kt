@@ -37,7 +37,7 @@ class ProjectBillTypeAdapter(internal var context: Context, internal var jsonArr
                 Log.e(TAG,"onBindViewHolder   1051   ")
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
-                holder.txtBillType.text        = jsonObject!!.getString("BillType")
+                holder.txtBillType.text        = jsonObject!!.getString("BTName")
 
                 holder.llBilltype!!.setTag(position)
                 holder.llBilltype!!.setOnClickListener(View.OnClickListener {
