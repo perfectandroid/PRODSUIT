@@ -102,10 +102,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent">
 
-                        <androidx.core.widget.NestedScrollView
+                        <ScrollView
+                            android:layout_alignParentTop="true"
+                            android:layout_above="@+id/ll_paymentInfo"
                             android:id="@+id/nest"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -708,22 +711,23 @@
 
                             </LinearLayout>
 
-                        </androidx.core.widget.NestedScrollView>
+                        </ScrollView>
 
                         <!--recyclerview-->
 
                         <LinearLayout
-                            android:layout_margin="10dp"
-                            android:layout_below="@+id/nest"
-                            android:layout_above="@+id/llBtn"
-                            android:layout_marginTop="20dp"
+
                             android:id="@+id/ll_paymentInfo"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:paddingBottom="0dp"
+                            android:layout_above="@+id/llBtn"
                             android:visibility="gone"
                             android:orientation="vertical"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                             <TextView
-                                android:background="@color/colorPrimary"
+                                android:background="@drawable/top_rounded_chip"
                                 android:gravity="center_vertical"
                                 android:textSize="16dp"
                                 android:paddingLeft="10dp"

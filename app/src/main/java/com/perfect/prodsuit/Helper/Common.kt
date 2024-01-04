@@ -8,6 +8,9 @@ import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.AttendanceMarkingActivity
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 object Common {
 
@@ -64,4 +67,23 @@ object Common {
     private fun rad2deg(rad: Double): Double {
         return rad * 180.0 / Math.PI
     }
+
+    fun getCurrentDateNTime(mode : String): String {
+
+        var result = ""
+
+        val currentDate1 = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
+        val currentTime1 = SimpleDateFormat("hh:mm aa", Locale.getDefault()).format(Date())
+
+        if (mode.equals("1")){
+            result = currentDate1
+        }
+        else if (mode.equals("2")){
+            result = currentTime1
+        }
+
+        return result
+    }
+
+
 }

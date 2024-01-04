@@ -897,4 +897,7 @@ interface ApiInterface {
     @POST("Project/PettyCashieDetails")
     fun getPettyCashieDetails(@Body body: RequestBody): Call<String>
 
+    @POST("Project/PaymentInformation")
+    fun getPaymentInformation(@Body body: RequestBody): Call<String>
+
 }

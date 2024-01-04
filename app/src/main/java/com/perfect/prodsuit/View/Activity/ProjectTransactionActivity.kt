@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DecimalToWordsConverter
 import com.perfect.prodsuit.Helper.DecimelFormatters
@@ -185,6 +186,16 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     lateinit var projectWiseEmployeeSort: JSONArray
     private var dialogProjectWiseEmployee: Dialog? = null
 
+    private var imLeadedit: ImageView? = null
+    private var ll_paymentInfo: LinearLayout? = null
+
+    private var recyle_paymentInfo          : RecyclerView?      = null
+    lateinit var paymentInfoViewModel: PaymentInfoViewModel
+    var payCount = 0
+    lateinit var paymentInfoList: JSONArray
+
+    private var paymentAdapter : PaymentInfoAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -203,6 +214,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         billtTypeViewModel = ViewModelProvider(this).get(BilltTypeViewModel::class.java)
         pettyCashierViewModel = ViewModelProvider(this).get(PettyCashierViewModel::class.java)
         projectWiseEmployeeViewModel = ViewModelProvider(this).get(ProjectWiseEmployeeViewModel::class.java)
+        paymentInfoViewModel = ViewModelProvider(this).get(PaymentInfoViewModel::class.java)
 
         setRegViews()
 //        var jsonObject: String? = intent.getStringExtra("jsonObject")
@@ -257,6 +269,10 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
         btnReset = findViewById(R.id.btnReset)
         btnSubmit = findViewById(R.id.btnSubmit)
+
+        recyle_paymentInfo    = findViewById(R.id.recyle_paymentInfo)
+        imLeadedit    = findViewById(R.id.imLeadedit)
+        ll_paymentInfo    = findViewById(R.id.ll_paymentInfo)
 
         tie_TransactionType!!.setOnClickListener(this)
         tie_Project!!.setOnClickListener(this)
@@ -2494,6 +2510,15 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             hideShow(ID_TransactionType)
             setMandatoryField(ID_TransactionType)
 
+            if (ID_TransactionType.equals("4") || ID_TransactionType.equals("0")) {
+                hideShow("0")
+            }
+            else
+            {
+                payCount = 0
+                getpaymentInfo2(ID_TransactionType,ID_Project,ID_Stage,ID_Employee,ID_BillType,ID_PaymentMethod,ID_PettyCashier)
+            }
+
         }
 
 
@@ -2514,6 +2539,15 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             ID_Employee = ""
             tie_Employee!!.setText("")
 
+            if (ID_TransactionType.equals("4") || ID_TransactionType.equals("0")) {
+                hideShow("0")
+            }
+            else
+            {
+                payCount = 0
+                getpaymentInfo2(ID_TransactionType,ID_Project,ID_Stage,ID_Employee,ID_BillType,ID_PaymentMethod,ID_PettyCashier)
+            }
+
         }
         if (data.equals("stageCliik")){
 
@@ -2529,6 +2563,15 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             ID_Employee = ""
             tie_Employee!!.setText("")
 
+            if (ID_TransactionType.equals("4") || ID_TransactionType.equals("0")) {
+                hideShow("0")
+            }
+            else
+            {
+                payCount = 0
+                getpaymentInfo2(ID_TransactionType,ID_Project,ID_Stage,ID_Employee,ID_BillType,ID_PaymentMethod,ID_PettyCashier)
+            }
+
 
         }
 
@@ -2538,6 +2581,15 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             val jsonObject = billtTypeArrayList.getJSONObject(position)
             ID_BillType = jsonObject.getString("ID_BillType")
             tie_Bill_Type!!.setText(jsonObject.getString("BTName"))
+
+            if (ID_TransactionType.equals("4") || ID_TransactionType.equals("0")) {
+                hideShow("0")
+            }
+            else
+            {
+                payCount = 0
+                getpaymentInfo2(ID_TransactionType,ID_Project,ID_Stage,ID_Employee,ID_BillType,ID_PaymentMethod,ID_PettyCashier)
+            }
 
 
         }
@@ -2549,6 +2601,15 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             ID_PettyCashier = jsonObject.getString("ID_PettyCashier")
             tie_Petty_Cashier!!.setText(jsonObject.getString("PtyCshrName"))
 
+            if (ID_TransactionType.equals("4") || ID_TransactionType.equals("0")) {
+                hideShow("0")
+            }
+            else
+            {
+                payCount = 0
+                getpaymentInfo2(ID_TransactionType,ID_Project,ID_Stage,ID_Employee,ID_BillType,ID_PaymentMethod,ID_PettyCashier)
+            }
+
 
         }
 
@@ -2558,6 +2619,15 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             val jsonObject = projectWiseEmployeeSort.getJSONObject(position)
             ID_Employee = jsonObject.getString("FK_Employee")
             tie_Employee!!.setText(jsonObject.getString("EmployeeName"))
+
+            if (ID_TransactionType.equals("4") || ID_TransactionType.equals("0")) {
+                hideShow("0")
+            }
+            else
+            {
+                payCount = 0
+                getpaymentInfo2(ID_TransactionType,ID_Project,ID_Stage,ID_Employee,ID_BillType,ID_PaymentMethod,ID_PettyCashier)
+            }
 
         }
 
@@ -2706,6 +2776,114 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
     }
 
+    private fun getpaymentInfo2(
+        ID_TransactionType: String,
+        ID_Project: String,
+        ID_Stage: String,
+        ID_Employee: String,
+        ID_BillType: String,
+        ID_PaymentMethod: String?,
+        ID_PettyCashier: String?
+    ) {
+
+        var asOnDate = Common.getCurrentDateNTime("1")
+        var ReqMode = "128"
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                paymentInfoViewModel.getPaymentInfo(this,ID_TransactionType,ID_Project!!,ID_Stage!!,ID_Employee!!,ID_BillType!!,
+                    ID_PaymentMethod!!,ID_PettyCashier!!,asOnDate,ReqMode!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (payCount == 0) {
+                                    payCount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   28022   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("PaymentInformation")
+                                        paymentInfoList = jobjt.getJSONArray("PaymentInformationList")
+                                        try {
+
+                                            if (paymentInfoList.length()>0)
+                                            {
+                                                ll_paymentInfo!!.visibility=View.VISIBLE
+                                                Log.e(TAG,"info 323232=="+paymentInfoList)
+
+                                                val lLayout = GridLayoutManager(this@ProjectTransactionActivity, 1)
+                                                recyle_paymentInfo!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+
+                                                paymentAdapter = PaymentInfoAdapter(this@ProjectTransactionActivity, paymentInfoList)
+                                                recyle_paymentInfo!!.adapter = paymentAdapter
+
+                                            }
+                                            else
+                                            {
+                                                val builder = AlertDialog.Builder(
+                                                    this@ProjectTransactionActivity,
+                                                    R.style.MyDialogTheme
+                                                )
+                                                builder.setMessage("No Data Found")
+                                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                                }
+                                                val alertDialog: AlertDialog = builder.create()
+                                                alertDialog.setCancelable(false)
+                                                alertDialog.show()
+                                            }
+
+                                        }
+                                        catch (e : Exception){
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectTransactionActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+
     private fun setMandatoryField(ID_TransactionType: String) {
         til_Project!!.isErrorEnabled = false
         if (ID_TransactionType.equals("0")){
@@ -2759,10 +2937,12 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         til_NetAmount!!.visibility = View.VISIBLE
         til_Petty_Cashier!!.visibility = View.VISIBLE
         til_PaymentMethod!!.visibility = View.VISIBLE
+       // ll_paymentInfo!!.visibility=View.VISIBLE
 
         if (ID_TransactionType.equals("0")){
             Log.e(TAG,"19533 0  ")
             til_NetAmount!!.visibility = View.GONE
+            ll_paymentInfo!!.visibility=View.GONE
         }
 
         else if (ID_TransactionType.equals("1")){
