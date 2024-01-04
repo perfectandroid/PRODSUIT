@@ -96,6 +96,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     lateinit var stageSort         : JSONArray
 
     val modelOtherCharges = ArrayList<ModelOtherCharges>()
+    val modelOtherChargesTemp = ArrayList<ModelOtherChargesTemp>()
 
     private var dialogTransType     : Dialog?            = null
     private var dialogProject     : Dialog?            = null
@@ -381,15 +382,57 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
                 Log.e(TAG,"3777   "+ID_TransactionType)
                 if (ID_TransactionType.equals("2") || ID_TransactionType.equals("4")){
-                    Config.disableClick(v)
-                    otherchargecount = 0
-                    getOtherCharges()
+
+                    if (modelOtherCharges.size == 0){
+                        Config.disableClick(v)
+                        otherchargecount = 0
+                        getOtherCharges()
+                    }else{
+                        Log.e(TAG,"1491112   "+modelOtherCharges.size)
+//                        modelOtherChargesTemp = modelOtherCharges :  ArrayList<ModelOtherCharges>
+//                        modelOtherCharges!!.add(ModelOtherCharges(modelOtherCharges : ArrayList<ModelOtherCharges>))
+                          //  modelOtherChargesTemp.add(ModelOtherChargesTemp(modelOtherCharges))
+//                        modelOtherChargesTemp = modelOtherCharges : ArrayList<ModelOtherCharges>
+                       // modelOtherChargesTemp.add(modelOtherCharges)
+                     //   modelOtherChargesTemp.clear()
+                        for (i in 0 until modelOtherCharges.size) {
+//                            modelOtherChargesTemp.addAll(i,modelOtherCharges :  ArrayList<ModelOtherCharges>)
+                            modelOtherChargesTemp[i].ID_OtherChargeType = modelOtherCharges[i].ID_OtherChargeType
+                            modelOtherChargesTemp[i].OctyName = modelOtherCharges[i].OctyName
+                            modelOtherChargesTemp[i].OctyTransTypeActive = modelOtherCharges[i].OctyTransTypeActive
+                            modelOtherChargesTemp[i].OctyTransType = modelOtherCharges[i].OctyTransType
+                            modelOtherChargesTemp[i].FK_TaxGroup = modelOtherCharges[i].FK_TaxGroup
+                            modelOtherChargesTemp[i].OctyAmount = modelOtherCharges[i].OctyAmount
+                            modelOtherChargesTemp[i].OctyTaxAmount = modelOtherCharges[i].OctyTaxAmount
+                            modelOtherChargesTemp[i].OctyIncludeTaxAmount = modelOtherCharges[i].OctyIncludeTaxAmount
+                            modelOtherChargesTemp[i].ID_TransType = modelOtherCharges[i].ID_TransType
+                            modelOtherChargesTemp[i].TransType_Name = modelOtherCharges[i].TransType_Name
+                            modelOtherChargesTemp[i].isCalculate = modelOtherCharges[i].isCalculate
+                            modelOtherChargesTemp[i].isTaxCalculate = modelOtherCharges[i].isTaxCalculate
+
+                        }
+                       // otherChargesPopup(modelOtherCharges)
+                        otherChargesPopup(modelOtherChargesTemp)
+                    }
+
+
                 }
 
             }
             R.id.tie_PaymentMethod->{
-                Config.disableClick(v)
-                paymentMethodPopup()
+
+                var othAmnt = tie_OtherCharges!!.text.toString()
+                if (othAmnt.equals("") || othAmnt.equals(".")){
+                    othAmnt = "0.00"
+                }
+
+                if (ID_TransactionType.equals("1") && othAmnt.toFloat() <= 0){
+                    Config.snackBarWarning(context,v,"Amount should be greter than zero")
+                }else{
+                    Config.disableClick(v)
+                    paymentMethodPopup()
+                }
+
             }
 
             R.id.btnSubmit->{
@@ -409,9 +452,19 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
     private fun clearData() {
 
+        ID_TransactionType = ""
+        ID_Project = ""
         ID_Stage = ""
+        ID_Employee = ""
+        ID_BillType  = ""
+        ID_PettyCashier  = ""
 
+        tie_TransactionType!!.setText("")
+        tie_Project!!.setText("")
         tie_Stage!!.setText("")
+        tie_Employee!!.setText("")
+        tie_Bill_Type!!.setText("")
+        tie_Petty_Cashier!!.setText("")
         tie_OtherCharges!!.setText("")
         tie_Remarks!!.setText("")
 
@@ -425,6 +478,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         adapterPaymentList = null
 
         getCurrentDate()
+        hideShow("0")
+
     }
 
     private fun validateProjectTransaction(v: View) {
@@ -476,13 +531,13 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             til_Petty_Cashier!!.setError("Select Petty cashier")
             til_Petty_Cashier!!.setErrorIconDrawable(null)
         }
-        else if(strOtherAmount.equals("")){
-            Config.snackBars(context, v, "Other Amount cannot be zero")
+        else if((ID_TransactionType.equals("1") && strOtherAmount.equals("")) || (ID_TransactionType.equals("2") && strOtherAmount.equals(""))
+            || (ID_TransactionType.equals("3") && strOtherAmount.equals(""))  || (ID_TransactionType.equals("4") && strOtherAmount.equals(""))
+            || (ID_TransactionType.equals("5") && strOtherAmount.equals("")) || (ID_TransactionType.equals("6") && strOtherAmount.equals("")) ){
+            Config.snackBars(context, v, "Amount cannot be zero")
         }
         else{
-
             validateSaveOtherCharges(v)
-
 
         }
 
@@ -530,7 +585,18 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         Log.e(TAG," 117884 pssOtherCharge          :  "+pssOtherCharge)
         Log.e(TAG," 117885 pssOtherChargeTax       :  "+pssOtherChargeTax)
 
-        validatePay(v)
+        if (ID_TransactionType.equals("1") || ID_TransactionType.equals("3") || ID_TransactionType.equals("4")
+            || ID_TransactionType.equals("5") || ID_TransactionType.equals("6")){
+            validatePay(v)
+        }else{
+
+            Log.e(TAG,"5491  updateProjectTransaction")
+//            savePaymentDetailArray = JSONArray()
+//            updateCount = 0
+//            updateProjectTransaction()
+        }
+
+
 
     }
 
@@ -562,6 +628,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     private fun validatePaymentMethod(v: View) {
 
         var otheAmount = tie_OtherCharges!!.text.toString()
+        var otheNetAmount = tie_NetAmount!!.text.toString()
         if (otheAmount.equals("") || otheAmount.equals(".")){
             otheAmount = "0.00"
         }
@@ -569,12 +636,40 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         if (otheAmount.toFloat() < 0){
             otheAmount = (Math.abs(otheAmount.toFloat())).toString()
         }
-        Log.e(TAG,"VALUES  1411   "+totPayAmount+"  ==  "+otheAmount.toFloat())
 
-        if (totPayAmount == otheAmount.toFloat()){
-            updateCount = 0
-            updateProjectTransaction()
-        }else{
+
+        ////
+        if (otheNetAmount.equals("") || otheNetAmount.equals(".")){
+            otheNetAmount = "0.00"
+        }
+
+        if (otheNetAmount.toFloat() < 0){
+            otheNetAmount = (Math.abs(otheNetAmount.toFloat())).toString()
+        }
+
+
+        Log.e(TAG,"VALUES  581011   "+totPayAmount+"  ==  "+otheAmount.toFloat())
+        Log.e(TAG,"VALUES  581012   "+totPayAmount+"  ==  "+otheNetAmount.toFloat())
+
+        if((totPayAmount == otheAmount.toFloat() && ID_TransactionType.equals("1")) || (totPayAmount == otheAmount.toFloat() && ID_TransactionType.equals("3"))
+            || (totPayAmount == otheAmount.toFloat() && ID_TransactionType.equals("5"))|| (totPayAmount == otheAmount.toFloat() && ID_TransactionType.equals("6"))){
+
+            Log.e(TAG,"5492  updateProjectTransaction")
+//            updateCount = 0
+//            updateProjectTransaction()
+
+            Log.e(TAG,"581021    Success")
+        }
+        else if (totPayAmount == otheNetAmount.toFloat() && ID_TransactionType.equals("4")){
+
+            Log.e(TAG,"5493  updateProjectTransaction")
+
+//            updateCount = 0
+//            updateProjectTransaction()
+
+            Log.e(TAG,"581022    Success")
+        }
+        else{
             Config.snackBars(context,v,"In Payment Method Balance Amt. Should be Zero")
 
         }
@@ -1396,7 +1491,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                             Log.e(TAG,"gridList  2111   "+gridList)
                                             val jobjt1 = jObject1.getJSONObject("TransType")
                                             var typeArrayList = jobjt1.getJSONArray("TransTypeDetails")
-
+                                            modelOtherChargesTemp.clear()
                                             for (i in 0 until otherChargeArrayList.length()) {
                                                 var jsonObject = otherChargeArrayList.getJSONObject(i)
 
@@ -1422,11 +1517,19 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                                 modelOtherCharges!!.add(ModelOtherCharges(jsonObject.getString("ID_OtherChargeType"),jsonObject.getString("OctyName"),
                                                     jsonObject.getString("OctyTransTypeActive"),jsonObject.getString("OctyTransType"),jsonObject.getString("FK_TaxGroup"),
                                                     jsonObject.getString("OctyAmount"), jsonObject.getString("OctyTaxAmount"),false,
-                                                    ID_TransType, TransType_Name,false))
+                                                    ID_TransType, TransType_Name,false,false))
+
+                                                modelOtherChargesTemp!!.add(ModelOtherChargesTemp(jsonObject.getString("ID_OtherChargeType"),jsonObject.getString("OctyName"),
+                                                    jsonObject.getString("OctyTransTypeActive"),jsonObject.getString("OctyTransType"),jsonObject.getString("FK_TaxGroup"),
+                                                    jsonObject.getString("OctyAmount"), jsonObject.getString("OctyTaxAmount"),false,
+                                                    ID_TransType,
+                                                    TransType_Name,false,false))
                                             }
                                         }
 
-                                             otherChargesPopup(modelOtherCharges)
+                                        Log.e(TAG,"149111   "+modelOtherCharges.size)
+//                                             otherChargesPopup(modelOtherCharges)
+                                             otherChargesPopup(modelOtherChargesTemp)
                                     } else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectTransactionActivity,
@@ -1466,7 +1569,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         }
     }
 
-    private fun otherChargesPopup(modelOtherCharges : ArrayList<ModelOtherCharges>) {
+    private fun otherChargesPopup(modelOtherChargesTemp : ArrayList<ModelOtherChargesTemp>) {
         try {
 
             dialogOtherChargesSheet = Dialog(this)
@@ -1482,7 +1585,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
             val lLayout = GridLayoutManager(this@ProjectTransactionActivity, 1)
             recycOtherCharges!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-            otherChargeAdapter = OtherChargeAdapter(this@ProjectTransactionActivity, modelOtherCharges)
+            otherChargeAdapter = OtherChargeAdapter(this@ProjectTransactionActivity, modelOtherChargesTemp)
             recycOtherCharges!!.adapter = otherChargeAdapter
             otherChargeAdapter!!.setClickListener(this@ProjectTransactionActivity)
             otherChargeAdapter!!.setClickListener(this@ProjectTransactionActivity)
@@ -1493,67 +1596,105 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
             txt_apply!!.setOnClickListener {
 
-                var otherCharge = 0F
-                for (i in 0 until modelOtherCharges.size) {
-                    if (modelOtherCharges[i].isCalculate){
-                        if (modelOtherCharges[i].OctyIncludeTaxAmount){
-                            if (modelOtherCharges[i].ID_TransType.equals("2")){
-                                // Debit
-                                otherCharge = otherCharge - (modelOtherCharges[i].OctyAmount).toFloat()
-                            }else if (modelOtherCharges[i].ID_TransType.equals("1")){
-                                // Credit
-                                otherCharge = otherCharge + (modelOtherCharges[i].OctyAmount).toFloat()
+                var hasCalulate = hasCalulateMethod(modelOtherChargesTemp)
+                if (hasCalulate){
+
+                    var otherCharge = 0F
+                    for (i in 0 until modelOtherChargesTemp.size) {
+
+                        Log.e(TAG,"548712   "+modelOtherChargesTemp.size+"  :  "+modelOtherCharges.size)
+                        try {
+
+                            if ( modelOtherChargesTemp[i].isCalculate){
+                                modelOtherCharges[i].ID_OtherChargeType = modelOtherChargesTemp[i].ID_OtherChargeType
+                                modelOtherCharges[i].OctyName = modelOtherChargesTemp[i].OctyName
+                                modelOtherCharges[i].OctyTransTypeActive = modelOtherChargesTemp[i].OctyTransTypeActive
+                                modelOtherCharges[i].OctyTransType = modelOtherChargesTemp[i].OctyTransType
+                                modelOtherCharges[i].FK_TaxGroup = modelOtherChargesTemp[i].FK_TaxGroup
+                                modelOtherCharges[i].OctyAmount = modelOtherChargesTemp[i].OctyAmount
+                                modelOtherCharges[i].OctyTaxAmount = modelOtherChargesTemp[i].OctyTaxAmount
+                                modelOtherCharges[i].OctyIncludeTaxAmount = modelOtherChargesTemp[i].OctyIncludeTaxAmount
+                                modelOtherCharges[i].ID_TransType = modelOtherChargesTemp[i].ID_TransType
+                                modelOtherCharges[i].TransType_Name = modelOtherChargesTemp[i].TransType_Name
+                                modelOtherCharges[i].isCalculate = modelOtherChargesTemp[i].isCalculate
+                                modelOtherCharges[i].isTaxCalculate = modelOtherChargesTemp[i].isTaxCalculate
                             }
-                        }else{
-                            if (modelOtherCharges[i].ID_TransType.equals("2")){
-                                // Debit
-                                otherCharge = otherCharge - ((modelOtherCharges[i].OctyAmount).toFloat()+(modelOtherCharges[i].OctyTaxAmount).toFloat())
-                            }else if (modelOtherCharges[i].ID_TransType.equals("1")){
-                                // Credit
-                                otherCharge = otherCharge + ((modelOtherCharges[i].OctyAmount).toFloat()+(modelOtherCharges[i].OctyTaxAmount).toFloat())
+
+                        }catch (e: Exception){
+                            Log.e(TAG,"12548  "+e.toString())
+                        }
+
+
+                        if (modelOtherChargesTemp[i].isCalculate){
+                            if (modelOtherChargesTemp[i].OctyIncludeTaxAmount){
+                                if (modelOtherChargesTemp[i].ID_TransType.equals("2")){
+                                    // Debit
+                                    otherCharge = otherCharge - (modelOtherChargesTemp[i].OctyAmount).toFloat()
+                                }else if (modelOtherChargesTemp[i].ID_TransType.equals("1")){
+                                    // Credit
+                                    otherCharge = otherCharge + (modelOtherChargesTemp[i].OctyAmount).toFloat()
+                                }
+                            }else{
+                                if (modelOtherChargesTemp[i].ID_TransType.equals("2")){
+                                    // Debit
+                                    otherCharge = otherCharge - ((modelOtherChargesTemp[i].OctyAmount).toFloat()+(modelOtherChargesTemp[i].OctyTaxAmount).toFloat())
+                                }else if (modelOtherChargesTemp[i].ID_TransType.equals("1")){
+                                    // Credit
+                                    otherCharge = otherCharge + ((modelOtherChargesTemp[i].OctyAmount).toFloat()+(modelOtherChargesTemp[i].OctyTaxAmount).toFloat())
+                                }
                             }
                         }
                     }
-                }
 
-                tie_OtherCharges!!.setText(Config.changeTwoDecimel(otherCharge.toString()))
-                dialogOtherChargesSheet!!.dismiss()
+                    tie_OtherCharges!!.setText(Config.changeTwoDecimel(otherCharge.toString()))
+                    dialogOtherChargesSheet!!.dismiss()
 
-                if (ID_TransactionType.equals("2") || ID_TransactionType.equals("4")){
+                    if (ID_TransactionType.equals("2") || ID_TransactionType.equals("4")){
 
-                    var othCharge = Config.changeTwoDecimel(otherCharge.toString())
-                    var othChargeAfterDot = othCharge.substringAfter(".")
-                    var othNetAmont = ""
-                    var roundOffAmont = ""
-                    othChargeAfterDot = (DecimalToWordsConverter.getDecimelFormate("."+othChargeAfterDot)).toString()
-                    Log.e(TAG,"147331   "+othChargeAfterDot)
-                    roundOffAmont  = (1-othChargeAfterDot.toDouble()).toString()
-                    Log.e(TAG,"147332   "+roundOffAmont)
+                        var othCharge = Config.changeTwoDecimel(otherCharge.toString())
+                        var othChargeAfterDot = othCharge.substringAfter(".")
+                        var othNetAmont = ""
+                        var roundOffAmont = ""
+                        othChargeAfterDot = (DecimalToWordsConverter.getDecimelFormate("."+othChargeAfterDot)).toString()
+                        Log.e(TAG,"147331   "+othChargeAfterDot)
+                        roundOffAmont  = (1-othChargeAfterDot.toDouble()).toString()
+                        Log.e(TAG,"147332   "+roundOffAmont)
 
 
-                    ////
-                    Log.e(TAG,"14831   "+otherCharge)
-                    val decimalPlaces = 0
+                        ////
+                        Log.e(TAG,"14831   "+otherCharge)
+                        val decimalPlaces = 0
 
-                    if (othChargeAfterDot.toFloat() < .50){
-                        roundOffAmont = othChargeAfterDot
-                        tie_RoundOff!!.setText("-"+DecimalToWordsConverter.getDecimelFormate(roundOffAmont))
-                        othNetAmont = (BigDecimal(otherCharge.toDouble()).setScale(decimalPlaces, RoundingMode.DOWN)).toString()
-                        Log.e(TAG,"14832   "+othNetAmont)
-                        Log.e(TAG,"14833   "+roundOffAmont)
-                       // Log.e(TAG,"147332  -"+DecimalToWordsConverter.getDecimelFormate("."+othChargeAfterDot))
-                        //othNetAmont = Config.changeTwoDecimel((othCharge.toFloat() - othChargeAfterDot.toFloat()).toString())
-                    }else{
-                        tie_RoundOff!!.setText(DecimalToWordsConverter.getDecimelFormate(roundOffAmont))
-                        othNetAmont = (BigDecimal(otherCharge.toDouble()).setScale(decimalPlaces, RoundingMode.HALF_UP)).toString()
-                        Log.e(TAG,"14834   "+othNetAmont)
-                       // Log.e(TAG,"147333  +"+DecimalToWordsConverter.getDecimelFormate("."+othChargeAfterDot))
-                       // othNetAmont = Config.changeTwoDecimel((othCharge.toFloat() + othChargeAfterDot.toFloat()).toString())
+                        if (othChargeAfterDot.toFloat() < .50){
+                            roundOffAmont = othChargeAfterDot
+
+                            if (roundOffAmont.toDouble() == 0.0){
+                                tie_RoundOff!!.setText(""+DecimalToWordsConverter.getDecimelFormate(roundOffAmont))
+                                othNetAmont = (BigDecimal(otherCharge.toDouble()).setScale(decimalPlaces, RoundingMode.DOWN)).toString()
+                            }else{
+                                tie_RoundOff!!.setText("-"+DecimalToWordsConverter.getDecimelFormate(roundOffAmont))
+                                othNetAmont = (BigDecimal(otherCharge.toDouble()).setScale(decimalPlaces, RoundingMode.DOWN)).toString()
+                            }
+
+                            Log.e(TAG,"14832   "+othNetAmont)
+                            Log.e(TAG,"14833   "+roundOffAmont)
+                            // Log.e(TAG,"147332  -"+DecimalToWordsConverter.getDecimelFormate("."+othChargeAfterDot))
+                            //othNetAmont = Config.changeTwoDecimel((othCharge.toFloat() - othChargeAfterDot.toFloat()).toString())
+                        }else{
+                            tie_RoundOff!!.setText(DecimalToWordsConverter.getDecimelFormate(roundOffAmont))
+                            othNetAmont = (BigDecimal(otherCharge.toDouble()).setScale(decimalPlaces, RoundingMode.HALF_UP)).toString()
+                            Log.e(TAG,"14834   "+othNetAmont)
+                            // Log.e(TAG,"147333  +"+DecimalToWordsConverter.getDecimelFormate("."+othChargeAfterDot))
+                            // othNetAmont = Config.changeTwoDecimel((othCharge.toFloat() + othChargeAfterDot.toFloat()).toString())
+                        }
+                        // othNetAmont = Config.changeTwoDecimel((othCharge.toFloat() + roundOffAmont.toFloat()).toString())
+                        Log.e(TAG,"14835   "+othCharge+"  :  "+othChargeAfterDot+"  :  "+othNetAmont)
+
+                        tie_NetAmount!!.setText(DecimalToWordsConverter.getDecimelFormate(othNetAmont))
                     }
-                   // othNetAmont = Config.changeTwoDecimel((othCharge.toFloat() + roundOffAmont.toFloat()).toString())
-                    Log.e(TAG,"14835   "+othCharge+"  :  "+othChargeAfterDot+"  :  "+othNetAmont)
-
-                    tie_NetAmount!!.setText(DecimalToWordsConverter.getDecimelFormate(othNetAmont))
+                }else{
+                    Config.snackBars(context,it,"Enter atleast one transactions")
+                    Log.e(TAG,"163111   Enter atleast one transactions")
                 }
 
             }
@@ -1568,6 +1709,17 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
             Log.e(TAG,"3856  "+e)
         }
+    }
+
+    private fun hasCalulateMethod(modelOtherChargesTemp: ArrayList<ModelOtherChargesTemp>): Boolean {
+
+        var result = false
+        for (i in 0 until modelOtherChargesTemp.size) {  // iterate through the JsonArray
+            if (modelOtherChargesTemp[i].isCalculate){
+                result = true
+            }
+        }
+        return result
     }
 
     private fun getOtherChargeTax() {
@@ -1598,6 +1750,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                         otherChargeCalcArrayList = jobjt.getJSONArray("OtherChargeTaxCalculationDetailsList")
 
                                         if (otherChargeCalcArrayList.length() > 0){
+                                           // modelOtherChargesTemp[otherChargeCalcPosition].isTaxCalculate = false
                                             if (otherchargetaxMode == 0){
                                                 otherChargesCalcPopup(otherChargeCalcArrayList)
                                             }else{
@@ -1612,10 +1765,10 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
                                                 }
 
-                                                modelOtherCharges[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+                                                modelOtherChargesTemp[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
                                                 otherChargeAdapter!!.notifyItemChanged(otherChargeClickPosition)
 
-                                                Log.e(TAG,"40552     "+sumOfTax)
+                                                Log.e(TAG,"405521     "+sumOfTax)
 //                                                modelOtherCharges[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
 //
 //                                                otherChargeAdapter!!.notifyItemChanged(otherChargeClickPosition)
@@ -1732,8 +1885,9 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                     }
                 }
 
-                Log.e(TAG,"40552     "+sumOfTax)
-                modelOtherCharges[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+                Log.e(TAG,"405522     "+sumOfTax)
+                modelOtherChargesTemp[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+                modelOtherChargesTemp[otherChargeClickPosition].isTaxCalculate = true
 
                 otherChargeAdapter!!.notifyItemChanged(otherChargeClickPosition)
                 dialogOtherChargesCalcSheet!!.dismiss()
@@ -2339,6 +2493,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
             hideShow(ID_TransactionType)
             setMandatoryField(ID_TransactionType)
+
         }
 
 
@@ -2408,7 +2563,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
         if (data.equals("IncludeTaxClick")){
 
-            Log.e(TAG,"IncludeTaxClick  6733   "+ modelOtherCharges[position].OctyIncludeTaxAmount)
+            Log.e(TAG,"IncludeTaxClick  6733   "+ modelOtherChargesTemp[position].OctyIncludeTaxAmount)
 //            if (modelOtherCharges[position].OctyIncludeTaxAmount){
 ////                FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
 ////                otherchargetaxcount = 0
@@ -2417,32 +2572,32 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 //
 //            }
             otherChargeClickPosition = position
-            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
-            AmountTaxCalc = modelOtherCharges[position].OctyAmount
-            if (modelOtherCharges[position].OctyIncludeTaxAmount){
+            FK_TaxGroup = modelOtherChargesTemp[position].FK_TaxGroup
+            AmountTaxCalc = modelOtherChargesTemp[position].OctyAmount
+            if (modelOtherChargesTemp[position].OctyIncludeTaxAmount){
                 IncludeTaxCalc = "1"
             }else{
                 IncludeTaxCalc = "0"
             }
 
             otherchargetaxcount = 0
-            otherchargetaxMode = 0
+            otherchargetaxMode = 1
             getOtherChargeTax()
 
         }
 
         if (data.equals("IncludeTaxAmountClick")){
 
-            Log.e(TAG,"IncludeTaxAmountClick  8288   "+ modelOtherCharges[position].OctyIncludeTaxAmount)
+            Log.e(TAG,"IncludeTaxAmountClick  8288   "+ modelOtherChargesTemp[position].OctyIncludeTaxAmount)
             otherChargeClickPosition = position
-            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
-            AmountTaxCalc = modelOtherCharges[position].OctyAmount
-            if (modelOtherCharges[position].OctyIncludeTaxAmount){
+            FK_TaxGroup = modelOtherChargesTemp[position].FK_TaxGroup
+            AmountTaxCalc = modelOtherChargesTemp[position].OctyAmount
+            if (modelOtherChargesTemp[position].OctyIncludeTaxAmount){
                 IncludeTaxCalc = "1"
             }else{
                 IncludeTaxCalc = "0"
             }
-            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
+            FK_TaxGroup = modelOtherChargesTemp[position].FK_TaxGroup
             otherchargetaxcount = 0
             otherchargetaxMode = 0
             getOtherChargeTax()
@@ -2450,19 +2605,29 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
         if (data.equals("TaxAmountClaculateClick")){
 
-            Log.e(TAG,"TaxAmountClaculateClick  8288   "+ modelOtherCharges[position].OctyIncludeTaxAmount)
+            Log.e(TAG,"TaxAmountClaculateClick  82881   "+ modelOtherChargesTemp[position].OctyIncludeTaxAmount)
             otherChargeClickPosition = position
-            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
-            AmountTaxCalc = modelOtherCharges[position].OctyAmount
-            if (modelOtherCharges[position].OctyIncludeTaxAmount){
+            FK_TaxGroup = modelOtherChargesTemp[position].FK_TaxGroup
+            AmountTaxCalc = modelOtherChargesTemp[position].OctyAmount
+            if (modelOtherChargesTemp[position].OctyIncludeTaxAmount){
                 IncludeTaxCalc = "1"
             }else{
                 IncludeTaxCalc = "0"
             }
-            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
-            otherchargetaxcount = 0
-            otherchargetaxMode = 1
-            getOtherChargeTax()
+            FK_TaxGroup = modelOtherChargesTemp[position].FK_TaxGroup
+
+            if (modelOtherChargesTemp[position].OctyIncludeTaxAmount || modelOtherChargesTemp[position].isTaxCalculate){
+//                modelOtherChargesTemp[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+             //   modelOtherChargesTemp[position].isTaxCalculate = false
+                otherChargeAdapter!!.notifyItemChanged(otherChargeClickPosition)
+            }else{
+                otherchargetaxcount = 0
+                otherchargetaxMode = 1
+
+                getOtherChargeTax()
+            }
+
+
         }
 
         if (data.equals("deleteArrayList")){
@@ -2542,6 +2707,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     }
 
     private fun setMandatoryField(ID_TransactionType: String) {
+        til_Project!!.isErrorEnabled = false
         if (ID_TransactionType.equals("0")){
             Log.e(TAG,"19522 0  ")
             til_Project!!.defaultHintTextColor   = ContextCompat.getColorStateList(this,R.color.grey_dark)
@@ -2639,7 +2805,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             til_Bill_Type!!.visibility = View.GONE
             til_RoundOff!!.visibility = View.GONE
             til_NetAmount!!.visibility = View.GONE
-            tie_OtherCharges!!.isFocusableInTouchMode = false
+            tie_OtherCharges!!.isFocusableInTouchMode = true
             tie_OtherCharges!!.isEnabled = true
         }
 
@@ -2651,7 +2817,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             til_Bill_Type!!.visibility = View.GONE
             til_RoundOff!!.visibility = View.GONE
             til_NetAmount!!.visibility = View.GONE
-            tie_OtherCharges!!.isFocusableInTouchMode = false
+            tie_OtherCharges!!.isFocusableInTouchMode = true
             tie_OtherCharges!!.isEnabled = true
         }
 

@@ -102,30 +102,30 @@ object UpdateProjectTransactionRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            // val call = apiService.getProductcategory(body)
-            val call = apiService.saveUpdateProjectTransaction(body)
-            call.enqueue(object : retrofit2.Callback<String> {
-                override fun onResponse(
-                    call: retrofit2.Call<String>, response:
-                    Response<String>
-                ) {
-                    try {
-                        progressDialog!!.dismiss()
-                        val jObject = JSONObject(response.body())
-                        val leads = ArrayList<UpdateProjectTransactionModel>()
-                        leads.add(UpdateProjectTransactionModel(response.body()))
-                        val msg = leads[0].message
-                        updateProjectTransactionSetterGetter.value = UpdateProjectTransactionModel(msg)
-                    } catch (e: Exception) {
-                        progressDialog!!.dismiss()
-                        Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
-                    }
-                }
-                override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-                    progressDialog!!.dismiss()
-                    Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
-                }
-            })
+
+//            val call = apiService.saveUpdateProjectTransaction(body)
+//            call.enqueue(object : retrofit2.Callback<String> {
+//                override fun onResponse(
+//                    call: retrofit2.Call<String>, response:
+//                    Response<String>
+//                ) {
+//                    try {
+//                        progressDialog!!.dismiss()
+//                        val jObject = JSONObject(response.body())
+//                        val leads = ArrayList<UpdateProjectTransactionModel>()
+//                        leads.add(UpdateProjectTransactionModel(response.body()))
+//                        val msg = leads[0].message
+//                        updateProjectTransactionSetterGetter.value = UpdateProjectTransactionModel(msg)
+//                    } catch (e: Exception) {
+//                        progressDialog!!.dismiss()
+//                        Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//                override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
+//                    progressDialog!!.dismiss()
+//                    Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+//                }
+//            })
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()

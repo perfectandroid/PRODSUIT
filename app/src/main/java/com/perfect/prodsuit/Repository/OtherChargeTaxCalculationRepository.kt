@@ -76,6 +76,7 @@ object OtherChargeTaxCalculationRepository {
 
 
                 Log.e(TAG,"getOtherChargeTaxCalculationDetails  6733331   "+requestObject1)
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }

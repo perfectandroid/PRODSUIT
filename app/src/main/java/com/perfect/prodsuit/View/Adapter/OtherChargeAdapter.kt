@@ -13,12 +13,13 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Model.ModelOtherCharges
+import com.perfect.prodsuit.Model.ModelOtherChargesTemp
 import com.perfect.prodsuit.Model.ServiceDetailsFullListModel
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class OtherChargeAdapter(internal var context: Context, internal var mList: List<ModelOtherCharges>):
+class OtherChargeAdapter(internal var context: Context, internal var mList: List<ModelOtherChargesTemp>):
     RecyclerView.Adapter<RecyclerView.ViewHolder>()  {
 
     internal val TAG : String = "OtherChargeAdapter"
@@ -117,11 +118,14 @@ class OtherChargeAdapter(internal var context: Context, internal var mList: List
                 holder.tv_calculate.setOnClickListener {
                    if (empModel.isCalculate){
                        empModel.isCalculate = false
+                       notifyItemChanged(position)
+
                    }else{
                        empModel.isCalculate = true
+                       clickListener!!.onClick(position, "TaxAmountClaculateClick")
                    }
 
-                    clickListener!!.onClick(position, "TaxAmountClaculateClick")
+//                    clickListener!!.onClick(position, "TaxAmountClaculateClick")
                   //  notifyItemChanged(position)
                 }
 

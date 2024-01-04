@@ -282,6 +282,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private val PICK_DOCUMENT_REQUEST_CODE = 123
 
     val modelOtherCharges = ArrayList<ModelOtherCharges>()
+    val modelOtherChargesTemp = ArrayList<ModelOtherChargesTemp>()
     private var dialogOtherChargesSheet : Dialog? = null
     val modelOtherChargesCalculation = ArrayList<ModelOtherChargesCalculation>()
     private var dialogOtherChargesCalcSheet : Dialog? = null
@@ -946,9 +947,41 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             }
             R.id.tie_Othercharges->{
 //                Toast.makeText(applicationContext, "test 1", Toast.LENGTH_LONG).show()
-                Config.disableClick(v)
-                otherchargecount = 0
-                getOtherCharges()
+//                Config.disableClick(v)
+//                otherchargecount = 0
+//                getOtherCharges()
+
+                if (modelOtherCharges.size == 0){
+                    Config.disableClick(v)
+                    otherchargecount = 0
+                    getOtherCharges()
+                }else{
+                    Log.e(TAG,"1491112   "+modelOtherCharges.size)
+//                        modelOtherChargesTemp = modelOtherCharges :  ArrayList<ModelOtherCharges>
+//                        modelOtherCharges!!.add(ModelOtherCharges(modelOtherCharges : ArrayList<ModelOtherCharges>))
+                    //  modelOtherChargesTemp.add(ModelOtherChargesTemp(modelOtherCharges))
+//                        modelOtherChargesTemp = modelOtherCharges : ArrayList<ModelOtherCharges>
+                    // modelOtherChargesTemp.add(modelOtherCharges)
+                    //   modelOtherChargesTemp.clear()
+                    for (i in 0 until modelOtherCharges.size) {
+//                            modelOtherChargesTemp.addAll(i,modelOtherCharges :  ArrayList<ModelOtherCharges>)
+                        modelOtherChargesTemp[i].ID_OtherChargeType = modelOtherCharges[i].ID_OtherChargeType
+                        modelOtherChargesTemp[i].OctyName = modelOtherCharges[i].OctyName
+                        modelOtherChargesTemp[i].OctyTransTypeActive = modelOtherCharges[i].OctyTransTypeActive
+                        modelOtherChargesTemp[i].OctyTransType = modelOtherCharges[i].OctyTransType
+                        modelOtherChargesTemp[i].FK_TaxGroup = modelOtherCharges[i].FK_TaxGroup
+                        modelOtherChargesTemp[i].OctyAmount = modelOtherCharges[i].OctyAmount
+                        modelOtherChargesTemp[i].OctyTaxAmount = modelOtherCharges[i].OctyTaxAmount
+                        modelOtherChargesTemp[i].OctyIncludeTaxAmount = modelOtherCharges[i].OctyIncludeTaxAmount
+                        modelOtherChargesTemp[i].ID_TransType = modelOtherCharges[i].ID_TransType
+                        modelOtherChargesTemp[i].TransType_Name = modelOtherCharges[i].TransType_Name
+                        modelOtherChargesTemp[i].isCalculate = modelOtherCharges[i].isCalculate
+                        modelOtherChargesTemp[i].isTaxCalculate = modelOtherCharges[i].isTaxCalculate
+
+                    }
+                    // otherChargesPopup(modelOtherCharges)
+                    otherChargesPopup(modelOtherChargesTemp)
+                }
 
             }
 
@@ -2230,11 +2263,17 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                                 modelOtherCharges!!.add(ModelOtherCharges(jsonObject.getString("ID_OtherChargeType"),jsonObject.getString("OctyName"),
                                                     jsonObject.getString("OctyTransTypeActive"),jsonObject.getString("OctyTransType"),jsonObject.getString("FK_TaxGroup"),
                                                     jsonObject.getString("OctyAmount"), jsonObject.getString("OctyTaxAmount"),false,
-                                                    ID_TransType, TransType_Name,false))
+                                                    ID_TransType, TransType_Name,false,false))
+
+                                                modelOtherChargesTemp!!.add(ModelOtherChargesTemp(jsonObject.getString("ID_OtherChargeType"),jsonObject.getString("OctyName"),
+                                                    jsonObject.getString("OctyTransTypeActive"),jsonObject.getString("OctyTransType"),jsonObject.getString("FK_TaxGroup"),
+                                                    jsonObject.getString("OctyAmount"), jsonObject.getString("OctyTaxAmount"),false,
+                                                    ID_TransType,
+                                                    TransType_Name,false,false))
                                             }
                                         }
 
-                                        otherChargesPopup(modelOtherCharges)
+                                        otherChargesPopup(modelOtherChargesTemp)
                                     } else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
@@ -2274,7 +2313,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         }
     }
 
-    private fun otherChargesPopup(modelOtherCharges : ArrayList<ModelOtherCharges>) {
+    private fun otherChargesPopup(modelOtherChargesTemp : ArrayList<ModelOtherChargesTemp>) {
         try {
 
             dialogOtherChargesSheet = Dialog(this)
@@ -2290,7 +2329,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
             val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
             recycOtherCharges!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-            otherChargeAdapter = OtherChargeAdapter(this@ProjectSiteVisitActivity, modelOtherCharges)
+            otherChargeAdapter = OtherChargeAdapter(this@ProjectSiteVisitActivity, modelOtherChargesTemp)
             recycOtherCharges!!.adapter = otherChargeAdapter
             otherChargeAdapter!!.setClickListener(this@ProjectSiteVisitActivity)
             otherChargeAdapter!!.setClickListener(this@ProjectSiteVisitActivity)
@@ -2301,32 +2340,62 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
             txt_apply!!.setOnClickListener {
 
-                var otherCharge = 0F
-                for (i in 0 until modelOtherCharges.size) {
-                    if (modelOtherCharges[i].isCalculate){
-                        if (modelOtherCharges[i].OctyIncludeTaxAmount){
-                            if (modelOtherCharges[i].ID_TransType.equals("1")){
-                                // Credit
-                                otherCharge = otherCharge - (modelOtherCharges[i].OctyAmount).toFloat()
-                            }else if (modelOtherCharges[i].ID_TransType.equals("2")){
-                                // Debit
-                                otherCharge = otherCharge + (modelOtherCharges[i].OctyAmount).toFloat()
-                            }
-                        }else{
-                            if (modelOtherCharges[i].ID_TransType.equals("1")){
-                                // Credit
+                var hasCalulate = hasCalulateMethod(modelOtherChargesTemp)
+                if (hasCalulate){
+                    var otherCharge = 0F
+                    for (i in 0 until modelOtherChargesTemp.size) {
 
-                                otherCharge = otherCharge - ((modelOtherCharges[i].OctyAmount).toFloat()+(modelOtherCharges[i].OctyTaxAmount).toFloat())
-                            }else if (modelOtherCharges[i].ID_TransType.equals("2")){
-                                // Debit
-                                otherCharge = otherCharge + ((modelOtherCharges[i].OctyAmount).toFloat()+(modelOtherCharges[i].OctyTaxAmount).toFloat())
+                        try {
+
+                            if ( modelOtherChargesTemp[i].isCalculate){
+                                modelOtherCharges[i].ID_OtherChargeType = modelOtherChargesTemp[i].ID_OtherChargeType
+                                modelOtherCharges[i].OctyName = modelOtherChargesTemp[i].OctyName
+                                modelOtherCharges[i].OctyTransTypeActive = modelOtherChargesTemp[i].OctyTransTypeActive
+                                modelOtherCharges[i].OctyTransType = modelOtherChargesTemp[i].OctyTransType
+                                modelOtherCharges[i].FK_TaxGroup = modelOtherChargesTemp[i].FK_TaxGroup
+                                modelOtherCharges[i].OctyAmount = modelOtherChargesTemp[i].OctyAmount
+                                modelOtherCharges[i].OctyTaxAmount = modelOtherChargesTemp[i].OctyTaxAmount
+                                modelOtherCharges[i].OctyIncludeTaxAmount = modelOtherChargesTemp[i].OctyIncludeTaxAmount
+                                modelOtherCharges[i].ID_TransType = modelOtherChargesTemp[i].ID_TransType
+                                modelOtherCharges[i].TransType_Name = modelOtherChargesTemp[i].TransType_Name
+                                modelOtherCharges[i].isCalculate = modelOtherChargesTemp[i].isCalculate
+                                modelOtherCharges[i].isTaxCalculate = modelOtherChargesTemp[i].isTaxCalculate
+                            }
+
+                        }catch (e: Exception){
+                            Log.e(TAG,"12548  "+e.toString())
+                        }
+
+
+                        if (modelOtherChargesTemp[i].isCalculate){
+                            if (modelOtherChargesTemp[i].OctyIncludeTaxAmount){
+                                if (modelOtherChargesTemp[i].ID_TransType.equals("1")){
+                                    // Credit
+                                    otherCharge = otherCharge - (modelOtherChargesTemp[i].OctyAmount).toFloat()
+                                }else if (modelOtherChargesTemp[i].ID_TransType.equals("2")){
+                                    // Debit
+                                    otherCharge = otherCharge + (modelOtherChargesTemp[i].OctyAmount).toFloat()
+                                }
+                            }else{
+                                if (modelOtherChargesTemp[i].ID_TransType.equals("1")){
+                                    // Credit
+
+                                    otherCharge = otherCharge - ((modelOtherChargesTemp[i].OctyAmount).toFloat()+(modelOtherChargesTemp[i].OctyTaxAmount).toFloat())
+                                }else if (modelOtherChargesTemp[i].ID_TransType.equals("2")){
+                                    // Debit
+                                    otherCharge = otherCharge + ((modelOtherChargesTemp[i].OctyAmount).toFloat()+(modelOtherChargesTemp[i].OctyTaxAmount).toFloat())
+                                }
                             }
                         }
                     }
+
+                    tie_Othercharges!!.setText(Config.changeTwoDecimel(otherCharge.toString()))
+                    dialogOtherChargesSheet!!.dismiss()
+                }else{
+                    Config.snackBars(context,it,"Enter atleast one transactions")
+                    Log.e(TAG,"163111   Enter atleast one transactions")
                 }
 
-                tie_Othercharges!!.setText(Config.changeTwoDecimel(otherCharge.toString()))
-                dialogOtherChargesSheet!!.dismiss()
 
             }
 
@@ -2340,6 +2409,17 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
             Log.e(TAG,"3856  "+e)
         }
+    }
+
+    private fun hasCalulateMethod(modelOtherChargesTemp: ArrayList<ModelOtherChargesTemp>): Boolean {
+
+        var result = false
+        for (i in 0 until modelOtherChargesTemp.size) {  // iterate through the JsonArray
+            if (modelOtherChargesTemp[i].isCalculate){
+                result = true
+            }
+        }
+        return result
     }
 
     private fun getOtherChargeTax() {
@@ -2384,7 +2464,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
                                                 }
 
-                                                modelOtherCharges[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+                                                modelOtherChargesTemp[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
                                                 otherChargeAdapter!!.notifyItemChanged(otherChargeClickPosition)
 
                                                 Log.e(TAG,"40552     "+sumOfTax)
@@ -2500,7 +2580,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 }
 
                 Log.e(TAG,"40552     "+sumOfTax)
-                modelOtherCharges[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+                modelOtherChargesTemp[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+                modelOtherChargesTemp[otherChargeClickPosition].isTaxCalculate = true
 
                 otherChargeAdapter!!.notifyItemChanged(otherChargeClickPosition)
                 dialogOtherChargesCalcSheet!!.dismiss()
@@ -4220,16 +4301,16 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 //
 //            }
             otherChargeClickPosition = position
-            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
-            AmountTaxCalc = modelOtherCharges[position].OctyAmount
-            if (modelOtherCharges[position].OctyIncludeTaxAmount){
+            FK_TaxGroup = modelOtherChargesTemp[position].FK_TaxGroup
+            AmountTaxCalc = modelOtherChargesTemp[position].OctyAmount
+            if (modelOtherChargesTemp[position].OctyIncludeTaxAmount){
                 IncludeTaxCalc = "1"
             }else{
                 IncludeTaxCalc = "0"
             }
 
             otherchargetaxcount = 0
-            otherchargetaxMode = 0
+            otherchargetaxMode = 1
             getOtherChargeTax()
 
         }
@@ -4238,14 +4319,14 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
             Log.e(TAG,"IncludeTaxAmountClick  8288   "+ modelOtherCharges[position].OctyIncludeTaxAmount)
             otherChargeClickPosition = position
-            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
-            AmountTaxCalc = modelOtherCharges[position].OctyAmount
-            if (modelOtherCharges[position].OctyIncludeTaxAmount){
+            FK_TaxGroup = modelOtherChargesTemp[position].FK_TaxGroup
+            AmountTaxCalc = modelOtherChargesTemp[position].OctyAmount
+            if (modelOtherChargesTemp[position].OctyIncludeTaxAmount){
                 IncludeTaxCalc = "1"
             }else{
                 IncludeTaxCalc = "0"
             }
-            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
+            FK_TaxGroup = modelOtherChargesTemp[position].FK_TaxGroup
             otherchargetaxcount = 0
             otherchargetaxMode = 0
             getOtherChargeTax()
@@ -4253,19 +4334,27 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
         if (data.equals("TaxAmountClaculateClick")){
 
-            Log.e(TAG,"TaxAmountClaculateClick  8288   "+ modelOtherCharges[position].OctyIncludeTaxAmount)
+            Log.e(TAG,"TaxAmountClaculateClick  82881   "+ modelOtherChargesTemp[position].OctyIncludeTaxAmount)
             otherChargeClickPosition = position
-            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
-            AmountTaxCalc = modelOtherCharges[position].OctyAmount
-            if (modelOtherCharges[position].OctyIncludeTaxAmount){
+            FK_TaxGroup = modelOtherChargesTemp[position].FK_TaxGroup
+            AmountTaxCalc = modelOtherChargesTemp[position].OctyAmount
+            if (modelOtherChargesTemp[position].OctyIncludeTaxAmount){
                 IncludeTaxCalc = "1"
             }else{
                 IncludeTaxCalc = "0"
             }
-            FK_TaxGroup = modelOtherCharges[position].FK_TaxGroup
-            otherchargetaxcount = 0
-            otherchargetaxMode = 1
-            getOtherChargeTax()
+            FK_TaxGroup = modelOtherChargesTemp[position].FK_TaxGroup
+
+            if (modelOtherChargesTemp[position].OctyIncludeTaxAmount || modelOtherChargesTemp[position].isTaxCalculate){
+//                modelOtherChargesTemp[otherChargeClickPosition].OctyTaxAmount = sumOfTax.toString()
+                //   modelOtherChargesTemp[position].isTaxCalculate = false
+                otherChargeAdapter!!.notifyItemChanged(otherChargeClickPosition)
+            }else{
+                otherchargetaxcount = 0
+                otherchargetaxMode = 1
+
+                getOtherChargeTax()
+            }
         }
 
 

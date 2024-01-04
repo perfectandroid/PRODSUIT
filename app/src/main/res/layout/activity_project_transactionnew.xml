@@ -83,7 +83,7 @@
                             android:background="@color/color_activity_transparent"
                             android:padding="5dp"
                             android:src="@drawable/ic_edit"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             tools:ignore="UseAppTint" />
 
                     </LinearLayout>
