@@ -1,6 +1,7 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.DialogInterface
@@ -25,6 +26,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
@@ -36,10 +38,20 @@ import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
 class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener {
+
+    //...................
+    var ll_sheduled: LinearLayout? = null
+    var tie_ScheduledDate: TextInputEditText? = null
+    var tie_ScheduledTime: TextInputEditText? = null
+    var img_filter: ImageView? = null
+
+    //..................
+
     var tie_module: TextInputEditText? = null
     var tie_Branch: TextInputEditText? = null
     var tie_Channel: TextInputEditText? = null
@@ -118,9 +130,24 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         tie_FromDate!!.setText(currentDate)
+        tie_ScheduledDate!!.setText(currentDate)
+
+
+
+//        val sdf1 = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
+//        val currentDate1 = sdf1.format(Date())
+//        val newDate: Date = sdf1.parse(currentDate1)
+//        val sdfTime1 = SimpleDateFormat("hh:mm aa")
+//        tie_ScheduledTime!!.setText(""+sdfTime1.format(newDate))
+
     }
 
     private fun setReg() {
+        ll_sheduled = findViewById(R.id.ll_sheduled)
+        tie_ScheduledDate = findViewById(R.id.tie_ScheduledDate)
+        tie_ScheduledTime = findViewById(R.id.tie_ScheduledTime)
+        img_filter = findViewById(R.id.img_filter)
+        //.................
         til_Branch = findViewById(R.id.til_Branch)
         tie_Branch = findViewById(R.id.tie_Branch)
         tie_module = findViewById(R.id.tie_module)
@@ -144,6 +171,11 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         btnReset!!.setOnClickListener(this)
         tie_Attachments!!.setOnClickListener(this)
         tie_FromDate!!.setOnClickListener(this)
+
+        //............
+        tie_ScheduledDate!!.setOnClickListener(this)
+        tie_ScheduledTime!!.setOnClickListener(this)
+        img_filter!!.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -175,11 +207,67 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                     reset()
                 }
                 R.id.tie_FromDate -> {
-                    datePicker()
+                    datePicker(tie_FromDate)
+                }
+                R.id.tie_ScheduledDate -> {
+                    datePicker(tie_ScheduledDate)
+                }
+                R.id.tie_ScheduledTime -> {
+                    Config.disableClick(v)
+
+                    openBottomTime()
+                }R.id.img_filter -> {
+
+
+                filterBottomData()
                 }
 
             }
         }
+    }
+
+    private fun openBottomTime() {
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_timer, null)
+
+        Log.e(TAG,"openBottomTime 2246  ")
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+
+        val time_Picker1 = view.findViewById<TimePicker>(R.id.time_Picker1)
+
+
+
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+//            dialog.dismiss()
+            try {
+
+
+                val hr = time_Picker1!!.hour
+                val min = time_Picker1!!.minute
+                val input = ""+hr+":"+min
+                val inputDateFormat: DateFormat = SimpleDateFormat("HH:mm", Locale.US)
+                val outputDateFormat: DateFormat = SimpleDateFormat("hh:mm aa", Locale.US)
+                val date: Date = inputDateFormat.parse(input)
+                val output = outputDateFormat.format(date)
+
+                tie_ScheduledTime!!.setText(output)
+                dialog.dismiss()
+
+            }
+            catch (e: Exception){
+                //   Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
     }
 
     private fun validateData(v: View) {
@@ -193,7 +281,23 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             Config.snackBars(context, v, "Select Channel")
         } else if (ID_Shedule.equals("")) {
             Config.snackBars(context, v, "Select Shedule Type")
-        } else {
+
+        }
+
+            else  if (ID_Shedule.equals("2"))
+            {
+                if (tie_ScheduledDate!!.text.toString().equals(""))
+                {
+                    Config.snackBars(context, v, "Select Sheduled Date")
+                }
+                else if (tie_ScheduledTime!!.text.toString().equals(""))
+                {
+                    Config.snackBars(context, v, "Select Sheduled Time")
+                }
+
+            }
+
+        else {
             docUploadValidation(v)
         }
 
@@ -358,7 +462,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         }
     }
 
-    private fun datePicker() {
+    private fun datePicker(tie_FromDate: TextInputEditText?) {
         val builder = android.app.AlertDialog.Builder(this)
         val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val layout = inflater1.inflate(R.layout.alert_date_chooser, null)
@@ -394,6 +498,10 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                 if (strMonth.length == 1) {
                     strMonth = "0" + strMonth
                 }
+//                this.tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+//                selectedDate = strDay + "-" + strMonth + "-" + strYear
+//                this.tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+
                 tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
                 selectedDate = strDay + "-" + strMonth + "-" + strYear
                 tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
@@ -435,10 +543,65 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         startActivityForResult(intent, PICK_DOCUMENT_REQUEST_CODE)
     }
 
+    private fun filterBottomData() {
+
+        try {
+            Log.e(TAG,"2323222323   ")
+            val dialog1 = BottomSheetDialog(this,R.style.BottomSheetDialog)
+            val view = layoutInflater.inflate(R.layout.intemation_popup, null)
+            dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val window: Window? = dialog1.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            dialog1!!.setCanceledOnTouchOutside(true)
+
+
+            val txtReset          = view.findViewById(R.id.txtReset)          as TextView
+            val txtSearch         = view.findViewById(R.id.txtSearch)         as TextView
+            val tie_LeadSource    = view.findViewById(R.id.tie_LeadSource)    as TextInputEditText
+            val tie_LeadFrom      = view.findViewById(R.id.tie_LeadFrom)      as TextInputEditText
+            val tie_FromDate      = view.findViewById(R.id.tie_FromDate)      as TextInputEditText
+            val tie_ToDate        = view.findViewById(R.id.tie_ToDate)        as TextInputEditText
+            val tie_Category      = view.findViewById(R.id.tie_Category)      as TextInputEditText
+
+            val tie_ProductType       = view.findViewById(R.id.tie_ProductType)       as TextInputEditText
+            val tie_productproject    = view.findViewById(R.id.tie_productproject)    as TextInputEditText
+            val tie_employeee         = view.findViewById(R.id.tie_employeee)         as TextInputEditText
+            val tie_CollectedBy       = view.findViewById(R.id.tie_CollectedBy)       as TextInputEditText
+            val tie_areaa             = view.findViewById(R.id.tie_areaa)             as TextInputEditText
+            val tie_FollowUpAction    = view.findViewById(R.id.tie_FollowUpAction)    as TextInputEditText
+            val tie_FollowUpType      = view.findViewById(R.id.tie_FollowUpType)      as TextInputEditText
+            val tie_Priority          = view.findViewById(R.id.tie_Priority)          as TextInputEditText
+            val tie_LeadDetails       = view.findViewById(R.id.tie_LeadDetails)       as TextInputEditText
+            val tie_Lead_entry        = view.findViewById(R.id.tie_Lead_entry)        as TextInputEditText
+            val add_multiple          = view.findViewById(R.id.add_multiple)          as LinearLayout
+
+
+
+
+            dialog1!!.setContentView(view)
+            dialog1.show()
+
+            dialog1.show()
+        }catch (e: Exception){
+            Log.e(TAG,"777  Exception   "+e.toString())
+        }
+
+
+
+    }
+
     private fun reset() {
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         tie_FromDate!!.setText(currentDate)
+
+        //................
+        tie_ScheduledDate!!.setText(currentDate)
+        ll_sheduled!!.visibility=View.GONE
+        img_filter!!.visibility=View.INVISIBLE
+
+        //...............
 
         tie_module!!.setText("")
         tie_Branch!!.setText("")
@@ -883,6 +1046,15 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             val jsonObject = moduleSort.getJSONObject(position)
             ID_module = jsonObject.getString("ID_Mode")
             tie_module!!.setText(jsonObject.getString("ModeName"))
+
+            if (ID_module.equals("2"))
+            {
+                img_filter!!.visibility=View.VISIBLE
+            }
+            else
+            {
+                img_filter!!.visibility=View.INVISIBLE
+            }
         }
         if (data.equals("branch")) {
             dialogBranch!!.dismiss()
@@ -902,6 +1074,15 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             val jsonObject = shedulesort.getJSONObject(position)
             ID_Shedule = jsonObject.getString("ID_SheduledType")
             tie_shedule!!.setText(jsonObject.getString("SheduledTypeName"))
+
+            if (ID_Shedule.equals("2"))
+            {
+                ll_sheduled!!.visibility=View.VISIBLE
+            }
+            else
+            {
+                ll_sheduled!!.visibility=View.GONE
+            }
         }
     }
 
