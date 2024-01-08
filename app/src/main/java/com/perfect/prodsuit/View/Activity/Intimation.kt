@@ -45,6 +45,14 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener {
+
+    private var source_lead          : RecyclerView? = null
+
+    var ID_SearchBy: String? = "0"
+    var Transmode: String? = ""
+
+    private var dialog1: Dialog? = null
+
     private var lead_sourceName: String = ""
     var leadSource                 = 0
     lateinit var leadSourceViewModel : LeadSourceViewModel
@@ -64,8 +72,10 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     lateinit var prodCategoryArrayList: JSONArray
     private var dialogProdCat: Dialog? = null
     var recyProdCategory: RecyclerView? = null
-
-
+    var ID_Category: String? = ""
+    lateinit var prodCatSort : JSONArray
+    //..........reset
+    private var txtReset  : TextView? = null
     //..........lead from
 
     var LeadFromInfocount = 0
@@ -74,6 +84,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     lateinit var leadfromInfosort: JSONArray
     var recy_comm: RecyclerView? = null
     private var dialogLeadinfo: Dialog? = null
+    var ID_LeadInfo: String = ""
 
     private var tie_LeadFrom: TextInputEditText? = null
     private var ID_FIELD: String = ""
@@ -82,6 +93,18 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     //......projectproduct
     private var tie_productproject  : TextInputEditText? = null
     private var til_productproject  : TextInputLayout? = null
+
+    //......product
+    private var tie_product  : TextInputEditText? = null
+    private var til_product  : TextInputLayout? = null
+    var proddetail = 0
+    lateinit var productDetailViewModel: ProductDetailViewModel
+    lateinit var prodDetailArrayList: JSONArray
+    private var dialogProdDet: Dialog? = null
+    var recyProdDetail: RecyclerView? = null
+    lateinit var prodDetailSort: JSONArray
+
+    var ID_Product: String = ""
     //............product type
     private var tie_ProductType  : TextInputEditText? = null
     var productTypeCount = 0
@@ -150,6 +173,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     lateinit var prodPrioritySort: JSONArray
     var ID_Priority: String? = ""
     //............lead details
+
+
     private var tie_LeadDetails  : TextInputEditText? = null
     var leadDetails = 0
     lateinit var leadDetailViewModel: LeadDetailViewModel
@@ -159,10 +184,19 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     lateinit var leadDetailSort : JSONArray
     private var ID_Lead_Details = "";
     //........lead details
+    private var ll_leadENTRY  : LinearLayout? = null
     private var til_Lead_entry  : TextInputLayout? = null
     private var tie_Lead_entry  : TextInputEditText? = null
+    //..........grid
+    private var ll_gridData  : LinearLayout? = null
     //.......multiple lead
+    lateinit var leadHistSort: JSONArray
+    var recyLeadHist: RecyclerView? = null
+    private var dialogHist: Dialog? = null
+    lateinit var leadHistArrayList : JSONArray
+    lateinit var leadHistViewModel: LeadHistViewModel
     private var add_multiple  : LinearLayout? = null
+    var addMulti = 0
     private var Cust_Wise_ListArray = JSONArray()
     private var dialogCusMiseLead : Dialog? = null
     var recyleCusWise: RecyclerView? = null
@@ -262,6 +296,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
         leadDetailViewModel = ViewModelProvider(this).get(LeadDetailViewModel::class.java)
         productTypeViewModel = ViewModelProvider(this).get(ProductTypeViewModel::class.java)
+        productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
+        leadHistViewModel = ViewModelProvider(this).get(LeadHistViewModel::class.java)
         setReg()
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
@@ -279,6 +315,10 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     }
 
     private fun setReg() {
+        gridListarray = JSONArray()
+        ll_gridData          = findViewById(R.id.ll_gridData)          as LinearLayout
+        fulllengthrcy          = findViewById(R.id.fulllengthrcy)          as RecyclerView
+
         ll_sheduled = findViewById(R.id.ll_sheduled)
         tie_ScheduledDate = findViewById(R.id.tie_ScheduledDate)
         tie_ScheduledTime = findViewById(R.id.tie_ScheduledTime)
@@ -683,16 +723,16 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
         try {
             Log.e(TAG,"2323222323   ")
-            val dialog1 = BottomSheetDialog(this,R.style.BottomSheetDialog)
+             dialog1 = BottomSheetDialog(this,R.style.BottomSheetDialog)
             val view = layoutInflater.inflate(R.layout.intemation_popup, null)
-            dialog1 .requestWindowFeature(Window.FEATURE_NO_TITLE)
-            val window: Window? = dialog1.getWindow()
+            (dialog1 as BottomSheetDialog).requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val window: Window? = (dialog1 as BottomSheetDialog).getWindow()
             window!!.setBackgroundDrawableResource(android.R.color.transparent);
             window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             dialog1!!.setCanceledOnTouchOutside(true)
 
 
-            val txtReset          = view.findViewById(R.id.txtReset)          as TextView
+             txtReset          = view.findViewById(R.id.txtReset)          as TextView
             val txtSearch         = view.findViewById(R.id.txtSearch)         as TextView
              tie_LeadSource    = view.findViewById(R.id.tie_LeadSource)    as TextInputEditText
              tie_LeadFrom      = view.findViewById(R.id.tie_LeadFrom)      as TextInputEditText
@@ -717,23 +757,39 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
              til_Lead_entry        = view.findViewById(R.id.til_Lead_entry)        as TextInputLayout
 
              add_multiple          = view.findViewById(R.id.add_multiple)          as LinearLayout
-            fulllengthrcy          = view.findViewById(R.id.fulllengthrcy)          as RecyclerView
+        //    fulllengthrcy          = view.findViewById(R.id.fulllengthrcy)          as RecyclerView
+
+            til_product          = view.findViewById(R.id.til_product)          as TextInputLayout
+            tie_product        = view.findViewById(R.id.tie_product)        as TextInputEditText
+            ll_leadENTRY          = view.findViewById(R.id.ll_leadENTRY)          as LinearLayout
+        //    ll_gridData          = view.findViewById(R.id.ll_gridData)          as LinearLayout
 
             tie_LeadSource!!.setText(lead_sourceName)
             tie_Lead_entry!!.visibility=View.GONE
+            ll_leadENTRY!!.visibility=View.INVISIBLE
 
-            if (ID_ProductType.equals("")||ID_ProductType.equals("2"))
-            {
-                til_productproject!!.setOnClickListener(View.OnClickListener {
-                    productTypeCount = 0
-                    getProductType()
+//            if (ID_ProductType.equals("")||ID_ProductType.equals("2"))
+//            {
+//                til_productproject!!.setOnClickListener(View.OnClickListener {
+//                    productTypeCount = 0
+//                    getProductType()
+//
+//                })
+//            }
+//            else
+//            {
+//
+//            }
 
-                })
-            }
-            else
-            {
+            txtReset!!.setOnClickListener(View.OnClickListener {
+                resetDialog()
 
-            }
+            })
+            tie_product!!.setOnClickListener(View.OnClickListener {
+                proddetail = 0
+                getProductDetail(ID_Category!!)
+
+            })
 
             tie_ProductType!!.setOnClickListener(View.OnClickListener {
                 productTypeCount = 0
@@ -742,7 +798,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             })
 
             add_multiple!!.setOnClickListener(View.OnClickListener {
-                val jObject = JSONObject()
+            /*    val jObject = JSONObject()
                 val startingLength: Int = Cust_Wise_ListArray.length()
 
                 for (i in startingLength - 1 downTo 0) {
@@ -776,7 +832,10 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                 Cust_Wise_ListArray!!.put(jObject3)
                 Log.e(TAG,"cus list array 67676="+Cust_Wise_ListArray)
 
-                CusWiseListPopUp(Cust_Wise_ListArray)
+                CusWiseListPopUp(Cust_Wise_ListArray) */
+
+                addMulti=0
+                getLeadHistory()
             })
 
             tie_LeadDetails!!.setOnClickListener(View.OnClickListener {
@@ -820,6 +879,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             tie_LeadSource!!.setOnClickListener(View.OnClickListener {
                 leadSource = 0
                 getLeadSource()
+             //   getLeadSource1()
 
             })
             tie_FromDate1!!.setOnClickListener(View.OnClickListener {
@@ -841,8 +901,18 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
             tie_LeadFrom!!.setOnClickListener {
 
-                LeadFromInfocount = 0
-                getLeadFromInfo()
+                if (ID_LeadSource.equals(""))
+                {
+             //       Config.snackBars(context, view, "Select Lead Source")
+                    Toast.makeText(this, "Select Lead Source", Toast.LENGTH_SHORT).show()
+                }
+                else
+                {
+                    LeadFromInfocount = 0
+                    getLeadFromInfo()
+                }
+
+
 
             }
 
@@ -856,14 +926,330 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
 
             dialog1!!.setContentView(view)
-            dialog1.show()
+            dialog1!!.show()
 
-            dialog1.show()
+           // dialog1.show()
         }catch (e: Exception){
             Log.e(TAG,"777  Exception   "+e.toString())
         }
 
 
+
+    }
+
+    private fun getLeadHistory() {
+
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                leadHistViewModel.getLeadHist(this,
+                    ID_LeadSource,
+                    ID_LeadInfo,
+                    tie_FromDate1!!.text.toString(),
+                    tie_ToDate!!.text.toString(),
+                    ID_Category,
+                    ID_ProductType,
+                    ID_Product,
+
+                    ID_Employee,
+                    ID_CollectedBy,
+                    ID_Area!!,
+                    ID_NextAction,
+                    ID_ActionType,
+                    ID_Priority,
+                    ID_Lead_Details,
+                    tie_Lead_entry!!.text.toString(),
+                    Transmode!!,
+                    tie_productproject!!.text.toString()
+
+
+
+
+
+
+                )!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        try {
+                            val msg = serviceSetterGetter.message
+                            Log.e(TAG,"msgggfg   1224rrt   "+msg)
+                            if (msg!!.length > 0) {
+                                Log.e(TAG,"msgggfg   1224rrt   "+msg)
+                                if (addMulti == 0){
+                                    addMulti++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   1224   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("LeadHistory")
+                                        leadHistArrayList = jobjt.getJSONArray("LeadHistoryList")
+                                        Log.e(TAG,"656565 array="+leadHistArrayList)
+                                        if (leadHistArrayList.length()>0){
+
+                                            leadHistPopup(leadHistArrayList)
+
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@Intimation,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        }catch (e :Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+
+    }
+
+    private fun leadHistPopup(leadHistArrayList: JSONArray) {
+
+
+        try {
+
+            dialogHist = Dialog(this)
+            dialogHist!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogHist!!.setContentView(R.layout.leadhist_popup)
+            dialogHist!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyLeadHist = dialogHist!!.findViewById(R.id.recyLeadHist) as RecyclerView
+//            val etsearch = dialogHist!!.findViewById(R.id.etsearch) as EditText
+
+            leadHistSort = JSONArray()
+            for (k in 0 until leadHistArrayList.length()) {
+                val jsonObject = leadHistArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                leadHistSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@Intimation, 1)
+            recyLeadHist!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+
+            val adapter = LeadHistCusAdapter(this@Intimation, leadHistSort)
+            recyLeadHist!!.adapter = adapter
+            adapter.setClickListener(this@Intimation)
+
+
+
+            dialogHist!!.show()
+            dialogHist!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun resetDialog() {
+        ID_LeadSource=""
+        tie_LeadSource!!.setText("")
+        ID_LeadInfo=""
+        tie_LeadFrom!!.setText("")
+        tie_FromDate1!!.setText("")
+        tie_ToDate!!.setText("")
+        tie_ProductType!!.setText("")
+        ID_ProductType=""
+        tie_Category!!.setText("")
+        ID_Category=""
+        tie_product!!.setText("")
+        tie_productproject!!.setText("")
+        ID_Product=""
+
+        tie_employeee!!.setText("")
+        ID_Employee=""
+        tie_CollectedBy!!.setText("")
+        ID_CollectedBy=""
+        tie_areaa!!.setText("")
+        ID_Area=""
+        tie_FollowUpAction!!.setText("")
+        ID_NextAction=""
+        tie_FollowUpType!!.setText("")
+        ID_ActionType=""
+        tie_Priority!!.setText("")
+        ID_Priority=""
+        tie_LeadDetails!!.setText("")
+        ID_Lead_Details=""
+        tie_Lead_entry!!.visibility=View.INVISIBLE
+        ll_leadENTRY!!.visibility=View.INVISIBLE
+        ll_project!!.visibility=View.GONE
+
+
+    }
+
+    private fun getProductDetail(ID_Category: String) {
+//         var proddetail = 0
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productDetailViewModel.getProductDetail(this, ID_Category)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (proddetail == 0) {
+                                    proddetail++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   227   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("ProductDetailsList")
+                                        prodDetailArrayList = jobjt.getJSONArray("ProductList")
+                                        Log.e(TAG, "list   2274545   " + msg)
+                                        if (prodDetailArrayList.length() > 0) {
+
+                                            productDetailPopup(prodDetailArrayList)
+
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@Intimation,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+    private fun productDetailPopup(prodDetailArrayList: JSONArray) {
+
+        try {
+
+            dialogProdDet = Dialog(this)
+            dialogProdDet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdDet!!.setContentView(R.layout.product_detail_popup)
+            dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyProdDetail = dialogProdDet!!.findViewById(R.id.recyProdDetail) as RecyclerView
+            val etsearch = dialogProdDet!!.findViewById(R.id.etsearch) as EditText
+
+            prodDetailSort = JSONArray()
+            for (k in 0 until prodDetailArrayList.length()) {
+                val jsonObject = prodDetailArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                prodDetailSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@Intimation, 1)
+            recyProdDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+
+            val adapter = ProductDetailAdapter(this@Intimation, prodDetailSort)
+            recyProdDetail!!.adapter = adapter
+            adapter.setClickListener(this@Intimation)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    prodDetailSort = JSONArray()
+
+                    for (k in 0 until prodDetailArrayList.length()) {
+                        val jsonObject = prodDetailArrayList.getJSONObject(k)
+                        //if (textlength <= jsonObject.getString("ProductName").length) {
+                        if (textlength > 0) {
+                            if (jsonObject.getString("ProductName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim()) ||
+                                jsonObject.getString("ProdBarcode")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())) {
+                                prodDetailSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "prodDetailSort               7103    " + prodDetailSort)
+                    val adapter = ProductDetailAdapter(this@Intimation, prodDetailSort)
+                    recyProdDetail!!.adapter = adapter
+                    adapter.setClickListener(this@Intimation)
+                }
+            })
+
+            dialogProdDet!!.show()
+            dialogProdDet!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
     }
     private fun getProductType() {
@@ -887,8 +1273,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   1224   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        val jobjt = jObject.getJSONObject("checkDetails")
-                                        productTypeArrayList = jobjt.getJSONArray("checkDetailsList")
+                                        val jobjt = jObject.getJSONObject("ProductType")
+                                        productTypeArrayList = jobjt.getJSONArray("ProductTypeList")
                                         Log.e(TAG,"656565 array="+productTypeArrayList)
                                         if (productTypeArrayList.length()>0){
 
@@ -2228,11 +2614,19 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             val llsearch = dialogProdCat!!.findViewById(R.id.llsearch) as LinearLayout
             llsearch!!.visibility=View.GONE
 
+
+            prodCatSort = JSONArray()
+            for (k in 0 until prodCategoryArrayList.length()) {
+                val jsonObject = prodCategoryArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                prodCatSort.put(jsonObject)
+            }
+
             val lLayout = GridLayoutManager(this@Intimation, 1)
             recyProdCategory!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
 //             val adapter = ProductCategoryAdapter(this@LeadGenerationActivity, prodCategoryArrayList)
-            val adapter = ProductCategoryAdapter1(this@Intimation, prodCategoryArrayList)
+            val adapter = ProductCategoryAdapter1(this@Intimation, prodCatSort)
             recyProdCategory!!.adapter = adapter
             adapter.setClickListener(this@Intimation)
 
@@ -2278,7 +2672,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
                                     if (leadSourceList.length() > 0)
                                     {
-                                        leadSourcePopup(leadSourceList)
+                                    //    leadSourcePopup(leadSourceList)
+                                        leadSourcePopup1(leadSourceList)
                                     }
 
 
@@ -2349,6 +2744,43 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
     }
 
+    private fun leadSourcePopup1(leadSourceList: JSONArray) {
+        try {
+
+            dialogeLeadSource = Dialog(this)
+            dialogeLeadSource!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogeLeadSource!!.setContentView(R.layout.source_lead)
+            dialogeLeadSource!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            source_lead = dialogeLeadSource!!.findViewById(R.id.source_lead) as RecyclerView
+
+
+//            prodDetailSort = JSONArray()
+//            for (k in 0 until leadSourceList.length()) {
+//                val jsonObject = leadSourceList.getJSONObject(k)
+//                // reportNamesort.put(k,jsonObject)
+//                prodDetailSort.put(jsonObject)
+//            }
+
+            val lLayout = GridLayoutManager(this@Intimation, 1)
+            source_lead!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+
+            val adapter = LeadSourceAdapter(this@Intimation, leadSourceList)
+            source_lead!!.adapter = adapter
+            adapter.setClickListener(this@Intimation)
+
+
+
+            dialogeLeadSource!!.show()
+            dialogeLeadSource!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
 
 
     private fun reset() {
@@ -2356,6 +2788,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         val currentDate = sdf.format(Date())
         tie_FromDate!!.setText(currentDate)
         tie_Lead_entry!!.visibility=View.GONE
+        ll_leadENTRY!!.visibility=View.INVISIBLE
 
         //................
         tie_ScheduledDate!!.setText(currentDate)
@@ -2928,27 +3361,61 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             tie_LeadDetails!!.setText(jsonObject.getString("TodoListLeadDetailsName"))
             til_Lead_entry!!.setHint(jsonObject.getString("TodoListLeadDetailsName"))
             tie_Lead_entry!!.visibility=View.VISIBLE
+            ll_leadENTRY!!.visibility=View.VISIBLE
 
 
         }
 
-        if (data.equals("cus_wise_lead")){
-            dialogCusMiseLead!!.dismiss()
-            val jsonObject = cusLeadSort.getJSONObject(position)
+//        if (data.equals("cus_wise_lead")){
+//            dialogCusMiseLead!!.dismiss()
+//            val jsonObject = cusLeadSort.getJSONObject(position)
+//            val jObject = JSONObject()
+////            jObject.put("CategoryName", edtProdcategory!!.text.toString())
+////            jObject.put("ProdName", edtProdproduct!!.text.toString())
+//            Log.e(TAG,"jsonObject  4543543 "+jsonObject)
+//            gridListarray = JSONArray()
+//            gridListarray!!.put(jsonObject)
+//            Log.e(TAG,"gridListarray  4543543 "+jsonObject)
+//
+//            try {
+//                val lLayout = GridLayoutManager(this@Intimation, 1)
+//                fulllengthrcy!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                val adapter = CusLeadAdapter(this@Intimation, gridListarray)
+//                fulllengthrcy!!.adapter = adapter
+//                adapter.setClickListener(this@Intimation)
+//            }catch (e: Exception){
+//                Log.e(TAG,"Exception  1275   "+e.toString())
+//            }
+//
+//
+//
+//        }
+
+        if (data.equals("cus_wise_lead_hist")){
+            dialogHist!!.dismiss()
+            dialog1!!.dismiss()
+            val jsonObject = leadHistSort.getJSONObject(position)
             val jObject = JSONObject()
 //            jObject.put("CategoryName", edtProdcategory!!.text.toString())
 //            jObject.put("ProdName", edtProdproduct!!.text.toString())
             Log.e(TAG,"jsonObject  4543543 "+jsonObject)
-            gridListarray = JSONArray()
+     //       Log.e(TAG,"gridListarray_first  454354321 "+gridListarray)
+
+
+     //       gridListarray = JSONArray()
             gridListarray!!.put(jsonObject)
+
+            Log.e(TAG,"gridListarray_second  454354322 "+gridListarray)
             Log.e(TAG,"gridListarray  4543543 "+jsonObject)
+
+            ll_gridData!!.visibility=View.VISIBLE
 
             try {
                 val lLayout = GridLayoutManager(this@Intimation, 1)
                 fulllengthrcy!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                val adapter = CusLeadAdapter(this@Intimation, gridListarray)
+                val adapter = LeadCusGridAdapter(this@Intimation, gridListarray)
                 fulllengthrcy!!.adapter = adapter
-                adapter.setClickListener(this@Intimation)
+              //  adapter.setClickListener(this@Intimation)
             }catch (e: Exception){
                 Log.e(TAG,"Exception  1275   "+e.toString())
             }
@@ -2957,18 +3424,42 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
         }
 
+        if (data.equals("prodcategory")){
+            dialogProdCat!!.dismiss()
+//             val jsonObject = followUpTypeArrayList.getJSONObject(position)
+            val jsonObject = prodCatSort.getJSONObject(position)
+
+
+            ID_Category = jsonObject.getString("ID_Category")
+            tie_Category!!.setText(jsonObject.getString("CategoryName"))
+
+
+        }
+
+        if (data.equals("proddetails"))
+        {
+            dialogProdDet!!.dismiss()
+//             val jsonObject = prodDetailArrayList.getJSONObject(position)
+            val jsonObject = prodDetailSort.getJSONObject(position)
+
+
+            ID_Product = jsonObject.getString("ID_Product")
+            tie_product!!.setText(jsonObject.getString("ProductName"))
+        }
+
         if (data.equals("prodcatType")) {
             dialogProductType!!.dismiss()
 //             val jsonObject = prodPriorityArrayList.getJSONObject(position)
             val jsonObject = productTypeSort.getJSONObject(position)
 
-            ID_ProductType = jsonObject.getString("ID_type")
-            tie_ProductType!!.setText(jsonObject.getString("Type_Name"))
-            til_productproject!!.setHint(jsonObject.getString("Type_Name"))
-            if (jsonObject.getString("ID_type").equals("2"))
+            ID_ProductType = jsonObject.getString("ID_ProductType")
+            tie_ProductType!!.setText(jsonObject.getString("ProductTypeName"))
+            til_productproject!!.setHint(jsonObject.getString("ProductTypeName"))
+            if (jsonObject.getString("ID_ProductType").equals("2"))
             {
                 ll_product!!.visibility=View.VISIBLE
                 ll_project!!.visibility=View.GONE
+                til_product!!.setHint(jsonObject.getString("ProductTypeName"))
 
           //      til_productproject!!.setEndIconDrawable(ContextCompat.getDrawable(this,R.drawable.ic_search))
             }
@@ -2977,11 +3468,23 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
                 ll_product!!.visibility=View.GONE
                 ll_project!!.visibility=View.VISIBLE
+                til_productproject!!.setHint(jsonObject.getString("ProductTypeName"))
            //     til_productproject!!.setEndIconDrawable(null)
             }
 
 
         }
+
+        if (data.equals("LeadFromInfo"))
+        {
+            dialogLeadinfo!!.dismiss()
+            val jsonObject = leadfromInfosort.getJSONObject(position)
+            ID_LeadInfo = jsonObject.getString("ID_FIELD")
+            tie_LeadFrom!!.setText(jsonObject.getString("Name"))
+
+
+        }
+
     }
 
     private fun shedulePopup(sheduleArrayList: JSONArray) {

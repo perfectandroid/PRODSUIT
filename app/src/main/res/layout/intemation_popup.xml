@@ -260,6 +260,7 @@
                                 android:layout_weight="1"
                                 android:layout_marginTop="5dp"
                                 android:layout_marginLeft="5dp"
+
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
                                 app:endIconMode="custom"
@@ -339,7 +340,7 @@
                             android:orientation="horizontal">
                             <LinearLayout
                                 android:id="@+id/ll_project"
-                                android:visibility="visible"
+                                android:visibility="gone"
                                 android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
@@ -348,7 +349,7 @@
                                     android:id="@+id/til_productproject"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:hint="Project/Product"
+                                    android:hint="Project"
                                     android:layout_marginTop="5dp"
                                     android:layout_marginRight="5dp"
 
@@ -357,7 +358,7 @@
                                     app:endIconMode="custom"
                                     android:visibility="visible"
 
-                                    app:startIconDrawable="@drawable/icon_svg_mobile"
+                                    app:startIconDrawable="@drawable/lead_productss"
                                     app:startIconTint="@color/colorPrimaryDark"
                                     style="@style/Widget.App.TextInputLayout">
 
@@ -389,7 +390,7 @@
                             </LinearLayout>
                             <LinearLayout
                                 android:id="@+id/ll_product"
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
@@ -398,7 +399,7 @@
                                     android:id="@+id/til_product"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:hint="Product"
+                                    android:hint="Project/Product"
                                     android:layout_marginTop="5dp"
                                     android:layout_marginRight="5dp"
 
@@ -407,7 +408,7 @@
                                     app:endIconMode="custom"
                                     android:visibility="visible"
                                     app:endIconDrawable="@drawable/ic_search"
-                                    app:startIconDrawable="@drawable/icon_svg_mobile"
+                                    app:startIconDrawable="@drawable/lead_categorys"
                                     app:startIconTint="@color/colorPrimaryDark"
                                     style="@style/Widget.App.TextInputLayout">
 
@@ -734,6 +735,8 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
                             <LinearLayout
+                                android:id="@+id/ll_leadENTRY"
+                                android:visibility="invisible"
                                 android:layout_weight="0.4"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
@@ -795,7 +798,7 @@
                                 android:layout_weight="1.7">
 
                                 <ImageView
-
+                                    android:backgroundTint="@color/white"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
@@ -808,17 +811,7 @@
 
 
                         </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
 
-                            <com.perfect.prodsuit.Helper.FullLenghRecyclertview
-                                android:id="@+id/fulllengthrcy"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"/>
-
-                        </LinearLayout>
 
                         <LinearLayout
                             android:id="@+id/ll_btn"

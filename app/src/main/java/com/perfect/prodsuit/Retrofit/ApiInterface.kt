@@ -905,4 +905,10 @@ interface ApiInterface {
     @POST("UserValidations/LeadFromInfo")
     fun getLeadFromInfo(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/ProductType")
+    fun getProductType(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/LeadHistory")
+    fun getLeadHistDetails(@Body body: RequestBody): Call<String>
+
 }

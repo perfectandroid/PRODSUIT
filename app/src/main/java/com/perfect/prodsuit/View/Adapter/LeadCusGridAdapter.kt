@@ -8,22 +8,24 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ProductTypeAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+class LeadCusGridAdapter(internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "ProductTypeAdapter"
+    internal val TAG : String = "LeadCusGridAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_product_category, parent, false
+            R.layout.lead_cus_grid, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -33,25 +35,27 @@ class ProductTypeAdapter(internal var context: Context, internal var jsonArray: 
         try {
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-                Log.e(TAG,"onBindViewHolder   1051   ")
+                Log.e(TAG,"onBindViewHolder   1051ghgh   ")
                 val pos = position+1
-                holder.txtsino.text        = pos.toString()
-                holder.txtCategory.text        = jsonObject!!.getString("ProductTypeName")
 
 
-                holder.llprodcategory!!.setTag(position)
-                holder.llprodcategory!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(
-                        position,
-                        "prodcatType"
-                    )
-                })
+                holder.tvv_slnmbr.text        = pos.toString()
+                holder.lead_txtno.text        = jsonObject!!.getString("LeadNo")
+                holder.txt_cusname.text        = jsonObject!!.getString("CustomerName")
+            //    holder.txt_cusMobile.text        = "("+jsonObject!!.getString("Mobile") +")"
+//                holder.llProduct!!.setOnClickListener(View.OnClickListener {
+//                    clickListener!!.onClick(
+//                        position,
+//                        "cus_"
+//                    )
+//                })
             }
         } catch (e: Exception) {
             e.printStackTrace()
             Log.e(TAG,"Exception   105   "+e.toString())
         }
     }
+
 
     override fun getItemCount(): Int {
         return jsonArray.length()
@@ -62,22 +66,30 @@ class ProductTypeAdapter(internal var context: Context, internal var jsonArray: 
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position % 2
+        return position
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtCategory          : TextView
-        internal var txtsino          : TextView
-        internal var llprodcategory    : LinearLayout
+        internal var lead_txtno   : TextView
+        internal var tvv_slnmbr         : TextView
+        internal var txt_cusname         : TextView
+    //    internal var txt_cusMobile         : TextView
+
+
+     //   internal var llProduct    : LinearLayout
         init {
-            txtCategory        = v.findViewById<View>(R.id.txtCategory) as TextView
-            txtsino        = v.findViewById<View>(R.id.txtsino) as TextView
-            llprodcategory       = v.findViewById<View>(R.id.llprodcategory) as LinearLayout
+            lead_txtno          = v.findViewById<View>(R.id.lead_txtno) as TextView
+            tvv_slnmbr                = v.findViewById<View>(R.id.tvv_slnmbr) as TextView
+            txt_cusname                = v.findViewById<View>(R.id.txt_cusname) as TextView
+//            txt_cusMobile                = v.findViewById<View>(R.id.txt_cusMobile) as TextView
+
+//            llProduct           = v.findViewById<View>(R.id.llProduct) as LinearLayout
+
         }
     }
-
     fun setClickListener(itemClickListener: ItemClickListener?) {
         clickListener = itemClickListener
     }
+
 
 }
