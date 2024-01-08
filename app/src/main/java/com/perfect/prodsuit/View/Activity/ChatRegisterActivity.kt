@@ -133,6 +133,7 @@ class ChatRegisterActivity : AppCompatActivity() {
 
             override fun onCancelled(error: DatabaseError) {
 
+                Log.e(TAG,"13666   "+error.message)
             }
 
         })

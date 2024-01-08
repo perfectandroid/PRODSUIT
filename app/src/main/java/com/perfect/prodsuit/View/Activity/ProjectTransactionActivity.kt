@@ -2948,7 +2948,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         til_NetAmount!!.visibility = View.VISIBLE
         til_Petty_Cashier!!.visibility = View.VISIBLE
         til_PaymentMethod!!.visibility = View.VISIBLE
-       // ll_paymentInfo!!.visibility=View.VISIBLE
+        ll_paymentInfo!!.visibility=View.VISIBLE
 
         if (ID_TransactionType.equals("0")){
             Log.e(TAG,"19533 0  ")
@@ -2986,6 +2986,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             til_Employee!!.visibility = View.GONE
             tie_OtherCharges!!.isFocusableInTouchMode = false
             tie_OtherCharges!!.isEnabled = true
+
+            ll_paymentInfo!!.visibility=View.GONE
         }
 
         else if (ID_TransactionType.equals("5")){

@@ -41,98 +41,131 @@
                         android:layout_width="match_parent"
                         android:layout_height="70dp"
                         android:layout_alignParentTop="true">
+
                         <LinearLayout
+                            android:id="@+id/ll_profname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_toLeftOf="@+id/ll_menuicons"
                             android:orientation="horizontal">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/profile_image"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/profile"
-                            app:civ_border_color="@color/white"
-                            android:layout_alignParentLeft="true"
-                            android:paddingLeft="10dp"
-                            app:civ_border_width="3dp"
-                            app:civ_circle_background_color="@color/white"
-                            android:layout_marginTop="5dp"/>
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/profile_image"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/profile"
+                                app:civ_border_color="@color/white"
+                                android:layout_alignParentLeft="true"
+                                android:paddingLeft="10dp"
+                                app:civ_border_width="3dp"
+                                app:civ_circle_background_color="@color/white"
+                                android:layout_marginTop="5dp"/>
 
-                        <TextView
-                            android:id="@+id/name_employee"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="25dp"
-                            android:layout_marginLeft="10dp"
-                            android:gravity="center"
-                            android:layout_marginRight="5dp"
-                            android:fontFamily="@font/myfont"
-                            android:text=""
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="17dp"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/name_employee"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="25dp"
+                                android:layout_marginLeft="10dp"
+                                android:gravity="center_vertical"
+                                android:layout_marginRight="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""
+                                android:layout_toRightOf="@+id/profile_image"
+                                android:textColor="@color/colorPrimary"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 
-                        <ImageView
-                            android:id="@+id/btn_menu"
-                            android:layout_width="50dp"
-                            android:layout_height="60dp"
-                            android:layout_alignParentTop="true"
+                        <LinearLayout
+                            android:id="@+id/ll_menuicons"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:layout_marginLeft="0dp"
-                            android:layout_marginTop="-1dp"
-                            android:padding="10dp"
-                            android:src="@drawable/homemenu"
-                            android:tint="@color/colorPrimary"
-                            tools:ignore="UseAppTint" />
-
-                        <ImageView
-                            android:id="@+id/img_logo"
-                            android:layout_width="150dp"
-                            android:layout_height="60dp"
-                            android:layout_centerInParent="true"
-                            android:padding="10dp"
-                            android:scaleType="fitXY"
-                            android:tint="@color/white"
-                            android:visibility="gone" />
-<!--                        android:src="@drawable/logo_white"-->
-<!--                        android:src="@drawable/applogo"-->
-
-                        <RelativeLayout
-                            android:id="@+id/rlnotification"
-                            android:layout_width="60dp"
-                            android:layout_height="60dp"
-                            android:layout_toLeftOf="@+id/btn_menu"
-                            android:src="@drawable/ic_notifications"
-                            android:visibility="visible">
+                            android:orientation="horizontal">
 
                             <ImageView
+                                android:id="@+id/btn_chat"
+                                android:layout_width="50dp"
+                                android:layout_height="60dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="-1dp"
+                                android:layout_toLeftOf="@+id/rlnotification"
+                                android:padding="10dp"
+                                android:src="@drawable/message_24"
+                                android:tint="@color/colorPrimary"
+                                tools:ignore="UseAppTint"
+                                android:visibility="gone"/>
+
+
+
+                            <ImageView
+                                android:id="@+id/img_logo"
+                                android:layout_width="150dp"
+                                android:layout_height="60dp"
+                                android:layout_centerInParent="true"
+                                android:padding="10dp"
+                                android:scaleType="fitXY"
+                                app:tint="@color/white"
+                                android:visibility="gone" />
+                            <!--                        android:src="@drawable/logo_white"-->
+                            <!--                        android:src="@drawable/applogo"-->
+
+                            <RelativeLayout
+                                android:id="@+id/rlnotification"
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
-                                android:layout_gravity="center"
-                                android:gravity="center"
-                                android:padding="15dp"
+                                android:layout_toLeftOf="@+id/btn_menu"
                                 android:src="@drawable/ic_notifications"
+                                android:visibility="visible">
+
+                                <ImageView
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_gravity="center"
+                                    android:gravity="center"
+                                    android:padding="15dp"
+                                    android:src="@drawable/ic_notifications"
+                                    android:tint="@color/colorPrimary"
+                                    tools:ignore="UseAppTint" />
+
+                                <TextView
+                                    android:id="@+id/txtv_notfcount"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_marginLeft="30dp"
+                                    android:layout_marginTop="12dp"
+                                    android:layout_marginRight="5dp"
+                                    android:background="@drawable/ic_circle"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center"
+                                    android:text="0"
+                                    android:textColor="@color/white"
+                                    android:textSize="7dp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
+                            <ImageView
+                                android:id="@+id/btn_menu"
+                                android:layout_width="50dp"
+                                android:layout_height="60dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="-1dp"
+                                android:padding="10dp"
+                                android:src="@drawable/homemenu"
                                 android:tint="@color/colorPrimary"
                                 tools:ignore="UseAppTint" />
 
-                            <TextView
-                                android:id="@+id/txtv_notfcount"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_alignParentTop="true"
-                                android:layout_marginLeft="30dp"
-                                android:layout_marginTop="12dp"
-                                android:layout_marginRight="5dp"
-                                android:background="@drawable/ic_circle"
-                                android:fontFamily="@font/myfont"
-                                android:gravity="center"
-                                android:text="0"
-                                android:textColor="@color/white"
-                                android:textSize="7dp"
-                                android:textStyle="bold" />
-                        </RelativeLayout>
+
+                        </LinearLayout>
+
+
 
 
                     </RelativeLayout>
