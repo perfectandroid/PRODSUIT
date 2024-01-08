@@ -2081,7 +2081,9 @@
 
 
                                         <LinearLayout
+
                                             android:gravity="center"
+
                                             android:layout_gravity="center"
                                             android:background="@color/white"
                                             android:layout_width="match_parent"
@@ -2101,6 +2103,8 @@
                                                 app:cardPreventCornerOverlap="true"
                                                 app:cardUseCompatPadding="true">
                                                 <LinearLayout
+                                                    android:id="@+id/ll_projectStatus"
+                                                    android:visibility="gone"
                                                     android:orientation="vertical"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content">
@@ -2177,6 +2181,8 @@
                                         </LinearLayout>
 
                                         <LinearLayout
+
+
                                             android:gravity="center"
                                             android:layout_gravity="center"
                                             android:background="@color/white"
@@ -2197,6 +2203,8 @@
                                                 app:cardPreventCornerOverlap="true"
                                                 app:cardUseCompatPadding="true">
                                                 <LinearLayout
+                                                    android:id="@+id/ll_BillingStatus"
+                                                    android:visibility="gone"
                                                     android:orientation="vertical"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content">

@@ -125,14 +125,22 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
     private var tvv_tile: TextView? = null
 
     //project status tile
+    private var ll_projectStatus: LinearLayout? = null
     var projectStatusCount = 0
+    //  var noDataProjectStatus="0"
+    var noDataProjectStatus: String? = "0"
+    var noDataProjrct:Boolean=false
     lateinit var projectTileViewModel: ProjectTileViewModel
     lateinit var projectStatusArrayList: JSONArray
     var recycler_project_tile: RecyclerView? = null
 
     //billing status
+    private var ll_BillingStatus: LinearLayout? = null
     var recycler_billing_status: RecyclerView? = null
     var billingStatusCount = 0
+
+    var noDataBillStatus: String? = "0"
+    var noDataBill:Boolean=false
     lateinit var projectBillStatusViewModel: ProjectBillStatusViewModel
     lateinit var projectBillArrayList: JSONArray
 
@@ -242,6 +250,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
     }
 
     private fun setRegViews() {
+        ll_projectStatus          = findViewById<LinearLayout>(R.id.ll_projectStatus)
+        ll_BillingStatus          = findViewById<LinearLayout>(R.id.ll_BillingStatus)
 
         stageWiseDue_xaxis = findViewById<TextView>(R.id.stageWiseDue_xaxis)
         stageWiseDue_yaxis = findViewById<TextView>(R.id.stageWiseDue_yaxis)
@@ -371,13 +381,13 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
             if (ContinueMode == 0) {
                 ChartMode = 0
                 chartModeCount = 0
-               getChartModeData()
-           //     getTop10Project()
+                getChartModeData()
+                //     getTop10Project()
 //                getProjectDelayed()
-          //      getExpenseAnalysis()
-           //     getUpcomingStageDueDates()
-         //      getCostMaterialUsageAllocatedUsed()
-           //     getTotalStagewiseDue()
+                //      getExpenseAnalysis()
+                //     getUpcomingStageDueDates()
+                //      getCostMaterialUsageAllocatedUsed()
+                //     getTotalStagewiseDue()
             }
 
 
@@ -387,11 +397,31 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
             tvv_dash!!.setBackgroundResource(R.drawable.btn_shape_reset)
             tvv_tile!!.setBackgroundResource(R.drawable.btn_dash)
 
+
+
             projectStatusCount = 0
             getProjectStatusTile()
 
             billingStatusCount = 0
             getBillingStatus()
+
+            Log.e(TAG,"54545 prject flag="+noDataProjrct)
+            Log.e(TAG,"54545 bill flag="+noDataBill)
+
+//            if ( noDataProjrct && noDataBill)
+//            {
+//                val builder = AlertDialog.Builder(
+//                    this@ProjectGraphActivity,
+//                    R.style.MyDialogTheme
+//                )
+//                builder.setMessage("No Data Found....")
+//                builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                }
+//                val alertDialog: AlertDialog = builder.create()
+//                alertDialog.setCancelable(false)
+//                alertDialog.show()
+//            }
+
 
         }
         getCurrentDate()
@@ -521,6 +551,22 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                         }else{
                                             showChartDrop(chartTypeArrayList)
                                         }
+                                    }
+                                    else
+                                    {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectGraphActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage("No Active Chart Settings")
+                                        builder.setPositiveButton("Ok") {
+                                                dialogInterface, which ->
+
+
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
                                     }
 
                                 } else {
@@ -678,7 +724,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                         tv_topten_Remark!!.setText(jobjt.getString("Reamrk"))
                                         top10_xaxis!!.setText(jobjt.getString("XAxis"))
                                         top10_yaxis!!.setText(jobjt.getString("YAxis"))
-                                    //    Log.e(TAG, "Top10ProjectArrayList 43434  =  "+Top10ProjectArrayList)
+                                        //    Log.e(TAG, "Top10ProjectArrayList 43434  =  "+Top10ProjectArrayList)
 
                                         if (Top10ProjectArrayList.length() > 0) {
 
@@ -739,7 +785,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
     private fun setTop10ProjectBarchart() {
         top10projectBar.clear()
         top10projectBar = getTop10Projecte()
-         //  Log.e(TAG, "top10projectBar==   "+top10projectBar)
+        //  Log.e(TAG, "top10projectBar==   "+top10projectBar)
 
 
         top10ProjectChart.axisLeft.setDrawGridLines(false)
@@ -1347,7 +1393,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                             Log.e(TAG, "CostMaterialUsage 43434  =  "+totalstagewiseDueArrayList)
 
                                             hideTotalStageWiseDueMore()
-                                         //   setTotalStagewiseDueBarchart()  //...........barchart here
+                                            //   setTotalStagewiseDueBarchart()  //...........barchart here
                                             setTotalStagewiseDueBarchartNew()
 
 
@@ -1857,21 +1903,21 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
     private fun getTop10Projecte(): ArrayList<Top10ProjectBar> {
 
 
-            for (i in 0 until Top10ProjectArrayList.length())
-            {
-                var jsonObject = Top10ProjectArrayList.getJSONObject(i)
-                Amount_top=jsonObject.getString("Amount").toString()
-                Log.e(TAG,"343443 check="+jsonObject.getString("Amount").toString())
-                //  saleGraphListBar.add(MonthlySaleBar(jsonObject.getString("Month").toString(),jsonObject.getString("Amount").toInt()))
-                try {
-                    top10projectBar.add(Top10ProjectBar("",jsonObject.getString("Amount").toDouble()))
-                }
-                catch (e:Exception)
-                {
-                    top10projectBar.add(Top10ProjectBar("",0.00))
-                }
-
+        for (i in 0 until Top10ProjectArrayList.length())
+        {
+            var jsonObject = Top10ProjectArrayList.getJSONObject(i)
+            Amount_top=jsonObject.getString("Amount").toString()
+            Log.e(TAG,"343443 check="+jsonObject.getString("Amount").toString())
+            //  saleGraphListBar.add(MonthlySaleBar(jsonObject.getString("Month").toString(),jsonObject.getString("Amount").toInt()))
+            try {
+                top10projectBar.add(Top10ProjectBar("",jsonObject.getString("Amount").toDouble()))
             }
+            catch (e:Exception)
+            {
+                top10projectBar.add(Top10ProjectBar("",0.00))
+            }
+
+        }
 
 
 
@@ -1908,7 +1954,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
     }
 
     private fun getBillingStatus() {
-
+        noDataBill=false
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1935,33 +1981,70 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                     Log.e(TAG, "msg   project bill   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
+
                                         val jobjt = jObject.getJSONObject("ProjectTileDashBoardDetails")
                                         var remark =   jobjt.getString("Reamrk")
-
-
-                                        tv_remarkBilling!!.setText(jobjt.getString("Reamrk"))
-                                        tv_nameBillingStatus!!.setText(jobjt.getString("ChartName"))
-
                                         projectBillArrayList=jobjt.getJSONArray("ProjectTileDashBoardDetailsList")
-                                        Log.e(TAG, "projectBillArrayList 43434  =  "+projectBillArrayList)
 
-                                        val lLayout = GridLayoutManager(this@ProjectGraphActivity, 4)
-                                        recycler_billing_status!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        val adapter1 = ProjectBillStatusAdapter(this@ProjectGraphActivity, projectBillArrayList,remark)
-                                        recycler_billing_status!!.adapter = adapter1
+                                        if (projectBillArrayList.length() > 0)
+                                        {
+
+                                            ll_BillingStatus!!.visibility=View.VISIBLE
+                                            tv_remarkBilling!!.setText(jobjt.getString("Reamrk"))
+                                            tv_nameBillingStatus!!.setText(jobjt.getString("ChartName"))
+
+
+                                            Log.e(TAG, "projectBillArrayList 43434  =  "+projectBillArrayList)
+
+                                            val lLayout = GridLayoutManager(this@ProjectGraphActivity, 4)
+                                            recycler_billing_status!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            val adapter1 = ProjectBillStatusAdapter(this@ProjectGraphActivity, projectBillArrayList,remark)
+                                            recycler_billing_status!!.adapter = adapter1
+                                        }
+
+
 
 
                                     } else {
-                                        val builder = AlertDialog.Builder(
-                                            this@ProjectGraphActivity,
-                                            R.style.MyDialogTheme
-                                        )
-                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        noDataBill=true
+
+
+                                        noDataBillStatus="1"
+
+                                        if ( noDataProjrct && noDataBill)
+                                        {
+                                            val builder = AlertDialog.Builder(
+                                                this@ProjectGraphActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage("No Active Tile Settings")
+                                            builder.setPositiveButton("Ok") {
+                                                    dialogInterface, which ->
+
+
+//                                                ll_Graph!!.visibility = View.VISIBLE
+//                                                tvv_dash!!.setBackgroundResource(R.drawable.btn_dash)
+//                                                tvv_tile!!.setBackgroundResource(R.drawable.btn_shape_reset)
+
+
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
                                         }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()
+
+
+
+//                                        val builder = AlertDialog.Builder(
+//                                            this@ProjectGraphActivity,
+//                                            R.style.MyDialogTheme
+//                                        )
+//                                        builder.setMessage(jObject.getString("EXMessage"))
+//                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                        }
+//                                        val alertDialog: AlertDialog = builder.create()
+//                                        alertDialog.setCancelable(false)
+//                                        alertDialog.show()
                                     }
                                 }
 
@@ -1994,7 +2077,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
 
     private fun getProjectStatusTile() {
-
+        noDataProjrct=false
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -2021,44 +2104,70 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                     //    Log.e(TAG, "msg   InventoryGraph   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
+
                                         val jobjt = jObject.getJSONObject("ProjectTileDashBoardDetails")
                                         var remark = jobjt.getString("Reamrk")
 
                                         projectStatusArrayList = jobjt.getJSONArray("ProjectTileDashBoardDetailsList")
                                         Log.e(TAG, "projectStatusArrayList 4343  =  " + projectStatusArrayList)
-                                        tv_remarkProjectTle!!.setText(jobjt.getString("Reamrk"))
-                                        tv_nameProjectTle!!.setText(jobjt.getString("ChartName"))
+
+                                        if (projectStatusArrayList.length() > 0)
+                                        {
+
+                                            ll_projectStatus!!.visibility=View.VISIBLE
+                                            tv_remarkProjectTle!!.setText(jobjt.getString("Reamrk"))
+                                            tv_nameProjectTle!!.setText(jobjt.getString("ChartName"))
 
 
-//                                        recycler_project_tile!!.setLayoutManager(
-//                                        LinearLayoutManager(this, RecyclerView.HORIZONTAL, false))
-//                                        val adapter = ProjectTileStatusAdapter(this@ProjectGraphActivity,projectStatusArrayList,remark)
-//                                        recycler_project_tile!!.adapter = adapter
-//                                     //   adapter.setClickListener(this@ProjectGraphActivity)
 
 
-//                                        val lLayout = GridLayoutManager(this@ProjectGraphActivity, 3)
-//                                        recycler_project_tile!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                                        val adapter1 = ProjectTileStatusAdapter(this@ProjectGraphActivity, projectStatusArrayList, remark)
-//                                        recycler_project_tile!!.adapter = adapter1
+                                            val lLayout = GridLayoutManager(this@ProjectGraphActivity, 3)
+                                            recycler_project_tile!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                            val adapter1 = ProjectTileStatusAdapter11(this@ProjectGraphActivity, projectStatusArrayList, remark)
+                                            recycler_project_tile!!.adapter = adapter1
+                                        }
 
-                                        val lLayout = GridLayoutManager(this@ProjectGraphActivity, 3)
-                                        recycler_project_tile!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                        val adapter1 = ProjectTileStatusAdapter11(this@ProjectGraphActivity, projectStatusArrayList, remark)
-                                        recycler_project_tile!!.adapter = adapter1
+
 
 
                                     } else {
-                                        val builder = AlertDialog.Builder(
-                                            this@ProjectGraphActivity,
-                                            R.style.MyDialogTheme
-                                        )
-                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        noDataProjrct=true
+                                        noDataProjectStatus="1"
+
+                                        if ( noDataProjrct && noDataBill)
+                                        {
+                                            val builder = AlertDialog.Builder(
+                                                this@ProjectGraphActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage("No Active Tile Settings")
+                                            builder.setPositiveButton("Ok") {
+                                                    dialogInterface, which ->
+
+//
+//                                               ll_Graph!!.visibility = View.VISIBLE
+//                                                tvv_dash!!.setBackgroundResource(R.drawable.btn_dash)
+//                                                tvv_tile!!.setBackgroundResource(R.drawable.btn_shape_reset)
+
+
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
                                         }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()
+
+
+
+//                                        val builder = AlertDialog.Builder(
+//                                            this@ProjectGraphActivity,
+//                                            R.style.MyDialogTheme
+//                                        )
+//                                        builder.setMessage(jObject.getString("EXMessage"))
+//                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                        }
+//                                        val alertDialog: AlertDialog = builder.create()
+//                                        alertDialog.setCancelable(false)
+//                                        alertDialog.show()
                                     }
                                 }
 
