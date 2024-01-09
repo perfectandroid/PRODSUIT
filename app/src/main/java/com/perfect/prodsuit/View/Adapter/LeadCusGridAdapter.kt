@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -35,13 +36,21 @@ class LeadCusGridAdapter(internal var context: Context, internal var jsonArray: 
         try {
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-                Log.e(TAG,"onBindViewHolder   1051ghgh   ")
+                Log.e(TAG,"onBindViewHolder   1051ghghuygff   ")
                 val pos = position+1
 
 
                 holder.tvv_slnmbr.text        = pos.toString()
                 holder.lead_txtno.text        = jsonObject!!.getString("LeadNo")
                 holder.txt_cusname.text        = jsonObject!!.getString("CustomerName")
+
+                holder.im_delete!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(
+                        position,
+                        "deletearray_list"
+                    )
+                })
+
             //    holder.txt_cusMobile.text        = "("+jsonObject!!.getString("Mobile") +")"
 //                holder.llProduct!!.setOnClickListener(View.OnClickListener {
 //                    clickListener!!.onClick(
@@ -73,11 +82,12 @@ class LeadCusGridAdapter(internal var context: Context, internal var jsonArray: 
         internal var lead_txtno   : TextView
         internal var tvv_slnmbr         : TextView
         internal var txt_cusname         : TextView
-    //    internal var txt_cusMobile         : TextView
+        internal var im_delete         : ImageView
 
 
      //   internal var llProduct    : LinearLayout
         init {
+         im_delete          = v.findViewById<View>(R.id.im_delete) as ImageView
             lead_txtno          = v.findViewById<View>(R.id.lead_txtno) as TextView
             tvv_slnmbr                = v.findViewById<View>(R.id.tvv_slnmbr) as TextView
             txt_cusname                = v.findViewById<View>(R.id.txt_cusname) as TextView

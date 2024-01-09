@@ -3426,6 +3426,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
         }
 
+
         if (data.equals("deletearray_list"))
         {
            gridListarray.remove(position)
