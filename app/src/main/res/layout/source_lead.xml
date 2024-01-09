@@ -15,7 +15,7 @@
         android:background="@drawable/shape_gradient_pop"
         android:padding="10dp"
         android:fontFamily="@font/myfont"
-        android:text="Category"/>
+        android:text="Lead Source"/>
 
     <LinearLayout
         android:visibility="gone"

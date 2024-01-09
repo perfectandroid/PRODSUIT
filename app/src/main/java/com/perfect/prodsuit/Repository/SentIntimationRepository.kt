@@ -14,6 +14,7 @@ import com.perfect.prodsuit.Model.SentIntimationModel
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
+import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -37,9 +38,45 @@ object SentIntimationRepository {
         ID_Shedule: String,
         encodeDoc: String,
         extension: String,
-        message: String
+        message: String,
+        ID_LeadSource: String,
+        ID_LeadInfo: String,
+        FromDate: String,
+        ToDate: String,
+        ID_Category: String?,
+        ID_ProductType: String?,
+        ID_Product: String,
+        ID_Employee: String,
+        ID_CollectedBy: String?,
+        idArea: String,
+        ID_NextAction: String,
+        ID_ActionType: String,
+        ID_Priority: String?,
+        SearchBy: String,
+        SearchBydetails: String,
+        GridData: String,
+        LeadCusDetails: JSONArray
     ): MutableLiveData<SentIntimationModel> {
-        sentIntimation(context,dated,ID_module,ID_Branch,ID_Channel,ID_Shedule,encodeDoc,extension,message)
+        sentIntimation(context,dated,ID_module,ID_Branch,ID_Channel,ID_Shedule,encodeDoc,extension,message,
+            ID_LeadSource,
+            ID_LeadInfo,
+            FromDate,
+            ToDate,
+            ID_Category,
+            ID_ProductType,
+            ID_Product,
+            ID_Employee,
+            ID_CollectedBy,
+            idArea,
+            ID_NextAction,
+            ID_ActionType,
+            ID_Priority,
+            SearchBy,
+            SearchBydetails,
+            GridData,
+            LeadCusDetails
+
+            )
         return branchSetterGetter
     }
 
@@ -52,7 +89,24 @@ object SentIntimationRepository {
         ID_Shedule: String,
         encodeDoc: String,
         extension: String,
-        message: String
+        message: String,
+        ID_LeadSource: String,
+        ID_LeadInfo: String,
+        FromDate: String,
+        ToDate: String,
+        ID_Category: String?,
+        ID_ProductType: String?,
+        ID_Product: String,
+        ID_Employee: String,
+        ID_CollectedBy: String?,
+        ID_Area: String,
+        ID_NextAction: String,
+        ID_ActionType: String,
+        ID_Priority: String?,
+        SearchBy: String,
+        SearchBydetails: String,
+        GridData: String,
+        LeadCusDetails: JSONArray
     ) {
         try {
             branchSetterGetter.value = SentIntimationModel("")
@@ -118,10 +172,36 @@ object SentIntimationRepository {
                 requestObject1.put("Date", ProdsuitApplication.encryptStart(currentDate+" 00:00:00"))//
                 requestObject1.put("SheduledTime", ProdsuitApplication.encryptStart("00:00:00"))//
                 requestObject1.put("SheduledDate", ProdsuitApplication.encryptStart(dated+" 00:00:00"))//
+
+                requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart(ID_LeadSource))
+                requestObject1.put("FK_LeadThrough", ProdsuitApplication.encryptStart(ID_LeadInfo))
+                requestObject1.put("FromDate", ProdsuitApplication.encryptStart(FromDate+" 00:00:00"))
+                requestObject1.put("ToDate", ProdsuitApplication.encryptStart(ToDate+" 00:00:00"))
+
+                requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
+                requestObject1.put("ProdType", ProdsuitApplication.encryptStart(ID_ProductType))
+                requestObject1.put("ID_Product", ProdsuitApplication.encryptStart(ID_Product))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
+
+                requestObject1.put("Collectedby_ID", ProdsuitApplication.encryptStart(ID_CollectedBy))
+                requestObject1.put("Area_ID", ProdsuitApplication.encryptStart(ID_Area))
+
+                requestObject1.put("FK_NetAction", ProdsuitApplication.encryptStart(ID_NextAction))
+                requestObject1.put("FK_ActionType", ProdsuitApplication.encryptStart(ID_ActionType))
+
+                requestObject1.put("FK_Priority", ProdsuitApplication.encryptStart(ID_Priority))
+
+                requestObject1.put("SearchBy", ProdsuitApplication.encryptStart(SearchBy))
+                requestObject1.put("SearchBydetails", ProdsuitApplication.encryptStart(SearchBydetails))
+
+                requestObject1.put("GridData", ProdsuitApplication.encryptStart(GridData))
+
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
-                Log.e(TAG,"intimation  "+requestObject1)
+
+                requestObject1.put("LeadCusDetails", (LeadCusDetails))
+                Log.e(TAG,"intimation 4545454  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
