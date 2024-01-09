@@ -36,7 +36,7 @@ object ProductTypeRepository {
     private fun getProductType(context: Context) {
 
 
-     /*   try {
+        try {
             productTypeSetterGetter.value = ProductTypeModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
@@ -84,23 +84,20 @@ object ProductTypeRepository {
             //    {"FK_Employee":"10044","EntrBy":"sree1","FK_Department":"1","FK_Branch":"3","FK_Company":"1","FK_BranchCodeUser":"3","TransDate":"2023-11-08","FK_Module":"0"}
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("34"))
 
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
-                requestObject1.put("FK_Department", ProdsuitApplication.encryptStart(FK_DepartmentSP.getString("FK_Department", null)))
-                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
+
+
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
-//                requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-08"))
-                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
-                requestObject1.put("FK_Module", ProdsuitApplication.encryptStart(SubMode))
+
               //  requestObject1.put("DashType", ProdsuitApplication.encryptStart("1"))
 
 
 
 
 
-                Log.e(TAG,"8551 getAuthorizationAction  "+requestObject1)
+                Log.e(TAG,"8551 getProductType  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -108,7 +105,7 @@ object ProductTypeRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getDashboardNames(body)
+            val call = apiService.getProductType(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -135,9 +132,9 @@ object ProductTypeRepository {
             e.printStackTrace()
             progressDialog!!.dismiss()
             Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
-        } */
+        }
 
-        try {
+    /*    try {
             productTypeSetterGetter.value = ProductTypeModel("")
             var msg = "{\n" +
                     "  \"checkDetails\": {\n" +
@@ -161,7 +158,7 @@ object ProductTypeRepository {
             productTypeSetterGetter.value = ProductTypeModel(msg)
         }catch (e: Exception){
 
-        }
+        } */
 
 
     }
