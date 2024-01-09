@@ -82,6 +82,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private var drawer_layout: DrawerLayout? = null
     private var nav_view: NavigationView? = null
     private var btn_menu: ImageView? = null
+    private var btn_chat: ImageView? = null
     private var imgAttendance: ImageView? = null
     private var imgv_logo: ImageView? = null
     private var llservice: LinearLayout? = null
@@ -912,6 +913,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         drawer_layout = findViewById(R.id.drawer_layout)
         nav_view = findViewById(R.id.nav_view)
         btn_menu = findViewById(R.id.btn_menu)
+        btn_chat = findViewById(R.id.btn_chat)
         lllead = findViewById(R.id.lllead)
         llservice = findViewById(R.id.llservice)
         rlnotification= findViewById(R.id.rlnotification)
@@ -946,6 +948,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         tv_navStatus = headerView!!.findViewById(R.id.tv_navStatus)
 
         btn_menu!!.setOnClickListener(this)
+        btn_chat!!.setOnClickListener(this)
         lllead!!.setOnClickListener(this)
         llservice!!.setOnClickListener(this)
         ll_dashboard!!.setOnClickListener(this)
@@ -1140,6 +1143,10 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                     drawer_layout!!.openDrawer(GravityCompat.START)
                 }
             }
+            R.id.btn_chat -> {
+                val i = Intent(this@HomeActivity, ChatRegisterActivity::class.java)
+                startActivity(i)
+            }
             R.id.imgAttendance -> {
                 Log.e("HomeActivity","imgAttendance    161  ")
 //               if (checkAndRequestPermissions()){
@@ -1265,6 +1272,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 //                val i = Intent(this@HomeActivity, ApprovalListDetailActivity::class.java)
 //                startActivity(i)
+
+
 
 
 
@@ -2637,6 +2646,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
         }
+
 
         /*if (data.equals("homeDashClicks")) {
             Log.e(TAG,"2385    "+position)

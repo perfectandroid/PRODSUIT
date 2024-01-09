@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txt_head"
+        android:id="@+id/txt_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -13,10 +13,10 @@
         android:textSize="17dp"
         android:textStyle="bold"
         android:textAllCaps="true"
+        android:fontFamily="@font/myfont"
         android:background="@drawable/shape_gradient_pop"
         android:padding="10dp"
-        android:fontFamily="@font/myfont"
-        android:text="Category"/>
+        android:text=""/>
 
     <LinearLayout
         android:id="@+id/llsearch"
@@ -55,14 +55,13 @@
         </LinearLayout>
     </LinearLayout>
 
-
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/grey"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyProdCategory"
+        android:id="@+id/recy_comm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible" />

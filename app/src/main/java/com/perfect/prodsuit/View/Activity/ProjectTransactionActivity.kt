@@ -120,6 +120,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     private var strDate                           = ""
     private var strOtherAmount                    = ""
     private var strRemark                    = ""
+    private var strRoundOff                   = ""
 
     var jsonObj: JSONObject? = null
     private var dialogOtherChargesSheet : Dialog? = null
@@ -437,14 +438,21 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             }
             R.id.tie_PaymentMethod->{
 
-                var othAmnt = tie_OtherCharges!!.text.toString()
-                if (othAmnt.equals("") || othAmnt.equals(".")){
-                    othAmnt = "0.00"
+                var otheAmount = ""
+                if (ID_TransactionType.equals("4")){
+                    otheAmount = tie_NetAmount!!.text.toString()
+                }else{
+                    otheAmount = tie_OtherCharges!!.text.toString()
                 }
+                if (otheAmount.equals("") || otheAmount.equals(".")){
+                    otheAmount = "0.00"
+                }
+                Log.e(TAG,"  441110   tie_PaymentMethod  "+otheAmount)
 
-                if (ID_TransactionType.equals("1") && othAmnt.toFloat() <= 0){
+                if (!ID_TransactionType.equals("2") && otheAmount.toFloat() <= 0){
                     Config.snackBarWarning(context,v,"Amount should be greter than zero")
                 }else{
+                    Log.e(TAG,"  441112   tie_PaymentMethod  "+otheAmount)
                     Config.disableClick(v)
                     paymentMethodPopup()
                 }
@@ -503,6 +511,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         strDate = tie_Date!!.text.toString()
         strOtherAmount = tie_OtherCharges!!.text.toString()
         strRemark = tie_Remarks!!.text.toString()
+        strRoundOff = tie_RoundOff!!.text.toString()
 
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
@@ -607,9 +616,10 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         }else{
 
             Log.e(TAG,"5491  updateProjectTransaction")
-//            savePaymentDetailArray = JSONArray()
-//            updateCount = 0
-//            updateProjectTransaction()
+            savePaymentDetailArray = JSONArray()
+            totPayAmount = tie_NetAmount!!.text.toString().toFloat()
+            updateCount = 0
+            updateProjectTransaction()
         }
 
 
@@ -671,8 +681,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             || (totPayAmount == otheAmount.toFloat() && ID_TransactionType.equals("5"))|| (totPayAmount == otheAmount.toFloat() && ID_TransactionType.equals("6"))){
 
             Log.e(TAG,"5492  updateProjectTransaction")
-//            updateCount = 0
-//            updateProjectTransaction()
+            updateCount = 0
+            updateProjectTransaction()
 
             Log.e(TAG,"581021    Success")
         }
@@ -680,8 +690,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
             Log.e(TAG,"5493  updateProjectTransaction")
 
-//            updateCount = 0
-//            updateProjectTransaction()
+            updateCount = 0
+            updateProjectTransaction()
 
             Log.e(TAG,"581022    Success")
         }
@@ -705,7 +715,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 updateProjectTransactionViewModel.SaveUpdateProjectTransaction(this,UserAction,strDate,ID_Project,ID_Stage,
-                    totPayAmount!!.toString(),strOtherAmount,strRemark,pssOtherCharge,pssOtherChargeTax,savePaymentDetailArray)!!.observe(
+                    totPayAmount!!.toString(),strOtherAmount,strRemark,pssOtherCharge,pssOtherChargeTax,savePaymentDetailArray,
+                    ID_TransactionType,ID_Employee,strRoundOff,ID_BillType,ID_PettyCashier)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -2511,7 +2522,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             setMandatoryField(ID_TransactionType)
 
             if (ID_TransactionType.equals("4") || ID_TransactionType.equals("0")) {
-                hideShow("0")
+              //  hideShow("0")
             }
             else
             {
@@ -2540,7 +2551,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             tie_Employee!!.setText("")
 
             if (ID_TransactionType.equals("4") || ID_TransactionType.equals("0")) {
-                hideShow("0")
+              //  hideShow("0")
             }
             else
             {
@@ -2564,7 +2575,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             tie_Employee!!.setText("")
 
             if (ID_TransactionType.equals("4") || ID_TransactionType.equals("0")) {
-                hideShow("0")
+              //  hideShow("0")
             }
             else
             {
@@ -2583,7 +2594,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             tie_Bill_Type!!.setText(jsonObject.getString("BTName"))
 
             if (ID_TransactionType.equals("4") || ID_TransactionType.equals("0")) {
-                hideShow("0")
+               // hideShow("0")
             }
             else
             {
@@ -2602,7 +2613,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             tie_Petty_Cashier!!.setText(jsonObject.getString("PtyCshrName"))
 
             if (ID_TransactionType.equals("4") || ID_TransactionType.equals("0")) {
-                hideShow("0")
+              //  hideShow("0")
             }
             else
             {
@@ -2621,7 +2632,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             tie_Employee!!.setText(jsonObject.getString("EmployeeName"))
 
             if (ID_TransactionType.equals("4") || ID_TransactionType.equals("0")) {
-                hideShow("0")
+               // hideShow("0")
             }
             else
             {
@@ -2937,7 +2948,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         til_NetAmount!!.visibility = View.VISIBLE
         til_Petty_Cashier!!.visibility = View.VISIBLE
         til_PaymentMethod!!.visibility = View.VISIBLE
-       // ll_paymentInfo!!.visibility=View.VISIBLE
+        ll_paymentInfo!!.visibility=View.VISIBLE
 
         if (ID_TransactionType.equals("0")){
             Log.e(TAG,"19533 0  ")
@@ -2975,6 +2986,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             til_Employee!!.visibility = View.GONE
             tie_OtherCharges!!.isFocusableInTouchMode = false
             tie_OtherCharges!!.isEnabled = true
+
+            ll_paymentInfo!!.visibility=View.GONE
         }
 
         else if (ID_TransactionType.equals("5")){

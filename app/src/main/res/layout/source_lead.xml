@@ -5,7 +5,6 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txt_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -16,9 +15,10 @@
         android:background="@drawable/shape_gradient_pop"
         android:padding="10dp"
         android:fontFamily="@font/myfont"
-        android:text="Category"/>
+        android:text="Lead Source"/>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/llsearch"
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -62,7 +62,7 @@
         android:background="@color/grey"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyProdCategory"
+        android:id="@+id/source_lead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible" />

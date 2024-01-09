@@ -9,107 +9,89 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.BranchModel
-import com.perfect.prodsuit.Model.SentIntimationModel
+import com.perfect.prodsuit.Model.LeadHistModel
+
 import com.perfect.prodsuit.R
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
-import org.json.JSONArray
 import org.json.JSONObject
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.text.SimpleDateFormat
-import java.util.*
+import java.util.ArrayList
 
-object SentIntimationRepository {
+object LeadHistRepository {
 
     private var progressDialog: ProgressDialog? = null
-    val branchSetterGetter = MutableLiveData<SentIntimationModel>()
-    val TAG: String = "BranchRepository"
+    val leadHistSetterGetter = MutableLiveData<LeadHistModel>()
+    val TAG: String = "LeadHistRepository"
 
     fun getServicesApiCall(
         context: Context,
-        dated: String,
-        ID_module: String,
-        ID_Branch: String,
-        ID_Channel: String,
-        ID_Shedule: String,
-        encodeDoc: String,
-        extension: String,
-        message: String,
         ID_LeadSource: String,
         ID_LeadInfo: String,
-        FromDate: String,
-        ToDate: String,
+        fromDate1: String,
+        toDate1: String,
         ID_Category: String?,
         ID_ProductType: String?,
         ID_Product: String,
         ID_Employee: String,
         ID_CollectedBy: String?,
-        idArea: String,
+        ID_Area: String?,
         ID_NextAction: String,
         ID_ActionType: String,
         ID_Priority: String?,
-        SearchBy: String,
-        SearchBydetails: String,
-        GridData: String,
-        LeadCusDetails: JSONArray
-    ): MutableLiveData<SentIntimationModel> {
-        sentIntimation(context,dated,ID_module,ID_Branch,ID_Channel,ID_Shedule,encodeDoc,extension,message,
+        ID_SearchBy: String?,
+        searchDetails: String?,
+        Transmode: String?,
+        prodName: String
+    ): MutableLiveData<LeadHistModel> {
+        getLeadHist(context,
             ID_LeadSource,
-            ID_LeadInfo,
-            FromDate,
-            ToDate,
+            ID_LeadInfo,fromDate1,
+            toDate1,
             ID_Category,
             ID_ProductType,
             ID_Product,
             ID_Employee,
             ID_CollectedBy,
-            idArea,
+            ID_Area,
             ID_NextAction,
             ID_ActionType,
             ID_Priority,
-            SearchBy,
-            SearchBydetails,
-            GridData,
-            LeadCusDetails
-
+            ID_SearchBy,
+            searchDetails,
+            Transmode,
+            prodName
             )
-        return branchSetterGetter
+        return leadHistSetterGetter
     }
 
-    private fun sentIntimation(
+    private fun getLeadHist(
         context: Context,
-        dated: String,
-        ID_module: String,
-        ID_Branch: String,
-        ID_Channel: String,
-        ID_Shedule: String,
-        encodeDoc: String,
-        extension: String,
-        message: String,
         ID_LeadSource: String,
         ID_LeadInfo: String,
-        FromDate: String,
-        ToDate: String,
+        fromDate1: String,
+        toDate1: String,
         ID_Category: String?,
         ID_ProductType: String?,
         ID_Product: String,
         ID_Employee: String,
         ID_CollectedBy: String?,
-        ID_Area: String,
+        ID_Area: String?,
         ID_NextAction: String,
         ID_ActionType: String,
         ID_Priority: String?,
-        SearchBy: String,
-        SearchBydetails: String,
-        GridData: String,
-        LeadCusDetails: JSONArray
-    ) {
+        ID_SearchBy: String?,
+        searchDetails: String?,
+        Transmode: String?,
+        prodName: String,
+
+        ) {
+
         try {
-            branchSetterGetter.value = SentIntimationModel("")
+            leadHistSetterGetter.value = LeadHistModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
@@ -134,74 +116,51 @@ object SentIntimationRepository {
             val apiService = retrofit.create(ApiInterface::class.java!!)
             val requestObject1 = JSONObject()
             try {
+
+
+//                {"ReqMode":"rTyE34GbkJc=","BankKey":"\/mXqmq3ZMvs=\n","FK_Employee":"07\/ybAx1yS4=\n","FK_Company":"vJ\/8asrP+O0=\n",
+//                    "Token":"Jn9nvIP\/Ms4F16TNnZe3H9KH0+x+sqTJl6afLjsUBvaKVwPJaIvQvQ==\n"}
+                val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
-                val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
-                val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
-                val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
-                val sdf = SimpleDateFormat("dd-MM-yyyy")
-                val currentDate = sdf.format(Date())
-
-                var attachement=""
-                if(encodeDoc.equals(""))
-                {
-                    attachement=""
-                }
-                else
-                {
-                    attachement=encodeDoc+"."+extension
-                }
-
-                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
+                val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("129"))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("UserAction", ProdsuitApplication.encryptStart("1"))
-                requestObject1.put("ID_CommonIntimation", ProdsuitApplication.encryptStart("0"))
-                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
-                requestObject1.put("SheduledType", ProdsuitApplication.encryptStart(ID_Shedule))
-                requestObject1.put("Message", ProdsuitApplication.encryptStart(message))
-                requestObject1.put("Unicode", ProdsuitApplication.encryptStart("0"))
-                requestObject1.put("Subject", ProdsuitApplication.encryptStart(""))
-                requestObject1.put("Status", ProdsuitApplication.encryptStart("0"))
-                requestObject1.put("Channel", ProdsuitApplication.encryptStart(ID_Channel))
-                requestObject1.put("DLId", ProdsuitApplication.encryptStart(""))
-                requestObject1.put("Attachment", ProdsuitApplication.encryptStart(attachement))
-                requestObject1.put("Module", ProdsuitApplication.encryptStart(ID_module))
-                requestObject1.put("Branch", ProdsuitApplication.encryptStart(ID_Branch))
-                requestObject1.put("Date", ProdsuitApplication.encryptStart(currentDate+" 00:00:00"))//
-                requestObject1.put("SheduledTime", ProdsuitApplication.encryptStart("00:00:00"))//
-                requestObject1.put("SheduledDate", ProdsuitApplication.encryptStart(dated+" 00:00:00"))//
+                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
 
                 requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart(ID_LeadSource))
                 requestObject1.put("FK_LeadThrough", ProdsuitApplication.encryptStart(ID_LeadInfo))
-                requestObject1.put("FromDate", ProdsuitApplication.encryptStart(FromDate+" 00:00:00"))
-                requestObject1.put("ToDate", ProdsuitApplication.encryptStart(ToDate+" 00:00:00"))
-
+                requestObject1.put("FromDate", ProdsuitApplication.encryptStart(fromDate1+" 00:00:00"))
+                requestObject1.put("ToDate", ProdsuitApplication.encryptStart(toDate1+" 00:00:00"))
                 requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
                 requestObject1.put("ProdType", ProdsuitApplication.encryptStart(ID_ProductType))
                 requestObject1.put("ID_Product", ProdsuitApplication.encryptStart(ID_Product))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
-
                 requestObject1.put("Collectedby_ID", ProdsuitApplication.encryptStart(ID_CollectedBy))
                 requestObject1.put("Area_ID", ProdsuitApplication.encryptStart(ID_Area))
-
+                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("FK_NetAction", ProdsuitApplication.encryptStart(ID_NextAction))
                 requestObject1.put("FK_ActionType", ProdsuitApplication.encryptStart(ID_ActionType))
-
                 requestObject1.put("FK_Priority", ProdsuitApplication.encryptStart(ID_Priority))
+                requestObject1.put("SearchBy", ProdsuitApplication.encryptStart(ID_SearchBy))
+                requestObject1.put("SearchBydetails", ProdsuitApplication.encryptStart(searchDetails))
+                requestObject1.put("TransMode", ProdsuitApplication.encryptStart(Transmode))
+                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
+                requestObject1.put("ProdName", ProdsuitApplication.encryptStart(prodName))
 
-                requestObject1.put("SearchBy", ProdsuitApplication.encryptStart(SearchBy))
-                requestObject1.put("SearchBydetails", ProdsuitApplication.encryptStart(SearchBydetails))
 
-                requestObject1.put("GridData", ProdsuitApplication.encryptStart(GridData))
 
-                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
-                requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
-                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
 
-                requestObject1.put("LeadCusDetails", (LeadCusDetails))
-                Log.e(TAG,"intimation 4545454  "+requestObject1)
+
+                requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
+
+
+
+
+                Log.e(TAG,"78144  history    "+requestObject1)
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -209,7 +168,7 @@ object SentIntimationRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.sentIntimation(body)
+            val call = apiService.getLeadHistDetails(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
@@ -218,26 +177,26 @@ object SentIntimationRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        Log.i("Branchresponse",response.body())
-                        val leads = ArrayList<BranchModel>()
-                        leads.add(BranchModel(response.body()))
+                        Log.e(TAG,"histtttt   782  "+response.body())
+                        val leads = ArrayList<LeadHistModel>()
+                        leads.add(LeadHistModel(response.body()))
                         val msg = leads[0].message
-                        branchSetterGetter.value = SentIntimationModel(msg)
+                        leadHistSetterGetter.value = LeadHistModel(msg)
                     } catch (e: Exception) {
                         progressDialog!!.dismiss()
-                        Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                     }
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
-                    Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
-            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
             progressDialog!!.dismiss()
         }
-    }
 
+    }
 }

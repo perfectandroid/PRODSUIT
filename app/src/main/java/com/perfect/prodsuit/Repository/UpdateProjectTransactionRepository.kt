@@ -29,16 +29,18 @@ object UpdateProjectTransactionRepository {
 
     fun getServicesApiCall(context: Context, UserAction : String, Date : String, FK_Project : String, FK_Stage : String,
                            NetAmount : String, OtherCharge : String, Remark : String,
-                           pssOtherCharge : JSONArray, pssOtherChargeTax : JSONArray, PaymentDetails : JSONArray
-    ): MutableLiveData<UpdateProjectTransactionModel> {
+                           pssOtherCharge : JSONArray, pssOtherChargeTax : JSONArray, PaymentDetails : JSONArray,
+                           ID_TransactionType : String,ID_Employee : String,strRoundOff : String,ID_BillType : String,
+                           ID_PettyCashier : String): MutableLiveData<UpdateProjectTransactionModel> {
         UpdateProjectTransactionRep(context,UserAction,Date,FK_Project,FK_Stage,NetAmount,OtherCharge,
-            Remark,pssOtherCharge,pssOtherChargeTax,PaymentDetails)
+            Remark,pssOtherCharge,pssOtherChargeTax,PaymentDetails,ID_TransactionType,ID_Employee,strRoundOff,ID_BillType,ID_PettyCashier)
         return updateProjectTransactionSetterGetter
     }
 
     private fun UpdateProjectTransactionRep(context: Context, UserAction : String, Date : String, FK_Project : String, FK_Stage : String,
                                             NetAmount : String, OtherCharge : String, Remark : String,
-                                            pssOtherCharge : JSONArray, pssOtherChargeTax : JSONArray, PaymentDetails : JSONArray) {
+                                            pssOtherCharge : JSONArray, pssOtherChargeTax : JSONArray, PaymentDetails : JSONArray,
+                                            ID_TransactionType : String,ID_Employee : String,strRoundOff : String,ID_BillType : String,ID_PettyCashier : String) {
 
         try {
             updateProjectTransactionSetterGetter.value = UpdateProjectTransactionModel("")
@@ -83,11 +85,19 @@ object UpdateProjectTransactionRepository {
                 requestObject1.put("UserAction", ProdsuitApplication.encryptStart(UserAction))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
 
+                requestObject1.put("FK_TransactionType", ProdsuitApplication.encryptStart(ID_TransactionType))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
+
                 requestObject1.put("Date", ProdsuitApplication.encryptStart(Config.convertDate(Date)))
                 requestObject1.put("FK_Project", ProdsuitApplication.encryptStart(FK_Project))
                 requestObject1.put("FK_Stage", ProdsuitApplication.encryptStart(FK_Stage))
                 requestObject1.put("NetAmount", ProdsuitApplication.encryptStart(NetAmount))
                 requestObject1.put("OtherCharge", ProdsuitApplication.encryptStart(OtherCharge))
+
+                requestObject1.put("RoundOff", ProdsuitApplication.encryptStart(strRoundOff))
+                requestObject1.put("FK_BillType", ProdsuitApplication.encryptStart(ID_BillType))
+                requestObject1.put("FK_PettyCashier", ProdsuitApplication.encryptStart(ID_PettyCashier))
+
                 requestObject1.put("Remark", ProdsuitApplication.encryptStart(Remark))
 
                 requestObject1.put("pssOtherCharge", pssOtherCharge)
@@ -95,6 +105,8 @@ object UpdateProjectTransactionRepository {
                 requestObject1.put("PaymentDetails", PaymentDetails)
 
                 Log.e(TAG,"requestObject1   82   "+requestObject1)
+
+
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -103,29 +115,29 @@ object UpdateProjectTransactionRepository {
                 requestObject1.toString()
             )
 
-//            val call = apiService.saveUpdateProjectTransaction(body)
-//            call.enqueue(object : retrofit2.Callback<String> {
-//                override fun onResponse(
-//                    call: retrofit2.Call<String>, response:
-//                    Response<String>
-//                ) {
-//                    try {
-//                        progressDialog!!.dismiss()
-//                        val jObject = JSONObject(response.body())
-//                        val leads = ArrayList<UpdateProjectTransactionModel>()
-//                        leads.add(UpdateProjectTransactionModel(response.body()))
-//                        val msg = leads[0].message
-//                        updateProjectTransactionSetterGetter.value = UpdateProjectTransactionModel(msg)
-//                    } catch (e: Exception) {
-//                        progressDialog!!.dismiss()
-//                        Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//                override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
-//                    progressDialog!!.dismiss()
-//                    Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
-//                }
-//            })
+            val call = apiService.saveUpdateProjectTransaction(body)
+            call.enqueue(object : retrofit2.Callback<String> {
+                override fun onResponse(
+                    call: retrofit2.Call<String>, response:
+                    Response<String>
+                ) {
+                    try {
+                        progressDialog!!.dismiss()
+                        val jObject = JSONObject(response.body())
+                        val leads = ArrayList<UpdateProjectTransactionModel>()
+                        leads.add(UpdateProjectTransactionModel(response.body()))
+                        val msg = leads[0].message
+                        updateProjectTransactionSetterGetter.value = UpdateProjectTransactionModel(msg)
+                    } catch (e: Exception) {
+                        progressDialog!!.dismiss()
+                        Toast.makeText(context,""+e.toString(), Toast.LENGTH_SHORT).show()
+                    }
+                }
+                override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
+                    progressDialog!!.dismiss()
+                    Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+                }
+            })
         }catch (e : Exception){
             e.printStackTrace()
             progressDialog!!.dismiss()

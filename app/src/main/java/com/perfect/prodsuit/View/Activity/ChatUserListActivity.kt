@@ -87,10 +87,13 @@ class ChatUserListActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     }
 
     private fun getAllUserListPopup() {
+
+       // var query = databaseRef.orderByChild("CompanyCategory").equalTo("8")
         databaseRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
 
+                Log.e(TAG,"966  "+dataSnapshot.childrenCount)
                 db!!.deleteFirebaseUser()
                 messageLists.clear()
                 for (data in dataSnapshot.children) {

@@ -1063,7 +1063,8 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/svg_sa_sub1"
                         android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:layout_marginBottom="10dp"
+                        android:visibility="invisible"/>
 
                     <LinearLayout
                         android:id="@+id/ll_project_transaction"
@@ -1071,7 +1072,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="20dp"
