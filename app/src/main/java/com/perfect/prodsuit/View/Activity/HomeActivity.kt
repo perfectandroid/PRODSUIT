@@ -2454,6 +2454,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
         }
 
+
         /*if (data.equals("homeDashClicks")) {
             Log.e(TAG,"2385    "+position)
             val jsonObject = dashCountArrayList.getJSONObject(position)

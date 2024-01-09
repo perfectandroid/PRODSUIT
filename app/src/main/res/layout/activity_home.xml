@@ -98,7 +98,7 @@
                                 android:src="@drawable/message_24"
                                 android:tint="@color/colorPrimary"
                                 tools:ignore="UseAppTint"
-                                android:visibility="gone"/>
+                                android:visibility="visible"/>
 
 
 

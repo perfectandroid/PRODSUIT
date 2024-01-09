@@ -124,7 +124,7 @@
                         android:textSize="12dp"
                         android:layout_weight="1"
                         android:textStyle="bold"
-                        android:text="Sender"
+                        android:text="Requester"
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/greydark"
                         android:textAllCaps="false"
