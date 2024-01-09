@@ -752,7 +752,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
              tie_FollowUpAction    = view.findViewById(R.id.tie_FollowUpAction)    as TextInputEditText
              tie_FollowUpType      = view.findViewById(R.id.tie_FollowUpType)      as TextInputEditText
              tie_Priority          = view.findViewById(R.id.tie_Priority)          as TextInputEditText
-             tie_LeadDetails       = view.findViewById(R.id.tie_LeadDetails)       as TextInputEditText
+             tie_LeadDetails       = view.findViewById(R.id.tie_Lea)               as TextInputEditText
              tie_Lead_entry        = view.findViewById(R.id.tie_Lead_entry)        as TextInputEditText
              til_Lead_entry        = view.findViewById(R.id.til_Lead_entry)        as TextInputLayout
 
@@ -3410,15 +3410,26 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
             ll_gridData!!.visibility=View.VISIBLE
 
-            try {
-                val lLayout = GridLayoutManager(this@Intimation, 1)
-                fulllengthrcy!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                val adapter = LeadCusGridAdapter(this@Intimation, gridListarray)
-                fulllengthrcy!!.adapter = adapter
-              //  adapter.setClickListener(this@Intimation)
-            }catch (e: Exception){
-                Log.e(TAG,"Exception  1275   "+e.toString())
-            }
+            viewGridList(gridListarray)
+
+//            try {
+//                val lLayout = GridLayoutManager(this@Intimation, 1)
+//                fulllengthrcy!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//                val adapter = LeadCusGridAdapter(this@Intimation, gridListarray)
+//                fulllengthrcy!!.adapter = adapter
+//              //  adapter.setClickListener(this@Intimation)
+//            }catch (e: Exception){
+//                Log.e(TAG,"Exception  1275   "+e.toString())
+//            }
+
+
+
+        }
+
+        if (data.equals("deletearray_list"))
+        {
+           gridListarray.remove(position)
+            viewGridList(gridListarray)
 
 
 
@@ -3483,6 +3494,19 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             tie_LeadFrom!!.setText(jsonObject.getString("Name"))
 
 
+        }
+
+    }
+
+    private fun viewGridList(gridListarray: JSONArray) {
+        try {
+            val lLayout = GridLayoutManager(this@Intimation, 1)
+            fulllengthrcy!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapter = LeadCusGridAdapter(this@Intimation, gridListarray)
+            fulllengthrcy!!.adapter = adapter
+            adapter.setClickListener(this@Intimation)
+        }catch (e: Exception){
+            Log.e(TAG,"Exception  1275   "+e.toString())
         }
 
     }
