@@ -52,7 +52,7 @@
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/myfont"
                 android:gravity="center"
-                android:text="This app requires access to the Calender"
+                android:text="Please enable access to the Calender"
                 android:textColor="@color/black"
                 android:textSize="18dp"
                 android:textStyle="bold" />
