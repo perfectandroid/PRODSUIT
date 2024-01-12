@@ -45,7 +45,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener {
-
+    var ID_first: String? = ""
+    var ID_LeadFirst: String? = ""
+    var ID_sec: String? = ""
+    var ID_LeadSec: String? = ""
     private var source_lead          : RecyclerView? = null
 
     var ID_SearchBy: String? = "0"
@@ -76,6 +79,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     lateinit var prodCatSort : JSONArray
     //..........reset
     private var txtReset  : TextView? = null
+    private var txtSearch  : TextView? = null
+
     //..........lead from
 
     var LeadFromInfocount = 0
@@ -181,6 +186,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     lateinit var leadDetailArrayList : JSONArray
     private var dialogleadDetail : Dialog? = null
     var recyleadDetail: RecyclerView? = null
+    var recyleadDetail1: RecyclerView? = null
     lateinit var leadDetailSort : JSONArray
     private var ID_Lead_Details = "";
     //........lead details
@@ -733,7 +739,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
 
              txtReset          = view.findViewById(R.id.txtReset)          as TextView
-            val txtSearch         = view.findViewById(R.id.txtSearch)         as TextView
+             txtSearch         = view.findViewById(R.id.txtSearch)         as TextView
              tie_LeadSource    = view.findViewById(R.id.tie_LeadSource)    as TextInputEditText
              tie_LeadFrom      = view.findViewById(R.id.tie_LeadFrom)      as TextInputEditText
              tie_FromDate1      = view.findViewById(R.id.tie_FromDate1)      as TextInputEditText
@@ -781,6 +787,10 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 //
 //            }
 
+            txtSearch!!.setOnClickListener(View.OnClickListener {
+                dialog1!!.dismiss()
+
+            })
             txtReset!!.setOnClickListener(View.OnClickListener {
                 resetDialog()
 
@@ -792,6 +802,9 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             })
 
             tie_ProductType!!.setOnClickListener(View.OnClickListener {
+
+                tie_productproject!!.setText("")
+                ID_Product=""
                 productTypeCount = 0
                 getProductType()
 
@@ -894,8 +907,17 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
             tie_Category!!.setOnClickListener(View.OnClickListener {
 
-                category = 0
-                getCategory()
+                if (ID_ProductType.equals(""))
+                {
+                    Toast.makeText(this, "Select Product Type", Toast.LENGTH_SHORT).show()
+                }
+                else
+                {
+                    category = 0
+                    getCategory()
+                }
+
+
 
             })
 
@@ -967,7 +989,6 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                     tie_Lead_entry!!.text.toString(),
                     Transmode!!,
                     tie_productproject!!.text.toString()
-
 
 
 
@@ -1046,7 +1067,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             dialogHist!!.setContentView(R.layout.leadhist_popup)
             dialogHist!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyLeadHist = dialogHist!!.findViewById(R.id.recyLeadHist) as RecyclerView
-//            val etsearch = dialogHist!!.findViewById(R.id.etsearch) as EditText
+            val etsearch = dialogHist!!.findViewById(R.id.etsearch) as EditText
 
             leadHistSort = JSONArray()
             for (k in 0 until leadHistArrayList.length()) {
@@ -1062,7 +1083,37 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             recyLeadHist!!.adapter = adapter
             adapter.setClickListener(this@Intimation)
 
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
 
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    leadHistSort = JSONArray()
+
+                    for (k in 0 until leadHistArrayList.length()) {
+                        val jsonObject = leadHistArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("LeadNo").length) {
+                            if (jsonObject.getString("LeadNo")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                leadHistSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "employeeSort               7103    " + leadHistSort)
+                    val adapter = LeadHistCusAdapter(this@Intimation, leadHistSort)
+                    recyLeadHist!!.adapter = adapter
+                    adapter.setClickListener(this@Intimation)
+                }
+            })
 
             dialogHist!!.show()
             dialogHist!!.getWindow()!!.setLayout(
@@ -1331,6 +1382,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             dialogProductType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdType = dialogProductType!!.findViewById(R.id.recyProdCategory) as RecyclerView
             val llsearch = dialogProductType!!.findViewById(R.id.llsearch) as LinearLayout
+            val txt_head = dialogProductType!!.findViewById(R.id.txt_head) as TextView
+            txt_head.text="Product Type"
             llsearch!!.visibility=View.GONE
 
 
@@ -1504,10 +1557,10 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
             dialogleadDetail = Dialog(this)
             dialogleadDetail!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-            dialogleadDetail!! .setContentView(R.layout.leaddetail_popup)
+            dialogleadDetail!! .setContentView(R.layout.lead_pop_up)
             dialogleadDetail!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-            recyleadDetail = dialogleadDetail!! .findViewById(R.id.recyleadDetail) as RecyclerView
-            val etsearch = dialogleadDetail!! .findViewById(R.id.etsearch) as EditText
+            recyleadDetail1 = dialogleadDetail!! .findViewById(R.id.detail_recy) as RecyclerView
+            val etsearch = dialogleadDetail!! .findViewById(R.id.etsearch1) as EditText
 
 
             leadDetailSort = JSONArray()
@@ -1519,9 +1572,9 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
             try {
                 val lLayout = GridLayoutManager(this@Intimation, 1)
-                recyleadDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                recyleadDetail1!!.layoutManager = lLayout as RecyclerView.LayoutManager?
                 val adapter = LeadDetailAdapter(this@Intimation, leadDetailSort)
-                recyleadDetail!!.adapter = adapter
+                recyleadDetail1!!.adapter = adapter
                 adapter.setClickListener(this@Intimation)
             }catch (e: Exception){
                 Log.e(TAG,"Exception  1275   "+e.toString())
@@ -1553,7 +1606,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
                     Log.e(TAG,"leadDetailSort               7103    "+leadDetailSort)
                     val adapter = LeadDetailAdapter(this@Intimation, leadDetailSort)
-                    recyleadDetail!!.adapter = adapter
+                    recyleadDetail1!!.adapter = adapter
                     adapter.setClickListener(this@Intimation)
                 }
             })
@@ -2612,7 +2665,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             recyProdCategory = dialogProdCat!!.findViewById(R.id.recyProdCategory) as RecyclerView
             val etsearch = dialogProdCat!!.findViewById(R.id.etsearch) as EditText
             val llsearch = dialogProdCat!!.findViewById(R.id.llsearch) as LinearLayout
-            llsearch!!.visibility=View.GONE
+//            llsearch!!.visibility=View.GONE
 
 
             prodCatSort = JSONArray()
@@ -2629,6 +2682,39 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             val adapter = ProductCategoryAdapter1(this@Intimation, prodCatSort)
             recyProdCategory!!.adapter = adapter
             adapter.setClickListener(this@Intimation)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    prodCatSort = JSONArray()
+
+                    for (k in 0 until prodCategoryArrayList.length()) {
+                        val jsonObject = prodCategoryArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("CategoryName").length) {
+                            if (jsonObject.getString("CategoryName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                prodCatSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "prodCategorySort               7103    " + prodCatSort)
+                    val adapter =
+                        ProductCategoryAdapter(this@Intimation, prodCatSort)
+                    recyProdCategory!!.adapter = adapter
+                    adapter.setClickListener(this@Intimation)
+                }
+            })
 
 
 
@@ -2789,6 +2875,15 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         tie_FromDate!!.setText(currentDate)
         tie_Lead_entry!!.visibility=View.GONE
         ll_leadENTRY!!.visibility=View.INVISIBLE
+        ll_gridData!!.visibility=View.GONE
+
+        gridListarray = JSONArray()
+
+//        val startingLength: Int = gridListarray.length()
+//
+//        for (i in startingLength - 1 downTo 0) {
+//            gridListarray.remove(i)
+//        }
 
         //................
         tie_ScheduledDate!!.setText(currentDate)
@@ -2828,6 +2923,10 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         Log.v("sfsdfdsfdsddd","encodeDoc  "+encodeDoc)
         Log.v("sfsdfdsfdsddd","extension  "+extension)
         Log.v("sfsdfdsfdsddd","message  "+message)
+        Log.v("sfsdfdsfdsddd","ID_LeadSource  "+ID_LeadSource)
+        Log.v("sfsdfdsfdsddd","ID_LeadInfo  "+ID_LeadInfo)
+        Log.v("sfsdfdsfdsddd","ID_Category  "+ID_Category)
+        Log.v("sfsdfdsfdsddd","ID_Employee  "+ID_Employee)
         var branch = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -2837,7 +2936,27 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                sentIntimationViewModel.sentIntimation(this, dated,ID_module,ID_Branch,ID_Channel,ID_Shedule,encodeDoc,extension,message)!!.observe(
+                sentIntimationViewModel.sentIntimation(this, dated,ID_module,ID_Branch,ID_Channel,ID_Shedule,encodeDoc,extension,
+                    message,
+                    ID_LeadSource,
+                    ID_LeadInfo,
+                    tie_FromDate1!!.text.toString(),
+                    tie_ToDate!!.text.toString(),
+                    ID_Category,
+                    ID_ProductType,
+                    ID_Product,
+                    ID_Employee,
+                    ID_CollectedBy,
+                    ID_Area!!,
+                    ID_NextAction,
+                    ID_ActionType,
+                    ID_Priority,
+                    ID_Lead_Details,
+                    tie_Lead_entry!!.text.toString(),
+                    gridListarray.length().toString(),
+                    gridListarray
+
+                )!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
@@ -3234,6 +3353,17 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         }
     }
 
+    private fun hasUser(gridListarray: JSONArray, idFirst: String, idLeadfirst: String): Boolean {
+
+        for (i in 0 until gridListarray.length()) {
+            Log.e(TAG,"rrrrrrrrrrrrrrrrrrrrrrrrr  2 "+gridListarray)
+            if (gridListarray.getJSONObject(i).getString("SlNo") == (idFirst) && gridListarray.getJSONObject(i).getString("LeadNo") == idLeadfirst)
+                return false
+        }
+        return true
+
+    }
+
     @SuppressLint("SuspiciousIndentation")
     override fun onClick(position: Int, data: String) {
         if (data.equals("module")) {
@@ -3392,8 +3522,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 //        }
 
         if (data.equals("cus_wise_lead_hist")){
-            dialogHist!!.dismiss()
-            dialog1!!.dismiss()
+
             val jsonObject = leadHistSort.getJSONObject(position)
             val jObject = JSONObject()
 //            jObject.put("CategoryName", edtProdcategory!!.text.toString())
@@ -3403,24 +3532,46 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
 
      //       gridListarray = JSONArray()
-            gridListarray!!.put(jsonObject)
 
-            Log.e(TAG,"gridListarray_second  454354322 "+gridListarray)
-            Log.e(TAG,"gridListarray  4543543 "+jsonObject)
 
-            ll_gridData!!.visibility=View.VISIBLE
+            ID_first = jsonObject.getString("SlNo")
+            ID_LeadFirst = jsonObject.getString("LeadNo")
 
-            viewGridList(gridListarray)
+            Log.e(TAG,"ID_first  4543543   "+ID_first)
+            Log.e(TAG,"ID_LeadFirst  4543543   "+ID_first)
+            Log.e(TAG,"ID_LeadFirst  4543543   "+ID_first)
 
-//            try {
-//                val lLayout = GridLayoutManager(this@Intimation, 1)
-//                fulllengthrcy!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-//                val adapter = LeadCusGridAdapter(this@Intimation, gridListarray)
-//                fulllengthrcy!!.adapter = adapter
-//              //  adapter.setClickListener(this@Intimation)
-//            }catch (e: Exception){
-//                Log.e(TAG,"Exception  1275   "+e.toString())
-//            }
+            var hasId = hasUser(gridListarray, ID_first!!, ID_LeadFirst!!)
+
+
+
+            if (hasId)
+            {
+                dialogHist!!.dismiss()
+                dialog1!!.dismiss()
+                gridListarray!!.put(jsonObject)
+
+                Log.e(TAG,"gridListarray_second  454354322 "+gridListarray)
+                Log.e(TAG,"gridListarray  4543543 "+jsonObject)
+
+                Log.e(TAG,"alresdytrt   65656565 ")
+
+                viewGridList(gridListarray)
+
+            }
+            else
+            {
+                dialogHist!!.dismiss()
+                dialog1!!.dismiss()
+                Log.e(TAG,"alresdy   65656565 ")
+                Toast.makeText(context,"already exist",Toast.LENGTH_SHORT).show()
+            }
+
+
+
+
+
+
 
 
 
@@ -3429,6 +3580,14 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
         if (data.equals("deletearray_list"))
         {
+
+
+//            Log.e(TAG,"ID_first  1275   "+ID_first)
+//            Log.e(TAG,"ID_LeadFirst  1275   "+ID_first)
+//            Log.e(TAG,"ID_first  1275   "+ID_first)
+//            Log.e(TAG,"ID_first  1275   "+ID_first)
+
+
            gridListarray.remove(position)
             viewGridList(gridListarray)
 
@@ -3501,11 +3660,21 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
     private fun viewGridList(gridListarray: JSONArray) {
         try {
-            val lLayout = GridLayoutManager(this@Intimation, 1)
-            fulllengthrcy!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-            val adapter = LeadCusGridAdapter(this@Intimation, gridListarray)
-            fulllengthrcy!!.adapter = adapter
-            adapter.setClickListener(this@Intimation)
+            if (gridListarray.length()>0)
+            {
+                ll_gridData!!.visibility=View.VISIBLE
+                val lLayout = GridLayoutManager(this@Intimation, 1)
+                fulllengthrcy!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                val adapter = LeadCusGridAdapter(this@Intimation, gridListarray)
+                fulllengthrcy!!.adapter = adapter
+                adapter.setClickListener(this@Intimation)
+            }
+            else
+            {
+                ll_gridData!!.visibility=View.GONE
+            }
+
+
         }catch (e: Exception){
             Log.e(TAG,"Exception  1275   "+e.toString())
         }

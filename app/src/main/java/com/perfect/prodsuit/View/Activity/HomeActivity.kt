@@ -13,6 +13,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -47,6 +48,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.nbfcmscore.Helper.PicassoTrustAll
+import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.Helper.*
 import com.perfect.prodsuit.Helper.LocationUtils.calculateDistance
 import com.perfect.prodsuit.R
@@ -123,6 +125,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private val REQUEST_ID_MULTIPLE_PERMISSIONS = 2
     val callbackId = 42
     val CALENDAR_PROJECTION=3
+    private val CALENDER_REQUEST_CODE=123;
     val PERMISSION_ID = 42
     var logo: String?=""
     lateinit var notificationViewModel: NotificationViewModel
@@ -192,7 +195,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private lateinit var alarmManager: AlarmManager
     private lateinit var pendingIntent: PendingIntent
 
-    private val CALENDAR_PERMISSION_REQUEST_CODE = 101
+    private val CALENDAR_PERMISSION_REQUEST_CODE = 1
     var dashboardcount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -207,7 +210,20 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         bottombarnav()
 //        getBannerlist()
         getCompanyLogo()
-        getCalendarId(context)
+       /* val pm = context.packageManager
+        val hasPerm = pm.checkPermission(
+            Manifest.permission.READ_CALENDAR,
+            context.packageName
+        )*/
+
+            // do stuff
+            getCalendarId(context)
+            // Toast.makeText(applicationContext,"granted",Toast.LENGTH_LONG).show()
+
+
+
+     //   Log.i("HASPERM",hasPerm.toString())
+       // getCalenderPermission()
         checkAndRequestPermissions()
         getLocationTracker()
         dashboardcount = 0
@@ -258,6 +274,13 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
 
+
+    private fun getCalenderRequest() {
+        TODO("Not yet implemented")
+        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_CALENDAR),CALENDER_REQUEST_CODE)
+    }
+
+
     /////
 
     private fun hasCalendarPermission(): Boolean {
@@ -273,26 +296,102 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             arrayOf(calendarPermission),
             CALENDAR_PERMISSION_REQUEST_CODE
         )
+
     }
 
+  //  override fun onRequestPermissionsResult(
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+       super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        Log.e(TAG,"REQUEST CODE "+ requestCode)
+       /* if (requestCode == CALENDAR_PERMISSION_REQUEST_CODE) {
+         //   when (requestCode) {
+               // CALENDAR_PERMISSION_REQUEST_CODE -> {
+                    if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        // Permission granted, you can now access the calendar
+                        // Perform your calendar-related operations here
+                        Log.e(TAG, "269992    Granted" + requestCode)
+                        //   Toast.makeText(applicationContext,"Granted",Toast.LENGTH_LONG).show()
+                    }
+                    else  if (grantResults.isNotEmpty() && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
 
-        if (requestCode == CALENDAR_PERMISSION_REQUEST_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted, you can now access the calendar
-                // Perform your calendar-related operations here
-                Log.e(TAG,"269992    Granted")
-            } else {
-                // Permission denied, inform the user or take appropriate action
-                Log.e(TAG,"269993    Denied")
-                requestCalendarPermission()
+                Log.e(TAG,"GRANT CODE "+ grantResults[0] )
+                        if(grantResults[0] == -1)
+                        {
+                            getCalendarId(context)
+                        }
+
+            }
+               // }
+        }*/
+      when (requestCode) {
+          CALENDAR_PERMISSION_REQUEST_CODE -> {
+              // If request is cancelled, the result arrays are empty.
+              if ((grantResults.isNotEmpty() &&
+                          grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                  Log.e(TAG, "269992    Granted" + requestCode)
+
+              }
+              else {
+
+                  //Now further we check if used denied permanently or not
+                  if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                          Manifest.permission.READ_CALENDAR)) {
+                      // case 4 User has denied permission but not permanently
+                      ActivityCompat.requestPermissions(
+                          this,
+                          arrayOf(Manifest.permission.READ_CALENDAR),
+                          1
+                      )
+                  } else {
+                      startActivity(
+                          Intent(
+                              Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                              Uri.parse("package:" + BuildConfig.APPLICATION_ID)
+                          )
+                      )
+                  }
+
+
+
+
+                  // Ignore all other requests.
+              }
+
+          }
+
+          // Add other 'when' lines to check for other
+          // permissions this app might request.
+          else -> {
+              ActivityCompat.requestPermissions(
+                  this,
+                  arrayOf(Manifest.permission.READ_CALENDAR),
+                  1
+              )
+
+              // Ignore all other requests.
+          }
+      }
+
+      /*  when (requestCode) {
+            CALENDER_REQUEST_CODE -> {
+
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+
+                    Toast.makeText(this,"Permission Denied",Toast.LENGTH_SHORT).show()
+
+                } else {
+                    Toast.makeText(this,"Permission Granted",Toast.LENGTH_SHORT).show()
+
+
             }
         }
+    }*/
+
+
     }
 
 
@@ -521,7 +620,20 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     override fun onResume() {
         super.onResume()
+        //getCalendarId(context)
         Config.setRedirection(context,"")
+       /* val pm = context.packageManager
+        val hasPerm = pm.checkPermission(
+            Manifest.permission.READ_CALENDAR,
+            context.packageName
+        )*/
+       /* if (hasPerm != PackageManager.PERMISSION_GRANTED) {
+            // do stuff
+            getCalendarId(context,callbackId)
+            // Toast.makeText(applicationContext,"granted",Toast.LENGTH_LONG).show()
+        }*/
+
+
 //        getNotfCount()
         updateWidgetHandler.postDelayed(updateWidgetRunnable, UPDATE_INTERVAL)
     }
@@ -530,6 +642,19 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     // REMOVE callback if app in background
     override fun onPause() {
         super.onPause()
+      //  getCalendarId(context)
+       /* val pm = context.packageManager
+        val hasPerm = pm.checkPermission(
+            Manifest.permission.READ_CALENDAR,
+            context.packageName
+        )
+        if (hasPerm != PackageManager.PERMISSION_GRANTED) {
+            // do stuff
+            getCalendarId(context,callbackId)
+            // Toast.makeText(applicationContext,"granted",Toast.LENGTH_LONG).show()
+        }*/
+
+
         updateWidgetHandler.removeCallbacks(updateWidgetRunnable);
     }
 
@@ -538,6 +663,13 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         dashboardcount = 0
         getDashBoardCount()
         Config.setRedirection(context,"")
+
+
+
+           // getCalendarId(context)
+            // Toast.makeText(applicationContext,"granted",Toast.LENGTH_LONG).show()
+
+
     }
 
     private fun checkAttendance() {
@@ -736,7 +868,29 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                        chipNavigationBar!!.setItemSelected(R.id.home, true)
 //                    }
                     R.id.reminder -> {
-                        setReminder()
+
+                        if (ActivityCompat.checkSelfPermission(
+                                applicationContext,
+                                Manifest.permission.WRITE_CALENDAR
+                            ) == PackageManager.PERMISSION_GRANTED
+                        ) {
+
+
+
+
+                            setReminder()
+                        }
+                        else
+                        {
+                            setPermission()
+
+
+                        }
+
+
+
+
+
 
                     }
                     R.id.logout -> {
@@ -757,6 +911,44 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         })
     }
 
+    private fun setPermission() {
+        try
+        {
+
+
+
+            val builder = android.app.AlertDialog.Builder(this)
+            val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout = inflater1.inflate(R.layout.calender_popup, null)
+            val btncancel = layout.findViewById(R.id.btncancel) as Button
+            val btnsubmit = layout.findViewById(R.id.btnsubmit) as Button
+            builder.setView(layout)
+            val alertDialog = builder.create()
+
+
+            btncancel.setOnClickListener {
+                Config.Utils.hideSoftKeyBoard(this, it)
+                chipNavigationBar!!.setItemSelected(R.id.home, true)
+                alertDialog.dismiss() }
+            btnsubmit.setOnClickListener {
+
+                Config.Utils.hideSoftKeyBoard(this, it)
+                chipNavigationBar!!.setItemSelected(R.id.home, true)
+
+                startActivity(Intent().apply {
+                    action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                    data = Uri.fromParts("package", packageName, null)
+                })
+                alertDialog.dismiss()
+
+            }
+            alertDialog.setCancelable(false)
+            alertDialog.show()
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
 
     private fun setRegViews() {
@@ -1732,7 +1924,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
     private fun setReminder() {
-        try
+       // getCalendarId(this,callbackId)
+       try
         {
 
 
@@ -1930,52 +2123,64 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
    private fun getCalendarId(context: Context): Long? {
-
-       if (ActivityCompat.checkSelfPermission(
-                       applicationContext,
-                       Manifest.permission.READ_CALENDAR
+       try
+       {
+           val permissions = true
+           if (ActivityCompat.checkSelfPermission(
+                   applicationContext,
+                   Manifest.permission.READ_CALENDAR
                ) != PackageManager.PERMISSION_GRANTED
-       ) {
-           ActivityCompat.requestPermissions(
+           ) {
+               ActivityCompat.requestPermissions(
                    this,
                    arrayOf(Manifest.permission.READ_CALENDAR),
                    1
-           )
-       }
+               )
+           }
 
-       val projection = arrayOf(CalendarContract.Calendars._ID, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME)
 
-       var calCursor = context.contentResolver.query(
+           val projection = arrayOf(CalendarContract.Calendars._ID, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME)
+
+           var calCursor = context.contentResolver.query(
                CalendarContract.Calendars.CONTENT_URI,
                projection,
                CalendarContract.Calendars.VISIBLE + " = 1 AND " + CalendarContract.Calendars.IS_PRIMARY + "=1",
                null,
                CalendarContract.Calendars._ID + " ASC"
-       )
-       if (calCursor != null && calCursor.count <= 0) {
-           calCursor = context.contentResolver.query(
+           )
+            Log.e("calcursor", calCursor.toString())
+           if (calCursor != null && calCursor.count <= 0) {
+               calCursor = context.contentResolver.query(
                    CalendarContract.Calendars.CONTENT_URI,
                    projection,
                    CalendarContract.Calendars.VISIBLE + " = 1",
                    null,
                    CalendarContract.Calendars._ID + " ASC"
-           )
-       }
-       if (calCursor != null) {
-           if (calCursor.moveToFirst()) {
-               val calName: String
-               val calID: String
-               val nameCol = calCursor.getColumnIndex(projection[1])
-               val idCol = calCursor.getColumnIndex(projection[0])
-
-               calName = calCursor.getString(nameCol)
-               calID = calCursor.getString(idCol)
-
-           //    Log.d("Calendar name = $calName Calendar ID = $calID")
-
-               calCursor.close()
-               return calID.toLong()
+               )
            }
+           if (calCursor != null) {
+               if (calCursor.moveToFirst()) {
+                   val calName: String
+                   val calID: String
+                   val nameCol = calCursor.getColumnIndex(projection[1])
+                   val idCol = calCursor.getColumnIndex(projection[0])
+
+                   calName = calCursor.getString(nameCol)
+                   calID = calCursor.getString(idCol)
+
+                   //    Log.d("Calendar name = $calName Calendar ID = $calID")
+
+                   calCursor.close()
+                   Log.e(TAG,"CALID : "+calID.toLong())
+                   return calID.toLong()
+               }
+           }
+
+
+       }
+       catch(e:SecurityException)
+       {
+             Log.e(TAG,"Error"+e.toString())
        }
        return null
 
@@ -2425,9 +2630,22 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
             }
             if (grid_id.equals("10")){
-                setReminder()
+                if (ActivityCompat.checkSelfPermission(
+                        applicationContext,
+                        Manifest.permission.WRITE_CALENDAR
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
 
-               // Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
+
+
+
+                    setReminder()
+                }
+                else
+                {
+                    setPermission()
+                }
+
             }
             if (grid_id.equals("11")){
 //                val i = Intent(this@HomeActivity, ExpenseActivity::class.java)

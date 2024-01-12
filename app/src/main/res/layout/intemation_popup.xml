@@ -247,20 +247,21 @@
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
 
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:weightSum="2"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/til_ProductType"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Product Type"
-                                android:layout_weight="1"
                                 android:layout_marginTop="5dp"
-                                android:layout_marginLeft="5dp"
-
+                                android:layout_marginRight="5dp"
+                                android:layout_weight="1"
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
                                 app:endIconMode="custom"
@@ -283,7 +284,6 @@
                                     android:textSize="14dp"
                                     android:focusableInTouchMode="false"
                                     android:editable="false"
-                                    android:drawableTint="@color/textColor"
                                     android:fontFamily="@font/myfont"
                                     android:textColor="@color/greydarks"
                                     android:drawablePadding="-10dp"
@@ -296,9 +296,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Category"
-                                android:layout_marginTop="5dp"
-                                android:layout_marginRight="5dp"
                                 android:layout_weight="1"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginLeft="5dp"
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
                                 app:endIconMode="custom"
@@ -321,17 +321,101 @@
                                     android:textSize="14dp"
                                     android:focusableInTouchMode="false"
                                     android:editable="false"
+                                    android:drawableTint="@color/textColor"
                                     android:fontFamily="@font/myfont"
                                     android:textColor="@color/greydarks"
                                     android:drawablePadding="-10dp"
                                     android:textStyle="normal"/>
 
                             </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
                         </LinearLayout>
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:weightSum="2"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:orientation="horizontal">-->
+<!--                            <com.google.android.material.textfield.TextInputLayout-->
+<!--                                android:id="@+id/til_ProductType"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:hint="Product Type"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:layout_marginTop="5dp"-->
+<!--                                android:layout_marginLeft="5dp"-->
+
+<!--                                android:drawableTint="@color/textColor"-->
+<!--                                android:fontFamily="@font/myfont"-->
+<!--                                app:endIconMode="custom"-->
+<!--                                android:visibility="visible"-->
+<!--                                app:startIconDrawable="@drawable/product_svg"-->
+<!--                                app:startIconTint="@color/colorPrimaryDark"-->
+<!--                                style="@style/Widget.App.TextInputLayout">-->
+
+<!--                                <com.google.android.material.textfield.TextInputEditText-->
+<!--                                    android:id="@+id/tie_ProductType"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:gravity="center_vertical"-->
+<!--                                    android:paddingLeft="10dp"-->
+<!--                                    android:paddingTop="1dp"-->
+<!--                                    android:singleLine="true"-->
+<!--                                    android:paddingBottom="1dp"-->
+<!--                                    android:drawableLeft="@drawable/svg_report"-->
+<!--                                    android:backgroundTint="@color/greydark"-->
+<!--                                    android:textSize="14dp"-->
+<!--                                    android:focusableInTouchMode="false"-->
+<!--                                    android:editable="false"-->
+<!--                                    android:drawableTint="@color/textColor"-->
+<!--                                    android:fontFamily="@font/myfont"-->
+<!--                                    android:textColor="@color/greydarks"-->
+<!--                                    android:drawablePadding="-10dp"-->
+<!--                                    android:textStyle="normal"/>-->
+
+<!--                            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                            <com.google.android.material.textfield.TextInputLayout-->
+<!--                                android:id="@+id/til_Category"-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:hint="Category"-->
+<!--                                android:layout_marginTop="5dp"-->
+<!--                                android:layout_marginRight="5dp"-->
+<!--                                android:layout_weight="1"-->
+<!--                                android:drawableTint="@color/textColor"-->
+<!--                                android:fontFamily="@font/myfont"-->
+<!--                                app:endIconMode="custom"-->
+<!--                                android:visibility="visible"-->
+<!--                                app:startIconDrawable="@drawable/icon_svg_category"-->
+<!--                                app:startIconTint="@color/colorPrimaryDark"-->
+<!--                                style="@style/Widget.App.TextInputLayout">-->
+
+<!--                                <com.google.android.material.textfield.TextInputEditText-->
+<!--                                    android:id="@+id/tie_Category"-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:gravity="center_vertical"-->
+<!--                                    android:paddingLeft="10dp"-->
+<!--                                    android:paddingTop="1dp"-->
+<!--                                    -->
+<!--                                    android:paddingBottom="1dp"-->
+<!--                                    android:singleLine="true"-->
+<!--                                    android:drawableLeft="@drawable/svg_report"-->
+<!--                                    android:backgroundTint="@color/greydark"-->
+<!--                                    android:textSize="14dp"-->
+<!--                                    android:focusableInTouchMode="false"-->
+<!--                                    android:editable="false"-->
+<!--                                    android:fontFamily="@font/myfont"-->
+<!--                                    android:textColor="@color/greydarks"-->
+<!--                                    android:drawablePadding="-10dp"-->
+<!--                                    android:textStyle="normal"/>-->
+
+<!--                            </com.google.android.material.textfield.TextInputLayout>-->
+
+
+
+
+<!--                        </LinearLayout>-->
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -772,7 +856,7 @@
                                         android:focusableInTouchMode="true"
                                         android:editable="true"
                                         android:visibility="invisible"
-                                        android:inputType="text"
+                                        android:inputType="numberDecimal"
                                         android:drawableTint="@color/textColor"
                                         android:fontFamily="@font/myfont"
                                         android:textColor="@color/greydarks"
@@ -790,7 +874,7 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
                                 android:layout_gravity="center_vertical"
-                                android:background="@color/colorPrimary"
+                                android:background="@drawable/btn_shape_int_his"
                                 android:layout_marginBottom="10dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginLeft="5dp"
@@ -798,12 +882,13 @@
                                 android:layout_weight="1.7">
 
                                 <ImageView
-                                    android:backgroundTint="@color/white"
+
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
+                                    app:tint="@color/white"
                                     android:src="@drawable/employee"/>
 
                             </LinearLayout>
