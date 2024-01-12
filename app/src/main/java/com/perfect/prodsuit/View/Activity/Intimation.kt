@@ -66,8 +66,9 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     private var ID_LeadSource: String = ""
     private var tie_LeadSource  : TextInputEditText? = null
     private var tie_FromDate1  : TextInputEditText? = null
+    var selectedFromDate: String = ""
     private var tie_ToDate  : TextInputEditText? = null
-
+    var selectedToDate: String = ""
     private var tie_Category  : TextInputEditText? = null
 
     var category                 = 0
@@ -167,7 +168,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     private var dialogFollowupType: Dialog? = null
     lateinit var followUpTypeSort: JSONArray
     var recyFollowupType: RecyclerView? = null
-    var ID_ActionType: String = ""
+
     //............priority
     private var tie_Priority  : TextInputEditText? = null
     var prodpriority = 0
@@ -193,6 +194,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     private var ll_leadENTRY  : LinearLayout? = null
     private var til_Lead_entry  : TextInputLayout? = null
     private var tie_Lead_entry  : TextInputEditText? = null
+    var leadEntry: String = ""
+    var ID_ActionType: String = ""
     //..........grid
     private var ll_gridData  : LinearLayout? = null
     //.......multiple lead
@@ -208,11 +211,14 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     var recyleCusWise: RecyclerView? = null
     lateinit var cusLeadSort : JSONArray
     lateinit var gridListarray : JSONArray
+    var gridSize: String = ""
     var fulllengthrcy: RecyclerView? = null
     //...................
     var ll_sheduled: LinearLayout? = null
     var tie_ScheduledDate: TextInputEditText? = null
+    var ScheduledDate: String = ""
     var tie_ScheduledTime: TextInputEditText? = null
+    var ScheduledTime: String = ""
     var img_filter: ImageView? = null
 
     //..................
@@ -308,7 +314,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         tie_FromDate!!.setText(currentDate)
-        tie_ScheduledDate!!.setText(currentDate)
+     //   tie_ScheduledDate!!.setText(currentDate)
 
 
 
@@ -371,28 +377,37 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                     finish()
                 }
                 R.id.tie_module -> {
+                    Config.disableClick(v)
                     getModule()
                 }
                 R.id.tie_Branch -> {
+                    Config.disableClick(v)
                     getBranch()
                 }
                 R.id.tie_Channel -> {
+                    Config.disableClick(v)
                     getChannel()
                 }
                 R.id.tie_shedule -> {
+                    Config.disableClick(v)
+
                     getShedule()
                 }
                 R.id.btnSubmit -> {
+                    Config.disableClick(v)
                     validateData(v)
                 }
                 R.id.btnReset -> {
+                    Config.disableClick(v)
                     reset()
                 }
                 R.id.tie_FromDate -> {
-                    datePicker(tie_FromDate)
+                    datePicker()
                 }
                 R.id.tie_ScheduledDate -> {
-                    datePicker(tie_ScheduledDate)
+                  //  datePicker(tie_ScheduledDate)
+
+                    datePickerSheduleDate()
                 }
                 R.id.tie_ScheduledTime -> {
                     Config.disableClick(v)
@@ -439,6 +454,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                 val output = outputDateFormat.format(date)
 
                 tie_ScheduledTime!!.setText(output)
+                ScheduledTime=output
                 dialog.dismiss()
 
             }
@@ -468,6 +484,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
             else  if (ID_Shedule.equals("2"))
             {
+//                ScheduledTime=""
+//                ScheduledDate=""
                 if (tie_ScheduledDate!!.text.toString().equals(""))
                 {
                     Config.snackBars(context, v, "Select Sheduled Date")
@@ -476,11 +494,17 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                 {
                     Config.snackBars(context, v, "Select Sheduled Time")
                 }
+                else
+                {
+                    Log.e(TAG,"tyfhtfhgfghfg first")
+                    docUploadValidation(v)
+                }
 
             }
 
         else {
-            docUploadValidation(v)
+            Log.e(TAG,"tyfhtfhgfghfg sec")
+           docUploadValidation(v)
         }
 
     }
@@ -644,6 +668,210 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         }
     }
 
+
+    private fun datePicker() {
+        val builder = android.app.AlertDialog.Builder(this)
+        val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater1.inflate(R.layout.alert_date_chooser, null)
+        val txtCancel = layout.findViewById(R.id.txtCancel) as TextView
+        val txtSubmit = layout.findViewById(R.id.txtSubmit) as TextView
+        val date_Picker1 = layout.findViewById<DatePicker>(R.id.date_Picker1)
+        val currentDate = Calendar.getInstance()
+        val year = currentDate.get(Calendar.YEAR)
+        val month = currentDate.get(Calendar.MONTH)
+        val day = currentDate.get(Calendar.DAY_OF_MONTH)
+        // Set the maximum date to the current date to prevent selecting future dates
+        date_Picker1.minDate = currentDate.timeInMillis
+        builder.setView(layout)
+        val alertDialog = builder.create()
+        txtCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            alertDialog.dismiss()
+
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon + 1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1) {
+                    strDay = "0" + day
+                }
+                if (strMonth.length == 1) {
+                    strMonth = "0" + strMonth
+                }
+                tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                selectedDate = strDay + "-" + strMonth + "-" + strYear
+                tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Exception   428   " + e.toString())
+            }
+        }
+        alertDialog.show()
+
+    }
+    private fun datePickerToDate() {
+        val builder = android.app.AlertDialog.Builder(this)
+        val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater1.inflate(R.layout.alert_date_chooser, null)
+        val txtCancel = layout.findViewById(R.id.txtCancel) as TextView
+        val txtSubmit = layout.findViewById(R.id.txtSubmit) as TextView
+        val date_Picker1 = layout.findViewById<DatePicker>(R.id.date_Picker1)
+        val currentDate = Calendar.getInstance()
+        val year = currentDate.get(Calendar.YEAR)
+        val month = currentDate.get(Calendar.MONTH)
+        val day = currentDate.get(Calendar.DAY_OF_MONTH)
+        // Set the maximum date to the current date to prevent selecting future dates
+        date_Picker1.minDate = currentDate.timeInMillis
+        builder.setView(layout)
+        val alertDialog = builder.create()
+        txtCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            alertDialog.dismiss()
+
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon + 1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1) {
+                    strDay = "0" + day
+                }
+                if (strMonth.length == 1) {
+                    strMonth = "0" + strMonth
+                }
+//                this.tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+//                selectedDate = strDay + "-" + strMonth + "-" + strYear
+//                this.tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+
+                tie_ToDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                selectedToDate = strDay + "-" + strMonth + "-" + strYear
+                tie_ToDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Exception   428   " + e.toString())
+            }
+        }
+        alertDialog.show()
+    }
+
+    private fun datePickerFromDate() {
+        val builder = android.app.AlertDialog.Builder(this)
+        val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater1.inflate(R.layout.alert_date_chooser, null)
+        val txtCancel = layout.findViewById(R.id.txtCancel) as TextView
+        val txtSubmit = layout.findViewById(R.id.txtSubmit) as TextView
+        val date_Picker1 = layout.findViewById<DatePicker>(R.id.date_Picker1)
+        val currentDate = Calendar.getInstance()
+        val year = currentDate.get(Calendar.YEAR)
+        val month = currentDate.get(Calendar.MONTH)
+        val day = currentDate.get(Calendar.DAY_OF_MONTH)
+        // Set the maximum date to the current date to prevent selecting future dates
+        date_Picker1.minDate = currentDate.timeInMillis
+        builder.setView(layout)
+        val alertDialog = builder.create()
+        txtCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            alertDialog.dismiss()
+
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon + 1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1) {
+                    strDay = "0" + day
+                }
+                if (strMonth.length == 1) {
+                    strMonth = "0" + strMonth
+                }
+//                this.tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+//                selectedDate = strDay + "-" + strMonth + "-" + strYear
+//                this.tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+
+                tie_FromDate1!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                selectedFromDate = strDay + "-" + strMonth + "-" + strYear
+                tie_FromDate1!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Exception   428   " + e.toString())
+            }
+        }
+        alertDialog.show()
+    }
+
+    private fun datePickerSheduleDate() {
+        val builder = android.app.AlertDialog.Builder(this)
+        val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater1.inflate(R.layout.alert_date_chooser, null)
+        val txtCancel = layout.findViewById(R.id.txtCancel) as TextView
+        val txtSubmit = layout.findViewById(R.id.txtSubmit) as TextView
+        val date_Picker1 = layout.findViewById<DatePicker>(R.id.date_Picker1)
+        val currentDate = Calendar.getInstance()
+        val year = currentDate.get(Calendar.YEAR)
+        val month = currentDate.get(Calendar.MONTH)
+        val day = currentDate.get(Calendar.DAY_OF_MONTH)
+        // Set the maximum date to the current date to prevent selecting future dates
+        date_Picker1.minDate = currentDate.timeInMillis
+        builder.setView(layout)
+        val alertDialog = builder.create()
+        txtCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            alertDialog.dismiss()
+
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon + 1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1) {
+                    strDay = "0" + day
+                }
+                if (strMonth.length == 1) {
+                    strMonth = "0" + strMonth
+                }
+//                this.tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+//                selectedDate = strDay + "-" + strMonth + "-" + strYear
+//                this.tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+
+                tie_ScheduledDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                ScheduledDate = strDay + "-" + strMonth + "-" + strYear
+                tie_ScheduledDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Exception   428   " + e.toString())
+            }
+        }
+        alertDialog.show()
+    }
     private fun datePicker(tie_FromDate: TextInputEditText?) {
         val builder = android.app.AlertDialog.Builder(this)
         val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -788,6 +1016,9 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 //            }
 
             txtSearch!!.setOnClickListener(View.OnClickListener {
+
+                leadEntry= tie_Lead_entry!!.text.toString()
+                gridSize= gridListarray.length().toString()
                 dialog1!!.dismiss()
 
             })
@@ -897,12 +1128,14 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             })
             tie_FromDate1!!.setOnClickListener(View.OnClickListener {
 
-                datePicker(tie_FromDate1)
+            //    datePicker(tie_FromDate1)
+                datePickerFromDate()
             })
 
             tie_ToDate!!.setOnClickListener(View.OnClickListener {
 
-                datePicker(tie_ToDate)
+           //     datePicker(tie_ToDate)
+                datePickerToDate()
             })
 
             tie_Category!!.setOnClickListener(View.OnClickListener {
@@ -958,6 +1191,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
 
     }
+
+
 
     private fun getLeadHistory() {
 
@@ -1127,6 +1362,9 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     }
 
     private fun resetDialog() {
+        selectedToDate=""
+        selectedFromDate=""
+
         ID_LeadSource=""
         tie_LeadSource!!.setText("")
         ID_LeadInfo=""
@@ -2873,9 +3111,9 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         tie_FromDate!!.setText(currentDate)
-        tie_Lead_entry!!.visibility=View.GONE
-        ll_leadENTRY!!.visibility=View.INVISIBLE
-        ll_gridData!!.visibility=View.GONE
+//        tie_Lead_entry!!.visibility=View.GONE
+//        ll_leadENTRY!!.visibility=View.INVISIBLE
+//        ll_gridData!!.visibility=View.GONE
 
         gridListarray = JSONArray()
 
@@ -2886,12 +3124,16 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 //        }
 
         //................
-        tie_ScheduledDate!!.setText(currentDate)
+//        tie_ScheduledDate!!.setText(currentDate)
         ll_sheduled!!.visibility=View.GONE
         img_filter!!.visibility=View.INVISIBLE
 
         //...............
+        ScheduledTime=""
+        ScheduledDate=""
+        tie_ScheduledTime!!.setText("")
 
+        tie_ScheduledDate!!.setText("")
         tie_module!!.setText("")
         tie_Branch!!.setText("")
         tie_Channel!!.setText("")
@@ -2927,6 +3169,12 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         Log.v("sfsdfdsfdsddd","ID_LeadInfo  "+ID_LeadInfo)
         Log.v("sfsdfdsfdsddd","ID_Category  "+ID_Category)
         Log.v("sfsdfdsfdsddd","ID_Employee  "+ID_Employee)
+        Log.v("sfsdfdsfdsddd","selectedFromDate  "+selectedFromDate)
+        Log.v("sfsdfdsfdsddd","selectedToDate  "+selectedToDate)
+        Log.v("sfsdfdsfdsddd","leadEntry  "+leadEntry)
+        Log.v("sfsdfdsfdsddd","gridSize  "+gridSize)
+        Log.v("sfsdfdsfdsddd","ScheduledTime  "+ScheduledTime)
+        Log.v("sfsdfdsfdsddd","ScheduleDate  "+ScheduledDate)
         var branch = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -2938,10 +3186,12 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                 progressDialog!!.show()
                 sentIntimationViewModel.sentIntimation(this, dated,ID_module,ID_Branch,ID_Channel,ID_Shedule,encodeDoc,extension,
                     message,
+                    ScheduledDate,
+                    ScheduledTime,
                     ID_LeadSource,
                     ID_LeadInfo,
-                    tie_FromDate1!!.text.toString(),
-                    tie_ToDate!!.text.toString(),
+                    selectedFromDate,
+                    selectedToDate,
                     ID_Category,
                     ID_ProductType,
                     ID_Product,
@@ -2952,8 +3202,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                     ID_ActionType,
                     ID_Priority,
                     ID_Lead_Details,
-                    tie_Lead_entry!!.text.toString(),
-                    gridListarray.length().toString(),
+                    leadEntry,
+                    gridSize,
                     gridListarray
 
                 )!!.observe(
@@ -3402,6 +3652,10 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
             if (ID_Shedule.equals("2"))
             {
+                val sdf = SimpleDateFormat("dd-MM-yyyy")
+                val currentDate = sdf.format(Date())
+                ScheduledDate=currentDate
+                tie_ScheduledDate!!.setText(ScheduledDate)
                 ll_sheduled!!.visibility=View.VISIBLE
             }
             else

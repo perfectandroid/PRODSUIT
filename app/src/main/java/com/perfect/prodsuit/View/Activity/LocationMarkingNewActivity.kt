@@ -16,7 +16,6 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -44,11 +43,12 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.coroutines.coroutineContext
 
 
 class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickListener,
     ItemClickListener {
+
+    var mapKey: String? = ""
 
     var TAG = "LocationMarkingNewActivity"
     private var progressDialog: ProgressDialog? = null
@@ -138,8 +138,9 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
     lateinit var designationtSort: JSONArray
     private var dialogDesignation: Dialog? = null
     var recyDesignation: RecyclerView? = null
-    var isRootviewAvailable: Boolean = true
+ //   var isRootviewAvailable: Boolean = true
 
+    var isRootviewAvailable: String? = ""
     lateinit var employeeLocationListViewModel: EmployeeLocationListViewModel
     lateinit var locationTravelListViewModel: LocationTravelListViewModel
 
@@ -170,24 +171,16 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
         mapView = findViewById(R.id.map_view);
         mapView!!.onCreate(savedInstanceState);
 
-//        var location = Config.createLocation()
-//        val jObject = JSONObject(location)
-//        val jobjt = jObject.getJSONObject("LocationType")
-//        locationList  = jobjt.getJSONArray("LocationDetails")
-//        if (locationList.length()>0){
-//            mapView!!.getMapAsync(this);
-//
-//            recyStaffList!!.setLayoutManager(LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false))
-//            val adapter = LocationMarkingAdapter(this@LocationMarkingNewActivity, locationList)
-//            recyStaffList!!.adapter = adapter
-//          //  adapter.setClickListener(this@LocationMarkingNewActivity)
-//        }
+        val EditLocationViewSP = context.getSharedPreferences(Config.SHARED_PREF77, 0)
+        isRootviewAvailable = EditLocationViewSP.getString("IsLocationDistanceShowing","0")
 
+        Log.v("dfsdfsdfsad4565",""+isRootviewAvailable)
+        isRootviewAvailable="true"
         EmployeeLocation = 0
         getEmployeeLocationList()
-        isRootviewAvailable=false
-        Log.v("dfsdfsdfsad",""+isRootviewAvailable)
-        if (isRootviewAvailable) {
+      //  isRootviewAvailable=false
+
+        if (isRootviewAvailable.equals("true")) {
             view_root_view.visibility = View.VISIBLE
             lin_root_view.visibility = View.VISIBLE
         } else {
@@ -205,6 +198,8 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
 
 
     private fun setRegViews() {
+         mapKey = resources.getString(R.string.google_maps_key)
+        Log.e(TAG,"map key  5655477="+mapKey)
         val imback = findViewById<ImageView>(R.id.imback)
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
         view_root_view = findViewById<View>(R.id.view_root_view)
@@ -359,9 +354,11 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
             imgRoot!!.setColorFilter(colorSelect, PorterDuff.Mode.SRC_IN)
             if (travelledDistanceList == null || travelledDistanceList?.length() == 0) {
                 getTravelDetails()
+
             }
         }
     }
+
 
     private fun getTravelDetails() {
 
@@ -389,7 +386,8 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                     ID_Department!!,
                     ID_Designation!!,
                     ID_Employee!!,
-                    ID_Branch!!
+                    ID_Branch!!,
+                    mapKey!!
                 )!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -405,9 +403,14 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                                     Log.v("sfsdfdsfd", "msg  " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
-                                        val jobjt = jObject.getJSONObject("EmployeeLocationList")
-                                        travelledDistanceList =
-                                            jobjt.getJSONArray("EmployeeLocationListData")
+                                      //  val jobjt = jObject.getJSONObject("EmployeeLocationList")
+                                        //  travelledDistanceList = jobjt.getJSONArray("EmployeeLocationListData")
+                                        val jobjt = jObject.getJSONObject("EmployeeLocationDistance")
+
+                                        travelledDistanceList = jobjt.getJSONArray("EmployeeLocationDistanceList")
+                                       // val jsonObject = travelledDistanceList?.getJSONObject("JSonData")
+
+                                        Log.e(TAG, "travelledDistanceList 564654656 " + travelledDistanceList)
                                         if (travelledDistanceList?.length()!! > 0) {
 
                                             ll_nodata!!.visibility = View.GONE

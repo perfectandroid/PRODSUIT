@@ -917,4 +917,7 @@ interface ApiInterface {
     @POST("fcm/send")
     fun sendFcmMessage(@Body message: FcmMessageNew): Call<Void>
 
+    @POST("UserValidations/EmployeeLocationDistance")
+    fun getEmpLocationList(@Body body: RequestBody): Call<String>
+
 }

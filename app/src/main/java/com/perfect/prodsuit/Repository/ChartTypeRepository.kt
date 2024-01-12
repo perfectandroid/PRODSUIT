@@ -137,22 +137,22 @@ object ChartTypeRepository {
             Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
         }
 
-       /* try {
+     /*   try {
             chartTypeSetterGetter.value = ChartTypeModel("")
             var msg = "{\n" +
-                    "  \"checkDetails\": {\n" +
-                    "    \"checkDetailsList\": [\n" +
+                    "  \"DashBoardNameDetails\": {\n" +
+                    "    \"DashBoardNameDetailsList\": [\n" +
                     "      {\n" +
-                    "        \"ID_Mode\": \"1\",\n" +
-                    "        \"Mode_Name\": \"Mode1\"\n" +
+                    "        \"DashMode\": \"1\",\n" +
+                    "        \"DashBoardName\": \"stageWise\"\n" +
                     "      },\n" +
                     "      {\n" +
-                    "        \"ID_Mode\": \"2\",\n" +
-                    "        \"Mode_Name\": \"Mode2\"\n" +
+                    "        \"DashMode\": \"2\",\n" +
+                    "        \"DashBoardName\": \"Mode2\"\n" +
                     "      },\n" +
                     "      {\n" +
-                    "        \"ID_Mode\": \"3\",\n" +
-                    "        \"Mode_Name\": \"Mode3\"\n" +
+                    "        \"DashMode\": \"3\",\n" +
+                    "        \"DashBoardName\": \"Mode3\"\n" +
                     "      }\n" +
                     "    ],\n" +
                     "    \"ResponseCode\": \"0\",\n" +
@@ -164,7 +164,7 @@ object ChartTypeRepository {
             chartTypeSetterGetter.value = ChartTypeModel(msg)
         }catch (e: Exception){
 
-        }*/
+        } */
 
 
     }

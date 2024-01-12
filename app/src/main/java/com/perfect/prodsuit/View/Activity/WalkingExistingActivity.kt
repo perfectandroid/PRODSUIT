@@ -100,6 +100,7 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
     var saveCount: Int = 0
     lateinit var createWalkingCustomerViewModel: CreateWalkingCustomerViewModel
     private var tie_Attachvoice: TextInputEditText? = null
+    private var til_AttachVoice: TextInputLayout? = null
 
     private var RECORD_PLAY: Int? = 1038
     var voiceData: String? = ""
@@ -116,6 +117,13 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
         createWalkingCustomerViewModel = ViewModelProvider(this).get(CreateWalkingCustomerViewModel::class.java)
 
         setRegViews()
+
+        val AUDIO_SP = context.getSharedPreferences(Config.SHARED_PREF76, 0)
+        if (AUDIO_SP.getString("AudioClipEnabled", null).equals("true")){
+            til_AttachVoice!!.visibility=View.VISIBLE
+        }else{
+            til_AttachVoice!!.visibility=View.GONE
+        }
 
         defaultLoad()
         checkAttendance()
@@ -161,6 +169,7 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
         tie_Attachvoice = findViewById<TextInputEditText>(R.id.tie_Attachvoice)
+        til_AttachVoice = findViewById<TextInputLayout>(R.id.til_AttachVoice)
         tie_CustomerName = findViewById<TextInputEditText>(R.id.tie_CustomerName)
         tie_Phone = findViewById<TextInputEditText>(R.id.tie_Phone)
         tie_AssignedDate = findViewById<TextInputEditText>(R.id.tie_AssignedDate)

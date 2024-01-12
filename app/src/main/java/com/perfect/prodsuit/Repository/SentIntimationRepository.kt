@@ -39,6 +39,8 @@ object SentIntimationRepository {
         encodeDoc: String,
         extension: String,
         message: String,
+        ScheduledDate: String,
+        ScheduledTime: String,
         ID_LeadSource: String,
         ID_LeadInfo: String,
         FromDate: String,
@@ -58,6 +60,8 @@ object SentIntimationRepository {
         LeadCusDetails: JSONArray
     ): MutableLiveData<SentIntimationModel> {
         sentIntimation(context,dated,ID_module,ID_Branch,ID_Channel,ID_Shedule,encodeDoc,extension,message,
+            ScheduledDate,
+            ScheduledTime,
             ID_LeadSource,
             ID_LeadInfo,
             FromDate,
@@ -90,6 +94,8 @@ object SentIntimationRepository {
         encodeDoc: String,
         extension: String,
         message: String,
+        ScheduledDate: String,
+        ScheduledTime: String,
         ID_LeadSource: String,
         ID_LeadInfo: String,
         FromDate: String,
@@ -108,6 +114,8 @@ object SentIntimationRepository {
         GridData: String,
         LeadCusDetails: JSONArray
     ) {
+
+
         try {
             branchSetterGetter.value = SentIntimationModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -169,14 +177,14 @@ object SentIntimationRepository {
                 requestObject1.put("Attachment", ProdsuitApplication.encryptStart(attachement))
                 requestObject1.put("Module", ProdsuitApplication.encryptStart(ID_module))
                 requestObject1.put("Branch", ProdsuitApplication.encryptStart(ID_Branch))
-                requestObject1.put("Date", ProdsuitApplication.encryptStart(currentDate+" 00:00:00"))//
-                requestObject1.put("SheduledTime", ProdsuitApplication.encryptStart("00:00:00"))//
-                requestObject1.put("SheduledDate", ProdsuitApplication.encryptStart(dated+" 00:00:00"))//
+                requestObject1.put("Date", ProdsuitApplication.encryptStart(dated+" 00:00:00"))//
+                requestObject1.put("SheduledTime", ProdsuitApplication.encryptStart(ScheduledTime))//
+                requestObject1.put("SheduledDate", ProdsuitApplication.encryptStart(ScheduledDate))//
 
                 requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart(ID_LeadSource))
                 requestObject1.put("FK_LeadThrough", ProdsuitApplication.encryptStart(ID_LeadInfo))
-                requestObject1.put("FromDate", ProdsuitApplication.encryptStart(FromDate+" 00:00:00"))
-                requestObject1.put("ToDate", ProdsuitApplication.encryptStart(ToDate+" 00:00:00"))
+                requestObject1.put("FromDate", ProdsuitApplication.encryptStart(FromDate))
+                requestObject1.put("ToDate", ProdsuitApplication.encryptStart(ToDate))
 
                 requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
                 requestObject1.put("ProdType", ProdsuitApplication.encryptStart(ID_ProductType))
