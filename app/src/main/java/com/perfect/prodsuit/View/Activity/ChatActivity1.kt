@@ -19,6 +19,7 @@ import com.perfect.prodsuit.Helper.DBHelper
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ChatAdapter1
 import com.perfect.prodsuit.fire.FcmMessage
+import com.perfect.prodsuit.fire.FcmMessageNew
 import com.perfect.prodsuit.fire.NotificationPayload
 import org.json.JSONException
 import org.json.JSONObject
@@ -419,11 +420,11 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
             dataChatRef.child(chatKey.toString()).child("message").child(currentTimeMillis).child("read").setValue("0")
             dataChatRef.child(chatKey.toString()).child("message").child(currentTimeMillis).child("mobile").setValue(Fbase_MobileSP.getString("Fbase_Mobile",""))
 
-            sendFcmMessage()
+            sendFcmMessage(sendMessage!!)
         }
     }
 
-    private fun sendFcmMessage() {
+    private fun sendFcmMessage(sendMessage : String) {
        try {
            val retrofit = Retrofit.Builder()
                .baseUrl("https://fcm.googleapis.com/") // FCM server base URL
@@ -443,13 +444,21 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
                Log.e("TAG", "onCreate: " + e.message)
            }
 
-           val deviceToken = "c0DyBRi6Sm2C9TPleVAq3B:APA91bHIA47fa_dVWPMGnmSmoX8aFeIt1O6XesNVxp-yNRBOWxEWZ1upQB4XP9yuYD8Ejw43Qex3flNrQsN8xnRpvuueS_vJ1mTRlJw-Z7myLbJH4M_lF1Q7DJYV0UiGjS3wRCL3fR1J"
-           val fcmMessage = FcmMessage(
+           val deviceToken = "c0DyBRi6Sm2C9TPleVAq3B:APA91bGzuvweHMKcG7IJGQ4tRZBtnNncgC3MsR8G-NQav0hpLxgQndq7xzH7vijnS53s0ISmNqX2QnIibPxz19wycnTE5KX3QKcS1ZeiyJla2mfW_iyPBdUM1E7sllleBmjsw3CZYwVI"
+//           val fcmMessage = FcmMessage(
+//               to = deviceToken,
+//               data = mapOf("key1" to "value1", "key2" to "value2"),
+//               notification = NotificationPayload(title = "Your Title", body = "Your Message")
+//           )
+
+           val fcmMessage = FcmMessageNew(
                to = deviceToken,
-               data = mapOf("key1" to "value1", "key2" to "value2"),
-               notification = NotificationPayload(title = "Your Title", body = "Your Message")
+               data = mapOf("body" to sendMessage, "title" to "", "mode" to "0")
            )
 
+           var data1 = mapOf("key1" to "value1", "key2" to "value2")
+
+           Log.e(TAG,"fcmMessage 45555    "+data1)
            Log.e(TAG,"fcmMessage 444477771    "+fcmMessage)
 
            val call: Call<Void> = fcmApiService.sendFcmMessage(fcmMessage)

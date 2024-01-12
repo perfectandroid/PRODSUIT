@@ -703,6 +703,13 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                         PSValueEditer.putString("PSValue", jobj.getString("PSValue"))
                                         PSValueEditer.commit()
 
+                                        val PnotificationIDSP = applicationContext.getSharedPreferences(Config.SHARED_PREF82, 0)
+                                        val PnotificationIDEditer = PnotificationIDSP.edit()
+                                        PnotificationIDEditer.putString("PnotificationID", "0")
+                                        PnotificationIDEditer.commit()
+
+
+
                                         val i = Intent(this@OTPActivity, SetMpinActivity::class.java)
                                         startActivity(i)
                                         finish()
