@@ -13,12 +13,23 @@ import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
+import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DBHelper
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ChatAdapter1
+import com.perfect.prodsuit.fire.FcmMessage
+import com.perfect.prodsuit.fire.NotificationPayload
+import org.json.JSONException
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.sql.Date
 import java.text.SimpleDateFormat
+import retrofit2.Response
+
 
 class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
 
@@ -105,7 +116,57 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
         dataChatRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
+
+                val currentTimestamp: Long = System.currentTimeMillis()
+
+                // Calculate the timestamp for 2 hours ago
+                val twoHoursAgoTimestamp: Long = currentTimestamp - (2 * 60 * 60 * 1000)
+
+                Log.e(TAG,"10000000  json       "+ twoHoursAgoTimestamp)
+
+
+//                // Delete data
+//                if (dataSnapshot.exists()) {
+//                    for (appleSnapshot in dataSnapshot.child(chatKey).child("message").children) {
+//                        Log.e(TAG,"10000000  json       "+ appleSnapshot.key)
+//
+//                        if (appleSnapshot.key == "1704891987196") {
+//                            appleSnapshot.ref.removeValue().addOnSuccessListener {
+//                                // Handle successful deletion
+//                                Log.e(TAG,"100000001  Success       "+ appleSnapshot.key)
+//                            }
+//                                .addOnFailureListener {
+//                                    // Handle failure
+//                                    Log.e(TAG,"100000002  failure       "+ appleSnapshot.key)
+//                                }
+//                        }
+//
+//                    }
+//                }
+
                 Log.e(TAG,"104444444   "+chatKey+"  :  "+dataSnapshot.child(chatKey).key)
+//                if (chatKey.equals("")){
+//
+//                    if (dataSnapshot.exists()) {
+//
+//                        for (dataSnapshot1 in dataSnapshot.children) {
+//                            var getUserOne = dataSnapshot1.child("user_1").value
+//                            var getUserTwo = dataSnapshot1.child("user_2").value
+//
+//                            Log.e(TAG,"2499991010  json       "+getUserOne+"  :  "+getUserTwo)
+//                            Log.e(TAG,"2499991011  json       "+senderID+"  :  "+ReceiverID)
+//                            Log.e(TAG,"24999911  json       "+dataSnapshot1.key)
+//
+//                            if ((senderID!!.equals(getUserOne) && ReceiverID!!.equals(getUserTwo)) || (senderID!!.equals(getUserTwo) && ReceiverID!!.equals(getUserOne))){
+//                                Log.e(TAG,"24999912     "+ dataSnapshot1.key)
+//                                chatKey = dataSnapshot.key.toString()
+//                                break
+//                            }
+//                        }
+//                    }
+//
+//                }
+
                 //if (chatModel.size>0){
                 if (active){
 
@@ -222,7 +283,8 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
 
                 }
                 else{
-
+                  //  chatKey = "1001"
+                    Log.e(TAG,"22666   "+chatKey)
                     if (chatKey.equals("")){
                         var isGnerated = genreateChatKey()
                         if (isGnerated){
@@ -232,29 +294,94 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
                         sendMessageToFirebase()
                     }
 
+                  //  generateKey()
+
                 }
             }
         }
+    }
+
+    private fun generateKey() {
+
+        dataChatRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+                    Log.e(TAG,"2499991  json       "+dataSnapshot.childrenCount)
+                    for (dataSnapshot1 in dataSnapshot.children) {
+
+                        var getUserOne = dataSnapshot1.child("user_1").value
+                        var getUserTwo = dataSnapshot1.child("user_2").value
+
+                        Log.e(TAG,"24999910  json       "+getUserOne+"  :  "+getUserTwo)
+                        Log.e(TAG,"24999911  json       "+dataSnapshot1.key)
+
+                        if ((senderID!!.equals(getUserOne) && ReceiverID!!.equals(getUserTwo)) || (senderID!!.equals(getUserTwo) && ReceiverID!!.equals(getUserOne))){
+
+                            break
+                        }
+                    }
+
+                }else{
+                    Log.e(TAG,"2499992  json       ")
+                 //   sendMessageToFirebase()
+                }
+
+            }
+
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.e(TAG,"189999994  json       ")
+            }
+        })
     }
 
     private fun genreateChatKey(): Boolean  {
 
         var isGenerated = false
         var generateKey = 1001
-        chatKey = generateKey.toString()
+      //  chatKey = generateKey.toString()
         Log.e(TAG,"189999991      json       ")
         dataChatRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 if (dataSnapshot.exists()) {
-                    Log.e(TAG,"1899999920  json       "+dataSnapshot.childrenCount)
-                    var ch = ((dataSnapshot.childrenCount).toInt())+generateKey
-                    chatKey = ch.toString()
-                    Log.e(TAG,"1899999921  json       "+chatKey)
+//                    Log.e(TAG,"1899999920  json       "+dataSnapshot.childrenCount)
+//                    var ch = ((dataSnapshot.childrenCount).toInt())+generateKey
+//                    chatKey = ch.toString()
+//                    Log.e(TAG,"1899999921  json       "+chatKey)
+//                    isGenerated = true
+//                    sendMessageToFirebase()
+
+                    Log.e(TAG,"2499991  json       "+dataSnapshot.childrenCount)
+                    for (dataSnapshot1 in dataSnapshot.children) {
+
+                        var getUserOne = dataSnapshot1.child("user_1").value
+                        var getUserTwo = dataSnapshot1.child("user_2").value
+
+                        Log.e(TAG,"2499991010  json       "+getUserOne+"  :  "+getUserTwo)
+                        Log.e(TAG,"2499991011  json       "+senderID+"  :  "+ReceiverID)
+                        Log.e(TAG,"24999911  json       "+dataSnapshot1.key)
+
+                        if ((senderID!!.equals(getUserOne) && ReceiverID!!.equals(getUserTwo)) || (senderID!!.equals(getUserTwo) && ReceiverID!!.equals(getUserOne))){
+                            Log.e(TAG,"24999912     "+ dataSnapshot1.key)
+                            chatKey = dataSnapshot1.key.toString()
+                            break
+                        }
+                    }
+
+                    if (chatKey.equals("")){
+                        Log.e(TAG,"24999913  json       "+chatKey)
+                        var ch = ((dataSnapshot.childrenCount).toInt())+generateKey
+                        chatKey = ch.toString()
+                    }
+                    Log.e(TAG,"24999914  json       "+chatKey)
                     isGenerated = true
-                    sendMessageToFirebase()
+//                    sendMessageToFirebase()
+
                 }else{
-                    Log.e(TAG,"189999993  json       "+generateKey)
+                    Log.e(TAG,"24999915  json       "+generateKey)
+                    chatKey = generateKey.toString()
                     sendMessageToFirebase()
                 }
 
@@ -289,8 +416,66 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
             dataChatRef.child(chatKey.toString()).child("user_1").setValue(Fbase_MobileSP.getString("Fbase_Mobile",""))
             dataChatRef.child(chatKey.toString()).child("user_2").setValue(mobile)
             dataChatRef.child(chatKey.toString()).child("message").child(currentTimeMillis).child("msg").setValue(sendMessage)
+            dataChatRef.child(chatKey.toString()).child("message").child(currentTimeMillis).child("read").setValue("0")
             dataChatRef.child(chatKey.toString()).child("message").child(currentTimeMillis).child("mobile").setValue(Fbase_MobileSP.getString("Fbase_Mobile",""))
+
+            sendFcmMessage()
         }
+    }
+
+    private fun sendFcmMessage() {
+       try {
+           val retrofit = Retrofit.Builder()
+               .baseUrl("https://fcm.googleapis.com/") // FCM server base URL
+               .addConverterFactory(GsonConverterFactory.create())
+               .build()
+
+           val fcmApiService = retrofit.create(ApiInterface::class.java)
+           val notification = JSONObject()
+           val notifcationBody = JSONObject()
+           try {
+               notifcationBody.put("title", "Enter_title")
+               notifcationBody.put("message", "Message")   //Enter your notification message
+               notification.put("to", "topic")
+               notification.put("data", notifcationBody)
+               Log.e("TAG", "try")
+           } catch (e: JSONException) {
+               Log.e("TAG", "onCreate: " + e.message)
+           }
+
+           val deviceToken = "c0DyBRi6Sm2C9TPleVAq3B:APA91bHIA47fa_dVWPMGnmSmoX8aFeIt1O6XesNVxp-yNRBOWxEWZ1upQB4XP9yuYD8Ejw43Qex3flNrQsN8xnRpvuueS_vJ1mTRlJw-Z7myLbJH4M_lF1Q7DJYV0UiGjS3wRCL3fR1J"
+           val fcmMessage = FcmMessage(
+               to = deviceToken,
+               data = mapOf("key1" to "value1", "key2" to "value2"),
+               notification = NotificationPayload(title = "Your Title", body = "Your Message")
+           )
+
+           Log.e(TAG,"fcmMessage 444477771    "+fcmMessage)
+
+           val call: Call<Void> = fcmApiService.sendFcmMessage(fcmMessage)
+
+           call.enqueue(object : Callback<Void> {
+               override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                   if (response.isSuccessful) {
+                       // Successfully sent FCM message
+                       println("FCM message sent successfully")
+                       Log.e(TAG,"  44447777   FCM message sent successfully")
+                   } else {
+                       // Handle error
+                       println("Failed to send FCM message. Error: ${response.errorBody()?.string()}")
+                       Log.e(TAG,"  44447777   Failed to send FCM message. Error: ${response.errorBody()?.string()}")
+                   }
+               }
+
+               override fun onFailure(call: Call<Void>, t: Throwable) {
+                   // Handle failure
+                   println("Failed to send FCM message. Exception: ${t.message}")
+               }
+           })
+       }
+       catch (e:Exception){
+
+       }
     }
 
     override fun onStart() {

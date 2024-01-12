@@ -83,7 +83,7 @@ class ServiceActivity : AppCompatActivity() , View.OnClickListener {
                 startActivity(i)
             }
             R.id.llServiceFollowup->{
-                val i = Intent(this@ServiceActivity, ServiceFollowUpListActivity::class.java)
+                val i = Intent(this@ServiceActivity, ServiceFollowUPActiivty::class.java)
                 startActivity(i)
             }
             R.id.llServiceAssign->{
