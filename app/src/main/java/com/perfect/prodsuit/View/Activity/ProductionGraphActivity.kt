@@ -36,6 +36,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
+    var noDataJobCard:Boolean=false
 
     var completed_xaxis: TextView? = null
     var completed_yaxis: TextView? = null
@@ -271,7 +272,7 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
         } else if (TabMode == 1) {
-            ContinueMode = 1
+          //  ContinueMode = 1
             ll_Tile!!.visibility = View.VISIBLE
             tvv_dash!!.setBackgroundResource(R.drawable.btn_shape_reset)
             tvv_tile!!.setBackgroundResource(R.drawable.btn_dash)
@@ -316,7 +317,8 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     chartTypeArrayList = jobjt.getJSONArray("DashBoardNameDetailsList")
 
 
-                                    if (chartTypeArrayList.length() > 0){
+                                    if (chartTypeArrayList.length() > 0)
+                                    {
 
                                         if (ChartMode == 0){
                                             val jsonObject = chartTypeArrayList.getJSONObject(0)
@@ -356,6 +358,24 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
                                             Log.e(TAG,"drop down 7877   "+chartTypeArrayList)
                                             showChartDrop(chartTypeArrayList)
                                         }
+                                    }
+                                    else
+                                    {
+
+                                        val builder = AlertDialog.Builder(
+                                            this@ProductionGraphActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage("No Active Chart Settings")
+                                        builder.setPositiveButton("Ok") {
+                                                dialogInterface, which ->
+
+
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+
                                     }
 
                                 } else {
@@ -1293,6 +1313,7 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
     //////////////////////Job cards\\\\\\\\\\\\\\\\\\\\\
 
     private fun getJobcards() {
+        noDataJobCard=false
         var DashMode = "13"
         var DashType = "1"
         ll_production!!.visibility = View.GONE
@@ -1315,7 +1336,8 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   88442   "+msg)
-                                if (jObject.getString("StatusCode").equals("0")) {
+                                if (jObject.getString("StatusCode").equals("0"))
+                                {
 
                                     val jobjt = jObject.getJSONObject("ProductionTileDashBoard")
                                     tv_Production!!.setText(jobjt.getString("ChartName"))
@@ -1330,17 +1352,28 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     }
 
 
-                                } else {
-//                                    val builder = AlertDialog.Builder(
-//                                        this@ServiceGraphActivity,
-//                                        R.style.MyDialogTheme
-//                                    )
-//                                    builder.setMessage(jObject.getString("EXMessage"))
-//                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                    }
-//                                    val alertDialog: AlertDialog = builder.create()
-//                                    alertDialog.setCancelable(false)
-//                                    alertDialog.show()
+                                }
+                                else {
+
+                                    noDataJobCard=true
+
+                                    if ( noDataJobCard )
+                                    {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProductionGraphActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage("No Active Tile Settings")
+                                        builder.setPositiveButton("Ok") {
+                                                dialogInterface, which ->
+
+
+
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
                                 }
                             }
                         } else {

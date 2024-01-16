@@ -13,6 +13,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -47,6 +48,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.nbfcmscore.Helper.PicassoTrustAll
+import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.Helper.*
 import com.perfect.prodsuit.Helper.LocationUtils.calculateDistance
 import com.perfect.prodsuit.R
@@ -271,14 +273,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         
     }
 
-    private fun getCalenderPermission() {
-        val permission = ContextCompat.checkSelfPermission(this,
-            Manifest.permission.READ_CALENDAR)
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            getCalenderRequest()
-        }
 
-    }
 
     private fun getCalenderRequest() {
         TODO("Not yet implemented")
@@ -338,41 +333,30 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
               if ((grantResults.isNotEmpty() &&
                           grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                   Log.e(TAG, "269992    Granted" + requestCode)
-              } else if (shouldShowRequestPermissionRationale(android.Manifest.permission.READ_CALENDAR)) {
-                  if (requestCode != CALENDAR_PERMISSION_REQUEST_CODE) {
 
-                      AlertDialog.Builder(this@HomeActivity)
-                          .setMessage(
-                              "Permission Denied"
-                          )
-                          .setPositiveButton(
-                              "OK"
-                          ) { _, _ ->
-                              // Show permission dialog
-                              ActivityCompat.requestPermissions(
-                                  this,
-                                  arrayOf(Manifest.permission.READ_CALENDAR),
-                                  1
-                              )
-                          }
-                          .setNegativeButton(
-                              "No, thank you"
-                          ) { _, _ -> }
-                          .create().show()
-
-                      // Explain to the user that the feature is unavailable because
-                      // the feature requires a permission that the user has denied.
-                      // At the same time, respect the user's decision. Don't link to
-                      // system settings in an effort to convince the user to change
-                      // their decision.
-                  }
-                  }
+              }
               else {
-                  ActivityCompat.requestPermissions(
-                      this,
-                      arrayOf(Manifest.permission.READ_CALENDAR),
-                      1
-                  )
+
+                  //Now further we check if used denied permanently or not
+                  if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                          Manifest.permission.READ_CALENDAR)) {
+                      // case 4 User has denied permission but not permanently
+                      ActivityCompat.requestPermissions(
+                          this,
+                          arrayOf(Manifest.permission.READ_CALENDAR),
+                          1
+                      )
+                  } else {
+                      startActivity(
+                          Intent(
+                              Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                              Uri.parse("package:" + BuildConfig.APPLICATION_ID)
+                          )
+                      )
+                  }
+
+
+
 
                   // Ignore all other requests.
               }
@@ -885,7 +869,28 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                    }
                     R.id.reminder -> {
 
-                        setReminder()
+                        if (ActivityCompat.checkSelfPermission(
+                                applicationContext,
+                                Manifest.permission.WRITE_CALENDAR
+                            ) == PackageManager.PERMISSION_GRANTED
+                        ) {
+
+
+
+
+                            setReminder()
+                        }
+                        else
+                        {
+                            setPermission()
+
+
+                        }
+
+
+
+
+
 
                     }
                     R.id.logout -> {
@@ -906,6 +911,44 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         })
     }
 
+    private fun setPermission() {
+        try
+        {
+
+
+
+            val builder = android.app.AlertDialog.Builder(this)
+            val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout = inflater1.inflate(R.layout.calender_popup, null)
+            val btncancel = layout.findViewById(R.id.btncancel) as Button
+            val btnsubmit = layout.findViewById(R.id.btnsubmit) as Button
+            builder.setView(layout)
+            val alertDialog = builder.create()
+
+
+            btncancel.setOnClickListener {
+                Config.Utils.hideSoftKeyBoard(this, it)
+                chipNavigationBar!!.setItemSelected(R.id.home, true)
+                alertDialog.dismiss() }
+            btnsubmit.setOnClickListener {
+
+                Config.Utils.hideSoftKeyBoard(this, it)
+                chipNavigationBar!!.setItemSelected(R.id.home, true)
+
+                startActivity(Intent().apply {
+                    action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                    data = Uri.fromParts("package", packageName, null)
+                })
+                alertDialog.dismiss()
+
+            }
+            alertDialog.setCancelable(false)
+            alertDialog.show()
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
 
     private fun setRegViews() {
@@ -2587,40 +2630,22 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
             }
             if (grid_id.equals("10")){
-                setReminder()
-               // getCalendarId1(context,callbackId)
-               /* val pm = context.packageManager
-                val hasPerm = pm.checkPermission(
-                    Manifest.permission.READ_CALENDAR,
-                    context.packageName
-                )
+                if (ActivityCompat.checkSelfPermission(
+                        applicationContext,
+                        Manifest.permission.WRITE_CALENDAR
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
 
-                 if (ActivityCompat.checkSelfPermission(
-                            applicationContext,
-                            Manifest.permission.READ_CALENDAR
-                        ) != PackageManager.PERMISSION_GRANTED
-                    ){
-                    // do stuff
-                     ActivityCompat.requestPermissions(
-                         this,
-                         arrayOf(Manifest.permission.READ_CALENDAR),
-                         1
-                     )
-                     val projection = arrayOf(CalendarContract.Calendars._ID, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME)
-                    Toast.makeText(applicationContext,"not granted",Toast.LENGTH_LONG).show()
-                }
 
-                else{
-                    Toast.makeText(applicationContext,"granted",Toast.LENGTH_LONG).show()
+
+
                     setReminder()
                 }
+                else
+                {
+                    setPermission()
+                }
 
-                Log.e("HASPERM",hasPerm.toString())*/
-
-             //
-              //  getCalendarId(context)
-
-               // Toast.makeText(context, "Work in progess", Toast.LENGTH_SHORT).show()
             }
             if (grid_id.equals("11")){
 //                val i = Intent(this@HomeActivity, ExpenseActivity::class.java)

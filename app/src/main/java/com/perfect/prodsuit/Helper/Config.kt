@@ -145,6 +145,8 @@ object Config {
     const val SHARED_PREF80 = "FollowUpDetails"  //
     const val SHARED_PREF81 = "PSValue"  //  Product Manadtory Followup
 
+    const val SHARED_PREF82 = "PnotificationID"  //  PushnotificationChannel
+
 
     var width = 0
     var height = 0
@@ -1420,6 +1422,12 @@ object Config {
         }
 
         return result
+    }
+
+
+    fun generateRandom(): Int {
+        val random = Random()
+        return random.nextInt(9999 - 1000) + 1000
     }
 
 

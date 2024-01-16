@@ -51,7 +51,9 @@ class ProjectBillStatusAdapter(
                 tvv_countValue=jsonObject!!.getString("Value").toDouble()
                 //  tvv_countValue=1649785634.18888
                 val forM= String.format("%2f",tvv_countValue)
-                val deciForm= DecimalFormat("##0.00")
+              //  val deciForm= DecimalFormat("##0.00")
+                val deciForm= DecimalFormat("#.##")
+                deciForm.isDecimalSeparatorAlwaysShown=false
                 val forMatNo=deciForm.format(tvv_countValue)
 
                 Log.e(TAG, "353353 forMatNo==   "+forMatNo)

@@ -89,75 +89,81 @@ class ChatUserListActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     private fun getAllUserListPopup() {
 
        // var query = databaseRef.orderByChild("CompanyCategory").equalTo("8")
-        databaseRef.addValueEventListener(object : ValueEventListener {
+        databaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
 
-                Log.e(TAG,"966  "+dataSnapshot.childrenCount)
-                db!!.deleteFirebaseUser()
-                messageLists.clear()
-                for (data in dataSnapshot.children) {
-                    val user = data.getValue(ChatAllUserList::class.java)
-                    if (user != null && user.mobile != mobile){
+                try {
+                    Log.e(TAG,"966  "+dataSnapshot.childrenCount)
+                    db!!.deleteFirebaseUser()
+                    messageLists.clear()
+                    for (data in dataSnapshot.children) {
+                        val user = data.getValue(ChatAllUserList::class.java)
+                        if (user != null && user.mobile != mobile){
 
-                        var lastmessage = ""
-                        var unseenMessage = 0
+                            var lastmessage = ""
+                            var unseenMessage = 0
 
-                        chatAllUserList.add(user)
-                        var chatUserKey = ""
-                        databaseRef1.addListenerForSingleValueEvent(object : ValueEventListener {
-                            override fun onDataChange(snapshot: DataSnapshot) {
+                            chatAllUserList.add(user)
+                            var chatUserKey = ""
+//                            databaseRef1.addListenerForSingleValueEvent(object : ValueEventListener {
+//                                override fun onDataChange(snapshot: DataSnapshot) {
+//
+//                                    var getChatCounts = snapshot.childrenCount
+//                                    if (getChatCounts > 0){
+//
+//                                        for (dataSnapshot1 in snapshot.children) {
+//                                            var getKey = dataSnapshot1.key
+//                                            chatKey = getKey
+//                                            var getUserOne = dataSnapshot1.child("user_1").value
+//                                            var getUserTwo = dataSnapshot1.child("user_2").value
+//
+//
+//
+//                                            if ((getUserOne!!.equals(user.mobile) && getUserTwo!!.equals(mobile)) || (getUserOne!!.equals(mobile) && getUserTwo!!.equals(user.mobile))){
+//                                                Log.e(TAG,"7777771   "+chatKey+"  :  "+getUserOne+"  :  "+getUserTwo)
+//                                                chatUserKey = chatKey.toString()
+//                                                db!!.addFirebaseUser(user.name.toString(),user.BranchName.toString(),getUserOne!!.toString(),getUserTwo!!.toString(),chatUserKey)
+//                                            }
+//
+//                                        }
+//
+//
+//                                    }
+//                                }
+//
+//                                override fun onCancelled(error: DatabaseError) {
+//
+//                                }
+//
+//                            })
+                            Log.e(TAG,"7777773   "+chatUserKey+"  :  "+mobile+"  :  "+user.mobile+"   :  "+messageLists.size)
 
-                                var getChatCounts = snapshot.childrenCount
-                                if (getChatCounts > 0){
 
-                                    for (dataSnapshot1 in snapshot.children) {
-                                        var getKey = dataSnapshot1.key
-                                        chatKey = getKey
-                                        var getUserOne = dataSnapshot1.child("user_1").value
-                                        var getUserTwo = dataSnapshot1.child("user_2").value
-
-
-
-                                        if ((getUserOne!!.equals(user.mobile) && getUserTwo!!.equals(mobile)) || (getUserOne!!.equals(mobile) && getUserTwo!!.equals(user.mobile))){
-                                            Log.e(TAG,"7777771   "+chatKey+"  :  "+getUserOne+"  :  "+getUserTwo)
-                                            chatUserKey = chatKey.toString()
-                                            db!!.addFirebaseUser(user.name.toString(),user.BranchName.toString(),getUserOne!!.toString(),getUserTwo!!.toString(),chatUserKey)
-                                        }
-
-                                    }
-
-
-                                }
-                            }
-
-                            override fun onCancelled(error: DatabaseError) {
-
-                            }
-
-                        })
-                        Log.e(TAG,"7777773   "+chatUserKey+"  :  "+mobile+"  :  "+user.mobile+"   :  "+messageLists.size)
-
-
-                        db!!.addFirebaseUser(user.name.toString(),user.BranchName.toString(),mobile!!.toString(),user.mobile.toString(),"")
-                        messageLists.add(ChatMessageList(user.name,user.mobile,lastmessage,unseenMessage,chatUserKey!!,user.BranchName))
+                            db!!.addFirebaseUser(user.name.toString(),user.BranchName.toString(),mobile!!.toString(),user.mobile.toString(),"")
+                            messageLists.add(ChatMessageList(user.name,user.mobile,lastmessage,unseenMessage,chatUserKey!!,user.BranchName))
+                        }
+                        else{
+                            senderID = data.key
+                            Log.e(TAG,"senderID  6444   "+senderID)
+                        }
                     }
-                    else{
-                        senderID = data.key
-                        Log.e(TAG,"senderID  6444   "+senderID)
+
+                    if (messageLists.size > 0){
+                        for (i in 0 until messageLists.size) {
+                            Log.e(TAG,"10555  "+messageLists[i].mobile+"  : "+messageLists[i].name+"  : "+messageLists[i].BranchName+"  : "+messageLists[i].chatUserKey)
+
+                        }
                     }
+
+                    if (messageLists.size > 0){
+                        userListPopup(messageLists)
+                    }
+
+                }catch (e: Exception){
+                    Log.e(TAG,"16444   "+e.toString())
                 }
 
-                if (messageLists.size > 0){
-                    for (i in 0 until messageLists.size) {
-                        Log.e(TAG,"10555  "+messageLists[i].mobile+"  : "+messageLists[i].name+"  : "+messageLists[i].BranchName+"  : "+messageLists[i].chatUserKey)
-
-                    }
-                }
-
-                if (messageLists.size > 0){
-                    userListPopup(messageLists)
-                }
 
 
 //                if (messageLists.size > 0){

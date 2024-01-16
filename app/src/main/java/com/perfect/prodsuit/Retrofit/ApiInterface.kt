@@ -1,5 +1,7 @@
 package com.perfect.prodsuit.Api
 
+import com.perfect.prodsuit.fire.FcmMessage
+import com.perfect.prodsuit.fire.FcmMessageNew
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -910,5 +912,12 @@ interface ApiInterface {
 
     @POST("UserValidations/LeadHistory")
     fun getLeadHistDetails(@Body body: RequestBody): Call<String>
+
+    @Headers("Content-Type: application/json", "Authorization: key=AAAAKQIZF2c:APA91bHwtHJmtJK76B3Pr1_IUeUwedLd4EctxjiSCK4chEhB5YLgBQrRyZ20rXNOWKTirZQBOqeBaSDQG0YlBn0TqQPF9QUEY3wy1xGOhHB0OHowHaQC6bryULZ3xdsnq6dONaZqdnUH")
+    @POST("fcm/send")
+    fun sendFcmMessage(@Body message: FcmMessageNew): Call<Void>
+
+    @POST("UserValidations/EmployeeLocationDistance")
+    fun getEmpLocationList(@Body body: RequestBody): Call<String>
 
 }

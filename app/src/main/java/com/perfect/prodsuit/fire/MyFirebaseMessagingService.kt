@@ -13,13 +13,15 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DeviceHelper
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.SplashActivity
 import com.perfect.prodsuit.View.Service.NotificationEvent
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
-    private val CHANNEL_ID = "ForegroundService Kotlin"
+   // private val CHANNEL_ID = "ForegroundService Kotlin"
+    var CHANNEL_ID = "ForegroundService Kotlin"
     var TAG = "MyFirebaseMessagingService"
     lateinit var context: Context
     override fun onNewToken(token: String) {
@@ -37,9 +39,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         if (!remoteMessage.data.isEmpty()) {
             Log.e(TAG,"remoteMessage  9999001    "+remoteMessage.data.get("title"))
             Log.e(TAG,"remoteMessage  9999001    "+remoteMessage.data.get("body"))
+            Log.e(TAG,"remoteMessage  9999001    "+remoteMessage.data.get("mode"))
 
-            createNotificationChannel()
-            showNotification(remoteMessage)
+            if (remoteMessage.data.get("mode").equals("1")){
+                Log.e(TAG,"remoteMessage  99990012    "+remoteMessage.data.get("body"))
+            }else{
+                createNotificationChannel()
+                showNotification(remoteMessage)
+            }
+
+
         }
 
     }
@@ -139,7 +148,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 .setAutoCancel(true)
 
             val notificationManager = NotificationManagerCompat.from(context)
-            notificationManager.notify(123, notificationBuilder.build())
+            notificationManager.notify(Config.generateRandom(), notificationBuilder.build())
 
 
 

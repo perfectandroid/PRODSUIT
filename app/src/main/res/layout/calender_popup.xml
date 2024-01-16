@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/rl_main"
+    android:layout_margin="1dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/reminder_clock"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/myfont"
+                android:gravity="center"
+                android:text="Please enable access to the Calender"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="15dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:visibility="gone"
+                android:fontFamily="@font/myfont"
+                android:text="Set your convenient date &amp; time."
+                android:textColor="@color/black"/>
+
+
+
+         <!--   <EditText
+                android:id="@+id/etdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="2.5dp"
+                android:background="@drawable/et_bggreybottom"
+                android:drawableLeft="@drawable/ic_date"
+                android:drawablePadding="10dp"
+                android:drawableTint="@color/colorPrimary"
+                android:fontFamily="@font/myfont"
+                android:gravity="left"
+                android:hint="Select Date"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textSize="13dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/ettime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Select Time"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="13dp"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/et_bggreybottom"
+                android:drawablePadding="10dp"
+                android:gravity="left"
+                android:drawableLeft="@drawable/ic_time"
+                android:drawableTint="@color/colorPrimary"
+                android:fontFamily="@font/myfont"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="2.5dp"/>
+
+            <EditText
+                android:id="@+id/etdis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="2.5dp"
+                android:background="@drawable/et_bggreybottom"
+                android:drawableLeft="@drawable/ic_remindermessage"
+                android:fontFamily="@font/myfont"
+                android:drawableTint="@color/colorPrimary"
+                android:drawablePadding="10dp"
+                android:gravity="left|center"
+                android:hint="Set Reminder Message"
+                android:lines="2"
+                android:padding="5dp"
+                android:textColor="@color/black"
+                android:textSize="13dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:textSize="12dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textStyle="bold|italic"
+                android:fontFamily="@font/myfont"
+                android:text="* You can change date, time &amp; description as your wish."
+                android:textColor="@color/redDark"/>-->
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:gravity="center">
+                <LinearLayout
+                    android:id="@+id/ll_cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/btncancel"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:textSize="15dp"
+                        android:textAllCaps="false"
+                        android:fontFamily="@font/myfont"
+                        android:background="@drawable/btn_resetbg"
+                        android:text="Cancel" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_ok"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_margin="5dp"
+                    android:layout_weight="0.5"
+                    android:gravity="center">
+                    <Button
+                        android:id="@+id/btnsubmit"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:textSize="15dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/myfont"
+                        android:background="@drawable/btn_bgcolour"
+                        android:textAllCaps="false"
+                        android:text="Ok" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -505,55 +505,66 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
     private fun getCalendarId(context: Context): kotlin.Long? {
 
-        if (ActivityCompat.checkSelfPermission(
-                applicationContext,
-                Manifest.permission.READ_CALENDAR
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.READ_CALENDAR),
-                1
-            )
-        }
+        try
+        {
+            val permissions = true
+            if (ActivityCompat.checkSelfPermission(
+                    applicationContext,
+                    Manifest.permission.READ_CALENDAR
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.READ_CALENDAR),
+                    1
+                )
+            }
 
-        val projection = arrayOf(CalendarContract.Calendars._ID, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME)
 
-        var calCursor = context.contentResolver.query(
-            CalendarContract.Calendars.CONTENT_URI,
-            projection,
-            CalendarContract.Calendars.VISIBLE + " = 1 AND " + CalendarContract.Calendars.IS_PRIMARY + "=1",
-            null,
-            CalendarContract.Calendars._ID + " ASC"
-        )
-        if (calCursor != null && calCursor.count <= 0) {
-            calCursor = context.contentResolver.query(
+            val projection = arrayOf(CalendarContract.Calendars._ID, CalendarContract.Calendars.CALENDAR_DISPLAY_NAME)
+
+            var calCursor = context.contentResolver.query(
                 CalendarContract.Calendars.CONTENT_URI,
                 projection,
-                CalendarContract.Calendars.VISIBLE + " = 1",
+                CalendarContract.Calendars.VISIBLE + " = 1 AND " + CalendarContract.Calendars.IS_PRIMARY + "=1",
                 null,
                 CalendarContract.Calendars._ID + " ASC"
             )
-        }
-        if (calCursor != null) {
-            if (calCursor.moveToFirst()) {
-                val calName: String
-                val calID: String
-                val nameCol = calCursor.getColumnIndex(projection[1])
-                val idCol = calCursor.getColumnIndex(projection[0])
-
-                calName = calCursor.getString(nameCol)
-                calID = calCursor.getString(idCol)
-
-                //    Log.d("Calendar name = $calName Calendar ID = $calID")
-
-                calCursor.close()
-                return calID.toLong()
+            Log.e("calcursor", calCursor.toString())
+            if (calCursor != null && calCursor.count <= 0) {
+                calCursor = context.contentResolver.query(
+                    CalendarContract.Calendars.CONTENT_URI,
+                    projection,
+                    CalendarContract.Calendars.VISIBLE + " = 1",
+                    null,
+                    CalendarContract.Calendars._ID + " ASC"
+                )
             }
+            if (calCursor != null) {
+                if (calCursor.moveToFirst()) {
+                    val calName: String
+                    val calID: String
+                    val nameCol = calCursor.getColumnIndex(projection[1])
+                    val idCol = calCursor.getColumnIndex(projection[0])
+
+                    calName = calCursor.getString(nameCol)
+                    calID = calCursor.getString(idCol)
+
+                    //    Log.d("Calendar name = $calName Calendar ID = $calID")
+
+                    calCursor.close()
+                    Log.e(TAG,"CALID : "+calID.toLong())
+                    return calID.toLong()
+                }
+            }
+
+
+        }
+        catch(e:SecurityException)
+        {
+            Log.e(TAG,"Error"+e.toString())
         }
         return null
-
-
 
 
     }

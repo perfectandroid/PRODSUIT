@@ -218,6 +218,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                     jsonObject.put("user_2", cursor.getString(4))
                     jsonObject.put("chatkey", cursor.getString(5))
                     jsonObject.put("senderID", cursor.getString(6))
+
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

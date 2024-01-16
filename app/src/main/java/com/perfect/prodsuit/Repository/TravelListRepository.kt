@@ -27,12 +27,29 @@ object TravelListRepository {
     val employeeLocationSetterGetter = MutableLiveData<TravelListModel>()
     val TAG: String = "EmployeeLocationListRepository"
 
-    fun getServicesApiCall(context: Context,strDate : String,ID_Department : String,ID_Designation : String,ID_Employee : String,ID_Branch : String): MutableLiveData<TravelListModel> {
-        getEmployeeLocation(context,strDate,ID_Department,ID_Designation,ID_Employee,ID_Branch)
+    fun getServicesApiCall(
+        context: Context,
+        strDate: String,
+        ID_Department: String,
+        ID_Designation: String,
+        ID_Employee: String,
+        ID_Branch: String,
+        mapKey: String
+    ): MutableLiveData<TravelListModel> {
+        getEmployeeLocation(context,strDate,ID_Department,ID_Designation,ID_Employee,ID_Branch,mapKey)
         return employeeLocationSetterGetter
     }
 
-    private fun getEmployeeLocation(context: Context,strDate : String,ID_Department : String,ID_Designation : String,ID_Employee : String,ID_Branch : String) {
+    private fun getEmployeeLocation(
+        context: Context,
+        strDate: String,
+        ID_Department: String,
+        ID_Designation: String,
+        ID_Employee: String,
+        ID_Branch: String,
+        mapKey: String
+    ) {
+        Log.e(TAG,"getEmpLocatiolList  date   "+strDate)
         try {
             employeeLocationSetterGetter.value = TravelListModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -81,8 +98,9 @@ object TravelListRepository {
                 requestObject1.put("FK_Designation", ProdsuitApplication.encryptStart(ID_Designation))
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(ID_Branch))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
+                requestObject1.put("URLKey", ProdsuitApplication.encryptStart(mapKey))
                 Log.v("sfsdfdsfd","requestObject1  "+requestObject1)
-                Log.e(TAG,"getDepartment  7801   "+requestObject1)
+                Log.e(TAG,"getEmpLocatiolList  564654656   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -90,7 +108,7 @@ object TravelListRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getEmployeeLocationList(body)
+            val call = apiService.getEmpLocationList(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
