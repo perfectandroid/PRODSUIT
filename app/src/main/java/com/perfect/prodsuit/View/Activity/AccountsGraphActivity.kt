@@ -37,7 +37,8 @@ import java.util.*
 
 class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
 
-
+    var noDataP_L:Boolean=false
+    private var ll_tile_recy: LinearLayout? = null
     val TAG : String = "AccountsGraphActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
@@ -176,7 +177,7 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
-
+        ll_tile_recy            = findViewById<LinearLayout>(R.id.ll_tile_recy)
         tvv_dash        = findViewById<TextView>(R.id.tvv_dash)
         tvv_tile        = findViewById<TextView>(R.id.tvv_tile)
         tv_ExpenseChart = findViewById<TextView>(R.id.tv_ExpenseChart)
@@ -287,7 +288,7 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
         }else if (TabMode == 1){
-            ContinueMode = 1
+         //   ContinueMode = 1
             ll_Tile!!.visibility = View.VISIBLE
             tvv_dash!!.setBackgroundResource(R.drawable.btn_shape_reset)
             tvv_tile!!.setBackgroundResource(R.drawable.btn_dash)
@@ -312,6 +313,7 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun getAccountsTileData() {
+        noDataP_L=false
 
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -337,7 +339,8 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     accountTileCount++
                                     val jObject = JSONObject(msg)
                                     //    Log.e(TAG, "msg   InventoryGraph   " + msg)
-                                    if (jObject.getString("StatusCode") == "0") {
+                                    if (jObject.getString("StatusCode") == "0")
+                                    {
 
                                         val jobjt =
                                             jObject.getJSONObject("AccountTileData")
@@ -355,6 +358,7 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                         if (accountsTileArrayList.length() > 0)
                                         {
+                                            ll_tile_recy!!.visibility=View.VISIBLE
                                             val lLayout =
                                                 GridLayoutManager(this@AccountsGraphActivity, 1)
 
@@ -372,16 +376,26 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                     }
                                     else {
-                                        val builder = AlertDialog.Builder(
-                                            this@AccountsGraphActivity,
-                                            R.style.MyDialogTheme
-                                        )
-                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        ll_tile_recy!!.visibility=View.GONE
+                                        noDataP_L=true
+
+                                        if ( noDataP_L )
+                                        {
+                                            val builder = AlertDialog.Builder(
+                                                this@AccountsGraphActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage("No Active Tile Settings")
+                                            builder.setPositiveButton("Ok") {
+                                                    dialogInterface, which ->
+
+
+
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
                                         }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()
                                     }
                                 }
 
@@ -479,6 +493,24 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         }else{
                                             showChartDrop(chartTypeArrayList)
                                         }
+                                    }
+                                    else
+                                    {
+
+                                        val builder = AlertDialog.Builder(
+                                            this@AccountsGraphActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage("No Active Chart Settings")
+                                        builder.setPositiveButton("Ok") {
+                                                dialogInterface, which ->
+
+
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+
                                     }
 
                                 } else {

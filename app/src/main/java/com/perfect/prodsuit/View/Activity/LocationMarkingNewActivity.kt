@@ -175,7 +175,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
         isRootviewAvailable = EditLocationViewSP.getString("IsLocationDistanceShowing","0")
 
         Log.v("dfsdfsdfsad4565",""+isRootviewAvailable)
-        isRootviewAvailable="true"
+      //  isRootviewAvailable="true"
         EmployeeLocation = 0
         getEmployeeLocationList()
       //  isRootviewAvailable=false
