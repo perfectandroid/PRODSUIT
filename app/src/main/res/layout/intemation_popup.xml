@@ -859,7 +859,7 @@
                                         android:focusableInTouchMode="true"
                                         android:editable="true"
                                         android:visibility="invisible"
-                                        android:inputType="numberDecimal"
+
                                         android:drawableTint="@color/textColor"
                                         android:fontFamily="@font/myfont"
                                         android:textColor="@color/greydarks"
