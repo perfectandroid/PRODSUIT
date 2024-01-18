@@ -920,4 +920,9 @@ interface ApiInterface {
     @POST("UserValidations/EmployeeLocationDistance")
     fun getEmpLocationList(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/AttendanceDetails")
+    fun getAttendanceReport(@Body body: RequestBody): Call<String>
+
+
+
 }

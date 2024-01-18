@@ -47,6 +47,7 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
     internal var tv_userrole: TextView? = null
     internal var tv_Cancel: TextView? = null
     internal var tv_Punch: TextView? = null
+    internal var tv_attndnce: TextView? = null
 
     internal var tv_date: TextView? = null
     internal var tv_time: TextView? = null
@@ -121,6 +122,7 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
     private fun setRegviews() {
         profile_image = findViewById(R.id.profile_image)
         tv_user = findViewById(R.id.tv_user)
+        tv_attndnce= findViewById(R.id.tv_attndnce)
         tv_userrole = findViewById(R.id.tv_userrole)
         tv_Cancel = findViewById(R.id.tv_Cancel)
         tv_Punch = findViewById(R.id.tv_Punch)
@@ -131,6 +133,7 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
 
         tv_Cancel!!.setOnClickListener(this)
         tv_Punch!!.setOnClickListener(this)
+        tv_attndnce!!.setOnClickListener(this)
 
         getSharedValues()
     }
@@ -179,6 +182,11 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
 
             R.id.tv_Cancel -> {
                 onBackPressed()
+            }
+            R.id.tv_attndnce -> {
+                val i = Intent(this@AttendanceMarkingActivity, AttendanceReportActivity::class.java)
+                startActivity(i)
+                finish()
             }
 
             R.id.tv_Punch -> {

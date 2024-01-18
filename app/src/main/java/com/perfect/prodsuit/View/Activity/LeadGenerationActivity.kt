@@ -583,7 +583,7 @@ private var custmoerAssignmentID : String? =null
         //   searchNameTitle = resources.getStringArray(R.array.array_NameTitle)
         searchNameTitle =
             arrayOf("Mr. ", "Mrs. ", "Miss. ", "M/s. ", "Dr. ", "Ms. ", "Fr. ", "Sr. ")
-        // getCalendarId(context)
+     //    getCalendarId(context)
         checkAttendance()
         clearData()
         getLeadRequestLicences()

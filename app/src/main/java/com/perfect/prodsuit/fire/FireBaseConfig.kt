@@ -21,6 +21,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.io.IOException
 
 
 object FireBaseConfig {
@@ -29,25 +30,32 @@ object FireBaseConfig {
     var deviceId = ""
 
     fun getToken(context: Context) {
+        try {
+            FirebaseMessaging.getInstance().token.addOnCompleteListener { task: Task<String?> ->
+                //   Log.e("spalsh", task.result!!)
+                if (task.isSuccessful){
+                    Log.e(TAG,"Token  99991    "+ task.result!!)
+                    // val deviceId: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+                    deviceId = DeviceHelper.getDeviceID(context)
+                    Log.e(TAG,"uniqueId  99991    "+ deviceId)
+                    checkUserToken(context,task.result!!,deviceId)
+                    Log.e(TAG,"uniqueId  99991    "+ deviceId)
 
-        FirebaseMessaging.getInstance().token.addOnCompleteListener { task: Task<String?> ->
-            Log.e("spalsh", task.result!!)
-            if (task.isSuccessful){
-                Log.e(TAG,"Token  99991    "+ task.result!!)
-               // val deviceId: String = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
-                deviceId = DeviceHelper.getDeviceID(context)
-                Log.e(TAG,"uniqueId  99991    "+ deviceId)
-                checkUserToken(context,task.result!!,deviceId)
-                Log.e(TAG,"uniqueId  99991    "+ deviceId)
 
+                    //   fetchFcmServerKey()
 
-             //   fetchFcmServerKey()
+                    //    updateUserTokenDeviceID(context,task.result!!,deviceId)
 
-            //    updateUserTokenDeviceID(context,task.result!!,deviceId)
-
+                }
             }
         }
+        catch(e : IOException)
+        {
+
+        }
+
     }
+
 
     fun checkUserToken(context: Context, userToken: String, deviceId1: String) {
 

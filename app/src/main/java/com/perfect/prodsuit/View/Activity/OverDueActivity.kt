@@ -508,7 +508,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
 
     }
 
-    private fun getCalendarId(context: Context): kotlin.Long? {
+    private fun getCalendarId(context: Context): Long? {
 
         try
         {
