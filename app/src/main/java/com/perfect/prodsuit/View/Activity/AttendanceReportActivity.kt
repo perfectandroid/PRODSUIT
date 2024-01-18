@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.View.Adapter.AttendanceReportAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -37,6 +38,8 @@ class AttendanceReportActivity : AppCompatActivity() , View.OnClickListener, Ite
     private var tv_listCount: TextView? = null
     private var txtv_headlabel: TextView? = null
     private var imgv_filter: ImageView? = null
+    private var tie_emp: TextInputEditText? = null
+
 
     var serviceList = 0
     var label : String?= ""
@@ -131,6 +134,8 @@ class AttendanceReportActivity : AppCompatActivity() , View.OnClickListener, Ite
 
 
         setRegViews()
+
+
         getAttedanceReport(strToDate)
 
         /*label   = intent.getStringExtra("label")
@@ -159,6 +164,14 @@ class AttendanceReportActivity : AppCompatActivity() , View.OnClickListener, Ite
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
+
+        tie_emp= findViewById<TextInputEditText>(R.id.tie_emp)
+
+
+
+        val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+        val emp = EntrBySP.getString("UserCode", null)
+        tie_emp!!.setText(emp)
 
         strToDate = "2024-01-12"
 

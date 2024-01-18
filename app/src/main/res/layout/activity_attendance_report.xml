@@ -57,7 +57,7 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/myfont"
                     android:gravity="center"
-                    android:text="Project Report"
+                    android:text="Attendance Report"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="18dp"
