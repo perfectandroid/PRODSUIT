@@ -15,6 +15,7 @@ import com.perfect.prodsuit.R
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.ItemClickListener
@@ -23,6 +24,9 @@ import com.perfect.prodsuit.View.Adapter.AttendanceReportAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class AttendanceReportActivity : AppCompatActivity() , View.OnClickListener, ItemClickListener {
 
@@ -39,6 +43,9 @@ class AttendanceReportActivity : AppCompatActivity() , View.OnClickListener, Ite
     private var txtv_headlabel: TextView? = null
     private var imgv_filter: ImageView? = null
     private var tie_emp: TextInputEditText? = null
+    private var tie_Date: TextInputEditText? = null
+    private var til_Date: TextInputLayout? = null
+    private var ll_reclatndreprt: LinearLayout? = null
 
 
     var serviceList = 0
@@ -92,7 +99,7 @@ class AttendanceReportActivity : AppCompatActivity() , View.OnClickListener, Ite
     lateinit var followUpActionSort : JSONArray
     private var dialogFollowupAction : Dialog? = null
     var recyFollowupAction: RecyclerView? = null
-
+    var dateMode = 0
     var attendCount = 0
     lateinit var employeeViewModel: EmployeeViewModel
     lateinit var employeeArrayList: JSONArray
@@ -132,11 +139,28 @@ class AttendanceReportActivity : AppCompatActivity() , View.OnClickListener, Ite
         context = this@AttendanceReportActivity
         attendanceReportViewModel = ViewModelProvider(this).get(AttendanceReportViewModel::class.java)
 
-
         setRegViews()
 
 
-        getAttedanceReport(strToDate)
+
+         //   getAttedanceReport(strToDate)
+
+
+      /*  if (tie_Date!!.text.toString().equals("Date")) {
+            //  Config.snackBars(context, v, "Select Date")
+        }
+        else
+        {
+            getAttedanceReport(tie_Date!!.text.toString())
+        }
+*/
+
+
+
+
+
+
+
 
         /*label   = intent.getStringExtra("label")
         SubMode   = intent.getStringExtra("SubMode")
@@ -166,14 +190,29 @@ class AttendanceReportActivity : AppCompatActivity() , View.OnClickListener, Ite
         imback!!.setOnClickListener(this)
 
         tie_emp= findViewById<TextInputEditText>(R.id.tie_emp)
+        tie_Date = findViewById<TextInputEditText>(R.id.tie_Date)
+        til_Date= findViewById<TextInputLayout>(R.id.til_Date)
+      //  ll_reclatndreprt= findViewById<TextInputLayout>(R.id.ll_reclatndreprt)
 
+
+        tie_Date!!.setOnClickListener(this)
 
 
         val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
         val emp = EntrBySP.getString("UserCode", null)
         tie_emp!!.setText(emp)
 
-        strToDate = "2024-01-12"
+
+
+
+
+        if(strToDate!!.equals("Date")||strToDate!!.equals("")||strToDate!!.equals(null))
+        {
+            til_Date!!.setError("Please select a Date")
+            til_Date!!.setErrorIconDrawable(null)
+
+            Log.i(TAG,"Date : "+strToDate)
+        }
 
 
         rclrvw_attendncereport= findViewById<RecyclerView>(R.id.rclrvw_attendncereport)
@@ -210,12 +249,24 @@ class AttendanceReportActivity : AppCompatActivity() , View.OnClickListener, Ite
                  filterBottomSheet()
 
              }*/
+            R.id.tie_Date->{
+                Config.disableClick(v)
+                dateMode = 0
+                openBottomDate()
+                til_Date!!.setError("")
 
+                val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF83, 0)
+                val atndncedte = EntrBySP.getString("attendance", null)
+
+
+                Log.e(TAG,"ATTENDANCE"+tie_Date!!.text.toString())
+
+
+
+            }
 
         }
     }
-
-
 
     private fun getAttedanceReport(strToDate: String?) {
         rclrvw_attendncereport!!.adapter = null
@@ -240,10 +291,15 @@ class AttendanceReportActivity : AppCompatActivity() , View.OnClickListener, Ite
                                     serviceList++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   attendacereprt   " + msg)
+
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("AttendanceDetails")
+                                     //   Log.e(TAG, "msg   attendacereprt   " + c)
+
+
 
                                         attendancereportListArrayList = jobjt.getJSONArray("AttendanceDetailsList")
+
                                         if (attendancereportListArrayList.length() > 0) {
                                             imgv_filter!!.visibility  =View.VISIBLE
 
@@ -362,6 +418,145 @@ class AttendanceReportActivity : AppCompatActivity() , View.OnClickListener, Ite
         super.onRestart()
         serviceList = 0
         getAttedanceReport(strToDate)
+    }
+
+    private fun openBottomDate() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottomsheet_remark, null)
+
+        val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
+        val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+        val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+
+        if (dateMode == 0){
+            date_Picker1.maxDate = System.currentTimeMillis()
+        }else if (dateMode == 1){
+
+            date_Picker1.minDate = System.currentTimeMillis()
+        }
+        else if (dateMode == 2){
+            date_Picker1.minDate = System.currentTimeMillis()
+        }
+
+        txtCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            dialog.dismiss()
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon+1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1){
+                    strDay ="0"+day
+                }
+                if (strMonth.length == 1){
+                    strMonth ="0"+strMonth
+                }
+
+                if (dateMode == 0){
+
+
+                    tie_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                    checkCurrDate(""+strDay+"-"+strMonth+"-"+strYear)
+
+
+
+
+                }else if (dateMode == 1){
+
+                    tie_Date!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                    checkCurrDate(""+strDay+"-"+strMonth+"-"+strYear)
+
+                }
+
+               /* else if (dateMode == 2){
+                    tie_ToDate!!.setText(""+strDay+"-"+strMonth+"-"+strYear)
+                }*/
+
+                val attendSP = context.getSharedPreferences(Config.SHARED_PREF83, 0)
+                val attendSPEditer = attendSP.edit()
+                attendSPEditer.putString("attendance", "")
+                attendSPEditer.commit()
+
+
+            }
+            catch (e: Exception){
+                Log.e(TAG,"Exception   428   "+e.toString())
+            }
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+
+    private fun checkCurrDate(curDate : String) {
+        val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
+        val currentDate = sdf.format(Date())
+
+        try {
+
+
+            val newDate: Date = sdf.parse(currentDate)
+            Log.e(TAG,"newDate  196  "+newDate)
+            val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
+            val sdfTime1 = SimpleDateFormat("hh:mm aa")
+            val sdfTime2 = SimpleDateFormat("HH:mm", Locale.US)
+
+            if (sdfDate1.format(newDate).equals(curDate)){
+                Log.e(TAG,"Change date 2196   "+curDate)
+                val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+                val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+
+
+                var dates = curDate
+                val dateFrom = inputFormat.parse(dates)
+                // val dateFrom = inputFormat.parse("08-04-2022")
+                val strDate = outputFormat.format(dateFrom)
+
+
+                Log.e(TAG,"org1   "+strDate)
+              //  ll_reclatndreprt!!.visibility=View.VISIBLE
+                getAttedanceReport(strDate)
+              //  tie_Time!!.setText(""+sdfTime1.format(newDate))
+            }
+            else
+            {
+                val inputFormat1: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+                val outputFormat1: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+
+                val dateFrom = inputFormat1.parse(tie_Date!!.text.toString())
+                // val dateFrom = inputFormat.parse("08-04-2022")
+                val strDate2 = outputFormat1.format(dateFrom)
+
+                Log.e(TAG,"org2   "+strDate2)
+                getAttedanceReport(strDate2)
+              //  ll_reclatndreprt!!.visibility=View.VISIBLE
+            }
+
+
+//            tie_Date!!.setText(""+sdfDate1.format(newDate))
+//            tie_FromDate!!.setText(""+sdfDate1.format(newDate))
+//            //  strVisitDate = sdfDate2.format(newDate)
+//
+//            tie_Time!!.setText(""+sdfTime1.format(newDate))
+//            //  strVisitTime = sdfTime2.format(newDate)
+
+
+        }catch (e: Exception){
+
+            Log.e(TAG,"Exception 196  "+e.toString())
+        }
     }
 
 
