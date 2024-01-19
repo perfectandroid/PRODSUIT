@@ -163,6 +163,14 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
                     )
                 })
 
+                holder.ll_ticketNumber!!.setTag(position)
+                holder.ll_ticketNumber!!.setOnClickListener(View.OnClickListener {
+                    clickListener!!.onClick(
+                        position,
+                        "Service_timeLine"
+                    )
+                })
+
 //                val colorAnim: ValueAnimator = ObjectAnimator.ofInt(holder.tv_TimeDue!!, "textColor", Color.RED, Color.BLUE)
 //                colorAnim.setDuration(5000)
 //                colorAnim.setEvaluator(ArgbEvaluator())
@@ -210,6 +218,7 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
         internal var ll_status    : LinearLayout
         internal var llServiceList    : LinearLayout
         internal var ll_tracker    : LinearLayout
+        internal var ll_ticketNumber    : LinearLayout
         init {
             tv_TicketNo        = v.findViewById<View>(R.id.tv_TicketNo) as TextView
             tv_TicketDate        = v.findViewById<View>(R.id.tv_TicketDate) as TextView
@@ -232,6 +241,7 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
             ll_status       = v.findViewById<View>(R.id.ll_status) as LinearLayout
             llServiceList       = v.findViewById<View>(R.id.llServiceList) as LinearLayout
             ll_tracker       = v.findViewById<View>(R.id.ll_tracker) as LinearLayout
+            ll_ticketNumber       = v.findViewById<View>(R.id.ll_ticketNumber) as LinearLayout
         }
     }
 

@@ -925,4 +925,7 @@ interface ApiInterface {
 
 
 
+    @POST("UserValidations/TimeLineDetails")
+    fun getServiceTimeLine(@Body body: RequestBody): Call<String>
+
 }

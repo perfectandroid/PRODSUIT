@@ -413,6 +413,42 @@
                                     android:visibility="visible" />
 
                             </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/til_Attachments1"
+                                style="@style/Widget.App.TextInputLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="15dp"
+                                android:drawableTint="@color/greydark"
+                                android:textColorHint="@color/greydark"
+                                android:fontFamily="@font/myfont"
+                                android:hint="Attachments"
+                                android:visibility="gone">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/tie_Attachments1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:drawableLeft="@drawable/attach_file"
+                                    android:drawableTint="@color/greydark"
+                                    android:drawablePadding="5dp"
+                                    android:editable="false"
+                                    android:focusableInTouchMode="false"
+                                    android:fontFamily="@font/myfont"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="10dp"
+                                    android:paddingTop="8dp"
+                                    android:paddingBottom="8dp"
+                                    android:textColorHint="@color/greydark"
+                                    android:textColor="@color/greydarks"
+                                    android:textSize="14dp"
+                                    android:textStyle="normal"
+                                    android:visibility="visible" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
                             <com.google.android.material.textfield.TextInputLayout
                                 style="@style/Widget.App.TextInputLayout"
                                 android:layout_width="match_parent"
