@@ -203,10 +203,12 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         intent.putExtra("ReportName", tie_ReportName!!.text.toString())
         intent.putExtra("LeadNumber", tie_LeadNo!!.text.toString())
         intent.putExtra("ReportMode", ReportMode)
+        intent.putExtra("strID_FIELD", strID_FIELD)
         intent.putExtra("Fromdate", strFromDate)
         intent.putExtra("Todate", strToDate)
         intent.putExtra("CatID", strID_cat)
         startActivity(intent)
+
     }
 
     private fun getReportName() {

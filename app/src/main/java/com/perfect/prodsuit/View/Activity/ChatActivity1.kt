@@ -10,17 +10,28 @@ import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
+import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DBHelper
+import com.perfect.prodsuit.Helper.ProdsuitApplication
+import com.perfect.prodsuit.Model.AccBankBalanceModel
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Repository.AccBankBalanceRepository
 import com.perfect.prodsuit.View.Adapter.ChatAdapter1
 import com.perfect.prodsuit.fire.FcmMessage
 import com.perfect.prodsuit.fire.FcmMessageNew
+import com.perfect.prodsuit.fire.FcmMessageNew1
 import com.perfect.prodsuit.fire.NotificationPayload
+import okhttp3.MediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
@@ -30,6 +41,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.sql.Date
 import java.text.SimpleDateFormat
 import retrofit2.Response
+import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.io.OutputStreamWriter
+import java.net.HttpURLConnection
+import java.net.URL
+import java.util.Locale
 
 
 class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
@@ -44,6 +60,7 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
     private var chatKey = ""
     private var BranchName = ""
     private var userMobile:String?=""
+    private var userToken:String?=""
 
     var txt_name : TextView? = null
     var edt_message : EditText? = null
@@ -85,13 +102,18 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
         if (getIntent().hasExtra("chatKey")) {
             chatKey = intent.getStringExtra("chatKey").toString()
             Log.e(TAG,"77777774    "+chatKey)
+            Log.e(TAG,"100501    "+chatKey)
+
         }
         if (getIntent().hasExtra("BranchName")) {
             BranchName = intent.getStringExtra("BranchName").toString()
             Log.e(TAG,"77777775    "+BranchName)
         }
-
-
+        if (getIntent().hasExtra("userToken")) {
+            userToken = intent.getStringExtra("userToken").toString()
+            Log.e(TAG,"77777776    "+userToken)
+        }
+        
 
         var timestampSP = applicationContext.getSharedPreferences(Config.SHARED_PREF70, 0)
         var timestampEditer = timestampSP.edit()
@@ -111,7 +133,7 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
 
 
 
-
+        Log.e(TAG,"100502    "+chatKey)
         Log.e(TAG,"104444443   "+chatKey+"  :  ")
         // val keyReference1 = dataChatRef.child(chatKey)
         dataChatRef.addValueEventListener(object : ValueEventListener {
@@ -121,9 +143,15 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
                 val currentTimestamp: Long = System.currentTimeMillis()
 
                 // Calculate the timestamp for 2 hours ago
-                val twoHoursAgoTimestamp: Long = currentTimestamp - (2 * 60 * 60 * 1000)
+                val twoHoursAgoTimestamp: Long = currentTimestamp - (5 * 24 * 60 * 60 * 1000)
 
                 Log.e(TAG,"10000000  json       "+ twoHoursAgoTimestamp)
+
+                // Define the desired date format
+                val date = Date(twoHoursAgoTimestamp)
+                val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+
+                Log.e(TAG,"1000000022  sdf       "+ sdf.format(date))
 
 
 //                // Delete data
@@ -144,7 +172,7 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
 //
 //                    }
 //                }
-
+                Log.e(TAG,"100503    "+chatKey)
                 Log.e(TAG,"104444444   "+chatKey+"  :  "+dataSnapshot.child(chatKey).key)
 //                if (chatKey.equals("")){
 //
@@ -285,13 +313,17 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
                 }
                 else{
                   //  chatKey = "1001"
-                    Log.e(TAG,"22666   "+chatKey)
+                    Log.e(TAG,"226661   "+chatKey)
+//                    chatKey = ""
+                    Log.e(TAG,"226662   "+chatKey)
+                    Log.e(TAG,"100504    "+chatKey)
                     if (chatKey.equals("")){
                         var isGnerated = genreateChatKey()
                         if (isGnerated){
                             // sendMessageToFirebase()
                         }
                     }else{
+                        Log.e(TAG,"100505    "+chatKey)
                         sendMessageToFirebase()
                     }
 
@@ -377,10 +409,13 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
                         chatKey = ch.toString()
                     }
                     Log.e(TAG,"24999914  json       "+chatKey)
+                    Log.e(TAG,"100506    "+chatKey)
                     isGenerated = true
+
 //                    sendMessageToFirebase()
 
                 }else{
+                    Log.e(TAG,"100507    "+chatKey)
                     Log.e(TAG,"24999915  json       "+generateKey)
                     chatKey = generateKey.toString()
                     sendMessageToFirebase()
@@ -393,7 +428,7 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
                 Log.e(TAG,"189999994  json       ")
             }
         })
-
+        Log.e(TAG,"100508    "+chatKey)
         Log.e(TAG,"189999995      chatKey       "+chatKey)
 //        sendMessageToFirebase()
 
@@ -404,6 +439,7 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
         //                    chatKey = "2"
         edt_message!!.setText("")
         val messageId = dataChatRef.push().key
+        Log.e(TAG,"100509    "+chatKey)
         Log.e(TAG,"messageId  97777   "+chatKey)
         if (senderID != null && messageId != null) {
             val currentTimeMillis = System.currentTimeMillis().toString()
@@ -413,7 +449,7 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
 //                        dataChatRef.child(messageId).setValue(chatMessage)
 
             var logUser = Fbase_MobileSP.getString("Fbase_Mobile","")
-            db!!.addFirebaseChatUser(name!!,BranchName,logUser!!,mobile!!,chatKey,senderID!!)
+            db!!.addFirebaseChatUser(name!!,BranchName,logUser!!,mobile!!,chatKey,senderID!!,userToken!!)
             dataChatRef.child(chatKey.toString()).child("user_1").setValue(Fbase_MobileSP.getString("Fbase_Mobile",""))
             dataChatRef.child(chatKey.toString()).child("user_2").setValue(mobile)
             dataChatRef.child(chatKey.toString()).child("message").child(currentTimeMillis).child("msg").setValue(sendMessage)
@@ -421,8 +457,11 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
             dataChatRef.child(chatKey.toString()).child("message").child(currentTimeMillis).child("mobile").setValue(Fbase_MobileSP.getString("Fbase_Mobile",""))
 
             sendFcmMessage(sendMessage!!)
+
         }
     }
+
+
 
     private fun sendFcmMessage(sendMessage : String) {
        try {
@@ -444,27 +483,22 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
                Log.e("TAG", "onCreate: " + e.message)
            }
 
-           val deviceToken = "c0DyBRi6Sm2C9TPleVAq3B:APA91bGzuvweHMKcG7IJGQ4tRZBtnNncgC3MsR8G-NQav0hpLxgQndq7xzH7vijnS53s0ISmNqX2QnIibPxz19wycnTE5KX3QKcS1ZeiyJla2mfW_iyPBdUM1E7sllleBmjsw3CZYwVI"
-//           val fcmMessage = FcmMessage(
-//               to = deviceToken,
-//               data = mapOf("key1" to "value1", "key2" to "value2"),
-//               notification = NotificationPayload(title = "Your Title", body = "Your Message")
-//           )
+           val fruits = arrayOf("c0DyBRi6Sm2C9TPleVAq3B:APA91bE_ckoAequUxjkU7yVyjcU4hIvxntVq8wdq_7ymI9y_VSt7UFqXbonR3bJOa8EgIUMEd-Ri2imFgdEy5U4XUNzeWRR1Z4riX8j7wHiMmwnAFAMreg-sUrXxxCFg74pr3rrVbcqU", "crf6gr1lRB-X8asWhzoIgP:APA91bEBakZpfXUqY_OkKdWGNEp2GpTN7PmlVveHIuJ4yxFuJb-Vw_-HpuM6PW6YPeF2MyDryS_kJ1gmMVTqXo44w9B2DRe5SGvyqlbsqH47PeND0LC41Fet0RwYu3TprwyTuFzMAp9l")
 
            val fcmMessage = FcmMessageNew(
-               to = deviceToken,
+               registration_ids = fruits,
                data = mapOf("body" to sendMessage, "title" to "", "mode" to "0")
            )
 
-           var data1 = mapOf("key1" to "value1", "key2" to "value2")
-
-           Log.e(TAG,"fcmMessage 45555    "+data1)
-           Log.e(TAG,"fcmMessage 444477771    "+fcmMessage)
+           Log.e(TAG,"fruits    518884           "+fruits)
 
            val call: Call<Void> = fcmApiService.sendFcmMessage(fcmMessage)
 
            call.enqueue(object : Callback<Void> {
                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+
+                   Log.e(TAG,"response    518885           "+response.isSuccessful +"  :   "+response.code())
+
                    if (response.isSuccessful) {
                        // Successfully sent FCM message
                        println("FCM message sent successfully")
@@ -472,12 +506,14 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
                    } else {
                        // Handle error
                        println("Failed to send FCM message. Error: ${response.errorBody()?.string()}")
+                       Log.e(TAG,"  44447777   434323 "+response.errorBody().toString())
                        Log.e(TAG,"  44447777   Failed to send FCM message. Error: ${response.errorBody()?.string()}")
                    }
                }
 
                override fun onFailure(call: Call<Void>, t: Throwable) {
                    // Handle failure
+                   Log.e(TAG,"  44447777   4343 v  "+t.toString())
                    println("Failed to send FCM message. Exception: ${t.message}")
                }
            })
@@ -530,15 +566,11 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
             }
 
             override fun onCancelled(error: DatabaseError) {
-
             }
-
         })
 
         return result
 
     }
-
-
 
 }

@@ -2,8 +2,10 @@ package com.perfect.prodsuit.Api
 
 import com.perfect.prodsuit.fire.FcmMessage
 import com.perfect.prodsuit.fire.FcmMessageNew
+import com.perfect.prodsuit.fire.FcmMessageNew1
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -916,5 +918,17 @@ interface ApiInterface {
     @Headers("Content-Type: application/json", "Authorization: key=AAAAKQIZF2c:APA91bHwtHJmtJK76B3Pr1_IUeUwedLd4EctxjiSCK4chEhB5YLgBQrRyZ20rXNOWKTirZQBOqeBaSDQG0YlBn0TqQPF9QUEY3wy1xGOhHB0OHowHaQC6bryULZ3xdsnq6dONaZqdnUH")
     @POST("fcm/send")
     fun sendFcmMessage(@Body message: FcmMessageNew): Call<Void>
+
+    @Headers("Content-Type: application/json", "Authorization: key=AAAAKQIZF2c:APA91bHwtHJmtJK76B3Pr1_IUeUwedLd4EctxjiSCK4chEhB5YLgBQrRyZ20rXNOWKTirZQBOqeBaSDQG0YlBn0TqQPF9QUEY3wy1xGOhHB0OHowHaQC6bryULZ3xdsnq6dONaZqdnUH")
+    @POST("fcm/send")
+    fun sendPushNotification(@Body message: JSONObject): Call<String>
+
+    @Headers("Content-Type: application/json", "Authorization: key=AAAAKQIZF2c:APA91bHwtHJmtJK76B3Pr1_IUeUwedLd4EctxjiSCK4chEhB5YLgBQrRyZ20rXNOWKTirZQBOqeBaSDQG0YlBn0TqQPF9QUEY3wy1xGOhHB0OHowHaQC6bryULZ3xdsnq6dONaZqdnUH")
+    @POST("fcm/send")
+    fun sendPushNew(@Body message: RequestBody): Call<String>
+
+
+    @POST("UserValidations/UserDetails")
+    fun getChatRegisterUser(@Body body: RequestBody): Call<String>
 
 }

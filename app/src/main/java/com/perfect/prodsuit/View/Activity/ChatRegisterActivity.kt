@@ -67,6 +67,7 @@ class ChatRegisterActivity : AppCompatActivity() {
         val CompanyCategorySP = applicationContext.getSharedPreferences(Config.SHARED_PREF46, 0)
         val UserCodeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF36, 0)
 
+        //rrrr
 
         var name = UserNameSP.getString("UserName", "")
         var mobile = MobileNumberSP.getString("MobileNumber", "")

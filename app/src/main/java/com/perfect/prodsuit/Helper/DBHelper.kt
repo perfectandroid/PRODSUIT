@@ -7,6 +7,7 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import android.widget.Toast
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -19,7 +20,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         // TODO Auto-generated method stub
         db.execSQL("create table travel_location " + "(id integer primary key, date text,time text,battery text, address text)")
         db.execSQL("create table chat_all_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text)")
-        db.execSQL("create table chat_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text,senderID text)")
+        db.execSQL("create table chat_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text,senderID text,userToken text)")  // ,userToken text
 
 
         db.execSQL(
@@ -38,7 +39,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
         if (oldVersion < 2) {
             db.execSQL("create table chat_all_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text)")
-            db.execSQL("create table chat_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text,senderID text)")
+            db.execSQL("create table chat_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text,senderID text)") //,userToken text
         } else if (oldVersion < 3) {
 
             db.execSQL(
@@ -53,6 +54,11 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                 "create table servicedetailsublist " + "(id integer primary key,FK_Category text, MasterProduct text,FK_Product text, FK_Product_sub text, SLNo text, BindProduct text," +
                         "ComplaintProduct text,Warranty text,ServiceWarrantyExpireDate text,ReplacementWarrantyExpireDate text,ID_CustomerWiseProductDetails text,ServiceWarrantyExpired text,ReplacementWarrantyExpired text)"
             )
+        }
+        else if (oldVersion < 4) {
+            Log.e(TAG,"58888   "+oldVersion +   " : "+newVersion)
+            db.execSQL("ALTER TABLE chat_user ADD COLUMN userToken text")
+           // db.execSQL("create table chat_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text,senderID text,userToken text)")
         }
         // onCreate(db)
     }
@@ -94,25 +100,32 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         user_sender: String,
         user_receiver: String,
         chatkey1: String,
-        senderID: String
+        senderID: String,
+        userToken : String
     ) {
         try {
+
+            Log.e(TAG,"10771  addFirebaseChatUser   "+name+"  :  "+BranchName+"  :  "+user_sender+"  :  "+user_receiver+"  :  "+chatkey1+"  :  "+senderID+"  :  "+userToken)
             val dbRead = this.readableDatabase
             val dbWrite = writableDatabase
             val cursor = dbRead.rawQuery(
                 "SELECT * FROM " + "chat_user WHERE (user_1= '$user_sender' AND user_2= '$user_receiver' ) OR (user_1= '$user_receiver' AND user_2= '$user_sender' )",
                 null
             )
+            Log.e(TAG,"1005001    "+cursor.count)
+            Log.e(TAG,"1005002    "+chatkey1)
+
             if (cursor.count == 0) {
-
-                dbWrite.execSQL("INSERT INTO chat_user (name,BranchName,user_1,user_2,chatkey,senderID) VALUES ('$name','$BranchName','$user_sender','$user_receiver','$chatkey1','$senderID')")
-
+                dbWrite.execSQL("INSERT INTO chat_user (name,BranchName,user_1,user_2,chatkey,senderID,userToken) VALUES ('$name','$BranchName','$user_sender','$user_receiver','$chatkey1','$senderID','$userToken')")
             } else {
+                Log.e(TAG,"1005003   Count   "+cursor.count)
+                Log.e(TAG,"1005004   Count   "+chatkey1)
                 if (!chatkey1.equals("")) {
-                    dbWrite.execSQL("UPDATE chat_user SET chatkey = '$chatkey1' WHERE (user_1= '$user_sender' AND user_2= '$user_receiver' ) OR (user_1= '$user_receiver' AND user_2= '$user_sender' )")
+                    dbWrite.execSQL("UPDATE chat_user SET chatkey = '$chatkey1' , userToken = '$userToken' WHERE (user_1= '$user_sender' AND user_2= '$user_receiver' ) OR (user_1= '$user_receiver' AND user_2= '$user_sender' )")
                 }
             }
         } catch (e: Exception) {
+            Log.e(TAG,"1005006   Exe   "+e.toString())
             Log.e(TAG, "49999  " + e.toString())
         }
     }
@@ -218,6 +231,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                     jsonObject.put("user_2", cursor.getString(4))
                     jsonObject.put("chatkey", cursor.getString(5))
                     jsonObject.put("senderID", cursor.getString(6))
+                    jsonObject.put("userToken", cursor.getString(7))
 
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -319,7 +333,9 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         private val DATABASE_NAME = "prodsuite"
 
         // below is the variable for database version
-        private val DATABASE_VERSION = 3
+        private val DATABASE_VERSION = 4
+
+        // DATABASE_VERSION = 4 , table chat_user , add new colum 'userToken'
 
     }
 }

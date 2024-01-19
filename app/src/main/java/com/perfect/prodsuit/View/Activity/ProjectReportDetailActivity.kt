@@ -42,6 +42,7 @@ class ProjectReportDetailActivity : AppCompatActivity(), View.OnClickListener, I
     private var strTodate: String? = ""
     private var ID_Leadno: String? = ""
     private var CatID: String? = ""
+    private var strID_FIELD: String? = ""
 
     /*  internal var ll_SiteVisit: LinearLayout? = null
       internal var ll_OutStanding: LinearLayout? = null
@@ -90,9 +91,12 @@ class ProjectReportDetailActivity : AppCompatActivity(), View.OnClickListener, I
         if (getIntent().hasExtra("CatID")) {
             CatID = intent.getStringExtra("CatID")
         }
+        if (getIntent().hasExtra("strID_FIELD")) {
+            strID_FIELD = intent.getStringExtra("strID_FIELD")
+        }
 
         if (ReportMode.equals("2")) {
-            getReportSitevisit(ReportMode!!, strFromdate!!, strTodate!!, ID_Leadno!!)
+            getReportSitevisit(ReportMode!!, strFromdate!!, strTodate!!, ID_Leadno!!,strID_FIELD!!)
         }
         if (ReportMode.equals("1")) {
             // getProjectStatusListReport(ReportMode!!,strFromdate!!,strTodate!!, ID_Leadno!!)
@@ -219,7 +223,8 @@ class ProjectReportDetailActivity : AppCompatActivity(), View.OnClickListener, I
         ReportMode: String,
         strFromdate: String,
         strTodate: String,
-        strIdLead: String
+        strIdLead: String,
+        strID_FIELD: String
     ) {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -234,7 +239,7 @@ class ProjectReportDetailActivity : AppCompatActivity(), View.OnClickListener, I
                     "4",
                     strFromdate,
                     strTodate,
-                    strIdLead
+                    strID_FIELD
                 )!!.observe(
                     this,
                     Observer { serviceSetterGetter ->

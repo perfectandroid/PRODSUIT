@@ -44,6 +44,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
@@ -66,6 +71,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
+import java.sql.Date
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -198,6 +204,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private val CALENDAR_PERMISSION_REQUEST_CODE = 1
     var dashboardcount = 0
 
+    private lateinit var dataChatRef : DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -210,6 +218,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         bottombarnav()
 //        getBannerlist()
         getCompanyLogo()
+        dataChatRef = FirebaseDatabase.getInstance().getReference("Chat")
        /* val pm = context.packageManager
         val hasPerm = pm.checkPermission(
             Manifest.permission.READ_CALENDAR,
@@ -270,9 +279,25 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //            adapter?.notifyDataSetChanged()
             swipe?.isRefreshing=false
         }
+
+        firebaseNotificationCount()
         
     }
 
+    private fun firebaseNotificationCount() {
+        dataChatRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+
+
+            }
+
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        })
+    }
 
 
     private fun getCalenderRequest() {
@@ -1187,8 +1212,32 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 }
             }
             R.id.btn_chat -> {
-                val i = Intent(this@HomeActivity, ChatRegisterActivity::class.java)
+
+                val UserNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF2, 0)
+                var MobileNumberSP = applicationContext.getSharedPreferences(Config.SHARED_PREF4, 0)
+                var name = UserNameSP.getString("UserName", "")
+                var mobile = MobileNumberSP.getString("MobileNumber", "")
+
+                val Fbase_NameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF68, 0)
+                val Fbase_NameEditer = Fbase_NameSP.edit()
+                Fbase_NameEditer.putString("Fbase_Name",name)
+                Fbase_NameEditer.commit()
+
+                val Fbase_MobileSP = applicationContext.getSharedPreferences(Config.SHARED_PREF69, 0)
+                val Fbase_MobileEditer = Fbase_MobileSP.edit()
+                Fbase_MobileEditer.putString("Fbase_Mobile",mobile)
+                Fbase_MobileEditer.commit()
+
+
+                val i = Intent(this@HomeActivity, ChatUserListActivity::class.java)
+                i.putExtra("name",name)
+                i.putExtra("mobile",mobile)
                 startActivity(i)
+
+//                val i = Intent(this@HomeActivity, ChatRegisterActivity::class.java)
+//                startActivity(i)
+
+
             }
             R.id.imgAttendance -> {
                 Log.e("HomeActivity","imgAttendance    161  ")

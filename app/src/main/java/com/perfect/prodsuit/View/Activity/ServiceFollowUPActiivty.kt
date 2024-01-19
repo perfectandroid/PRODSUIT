@@ -958,6 +958,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                                     serviceFollowUpInfo++
                                     Log.e(TAG, "det")
                                     val jObject = JSONObject(msg)
+                                    Log.e("fsfsfds   95771    ","   : " +jObject)
                                     Log.e(TAG, "st code " + jObject.getString("StatusCode"))
                                     if (jObject.getString("StatusCode") == "0") {
                                         serviceFollowUpInfoObjectList = jObject.getJSONObject("EmployeeWiseTicketSelect")
@@ -1085,6 +1086,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                                     val jObject = JSONObject(msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("ServiceDetails")
+                                        Log.e("fsfsfds   95772    ","   : " +jObject)
                                         jsonArrayServiceType =
                                             jobjt.getJSONArray("ServiceAttendedList")
 

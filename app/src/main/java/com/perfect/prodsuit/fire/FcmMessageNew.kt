@@ -1,4 +1,6 @@
 package com.perfect.prodsuit.fire
 
-data class FcmMessageNew(val to: String, // Device token or topic
+import org.json.JSONArray
+
+data class FcmMessageNew(val registration_ids: Array<String>, // Device token or topic
                          val data: Map<String, String>)
