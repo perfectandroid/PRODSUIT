@@ -39,6 +39,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
+
+    var noDataStockValue:Boolean=false
+
     var purchase_xaxis: TextView? = null
     var purchase_yaxis: TextView? = null
     var ll_purchase_XY: LinearLayout? = null
@@ -459,7 +462,8 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   1777   "+msg)
-                                if (jObject.getString("StatusCode") == "0") {
+                                if (jObject.getString("StatusCode") == "0")
+                                {
 
                                     val jobjt = jObject.getJSONObject("DashBoardNameDetails")
                                     chartTypeArrayList = jobjt.getJSONArray("DashBoardNameDetailsList")
@@ -540,6 +544,24 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         }else{
                                             showChartDrop(chartTypeArrayList)
                                         }
+                                    }
+                                    else
+                                    {
+
+                                            val builder = AlertDialog.Builder(
+                                                this@InventoryGraphActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage("No Active Chart Settings")
+                                            builder.setPositiveButton("Ok") {
+                                                    dialogInterface, which ->
+
+
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
+
                                     }
 
                                 } else {
@@ -1640,7 +1662,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun getStockValueData() {
-
+        noDataStockValue=false
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1661,7 +1683,8 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     stockValueDataCount++
                                     val jObject = JSONObject(msg)
                                     //    Log.e(TAG, "msg   InventoryGraph   " + msg)
-                                    if (jObject.getString("StatusCode") == "0") {
+                                    if (jObject.getString("StatusCode") == "0")
+                                    {
                                         Log.e(TAG, "success and inside   ")
                                         val jobjt = jObject.getJSONObject("StockValueData")
 //                                        tileValue=jobjt.getString("StockValue")
@@ -1690,17 +1713,28 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         tv_stockNameChart!!.text=  jobjt.getString("ChartName")
 
 
-                                    } else {
-                                        val builder = AlertDialog.Builder(
-                                            this@InventoryGraphActivity,
-                                            R.style.MyDialogTheme
-                                        )
-                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    else
+                                    {
+                                        noDataStockValue=true
+
+                                        if ( noDataStockValue )
+                                        {
+                                            val builder = AlertDialog.Builder(
+                                                this@InventoryGraphActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage("No Active Tile Settings")
+                                            builder.setPositiveButton("Ok") {
+                                                    dialogInterface, which ->
+
+
+
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
                                         }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()
                                     }
                                 }
 
@@ -2565,7 +2599,7 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
         }else if (TabMode == 1){
-            ContinueMode = 1
+       //     ContinueMode = 1
 //            ll_Tile!!.visibility = View.VISIBLE
             tvv_dash!!.setBackgroundResource(R.drawable.btn_shape_reset)
             tvv_tile!!.setBackgroundResource(R.drawable.btn_dash)

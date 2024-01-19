@@ -34,6 +34,12 @@ import java.util.*
 
 class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, ItemClickListener {
 
+    //.............
+    var ID_Master: String? = ""
+    var TransMode: String? = ""
+
+    //...............
+
     var TAG  ="ServiceAssignListActivity"
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
@@ -372,7 +378,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                                 if (serviceList == 0) {
                                     serviceList++
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG, "msg   82   " + msg)
+                                    Log.e(TAG, "msg   serviceassign   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("ServiceAssignNewDetails")
 
@@ -439,6 +445,30 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
     }
 
     override fun onClick(position: Int, data: String) {
+
+        if (data.equals("Service_timeLine"))
+        {
+            val jsonObject = serviceListArrayList.getJSONObject(position)
+
+            TicketDate = jsonObject.getString("TicketDate")
+            TicketStatus = jsonObject.getString("TicketStatus")
+            ID_Master = jsonObject.getString("ID_Master")
+            TransMode = jsonObject.getString("TransMode")
+
+            Log.e(TAG, "time Flow 4545456 transmode  "+TransMode)
+            Log.e(TAG, "time Flow 4545456 idcus  "+ID_Master )
+            Log.e(TAG, "time Flow 4545456  status "+TicketStatus )
+
+
+            val i = Intent(this@ServiceAssignListActivity, TimeFlowServiceActivity::class.java)
+            i.putExtra("TicketDate",TicketDate)
+            i.putExtra("TicketStatus",TicketStatus)
+            i.putExtra("ID_Master",ID_Master)
+            i.putExtra("TransMode",TransMode)
+            startActivity(i)
+
+            startActivity(i)
+        }
 
         if (data.equals("ServiceList")) {
             val jsonObject = serviceListArrayList.getJSONObject(position)

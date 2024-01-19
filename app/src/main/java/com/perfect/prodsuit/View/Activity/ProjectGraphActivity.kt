@@ -548,6 +548,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                             }
 
 
+
                                         }else{
                                             showChartDrop(chartTypeArrayList)
                                         }

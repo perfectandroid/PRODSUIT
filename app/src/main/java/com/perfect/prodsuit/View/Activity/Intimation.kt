@@ -16,6 +16,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
@@ -37,6 +38,7 @@ import com.perfect.prodsuit.Helper.UriUtil
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
+
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
@@ -45,6 +47,22 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener {
+    lateinit var saveDocumentViewModel: SaveDocumentViewModel
+
+    var tie_Attachments1: TextInputEditText? = null
+    private var inputStreamImg1: InputStream? = null
+    private var destination1: File? = null
+    private var imgPath1: String? = null
+    var documentPath1: String = ""
+    private var bitmap1: Bitmap? = null
+    var strImageName1: String = ""
+    var encodeDoc1 : String = ""
+
+
+
+
+    var shedulemode = 0
+
     var ID_first: String? = ""
     var ID_LeadFirst: String? = ""
     var ID_sec: String? = ""
@@ -66,8 +84,9 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     private var ID_LeadSource: String = ""
     private var tie_LeadSource  : TextInputEditText? = null
     private var tie_FromDate1  : TextInputEditText? = null
+    var selectedFromDate: String = ""
     private var tie_ToDate  : TextInputEditText? = null
-
+    var selectedToDate: String = ""
     private var tie_Category  : TextInputEditText? = null
 
     var category                 = 0
@@ -92,6 +111,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     var ID_LeadInfo: String = ""
 
     private var tie_LeadFrom: TextInputEditText? = null
+    private var til_LeadFrom: TextInputLayout? = null
     private var ID_FIELD: String = ""
     private var TransMode: String = ""
     private var ID_LeadFrom: String = "2"
@@ -167,7 +187,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     private var dialogFollowupType: Dialog? = null
     lateinit var followUpTypeSort: JSONArray
     var recyFollowupType: RecyclerView? = null
-    var ID_ActionType: String = ""
+
     //............priority
     private var tie_Priority  : TextInputEditText? = null
     var prodpriority = 0
@@ -193,6 +213,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     private var ll_leadENTRY  : LinearLayout? = null
     private var til_Lead_entry  : TextInputLayout? = null
     private var tie_Lead_entry  : TextInputEditText? = null
+    var leadEntry: String = ""
+    var ID_ActionType: String = ""
     //..........grid
     private var ll_gridData  : LinearLayout? = null
     //.......multiple lead
@@ -208,11 +230,14 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     var recyleCusWise: RecyclerView? = null
     lateinit var cusLeadSort : JSONArray
     lateinit var gridListarray : JSONArray
+    var gridSize: String = ""
     var fulllengthrcy: RecyclerView? = null
     //...................
     var ll_sheduled: LinearLayout? = null
     var tie_ScheduledDate: TextInputEditText? = null
+    var ScheduledDate: String = ""
     var tie_ScheduledTime: TextInputEditText? = null
+    var ScheduledTime: String = ""
     var img_filter: ImageView? = null
 
     //..................
@@ -304,11 +329,12 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         productTypeViewModel = ViewModelProvider(this).get(ProductTypeViewModel::class.java)
         productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
         leadHistViewModel = ViewModelProvider(this).get(LeadHistViewModel::class.java)
+        saveDocumentViewModel = ViewModelProvider(this).get(SaveDocumentViewModel::class.java)
         setReg()
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         tie_FromDate!!.setText(currentDate)
-        tie_ScheduledDate!!.setText(currentDate)
+     //   tie_ScheduledDate!!.setText(currentDate)
 
 
 
@@ -317,10 +343,21 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 //        val newDate: Date = sdf1.parse(currentDate1)
 //        val sdfTime1 = SimpleDateFormat("hh:mm aa")
 //        tie_ScheduledTime!!.setText(""+sdfTime1.format(newDate))
+        getShedule()
+
+        val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
+        val BranchSP = context.getSharedPreferences(Config.SHARED_PREF45, 0)
+        ID_Branch = FK_BranchSP.getString("FK_Branch", null).toString()
+        tie_Branch!!.setText(BranchSP.getString("BranchName", null))
 
     }
 
     private fun setReg() {
+
+        tie_Attachments1       = findViewById(R.id.tie_Attachments1) as TextInputEditText
+
+        tie_Attachments1!!.setOnClickListener(this)
+
         gridListarray = JSONArray()
         ll_gridData          = findViewById(R.id.ll_gridData)          as LinearLayout
         fulllengthrcy          = findViewById(R.id.fulllengthrcy)          as RecyclerView
@@ -360,6 +397,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         img_filter!!.setOnClickListener(this)
     }
 
+
     override fun onClick(v: View?) {
         if (v != null) {
             when (v.id) {
@@ -371,28 +409,37 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                     finish()
                 }
                 R.id.tie_module -> {
+                    Config.disableClick(v)
                     getModule()
                 }
                 R.id.tie_Branch -> {
+                    Config.disableClick(v)
                     getBranch()
                 }
                 R.id.tie_Channel -> {
+                    Config.disableClick(v)
                     getChannel()
                 }
                 R.id.tie_shedule -> {
+                    Config.disableClick(v)
+                    shedulemode=1
                     getShedule()
                 }
                 R.id.btnSubmit -> {
+                    Config.disableClick(v)
                     validateData(v)
                 }
                 R.id.btnReset -> {
+                    Config.disableClick(v)
                     reset()
                 }
                 R.id.tie_FromDate -> {
-                    datePicker(tie_FromDate)
+                    datePicker()
                 }
                 R.id.tie_ScheduledDate -> {
-                    datePicker(tie_ScheduledDate)
+                  //  datePicker(tie_ScheduledDate)
+
+                    datePickerSheduleDate()
                 }
                 R.id.tie_ScheduledTime -> {
                     Config.disableClick(v)
@@ -404,9 +451,149 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                 filterBottomData()
                 }
 
+                R.id.tie_Attachments1->{
+                    selectImage1()
+                }
+
             }
         }
     }
+
+    private fun browseDocuments1() {
+
+
+        val mimetypes = arrayOf(
+            "application/*",  //"audio/*",
+            "font/*",  //"image/*",
+            "message/*",
+            "model/*",
+            "multipart/*",
+            "text/*"
+        )
+
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        //   val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        //   intent.setAction(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+        intent.type = "*/*"
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes) //Important part here
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        startActivityForResult(intent, PICK_DOCUMRNT_GALLERY)
+    }
+
+    private fun selectImage1() {
+        try {
+            val pm = packageManager
+            val hasPerm = pm.checkPermission(Manifest.permission.CAMERA, packageName)
+            if (hasPerm == PackageManager.PERMISSION_GRANTED) {
+
+
+                if (Build.VERSION.SDK_INT >= 33) {
+                    //ActivityCompat.requestPermissions(this,String[]{readMediaAudio},PERMISSION_CODE)
+                    Log.e(TAG, "222399912   ")
+                    if (Config.check13Permission(context)) {
+                        Log.e(TAG, "222399913   ")
+
+                        val options = arrayOf<CharSequence>(
+                            "Take Photo",
+                            "Choose From Gallery",
+                            "Choose Document",
+                            "Cancel"
+                        )
+                        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                        builder.setTitle("Select Option")
+                        builder.setItems(options,
+                            DialogInterface.OnClickListener { dialog, item ->
+                                if (options[item] == "Take Photo") {
+                                    dialog.dismiss()
+                                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                                    startActivityForResult(intent, PICK_IMAGE_CAMERA)
+                                } else if (options[item] == "Choose From Gallery") {
+                                    dialog.dismiss()
+                                    val pickPhoto = Intent(
+                                        Intent.ACTION_PICK,
+                                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                                    )
+                                    startActivityForResult(pickPhoto,  PICK_IMAGE_GALLERY)
+                                } else if (options[item] == "Choose Document") {
+                                    browseDocuments1()
+                                } else if (options[item] == "Cancel") {
+                                    dialog.dismiss()
+                                }
+                                dialog.dismiss()
+                            })
+                        builder.show()
+                    }
+//                    ActivityCompat.requestPermissions(this, arrayOf(readMediaAudio,readMediaImages,readMediaVideo), PERMISSION_CODE)
+
+
+                } else {
+                    if (ContextCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        ) !== PackageManager.PERMISSION_GRANTED
+                    ) {
+                        // Permission is not granted
+                        if (ActivityCompat.shouldShowRequestPermissionRationale(
+                                this,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            )
+                        ) {
+                            // Show an explanation to the user *asynchronously* -- don't block
+                            // this thread waiting for the user's response! After the user
+                            // sees the explanation, try again to request the permission.
+                        } else {
+                            // No explanation needed; request the permission
+                            ActivityCompat.requestPermissions(
+                                this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                MY_PERMISSIONS_WRITE_EXTERNAL_STORAGE
+                            )
+                        }
+                    } else {
+                        val options = arrayOf<CharSequence>(
+                            "Take Photo",
+                            "Choose From Gallery",
+                            "Choose Document",
+                            "Cancel"
+                        )
+                        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                        builder.setTitle("Select Option")
+                        builder.setItems(options,
+                            DialogInterface.OnClickListener { dialog, item ->
+                                if (options[item] == "Take Photo") {
+                                    dialog.dismiss()
+                                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                                    startActivityForResult(intent, PICK_IMAGE_CAMERA)
+                                } else if (options[item] == "Choose From Gallery") {
+                                    dialog.dismiss()
+                                    val pickPhoto = Intent(
+                                        Intent.ACTION_PICK,
+                                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                                    )
+                                    startActivityForResult(pickPhoto,  PICK_IMAGE_GALLERY)
+                                } else if (options[item] == "Choose Document") {
+                                    browseDocuments1()
+                                } else if (options[item] == "Cancel") {
+                                    dialog.dismiss()
+                                }
+                                dialog.dismiss()
+                            })
+                        builder.show()
+                    }
+                }
+
+            } else ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.CAMERA),
+                PERMISSION_CAMERA
+            )
+        } catch (e: Exception) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Camera Permission error", Toast.LENGTH_SHORT).show()
+            e.printStackTrace()
+        }
+    }
+
+
 
     private fun openBottomTime() {
 
@@ -439,6 +626,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                 val output = outputDateFormat.format(date)
 
                 tie_ScheduledTime!!.setText(output)
+                ScheduledTime=output
                 dialog.dismiss()
 
             }
@@ -468,6 +656,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
             else  if (ID_Shedule.equals("2"))
             {
+//                ScheduledTime=""
+//                ScheduledDate=""
                 if (tie_ScheduledDate!!.text.toString().equals(""))
                 {
                     Config.snackBars(context, v, "Select Sheduled Date")
@@ -476,11 +666,17 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                 {
                     Config.snackBars(context, v, "Select Sheduled Time")
                 }
+                else
+                {
+                    Log.e(TAG,"tyfhtfhgfghfg first")
+                    docUploadValidation(v)
+                }
 
             }
 
         else {
-            docUploadValidation(v)
+            Log.e(TAG,"tyfhtfhgfghfg sec")
+           docUploadValidation(v)
         }
 
     }
@@ -488,13 +684,17 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     private fun docUploadValidation(v: View) {
         val message = tie_message!!.text.toString()
         strImageName = tie_Attachments!!.text.toString()
+      //  strImageName1 = tie_Attachments1!!.text.toString()
         var extension=""
+
+
 
         if (strImageName.equals("") && message.equals("")) {
             Config.snackBars(context, v, "Select Documents Or Add Message")
         } else if (documentPath.equals("") && message.equals("")) {
             Config.snackBars(context, v, "Pick Documents Or Add Message")
-        } else {
+        } else
+        {
             try {
                 val inputStream: InputStream = FileInputStream(documentPath)
                 val bos = ByteArrayOutputStream()
@@ -515,16 +715,29 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                     )
                 }
                 extension= documentPath.substring(documentPath.lastIndexOf("."))
-                Log.e(TAG, "encodeDoc   508   " + encodeDoc)
+                Log.e(TAG, "encodeDoc_intimation   5083333   " + encodeDoc)
+                Log.e(TAG, "encodeDoc_intimation   5083333   " + extension)
 
             } catch (e: Exception) {
 
             }
-            sentIntimation(tie_FromDate!!.text.toString(),ID_module,ID_Branch,ID_Channel,ID_Shedule,encodeDoc,extension,message)
-//            saveDocuments(strDescription, strImageName, encodeDoc, extension)
+
+
+            sentIntimation(tie_FromDate!!.text.toString(),ID_module,ID_Branch,ID_Channel,ID_Shedule,
+                encodeDoc ,extension,message)
+
+
+       //     saveDocuments("01-03-2024", documentPath, "description", encodeDoc,extension)
         }
 
+
+
+
+
     }
+
+
+
 
     private fun selectImage() {
         try {
@@ -644,6 +857,210 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         }
     }
 
+
+    private fun datePicker() {
+        val builder = android.app.AlertDialog.Builder(this)
+        val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater1.inflate(R.layout.alert_date_chooser, null)
+        val txtCancel = layout.findViewById(R.id.txtCancel) as TextView
+        val txtSubmit = layout.findViewById(R.id.txtSubmit) as TextView
+        val date_Picker1 = layout.findViewById<DatePicker>(R.id.date_Picker1)
+        val currentDate = Calendar.getInstance()
+        val year = currentDate.get(Calendar.YEAR)
+        val month = currentDate.get(Calendar.MONTH)
+        val day = currentDate.get(Calendar.DAY_OF_MONTH)
+        // Set the maximum date to the current date to prevent selecting future dates
+        date_Picker1.maxDate = currentDate.timeInMillis
+        builder.setView(layout)
+        val alertDialog = builder.create()
+        txtCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            alertDialog.dismiss()
+
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon + 1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1) {
+                    strDay = "0" + day
+                }
+                if (strMonth.length == 1) {
+                    strMonth = "0" + strMonth
+                }
+                tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                selectedDate = strDay + "-" + strMonth + "-" + strYear
+                tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Exception   428   " + e.toString())
+            }
+        }
+        alertDialog.show()
+
+    }
+    private fun datePickerToDate() {
+        val builder = android.app.AlertDialog.Builder(this)
+        val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater1.inflate(R.layout.alert_date_chooser, null)
+        val txtCancel = layout.findViewById(R.id.txtCancel) as TextView
+        val txtSubmit = layout.findViewById(R.id.txtSubmit) as TextView
+        val date_Picker1 = layout.findViewById<DatePicker>(R.id.date_Picker1)
+        val currentDate = Calendar.getInstance()
+        val year = currentDate.get(Calendar.YEAR)
+        val month = currentDate.get(Calendar.MONTH)
+        val day = currentDate.get(Calendar.DAY_OF_MONTH)
+        // Set the maximum date to the current date to prevent selecting future dates
+    //    date_Picker1.minDate = currentDate.timeInMillis
+        builder.setView(layout)
+        val alertDialog = builder.create()
+        txtCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            alertDialog.dismiss()
+
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon + 1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1) {
+                    strDay = "0" + day
+                }
+                if (strMonth.length == 1) {
+                    strMonth = "0" + strMonth
+                }
+//                this.tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+//                selectedDate = strDay + "-" + strMonth + "-" + strYear
+//                this.tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+
+                tie_ToDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                selectedToDate = strDay + "-" + strMonth + "-" + strYear
+                tie_ToDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Exception   428   " + e.toString())
+            }
+        }
+        alertDialog.show()
+    }
+
+    private fun datePickerFromDate() {
+        val builder = android.app.AlertDialog.Builder(this)
+        val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater1.inflate(R.layout.alert_date_chooser, null)
+        val txtCancel = layout.findViewById(R.id.txtCancel) as TextView
+        val txtSubmit = layout.findViewById(R.id.txtSubmit) as TextView
+        val date_Picker1 = layout.findViewById<DatePicker>(R.id.date_Picker1)
+        val currentDate = Calendar.getInstance()
+        val year = currentDate.get(Calendar.YEAR)
+        val month = currentDate.get(Calendar.MONTH)
+        val day = currentDate.get(Calendar.DAY_OF_MONTH)
+        // Set the maximum date to the current date to prevent selecting future dates
+      //  date_Picker1.minDate = currentDate.timeInMillis
+        builder.setView(layout)
+        val alertDialog = builder.create()
+        txtCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            alertDialog.dismiss()
+
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon + 1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1) {
+                    strDay = "0" + day
+                }
+                if (strMonth.length == 1) {
+                    strMonth = "0" + strMonth
+                }
+//                this.tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+//                selectedDate = strDay + "-" + strMonth + "-" + strYear
+//                this.tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+
+                tie_FromDate1!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                selectedFromDate = strDay + "-" + strMonth + "-" + strYear
+                tie_FromDate1!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Exception   428   " + e.toString())
+            }
+        }
+        alertDialog.show()
+    }
+
+    private fun datePickerSheduleDate() {
+        val builder = android.app.AlertDialog.Builder(this)
+        val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val layout = inflater1.inflate(R.layout.alert_date_chooser, null)
+        val txtCancel = layout.findViewById(R.id.txtCancel) as TextView
+        val txtSubmit = layout.findViewById(R.id.txtSubmit) as TextView
+        val date_Picker1 = layout.findViewById<DatePicker>(R.id.date_Picker1)
+        val currentDate = Calendar.getInstance()
+        val year = currentDate.get(Calendar.YEAR)
+        val month = currentDate.get(Calendar.MONTH)
+        val day = currentDate.get(Calendar.DAY_OF_MONTH)
+        // Set the maximum date to the current date to prevent selecting future dates
+        date_Picker1.minDate = currentDate.timeInMillis
+        builder.setView(layout)
+        val alertDialog = builder.create()
+        txtCancel.setOnClickListener {
+            alertDialog.dismiss()
+        }
+        txtSubmit.setOnClickListener {
+            alertDialog.dismiss()
+
+            try {
+                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
+                val day: Int = date_Picker1!!.getDayOfMonth()
+                val mon: Int = date_Picker1!!.getMonth()
+                val month: Int = mon + 1
+                val year: Int = date_Picker1!!.getYear()
+                var strDay = day.toString()
+                var strMonth = month.toString()
+                var strYear = year.toString()
+                if (strDay.length == 1) {
+                    strDay = "0" + day
+                }
+                if (strMonth.length == 1) {
+                    strMonth = "0" + strMonth
+                }
+//                this.tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+//                selectedDate = strDay + "-" + strMonth + "-" + strYear
+//                this.tie_FromDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+
+                tie_ScheduledDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                ScheduledDate = strDay + "-" + strMonth + "-" + strYear
+                tie_ScheduledDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Exception   428   " + e.toString())
+            }
+        }
+        alertDialog.show()
+    }
     private fun datePicker(tie_FromDate: TextInputEditText?) {
         val builder = android.app.AlertDialog.Builder(this)
         val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -742,6 +1159,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
              txtSearch         = view.findViewById(R.id.txtSearch)         as TextView
              tie_LeadSource    = view.findViewById(R.id.tie_LeadSource)    as TextInputEditText
              tie_LeadFrom      = view.findViewById(R.id.tie_LeadFrom)      as TextInputEditText
+            til_LeadFrom      = view.findViewById(R.id.til_LeadFrom)      as TextInputLayout
              tie_FromDate1      = view.findViewById(R.id.tie_FromDate1)      as TextInputEditText
              tie_ToDate        = view.findViewById(R.id.tie_ToDate)        as TextInputEditText
              tie_Category      = view.findViewById(R.id.tie_Category)      as TextInputEditText
@@ -788,6 +1206,9 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 //            }
 
             txtSearch!!.setOnClickListener(View.OnClickListener {
+
+                leadEntry= tie_Lead_entry!!.text.toString()
+                gridSize= gridListarray.length().toString()
                 dialog1!!.dismiss()
 
             })
@@ -803,8 +1224,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
             tie_ProductType!!.setOnClickListener(View.OnClickListener {
 
-                tie_productproject!!.setText("")
-                ID_Product=""
+             //   tie_productproject!!.setText("")
+//                ID_Product=""
                 productTypeCount = 0
                 getProductType()
 
@@ -897,12 +1318,14 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             })
             tie_FromDate1!!.setOnClickListener(View.OnClickListener {
 
-                datePicker(tie_FromDate1)
+            //    datePicker(tie_FromDate1)
+                datePickerFromDate()
             })
 
             tie_ToDate!!.setOnClickListener(View.OnClickListener {
 
-                datePicker(tie_ToDate)
+           //     datePicker(tie_ToDate)
+                datePickerToDate()
             })
 
             tie_Category!!.setOnClickListener(View.OnClickListener {
@@ -959,8 +1382,29 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
     }
 
-    private fun getLeadHistory() {
 
+
+    private fun getLeadHistory() {
+        Log.v("sfsdfdsfdsddd","ID_LeadSource  "+ID_LeadSource)
+        Log.v("sfsdfdsfdsddd","ID_LeadInfo  "+ID_LeadInfo)
+        Log.v("sfsdfdsfdsddd","selectedFromDate  "+selectedFromDate)
+        Log.v("sfsdfdsfdsddd","selectedToDate  "+selectedToDate)
+
+        Log.v("sfsdfdsfdsddd","ID_Category  "+ID_Category)
+        Log.v("sfsdfdsfdsddd","ID_ProductType  "+ID_ProductType)
+        Log.v("sfsdfdsfdsddd","ID_Product  "+ID_Product)
+        Log.v("sfsdfdsfdsddd","ID_Employee  "+ID_Employee)
+        Log.v("sfsdfdsfdsddd","ID_CollectedBy  "+ID_CollectedBy)
+        Log.v("sfsdfdsfdsddd","ID_Area  "+ID_Area)
+
+
+        Log.v("sfsdfdsfdsddd","ID_NextAction  "+ID_NextAction)
+        Log.v("sfsdfdsfdsddd","ID_ActionType  "+ID_ActionType)
+        Log.v("sfsdfdsfdsddd","ID_Priority  "+ID_Priority)
+        Log.v("sfsdfdsfdsddd","ID_Lead_Details  "+ID_Lead_Details)
+        Log.v("sfsdfdsfdsddd","lead Entry  "+ tie_Lead_entry!!.text.toString())
+        Log.v("sfsdfdsfdsddd","Transmode  "+ Transmode)
+        Log.v("sfsdfdsfdsddd","product project  "+ tie_productproject!!.text.toString())
 
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -973,8 +1417,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                 leadHistViewModel.getLeadHist(this,
                     ID_LeadSource,
                     ID_LeadInfo,
-                    tie_FromDate1!!.text.toString(),
-                    tie_ToDate!!.text.toString(),
+                    selectedFromDate,
+                    selectedToDate,
                     ID_Category,
                     ID_ProductType,
                     ID_Product,
@@ -1098,9 +1542,17 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
                     for (k in 0 until leadHistArrayList.length()) {
                         val jsonObject = leadHistArrayList.getJSONObject(k)
+                        Log.e(TAG,"object 343434"+jsonObject)
                         if (textlength <= jsonObject.getString("LeadNo").length) {
                             if (jsonObject.getString("LeadNo")!!.toLowerCase().trim()
                                     .contains(etsearch!!.text.toString().toLowerCase().trim())
+                                ||
+                                jsonObject.getString("CustomerName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                                ||
+                                jsonObject.getString("Mobile")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+
                             ) {
                                 leadHistSort.put(jsonObject)
                             }
@@ -1127,6 +1579,9 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     }
 
     private fun resetDialog() {
+        selectedToDate=""
+        selectedFromDate=""
+
         ID_LeadSource=""
         tie_LeadSource!!.setText("")
         ID_LeadInfo=""
@@ -1157,6 +1612,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         ID_Lead_Details=""
         tie_Lead_entry!!.visibility=View.INVISIBLE
         ll_leadENTRY!!.visibility=View.INVISIBLE
+        til_LeadFrom!!.visibility=View.VISIBLE
         ll_project!!.visibility=View.GONE
 
 
@@ -2870,14 +3326,22 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
 
     private fun reset() {
+
+        tie_Attachments1!!.setText("")
+        shedulemode = 0
+        getShedule()
+
+
+
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         tie_FromDate!!.setText(currentDate)
-        tie_Lead_entry!!.visibility=View.GONE
-        ll_leadENTRY!!.visibility=View.INVISIBLE
-        ll_gridData!!.visibility=View.GONE
+//        tie_Lead_entry!!.visibility=View.GONE
+//        ll_leadENTRY!!.visibility=View.INVISIBLE
+//        ll_gridData!!.visibility=View.GONE
 
         gridListarray = JSONArray()
+        ll_gridData!!.visibility=View.GONE
 
 //        val startingLength: Int = gridListarray.length()
 //
@@ -2886,12 +3350,16 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 //        }
 
         //................
-        tie_ScheduledDate!!.setText(currentDate)
+//        tie_ScheduledDate!!.setText(currentDate)
         ll_sheduled!!.visibility=View.GONE
         img_filter!!.visibility=View.INVISIBLE
 
         //...............
+        ScheduledTime=""
+        ScheduledDate=""
+        tie_ScheduledTime!!.setText("")
 
+        tie_ScheduledDate!!.setText("")
         tie_module!!.setText("")
         tie_Branch!!.setText("")
         tie_Channel!!.setText("")
@@ -2903,6 +3371,93 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         ID_Branch = ""
         ID_Channel = ""
         ID_Shedule = ""
+
+        val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
+        val BranchSP = context.getSharedPreferences(Config.SHARED_PREF45, 0)
+        ID_Branch = FK_BranchSP.getString("FK_Branch", null).toString()
+        tie_Branch!!.setText(BranchSP.getString("BranchName", null))
+    }
+
+    private fun saveDocuments(strDate: String, strSubject: String, strDescription: String, encodeDoc: String?,extension : String) {
+
+        var saveDoc = 0
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                saveDocumentViewModel.saveDocuments(this,"4",strDate,strSubject,strDescription,encodeDoc!!,extension)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        try {
+                            if (msg!!.length > 0) {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   82   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
+                                    val jobjt = jObject.getJSONObject("AddDocument")
+
+                                    val dir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).absolutePath + "/" + "."+context.getResources().getString(R.string.app_name))
+                                    if (dir.isDirectory) {
+                                        val children = dir.list()
+                                        for (i in children.indices) {
+                                            File(dir, children[i]).delete()
+                                        }
+                                    }
+
+
+                                    val builder = AlertDialog.Builder(
+                                        this@Intimation,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jobjt.getString("ResponseMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                    val i = Intent(this@AddDocumentActivity, AccountDetailsActivity::class.java)
+//                                    startActivity(i)
+//                                    finish()
+
+                                        onBackPressed()
+
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@Intimation,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
+                            } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+                            }
+
+                        }catch (e : Exception){
+                            Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
     }
 
     private fun sentIntimation(
@@ -2927,6 +3482,13 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         Log.v("sfsdfdsfdsddd","ID_LeadInfo  "+ID_LeadInfo)
         Log.v("sfsdfdsfdsddd","ID_Category  "+ID_Category)
         Log.v("sfsdfdsfdsddd","ID_Employee  "+ID_Employee)
+        Log.v("sfsdfdsfdsddd","selectedFromDate  "+selectedFromDate)
+        Log.v("sfsdfdsfdsddd","selectedToDate  "+selectedToDate)
+        Log.v("sfsdfdsfdsddd","leadEntry  "+leadEntry)
+        Log.v("sfsdfdsfdsddd","gridSize  "+gridSize)
+        Log.v("sfsdfdsfdsddd","ScheduledTime  "+ScheduledTime)
+        Log.v("sfsdfdsfdsddd","ScheduleDate  "+ScheduledDate)
+
         var branch = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -2938,10 +3500,12 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                 progressDialog!!.show()
                 sentIntimationViewModel.sentIntimation(this, dated,ID_module,ID_Branch,ID_Channel,ID_Shedule,encodeDoc,extension,
                     message,
+                    ScheduledDate,
+                    ScheduledTime,
                     ID_LeadSource,
                     ID_LeadInfo,
-                    tie_FromDate1!!.text.toString(),
-                    tie_ToDate!!.text.toString(),
+                    selectedFromDate,
+                    selectedToDate,
                     ID_Category,
                     ID_ProductType,
                     ID_Product,
@@ -2952,8 +3516,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                     ID_ActionType,
                     ID_Priority,
                     ID_Lead_Details,
-                    tie_Lead_entry!!.text.toString(),
-                    gridListarray.length().toString(),
+                    leadEntry,
+                    gridSize,
                     gridListarray
 
                 )!!.observe(
@@ -3001,6 +3565,9 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                     .show()
             }
         }
+
+
+
     }
 
     private fun successPopup()
@@ -3189,7 +3756,23 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                                     if (sheduleArrayList.length() > 0) {
                                         if (branch == 0) {
                                             branch++
-                                            shedulePopup(sheduleArrayList)
+
+
+                                            if(shedulemode == 0)
+                                            {
+                                                var jsonObject1 = sheduleArrayList.getJSONObject(0)
+                                                tie_shedule!!.setText(jsonObject1.getString("SheduledTypeName"))
+                                                ID_Shedule = jsonObject1.getString("ID_SheduledType")
+                                            }
+                                            else
+                                            {
+                                                shedulePopup(sheduleArrayList)
+                                            }
+
+//                                            var jsonObject1 = sheduleArrayList.getJSONObject(1)
+//                                            tie_shedule!!.setText(jsonObject1.getString("SheduledTypeName"))
+//                                            ID_Shedule = jsonObject1.getString("ID_SheduledType")
+//                                            shedulePopup(sheduleArrayList)
                                         }
 
                                     }
@@ -3402,10 +3985,21 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
             if (ID_Shedule.equals("2"))
             {
+                val sdf = SimpleDateFormat("dd-MM-yyyy")
+                val currentDate = sdf.format(Date())
+                ScheduledDate=currentDate
+                tie_ScheduledDate!!.setText(ScheduledDate)
                 ll_sheduled!!.visibility=View.VISIBLE
+
+
             }
             else
             {
+                ScheduledTime=""
+                ScheduledDate=""
+                tie_ScheduledTime!!.setText("")
+
+                tie_ScheduledDate!!.setText("")
                 ll_sheduled!!.visibility=View.GONE
             }
         }
@@ -3414,6 +4008,21 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             val jsonObject = leadSourceList.getJSONObject(position)
             ID_LeadSource = jsonObject.getString("ID_LeadFrom")
             tie_LeadSource!!.setText(jsonObject.getString("LeadFromName"))
+
+            Log.e(TAG, "ID_LeadSource   3453454 " + ID_LeadSource)
+
+            if (ID_LeadSource.equals("11") || ID_LeadSource.equals("10"))
+            {
+                til_LeadFrom!!.visibility=View.GONE
+                ID_LeadInfo=""
+
+            }
+            else
+            {
+                til_LeadFrom!!.visibility=View.VISIBLE
+            }
+
+
         }
 
         if (data.equals("employee")) {
@@ -3492,6 +4101,22 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             til_Lead_entry!!.setHint(jsonObject.getString("TodoListLeadDetailsName"))
             tie_Lead_entry!!.visibility=View.VISIBLE
             ll_leadENTRY!!.visibility=View.VISIBLE
+
+            if (ID_Lead_Details.equals("1"))
+            {
+                tie_Lead_entry!!.setText("")
+                tie_Lead_entry!!.inputType=InputType.TYPE_CLASS_TEXT
+            }
+            if (ID_Lead_Details.equals("2"))
+            {
+                tie_Lead_entry!!.setText("")
+                tie_Lead_entry!!.inputType=InputType.TYPE_CLASS_PHONE
+            }
+            if (ID_Lead_Details.equals("3"))
+            {
+                tie_Lead_entry!!.setText("")
+                tie_Lead_entry!!.inputType=InputType.TYPE_CLASS_TEXT
+            }
 
 
         }
@@ -3581,15 +4206,38 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         if (data.equals("deletearray_list"))
         {
 
+            val dialog = BottomSheetDialog(this)
+            val view = layoutInflater.inflate(R.layout.alert_delete, null)
 
-//            Log.e(TAG,"ID_first  1275   "+ID_first)
-//            Log.e(TAG,"ID_LeadFirst  1275   "+ID_first)
-//            Log.e(TAG,"ID_first  1275   "+ID_first)
-//            Log.e(TAG,"ID_first  1275   "+ID_first)
+            val btnNo = view.findViewById<Button>(R.id.btn_No)
+            val btnYes = view.findViewById<Button>(R.id.btn_Yes)
+            val textid1 = view.findViewById<TextView>(R.id.textid1)
+
+            textid1!!.setText("Do you want to delete this product?")
+
+            btnNo.setOnClickListener {
+                dialog .dismiss()
+
+            }
+            btnYes.setOnClickListener {
+
+                gridListarray.remove(position)
+                viewGridList(gridListarray)
+                dialog.dismiss()
+
+            }
+            dialog.setCancelable(true)
+            dialog!!.setContentView(view)
+
+            dialog.show()
 
 
-           gridListarray.remove(position)
-            viewGridList(gridListarray)
+
+
+            //...........old
+
+//           gridListarray.remove(position)
+//            viewGridList(gridListarray)
 
 
 
@@ -3619,6 +4267,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         }
 
         if (data.equals("prodcatType")) {
+          //     tie_productproject!!.setText("")
+                ID_Product=""
             dialogProductType!!.dismiss()
 //             val jsonObject = prodPriorityArrayList.getJSONObject(position)
             val jsonObject = productTypeSort.getJSONObject(position)
@@ -3632,6 +4282,12 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                 ll_project!!.visibility=View.GONE
                 til_product!!.setHint(jsonObject.getString("ProductTypeName"))
 
+                //                ll_project!!.visibility=View.GONE
+//
+                tie_productproject!!.setText("")
+//                ll_product!!.visibility=View.GONE
+//                ID_Product=""
+
           //      til_productproject!!.setEndIconDrawable(ContextCompat.getDrawable(this,R.drawable.ic_search))
             }
             else
@@ -3639,6 +4295,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
                 ll_product!!.visibility=View.GONE
                 ll_project!!.visibility=View.VISIBLE
+                ID_Product=""
                 til_productproject!!.setHint(jsonObject.getString("ProductTypeName"))
            //     til_productproject!!.setEndIconDrawable(null)
             }
@@ -3908,64 +4565,64 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 //                            }
 //                        } else {
 
-                            Log.e(TAG, "3961   " + data)
-                            Log.e(TAG, "3962   " + data!!.getExtras()!!.get("data"))
+                        Log.e(TAG, "3961   " + data)
+                        Log.e(TAG, "3962   " + data!!.getExtras()!!.get("data"))
 
-                            val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
-                            val bytes = ByteArrayOutputStream()
-                            thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-                            val fileName = "IMG_" + System.currentTimeMillis() + ".jpg";
-                            try {
+                        val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
+                        val bytes = ByteArrayOutputStream()
+                        thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+                        val fileName = "IMG_" + System.currentTimeMillis() + ".jpg";
+                        try {
 
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                                    destination = File(
-                                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
-                                        ""
-                                    )
-                                    // destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)  +"/" +  getString(R.string.app_name));
-                                } else {
-                                    destination = File(
-                                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
-                                        ""
-                                    )
-                                }
-
-                                if (!destination!!.exists()) {
-                                    destination!!.createNewFile()
-                                }
-
-
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                                 destination = File(
-                                    (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
-                                            "",
-                                    fileName
+                                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
+                                    ""
                                 )
-                                val fo: FileOutputStream
+                                // destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)  +"/" +  getString(R.string.app_name));
+                            } else {
+                                destination = File(
+                                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
+                                    ""
+                                )
+                            }
 
-
-                                fo = FileOutputStream(destination)
-                                fo.write(bytes.toByteArray())
-                                fo.close()
-                            } catch (e: FileNotFoundException) {
-                                e.printStackTrace()
-                                Log.e(TAG, "FileNotFoundException   23671    " + e.toString())
-
-                            } catch (e: IOException) {
-                                e.printStackTrace()
-                                Log.e(TAG, "FileNotFoundException   23672    " + e.toString())
+                            if (!destination!!.exists()) {
+                                destination!!.createNewFile()
                             }
 
 
-                            imgPath = destination!!.getAbsolutePath()
-                            Log.e(TAG, "imgPath  20522    " + imgPath)
-                            destination = File(imgPath)
-                            documentPath = imgPath!!
-                            //txtAttachmentPath!!.setText(imgPath)
-                            //  tie_Attachment!!.setText(imgPath)
-                            tie_Attachments!!.setText(fileName)
+                            destination = File(
+                                (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
+                                        "",
+                                fileName
+                            )
+                            val fo: FileOutputStream
 
 
-                      //  }
+                            fo = FileOutputStream(destination)
+                            fo.write(bytes.toByteArray())
+                            fo.close()
+                        } catch (e: FileNotFoundException) {
+                            e.printStackTrace()
+                            Log.e(TAG, "FileNotFoundException   23671    " + e.toString())
+
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                            Log.e(TAG, "FileNotFoundException   23672    " + e.toString())
+                        }
+
+
+                        imgPath = destination!!.getAbsolutePath()
+                        Log.e(TAG, "imgPath  20522    " + imgPath)
+                        destination = File(imgPath)
+                        documentPath = imgPath!!
+                        //txtAttachmentPath!!.setText(imgPath)
+                        //  tie_Attachment!!.setText(imgPath)
+                        tie_Attachments!!.setText(fileName)
+
+
+                        //  }
                     } catch (e: IOException) {
                         e.printStackTrace()
                         Toast.makeText(this@Intimation, "Failed!", Toast.LENGTH_SHORT)
@@ -3985,6 +4642,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                     bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, selectedImage)
                     val bytes = ByteArrayOutputStream()
                     bitmap!!.compress(Bitmap.CompressFormat.JPEG, 50, bytes)
+
                     imgPath = getRealPathFromURI(selectedImage!!)
                     destination = File(imgPath.toString())
                     documentPath = imgPath!!
@@ -4069,7 +4727,6 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             }
         }
     }
-
     fun getRealPathFromURI(uri: Uri): String {
         var path = ""
         if (getContentResolver() != null) {
@@ -4083,6 +4740,13 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         }
         return path
     }
+//    fun getRealPathFromURI(contentUri: Uri?): String? {
+//        val proj = arrayOf(MediaStore.Audio.Media.DATA)
+//        val cursor = managedQuery(contentUri, proj, null, null, null)
+//        val column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+//        cursor.moveToFirst()
+//        return cursor.getString(column_index)
+//    }
 
     private fun uploadDocument(documentUri: Uri) {
         val documentFile = DocumentFile.fromSingleUri(this, documentUri)

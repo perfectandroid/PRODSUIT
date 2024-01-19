@@ -919,6 +919,17 @@ interface ApiInterface {
     @POST("fcm/send")
     fun sendFcmMessage(@Body message: FcmMessageNew): Call<Void>
 
+    @POST("UserValidations/EmployeeLocationDistance")
+    fun getEmpLocationList(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/AttendanceDetails")
+    fun getAttendanceReport(@Body body: RequestBody): Call<String>
+
+
+
+    @POST("UserValidations/TimeLineDetails")
+    fun getServiceTimeLine(@Body body: RequestBody): Call<String>
+
     @Headers("Content-Type: application/json", "Authorization: key=AAAAKQIZF2c:APA91bHwtHJmtJK76B3Pr1_IUeUwedLd4EctxjiSCK4chEhB5YLgBQrRyZ20rXNOWKTirZQBOqeBaSDQG0YlBn0TqQPF9QUEY3wy1xGOhHB0OHowHaQC6bryULZ3xdsnq6dONaZqdnUH")
     @POST("fcm/send")
     fun sendPushNotification(@Body message: JSONObject): Call<String>

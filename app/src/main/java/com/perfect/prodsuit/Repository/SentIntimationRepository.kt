@@ -22,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 object SentIntimationRepository {
 
@@ -39,6 +40,8 @@ object SentIntimationRepository {
         encodeDoc: String,
         extension: String,
         message: String,
+        ScheduledDate: String,
+        ScheduledTime: String,
         ID_LeadSource: String,
         ID_LeadInfo: String,
         FromDate: String,
@@ -58,6 +61,8 @@ object SentIntimationRepository {
         LeadCusDetails: JSONArray
     ): MutableLiveData<SentIntimationModel> {
         sentIntimation(context,dated,ID_module,ID_Branch,ID_Channel,ID_Shedule,encodeDoc,extension,message,
+            ScheduledDate,
+            ScheduledTime,
             ID_LeadSource,
             ID_LeadInfo,
             FromDate,
@@ -90,6 +95,8 @@ object SentIntimationRepository {
         encodeDoc: String,
         extension: String,
         message: String,
+        ScheduledDate: String,
+        ScheduledTime: String,
         ID_LeadSource: String,
         ID_LeadInfo: String,
         FromDate: String,
@@ -108,6 +115,8 @@ object SentIntimationRepository {
         GridData: String,
         LeadCusDetails: JSONArray
     ) {
+        Log.e(TAG,"encodeDoc_repos   5083333  "+encodeDoc)
+
         try {
             branchSetterGetter.value = SentIntimationModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -119,6 +128,11 @@ object SentIntimationRepository {
                 R.drawable.progress))
             progressDialog!!.show()
             val client = OkHttpClient.Builder()
+                .connectTimeout(100, TimeUnit.SECONDS).
+                readTimeout(100, TimeUnit.SECONDS)
+                .writeTimeout(100, TimeUnit.SECONDS)
+                .followRedirects(true)
+                .followSslRedirects(true)
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
                 .build()
@@ -152,6 +166,7 @@ object SentIntimationRepository {
                 else
                 {
                     attachement=encodeDoc+"."+extension
+                  //  attachement=encodeDoc
                 }
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -166,17 +181,18 @@ object SentIntimationRepository {
                 requestObject1.put("Status", ProdsuitApplication.encryptStart("0"))
                 requestObject1.put("Channel", ProdsuitApplication.encryptStart(ID_Channel))
                 requestObject1.put("DLId", ProdsuitApplication.encryptStart(""))
-                requestObject1.put("Attachment", ProdsuitApplication.encryptStart(attachement))
+             // requestObject1.put("Attachment", ProdsuitApplication.encryptStart(attachement))
+               requestObject1.put("Attachment", encodeDoc)
                 requestObject1.put("Module", ProdsuitApplication.encryptStart(ID_module))
                 requestObject1.put("Branch", ProdsuitApplication.encryptStart(ID_Branch))
-                requestObject1.put("Date", ProdsuitApplication.encryptStart(currentDate+" 00:00:00"))//
-                requestObject1.put("SheduledTime", ProdsuitApplication.encryptStart("00:00:00"))//
-                requestObject1.put("SheduledDate", ProdsuitApplication.encryptStart(dated+" 00:00:00"))//
+                requestObject1.put("Date", ProdsuitApplication.encryptStart(dated+" 00:00:00"))//
+                requestObject1.put("SheduledTime", ProdsuitApplication.encryptStart(ScheduledTime))//
+                requestObject1.put("SheduledDate", ProdsuitApplication.encryptStart(ScheduledDate))//
 
                 requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart(ID_LeadSource))
                 requestObject1.put("FK_LeadThrough", ProdsuitApplication.encryptStart(ID_LeadInfo))
-                requestObject1.put("FromDate", ProdsuitApplication.encryptStart(FromDate+" 00:00:00"))
-                requestObject1.put("ToDate", ProdsuitApplication.encryptStart(ToDate+" 00:00:00"))
+                requestObject1.put("FromDate", ProdsuitApplication.encryptStart(FromDate))
+                requestObject1.put("ToDate", ProdsuitApplication.encryptStart(ToDate))
 
                 requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
                 requestObject1.put("ProdType", ProdsuitApplication.encryptStart(ID_ProductType))
@@ -202,6 +218,7 @@ object SentIntimationRepository {
 
                 requestObject1.put("LeadCusDetails", (LeadCusDetails))
                 Log.e(TAG,"intimation 4545454  "+requestObject1)
+                Log.e(TAG,"intimation 66666  "+encodeDoc)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -230,12 +247,13 @@ object SentIntimationRepository {
                 }
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
+                    Log.e("yhgfhgf 4654645",t.toString())
                     Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
                 }
             })
         }catch (e : Exception){
             e.printStackTrace()
-            Toast.makeText(context,""+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
+            Toast.makeText(context,"DFSFSDF"+Config.SOME_TECHNICAL_ISSUES,Toast.LENGTH_SHORT).show()
             progressDialog!!.dismiss()
         }
     }

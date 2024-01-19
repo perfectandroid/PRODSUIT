@@ -40,6 +40,11 @@ import java.util.*
 
 class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
+    var noDataTicketOutStanding:Boolean=false
+    var noDataTicketStatus:Boolean=false
+    var noDataTicketOutStandingCount:Boolean=false
+    var noDataAmcDue:Boolean=false
+
 
     var ServiceTicketAction_xaxis: TextView? = null
     var ServiceTicketAction_yaxis: TextView? = null
@@ -514,7 +519,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 //            getCRMTop10Product()
 
         }else if (TabMode == 1){
-            ContinueMode = 1
+        //    ContinueMode = 1
             ll_Tile!!.visibility = View.VISIBLE
             tvv_dash!!.setBackgroundResource(R.drawable.btn_shape_reset)
             tvv_tile!!.setBackgroundResource(R.drawable.btn_dash)
@@ -559,11 +564,13 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   1777   "+msg)
-                                if (jObject.getString("StatusCode") == "0") {
+                                if (jObject.getString("StatusCode") == "0")
+                                {
 
                                     val jobjt = jObject.getJSONObject("DashBoardNameDetails")
                                     chartTypeArrayList = jobjt.getJSONArray("DashBoardNameDetailsList")
-                                    if (chartTypeArrayList.length() > 0){
+                                    if (chartTypeArrayList.length() > 0)
+                                    {
                                         if (ChartMode == 0){
                                             val jsonObject = chartTypeArrayList.getJSONObject(0)
                                             ID_ChartMode = jsonObject.getString("DashMode")
@@ -630,6 +637,22 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         }else{
                                             showChartDrop(chartTypeArrayList)
                                         }
+                                    }
+                                    else
+                                    {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceGraphActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage("No Active Chart Settings")
+                                        builder.setPositiveButton("Ok") {
+                                                dialogInterface, which ->
+
+
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
                                     }
 
                                 } else {
@@ -1368,6 +1391,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun getTicketOutstandingData() {
+        noDataTicketOutStanding=false
         var DashMode2 = "4"
         DashType = "1"
         ll_crmtile_outstanding!!.visibility = View.GONE
@@ -1390,7 +1414,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   88441   "+msg)
-                                if (jObject.getString("StatusCode").equals("0")) {
+                                if (jObject.getString("StatusCode").equals("0"))
+                                {
 
                                     val jobjt = jObject.getJSONObject("CRMTileDashBoardDetails")
                                     tv_crmtile_Outstanding!!.setText(jobjt.getString("ChartName"))
@@ -1425,17 +1450,27 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     }
 
 
-                                } else {
-//                                    val builder = AlertDialog.Builder(
-//                                        this@ServiceGraphActivity,
-//                                        R.style.MyDialogTheme
-//                                    )
-//                                    builder.setMessage(jObject.getString("EXMessage"))
-//                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                    }
-//                                    val alertDialog: AlertDialog = builder.create()
-//                                    alertDialog.setCancelable(false)
-//                                    alertDialog.show()
+                                } else
+                                {
+                                    noDataTicketOutStanding=true
+
+                                    if ( noDataTicketOutStanding && noDataTicketStatus && noDataTicketOutStandingCount && noDataAmcDue )
+                                    {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceGraphActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage("No Active Tile Settings")
+                                        builder.setPositiveButton("Ok") {
+                                                dialogInterface, which ->
+
+
+
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
                                 }
                             }
                         } else {
@@ -1458,6 +1493,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun getTicketStatusData() {
+        noDataTicketStatus=false
         var DashMode1 = "5"
         DashType = "1"
         ll_crmtile_status!!.visibility = View.GONE
@@ -1515,17 +1551,28 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     }
 
 
-                                } else {
-//                                    val builder = AlertDialog.Builder(
-//                                        this@ServiceGraphActivity,
-//                                        R.style.MyDialogTheme
-//                                    )
-//                                    builder.setMessage(jObject.getString("EXMessage"))
-//                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                    }
-//                                    val alertDialog: AlertDialog = builder.create()
-//                                    alertDialog.setCancelable(false)
-//                                    alertDialog.show()
+                                }
+                                else {
+                                    noDataTicketStatus=true
+
+                                    if ( noDataTicketOutStanding && noDataTicketStatus && noDataTicketOutStandingCount && noDataAmcDue )
+                                    {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceGraphActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage("No Active Tile Settings")
+                                        builder.setPositiveButton("Ok") {
+                                                dialogInterface, which ->
+
+
+
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+
                                 }
                             }
                         } else {
@@ -1548,6 +1595,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun getOutStandingCountData() {
+        noDataTicketOutStandingCount=false
         var DashMode2 = "6"
         DashType = "1"
 //        TransDate = "08-11-2023"
@@ -1571,7 +1619,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   88443   "+msg)
-                                if (jObject.getString("StatusCode").equals("0")) {
+                                if (jObject.getString("StatusCode").equals("0"))
+                                {
 
                                     val jobjt = jObject.getJSONObject("CRMTileDashBoardDetails")
                                     tv_crmtile_outstandcount!!.setText(jobjt.getString("ChartName"))
@@ -1600,16 +1649,26 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
                                 } else {
-//                                    val builder = AlertDialog.Builder(
-//                                        this@ServiceGraphActivity,
-//                                        R.style.MyDialogTheme
-//                                    )
-//                                    builder.setMessage(jObject.getString("EXMessage"))
-//                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                    }
-//                                    val alertDialog: AlertDialog = builder.create()
-//                                    alertDialog.setCancelable(false)
-//                                    alertDialog.show()
+                                    noDataTicketOutStandingCount=true
+
+                                    if ( noDataTicketOutStanding && noDataTicketStatus && noDataTicketOutStandingCount && noDataAmcDue)
+                                    {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceGraphActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage("No Active Tile Settings")
+                                        builder.setPositiveButton("Ok") {
+                                                dialogInterface, which ->
+
+
+
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+
                                 }
                             }
                         } else {
@@ -1632,6 +1691,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun getAmcDueStatusData() {
+        noDataAmcDue=false
         var DashMode3 = "7"
         DashType = "1"
 //        TransDate = "08-11-2023"
@@ -1655,7 +1715,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG,"msg   88444   "+msg)
-                                if (jObject.getString("StatusCode").equals("0")) {
+                                if (jObject.getString("StatusCode").equals("0"))
+                                {
 
                                     val jobjt = jObject.getJSONObject("CRMTileDashBoardDetails")
                                     tv_crmtile_amcDue!!.setText(jobjt.getString("ChartName"))
@@ -1687,17 +1748,27 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     }
 
 
-                                } else {
-//                                    val builder = AlertDialog.Builder(
-//                                        this@ServiceGraphActivity,
-//                                        R.style.MyDialogTheme
-//                                    )
-//                                    builder.setMessage(jObject.getString("EXMessage"))
-//                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
-//                                    }
-//                                    val alertDialog: AlertDialog = builder.create()
-//                                    alertDialog.setCancelable(false)
-//                                    alertDialog.show()
+                                } else
+                                {
+                                    noDataAmcDue=true
+
+                                    if ( noDataTicketOutStanding && noDataTicketStatus && noDataTicketOutStandingCount && noDataAmcDue )
+                                    {
+                                        val builder = AlertDialog.Builder(
+                                            this@ServiceGraphActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage("No Active Tile Settings")
+                                        builder.setPositiveButton("Ok") {
+                                                dialogInterface, which ->
+
+
+
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
                                 }
                             }
                         } else {

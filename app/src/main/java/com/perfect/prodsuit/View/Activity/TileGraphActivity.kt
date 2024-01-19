@@ -1,5 +1,6 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
@@ -59,6 +60,13 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     lateinit var avgconvsnleadArrayList: JSONArray
     lateinit var leadActivityViewModels: leadActivityViewModel
     lateinit var leadCountFollowupViewModel: LeadCountFollowupViewModel
+//........
+    var ll_labelAll: LinearLayout? = null
+    var noDataLeadTile:Boolean=false
+    var noDataLeadOutStanding:Boolean=false
+    var noDataLeadAvg:Boolean=false
+    var noDataLeadCount:Boolean=false
+    //............
 
     var leadActivityText: TextView? = null
     var mainHeadingDash: TextView? = null
@@ -364,6 +372,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     }
 
     private fun getLeadOutstandTile() {
+        noDataLeadOutStanding=false
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -384,7 +393,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     LeadTileOutstandCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   leadoutstandtile   " + msg)
-                                    if (jObject.getString("StatusCode") == "0") {
+                                    if (jObject.getString("StatusCode") == "0")
+                                    {
                                         val jobjt = jObject.getJSONObject("TileLeadDashBoardDetails")
                                         var chartname =   jobjt.getString("ChartName")
                                         var remark =   jobjt.getString("Reamrk")
@@ -445,16 +455,31 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             alertDialog.show()*/
                                         }
                                     } else {
-                                        /*val builder = AlertDialog.Builder(
-                                            this@TileGraphActivity,
-                                            R.style.MyDialogTheme
-                                        )
-                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                        noDataLeadOutStanding=true
+
+                                        if ( noDataLeadTile && noDataLeadOutStanding && noDataLeadAvg && noDataLeadCount )
+                                        {
+                                            val builder = AlertDialog.Builder(
+                                                this@TileGraphActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage("No Active Tile Settings")
+                                            builder.setPositiveButton("Ok") {
+                                                    dialogInterface, which ->
+
+
+//                                                ll_Graph!!.visibility = View.VISIBLE
+//                                                tvv_dash!!.setBackgroundResource(R.drawable.btn_dash)
+//                                                tvv_tile!!.setBackgroundResource(R.drawable.btn_shape_reset)
+
+
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
                                         }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()*/
+
                                     }
                                  //   progressDialog!!.dismiss()
                                 }
@@ -485,6 +510,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     }
 
     private fun getLeadAvgConvrsn() {
+        noDataLeadAvg=false
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                  progressDialog = ProgressDialog(context, R.style.Progress)
@@ -504,7 +530,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     LeadAvgCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   avgleadconvrsn   " + msg)
-                                    if (jObject.getString("StatusCode") == "0") {
+                                    if (jObject.getString("StatusCode") == "0")
+                                    {
                                         val jobjt = jObject.getJSONObject("TileLeadDashBoardDetails")
                                         var chartname =   jobjt.getString("ChartName")
                                         var remark =   jobjt.getString("Reamrk")
@@ -556,17 +583,31 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             alertDialog.setCancelable(false)
                                             alertDialog.show()*/
                                         }
-                                    } else {
-                                        /*val builder = AlertDialog.Builder(
-                                            this@TileGraphActivity,
-                                            R.style.MyDialogTheme
-                                        )
-                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    } else
+                                    {
+                                        noDataLeadAvg=true
+
+                                        if ( noDataLeadTile && noDataLeadOutStanding && noDataLeadAvg && noDataLeadCount )
+                                        {
+                                            val builder = AlertDialog.Builder(
+                                                this@TileGraphActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage("No Active Tile Settings")
+                                            builder.setPositiveButton("Ok") {
+                                                    dialogInterface, which ->
+
+
+//                                                ll_Graph!!.visibility = View.VISIBLE
+//                                                tvv_dash!!.setBackgroundResource(R.drawable.btn_dash)
+//                                                tvv_tile!!.setBackgroundResource(R.drawable.btn_shape_reset)
+
+
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
                                         }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()*/
                                     }
                                     //   progressDialog!!.dismiss()
                                 }
@@ -597,7 +638,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     }
 
     private fun setRegViews() {
-
+        ll_labelAll= findViewById<LinearLayout>(R.id.ll_labelAll)
         val imback = findViewById<ImageView>(R.id.imback)
         imback!!.setOnClickListener(this)
 
@@ -972,6 +1013,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
      }*/
 
     private fun getLeadTile() {
+        noDataLeadTile=false
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                progressDialog = ProgressDialog(context, R.style.Progress)
@@ -992,7 +1034,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     LeadTileCount++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   leadtile   " + msg)
-                                    if (jObject.getString("StatusCode") == "0") {
+                                    if (jObject.getString("StatusCode") == "0")
+                                    {
                                         val jobjt = jObject.getJSONObject("TileLeadDashBoardDetails")
                                         var remark =   jobjt.getString("Reamrk")
                                         var chartname =   jobjt.getString("ChartName")
@@ -1039,6 +1082,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         }
                                         else {
                                             crdv_lead!!.visibility=View.GONE
+
+
                                            /* val builder = AlertDialog.Builder(
                                                 this@TileGraphActivity,
                                                 R.style.MyDialogTheme
@@ -1051,6 +1096,25 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             alertDialog.show()*/
                                         }
                                     } else {
+                                        noDataLeadTile=true
+
+                                        if ( noDataLeadTile && noDataLeadOutStanding && noDataLeadAvg && noDataLeadCount)
+                                        {
+                                            val builder = AlertDialog.Builder(
+                                                this@TileGraphActivity,
+                                                R.style.MyDialogTheme
+                                            )
+                                            builder.setMessage("No Active Tile Settings")
+                                            builder.setPositiveButton("Ok") {
+                                                    dialogInterface, which ->
+
+
+
+                                            }
+                                            val alertDialog: AlertDialog = builder.create()
+                                            alertDialog.setCancelable(false)
+                                            alertDialog.show()
+                                        }
                                       /*  val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
                                             R.style.MyDialogTheme
@@ -1091,6 +1155,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     }
 
     private fun getLeadCountScenario() {
+        noDataLeadCount=false
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1111,7 +1176,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     leadcountscenario++
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   leadcountscenario   " + msg)
-                                   if (jObject.getString("StatusCode") == "0") {
+                                   if (jObject.getString("StatusCode") == "0")
+                                   {
                                         val jobjt = jObject.getJSONObject("TileLeadDashBoardDetails")
                                         var remark =   jobjt.getString("Reamrk")
                                         var chartname =   jobjt.getString("ChartName")
@@ -1176,16 +1242,28 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                              alertDialog.show()*/
                                         }
                                     } else {
-                                        /*  val builder = AlertDialog.Builder(
-                                              this@TileGraphActivity,
-                                              R.style.MyDialogTheme
-                                          )
-                                          builder.setMessage(jObject.getString("EXMessage"))
-                                          builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                          }
-                                          val alertDialog: AlertDialog = builder.create()
-                                          alertDialog.setCancelable(false)
-                                          alertDialog.show()*/
+                                       noDataLeadCount=true
+                                       if ( noDataLeadTile && noDataLeadOutStanding && noDataLeadAvg && noDataLeadCount)
+                                       {
+                                           val builder = AlertDialog.Builder(
+                                               this@TileGraphActivity,
+                                               R.style.MyDialogTheme
+                                           )
+                                           builder.setMessage("No Active Tile Settings")
+                                           builder.setPositiveButton("Ok") {
+                                                   dialogInterface, which ->
+
+
+//                                                ll_Graph!!.visibility = View.VISIBLE
+//                                                tvv_dash!!.setBackgroundResource(R.drawable.btn_dash)
+//                                                tvv_tile!!.setBackgroundResource(R.drawable.btn_shape_reset)
+
+
+                                           }
+                                           val alertDialog: AlertDialog = builder.create()
+                                           alertDialog.setCancelable(false)
+                                           alertDialog.show()
+                                       }
                                     }
                                     //  progressDialog!!.dismiss()
                                 }
@@ -1254,6 +1332,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         jobjt.getString("XAxis")
                                     val yAxis =
                                         jobjt.getString("YAxis")
+
+                                    ll_labelAll!!.visibility=View.VISIBLE
                                     txtv_EmpWiseRemark!!.visibility=View.GONE
                                     txt_chartlabel!!.visibility=View.VISIBLE
                                     txt_chartremark!!.visibility=View.VISIBLE
@@ -1286,6 +1366,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     }
                                     else
                                     {
+                                        ll_labelAll!!.visibility=View.GONE
                                         txt_chartlabel!!.visibility=View.GONE
                                         txt_chartremark!!.visibility=View.GONE
                                         ll_emp_XY!!.visibility=View.GONE
@@ -2576,6 +2657,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         return topRevenueBar
     }
 
+    @SuppressLint("SuspiciousIndentation")
     private fun getLeadStagewiseforecast() {
         leadstagewiswforecast= 0
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -2607,6 +2689,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             jobjt.getJSONArray("LeadstagewiseforcastList")
                                     val remark =
                                         jobjt.getString("Reamrk")
+                                    ll_labelAll!!.visibility=View.VISIBLE
                                     txtv_LeadForecastRemark!!.visibility=View.GONE
                                     txt_chartlabel!!.visibility=View.VISIBLE
                                     txt_chartremark!!.visibility=View.VISIBLE
@@ -2614,7 +2697,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     txt_chartlabel!!.text="LEAD PROGRESS REPORT"
                                     txt_chartremark!!.text=remark
                                         //    tv_leadStatusTotal!!.setText(jobjt.getString("TotalCount"))
-                                        Log.e(TAG, "array  125   " + leadStagewiseArrayList)
+                                     //   Log.e(TAG, "array  125   " + leadStagewiseArrayList)
 
                                         setPieChart(leadStagewiseArrayList)
                                     leadcountmode=0
@@ -2633,6 +2716,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
 //
                                 } else {
+                                    ll_labelAll!!.visibility=View.GONE
                                     txt_chartlabel!!.visibility=View.GONE
                                     txt_chartremark!!.visibility=View.GONE
                                     rclv_leadStagewiseforecast!!.visibility=View.GONE
@@ -2807,7 +2891,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             card_leadActivity!!.visibility = View.GONE
                                             card_toprevenue!!.visibility = View.GONE
                                             ll_empwseamt!!.visibility = View.GONE
-
+                                            ll_labelAll!!.visibility=View.GONE
 
                                            /* card_leadActivity!!.visibility = View.VISIBLE
                                             leadActivityText!!.visibility=View.VISIBLE*/
@@ -2910,6 +2994,22 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             showChartDrop(chartTypeArrayList)
                                         }
                                     }
+                                   else
+                                   {
+                                       val builder = AlertDialog.Builder(
+                                           this@TileGraphActivity,
+                                           R.style.MyDialogTheme
+                                       )
+                                       builder.setMessage("No Active Chart Settings")
+                                       builder.setPositiveButton("Ok") {
+                                               dialogInterface, which ->
+
+
+                                       }
+                                       val alertDialog: AlertDialog = builder.create()
+                                       alertDialog.setCancelable(false)
+                                       alertDialog.show()
+                                   }
 
                                 } else {
                                     val builder = AlertDialog.Builder(
@@ -2971,7 +3071,9 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 ll_Piechart!!.visibility=View.GONE
                 ll_top10!!.visibility=View.GONE
                 ll_empwseamt!!.visibility = View.GONE
+
 */
+                ll_labelAll!!.visibility=View.GONE
                 leadcountmode = 0
                 if (ID_ChartMode.equals("2")){
                     ll_barchart!!.visibility=View.VISIBLE
@@ -3154,6 +3256,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     val YAxis =
                                         jobjt.getString("YAxis")
                                  //   txtv_top10Remrk!!.setText(remark)
+                                    ll_labelAll!!.visibility=View.VISIBLE
                                     txtv_top10Remrk!!.visibility=View.GONE
                                     txt_chartlabel!!.visibility=View.VISIBLE
                                     txt_chartremark!!.visibility=View.VISIBLE
@@ -3201,6 +3304,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
 
                                 } else {
+                                    ll_labelAll!!.visibility=View.GONE
                                     val builder = AlertDialog.Builder(
                                         this@TileGraphActivity,
                                         R.style.MyDialogTheme
@@ -3268,7 +3372,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         jobjt.getString("XAxis")
                                     val YAxis =
                                         jobjt.getString("YAxis")
-
+                                    ll_labelAll!!.visibility=View.VISIBLE
                                     txt_chartlabel!!.visibility=View.VISIBLE
                                     txt_chartremark!!.visibility=View.VISIBLE
                                     ll_toprevenue_XY!!.visibility=View.VISIBLE
@@ -3329,6 +3433,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
 
 
                                 } else {
+                                    ll_labelAll!!.visibility=View.GONE
                                     val builder = AlertDialog.Builder(
                                         this@TileGraphActivity,
                                         R.style.MyDialogTheme
@@ -3401,6 +3506,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             jobjt.getString("YAxis")
 
                                      //   leadSourseSubText!!.setText(remark)
+                                        ll_labelAll!!.visibility=View.VISIBLE
                                         leadSourseSubText!!.visibility=View.GONE
                                         txt_chartlabel!!.visibility=View.VISIBLE
                                         txt_chartremark!!.visibility=View.VISIBLE
@@ -3436,6 +3542,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             Log.e("exceptionStock344", "" + e.toString())
                                         }
                                     } else {
+
+                                        ll_labelAll!!.visibility=View.GONE
                                         txt_chartlabel!!.visibility=View.GONE
                                         txt_chartremark!!.visibility=View.GONE
                                         ll_leadSource_XY!!.visibility=View.GONE
@@ -3493,6 +3601,10 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
             val description = Description()
             description.text = ""
             leadSourseChart.description = description
+
+            //remove legend
+            leadSourseChart.legend.isEnabled = false
+            leadSourseChart!!.setScaleEnabled(false)
             // Customize X-axis
             val xAxis: XAxis = leadSourseChart.xAxis
 
@@ -3682,7 +3794,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             jobjt.getString("XAxis")
                                         val YAxis =
                                             jobjt.getString("YAxis")
-
+                                        ll_labelAll!!.visibility=View.VISIBLE
                                         //employeewiseAvgText!!.setText(remark)
                                         employeewiseAvgText!!.visibility=View.GONE
                                         empwise_avgmode=0
@@ -3713,6 +3825,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             Log.e("exceptionStock344", "" + e.toString())
                                         }
                                     } else {
+                                        ll_labelAll!!.visibility=View.GONE
                                         ll_empAVG_XY!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@TileGraphActivity,
@@ -3791,7 +3904,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             jobjt.getString("XAxis")
                                         val YAxis =
                                             jobjt.getString("YAxis")
-
+                                        ll_labelAll!!.visibility=View.VISIBLE
                                       //  txtv_empamtRemrk!!.setText(remark)
                                         txtv_empamtRemrk!!.visibility=View.GONE
                                         ll_EmpTarg_XY!!.visibility=View.VISIBLE
@@ -3834,6 +3947,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             Log.e("exceptionStock344", "" + e.toString())
                                         }
                                     } else {
+                                        ll_labelAll!!.visibility=View.GONE
                                         txt_chartlabel!!.visibility=View.GONE
                                         txt_chartremark!!.visibility=View.GONE
                                         ll_EmpTarg_XY!!.visibility=View.GONE
@@ -3957,6 +4071,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         val remark =
                                             jobjt.getString("Reamrk")
                                        // leadstagecountwiseText!!.setText(remark)
+                                        ll_labelAll!!.visibility=View.VISIBLE
                                         leadstagecountwiseText!!.visibility=View.GONE
                                         txt_chartlabel!!.visibility=View.VISIBLE
                                         txt_chartremark!!.visibility=View.VISIBLE
@@ -3980,6 +4095,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         } catch (e: Exception) {
                                         }
                                     } else {
+                                        ll_labelAll!!.visibility=View.GONE
                                         txt_chartlabel!!.visibility=View.GONE
                                         txt_chartremark!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
@@ -4068,6 +4184,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             jObject.getJSONObject("LeadActivites")
                                         val remark =
                                             jobjt.getString("Reamrk")
+                                        ll_labelAll!!.visibility=View.VISIBLE
                                         leadActivityText!!.visibility=View.VISIBLE
                                         leadActivityText!!.visibility=View.GONE
                                        // leadActivityText!!.setText(remark)
@@ -4095,6 +4212,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             Log.e("exceptionStock344", "" + e.toString())
                                         }
                                     } else {
+                                        ll_labelAll!!.visibility=View.GONE
                                         txt_chartlabel!!.text=""
                                         txt_chartremark!!.text=""
                                         leadActivityText!!.visibility=View.GONE

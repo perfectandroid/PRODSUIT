@@ -22,6 +22,8 @@ class SentIntimationViewModel: ViewModel() {
         encodeDoc: String,
         extension: String,
         message: String,
+        ScheduledDate: String,
+        ScheduledTime: String,
         ID_LeadSource: String,
         ID_LeadInfo: String,
         FromDate: String,
@@ -42,6 +44,8 @@ class SentIntimationViewModel: ViewModel() {
     ) : LiveData<SentIntimationModel>? {
         sentData = SentIntimationRepository.getServicesApiCall(
             context,dated,ID_module,ID_Branch,ID_Channel,ID_Shedule,encodeDoc,extension,message,
+            ScheduledDate,
+            ScheduledTime,
             ID_LeadSource,
             ID_LeadInfo,
             FromDate,

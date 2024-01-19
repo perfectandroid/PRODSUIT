@@ -896,20 +896,21 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
                         if (ActivityCompat.checkSelfPermission(
                                 applicationContext,
-                                Manifest.permission.WRITE_CALENDAR
+                                Manifest.permission.READ_CALENDAR
                             ) == PackageManager.PERMISSION_GRANTED
                         ) {
 
-
-
+                            ActivityCompat.requestPermissions(
+                                this@HomeActivity,
+                                arrayOf(Manifest.permission.READ_CALENDAR),
+                                1
+                            )
 
                             setReminder()
                         }
                         else
                         {
                             setPermission()
-
-
                         }
 
 
@@ -2681,12 +2682,15 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             if (grid_id.equals("10")){
                 if (ActivityCompat.checkSelfPermission(
                         applicationContext,
-                        Manifest.permission.WRITE_CALENDAR
+                        Manifest.permission.READ_CALENDAR
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
 
-
-
+                    ActivityCompat.requestPermissions(
+                            this,
+                            arrayOf(Manifest.permission.READ_CALENDAR),
+                            1
+                        )
 
                     setReminder()
                 }
