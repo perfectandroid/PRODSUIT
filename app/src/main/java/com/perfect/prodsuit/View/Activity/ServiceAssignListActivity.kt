@@ -372,7 +372,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                                 if (serviceList == 0) {
                                     serviceList++
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG, "msg   82   " + msg)
+                                    Log.e(TAG, "msg   serviceassign   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("ServiceAssignNewDetails")
 

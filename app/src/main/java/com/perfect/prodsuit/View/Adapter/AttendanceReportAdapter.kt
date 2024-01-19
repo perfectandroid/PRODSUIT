@@ -35,15 +35,15 @@ class AttendanceReportAdapter (internal var context: Context, internal var jsonA
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
 
-                Log.e(TAG,"onBindViewHolder   attendance   ")
+                Log.e(TAG,"onBindViewHolder   attendance   "+jsonArray.getJSONObject(position).toString())
                 val pos = position+1
 
 
-                   /* holder.txtv_slno.text = jsonObject!!.getString("Status")
-                    holder.txtv_empid.text = jsonObject!!.getString("ProjectName")
-                    holder.txtv_punchintime.text = "Lead No : "+jsonObject!!.getString("LeadNumber")
+                    /*holder.txtv_slno.text = ""
+                    holder.txtv_empid.text = jsonObject!!.getString("EmployeeName")
+                    holder.txtv_punchintime.text = "Lead No : "+jsonObject!!.getString("EnteredTime")
 
-                    holder.txtv_punchinlocation.text = "Category : "+jsonObject!!.getString("Category")*/
+                    holder.txtv_punchinlocation.text = "Category : "+jsonObject!!.getString("LocationName")*/
 
               /*  holder.ll_projectList!!.setTag(position)
                 holder.ll_projectList!!.setOnClickListener(View.OnClickListener {

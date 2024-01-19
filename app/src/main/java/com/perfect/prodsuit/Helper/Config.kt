@@ -146,7 +146,7 @@ object Config {
     const val SHARED_PREF81 = "PSValue"  //  Product Manadtory Followup
 
     const val SHARED_PREF82 = "PnotificationID"  //  PushnotificationChannel
-
+    const val SHARED_PREF83 = "attendance"
 
     var width = 0
     var height = 0
