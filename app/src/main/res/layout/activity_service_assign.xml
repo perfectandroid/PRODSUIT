@@ -446,7 +446,7 @@
                                                             android:fontFamily="@font/myfont"
                                                             android:gravity="center_vertical"
                                                             android:paddingLeft="4dp"
-                                                            android:text="Contact No."
+                                                            android:text="Contact No"
                                                             android:textColor="@color/black"
                                                             android:textSize="12dp" />
 

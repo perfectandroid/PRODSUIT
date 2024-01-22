@@ -132,8 +132,8 @@ object LeadHistRepository {
 
                 requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart(ID_LeadSource))
                 requestObject1.put("FK_LeadThrough", ProdsuitApplication.encryptStart(ID_LeadInfo))
-                requestObject1.put("FromDate", ProdsuitApplication.encryptStart(fromDate1+" 00:00:00"))
-                requestObject1.put("ToDate", ProdsuitApplication.encryptStart(toDate1+" 00:00:00"))
+                requestObject1.put("FromDate", ProdsuitApplication.encryptStart(fromDate1))
+                requestObject1.put("ToDate", ProdsuitApplication.encryptStart(toDate1))
                 requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
                 requestObject1.put("ProdType", ProdsuitApplication.encryptStart(ID_ProductType))
                 requestObject1.put("ID_Product", ProdsuitApplication.encryptStart(ID_Product))

@@ -34,7 +34,7 @@ class LeadSourceAdapter(internal var context: Context, internal var jsonArray: J
         try {
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-                Log.e(TAG,"onBindViewHolder   1051   ")
+                Log.e(TAG,"onBindViewHolder   1051   "+jsonArray.length())
                 val pos = position+1
                 holder.txtsino.text        = pos.toString()
                 holder.txtProduct.text        = jsonObject!!.getString("LeadFromName")

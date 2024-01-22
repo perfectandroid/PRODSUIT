@@ -19,17 +19,20 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
+import android.util.TypedValue
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
@@ -1390,21 +1393,21 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         Log.v("sfsdfdsfdsddd","selectedFromDate  "+selectedFromDate)
         Log.v("sfsdfdsfdsddd","selectedToDate  "+selectedToDate)
 
-        Log.v("sfsdfdsfdsddd","ID_Category  "+ID_Category)
-        Log.v("sfsdfdsfdsddd","ID_ProductType  "+ID_ProductType)
-        Log.v("sfsdfdsfdsddd","ID_Product  "+ID_Product)
-        Log.v("sfsdfdsfdsddd","ID_Employee  "+ID_Employee)
-        Log.v("sfsdfdsfdsddd","ID_CollectedBy  "+ID_CollectedBy)
-        Log.v("sfsdfdsfdsddd","ID_Area  "+ID_Area)
-
-
-        Log.v("sfsdfdsfdsddd","ID_NextAction  "+ID_NextAction)
-        Log.v("sfsdfdsfdsddd","ID_ActionType  "+ID_ActionType)
-        Log.v("sfsdfdsfdsddd","ID_Priority  "+ID_Priority)
-        Log.v("sfsdfdsfdsddd","ID_Lead_Details  "+ID_Lead_Details)
-        Log.v("sfsdfdsfdsddd","lead Entry  "+ tie_Lead_entry!!.text.toString())
-        Log.v("sfsdfdsfdsddd","Transmode  "+ Transmode)
-        Log.v("sfsdfdsfdsddd","product project  "+ tie_productproject!!.text.toString())
+//        Log.v("sfsdfdsfdsddd","ID_Category  "+ID_Category)
+//        Log.v("sfsdfdsfdsddd","ID_ProductType  "+ID_ProductType)
+//        Log.v("sfsdfdsfdsddd","ID_Product  "+ID_Product)
+//        Log.v("sfsdfdsfdsddd","ID_Employee  "+ID_Employee)
+//        Log.v("sfsdfdsfdsddd","ID_CollectedBy  "+ID_CollectedBy)
+//        Log.v("sfsdfdsfdsddd","ID_Area  "+ID_Area)
+//
+//
+//        Log.v("sfsdfdsfdsddd","ID_NextAction  "+ID_NextAction)
+//        Log.v("sfsdfdsfdsddd","ID_ActionType  "+ID_ActionType)
+//        Log.v("sfsdfdsfdsddd","ID_Priority  "+ID_Priority)
+//        Log.v("sfsdfdsfdsddd","ID_Lead_Details  "+ID_Lead_Details)
+//        Log.v("sfsdfdsfdsddd","lead Entry  "+ tie_Lead_entry!!.text.toString())
+//        Log.v("sfsdfdsfdsddd","Transmode  "+ Transmode)
+//        Log.v("sfsdfdsfdsddd","product project  "+ tie_productproject!!.text.toString())
 
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -3020,8 +3023,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                     }
 
                     Log.e(TAG, "leadfromInfosort               7103    " + leadfromInfosort)
-                    val adapter = BranchAdapter(this@Intimation, leadfromInfosort)
-                    recyBranch!!.adapter = adapter
+                    val adapter = LeadFromInfoAdapter(this@Intimation, leadfromInfosort)
+                    recy_comm!!.adapter = adapter
                     adapter.setClickListener(this@Intimation)
                 }
             })
@@ -3166,7 +3169,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
                     Log.e(TAG, "prodCategorySort               7103    " + prodCatSort)
                     val adapter =
-                        ProductCategoryAdapter(this@Intimation, prodCatSort)
+                        ProductCategoryAdapter1(this@Intimation, prodCatSort)
                     recyProdCategory!!.adapter = adapter
                     adapter.setClickListener(this@Intimation)
                 }
@@ -3294,23 +3297,53 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             dialogeLeadSource!!.setContentView(R.layout.source_lead)
             dialogeLeadSource!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             source_lead = dialogeLeadSource!!.findViewById(R.id.source_lead) as RecyclerView
+            val etsearch = dialogeLeadSource!!.findViewById(R.id.etsearch) as EditText
 
-
-//            prodDetailSort = JSONArray()
-//            for (k in 0 until leadSourceList.length()) {
-//                val jsonObject = leadSourceList.getJSONObject(k)
-//                // reportNamesort.put(k,jsonObject)
-//                prodDetailSort.put(jsonObject)
-//            }
+            leadSorceSort = JSONArray()
+            for (k in 0 until leadSourceList.length()) {
+                val jsonObject = leadSourceList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                leadSorceSort.put(jsonObject)
+            }
 
             val lLayout = GridLayoutManager(this@Intimation, 1)
             source_lead!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 
-            val adapter = LeadSourceAdapter(this@Intimation, leadSourceList)
+            val adapter = LeadSourceAdapter(this@Intimation, leadSorceSort)
             source_lead!!.adapter = adapter
             adapter.setClickListener(this@Intimation)
 
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
 
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    leadSorceSort = JSONArray()
+
+                    for (k in 0 until leadSourceList.length()) {
+                        val jsonObject = leadSourceList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("LeadFromName").length) {
+                            if (jsonObject.getString("LeadFromName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                leadSorceSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "leadfromInfosort               7103    " + leadSorceSort)
+                    val adapter = LeadSourceAdapter(this@Intimation, leadSorceSort)
+                    source_lead!!.adapter = adapter
+                    adapter.setClickListener(this@Intimation)
+                }
+            })
 
             dialogeLeadSource!!.show()
             dialogeLeadSource!!.getWindow()!!.setLayout(
@@ -4189,7 +4222,21 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                 dialogHist!!.dismiss()
                 dialog1!!.dismiss()
                 Log.e(TAG,"alresdy   65656565 ")
-                Toast.makeText(context,"already exist",Toast.LENGTH_SHORT).show()
+             //   Toast.makeText(context,"Already exist",Toast.LENGTH_SHORT).show()
+   //             Config.snackBars(context, , "Select Documents Or Add Message")
+          //      Snackbar.make(findViewById(android.R.id.content), "Already exist", Snackbar.LENGTH_SHORT).show()
+
+
+                val snackbar = Snackbar.make(findViewById(android.R.id.content), "Already exist", Snackbar.LENGTH_SHORT)
+                val sbView = snackbar.view
+                sbView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                val textView: TextView = sbView.findViewById<View>(R.id.snackbar_text) as TextView
+                textView.setTextColor(Color.WHITE)
+                val typeface = ResourcesCompat.getFont(context, R.font.myfont)
+                textView.setTypeface(typeface)
+                textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15f)
+                textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
+                snackbar.show()
             }
 
 

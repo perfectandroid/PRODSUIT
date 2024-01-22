@@ -432,7 +432,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="20dp"
-                                            android:text="Lead Generation"
+                                            android:text="Generate Leads"
                                             android:layout_weight="1"
                                             android:textStyle="bold"
                                             android:textColor="@color/color_common1"

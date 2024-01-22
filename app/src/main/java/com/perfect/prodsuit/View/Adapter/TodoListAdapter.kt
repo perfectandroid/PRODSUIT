@@ -91,7 +91,8 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                 holder.tv_address.text        = jsonObject!!.getString("CusAddress")
                 holder.tv_mobile.text        = jsonObject!!.getString("LgCusMobile")
 
-                holder.txtv_collectedby.text        = "Collected By : "+jsonObject!!.getString("LgCollectedBy")
+                holder.txtv_collectedby.text        = "Referred By : "+jsonObject!!.getString("LgCollectedBy")
+            //    holder.txtv_collectedby.text        = "Collected By : "+jsonObject!!.getString("LgCollectedBy")
                 holder.txtv_preference.text        = jsonObject!!.getString("Preference")
                 holder.tv_nextaction.text        = "Next Action  : "+jsonObject!!.getString("Action")
                 if(jsonObject!!.getString("Preference").equals("Hot")){
@@ -107,10 +108,11 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
 
                 }
                 if (SubMode.equals("2")){
-                    holder.tv_nextdate.text        = "Next Action Date : "+jsonObject!!.getString("NextActionDate")
+                 //   holder.tv_nextdate.text        = "Next Action Date : "+jsonObject!!.getString("NextActionDate")
+                    holder.tv_nextdate.text        = "Action Taken Date : "+jsonObject!!.getString("NextActionDate")
                 }
                 else{
-                    holder.tv_nextdate.text        = "Next Action Date : "+jsonObject!!.getString("NextActionDate")
+                    holder.tv_nextdate.text        = "Action Taken Date : "+jsonObject!!.getString("NextActionDate")
                 }
 
                 holder.tv_leadno.text        = jsonObject!!.getString("LeadNo")
@@ -163,7 +165,8 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
 
 //                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
                             val desc =
-                                "Customer : " + Customer + ", Product : " + ProdName + " , Next Action Date : " + NextActionDate
+                                "Customer : " + Customer + ", Product : " + ProdName + " , Action Taken Date : " + NextActionDate
+                             //   "Customer : " + Customer + ", Product : " + ProdName + " , Next Action Date : " + NextActionDate
                             Log.i("response2323","msg="+desc)
 
                             lstChk.add(desc)
@@ -193,7 +196,8 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
 
 //                        val desc = "Action : "+ActionTypeName1+", Product : "+EnquiryAbout1+" , Status : "+Status1
                             val desc =
-                                "Customer : " + Customer + ", Product : " + ProdName + " , Next Action Date : " + NextActionDate
+                                "Customer : " + Customer + ", Product : " + ProdName + " , Action Taken Date : " + NextActionDate
+                     //           "Customer : " + Customer + ", Product : " + ProdName + " , Next Action Date : " + NextActionDate
 
                             lstChk.remove(desc)
                             val gson = Gson()
