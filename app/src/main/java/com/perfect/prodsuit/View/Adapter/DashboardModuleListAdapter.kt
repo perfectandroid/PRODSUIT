@@ -100,6 +100,13 @@ class DashboardModuleListAdapter(
                     holder.ll2!!.setBackgroundColor(context.getColor(R.color.white))
                     holder.txtv_label!!.setTextColor(context.resources.getColor(R.color.textacnt))
                 }
+                if(mode.equals("7"))
+                {
+                    holder.ll_bkgrnd!!.setBackgroundDrawable(context.getDrawable(R.drawable.shapes_pickup))
+                    holder.img_module.setImageDrawable(context.resources.getDrawable(R.drawable.dash_acnt))
+                    holder.ll2!!.setBackgroundColor(context.getColor(R.color.white))
+                    holder.txtv_label!!.setTextColor(context.resources.getColor(R.color.textacnt))
+                }
 
               //  holder.tv_newCount.text        = jsonObject!!.getString("value")
               //  holder.tv_Branch.text        = jsonObject!!.getString("Branch")
@@ -223,6 +230,13 @@ class DashboardModuleListAdapter(
                     if (submode=="6")
                     {
                         val i = Intent(context, ProductionGraphActivity::class.java)
+                        i.putExtra("SubMode",submode)
+                        i.putExtra("label",label)
+                        context.startActivity(i)
+                    }
+                    if (submode=="7")
+                    {
+                        val i = Intent(context, PickupAndDeliveryGraphActivity::class.java)
                         i.putExtra("SubMode",submode)
                         i.putExtra("label",label)
                         context.startActivity(i)

@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/navbg"
+    tools:context=".View.Activity.ProjectGraphActivity"
+    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/llback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/shape_header">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imback_project"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:background="@color/color_activity_transparent"
+                    android:padding="10dp"
+                    android:src="@drawable/back_arro"
+                    android:tint="@color/white"
+                    tools:ignore="UseAppTint" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/mainHeadingDash"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/myfont"
+                android:gravity="left"
+                android:text="Pick up And Delivery"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:tint="@color/black" />
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp"
+                android:orientation="vertical">
+
+
+                <!--All tab here-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+
+                        <LinearLayout
+                            android:id="@+id/ll_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_alignParentBottom="true"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvv_dash"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_weight="1"
+                                android:text="Chart"
+                                android:textColor="@color/colorPrimary"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:fontFamily="@font/myfont"
+                                android:background="@drawable/btn_dash"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/header_text1"
+                                android:visibility="visible"/>
+
+                            <View
+                                android:id="@+id/vw_previous"
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@color/white"
+                                android:visibility="visible"/>
+
+                            <TextView
+                                android:id="@+id/tvv_tile"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:background="@drawable/btn_shape_reset"
+                                android:layout_weight="1"
+                                android:text="Tile"
+                                android:textColor="@color/colorPrimary"
+                                android:gravity="center"
+                                android:layout_gravity="center"
+                                android:fontFamily="@font/myfont"
+                                android:textStyle="bold"
+                                android:textSize="@dimen/header_text1" />
+
+                        </LinearLayout>
+
+                        <!--Graph-->
+                        <LinearLayout
+                            android:visibility="gone"
+                            android:id="@+id/ll_Graph"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="3dp"
+                                app:cardBackgroundColor="@color/white"
+                                android:visibility="visible">
+
+                                <ScrollView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:fillViewport="true">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+
+                                            <AutoCompleteTextView
+                                                android:id="@+id/actv_mode"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="20dp"
+                                                android:layout_marginLeft="13dp"
+                                                android:layout_marginRight="13dp"
+                                                android:inputType="textNoSuggestions"
+                                                android:fontFamily="@font/myfont"
+                                                android:padding="10dp"
+                                                android:hint="Vehicle Detail"
+                                                android:drawablePadding="5dp"
+                                                android:drawableStart="@drawable/dash_icon"
+                                                android:focusableInTouchMode="false"
+                                                android:textSize="16sp"
+                                                android:drawableEnd="@drawable/down_arrows"
+                                                android:text=""
+                                                android:background="@drawable/bg_dash2"
+                                                android:layout_gravity="center"
+                                                android:visibility="gone"/>
+                                        </LinearLayout>
+
+                                        <!--VehicleDetails Graph -->
+                                        <LinearLayout
+                                            android:id="@+id/ll_VehicleDetails"
+                                            android:layout_marginTop="10dp"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@color/white"
+                                            android:orientation="vertical"
+                                            android:visibility="visible">
+
+                                            <LinearLayout
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:orientation="vertical"
+                                                android:background="#E6F1F2">
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:orientation="horizontal">
+
+                                                    <TextView
+                                                        android:id="@+id/tvv_head_projectDelayed"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:layout_weight="1"
+                                                        android:text="Vehicle Detail"
+                                                        android:textColor="@color/colorPrimary"
+                                                        android:gravity="start"
+                                                        android:paddingLeft="5dp"
+                                                        android:paddingTop="5dp"
+                                                        android:layout_gravity="center"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="16dp"
+                                                        android:visibility="visible"/>
+
+                                                    <TextView
+                                                        android:id="@+id/tvv_lemo_VehicleDetails"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:paddingTop="2dp"
+                                                        android:paddingBottom="2dp"
+                                                        android:layout_gravity="center"
+                                                        android:layout_margin="5dp"
+                                                        android:layout_weight="2.8"
+                                                        android:background="@drawable/btn_bgcolour"
+                                                        android:drawableRight="@drawable/dash_more"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:gravity="center"
+                                                        android:paddingEnd="10dp"
+                                                        android:text="More"
+                                                        android:textAllCaps="false"
+                                                        android:textColor="@color/white"
+                                                        android:textSize="15sp"
+                                                        android:textStyle="bold"
+                                                        android:visibility="visible" />
+
+
+                                                </LinearLayout>
+
+
+
+                                                <TextView
+                                                    android:id="@+id/tv_VehicleDetailRemark"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_gravity="center_vertical"
+                                                    android:paddingLeft="5dp"
+                                                    android:layout_marginTop="-7dp"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:gravity="center_vertical"
+                                                    android:text=""
+                                                    android:textAllCaps="false"
+                                                    android:textColor="@color/colorPrimary"
+                                                    android:textSize="13dp"
+                                                    android:textStyle="normal"
+                                                    android:tint="@color/black" />
+
+
+
+
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:id="@+id/ll_VehicleDetail_XY"
+                                                android:visibility="visible"
+                                                android:layout_marginTop="10dp"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:gravity="center"
+                                                android:layout_gravity="center"
+                                                android:orientation="horizontal"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content">
+                                                <TextView
+                                                    android:fontFamily="@font/myfont"
+                                                    android:textStyle="bold"
+                                                    android:textAllCaps="false"
+                                                    android:textSize="14dp"
+                                                    android:text="X axis : "
+                                                    android:textColor="@color/colorPrimary"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+                                                </TextView>
+                                                <TextView
+                                                    android:id="@+id/VehicleDetail_xaxis"
+                                                    android:fontFamily="@font/myfont"
+                                                    android:textStyle="bold"
+                                                    android:textAllCaps="false"
+                                                    android:textSize="14dp"
+                                                    android:text=""
+                                                    android:textColor="@color/colorPrimary"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+                                                </TextView>
+
+                                                <LinearLayout
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:orientation="horizontal"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+
+                                                    <TextView
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="14dp"
+                                                        android:text="Y axis : "
+                                                        android:textColor="@color/colorPrimary"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content">
+
+                                                    </TextView>
+                                                    <TextView
+                                                        android:id="@+id/VehicleDetail_yaxis"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="14dp"
+                                                        android:text=""
+                                                        android:textColor="@color/colorPrimary"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content">
+
+                                                    </TextView>
+                                                </LinearLayout>
+
+
+                                            </LinearLayout>
+                                            <LinearLayout
+                                                android:id="@+id/ll_VehicleDetailColor"
+                                                android:visibility="visible"
+                                                android:layout_marginLeft="10dp"
+                                                android:layout_marginRight="10dp"
+                                                android:gravity="center"
+                                                android:layout_gravity="center"
+                                                android:orientation="horizontal"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content">
+
+
+                                                <LinearLayout
+                                                    android:gravity="center"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:orientation="horizontal"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+                                                    <TextView
+
+                                                        android:layout_width="20dp"
+                                                        android:layout_height="12dp"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textSize="14dp"
+                                                        android:textStyle="bold"
+                                                        android:background="@color/expense_color1"
+                                                        />
+                                                    <TextView
+
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="14dp"
+                                                        android:text=" Pick Up"
+                                                        android:textColor="@color/black"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content">
+
+                                                    </TextView>
+
+                                                </LinearLayout>
+
+
+
+                                                <LinearLayout
+                                                    android:gravity="center"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:orientation="horizontal"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content">
+
+
+                                                    <TextView
+
+                                                        android:layout_width="20dp"
+                                                        android:layout_height="12dp"
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textSize="14dp"
+                                                        android:textStyle="bold"
+                                                        android:background="@color/gain_color1"
+                                                        android:textColor="@color/black"/>
+                                                    <TextView
+
+                                                        android:fontFamily="@font/myfont"
+                                                        android:textStyle="bold"
+                                                        android:textAllCaps="false"
+                                                        android:textSize="14dp"
+                                                        android:text=" Delivery "
+                                                        android:textColor="@color/black"
+                                                        android:layout_width="wrap_content"
+                                                        android:layout_height="wrap_content">
+
+                                                    </TextView>
+                                                </LinearLayout>
+
+
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:orientation="vertical">
+
+<!--                                                projectDelayedChart-->
+                                                <com.github.mikephil.charting.charts.BarChart
+                                                    android:id="@+id/vehicleDetailChart"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="400dp"
+                                                    android:layout_marginLeft="10dp"
+                                                    android:layout_marginRight="10dp"
+                                                    android:visibility="visible" />
+
+                                                <LinearLayout
+                                                    android:id="@+id/ll_vehicleDetailRecyc"
+                                                    android:paddingTop="5dp"
+                                                    android:orientation="vertical"
+                                                    android:visibility="gone"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_margin="5dp">
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="1dp"
+                                                        android:background="@color/grey"/>
+                                                    <LinearLayout
+                                                        android:background="@color/greylight"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:orientation="vertical"
+                                                        tools:ignore="MissingConstraints">
+                                                        <LinearLayout
+
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_alignParentTop="true"
+                                                            android:orientation="horizontal">
+
+                                                            <LinearLayout
+                                                                android:layout_width="1dp"
+                                                                android:layout_height="35dp"
+                                                                android:background="@color/grey"/>
+
+                                                            <TextView
+
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:padding="5dp"
+                                                                android:text="sln"
+                                                                android:textColor="@color/black"
+                                                                android:gravity="center"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:textSize="12dp"
+                                                                android:layout_weight="1.4"/>
+                                                            <LinearLayout
+                                                                android:layout_width="1dp"
+                                                                android:layout_height="35dp"
+                                                                android:background="@color/grey"/>
+                                                            <TextView
+                                                                android:id="@+id/tvv_Project"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:padding="5dp"
+                                                                android:textSize="12dp"
+                                                                android:text="Vehicle"
+                                                                android:textColor="@color/black"
+                                                                android:layout_weight="1"/>
+                                                            <LinearLayout
+                                                                android:layout_width="1dp"
+                                                                android:layout_height="35dp"
+                                                                android:background="@color/grey"/>
+                                                            <TextView
+                                                                android:id="@+id/tvv_ActualPeriod"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:padding="5dp"
+                                                                android:textSize="12dp"
+                                                                android:textColor="@color/expense_color1"
+                                                                android:gravity="center"
+                                                                android:text="Pick Up"
+                                                                android:layout_weight="1.1"/>
+                                                            <LinearLayout
+                                                                android:layout_width="1dp"
+                                                                android:layout_height="35dp"
+                                                                android:background="@color/grey"/>
+
+                                                            <TextView
+                                                                android:id="@+id/tvv_CurrentPeriod"
+                                                                android:layout_width="match_parent"
+                                                                android:layout_height="wrap_content"
+                                                                android:fontFamily="@font/myfont"
+                                                                android:padding="5dp"
+                                                                android:gravity="center"
+                                                                android:textColor="@color/gain_color1"
+                                                                android:text="Delivery"
+                                                                android:textSize="12dp"
+                                                                android:layout_weight="1.1"/>
+                                                            <LinearLayout
+                                                                android:layout_width="1dp"
+                                                                android:layout_height="35dp"
+                                                                android:background="@color/grey"/>
+
+
+                                                        </LinearLayout>
+                                                        <LinearLayout
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="1dp"
+                                                            android:background="@color/grey"/>
+
+                                                    </LinearLayout>
+                                                    <com.perfect.prodsuit.Helper.FullLenghRecyclertview
+                                                        android:id="@+id/recycprojectDelayed"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:background="@drawable/svg_dashrect"
+
+                                                        >
+
+                                                    </com.perfect.prodsuit.Helper.FullLenghRecyclertview>
+                                                </LinearLayout>
+
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+
+                                </ScrollView>
+
+                            </androidx.cardview.widget.CardView>
+
+
+                        </LinearLayout>
+
+                        <!--Tile-->
+                        <LinearLayout
+                            android:id="@+id/ll_Tile"
+                            android:visibility="visible"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="3dp"
+                                app:cardBackgroundColor="@color/white"
+                                android:visibility="visible">
+
+                                <ScrollView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:fillViewport="true">
+                                    <!--tiles project -->
+                                    <LinearLayout
+
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:orientation="vertical">
+
+
+
+
+                                        <!--tiles one -->
+
+                                        <LinearLayout
+                                            android:gravity="center"
+                                            android:layout_gravity="center"
+                                            android:background="@color/white"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="vertical">
+                                            <androidx.cardview.widget.CardView
+                                                android:gravity="center"
+                                                android:layout_gravity="center"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginLeft="5dp"
+                                                android:layout_marginRight="5dp"
+                                                android:layout_marginBottom="5dp"
+                                                android:background="@color/white"
+                                                app:cardCornerRadius="5dp"
+                                                app:cardElevation="1dp"
+                                                app:cardPreventCornerOverlap="true"
+                                                app:cardUseCompatPadding="true">
+
+                                                <LinearLayout
+                                                    android:id="@+id/ll_OrderTrackingTile"
+                                                    android:visibility="visible"
+                                                    android:orientation="vertical"
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content">
+                                                    <LinearLayout
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content">
+                                                        <TextView
+                                                            android:id="@+id/tv_nameOrderTrackingTle"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="50dp"
+                                                            android:layout_weight="1"
+                                                            android:text=""
+                                                            android:textColor="@color/white"
+                                                            android:gravity="left|center"
+                                                            android:paddingLeft="15dp"
+                                                            android:layout_gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:background="@color/colorPrimary"
+                                                            android:textStyle="bold"
+                                                            android:textSize="@dimen/header_text1"
+                                                            android:visibility="visible"/>
+
+                                                    </LinearLayout>
+                                                    <LinearLayout
+                                                        android:id="@+id/OrderTrackingTile"
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="wrap_content"
+                                                        android:background="#ffffff"
+                                                        android:layout_weight="1"
+                                                        android:orientation="vertical"
+                                                        android:gravity="center"
+                                                        android:layout_gravity="center"
+                                                        >
+
+                                                        <androidx.recyclerview.widget.RecyclerView
+                                                            android:id="@+id/recycler_OrderTracking_tile"
+                                                            android:layout_width="wrap_content"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_gravity="center"
+                                                            android:paddingTop="10dp"
+                                                            android:paddingBottom="10dp"
+                                                            android:layout_margin="0dp"
+                                                            android:gravity="center"
+                                                            android:visibility="visible" />
+                                                        <TextView
+                                                            android:id="@+id/tv_remarkOrderTrackingTle"
+                                                            android:layout_width="match_parent"
+                                                            android:layout_height="wrap_content"
+                                                            android:layout_weight="1"
+                                                            android:text=""
+                                                            android:textColor="@color/grey_dark"
+                                                            android:gravity="left"
+                                                            android:paddingLeft="15dp"
+                                                            android:layout_gravity="center"
+                                                            android:fontFamily="@font/myfont"
+                                                            android:textStyle="bold"
+                                                            android:textSize="13dp"
+                                                            android:visibility="visible"/>
+
+
+                                                    </LinearLayout>
+
+                                                </LinearLayout>
+
+
+                                            </androidx.cardview.widget.CardView>
+
+
+
+                                        </LinearLayout>
+
+
+                                    </LinearLayout>
+
+                                </ScrollView>
+
+                            </androidx.cardview.widget.CardView>
+
+                        </LinearLayout>
+
+
+
+
+                    </LinearLayout>
+
+
+
+
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

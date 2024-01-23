@@ -79,15 +79,17 @@
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".View.Activity.TimeFlowServiceActivity"
+            android:name=".View.Activity.PickupAndDeliveryGraphActivity"
             android:exported="false"
-
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-
-
-            />
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+        <activity
+            android:name=".View.Activity.TimeFlowServiceActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".View.Activity.Intimation"
             android:exported="false"
@@ -119,7 +121,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.perfect.prodsuit.View.Activity.AttendanceReportActivity"
+            android:name=".View.Activity.AttendanceReportActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -721,8 +723,8 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".View.Activity.HomeActivity"
-            android:screenOrientation="portrait"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity

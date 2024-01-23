@@ -942,4 +942,10 @@ interface ApiInterface {
     @POST("UserValidations/UserDetails")
     fun getChatRegisterUser(@Body body: RequestBody): Call<String>
 
+    @POST("DashBoard/VehicleDetails")
+    fun getPickDeliveryVehicleDetails(@Body body: RequestBody): Call<String>
+
+    @POST("DashBoard/OrderTrackingTileDashBoard")
+    fun getPickDeliveryOrderTrackingTileDashBoard(@Body body: RequestBody): Call<String>
+
 }
