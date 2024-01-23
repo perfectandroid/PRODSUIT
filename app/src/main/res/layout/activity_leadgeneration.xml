@@ -67,22 +67,23 @@
 
 
                     <!--                    icback-->
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:gravity="left"
-                        android:text="Lead Generation"
-                        android:textAllCaps="true"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/myfont"
+                        android:gravity="left"
+                        android:text="Generate Leads"
+                        android:textAllCaps="true"
                         android:textColor="@color/white"
                         android:textSize="20dp"
-                        android:textStyle="bold"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/myfont" />
+                        android:textStyle="bold" />
 
                     <ImageView
                         android:id="@+id/imLeadedit"
@@ -435,7 +436,7 @@
                                                 android:drawableTint="@color/greydark"
                                                 android:paddingLeft="5dp"
                                                 android:paddingRight="5dp"
-                                                android:hint="Attended By"
+                                                android:hint="Referred By"
                                                 android:fontFamily="@font/myfont"
                                                 android:padding="7dp"
                                                 android:singleLine="true"

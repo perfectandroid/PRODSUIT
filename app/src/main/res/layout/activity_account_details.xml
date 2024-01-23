@@ -1744,7 +1744,7 @@
                                                                     android:layout_marginLeft="10dp"
                                                                     android:fontFamily="@font/myfont"
                                                                     android:gravity="center_vertical"
-                                                                    android:text="Collected By"
+                                                                    android:text="Referred By"
                                                                     android:textColor="@color/black"
                                                                     android:textSize="12dp"
                                                                     android:textStyle="bold" />

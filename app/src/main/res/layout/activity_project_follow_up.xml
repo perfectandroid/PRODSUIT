@@ -327,7 +327,7 @@
                                                     android:id="@+id/til_StatusDate"
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
-                                                    android:hint="Status Date *"
+                                                    android:hint="Completion Date *"
                                                     android:layout_marginTop="10dp"
                                                     android:layout_marginLeft="15dp"
                                                     android:layout_marginRight="15dp"

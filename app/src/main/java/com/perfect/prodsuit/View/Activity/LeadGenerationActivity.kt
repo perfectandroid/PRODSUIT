@@ -3188,6 +3188,8 @@ private var custmoerAssignmentID : String? =null
             dialogLeadBy!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyLeadby = dialogLeadBy!!.findViewById(R.id.recyLeadby) as RecyclerView
             val etsearch = dialogLeadBy!!.findViewById(R.id.etsearch) as EditText
+            val referdby = dialogLeadBy!!.findViewById(R.id.txt_referedby) as TextView
+            referdby.text="Referred By"
 
             leadBySort = JSONArray()
             for (k in 0 until leadByArrayList.length()) {

@@ -3905,14 +3905,16 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         val YAxis =
                                             jobjt.getString("YAxis")
                                         ll_labelAll!!.visibility=View.VISIBLE
+                                        txt_chartlabel!!.text="EMPLOYEE WISE TARGET(IN AMOUNT)"
+                                        txt_chartremark!!.text=remark
                                       //  txtv_empamtRemrk!!.setText(remark)
-                                        txtv_empamtRemrk!!.visibility=View.GONE
+                                     //   txtv_empamtRemrk!!.visibility=View.GONE
                                         ll_EmpTarg_XY!!.visibility=View.VISIBLE
                                         ll_ActualTarg!!.visibility=View.VISIBLE
                                         empwse_amtmode=0
                                         hideempwseamt()
-                                        txt_chartlabel!!.text="EMPLOYEE WISE TARGET(IN AMOUNT)"
-                                        txt_chartremark!!.text=remark
+
+
                                         EmpTarg_xaxis!!.text=XAxis
                                         EmpTarg_yaxis!!.text=YAxis
 

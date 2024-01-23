@@ -64,7 +64,8 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
                 if (SubMode.equals("1")){
 
                     holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_lite_common1))
-                    holder.tv_DeliveryDateTime.text    =  "Pickup Date Time : "+jsonObject!!.getString("PickUpTime")
+                    holder.tv_DeliveryDateTime.text    =  "Pickup Date & Time : "+jsonObject!!.getString("PickUpTime")
+                 //   holder.tv_DeliveryDateTime.text    =  "Pickup Date Time : "+jsonObject!!.getString("PickUpTime")
 
                     if (priority.equals("Medium")){
                         holder.img_Priority!!.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_medium))
