@@ -33,8 +33,12 @@ import com.perfect.prodsuit.Model.CalllogModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.AssignedToAdapter
 import com.perfect.prodsuit.View.Adapter.CallLogListAdapter
+import com.perfect.prodsuit.View.Adapter.ProductCategoryAdapter
+import com.perfect.prodsuit.View.Adapter.ProductDetailAdapter
 import com.perfect.prodsuit.Viewmodel.AssignedToWalkingViewModel
 import com.perfect.prodsuit.Viewmodel.CreateWalkingCustomerViewModel
+import com.perfect.prodsuit.Viewmodel.ProductCategoryViewModel
+import com.perfect.prodsuit.Viewmodel.ProductDetailViewModel
 import com.perfect.prodsuit.Viewmodel.WalkExistViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -60,6 +64,10 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
     private var til_AttachVoice: TextInputLayout? = null
     private var til_Description: TextInputLayout? = null
 
+    private var til_Category: TextInputLayout? = null
+    private var til_Product: TextInputLayout? = null
+    private var til_Project: TextInputLayout? = null
+
     private var tie_CustomerName: TextInputEditText? = null
     private var tie_Phone: TextInputEditText? = null
     private var tie_AssignedTo: TextInputEditText? = null
@@ -68,6 +76,10 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
     private var tie_Attachvoice1: TextInputEditText? = null
     private var tie_Attachvoice2: TextInputEditText? = null
     private var tie_Description: TextInputEditText? = null
+
+    private var tie_Category: TextInputEditText? = null
+    private var tie_Product: TextInputEditText? = null
+    private var tie_Project: TextInputEditText? = null
 
     private var btnReset: Button? = null
     private var btnSubmit: Button? = null
@@ -97,6 +109,32 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
     lateinit var walkExistViewModel: WalkExistViewModel
     lateinit var walkExistList: JSONArray
 
+    // Add Product 23-01-2024
+
+    lateinit var productCategoryViewModel: ProductCategoryViewModel
+    lateinit var productDetailViewModel: ProductDetailViewModel
+
+    lateinit var prodCategoryArrayList: JSONArray
+    lateinit var prodCategorySort: JSONArray
+
+    lateinit var prodDetailArrayList: JSONArray
+    lateinit var prodDetailSort: JSONArray
+
+    var recyProdCategory: RecyclerView? = null
+    var recyProdDetail: RecyclerView? = null
+
+    private var dialogProdCat: Dialog? = null
+    private var dialogProdDet: Dialog? = null
+
+    var prodcategory = 0
+    var proddetail = 0
+
+    var ID_Category: String? = "0"
+    var ID_Product: String? = ""
+    var checkProject: String = "1"
+
+    // Add Product 23-01-2024
+
     private var array_walkingUpdate = JSONArray()
 
 
@@ -105,6 +143,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
     private var sadapter: CallLogListAdapter? = null
     private var textlength = 0
     private var etxtsearch:EditText? =null
+    private var tv_callhistory:TextView? =null
 
     private var RECORD_PLAY: Int? = 1038
     var voiceData: String? = ""
@@ -125,6 +164,8 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
         createWalkingCustomerViewModel =
             ViewModelProvider(this).get(CreateWalkingCustomerViewModel::class.java)
         walkExistViewModel = ViewModelProvider(this).get(WalkExistViewModel::class.java)
+        productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
+        productDetailViewModel = ViewModelProvider(this).get(ProductDetailViewModel::class.java)
 
         context = this@WalkingCustomerActivity
 
@@ -179,11 +220,21 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
         til_AssignedTo = findViewById<TextInputLayout>(R.id.til_AssignedTo)
         til_Description = findViewById<TextInputLayout>(R.id.til_Description)
 
+        til_Category = findViewById<TextInputLayout>(R.id.til_Category)
+        til_Product = findViewById<TextInputLayout>(R.id.til_Product)
+        til_Project = findViewById<TextInputLayout>(R.id.til_Project)
+
+        tie_Category = findViewById<TextInputEditText>(R.id.tie_Category)
+        tie_Product = findViewById<TextInputEditText>(R.id.tie_Product)
+        tie_Project = findViewById<TextInputEditText>(R.id.tie_Project)
+
 
 
         btnReset = findViewById<Button>(R.id.btnReset)
         btnSubmit = findViewById<Button>(R.id.btnSubmit)
         imcontactlog = findViewById<ImageView>(R.id.imcontactlog)
+
+
 
         tie_AssignedDate!!.setOnClickListener(this)
         tie_Attachvoice!!.setOnClickListener(this)
@@ -193,6 +244,10 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
         imcontactlog!!.setOnClickListener(this)
+
+        tie_Category!!.setOnClickListener(this)
+        tie_Product!!.setOnClickListener(this)
+        tie_Project!!.setOnClickListener(this)
 
         til_CustomerName!!.defaultHintTextColor =
             ContextCompat.getColorStateList(this, R.color.color_mandatory)
@@ -227,6 +282,18 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
 
                 //   startActivity(Intent(this@WalkingCustomerActivity, VoiceRecordingActivity::class.java))
 
+            }
+
+            R.id.tie_Category -> {
+                Config.disableClick(v)
+                prodcategory = 0
+                getCategory()
+            }
+
+            R.id.tie_Product -> {
+                Config.disableClick(v)
+                proddetail = 0
+                getProductDetail(ID_Category!!)
             }
 
             R.id.tie_AssignedTo -> {
@@ -302,6 +369,285 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
 
             }
         }
+    }
+
+    private fun getCategory() {
+        var ReqMode = "13"
+        var SubMode = "0"
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productCategoryViewModel.getProductCategory(this, ReqMode!!, SubMode!!)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (prodcategory == 0) {
+                                    prodcategory++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   82   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("CategoryDetailsList")
+                                        prodCategoryArrayList = jobjt.getJSONArray("CategoryList")
+                                        if (prodCategoryArrayList.length() > 0) {
+                                            productCategoryPopup(prodCategoryArrayList)
+
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@WalkingCustomerActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun productCategoryPopup(prodCategoryArrayList: JSONArray) {
+        try {
+
+            dialogProdCat = Dialog(this)
+            dialogProdCat!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdCat!!.setContentView(R.layout.product_category_popup)
+            dialogProdCat!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyProdCategory = dialogProdCat!!.findViewById(R.id.recyProdCategory) as RecyclerView
+            val etsearch = dialogProdCat!!.findViewById(R.id.etsearch) as EditText
+
+            prodCategorySort = JSONArray()
+            for (k in 0 until prodCategoryArrayList.length()) {
+                val jsonObject = prodCategoryArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                prodCategorySort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@WalkingCustomerActivity, 1)
+            recyProdCategory!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapter = ProductCategoryAdapter(this@WalkingCustomerActivity, prodCategorySort)
+            recyProdCategory!!.adapter = adapter
+            adapter.setClickListener(this@WalkingCustomerActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    prodCategorySort = JSONArray()
+
+                    for (k in 0 until prodCategoryArrayList.length()) {
+                        val jsonObject = prodCategoryArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("CategoryName").length) {
+                            if (jsonObject.getString("CategoryName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                prodCategorySort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "prodCategorySort               7103    " + prodCategorySort)
+                    val adapter =
+                        ProductCategoryAdapter(this@WalkingCustomerActivity, prodCategorySort)
+                    recyProdCategory!!.adapter = adapter
+                    adapter.setClickListener(this@WalkingCustomerActivity)
+                }
+            })
+
+            dialogProdCat!!.show()
+            dialogProdCat!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun getProductDetail(ID_Category: String) {
+//         var proddetail = 0
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                productDetailViewModel.getProductDetail(this, ID_Category)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+                                if (proddetail == 0) {
+                                    proddetail++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG, "msg   227   " + msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("ProductDetailsList")
+                                        prodDetailArrayList = jobjt.getJSONArray("ProductList")
+                                        if (prodDetailArrayList.length() > 0) {
+//                                             if (proddetail == 0){
+//                                                 proddetail++
+                                            productDetailPopup(prodDetailArrayList)
+//                                             }
+
+                                        }
+
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@WalkingCustomerActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                 Toast.makeText(
+//                                     applicationContext,
+//                                     "Some Technical Issues.",
+//                                     Toast.LENGTH_LONG
+//                                 ).show()
+                            }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
+    private fun productDetailPopup(prodDetailArrayList: JSONArray) {
+
+        try {
+
+            dialogProdDet = Dialog(this)
+            dialogProdDet!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogProdDet!!.setContentView(R.layout.product_detail_popup)
+            dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyProdDetail = dialogProdDet!!.findViewById(R.id.recyProdDetail) as RecyclerView
+            val etsearch = dialogProdDet!!.findViewById(R.id.etsearch) as EditText
+
+            prodDetailSort = JSONArray()
+            for (k in 0 until prodDetailArrayList.length()) {
+                val jsonObject = prodDetailArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                prodDetailSort.put(jsonObject)
+            }
+
+            val lLayout = GridLayoutManager(this@WalkingCustomerActivity, 1)
+            recyProdDetail!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+//            recyCustomer!!.setHasFixedSize(true)
+//             val adapter = ProductDetailAdapter(this@LeadGenerationActivity, prodDetailArrayList)
+            val adapter = ProductDetailAdapter(this@WalkingCustomerActivity, prodDetailSort)
+            recyProdDetail!!.adapter = adapter
+            adapter.setClickListener(this@WalkingCustomerActivity)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    prodDetailSort = JSONArray()
+
+                    for (k in 0 until prodDetailArrayList.length()) {
+                        val jsonObject = prodDetailArrayList.getJSONObject(k)
+                        //if (textlength <= jsonObject.getString("ProductName").length) {
+                        if (textlength > 0) {
+                            if (jsonObject.getString("ProductName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim()) ||
+                                jsonObject.getString("ProdBarcode")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())) {
+                                prodDetailSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "prodDetailSort               7103    " + prodDetailSort)
+                    val adapter = ProductDetailAdapter(this@WalkingCustomerActivity, prodDetailSort)
+                    recyProdDetail!!.adapter = adapter
+                    adapter.setClickListener(this@WalkingCustomerActivity)
+                }
+            })
+
+            dialogProdDet!!.show()
+            dialogProdDet!!.getWindow()!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     private fun playString(voiceData: String?) {
@@ -454,6 +800,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
                 val layout = inflater1.inflate(R.layout.custlog_popup, null)
                 lvCustno = layout.findViewById(R.id.lvCustno)
                 etxtsearch  = layout.findViewById(R.id.etsearch)
+                tv_callhistory  = layout.findViewById(R.id.tv_callhistory)
                 builder.setView(layout)
                 val alertDialog = builder.create()
                 sadapter = CallLogListAdapter(this@WalkingCustomerActivity, array_sort)
@@ -487,8 +834,15 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
                                 }
                             }
                         }
+
+                        if (array_sort.size <= 0){
+                            Log.e(TAG,"839991  Call History is empty")
+                        }else{
+                            Log.e(TAG,"839992  Call History")
+                        }
                         sadapter = CallLogListAdapter(this@WalkingCustomerActivity, array_sort)
                         lvCustno!!.setAdapter(sadapter)
+
                     }
                 })
 
@@ -554,6 +908,19 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
         tie_Attachvoice!!.setText("")
         ID_AssignedTo = ""
         voiceData = ""
+
+        ID_Category = "0"
+        ID_Product = "0"
+        checkProject = "1"
+        tie_Category!!.setText("")
+        tie_Product!!.setText("")
+        tie_Project!!.setText("")
+
+        til_Product!!.visibility = View.VISIBLE
+        til_Project!!.visibility = View.VISIBLE
+
+
+
    //     voicedataByte!!.fill(0)
 //        voicedataByte!!.fill(0)
         defaultLoad()
@@ -720,15 +1087,15 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
                     val textlength = etsearch!!.text.length
                     assignedToSortList = JSONArray()
                     for (k in 0 until assignedToList.length()) {
-                        val jsonObject = assignedToList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("EmpName").length) {
-                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim()
-                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
-                            ) {
+                        var jsonObject = assignedToList.getJSONObject(k)
+                     //   if (textlength <= jsonObject.getString("EmpName").length) {
+                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())
+                                || jsonObject.getString("DepartmentName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())
+                                || jsonObject.getString("DesignationName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())) {
                                 assignedToSortList.put(jsonObject)
                             }
 
-                        }
+                       // }
                     }
 
                     Log.e(TAG, "assignedToSortList               7103    " + assignedToSortList)
@@ -760,6 +1127,49 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
             Log.i("responseWlk", "id=" + jsonObject.getString("ID_Employee"))
             ID_AssignedTo = jsonObject.getString("ID_Employee")
         }
+
+        if (data.equals("prodcategory")) {
+            dialogProdCat!!.dismiss()
+//             val jsonObject = prodCategoryArrayList.getJSONObject(position)
+            val jsonObject = prodCategorySort.getJSONObject(position)
+            Log.e(TAG, "ID_Category   " + jsonObject.getString("ID_Category"))
+            ID_Category = jsonObject.getString("ID_Category")
+            tie_Category!!.setText(jsonObject.getString("CategoryName"))
+            ID_Product = ""
+            tie_Product!!.setText("")
+            tie_Project!!.setText("")
+
+
+            Log.i("resperr","check data side="+ checkProject)
+            Log.e(TAG,"12121212   Project   "+jsonObject.getString("Project"))
+            if (jsonObject.getString("Project").equals("0")) {
+                til_Product!!.visibility = View.VISIBLE
+                til_Project!!.visibility = View.GONE
+                checkProject ="1"  // <--gone
+
+            } else if (jsonObject.getString("Project").equals("1")) {
+                til_Product!!.visibility = View.GONE
+                til_Project!!.visibility = View.VISIBLE
+
+                checkProject ="0"  // <-- visible
+
+            }
+
+
+        }
+
+        if (data.equals("proddetails")) {
+            dialogProdDet!!.dismiss()
+//             val jsonObject = prodDetailArrayList.getJSONObject(position)
+            val jsonObject = prodDetailSort.getJSONObject(position)
+            Log.e(TAG, "ID_Product   " + jsonObject.getString("ID_Product"))
+            ID_Category = jsonObject.getString("FK_Category")
+            ID_Product = jsonObject.getString("ID_Product")
+            tie_Product!!.setText(jsonObject.getString("ProductName"))
+
+        }
+
+
     }
 
     private fun validation(v: View) {

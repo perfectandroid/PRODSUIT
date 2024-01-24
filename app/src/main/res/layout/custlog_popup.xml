@@ -73,4 +73,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tv_callhistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:padding="10dp"
+        android:fontFamily="@font/myfont"
+        android:text="Call history is empty"
+        android:visibility="gone"/>
 </LinearLayout>
