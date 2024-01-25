@@ -403,7 +403,7 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
 
     override fun onRestart() {
         super.onRestart()
-        serviceList = 0
+      /*  serviceList = 0
 
         val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
         val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -417,10 +417,17 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
 
 
         Log.e(TAG,"org3   "+strDate)
+*/
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val currentDate = sdf.format(Date())
+        System.out.println(" C DATE is  "+currentDate)
+        tie_Date!!.setText(currentDate)
+        serviceList = 0
+        strToDate=currentDate
 
 
-       // serviceList=0
-        getPunchReport(strDate!!)
+        serviceList=0
+        getPunchReport(strToDate!!)
     }
     private fun openBottomDate() {
         // BottomSheet
