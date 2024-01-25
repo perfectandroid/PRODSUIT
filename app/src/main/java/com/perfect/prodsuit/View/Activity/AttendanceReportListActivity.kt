@@ -47,7 +47,7 @@ class AttendanceReportListActivity : AppCompatActivity() , View.OnClickListener,
     lateinit var serviceListViewModel: ServiceListViewModel
     lateinit var attendanceListArrayList: JSONArray
     lateinit var serviceListSort: JSONArray
-
+    lateinit var locationList : JSONArray
     var recyServiceList: RecyclerView? = null
     private var tv_listCount: TextView? = null
     private var txtv_headlabel: TextView? = null
@@ -433,7 +433,9 @@ class AttendanceReportListActivity : AppCompatActivity() , View.OnClickListener,
             startActivity(i)
         }*/
 
-
+        if (data.equals("LocationReport")) {
+       //   Toast.makeText(applicationContext,"clicked",Toast.LENGTH_LONG).show()
+        }
 
 
     }

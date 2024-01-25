@@ -32,7 +32,7 @@ class AttendanceListAdapter (internal var context: Context, internal var jsonArr
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_attendance_list, parent, false
+            R.layout.adapter_attendance_list1, parent, false
         )
         vh = MainViewHolder(v)
         return vh
@@ -59,17 +59,28 @@ class AttendanceListAdapter (internal var context: Context, internal var jsonArr
                 if(jsonObject!!.getString("Status").equals("True"))
                     {
                         holder.txtv_punchstatus.text        = "Punch In"
-                        holder.pnch_image.setBackgroundResource(R.drawable.punch_in);
+                        holder.ll_img.setBackgroundResource(R.drawable.punch_in);
                     }
                 else
                 {
                     holder.txtv_punchstatus.text        = "Punch Out"
-                    holder.pnch_image.setBackgroundResource(R.drawable.punch_out);
+                    holder.ll_img.setBackgroundResource(R.drawable.punch_out);
                 }
 
 
               holder.tv_punchDate.text        = jsonObject!!.getString("EnteredDate")
                 holder.txtv_punchlocatn.text        = jsonObject!!.getString("LocationName")
+
+                holder.im_mapview!!.setTag(position)
+                holder.im_mapview!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
+                    clickListener!!.onClick(
+                        position,
+                        "LocationReport"
+                    )
+                })
+
+
 
                 /*  holder.tv_Mobile.text        = jsonObject!!.getString("Mobile")
                 holder.tv_Area.text        = jsonObject!!.getString("Area")
@@ -216,14 +227,17 @@ class AttendanceListAdapter (internal var context: Context, internal var jsonArr
         internal var txtv_punchstatus          : TextView
         internal var tv_punchDate          : TextView
         internal var txtv_punchlocatn          : TextView
-        internal var pnch_image          : ImageView
+
+        internal var im_mapview          : ImageView
+        internal var ll_img          : LinearLayout
 
 
         init {
-            txtv_punchstatus        = v.findViewById<View>(R.id.txtv_punchstatus) as TextView
-            tv_punchDate        = v.findViewById<View>(R.id.tv_punchDate) as TextView
-            txtv_punchlocatn        = v.findViewById<View>(R.id.txtv_punchlocatn) as TextView
-            pnch_image = v.findViewById<View>(R.id.pnch_image) as ImageView
+            txtv_punchstatus        = v.findViewById<View>(R.id.txtv_Status) as TextView
+            tv_punchDate        = v.findViewById<View>(R.id.txtv_Date) as TextView
+            txtv_punchlocatn        = v.findViewById<View>(R.id.txtv_loctn) as TextView
+            im_mapview = v.findViewById<View>(R.id.im_mapview) as ImageView
+            ll_img = v.findViewById<View>(R.id.ll_img) as LinearLayout
         /*    tv_Customer        = v.findViewById<View>(R.id.tv_Customer) as TextView
             tv_Mobile        = v.findViewById<View>(R.id.tv_Mobile) as TextView
             tv_Area        = v.findViewById<View>(R.id.tv_Area) as TextView

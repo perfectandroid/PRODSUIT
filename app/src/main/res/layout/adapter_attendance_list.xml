@@ -68,8 +68,8 @@
                             android:orientation="horizontal">
                             <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/pnch_image"
-                                android:layout_width="25dp"
-                                android:layout_height="25dp"
+                                android:layout_width="20dp"
+                                android:layout_height="40dp"
                                 android:layout_gravity="center"
                                 android:padding="2dp"
                                 app:tint="@color/colorPrimary" />
