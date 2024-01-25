@@ -924,6 +924,10 @@ interface ApiInterface {
     fun getAttendanceReport(@Body body: RequestBody): Call<String>
 
 
+    @POST("UserValidations/AttendancePunchDetails")
+    fun getPunchReport(@Body body: RequestBody): Call<String>
+
+
 
     @POST("UserValidations/TimeLineDetails")
     fun getServiceTimeLine(@Body body: RequestBody): Call<String>
