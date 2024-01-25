@@ -258,12 +258,12 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
 
 //314400
 
-        val AUDIO_SP = context.getSharedPreferences(Config.SHARED_PREF76, 0)
-        if (AUDIO_SP.getString("AudioClipEnabled", null).equals("true")){
-            til_AttachVoice!!.visibility=View.VISIBLE
-        }else{
-            til_AttachVoice!!.visibility=View.GONE
-        }
+//        val AUDIO_SP = context.getSharedPreferences(Config.SHARED_PREF76, 0)
+//        if (AUDIO_SP.getString("AudioClipEnabled", null).equals("true")){
+//            til_AttachVoice!!.visibility=View.VISIBLE
+//        }else{
+//            til_AttachVoice!!.visibility=View.GONE
+//        }
     }
 
     override fun onClick(v: View) {

@@ -49,7 +49,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
-
+    lateinit var cusNameSort: JSONArray
     val TAG: String = "LeadGenerationQuickActivity"
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
@@ -839,6 +839,19 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             dialogCustSearch!!.setContentView(R.layout.customersearch_popup)
             dialogCustSearch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             val recyCustomer = dialogCustSearch!!.findViewById(R.id.recyCustomer) as RecyclerView
+            val llsearch = dialogCustSearch!!.findViewById(R.id.llsearch) as LinearLayout
+            llsearch.visibility=View.VISIBLE
+            recyCustomer.visibility=View.VISIBLE
+            val etsearch = dialogCustSearch!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogCustSearch!!.findViewById(R.id.txt_nodata) as TextView
+            cusNameSort = JSONArray()
+            for (k in 0 until customerArrayList.length()) {
+                val jsonObject = customerArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                cusNameSort.put(jsonObject)
+            }
+
+
 
             val lLayout = GridLayoutManager(this@LeadGenerationQuickActivity, 1)
             recyCustomer!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -846,6 +859,58 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             val adapter = CustomerAdapter(this@LeadGenerationQuickActivity, customerArrayList)
             recyCustomer!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationQuickActivity)
+
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    cusNameSort = JSONArray()
+
+                    for (k in 0 until customerArrayList.length()) {
+                        val jsonObject = customerArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("CusName").length) {
+                            if (jsonObject.getString("CusName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                cusNameSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+
+                    if (cusNameSort.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recyCustomer.visibility=View.VISIBLE
+                        Log.e(TAG, "employeeSort               7103    " + cusNameSort)
+                        val adapter = CustomerAdapter(this@LeadGenerationQuickActivity, cusNameSort)
+                        recyCustomer!!.adapter = adapter
+                        adapter.setClickListener(this@LeadGenerationQuickActivity)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recyCustomer.visibility=View.GONE
+                    }
+
+
+//                    Log.e(TAG, "employeeSort               7103    " + cusNameSort)
+//                    val adapter = CustomerAdapter(this@LeadGenerationQuickActivity, cusNameSort)
+//                    recyCustomer!!.adapter = adapter
+//                    adapter.setClickListener(this@LeadGenerationQuickActivity)
+                }
+            })
+
 
             dialogCustSearch!!.show()
             dialogCustSearch!!.getWindow()!!.setLayout(
@@ -977,6 +1042,16 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
+//                    Log.e(TAG, "cursor 3443432 length ==" + cursor!!.count)
+//
+//                   if (cursor!!.count>0)
+//                   {
+//
+//                   }
+//                    else
+//                   {
+//
+//                   }
 
                     cursor = contentResolver.query(
                         ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
@@ -2231,6 +2306,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                                 if (barcodeCount == 0) {
                                     barcodeCount++
                                     val jObject = JSONObject(msg)
+                                    Log.e(TAG, "608   barcodeValue   " + barcodeValue)
                                     Log.e(TAG, "608   msg   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
 
@@ -2285,6 +2361,27 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                                         }
 
                                     } else {
+
+                                        tv_Mrp!!.setText("")
+                                        ProductMRP = ""
+                                        edtAmount!!.setText("")
+                                        edtProdcategory!!.setText("")
+                                        edtProdproduct!!.setText("")
+                                        ID_Category = ""
+                                        ID_Product = ""
+
+                                        ID_Category = ""
+                                        strProduct = ""
+
+
+
+                                        proddetailMode = 0
+                                        proddetail = 0
+                                        getProductDetail("0")
+
+                                        prodpriority = 0
+                                        priorityMode = 0
+                                        getProductPriority()
                                         val builder = AlertDialog.Builder(
                                             this@LeadGenerationQuickActivity,
                                             R.style.MyDialogTheme

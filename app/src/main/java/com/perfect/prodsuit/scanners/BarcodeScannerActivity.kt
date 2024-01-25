@@ -3,29 +3,36 @@ package com.perfect.prodsuit.scanners
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.util.SparseArray
+import android.util.TypedValue
 import android.view.*
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.Frame
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
+import com.google.android.material.snackbar.Snackbar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 
 class BarcodeScannerActivity : AppCompatActivity() {
-
+    lateinit var context: Context
     var TAG = "BarcodeScannerActivity"
     private lateinit var surfaceView: SurfaceView
     private lateinit var overlayView: View
@@ -37,7 +44,7 @@ class BarcodeScannerActivity : AppCompatActivity() {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_barcode_scanner)
-
+        context = this@BarcodeScannerActivity
         surfaceView = findViewById(R.id.surfaceView)
         overlayView = findViewById(R.id.overlayView)
 
@@ -83,6 +90,7 @@ class BarcodeScannerActivity : AppCompatActivity() {
 
             override fun receiveDetections(detections: Detector.Detections<Barcode>) {
                 val barcodes: SparseArray<Barcode> = detections.detectedItems
+                Log.e(TAG,"766003 barcodes2  "+barcodes)
                 if (barcodes.size() > 0) {
                     // Barcode detected, process the result
                     val barcode = barcodes.valueAt(0)
@@ -95,6 +103,20 @@ class BarcodeScannerActivity : AppCompatActivity() {
 
 
                 }
+//                else
+//                {
+//                    // Toast.makeText(context,"pls upload proper QR",Toast.LENGTH_LONG).show()
+//                    val snackbar = Snackbar.make(findViewById(android.R.id.content), "Please Upload Valid QR", Snackbar.LENGTH_LONG)
+//                    val sbView = snackbar.view
+//                    sbView.setBackgroundColor(ContextCompat.getColor(context, R.color.greylight));
+//                    val textView: TextView = sbView.findViewById<View>(R.id.snackbar_text) as TextView
+//                    textView.setTextColor(Color.BLACK)
+//                    val typeface = ResourcesCompat.getFont(context, R.font.myfont)
+//                    textView.setTypeface(typeface)
+//                    textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15f)
+//                    textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
+//                    snackbar.show()
+//                }
             }
         })
 
@@ -153,7 +175,7 @@ class BarcodeScannerActivity : AppCompatActivity() {
                     Log.e(TAG,"7660033 bitmap  "+bitmap)
                     bitmap?.let { imageBitmap ->
                         val barcodes: SparseArray<Barcode>? = extractBarcodes(bitmap)
-                        Log.e(TAG,"766003 barcodes  "+barcodes)
+                        Log.e(TAG,"766003 barcodes1  "+barcodes)
 
                         if (barcodes!!.size() > 0) {
                             val barcode = barcodes.valueAt(0)
@@ -164,6 +186,20 @@ class BarcodeScannerActivity : AppCompatActivity() {
                             intent.putExtra("barcodeValue", barcodeValue)
                             setResult(Config.SCANNER_CODE, intent)
                             finish() //finishing activity
+                        }
+                        else
+                        {
+                           // Toast.makeText(context,"pls upload proper QR",Toast.LENGTH_LONG).show()
+                            val snackbar = Snackbar.make(findViewById(android.R.id.content), "Invalid QR Code", Snackbar.LENGTH_LONG)
+                            val sbView = snackbar.view
+                            sbView.setBackgroundColor(ContextCompat.getColor(context, R.color.greylight));
+                            val textView: TextView = sbView.findViewById<View>(R.id.snackbar_text) as TextView
+                            textView.setTextColor(ContextCompat.getColor(context, R.color.leadstages_color7))
+                            val typeface = ResourcesCompat.getFont(context, R.font.myfont)
+                            textView.setTypeface(typeface)
+                            textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP,15f)
+                            textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
+                            snackbar.show()
                         }
 
                     }

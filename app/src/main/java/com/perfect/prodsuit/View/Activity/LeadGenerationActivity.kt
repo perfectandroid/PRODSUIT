@@ -57,6 +57,8 @@ import kotlin.math.log
 
 
 class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener,ItemClickListenerValue {
+    lateinit var cusNameSort: JSONArray
+
     var saveCount: Int = 0
     var voiceData2: String? = ""
     private var voicedataByte2: ByteArray? = null
@@ -4480,6 +4482,19 @@ private var custmoerAssignmentID : String? =null
             dialogCustSearch!!.setContentView(R.layout.customersearch_popup)
             dialogCustSearch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             val recyCustomer = dialogCustSearch!!.findViewById(R.id.recyCustomer) as RecyclerView
+            val llsearch = dialogCustSearch!!.findViewById(R.id.llsearch) as LinearLayout
+            llsearch.visibility=View.VISIBLE
+            recyCustomer.visibility=View.VISIBLE
+            val etsearch = dialogCustSearch!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogCustSearch!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
+            cusNameSort = JSONArray()
+            for (k in 0 until customerArrayList.length()) {
+                val jsonObject = customerArrayList.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                cusNameSort.put(jsonObject)
+            }
+
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recyCustomer!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -4487,6 +4502,54 @@ private var custmoerAssignmentID : String? =null
             val adapter = CustomerAdapter(this@LeadGenerationActivity, customerArrayList)
             recyCustomer!!.adapter = adapter
             adapter.setClickListener(this@LeadGenerationActivity)
+
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    cusNameSort = JSONArray()
+
+                    for (k in 0 until customerArrayList.length()) {
+                        val jsonObject = customerArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("CusName").length) {
+                            if (jsonObject.getString("CusName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                cusNameSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    if (cusNameSort.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recyCustomer.visibility=View.VISIBLE
+                        Log.e(TAG, "employeeSort               7103    " + cusNameSort)
+                        val adapter = CustomerAdapter(this@LeadGenerationActivity, cusNameSort)
+                        recyCustomer!!.adapter = adapter
+                        adapter.setClickListener(this@LeadGenerationActivity)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recyCustomer.visibility=View.GONE
+                    }
+
+//                    Log.e(TAG, "employeeSort               7103    " + cusNameSort)
+//                    val adapter = CustomerAdapter(this@LeadGenerationActivity, cusNameSort)
+//                    recyCustomer!!.adapter = adapter
+//                    adapter.setClickListener(this@LeadGenerationActivity)
+                }
+            })
 
             dialogCustSearch!!.show()
             dialogCustSearch!!.getWindow()!!.setLayout(
@@ -10261,6 +10324,16 @@ private var custmoerAssignmentID : String? =null
                                         }
 
                                     } else {
+
+                                        ProductMRP = ""
+                                        edtAmount!!.setText("")
+                                        tv_Mrp!!.setText("")
+                                        edtProdcategory!!.setText("")
+                                        edtProdproduct!!.setText("")
+                                        ID_Category = "0"
+                                        ID_Product = ""
+
+
                                         val builder = AlertDialog.Builder(
                                             this@LeadGenerationActivity,
                                             R.style.MyDialogTheme
