@@ -2391,7 +2391,7 @@
                         android:id="@+id/rltv_subfab"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_above="@+id/fab">
+                        android:layout_above="@+id/fab1">
 
                         <TextView
                             android:id="@+id/txtCloseLead"
@@ -2641,7 +2641,7 @@
 
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fab"
+                        android:id="@+id/fab1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -2650,7 +2650,8 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="50dp"
+                        android:visibility="invisible"
                         android:backgroundTint="@color/colorPrimary"
                         android:tint="@color/white"
                         app:fabCustomSize="50dp"
@@ -2661,6 +2662,24 @@
                 </RelativeLayout>
 
 
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="70dp"
+                    android:visibility="visible"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:tint="@color/white"
+                    app:fabCustomSize="50dp"
+                    app:rippleColor="@color/white"
+                    app:srcCompat="@drawable/ic_adding" />
             </RelativeLayout>
 
 

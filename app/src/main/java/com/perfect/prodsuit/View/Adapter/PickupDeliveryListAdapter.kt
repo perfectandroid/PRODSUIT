@@ -1,6 +1,8 @@
 package com.perfect.prodsuit.View.Adapter
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +25,7 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
     internal var jsonObject        : JSONObject?    = null
     private var clickListener      : ClickListener? = null
     private var priority           : String?        = null
+    private var TransMode           : String?        = null
     private var ID_ProductDelivery : String?        = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -38,11 +41,12 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
         try {
             jsonObject = jsonArray.getJSONObject(position)
             if (holder is MainViewHolder) {
-                Log.e(TAG,"onBindViewHolder   1051   ")
+                Log.e(TAG,"onBindViewHolder   1051121   "+jsonArray)
                 val pos = position+1
 
                 priority = jsonObject!!.getString("Priority")
                 ID_ProductDelivery = jsonObject!!.getString("ID_ProductDelivery")
+                TransMode = jsonObject!!.getString("TransMode")
                 Log.e(TAG,"ID_ProductDelivery   112548566   "+ID_ProductDelivery)
 
                 holder.tv_TicketNo.text            =  jsonObject!!.getString("ReferenceNo")
@@ -53,6 +57,7 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
                 holder.tv_assigned_date.text       =  jsonObject!!.getString("AssignedDate")
                 holder.tv_Area.text                =  "Area : "+jsonObject!!.getString("Area")
                 holder.tv_ProductName.text         =  "Product Name : "+jsonObject!!.getString("ProductName")
+                holder.tv_module.text              =  jsonObject!!.getString("Module")
 
                 if (jsonObject!!.getString("ProductName").equals("")){
                     holder.tv_ProductName.visibility = View.GONE
@@ -63,7 +68,14 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
 
                 if (SubMode.equals("1")){
 
-                    holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_lite_common1))
+                    if (TransMode!!.equals("CUSA")){
+                        holder.ll_first.setBackgroundColor(context.resources.getColor(R.color.color_list3))
+
+                    }else if (TransMode!!.equals("INPDR")){
+                        holder.ll_first.setBackgroundColor(context.resources.getColor(R.color.color_list4))
+                    }
+
+//                    holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_lite_common1))
                     holder.tv_DeliveryDateTime.text    =  "Pickup Date & Time : "+jsonObject!!.getString("PickUpTime")
                  //   holder.tv_DeliveryDateTime.text    =  "Pickup Date Time : "+jsonObject!!.getString("PickUpTime")
 
@@ -81,7 +93,18 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
                     }
                 }
                 if (SubMode.equals("2")){
-                    holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_common3))
+//                    holder.ll_first!!.setBackgroundColor(context.resources.getColor(R.color.color_common3))
+                    if (TransMode!!.equals("INDA")){
+                        holder.ll_first.setBackgroundColor(context.resources.getColor(R.color.color_list1))
+
+                    }else if (TransMode!!.equals("INSBR")){
+                        holder.ll_first.setBackgroundColor(context.resources.getColor(R.color.color_list2))
+
+                    }else if (TransMode!!.equals("CUSA")){
+                        holder.ll_first.setBackgroundColor(context.resources.getColor(R.color.color_list3))
+
+                    }
+
                     holder.tv_DeliveryDateTime.text    =  "Delivery Date Time : "+jsonObject!!.getString("PickUpTime")
 
                     if (priority.equals("Medium")){
@@ -96,6 +119,8 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
                         holder.img_Priority!!.setImageDrawable(context.resources.getDrawable(R.drawable.svg_hml_high))
                         holder.tv_Priority!!.setText("High")
                     }
+
+
                 }
 
                 holder.ll_main!!.setTag(position)
@@ -147,6 +172,7 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
         internal var tv_assigned_date       : TextView
         internal var tv_Area                : TextView
         internal var tv_ProductName         : TextView
+        internal var tv_module         : TextView
         init {
             tv_TicketNo          = v.findViewById<View>(R.id.tv_TicketNo) as TextView
             tv_Customer          = v.findViewById<View>(R.id.tv_Customer) as TextView
@@ -163,6 +189,7 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
             tv_assigned_date     = v.findViewById<View>(R.id.tv_assigned_date) as TextView
             tv_Area              = v.findViewById<View>(R.id.tv_Area) as TextView
             tv_ProductName       = v.findViewById<View>(R.id.tv_ProductName) as TextView
+            tv_module       = v.findViewById<View>(R.id.tv_module) as TextView
         }
     }
 

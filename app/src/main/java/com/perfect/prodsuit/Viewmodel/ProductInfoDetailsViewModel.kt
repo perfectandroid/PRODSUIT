@@ -11,8 +11,8 @@ class ProductInfoDetailsViewModel : ViewModel(){
 
     var ProductInfoDetailsData: MutableLiveData<ProductInfoDetailsModel>? = null
 
-    fun getProductInfoDetails(context: Context, SubMode: String, ID_ProductDelivery: String) : LiveData<ProductInfoDetailsModel>? {
-        ProductInfoDetailsData = ProductInfoDetailsRepository.getServicesApiCall(context,SubMode,ID_ProductDelivery)
+    fun getProductInfoDetails(context: Context, SubMode: String, ID_ProductDelivery: String, TransMode: String) : LiveData<ProductInfoDetailsModel>? {
+        ProductInfoDetailsData = ProductInfoDetailsRepository.getServicesApiCall(context,SubMode,ID_ProductDelivery,TransMode)
         return ProductInfoDetailsData
 
 

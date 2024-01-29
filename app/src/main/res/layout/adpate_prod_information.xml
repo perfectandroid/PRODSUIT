@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    tools:viewBindingIgnore="true"
     android:layout_height="wrap_content">
+
+<!--    Pickup-->
 
     <LinearLayout
         android:id="@+id/ll_Pickup"
@@ -16,7 +19,7 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="5dp"
-        android:visibility="gone"
+        android:visibility="visible"
         android:paddingBottom="10dp"
         android:background="@drawable/border_shadow2"
         tools:ignore="MissingConstraints">
@@ -44,10 +47,12 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
+                        android:id="@+id/ll_Productnamepickup"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="5"
                         android:gravity="top"
+                        android:visibility="visible"
                         android:layout_gravity="top"
                         android:orientation="vertical">
 
@@ -71,6 +76,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tvv_productnameLabel"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -159,6 +165,7 @@
                     android:layout_marginRight="5dp"
                     android:drawableTint="@color/textColor"
                     android:fontFamily="@font/myfont"
+                    android:visibility="visible"
                     style="@style/Widget.App.TextInputLayout">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -188,6 +195,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="StandBy Product"
+                    android:visibility="visible"
                     android:layout_marginLeft="5dp"
                     android:drawableTint="@color/textColor"
                     android:fontFamily="@font/myfont"
@@ -202,6 +210,7 @@
                         android:drawablePadding="5dp"
                         android:drawableTint="@color/textColor"
                         android:editable="false"
+                        android:singleLine="true"
                         android:focusableInTouchMode="false"
                         android:fontFamily="@font/myfont"
                         android:gravity="center_vertical"
@@ -233,6 +242,7 @@
                     android:layout_weight="1"
                     android:hint="StandBy Qty"
                     android:layout_marginRight="5dp"
+                    android:visibility="visible"
                     android:drawableTint="@color/textColor"
                     android:fontFamily="@font/myfont"
                     style="@style/Widget.App.TextInputLayout">
@@ -314,6 +324,7 @@
                     android:hint="Remarks"
                     android:drawableTint="@color/textColor"
                     android:fontFamily="@font/myfont"
+                    android:visibility="visible"
                     style="@style/Widget.App.TextInputLayout">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -350,6 +361,201 @@
 
     </LinearLayout>
 
+<!--    emirecovery_Pickup-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/ll_emi_Pickup"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        android:layout_margin="5dp"-->
+<!--        android:paddingLeft="5dp"-->
+<!--        android:paddingRight="5dp"-->
+<!--        android:paddingTop="5dp"-->
+<!--        android:visibility="gone"-->
+<!--        android:paddingBottom="10dp"-->
+<!--        android:background="@drawable/border_shadow2"-->
+<!--        tools:ignore="MissingConstraints">-->
+
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:visibility="visible">-->
+
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:padding="5dp"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_marginRight="5dp"-->
+<!--                    android:orientation="horizontal">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:layout_weight="5"-->
+<!--                        android:gravity="top"-->
+<!--                        android:layout_gravity="top"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <CheckBox-->
+<!--                            android:id="@+id/checkbox_emi"-->
+<!--                            android:layout_width="30dp"-->
+<!--                            android:layout_height="30dp"-->
+<!--                            android:theme="@style/checkBoxStyle"-->
+<!--                            android:gravity="start"-->
+<!--                            android:layout_gravity="start"-->
+<!--                            android:visibility="visible" />-->
+
+
+<!--                    </LinearLayout>-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:paddingLeft="5dp"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:textSize="13dp"-->
+<!--                            android:textStyle="bold"-->
+<!--                            android:fontFamily="@font/myfont"-->
+<!--                            android:text="Product Name"-->
+<!--                            android:textColor="@color/black"-->
+<!--                            android:visibility="visible"/>-->
+
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/tv_emi_ProductName"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:textSize="13dp"-->
+<!--                            android:layout_marginTop="-3dp"-->
+<!--                            android:textStyle="normal"-->
+<!--                            android:fontFamily="@font/myfont"-->
+<!--                            android:text=""-->
+<!--                            android:textColor="@color/black" />-->
+
+
+<!--                    </LinearLayout>-->
+
+<!--                </LinearLayout>-->
+
+
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:paddingRight="10dp"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:id="@+id/til_emi_Quantity"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:hint="Quantity"-->
+<!--                    android:layout_marginRight="5dp"-->
+<!--                    android:drawableTint="@color/textColor"-->
+<!--                    android:fontFamily="@font/myfont"-->
+<!--                    style="@style/Widget.App.TextInputLayout">-->
+
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/tie_emi_Quantity"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:paddingLeft="10dp"-->
+<!--                        android:paddingTop="8dp"-->
+<!--                        android:paddingBottom="8dp"-->
+<!--                        android:drawableLeft="@drawable/vtr_quantity"-->
+<!--                        android:drawablePadding="5dp"-->
+<!--                        android:drawableTint="@color/textColor"-->
+<!--                        android:textSize="14dp"-->
+<!--                        android:focusableInTouchMode="true"-->
+<!--                        android:editable="true"-->
+<!--                        android:inputType="number"-->
+<!--                        android:fontFamily="@font/myfont"-->
+<!--                        android:textColor="@color/greydarks"-->
+<!--                        android:textStyle="normal"/>-->
+
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+
+
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:paddingRight="10dp"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:id="@+id/til_emi_Remarks"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:hint="Remarks"-->
+<!--                    android:drawableTint="@color/textColor"-->
+<!--                    android:fontFamily="@font/myfont"-->
+<!--                    style="@style/Widget.App.TextInputLayout">-->
+
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/tie_emi_Remarks"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:paddingLeft="10dp"-->
+<!--                        android:paddingTop="8dp"-->
+<!--                        android:paddingBottom="8dp"-->
+<!--                        android:drawableLeft="@drawable/icon_svg_remark"-->
+<!--                        android:drawablePadding="5dp"-->
+<!--                        android:drawableTint="@color/textColor"-->
+<!--                        android:maxLength="150"-->
+<!--                        android:textSize="14dp"-->
+<!--                        android:focusableInTouchMode="true"-->
+<!--                        android:editable="true"-->
+<!--                        android:fontFamily="@font/myfont"-->
+<!--                        android:textColor="@color/greydarks"-->
+<!--                        android:textStyle="normal"/>-->
+
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+
+
+<!--            </LinearLayout>-->
+
+
+
+
+<!--        </LinearLayout>-->
+
+
+
+<!--    </LinearLayout>-->
+
+
+<!--    Delivery-->
 
     <LinearLayout
         android:id="@+id/ll_delivery"
@@ -360,7 +566,7 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="5dp"
-        android:visibility="visible"
+        android:visibility="gone"
         android:paddingBottom="10dp"
         android:background="@drawable/border_shadow2"
         tools:ignore="MissingConstraints">
@@ -426,7 +632,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/llcomple.Reg"
+                    android:id="@+id/llcomple_Reg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -721,6 +927,267 @@
 
 
     </LinearLayout>
+
+<!--    StandByRecovery-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/ll_StandByRecovery"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="vertical"-->
+<!--        android:layout_margin="5dp"-->
+<!--        android:paddingLeft="5dp"-->
+<!--        android:paddingRight="5dp"-->
+<!--        android:paddingTop="5dp"-->
+<!--        android:visibility="visible"-->
+<!--        android:paddingBottom="10dp"-->
+<!--        android:background="@drawable/border_shadow2"-->
+<!--        tools:ignore="MissingConstraints">-->
+<!--        &lt;!&ndash;        shadow_border1&ndash;&gt;-->
+<!--        &lt;!&ndash;        android:background="@drawable/border_shadow1"&ndash;&gt;-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:visibility="visible">-->
+
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:padding="5dp"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:layout_marginRight="5dp"-->
+<!--                    android:orientation="horizontal">-->
+
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:paddingLeft="5dp"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:textSize="13dp"-->
+<!--                            android:textStyle="bold"-->
+<!--                            android:fontFamily="@font/myfont"-->
+<!--                            android:text="Replace Product"-->
+<!--                            android:textColor="@color/black"-->
+<!--                            android:visibility="visible"/>-->
+
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/tv_ReplaceProduct"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:background="@color/white"-->
+<!--                            android:textSize="13dp"-->
+<!--                            android:layout_marginTop="-3dp"-->
+<!--                            android:textStyle="normal"-->
+<!--                            android:fontFamily="@font/myfont"-->
+<!--                            android:text=""-->
+<!--                            android:textColor="@color/black" />-->
+
+
+<!--                    </LinearLayout>-->
+
+<!--                </LinearLayout>-->
+
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:paddingRight="10dp"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:id="@+id/til_ReplaceQuantity"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:hint="Replace Quantity"-->
+<!--                    android:drawableTint="@color/textColor"-->
+<!--                    android:fontFamily="@font/myfont"-->
+<!--                    style="@style/Widget.App.TextInputLayout">-->
+
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/tie_ReplaceQuantity"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:paddingLeft="10dp"-->
+<!--                        android:paddingTop="8dp"-->
+<!--                        android:paddingBottom="8dp"-->
+<!--                        android:drawableLeft="@drawable/vtr_quantity"-->
+<!--                        android:drawablePadding="5dp"-->
+<!--                        android:drawableTint="@color/textColor"-->
+<!--                        android:textSize="14dp"-->
+<!--                        android:focusableInTouchMode="true"-->
+<!--                        android:editable="true"-->
+<!--                        android:inputType="number"-->
+<!--                        android:fontFamily="@font/myfont"-->
+<!--                        android:textColor="@color/greydarks"-->
+<!--                        android:textStyle="normal"/>-->
+
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+
+
+<!--            </LinearLayout>-->
+
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:paddingRight="10dp"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:id="@+id/til_StandByProductRecovery"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:hint="StandBy Product"-->
+<!--                    android:visibility="visible"-->
+<!--                    android:drawableTint="@color/textColor"-->
+<!--                    android:fontFamily="@font/myfont"-->
+<!--                    style="@style/Widget.App.TextInputLayout">-->
+
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/tie_StandByProductRecovery"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:drawableLeft="@drawable/product_svg"-->
+<!--                        android:drawablePadding="5dp"-->
+<!--                        android:drawableTint="@color/textColor"-->
+<!--                        android:editable="false"-->
+<!--                        android:focusableInTouchMode="false"-->
+<!--                        android:fontFamily="@font/myfont"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:paddingLeft="10dp"-->
+<!--                        android:paddingTop="8dp"-->
+<!--                        android:paddingBottom="8dp"-->
+<!--                        android:textColor="@color/greydarks"-->
+<!--                        android:textSize="14dp"-->
+<!--                        android:textStyle="normal" />-->
+
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--            </LinearLayout>-->
+
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:paddingRight="10dp"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:id="@+id/til_StandByQuantityRecovery"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:hint="StandBy Qty"-->
+<!--                    android:visibility="visible"-->
+<!--                    android:drawableTint="@color/textColor"-->
+<!--                    android:fontFamily="@font/myfont"-->
+<!--                    style="@style/Widget.App.TextInputLayout">-->
+
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/tie_StandByQuantityRecovery"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:paddingLeft="10dp"-->
+<!--                        android:paddingTop="8dp"-->
+<!--                        android:paddingBottom="8dp"-->
+<!--                        android:drawableLeft="@drawable/icon_svg_quantity"-->
+<!--                        android:drawablePadding="5dp"-->
+<!--                        android:drawableTint="@color/textColor"-->
+<!--                        android:textSize="14dp"-->
+<!--                        android:focusableInTouchMode="true"-->
+<!--                        android:editable="true"-->
+<!--                        android:maxLength="12"-->
+<!--                        android:inputType="number"-->
+<!--                        android:fontFamily="@font/myfont"-->
+<!--                        android:textColor="@color/greydarks"-->
+<!--                        android:textStyle="normal"/>-->
+
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+
+
+<!--            </LinearLayout>-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:paddingLeft="10dp"-->
+<!--                android:paddingRight="10dp"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:id="@+id/til_RemarksRecovery"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:hint="Remarks"-->
+<!--                    android:drawableTint="@color/textColor"-->
+<!--                    android:fontFamily="@font/myfont"-->
+<!--                    style="@style/Widget.App.TextInputLayout">-->
+
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/tie_RemarksRecovery"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:gravity="center_vertical"-->
+<!--                        android:paddingLeft="10dp"-->
+<!--                        android:paddingTop="8dp"-->
+<!--                        android:paddingBottom="8dp"-->
+<!--                        android:drawableLeft="@drawable/icon_svg_remark"-->
+<!--                        android:drawablePadding="5dp"-->
+<!--                        android:drawableTint="@color/textColor"-->
+<!--                        android:maxLength="150"-->
+<!--                        android:textSize="14dp"-->
+<!--                        android:focusableInTouchMode="true"-->
+<!--                        android:editable="true"-->
+<!--                        android:fontFamily="@font/myfont"-->
+<!--                        android:textColor="@color/greydarks"-->
+<!--                        android:textStyle="normal"/>-->
+
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+
+
+<!--            </LinearLayout>-->
+
+
+
+
+<!--        </LinearLayout>-->
+
+
+
+<!--    </LinearLayout>-->
 
     <View
         android:layout_width="match_parent"

@@ -485,6 +485,11 @@
     <color name="color_common3">#FF667B7C</color>
     <color name="color_common4">#447B7E</color>
 
+    <color name="color_list1">#FF667B7C</color>
+    <color name="color_list2">#858DA5</color>
+    <color name="color_list3">#647685</color>
+    <color name="color_list4">#7E9293</color>
+    <color name="color_list5">#619C9F</color>
 
     <color name="color_lite_common1">#4D82A1</color>
 

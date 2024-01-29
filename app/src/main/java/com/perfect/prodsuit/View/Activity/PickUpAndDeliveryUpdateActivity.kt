@@ -28,6 +28,7 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -107,6 +108,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private var tv_tvCategory: TextView? = null
     private var edtPayMethod: EditText? = null
     private var til_Selectstatus: TextInputLayout? = null
+    private var ll_PickDeliveryInformation: LinearLayout? = null
     private var lllocationpickup: LinearLayout? = null
     private var til_location: TextInputLayout? = null
     lateinit var tie_location: AutoCompleteTextView
@@ -161,6 +163,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private var llPickDeliveryInformation: LinearLayout? = null
     private var ll_deliveryDetailslist: LinearLayout? = null
     private var ll_prodDetail_pickup: LinearLayout? = null
+    private var ll_billno: LinearLayout? = null
+    private var view_billno: View? = null
 
     var TicketDetailsMode: String? = "1"
     var llpaymentmethodCount: String? = ""
@@ -189,6 +193,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private var tie_PickDeliveryDate: TextInputEditText? = null
     private var tie_PickDeliveryTime: TextInputEditText? = null
     private var tvv_list_name: TextView? = null
+    private var tv_billno: TextView? = null
     private var tie_Remark: TextInputEditText? = null
 
     private var PRODUCT_INFORM: Int? = 100
@@ -200,7 +205,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     var prodcomplaint = 0
     var productposition = ""
     var ID_Category = "0"
-    var IsSelected = ""
+    var IsSelected = "0"
 //    var standbyTotal = "0.00"
     var pickupdeliStatusCount = 0
     lateinit var ProdInformationViewModel: PaymentMethodViewModel
@@ -232,6 +237,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     lateinit var pickupdelibilltypeviewmodel: PickupDeliBillTypeViewModel
     lateinit var pickupdelistandbyproductviewmodel: PickupDeliStandByProductViewModel
     lateinit var updatepickupanddeliveryviewmodel: UpdatePickUpAndDeliveryViewModel
+    lateinit var standbyViewModel: StandByViewModel
     private var dialogProdInformation: Dialog? = null
     private var dialogProdDet: Dialog? = null
     private var dialogPayment: Dialog? = null
@@ -245,11 +251,13 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     var recyProdPriority: RecyclerView? = null
     var recylist: RecyclerView? = null
     var tv_Pop_StandByTotal: TextView? = null
+    var ll_Cancelll: LinearLayout? = null
     var lladdProduct: LinearLayout? = null
     var llbilltype: LinearLayout? = null
     var arrPosition: Int? = 0
     var standbytotal1 :String = ""
     var updatepickupanddeliveryCount = 0
+    var updatepickupanddeliverystandbyCount = 0
     var FK_EmployeeStock = ""
 
     var tickrtmode: String? = "1"  // GONE
@@ -293,6 +301,19 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 8088
     var saveAttendanceMark = false
 
+    private var ll_ticktDetail        : LinearLayout? = null
+    private var ll_CustomerDetails    : LinearLayout? = null
+    private var ll_ProductDetails     : LinearLayout? = null
+    private var ll_ProductInformation : LinearLayout? = null
+    private var card_ProductDetails : CardView? = null
+
+    private var card_PickDeliveryInformation : CardView? = null
+
+//    private var ll_emi_Pickup : LinearLayout? = null
+
+    var tabshow: String = "1"
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -315,10 +336,12 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
         productPriorityViewModel = ViewModelProvider(this).get(ProductPriorityViewModel::class.java)
         complaintTypeViewModel = ViewModelProvider(this).get(ComplaintTypeViewModel::class.java)
         updatepickupanddeliveryviewmodel = ViewModelProvider(this).get(UpdatePickUpAndDeliveryViewModel::class.java)
+        standbyViewModel = ViewModelProvider(this).get(StandByViewModel::class.java)
 
 
         if (getIntent().hasExtra("SubMode")) {
             SubMode = intent.getStringExtra("SubMode")
+            Log.e(TAG, "000111222255  " + SubMode)
         }
         if (getIntent().hasExtra("SubMode")) {
             TransMode = intent.getStringExtra("TransMode")
@@ -396,6 +419,10 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
         tv_ReferenceNo = findViewById(R.id.tv_ReferenceNo)
         tv_addressMobilenumber = findViewById(R.id.tv_addressMobilenumber)
         tv_Country = findViewById(R.id.tv_Country)
+        ll_PickDeliveryInformation = findViewById(R.id.ll_PickDeliveryInformation)
+        tv_billno = findViewById(R.id.tv_billno)
+        card_ProductDetails = findViewById(R.id.card_ProductDetails)
+        view_billno = findViewById(R.id.view_billno)
 
         llTicketDetails = findViewById<LinearLayout>(R.id.llTicketDetails)
         llCustomerDetails = findViewById<LinearLayout>(R.id.llCustomerDetails)
@@ -408,6 +435,14 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
         tie_PickDeliveryDate = findViewById<TextInputEditText>(R.id.tie_PickDeliveryDate)
         tie_PickDeliveryTime = findViewById<TextInputEditText>(R.id.tie_PickDeliveryTime)
         tie_Remark = findViewById<TextInputEditText>(R.id.tie_Remark)
+        ll_billno = findViewById<LinearLayout>(R.id.ll_billno)
+
+        ll_ticktDetail         = findViewById<LinearLayout>(R.id.ll_ticktDetail)
+        ll_CustomerDetails     = findViewById<LinearLayout>(R.id.ll_CustomerDetails)
+        ll_ProductDetails      = findViewById<LinearLayout>(R.id.ll_ProductDetails)
+        ll_ProductInformation  = findViewById<LinearLayout>(R.id.ll_ProductInformation)
+        card_PickDeliveryInformation  = findViewById<CardView>(R.id.card_PickDeliveryInformation)
+//        ll_emi_Pickup  = findViewById<LinearLayout>(R.id.ll_emi_Pickup)
 
         tv_TicketDetailsClick!!.setOnClickListener(this)
         tv_CustomerDetailsClick!!.setOnClickListener(this)
@@ -532,7 +567,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 pickupdeliveryupdatedetailsviewmodel.getPickUpDeliveryUpdateDetails(
                     this,
                     SubMode!!,
-                    ID_ProductDelivery!!
+                    ID_ProductDelivery!!,
+                    TransMode!!
                 )!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -566,9 +602,10 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                         til_driver_Mobile!!.setText(jobjt.getString("DelDriverMobileNo"))
                                         til_Ewaybill!!.setText(jobjt.getString("PdEWayBillNo"))
                                         tvv_CustomersName!!.setText(jobjt.getString("Customer"))
+                                        tv_billno!!.setText(jobjt.getString("SalBillNo"))
                                         tv_Mobileno!!.setText(jobjt.getString("MobileNo"))
-                                        tv_ReferenceNo!!.setText(jobjt.getString("CSRTickno"))
-//                                        tv_addressMobilenumber!!.setText(jobjt.getString("MobileNo"))
+                                        tv_ReferenceNo!!.setText(jobjt.getString("ReferenceNo"))
+                                        tv_addressMobilenumber!!.setText(jobjt.getString("MobileNo"))
 //                                        tv_Country!!.setText(jobjt.getString("tv_Country"))
 
                                         if (Address1!!.equals("")) {
@@ -652,77 +689,156 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
 
     private fun setLabel() {
+        if (SubMode.equals("1")) {  //pickup
 
-        if (SubMode.equals("1")) {
             tv_header!!.text = "Pick up"
             tv_PickDeliveryInformationClick!!.text = "Pickup Note"
-            til_PickDeliveryDate!!.hint       = "Pick Up Date *"
-            til_PickDeliveryTime!!.hint       = "Pick up Time *"
+            til_PickDeliveryDate!!.hint = "Pick Up Date *"
+            til_PickDeliveryTime!!.hint = "Pick up Time *"
             tv_ProductInformationClick!!.text = "PickUp Information"
-            llreference!!.visibility          = View.GONE
-            ll_Customername!!.visibility      = View.GONE
-            ll_mobileno!!.visibility          = View.GONE
-            view_mobile!!.visibility          = View.GONE
-            customer_view!!.visibility        = View.GONE
-            reference_view!!.visibility       = View.GONE
-            llregistration!!.visibility       = View.VISIBLE
-            registration_view!!.visibility    = View.VISIBLE
-            ll_ticket!!.visibility            = View.VISIBLE
-            ticket_view!!.visibility          = View.VISIBLE
-            ll_prodDetail_pickup!!.visibility = View.VISIBLE
-            ll_deliveryDetailslist!!.visibility  = View.GONE
+            ll_deliveryDetailslist!!.visibility = View.GONE
+
+
+//            if (TransMode!!.equals("INDA")) {                                    //sales
+//                llreference!!.visibility = View.GONE
+//                ll_Customername!!.visibility = View.GONE
+//                ll_mobileno!!.visibility = View.GONE
+//                view_mobile!!.visibility = View.GONE
+//                customer_view!!.visibility = View.GONE
+//                reference_view!!.visibility = View.GONE
+//                ll_Customername!!.visibility = View.GONE
+//                customer_view!!.visibility = View.GONE
+//                llreference!!.visibility = View.GONE
+//                ll_billno!!.visibility = View.GONE
+//                reference_view!!.visibility = View.GONE
+//                view_mobile!!.visibility = View.GONE
+//                ll_mobileno!!.visibility = View.GONE
+//                view_billno!!.visibility = View.GONE
+//                ll_billno!!.visibility = View.GONE
+//                view_billno!!.visibility = View.GONE
+//                ll_mobileno!!.visibility = View.GONE
+//                llregistration!!.visibility = View.VISIBLE
+//                registration_view!!.visibility = View.VISIBLE
+//                ll_ticket!!.visibility = View.VISIBLE
+//                ticket_view!!.visibility = View.VISIBLE
+//                ll_prodDetail_pickup!!.visibility = View.VISIBLE
+//                ll_CustomerDetails!!.visibility = View.VISIBLE
+//
+//            }
+
+            if(TransMode!!.equals("CUSA")) {   //service
+
+                Log.e(TAG,"CUSA inn  ")
+
+                llreference!!.visibility = View.GONE
+                ll_Customername!!.visibility = View.GONE
+                ll_mobileno!!.visibility = View.GONE
+                view_mobile!!.visibility = View.GONE
+                customer_view!!.visibility = View.GONE
+                reference_view!!.visibility = View.GONE
+                ll_mobileno!!.visibility = View.GONE
+                view_billno!!.visibility = View.GONE
+                ll_billno!!.visibility = View.GONE
+                llregistration!!.visibility = View.VISIBLE
+                registration_view!!.visibility = View.VISIBLE
+                ll_ticket!!.visibility = View.VISIBLE
+                ticket_view!!.visibility = View.VISIBLE
+                ll_prodDetail_pickup!!.visibility = View.VISIBLE
+                ll_deliveryDetailslist!!.visibility = View.GONE
+                ll_billno!!.visibility = View.GONE
+
+            }else if (TransMode!!.equals("INPDR")) {            //emiRecovery
+
+                Log.e(TAG, "21212121212212  " + TransMode)
+
+                ll_ticktDetail!!.visibility = View.GONE
+                ll_CustomerDetails!!.visibility = View.VISIBLE
+                llCustomerDetails!!.visibility = View.VISIBLE
+                ll_ProductInformation!!.visibility = View.VISIBLE
+                ll_ProductDetails!!.visibility = View.GONE
+                ll_billno!!.visibility = View.GONE
+            }
+
 //            tv_ProductInformationClick!!.text = "Product"
 
         }
-        if (SubMode.equals("2")) {
+        if (SubMode.equals("2")) {      //delivery
+            tv_ProductInformationClick!!.text = "Delivery Information"
 
-            if (TransMode!!.equals("INDA")){
-            tv_header!!.text = "Delivery"
-            tv_PickDeliveryInformationClick!!.text = "Delivery Note"
-            til_PickDeliveryDate!!.hint            = "Delivery Date *"
-            til_PickDeliveryTime!!.hint            = "Delivery Time *"
-            tv_ProductInformationClick!!.text      = "Delivery Information"
-            tv_TicketDetailsClick!!.text           = "Sales Details"
-            tv_CustomerDetailsClick!!.text         = "Delivery Address"
-            tv_ProductDetailsClick!!.text          = "Delivery Details"
-            llreference!!.visibility               = View.VISIBLE
-            ll_Customername!!.visibility           = View.VISIBLE
-            ll_mobileno!!.visibility               = View.VISIBLE
-            view_mobile!!.visibility               = View.VISIBLE
-            customer_view!!.visibility             = View.VISIBLE
-            reference_view!!.visibility            = View.VISIBLE
-            llregistration!!.visibility            = View.VISIBLE
-            registration_view!!.visibility         = View.VISIBLE
-            ll_ticket!!.visibility                 = View.GONE
-            ticket_view!!.visibility               = View.GONE
-            ll_deliveryDetailslist!!.visibility    = View.VISIBLE
-            ll_prodDetail_pickup!!.visibility      = View.GONE
+            if (TransMode!!.equals("INDA")) {           //Sales
+                tv_header!!.text = "Delivery"
+                tv_PickDeliveryInformationClick!!.text = "Delivery Note"
+                til_PickDeliveryDate!!.hint = "Delivery Date *"
+                til_PickDeliveryTime!!.hint = "Delivery Time *"
+                tv_TicketDetailsClick!!.text = "Sales Details"
+                tv_CustomerDetailsClick!!.text = "Delivery Address"
+                tv_ProductDetailsClick!!.text = "Delivery Details"
+                llreference!!.visibility = View.VISIBLE
+                ll_Customername!!.visibility = View.VISIBLE
+                ll_mobileno!!.visibility = View.VISIBLE
+                view_mobile!!.visibility = View.VISIBLE
+                customer_view!!.visibility = View.VISIBLE
+                reference_view!!.visibility = View.VISIBLE
+                llregistration!!.visibility = View.VISIBLE
+                registration_view!!.visibility = View.VISIBLE
+                ll_ticket!!.visibility = View.GONE
+                ticket_view!!.visibility = View.GONE
+                ll_deliveryDetailslist!!.visibility = View.VISIBLE
+                ll_prodDetail_pickup!!.visibility = View.GONE
+                ll_billno!!.visibility = View.GONE
 //            tvv_productname!!.text = "Vehicle No"
 
 
-            }else if(TransMode!!.equals("CUSA")){
+            } else if (TransMode!!.equals("CUSA")) {                 //Service
+
+                Log.e(TAG,"CUSA inn  ")
 
                 tv_header!!.text = "Delivery"
                 tv_PickDeliveryInformationClick!!.text = "Delivery Note"
-                til_PickDeliveryDate!!.hint       = "Delivery Date *"
-                til_PickDeliveryTime!!.hint       = "Delivery Time *"
+                til_PickDeliveryDate!!.hint = "Delivery Date *"
+                til_PickDeliveryTime!!.hint = "Delivery Time *"
                 tv_ProductInformationClick!!.text = "Delivery Information"
-                llreference!!.visibility          = View.GONE
-                ll_Customername!!.visibility      = View.GONE
-                ll_mobileno!!.visibility          = View.GONE
-                view_mobile!!.visibility          = View.GONE
-                customer_view!!.visibility        = View.GONE
-                reference_view!!.visibility       = View.GONE
-                llregistration!!.visibility       = View.VISIBLE
-                registration_view!!.visibility    = View.VISIBLE
-                ll_ticket!!.visibility            = View.VISIBLE
-                ticket_view!!.visibility          = View.VISIBLE
+                llreference!!.visibility = View.GONE
+                ll_Customername!!.visibility = View.GONE
+                ll_mobileno!!.visibility = View.GONE
+                view_mobile!!.visibility = View.GONE
+                customer_view!!.visibility = View.GONE
+                reference_view!!.visibility = View.GONE
+                llregistration!!.visibility = View.VISIBLE
+                registration_view!!.visibility = View.VISIBLE
+                ll_ticket!!.visibility = View.VISIBLE
+                ticket_view!!.visibility = View.VISIBLE
                 ll_prodDetail_pickup!!.visibility = View.VISIBLE
-                ll_deliveryDetailslist!!.visibility  = View.GONE
+                ll_deliveryDetailslist!!.visibility = View.GONE
+                ll_billno!!.visibility = View.GONE
+
+            }else if (TransMode!!.equals("INSBR")){              //standby Recovery
+
+                Log.e(TAG,"INSBR inn  ")
+
+                tv_PickDeliveryInformationClick!!.text = "Delivery Note"
+                til_PickDeliveryDate!!.hint = "Delivery Date *"
+                til_PickDeliveryTime!!.hint = "Delivery Time *"
+                tv_CustomerDetailsClick!!.text = "Delivery Address"
+                tv_ProductDetailsClick!!.text = "Delivery Details"
+                tv_header!!.text = "StandBy Recovery"
+                tv_TicketDetailsClick!!.text = "Sales Bill Details"
+                tv_ProductDetailsClick!!.visibility = View.GONE
+                ll_PickDeliveryInformation!!.visibility = View.GONE
+                ll_ticket!!.visibility = View.GONE
+                llreference!!.visibility = View.GONE
+                llregistration!!.visibility = View.GONE
+                ll_mobileno!!.visibility = View.GONE
+                ticket_view!!.visibility = View.GONE
+                reference_view!!.visibility = View.GONE
+                registration_view!!.visibility = View.GONE
+                card_PickDeliveryInformation!!.visibility = View.GONE
+                card_ProductDetails!!.visibility = View.GONE
+                ll_billno!!.visibility = View.VISIBLE
+
             }
         }
     }
-
 
     override fun onClick(v: View) {
         when (v.id) {
@@ -1018,7 +1134,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 productinfodetailsviewmodel.getProductInfoDetails(
                     this,
                     SubMode!!,
-                    ID_ProductDelivery!!
+                    ID_ProductDelivery!!,
+                    TransMode!!
                 )!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -1076,9 +1193,12 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                                 jsonObject.getString("SPAmount")
                                             )
                                             jObject.put("Remarks", jsonObject.getString("Remarks"))
+                                            jObject.put("StandByProduct", (""))
+                                            jObject.put("FK_StandByProduct", (""))
                                             jObject.put("isSelected", ("0"))
                                             jObject.put("isEnable", ("0"))
                                             jObject.put("SubMode", SubMode)
+                                            jObject.put("TransMode", TransMode)
 
                                             Log.e(TAG, "wwwwwwwwwww 222 " + SubMode)
                                             prodInformationArrayList2.put(jObject)
@@ -1169,7 +1289,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
                 deliveryinformationViewModel.getDeliveryInformation(
-                    this, SubMode!!, ID_ProductDelivery!!)!!.observe(
+                    this, SubMode!!,
+                    ID_ProductDelivery!!,TransMode!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -1200,6 +1321,12 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                             jObject.put("Product", jsonObject.getString("Product"))
                                             jObject.put("Quantity", jsonObject.getString("Quantity"))
                                             jObject.put("TransMode", jsonObject.getString("TransMode"))
+                                            jObject.put("StandByProduct", jsonObject.getString("StandByProduct"))
+                                            jObject.put("FK_StandByProduct", jsonObject.getString("FK_StandByProduct"))
+                                            jObject.put("SPQuantity", jsonObject.getString("SPQuantity"))
+                                            jObject.put("ProvideStandBy", jsonObject.getString("ProvideStandBy"))
+                                            jObject.put("SPAmount", jsonObject.getString("SPAmount"))
+                                            jObject.put("FK_StandByStock", jsonObject.getString("FK_StandByStock"))
                                             jObject.put("PriorityName", "")
                                             jObject.put("ID_Priority", "")
                                             jObject.put("ComplaintQty", "")
@@ -1207,8 +1334,10 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                             jObject.put("ComplaintName", "")
                                             jObject.put("Description", "")
                                             jObject.put("isSelectedDelivery", ("0"))
-//                                            jObject.put("isEnable", ("0"))
+                                            jObject.put("isSelected", ("1"))
+                                            jObject.put("isEnable", ("0"))
                                             jObject.put("SubMode", SubMode)
+                                            jObject.put("TransMode", TransMode)
 
 
                                             Log.e(TAG, "wwwwwwwwwww eeeeee " + SubMode)
@@ -1273,8 +1402,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             var imback = dialogProdInformation!!.findViewById(R.id.imback) as ImageView
             recyProdInformation =
                 dialogProdInformation!!.findViewById(R.id.recyProdInformation) as RecyclerView
-            tv_Pop_StandByTotal =
-                dialogProdInformation!!.findViewById(R.id.tv_Pop_StandByTotal) as TextView
+            tv_Pop_StandByTotal = dialogProdInformation!!.findViewById(R.id.tv_Pop_StandByTotal) as TextView
+            ll_Cancelll = dialogProdInformation!!.findViewById(R.id.ll_Cancelll) as LinearLayout
             lladdProduct = dialogProdInformation!!.findViewById(R.id.lladdProduct) as LinearLayout
             llbilltype = dialogProdInformation!!.findViewById(R.id.llbilltype) as LinearLayout
             tie_Selectstatus =
@@ -1293,6 +1422,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             val ll_standbytotal = dialogProdInformation!!.findViewById(R.id.ll_standbytotal) as LinearLayout
 
             if (SubMode!!.equals("1")) {
+
                 tv_header1!!.text = "Pickup Information"
                 ll_standbytotal.visibility = View.VISIBLE
 
@@ -1300,6 +1430,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 if (prodInformationArrayList2.length() == 0) {
                     productinfodetailscount = 0
                     getProductInformationDetails()
+
                 } else {
 
 //                    if (StandByAmount.equals("0.00") || StandByAmount!!.equals("")) {
@@ -1309,13 +1440,14 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //
 //                        llbilltype!!.visibility = View.VISIBLE
 //                        setAmount()
-////                    Log.e(TAG, "standbytotal1           3"+standbytotal1)
+///                     Log.e(TAG, "standbytotal1           3"+standbytotal1)
 //                    }
 
                     if (standbytotal1.equals("0.00")){
                         llbilltype!!.visibility = View.GONE
                     }else{
                         llbilltype!!.visibility = View.VISIBLE
+                        Log.v("SDfsdfsdfdd","1")
                         setAmount()
                     }
 
@@ -1330,27 +1462,55 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //                standbyTotal = ""
 
                 }
+                if (TransMode!!.equals("INPDR")){
+
+                    lladdProduct!!.visibility = View.GONE
+                    ll_Cancelll!!.visibility = View.VISIBLE
+                    ll_standbytotal!!.visibility = View.GONE
+                    llbilltype!!.visibility = View.GONE
+                    llpaymentmethod!!.visibility = View.GONE
+                }else {
+                    lladdProduct!!.visibility = View.VISIBLE
+                    ll_Cancelll!!.visibility = View.GONE
+                    ll_standbytotal!!.visibility = View.VISIBLE
+                }
+
             }else if (SubMode!!.equals("2")) {
+
 
                 llbilltype!!.visibility = View.GONE
                 lladdProduct!!.visibility = View.GONE
                 ll_standbytotal.visibility = View.GONE
-
-//                if (TransMode!!.equals("INDA")){
-//
-//                }else if (TransMode!!.equals("CUSA")){
-//
-//                }
-//                tv_header1!!.text = "Delivery Information"
-
-
+                ll_Cancelll!!.visibility = View.VISIBLE
+//                ll_emi_Pickup!!.visibility = View.VISIBLE
+                tv_header1!!.text = "Delivery Information"
 
 
 
                 if (prodInformationArrayList2.length() == 0) {
-                    productinfodetailsdeliverycount = 0
-                    Log.e(TAG, "wwwwwwwwwww 121   " + SubMode)
-                    getProductInformationDelivery()
+
+                    if (TransMode!!.equals("CUSA")){
+
+                        Log.e(TAG,"wwwweeeaqqq 1")
+                        productinfodetailscount = 0
+                        getProductInformationDetails()
+
+                    }else{
+
+                        Log.e(TAG,"wwwweeeaqqq 2")
+                        productinfodetailsdeliverycount = 0
+                        getProductInformationDelivery()
+
+                    }
+
+
+
+//                    if (TransMode!!.equals("CUSA")) {  //service
+//
+//                        getProductInformationDetails()
+//
+//                        Log.e(TAG, "wwwwwwwwwww 121   " + TransMode)
+//                    }else
 
                 } else {
 
@@ -1403,6 +1563,9 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 billTypecount = 0
                 getBillType()
             }
+            ll_Cancelll!!.setOnClickListener {
+                dialogProdInformation!!.dismiss()
+            }
 
             tie_location!!.setOnClickListener {
 
@@ -1414,6 +1577,10 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             llsubmit!!.setOnClickListener {
                 Config.disableClick(it)
 
+                remark = tie_Remark!!.text.toString()
+
+                Log.e(TAG,"ssaaddss  "+remark)
+
                 if (isLocationEnabled().equals(false)) {
                     Log.e(TAG,"isLocationEnabled.......  ")
                     getLocation()
@@ -1422,11 +1589,32 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                         Log.e(TAG,"status_id.......1  ")
                     }
                 }else{
-                    Log.e(TAG,"Validation.......1  ")
+
+                    Log.e(TAG,".......2  "+ TransMode)
+                    if (TransMode!!.equals("INPDR") || TransMode!!.equals("INSBR")){     //Standby recovery  && Emi Recovery
+
+                        Log.e(TAG,".......2  ")
+
+                        if (status_id.equals("")){
+                            Config.snackBarWarning(context, it, "Please Select Status")
+                            Log.e(TAG,".......3  ")
+                        }else{
+
+                            Log.e(TAG,"Validation.......2  ")
+                            getLocation()
+                            checkAttendance()
+                            passvalue()
+                        }
+
+                    }
+
+                    Log.e(TAG,"Validation.......3  ")
                     getLocation()
                     checkAttendance()
                     Validation(it)
+
                 }
+
             }
 
 
@@ -2574,6 +2762,101 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     }
 
 
+    private fun saveStandByRecoveryPickUpAndDelivery() {
+
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(this, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(this.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                standbyViewModel.getStandBy(this, ID_ProductDelivery!!, PickDeliveryTime, PickDeliveryDate, remark!!, FK_BillType!!, Productdetails, arrayPaymentmethod!!,DeliveryComplaints!!, StandByAmount!!, status_id!!, strLongitue!!, strLatitude!!, locAddress!!)!!.observe(
+                    this,
+                    Observer { deleteleadSetterGetter ->
+                        val msg = deleteleadSetterGetter.message
+                        try {
+                            if (msg!!.length > 0) {
+                                Log.e(TAG, "msg  1126     " + msg)
+                                val jObject = JSONObject(msg)
+                                if (updatepickupanddeliverystandbyCount == 0) {
+                                    updatepickupanddeliverystandbyCount++
+                                    if (jObject.getString("StatusCode") == "0") {
+
+                                        val jobjt = jObject.getJSONObject("UpdatePickUpAndDelivery")
+                                        try {
+
+                                            val suceessDialog = Dialog(this)
+                                            suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                            suceessDialog!!.setCancelable(false)
+                                            suceessDialog!!.setContentView(R.layout.pickup_deli_update_success)
+                                            suceessDialog!!.window!!.attributes.gravity =
+                                                Gravity.CENTER_VERTICAL;
+
+                                            val tv_succesmsg =
+                                                suceessDialog!!.findViewById(R.id.tv_succesmsg) as TextView
+//                                            val tv_label = suceessDialog!! .findViewById(R.id.tv_label) as TextView
+//                                            val tv_leadid = suceessDialog!! .findViewById(R.id.tv_leadid) as TextView
+                                            val tv_succesok =
+                                                suceessDialog!!.findViewById(R.id.tv_succesok) as TextView
+                                            //LeadNumber
+                                            tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
+//                                            tv_label!!.setText("Lead No : ")
+//                                            tv_leadid!!.setText(jobjt.getString("LeadNo"))
+
+                                            tv_succesok!!.setOnClickListener {
+                                                suceessDialog!!.dismiss()
+                                                val intent = Intent()
+                                                intent.putExtra("MESSAGE", android.R.id.message)
+                                                setResult(2, intent)
+                                                onBackPressed()
+
+                                            }
+
+                                            suceessDialog!!.show()
+                                            suceessDialog!!.getWindow()!!.setLayout(
+                                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                                ViewGroup.LayoutParams.WRAP_CONTENT
+                                            );
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
+                                        }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@PickUpAndDeliveryUpdateActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            }
+
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                applicationContext,
+                                "" + e.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
+
     private fun saveUpdatePickUpAndDelivery() {
 
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -2677,16 +2960,28 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             jsonObject5 = prodInformationArrayList2.getJSONObject(position)
 //            IsSelected = jsonObject5.getString("isSelected")
 //            Log.e(TAG,"343434  "+IsSelected)
-
             Log.e(TAG, "5555555555555  " +jsonObject5.getString("ProvideStandBy"))
-//            Log.e(TAG, "4444444444444  " +jsonObject5.getString("isSelected"))
-            setAmount()
+            Log.e(TAG, "4444444444444 12  " +jsonObject5.getString("isSelected"))
+            Log.e(TAG, "prodInformationArrayList2 4444444444444  " +prodInformationArrayList2)
+
+
+            Log.v("SDfsdfsdfdd","2")
+            if(SubMode.equals("1")) {
+                setAmount()
+                Log.e(TAG, "1234567890 changeAmount ")
+            }else{
+
+                Log.e(TAG, "1234567890 changeAmount2 ")
+            }
 
         }
 
         if (data.equals("PickupDeliStandByproduct")) {
             dialogProdDet!!.dismiss()
-            setAmount()
+//            Log.v("SDfsdfsdfdd","3")
+//            setAmount()
+            Log.e(TAG, "pickup Selected      1  ")
+
             val jsonObject3 = prodDetailArrayList.getJSONObject(position)
 
             Log.e(TAG, "llllllllllllll   " + jsonObject3)
@@ -2705,6 +3000,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
 
 //            jObject.put("ProductName",jsonObject.getString("ProductName"))
+
             jObject.put("ID_Product", jsonObject2.getString("ID_Product"))
             jObject.put("ProdName", jsonObject2.getString("ProdName"))
             jObject.put("ProvideStandBy", jsonObject2.getString("ProvideStandBy"))
@@ -2713,9 +3009,12 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             jObject.put("SPQuantity", jsonObject2.getString("SPQuantity"))
             jObject.put("SPAmount", jsonObject2.getString("SPAmount"))
             jObject.put("Remarks", jsonObject2.getString("Remarks"))
+            jObject.put("StandByProduct", jsonObject2.getString("StandByProduct"))
+            jObject.put("FK_StandByProduct", jsonObject2.getString("FK_StandByProduct"))
             jObject.put("isSelected", ("1"))
             jObject.put("isEnable", ("0"))
             jObject.put("SubMode", SubMode)
+            jObject.put("TransMode", TransMode)
 
 //            prodInformationArrayList.remove(pos)
             prodInformationArrayList2!!.put(pos, jObject)
@@ -2723,7 +3022,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
             Log.e(TAG, "errrrrrrrrrrrr        " + position)
             Log.e(TAG, "eeeeeeeeeeeeeeeeeee   " + jObject)
-//
+
 //            Log.e(TAG,"ggggggggg   "+jsonObject.getString("ID_Product"))
 //            Log.e(TAG,"ggggggggg   "+jsonObject.getString("ProductName"))
 //            Log.e(TAG,"ggggggggg   "+jsonObject.getString("ProvideStandBy"))
@@ -2751,6 +3050,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //                Log.e(TAG,"llllllllllllll   "+prodInformationArrayList)
 //            }
 
+            Log.v("SDfsdfsdfdd","4")
             setAmount()
             Log.e(TAG, "iddddd " + productName)
             Log.e(TAG, "iddddd " + productId)
@@ -2765,14 +3065,28 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             Log.e(TAG, "idhssss " + position)
 //            getProductDetail()
 
-            getPickupDeliStandByProductDetails()
+            if (SubMode!!.equals("1")){
+
+                getPickupDeliStandByProductDetails()
+                setAmount()
+                Log.v("SDfsdfsdfdd","5")
+
+                Log.e(TAG, "1234567890 changeAmount 1")
+            }else{
+
+                Log.e(TAG, "1234567890 changeAmount 2")
+                getPickupDeliStandByProductDetails()
+            }
+
+//            getPickupDeliStandByProductDetails()
 
 //            val jsonObject = prodInformationArrayList.getJSONObject(position)
 //            remark = jsonObject.getString("remark")
 //
 //            tempremark = remark.toString()
 //            StandByAmount = jsonObject.getString("StandByAmount")
-            setAmount()
+//            Log.v("SDfsdfsdfdd","5")
+//            setAmount()
 
 
         }
@@ -2792,6 +3106,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             val jsonObject2 = prodInformationArrayList2.getJSONObject(positions)
 
 
+            Log.e(TAG, "pickup Selected      2  ")
+
             jObject.put("ID_ProductDelivery", jsonObject2.getString("ID_ProductDelivery"))
             jObject.put("FK_Product", jsonObject2.getString("FK_Product"))
             jObject.put("FK_Category", jsonObject2.getString("FK_Category"))
@@ -2805,7 +3121,15 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             jObject.put("ComplaintName",jsonObject2.getString("ComplaintName"))
             jObject.put("Description", jsonObject2.getString("Description"))
             jObject.put("isSelectedDelivery", jsonObject2.getString("isSelectedDelivery"))
+            jObject.put("FK_StandByStock", jsonObject2.getString("FK_StandByStock"))
+            jObject.put("isSelected", jsonObject2.getString("isSelected"))
+            jObject.put("StandByProduct", jsonObject2.getString("StandByProduct"))
+            jObject.put("FK_StandByProduct", jsonObject2.getString("FK_StandByProduct"))
+            jObject.put("ProvideStandBy", jsonObject2.getString("ProvideStandBy"))
+            jObject.put("SPQuantity", jsonObject2.getString("SPQuantity"))
+            jObject.put("SPAmount", jsonObject2.getString("SPAmount"))
             jObject.put("SubMode", SubMode)
+            jObject.put("TransMode", TransMode)
 
 
             prodInformationArrayList2!!.put(positions, jObject)
@@ -2859,6 +3183,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             val jObject = JSONObject()
             val jsonObject2 = prodInformationArrayList2.getJSONObject(positions)
 
+            Log.e(TAG, "pickup Selected      3  ")
 //
             jObject.put("ID_ProductDelivery", jsonObject2.getString("ID_ProductDelivery"))
             jObject.put("FK_Product", jsonObject2.getString("FK_Product"))
@@ -2873,7 +3198,15 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             jObject.put("ComplaintName",jsonObject3.getString("ComplaintName"))
             jObject.put("Description", jsonObject2.getString("Description"))
             jObject.put("isSelectedDelivery", jsonObject2.getString("isSelectedDelivery"))
+            jObject.put("FK_StandByStock", jsonObject2.getString("FK_StandByStock"))
+            jObject.put("isSelected", jsonObject2.getString("isSelected"))
+            jObject.put("StandByProduct", jsonObject2.getString("StandByProduct"))
+            jObject.put("FK_StandByProduct", jsonObject2.getString("FK_StandByProduct"))
+            jObject.put("ProvideStandBy", jsonObject2.getString("ProvideStandBy"))
+            jObject.put("SPQuantity", jsonObject2.getString("SPQuantity"))
+            jObject.put("SPAmount", jsonObject2.getString("SPAmount"))
             jObject.put("SubMode", SubMode)
+            jObject.put("TransMode", TransMode)
 
 
             prodInformationArrayList2!!.put(positions, jObject)
@@ -2909,6 +3242,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                 jObject.put("ID_Product", jsonObject4.getString("ID_Product"))
                 jObject.put("ProdName", jsonObject4.getString("ProductName"))
+//                jObject.put("ProdName", jsonObject4.getString("ProdName"))
                 jObject.put("ProvideStandBy", ("0"))
                 jObject.put("Quantity", ("1.00"))
                 jObject.put("Product", "")
@@ -2918,6 +3252,9 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 jObject.put("isSelected", ("1"))
                 jObject.put("isEnable", ("0"))
                 jObject.put("SubMode", SubMode)
+                jObject.put("TransMode", TransMode)
+                jObject.put("StandByProduct", (""))
+                jObject.put("FK_StandByProduct", (""))
 //            jObject.put("Quantity", (""))
 
                 prodInformationArrayList2!!.put(jObject)
@@ -2928,6 +3265,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                 jObject.put("ID_Product", jsonObject2.getString("ID_Product"))
                 jObject.put("ProdName", jsonObject4.getString("ProductName"))
+//                jObject.put("ProdName", jsonObject4.getString("ProdName"))
                 jObject.put("ProvideStandBy", ("0"))
                 jObject.put("Quantity", jsonObject2.getString("Quantity"))
                 jObject.put("Product", "")
@@ -2937,6 +3275,9 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 jObject.put("isSelected", ("1"))
                 jObject.put("isEnable", ("0"))
                 jObject.put("SubMode", SubMode)
+                jObject.put("TransMode", TransMode)
+                jObject.put("StandByProduct", (""))
+                jObject.put("FK_StandByProduct", (""))
 
                 prodInformationArrayList2!!.put(jObject)
 
@@ -2962,6 +3303,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
             Log.e(TAG, "iddddd " + productName)
             Log.e(TAG, "iddddd " + productId)
+            Log.v("SDfsdfsdfdd","6")
             setAmount()
 
         }
@@ -3044,46 +3386,64 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             Log.e(TAG, "mnmnmmnmnn  " + Productdetails)
             if (SubMode!!.equals("1")) {
 
-                if (jsonObject5.getString("isSelected").equals("1")) {
-//                if (IsSelected.equals("1")){
-                    jObject.put(
-                        "ID_Product",
-                        ProdsuitApplication.encryptStart(jsonObject.getString("ID_Product"))
-                    )
-                    jObject.put(
-                        "ProvideStandBy",
-                        ProdsuitApplication.encryptStart(jsonObject.getString("ProvideStandBy"))
-                    )
-                    jObject.put(
-                        "Quantity",
-                        ProdsuitApplication.encryptStart(jsonObject.getString("Quantity"))
-                    )
-                    jObject.put(
-                        "FK_StandByProduct",
-                        ProdsuitApplication.encryptStart(jsonObject.getString("Product"))
-                    )
-                    jObject.put(
-                        "StandByQuantity",
-                        ProdsuitApplication.encryptStart(jsonObject.getString("SPQuantity"))
-                    )
-                    jObject.put(
-                        "StandByAmount",
-                        ProdsuitApplication.encryptStart(jsonObject.getString("SPAmount"))
-                    )
+                if (TransMode!!.equals("INPDR")) {   //emirecovery save
+
+                    jObject.put("ID_Product", ProdsuitApplication.encryptStart(jsonObject.getString("ID_Product")))
+                    jObject.put("ProvideStandBy", ProdsuitApplication.encryptStart(jsonObject.getString("ProvideStandBy")))
+//                    jObject.put(
+//                        "ProdName",
+//                        ProdsuitApplication.encryptStart(jsonObject.getString("Product"))
+//                    )
+                    jObject.put("ProdName", ProdsuitApplication.encryptStart(jsonObject.getString("ProdName")))
+                    jObject.put("Quantity", ProdsuitApplication.encryptStart(jsonObject.getString("Quantity")))
+                    jObject.put("FK_StandByProduct", ProdsuitApplication.encryptStart(jsonObject.getString("ID_Product")))
+                    jObject.put("StandByQuantity", ProdsuitApplication.encryptStart(jsonObject.getString("SPQuantity")))
+                    jObject.put("StandByAmount", ProdsuitApplication.encryptStart(jsonObject.getString("SPAmount")))
                     for (i in 0 until prodDetailArrayList.length()) {
                         var jsonObject1 = prodDetailArrayList.getJSONObject(i)
 
 //                        Log.e(TAG, "vhevk1  " + jsonObject1.getString("ID_Product") + "  " + jsonObject.getString("ID_Product"))
 //                    Log.e(TAG, "vhevk2  " + )
 
-                        if (jsonObject.getString("ID_Product")
-                                .equals(jsonObject1.getString("ID_Product"))
-                        ) {
+                        if (jsonObject.getString("ID_Product").equals(jsonObject1.getString("ID_Product"))) {
 
-                            jObject.put(
-                                "FK_EmployeeStock",
-                                ProdsuitApplication.encryptStart(jsonObject1.getString("ID_Product"))
-                            )
+                            jObject.put("FK_EmployeeStock", ProdsuitApplication.encryptStart(jsonObject1.getString("ID_Product")))
+                        } else {
+                            jObject.put("FK_EmployeeStock", ("0"))
+                        }
+
+                    }
+                    Productdetails.put(jObject)
+
+                    Log.e(TAG, "1fffffffffffffffffffffffffffffff  " + Productdetails)
+
+                    arrayPaymentmethod = JSONArray()
+
+                } else if (TransMode!!.equals("CUSA")) {      //service
+
+                    if (jsonObject5.getString("isSelected").equals("1")) {
+//                if (IsSelected.equals("1")){
+                    jObject.put("ID_Product", ProdsuitApplication.encryptStart(jsonObject.getString("ID_Product")))
+                    jObject.put("ProvideStandBy", ProdsuitApplication.encryptStart(jsonObject.getString("ProvideStandBy")))
+//                    jObject.put(
+//                        "ProdName",
+//                        ProdsuitApplication.encryptStart(jsonObject.getString("Product"))
+//                    )
+                    jObject.put("ProdName", ProdsuitApplication.encryptStart(jsonObject.getString("ProdName")))
+                    jObject.put("Quantity", ProdsuitApplication.encryptStart(jsonObject.getString("Quantity")))
+                    jObject.put("FK_StandByProduct", ProdsuitApplication.encryptStart(jsonObject.getString("ID_Product")))
+                    jObject.put("StandByQuantity", ProdsuitApplication.encryptStart(jsonObject.getString("SPQuantity")))
+                    jObject.put("StandByAmount", ProdsuitApplication.encryptStart(jsonObject.getString("SPAmount")))
+                    for (i in 0 until prodDetailArrayList.length()) {
+                        var jsonObject1 = prodDetailArrayList.getJSONObject(i)
+
+//                        Log.e(TAG, "vhevk1  " + jsonObject1.getString("ID_Product") + "  " + jsonObject.getString("ID_Product"))
+//                    Log.e(TAG, "vhevk2  " + )
+
+                        if (jsonObject.getString("ID_Product").equals(jsonObject1.getString("ID_Product"))) {
+
+                            jObject.put("FK_EmployeeStock", ProdsuitApplication.encryptStart(jsonObject1.getString("ID_Product")))
+
                         } else {
                             jObject.put("FK_EmployeeStock", ("0"))
                         }
@@ -3098,25 +3458,22 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 for (i in 0 until arrPayment.length()) {
                     var jsonObject = arrPayment.getJSONObject(i)
                     val jObject = JSONObject()
-                    jObject.put(
-                        "PaymentMethod",
-                        ProdsuitApplication.encryptStart(jsonObject.getString("MethodID"))
-                    )
-                    jObject.put(
-                        "PAmount",
-                        ProdsuitApplication.encryptStart(jsonObject.getString("Amount"))
-                    )
-                    jObject.put(
-                        "Refno",
-                        ProdsuitApplication.encryptStart(jsonObject.getString("RefNo"))
-                    )
+
+                    jObject.put("PaymentMethod", ProdsuitApplication.encryptStart(jsonObject.getString("MethodID")))
+                    jObject.put("PAmount", ProdsuitApplication.encryptStart(jsonObject.getString("Amount")))
+                    jObject.put("Refno", ProdsuitApplication.encryptStart(jsonObject.getString("RefNo")))
 
                     arrayPaymentmethod.put(jObject)
 
                     Log.e(TAG, "1234561 arrayPaymentmethod  " + arrayPaymentmethod)
                 }
+            }
 
                 DeliveryComplaints = JSONArray()
+                updatepickupanddeliveryCount = 0
+
+                Log.e(TAG, "1ffffffffffffffffffffffffff Productdetails " + Productdetails)
+                Log.e(TAG, "1ffffffffffffffffffffffffff Productdetails " + arrayPaymentmethod)
                 saveUpdatePickUpAndDelivery()
 
 
@@ -3125,30 +3482,283 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 Productdetails     = JSONArray()
                 arrayPaymentmethod = JSONArray()
 
+                if (TransMode!!.equals("CUSA")){  //Service
+
+//                    Log.e(TAG,"wwwwwwwdddsssaxc"+jsonObject5)
+
+                    if (jsonObject.getString("isSelected").equals("1")) {
+//                if (IsSelected.equals("1")){
+                        jObject.put("ID_Product", ProdsuitApplication.encryptStart(jsonObject.getString("ID_Product")))
+                        jObject.put("ProvideStandBy", ProdsuitApplication.encryptStart(jsonObject.getString("ProvideStandBy")))
+//                        jObject.put(
+//                            "ProdName",
+//                            ProdsuitApplication.encryptStart(jsonObject.getString("Product"))
+//                        )
+                        jObject.put("ProdName",ProdsuitApplication.encryptStart(jsonObject.getString("ProdName")))
+                        jObject.put("Quantity", ProdsuitApplication.encryptStart(jsonObject.getString("Quantity")))
+                        jObject.put("FK_StandByProduct", ProdsuitApplication.encryptStart(jsonObject.getString("ID_Product")))
+                        jObject.put("StandByQuantity", ProdsuitApplication.encryptStart(jsonObject.getString("SPQuantity")))
+                        jObject.put("StandByAmount", ProdsuitApplication.encryptStart(jsonObject.getString("SPAmount")))
+
+                        for (i in 0 until prodDetailArrayList.length()) {
+                            var jsonObject1 = prodDetailArrayList.getJSONObject(i)
+
+//                        Log.e(TAG, "vhevk1  " + jsonObject1.getString("ID_Product") + "  " + jsonObject.getString("ID_Product"))
+//                    Log.e(TAG, "vhevk2  " + )
+
+                            if (jsonObject.getString("ID_Product").equals(jsonObject1.getString("ID_Product"))) {
+
+                                jObject.put("FK_EmployeeStock", ProdsuitApplication.encryptStart(jsonObject1.getString("ID_Product")))
+
+                            } else {
+                                jObject.put("FK_EmployeeStock", ("0"))
+                            }
+
+                        }
+                        Productdetails.put(jObject)
+
+                        Log.e(TAG, "1fffffffffffffffffffffffffffffff  " + Productdetails)
+
+                    }
+
+                    DeliveryComplaints = JSONArray()
+                    arrayPaymentmethod = JSONArray()
+                    updatepickupanddeliveryCount = 0
+                    saveUpdatePickUpAndDelivery()
+
+                }else if(TransMode!!.equals("INDA")){  //Sales
+
+                    Productdetails     = JSONArray()
+                    arrayPaymentmethod = JSONArray()
+
+                    jObject.put("FK_Product", ProdsuitApplication.encryptStart(jsonObject.getString("FK_Product")))
+                    jObject.put("Qty", ProdsuitApplication.encryptStart(jsonObject.getString("ComplaintQty")))
+                    jObject.put("ComplaintID", ProdsuitApplication.encryptStart(jsonObject.getString("ID_ComplaintList")))
+                    jObject.put("Description", ProdsuitApplication.encryptStart(jsonObject.getString("Description")))
+                    jObject.put("Priority", ProdsuitApplication.encryptStart(jsonObject.getString("ID_Priority")))
+
+                    DeliveryComplaints.put(jObject)
+
+                    Log.e(TAG, "1234561 DeliveryComplaints  " + DeliveryComplaints)
+                    updatepickupanddeliveryCount = 0
+                    saveUpdatePickUpAndDelivery()
 
 
-                jObject.put("FK_Product", ProdsuitApplication.encryptStart(jsonObject.getString("FK_Product")))
-                jObject.put("Qty", ProdsuitApplication.encryptStart(jsonObject.getString("ComplaintQty")))
-                jObject.put("ComplaintID", ProdsuitApplication.encryptStart(jsonObject.getString("ID_ComplaintList")))
-                jObject.put("Description", ProdsuitApplication.encryptStart(jsonObject.getString("Description")))
-                jObject.put("Priority", ProdsuitApplication.encryptStart(jsonObject.getString("ID_Priority")))
 
-                DeliveryComplaints.put(jObject)
+                }else if (TransMode!!.equals("INSBR")){       //standBy Recovery
 
-                Log.e(TAG, "1234561 DeliveryComplaints  " + DeliveryComplaints)
+                    Log.e(TAG,"wwwwwwwwweeee 11")
 
-                saveUpdatePickUpAndDelivery()
+                    DeliveryComplaints = JSONArray()
+                    arrayPaymentmethod = JSONArray()
+
+                    jObject.put("ID_Product", ProdsuitApplication.encryptStart(jsonObject.getString("FK_Product")))
+                    jObject.put("ProvideStandBy", ProdsuitApplication.encryptStart(jsonObject.getString("ProvideStandBy")))
+//                    jObject.put(
+//                        "ProdName",
+//                        ProdsuitApplication.encryptStart(jsonObject.getString("Product"))
+//                    )
+                    jObject.put("ProdName", ProdsuitApplication.encryptStart(jsonObject.getString("Product")))
+                    jObject.put("ReQuantity", ProdsuitApplication.encryptStart(jsonObject.getString("Quantity")))
+                    jObject.put("StandByProduct", ProdsuitApplication.encryptStart(jsonObject.getString("StandByProduct")))
+                    jObject.put("FK_StandByProduct", ProdsuitApplication.encryptStart(jsonObject.getString("FK_StandByProduct")))
+                    jObject.put("StandByQuantity", ProdsuitApplication.encryptStart(jsonObject.getString("SPQuantity")))
+                    jObject.put("StandByAmount", ProdsuitApplication.encryptStart(jsonObject.getString("SPAmount")))
+                    jObject.put("FK_StandByStock", ProdsuitApplication.encryptStart(jsonObject.getString("FK_StandByStock")))
+
+//                    for (i in 0 until prodDetailArrayList.length()) {
+//                        var jsonObject1 = prodDetailArrayList.getJSONObject(i)
+//
+////                        Log.e(TAG, "vhevk1  " + jsonObject1.getString("ID_Product") + "  " + jsonObject.getString("ID_Product"))
+////                    Log.e(TAG, "vhevk2  " + )
+//
+//                        if (jsonObject.getString("ID_Product").equals(jsonObject1.getString("ID_Product"))) {
+//
+//                            jObject.put("FK_StandbyStock", ProdsuitApplication.encryptStart(jsonObject1.getString("ID_Product")))
+//
+//                        } else {
+//
+//                            jObject.put("FK_StandbyStock", ("0"))
+//                        }
+//
+//                    }
+                    Productdetails.put(jObject)
+
+                    Log.e(TAG, "gggfggfggfggf1233  " + Productdetails)
+
+                    updatepickupanddeliverystandbyCount = 0
+                    saveStandByRecoveryPickUpAndDelivery()
+
+                }
+
+                }
+
             }
+
         }
-    }
+
+//    private fun Validation(view: View) {
+//        Log.e(TAG, "11111111 " + SubMode)
+//        try {
+//            Productdetails = JSONArray()
+////        prodInformationArrayList2 = JSONArray()
+//
+////        val jsonObject3 = prodInformationArrayList2.getJSONObject(pos)
+//
+//            if (status_id.equals("")){
+//                Config.snackBarWarning(context, view, "Please Select Status")
+//            }
+//
+//            else if (prodInformationArrayList2.length() > 0) {
+//
+////            Log.e(TAG, "kkkkkkkkkkkkkkk  " + jsonObject3.getString("isSelected"))
+//                var isvalid = true
+//
+//                for (i in 0 until prodInformationArrayList2.length()) {
+//                    var jsonObject = prodInformationArrayList2.getJSONObject(i)
+////            val jObject = JSONObject()
+//                    Log.e(TAG, "assasasassaa  " + prodInformationArrayList2)
+//                    Log.e(TAG, "adadadddada submode  " + SubMode)
+//
+//
+//                    if (jsonObject.getString("SubMode").equals("1")) {
+//
+//                        Log.e(TAG, "fdfdffd  " + jsonObject.getString("SubMode"))
+//                        Log.e(TAG, "rrttt  " + jsonObject.getString("isSelected"))
+//
+//                        if (jsonObject.getString("isSelected").equals("1")) {
+//                            Log.e(TAG, "ffffffffffff  " + jsonObject.getString("isSelected"))
+//                            if (!jsonObject.getString("Quantity").equals("0")&&jsonObject.getString("ProvideStandBy").equals("1")) {
+//                                Log.e(TAG, "ProvideStandBy12121  " + jsonObject.getString("isSelected"))
+////                                if (jsonObject.getString("ProvideStandBy").equals("1")) {
+//
+//                                    if (jsonObject.getString("Product").equals("")) {
+//
+//                                        isvalid = false
+//                                        Config.snackBarWarning(context, view, "StandByProduct is emplty")
+//                                    } else if (jsonObject.getString("SPQuantity").equals("")) {
+//
+//                                        isvalid = false
+//                                        Config.snackBarWarning(context, view, "StandByQuantity is emplty")
+//
+//                                    } else if (jsonObject.getString("SPAmount").equals("")) {
+//                                        isvalid = false
+//                                        Config.snackBarWarning(context, view, "StandByAmount is emplty")
+//
+//                                    } else if (FK_BillType!!.equals("")) {
+//                                        isvalid = false
+//                                        Config.snackBarWarning(context, view, "Please Select Bill Type")
+//
+//                                    } else if (llpaymentmethodCount!!.equals("")) {
+//                                        isvalid = false
+//                                        Config.snackBarWarning(context, view, "Please Select Payment Method")
+//
+//                                    } else {
+//                                        passvalue()
+//                                        Log.e(TAG, "yyyyyyyyyyyyy  ")
+//                                    }
+//
+////                                }
+//
+//
+//
+//                        }else if (!jsonObject.getString("Quantity").equals("0")){
+//                                isvalid = false
+//                                Config.snackBarWarning(context, view, "Quantity is emplty")
+//                            }
+//
+//                            }
+//
+//
+////                        else{
+////                            validatestatus(view)
+////                        }
+//                    }
+//
+//
+//
+//                    if (jsonObject.getString("SubMode").equals("2")) {
+//
+//                        if (prodInformationArrayList2.length() > 0)
+//                        {
+//
+//                            Log.e(TAG, "prodInformationArrayList2 1234  " +prodInformationArrayList2 )
+////                            if (jsonObject.getString("isSelected").equals("1")) {
+//                            if (jsonObject.getString("isSelectedDelivery").equals("1")) {
+//
+//                                Log.e(TAG, "nnnnnnnnn  " + jsonObject.getString("isSelectedDelivery"))
+////                                if (status_id!!.equals("")) {
+////
+////                                    isvalid = false
+////                                    Log.e(TAG, "12  " + status_id)
+////                                    Config.snackBarWarning(context, view, "Please Select Status")
+////
+////                                }
+//                                if (jsonObject.getString("ID_Priority").equals("")){
+//
+//                                    isvalid = false
+//                                    Log.e(TAG, "123  " + jsonObject.getString("ID_Priority"))
+//                                    Config.snackBarWarning(context, view, "Please Select Priority")
+//
+//                                }else if (jsonObject.getString("ComplaintQty").equals("")){
+//
+//                                    isvalid = false
+//                                    Log.e(TAG, "1234  " + jsonObject.getString("ComplaintQty"))
+//                                    Config.snackBarWarning(context, view, "Please Enter Complaint Qty")
+//
+//                                }else if (jsonObject.getString("ID_ComplaintList").equals("")){
+//
+//                                    isvalid = false
+//                                    Log.e(TAG, "1234  " + jsonObject.getString("ID_ComplaintList"))
+//                                    Config.snackBarWarning(context, view, "Please Select Complaint Type")
+//                                }
+//
+//                                else {
+//                                    Log.e(TAG, "bfbbfbbffb  " + status_id)
+//                                  //  passvalue()
+//
+//                                }
+//                            }else {
+////                                validatestatus(view)
+//                        }
+//                      }
+//                    }
+//
+////                if (jsonObject.getString("isSelected").equals("1")) {
+////                    validatestatus(view)
+////                }
+//
+//                }
+////            if (jsonObject3.getString("isSelected").equals("1")) {
+////                    validatestatus(view)
+////                }
+//
+//                if (isvalid){
+////                    passvalue()
+//                    Log.e(TAG,"12345")
+//                }
+//                else{
+//                    Log.e(TAG,"12345  2")
+//                }
+//
+//
+//            } else {
+//              //  validatestatus(view)
+//            }
+//        }
+//        catch (e: Exception) {
+//            Log.e(TAG, "uuuuuuu  " + e.toString())
+//        }
+////            Log.e(TAG, "5555555555555  " + jsonObject5.getString("ProvideStandBy"))
+////           Log.e(TAG, "4444444444444  " + jsonObject5.getString("isSelected"))
+//
+//    }
 
     private fun Validation(view: View) {
         Log.e(TAG, "11111111 " + SubMode)
         try {
             Productdetails = JSONArray()
-//        prodInformationArrayList2 = JSONArray()
 
-//        val jsonObject3 = prodInformationArrayList2.getJSONObject(pos)
 
             if (status_id.equals("")){
                 Config.snackBarWarning(context, view, "Please Select Status")
@@ -3156,7 +3766,6 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
             else if (prodInformationArrayList2.length() > 0) {
 
-//            Log.e(TAG, "kkkkkkkkkkkkkkk  " + jsonObject3.getString("isSelected"))
                 var isvalid = true
 
                 for (i in 0 until prodInformationArrayList2.length()) {
@@ -3173,51 +3782,60 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                         if (jsonObject.getString("isSelected").equals("1")) {
                             Log.e(TAG, "ffffffffffff  " + jsonObject.getString("isSelected"))
-                            if (!jsonObject.getString("Quantity").equals("0")&&jsonObject.getString("ProvideStandBy").equals("1")) {
-                                Log.e(TAG, "ProvideStandBy  " + jsonObject.getString("isSelected"))
+//
+
+                            if (jsonObject.getString("ProvideStandBy").equals("1")) {
+
+                                Log.e(TAG, "ProvideStandBy12121  " + jsonObject.getString("ProvideStandBy"))
 //                                if (jsonObject.getString("ProvideStandBy").equals("1")) {
 
-                                    if (jsonObject.getString("Product").equals("")) {
+                                 if (jsonObject.getString("Quantity").equals("0")){
+                                    isvalid = false
+                                    Config.snackBarWarning(context, view, "Quantity is emplty")
 
-                                        isvalid = false
-                                        Config.snackBarWarning(context, view, "StandByProduct is emplty")
-                                    } else if (jsonObject.getString("SPQuantity").equals("")) {
+                                    } else if (jsonObject.getString("Product").equals("")) {
 
-                                        isvalid = false
-                                        Config.snackBarWarning(context, view, "StandByQuantity is emplty")
+                                    isvalid = false
+                                    Config.snackBarWarning(context, view, "StandByProduct is emplty")
+                                } else if (jsonObject.getString("SPQuantity").equals("")) {
 
-                                    } else if (jsonObject.getString("SPAmount").equals("")) {
-                                        isvalid = false
-                                        Config.snackBarWarning(context, view, "StandByAmount is emplty")
+                                    isvalid = false
+                                    Config.snackBarWarning(context, view, "StandByQuantity is emplty")
 
-                                    } else if (FK_BillType!!.equals("")) {
-                                        isvalid = false
-                                        Config.snackBarWarning(context, view, "Please Select Bill Type")
+                                } else if (jsonObject.getString("SPAmount").equals("")) {
+                                    isvalid = false
+                                    Config.snackBarWarning(context, view, "StandByAmount is emplty")
 
-                                    } else if (llpaymentmethodCount!!.equals("")) {
-                                        isvalid = false
-                                        Config.snackBarWarning(context, view, "Please Select Payment Method")
+                                } else if (FK_BillType!!.equals("")) {
+                                    isvalid = false
+                                    Config.snackBarWarning(context, view, "Please Select Bill Type")
 
-                                    } else {
-                                        passvalue()
-                                        Log.e(TAG, "yyyyyyyyyyyyy  ")
-                                    }
+                                } else if (llpaymentmethodCount!!.equals("")) {
+                                    isvalid = false
+                                    Config.snackBarWarning(context, view, "Please Select Payment Method")
+
+                                } else {
+//                                    passvalue()
+                                    Log.e(TAG, "yyyyyyyyyyyyy  ")
+
+                                }
 
 //                                }
 
-
-
-                        }else if (!jsonObject.getString("Quantity").equals("0")){
+                            }
+                            else if (jsonObject.getString("Quantity").equals("0")){
                                 isvalid = false
                                 Config.snackBarWarning(context, view, "Quantity is emplty")
                             }
 
-                            }
-
-
-//                        else{
+                        }
+                        else{
 //                            validatestatus(view)
-//                        }
+                            Log.e(TAG, "sucessss  ")
+////                            Log.e(TAG, "ffffffffffff  " + jsonObject.getString("isSelected"))
+////                            Log.e(TAG, "ffffffffffff  " + jsonObject.getString("Quantity"))
+////                            Log.e(TAG, "ffffffffffff  " + jsonObject.getString("ProvideStandBy"))
+                        }
                     }
 
 
@@ -3228,10 +3846,14 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                         {
 
                             Log.e(TAG, "prodInformationArrayList2 1234  " +prodInformationArrayList2 )
-//                            if (jsonObject.getString("isSelected").equals("1")) {
-                            if (jsonObject.getString("isSelectedDelivery").equals("1")) {
 
-                                Log.e(TAG, "nnnnnnnnn  " + jsonObject.getString("isSelectedDelivery"))
+                            if (TransMode!!.equals("INDA")) {    //sales
+
+                                Log.e(TAG, "nnnnnnnnn11221  " + TransMode)
+
+                                if (jsonObject.getString("isSelectedDelivery").equals("1")) {
+
+                                    Log.e(TAG, "nnnnnnnnn  " + jsonObject.getString("isSelectedDelivery"))
 //                                if (status_id!!.equals("")) {
 //
 //                                    isvalid = false
@@ -3239,34 +3861,90 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //                                    Config.snackBarWarning(context, view, "Please Select Status")
 //
 //                                }
-                                if (jsonObject.getString("ID_Priority").equals("")){
+                                    if (jsonObject.getString("ID_Priority").equals("")){
 
-                                    isvalid = false
-                                    Log.e(TAG, "123  " + jsonObject.getString("ID_Priority"))
-                                    Config.snackBarWarning(context, view, "Please Select Priority")
+                                        isvalid = false
+                                        Log.e(TAG, "123  " + jsonObject.getString("ID_Priority"))
+                                        Config.snackBarWarning(context, view, "Please Select Priority")
 
-                                }else if (jsonObject.getString("ComplaintQty").equals("")){
+                                    }else if (jsonObject.getString("ComplaintQty").equals("")){
 
-                                    isvalid = false
-                                    Log.e(TAG, "1234  " + jsonObject.getString("ComplaintQty"))
-                                    Config.snackBarWarning(context, view, "Please Enter Complaint Qty")
+                                        isvalid = false
+                                        Log.e(TAG, "1234  " + jsonObject.getString("ComplaintQty"))
+                                        Config.snackBarWarning(context, view, "Please Enter Complaint Qty")
 
-                                }else if (jsonObject.getString("ID_ComplaintList").equals("")){
+                                    }else if (jsonObject.getString("ID_ComplaintList").equals("")){
 
-                                    isvalid = false
-                                    Log.e(TAG, "1234  " + jsonObject.getString("ID_ComplaintList"))
-                                    Config.snackBarWarning(context, view, "Please Select Complaint Type")
-                                }
+                                        isvalid = false
+                                        Log.e(TAG, "1234  " + jsonObject.getString("ID_ComplaintList"))
+                                        Config.snackBarWarning(context, view, "Please Select Complaint Type")
+                                    }
 
-                                else {
-                                    Log.e(TAG, "bfbbfbbffb  " + status_id)
-                                  //  passvalue()
+                                    else {
+                                        Log.e(TAG, "bfbbfbbffb  " + status_id)
+                                        //  passvalue()
 
-                                }
-                            }else {
+                                    }
+                                }else {
 //                                validatestatus(view)
+
+                                }
+
+                            }else if (TransMode!!.equals("CUSA")) {   //service
+
+                                Log.e(TAG, "nnnnnnnn2323232  " + TransMode)
+                                Log.e(TAG, "ffffffffffff 12121 " + jsonObject.getString("isSelected"))
+
+                                if (jsonObject.getString("isSelected").equals("1")) {
+
+                                    Log.e(TAG, "ffffffffffff 12121 " + jsonObject.getString("isSelected"))
+//
+
+                                    Log.e(TAG, "ffffffffffff 12121 " + jsonObject.getString("ProvideStandBy"))
+                                    if (jsonObject.getString("ProvideStandBy").equals("1")) {
+
+                                        Log.e(TAG, "ffffffffffff 12121  " + jsonObject.getString("Quantity"))
+                                        if (jsonObject.getString("Quantity").equals("0")) {
+                                            isvalid = false
+                                            Config.snackBarWarning(context, view, "Quantity is emplty")
+
+                                            Log.e(TAG, "ffffffffffff 12121  " + jsonObject.getString("Product"))
+                                        } else if (jsonObject.getString("Product").equals("")) {
+
+                                            isvalid = false
+                                            Config.snackBarWarning(context, view, "StandByProduct is emplty")
+
+                                            Log.e(TAG, "ffffffffffff 12121  " + jsonObject.getString("SPQuantity"))
+                                        } else if (jsonObject.getString("SPQuantity").equals("0") || jsonObject.getString("SPQuantity").equals("")) {
+
+                                            isvalid = false
+                                            Config.snackBarWarning(context, view, "StandByQuantity is emplty")
+
+                                        }
+
+                                        else {
+//                                            isvalid = true
+                                             passvalue()
+                                            Log.e(TAG, "yyyyyyyyyyyyy  ")
+
+                                        }
+
+                                    } else if (jsonObject.getString("Quantity").equals("0")) {
+
+                                        isvalid = false
+                                        Config.snackBarWarning(context, view, "Quantity is emplty")
+                                    }
+
+                                } else {
+
+//                                    isvalid = true
+                                    passvalue()
+//                                   validatestatus(view)
+                                    Log.e(TAG, "sucessss  ")
+
+                                }
+                            }
                         }
-                      }
                     }
 
 //                if (jsonObject.getString("isSelected").equals("1")) {
@@ -3279,7 +3957,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //                }
 
                 if (isvalid){
-//                    passvalue()
+                    passvalue()
                     Log.e(TAG,"12345")
                 }
                 else{
@@ -3288,14 +3966,15 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
 
             } else {
-              //  validatestatus(view)
+                //  validatestatus(view)
+                Log.e(TAG,"12345  3")
             }
         }
         catch (e: Exception) {
             Log.e(TAG, "uuuuuuu  " + e.toString())
         }
 //            Log.e(TAG, "5555555555555  " + jsonObject5.getString("ProvideStandBy"))
-//           Log.e(TAG, "4444444444444  " + jsonObject5.getString("isSelected"))
+           Log.e(TAG, "4444444444444  ")
 
     }
 
@@ -3308,8 +3987,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             Config.snackBarWarning(context, view, "Please Select Status")
         } else {
             Log.e(TAG, "uuuuuuu  " + status_id)
-//            passvalue()
-            saveUpdatePickUpAndDelivery()
+            passvalue()
+//            saveUpdatePickUpAndDelivery()
 
         }
 

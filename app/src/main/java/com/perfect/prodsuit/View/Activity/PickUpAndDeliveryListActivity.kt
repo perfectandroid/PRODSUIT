@@ -82,6 +82,8 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
     var filterCustomer     : String? = ""
     var filterMobile       : String? = ""
     var filterDate         : String? = ""
+    var filterModule         : String? = ""
+    var filterArea         : String? = ""
     var strlatitude        : String? = ""
     var strlongitude       : String? = ""
     var clicksubmit        = ""
@@ -196,6 +198,8 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
             val tie_pTicketNumber = view.findViewById(R.id.tie_pTicketNumber)  as TextInputEditText
                 tie_pDate         = view.findViewById(R.id.tie_pDate)          as TextInputEditText
             val tie_Mobile1       = view.findViewById(R.id.tie_Mobile1)        as TextInputEditText
+            val tie_Modulefilter       = view.findViewById(R.id.tie_Modulefilter)        as TextInputEditText
+            val tie_Areafilter       = view.findViewById(R.id.tie_Areafilter)            as TextInputEditText
 
 
             if(SubMode!!.equals("1")){
@@ -232,6 +236,8 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
                 filterMobile       = tie_Mobile1!!.text!!.toString().toLowerCase().trim()
                 filterDate         = tie_pDate!!.text!!.toString().toLowerCase().trim()
                 filterTicketNumber = tie_pTicketNumber!!.text!!.toString().toLowerCase().trim()
+                filterArea         = tie_Areafilter!!.text!!.toString().toLowerCase().trim()
+                filterModule       = tie_Modulefilter!!.text!!.toString().toLowerCase().trim()
 
 
                 pickup_and_deliverysort = JSONArray()
@@ -241,17 +247,22 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
                     Log.e(TAG,"7788899999 @   "+jsonObject.getString("PickUpTime"))
 //                    Log.e(TAG,"7788899999 #    "+filterDate)
 
+//                    val dateee = "05/11/2023 12:00AM"
                     val filterDate2 = jsonObject.getString("PickUpTime")
-                    val inputFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy  KK:mma")
+                    val inputFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy hh:mma")
 
-                    Log.e(TAG,"778888888888 #    "+inputFormat)
+//                    Log.e(TAG,"778888888888 #    "+inputFormat)
 
                     val outputFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
                     val date = outputFormat.format(inputFormat.parse(filterDate2))
 
+                    Log.e(TAG,"778888888888 #    "+date)
+
                     if ((jsonObject.getString("ReferenceNo")!!.toLowerCase().trim().contains(filterTicketNumber!!))
                         && (jsonObject.getString("CustomerName")!!.toLowerCase().trim().contains(filterCustomer!!))
                         && (jsonObject.getString("Mobile")!!.toLowerCase().trim().contains(filterMobile!!))
+                        && (jsonObject.getString("Area")!!.toLowerCase().trim().contains(filterArea!!))
+                        && (jsonObject.getString("Module")!!.toLowerCase().trim().contains(filterModule!!))
                         && date.toLowerCase().trim().contains(filterDate!!)){
 
                            pickup_and_deliverysort.put(jsonObject)

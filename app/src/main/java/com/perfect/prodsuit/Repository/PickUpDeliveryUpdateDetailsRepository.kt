@@ -26,12 +26,12 @@ object PickUpDeliveryUpdateDetailsRepository {
     val PickUpDeliveryUpdateDetailsRepositorySetterGetter = MutableLiveData<PickUpDeliveryUpdateDetailsModel>()
     val TAG: String = "PickUpDeliveryUpdateDetailsRepository"
 
-    fun getServicesApiCall(context: Context,SubMode: String, ID_ProductDelivery: String): MutableLiveData<PickUpDeliveryUpdateDetailsModel> {
-        getPickupDeliveryCounts(context,SubMode,ID_ProductDelivery)
+    fun getServicesApiCall(context: Context,SubMode: String, ID_ProductDelivery: String, TransMode: String): MutableLiveData<PickUpDeliveryUpdateDetailsModel> {
+        getPickupDeliveryCounts(context,SubMode,ID_ProductDelivery,TransMode)
         return PickUpDeliveryUpdateDetailsRepositorySetterGetter
     }
 
-    private fun getPickupDeliveryCounts(context: Context,SubMode: String, ID_ProductDelivery: String) {
+    private fun getPickupDeliveryCounts(context: Context,SubMode: String, ID_ProductDelivery: String, TransMode: String) {
 
         try {
             PickUpDeliveryUpdateDetailsRepositorySetterGetter.value = PickUpDeliveryUpdateDetailsModel("")
@@ -71,6 +71,7 @@ object PickUpDeliveryUpdateDetailsRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_ProductDelivery", ProdsuitApplication.encryptStart(ID_ProductDelivery))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
+                requestObject1.put("TransMode", ProdsuitApplication.encryptStart(TransMode))
 
                 Log.e(TAG,"requestObject1   554122566   "+requestObject1)
                 Log.e(TAG,"ID_ProductDelivery   8756546   "+ID_ProductDelivery)
