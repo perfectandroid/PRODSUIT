@@ -89,6 +89,7 @@ class AttendanceReportAdapter(
                     intent.putExtra("name", holder.txtv_name.text.toString())
                     intent.putExtra("id", jsonObject1!!.getString("ID_EmployeeAttanceMarking"))
 
+
                     val inputFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
                     val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
 

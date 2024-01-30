@@ -5,6 +5,7 @@ import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,8 +18,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.AttendancePickerActivity
+import com.perfect.prodsuit.View.Activity.AttendanceReportListActivity
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 
 class AttendanceListAdapter (internal var context: Context, internal var jsonArray: JSONArray, internal var date :String):
@@ -73,11 +78,22 @@ class AttendanceListAdapter (internal var context: Context, internal var jsonArr
 
                 holder.im_mapview!!.setTag(position)
                 holder.im_mapview!!.setOnClickListener(View.OnClickListener {
-                    Config.disableClick(it)
+                   /* Config.disableClick(it)
                     clickListener!!.onClick(
                         position,
                         "LocationReport"
-                    )
+
+
+                    )*/
+
+                        val intent = Intent(context, AttendancePickerActivity::class.java)
+                        intent.putExtra("longi", jsonObject!!.getString("Longitude"))
+                        intent.putExtra("lati", jsonObject!!.getString("Lattitude"))
+                        intent.putExtra("loc", jsonObject!!.getString("LocationName"))
+
+                        context.startActivity(intent)
+
+
                 })
 
 
