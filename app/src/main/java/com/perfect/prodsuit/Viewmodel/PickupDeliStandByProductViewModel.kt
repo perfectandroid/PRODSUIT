@@ -7,7 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.PickupDeliStandByProductModel
 import com.perfect.prodsuit.Repository.PickupDeliStandByProductRespository
 
-class PickupDeliStandByProductViewModel : ViewModel(){
+class
+PickupDeliStandByProductViewModel : ViewModel(){
 
     var PickupDeliStandByProductData: MutableLiveData<PickupDeliStandByProductModel>? = null
 
