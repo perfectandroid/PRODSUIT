@@ -583,7 +583,8 @@ class LeadCorrectionActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                         ID_CustomerAssignment!!,
                         ID_CollectedBy!!,
                         ID_AuthorizationData!!,
-                        jsonproduct
+                        jsonproduct,
+                        LeadGenerationActivity.Customer_Mobile2!!
 
                     )!!.observe(
                         this,

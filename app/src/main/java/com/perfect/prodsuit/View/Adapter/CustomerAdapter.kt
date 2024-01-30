@@ -121,6 +121,7 @@ class CustomerAdapter (internal var context: Context, internal var jsonArray: JS
                 holder.txtEmail.text        = jsonObject!!.getString("CusEmail")
                 holder.txtMobile.text     = jsonObject!!.getString("CusPhnNo")
                 holder.txtAddress.text      = jsonObject!!.getString("CusAddress1")
+                Log.e(TAG,"LandNumber   1055656   "+jsonObject!!.getString("LandNumber"))
                 holder.lladpcustomer!!.setTag(position)
                 holder.lladpcustomer!!.setOnClickListener(View.OnClickListener {
                     clickListener!!.onClick(

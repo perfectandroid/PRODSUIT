@@ -6,7 +6,6 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
@@ -53,7 +52,6 @@ import java.io.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.log
 
 
 class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener,ItemClickListenerValue {
@@ -242,6 +240,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private var edtArea: EditText? = null
     private var edtPost: EditText? = null
     private var edtWhatsApp: EditText? = null
+    //.....new field add mobile no
+    private var edtMobileNumber: EditText? = null
     private var edtCompanyContact: EditText? = null
     private var imgPinSearch: ImageView? = null
 
@@ -418,6 +418,7 @@ private var custmoerAssignmentID : String? =null
         var Customer_Type: String? = ""
         var Customer_Name: String? = ""
         var Customer_Mobile: String? = ""
+        var Customer_Mobile2: String? = ""
         var Customer_Email: String? = ""
         var Customer_Address1: String? = ""
         var Customer_Address2: String? = ""
@@ -748,12 +749,14 @@ private var custmoerAssignmentID : String? =null
         Customer_Type = ""
         Customer_Name = ""
         Customer_Mobile = ""
+        Customer_Mobile2 = ""
         Customer_Email = ""
         Customer_Address1 = ""
         Customer_Address2 = ""
         edt_customer!!.setText("")
         edtCustname!!.setText("")
         edtCustphone!!.setText("")
+        edtMobileNumber!!.setText("")
         edtCustemail!!.setText("")
         edtCustaddress1!!.setText("")
         edtCustaddress2!!.setText("")
@@ -780,6 +783,7 @@ private var custmoerAssignmentID : String? =null
         edtArea!!.setText("")
         edtPost!!.setText("")
         edtWhatsApp!!.setText("")
+
         edtCompanyContact!!.setText("")
 
         ID_Category = "0"
@@ -996,6 +1000,9 @@ private var custmoerAssignmentID : String? =null
         edtCustname = findViewById<EditText>(R.id.edtCustname)
         edtCustemail = findViewById<EditText>(R.id.edtCustemail)
         edtCustphone = findViewById<EditText>(R.id.edtCustphone)
+
+        edtMobileNumber = findViewById<EditText>(R.id.edtMobile_number)
+
         edtCustaddress1 = findViewById<EditText>(R.id.edtCustaddress1)
         edtCustaddress2 = findViewById<EditText>(R.id.edtCustaddress2)
         edtCompanyName = findViewById<EditText>(R.id.edtCompanyName)
@@ -1011,6 +1018,7 @@ private var custmoerAssignmentID : String? =null
         edtArea = findViewById<EditText>(R.id.edtArea)
         edtPost = findViewById<EditText>(R.id.edtPost)
         edtWhatsApp = findViewById<EditText>(R.id.edtWhatsApp)
+
         edtCompanyContact = findViewById<EditText>(R.id.edtCompanyContact)
 
         imgPinSearch = findViewById<ImageView>(R.id.imgPinSearch)
@@ -4728,6 +4736,7 @@ private var custmoerAssignmentID : String? =null
         edtArea!!.setText("")
         edtPost!!.setText("")
         edtWhatsApp!!.setText("")
+      //  edtMobileNumber!!.setText("")
         edtCompanyContact!!.setText("")
     }
 
@@ -7227,6 +7236,9 @@ private var custmoerAssignmentID : String? =null
             Customer_Type = jsonObject.getString("Customer_Type")
             Customer_Name = jsonObject.getString("CusName")
             Customer_Mobile = jsonObject.getString("CusPhnNo")
+            Customer_Mobile2 = jsonObject.getString("LandNumber")
+
+
             Customer_Email = jsonObject.getString("CusEmail")
             Customer_Address1 = jsonObject.getString("CusAddress1")
             Customer_Address2 = jsonObject.getString("CusAddress2")
@@ -7235,6 +7247,7 @@ private var custmoerAssignmentID : String? =null
             actv_namTitle!!.setText(jsonObject.getString("CusNameTitle"))
             edtCustname!!.setText(jsonObject.getString("CusName"))
             edtCustphone!!.setText(jsonObject.getString("CusPhnNo"))
+            edtMobileNumber!!.setText(jsonObject.getString("LandNumber"))
             edtCustemail!!.setText(jsonObject.getString("CusEmail"))
             edtCustaddress1!!.setText(jsonObject.getString("CusAddress1"))
             edtCustaddress2!!.setText(jsonObject.getString("CusAddress2"))
@@ -8049,6 +8062,7 @@ private var custmoerAssignmentID : String? =null
             CusNameTitle = actv_namTitle!!.text.toString()
             Customer_Name = edtCustname!!.text.toString()
             Customer_Mobile = edtCustphone!!.text.toString()
+            Customer_Mobile2 = edtMobileNumber!!.text.toString()
             Customer_Email = edtCustemail!!.text.toString()
             strWhatsAppNo = edtWhatsApp!!.text.toString()
             strCompanyContact = edtCompanyContact!!.text.toString()
@@ -8125,6 +8139,7 @@ private var custmoerAssignmentID : String? =null
             CusNameTitle = actv_namTitle!!.text.toString()
             Customer_Name = edtCustname!!.text.toString()
             Customer_Mobile = edtCustphone!!.text.toString()
+            Customer_Mobile2 = edtMobileNumber!!.text.toString()
             Customer_Email = edtCustemail!!.text.toString()
             strWhatsAppNo = edtWhatsApp!!.text.toString()
             strCompanyContact = edtCompanyContact!!.text.toString()
@@ -8669,6 +8684,7 @@ private var custmoerAssignmentID : String? =null
                 dialogConfirmPop!!.findViewById(R.id.ll_CustomerDetail) as LinearLayout
             val ll_cust_name = dialogConfirmPop!!.findViewById(R.id.ll_cust_name) as LinearLayout
             val ll_cust_phone = dialogConfirmPop!!.findViewById(R.id.ll_cust_phone) as LinearLayout
+            val ll_mobile_number = dialogConfirmPop!!.findViewById(R.id.ll_mobile_number) as LinearLayout
             val ll_whats_app = dialogConfirmPop!!.findViewById(R.id.ll_whats_app) as LinearLayout
             val ll_company_contact =
                 dialogConfirmPop!!.findViewById(R.id.ll_company_contact) as LinearLayout
@@ -8682,6 +8698,7 @@ private var custmoerAssignmentID : String? =null
 
             val tvp_cust_name = dialogConfirmPop!!.findViewById(R.id.tvp_cust_name) as TextView
             val tvp_cust_phone = dialogConfirmPop!!.findViewById(R.id.tvp_cust_phone) as TextView
+            val tvp_mobile_number = dialogConfirmPop!!.findViewById(R.id.tvp_mobile_number) as TextView
             val tvp_whats_app = dialogConfirmPop!!.findViewById(R.id.tvp_whats_app) as TextView
             val tvp_company_contact =
                 dialogConfirmPop!!.findViewById(R.id.tvp_company_contact) as TextView
@@ -8848,6 +8865,10 @@ private var custmoerAssignmentID : String? =null
             if (edtCustphone!!.text.toString().equals("")) {
                 ll_cust_phone!!.visibility = View.GONE
             }
+            if (edtMobileNumber!!.text.toString().equals("")) {
+                ll_mobile_number!!.visibility = View.GONE
+            }
+
             if (edtWhatsApp!!.text.toString().equals("")) {
                 ll_whats_app!!.visibility = View.GONE
             }
@@ -9003,6 +9024,7 @@ private var custmoerAssignmentID : String? =null
             tvp_cust_name.text =
                 actv_namTitle!!.text.toString() + "  " + edtCustname!!.text.toString()
             tvp_cust_phone.text = edtCustphone!!.text.toString()
+            tvp_mobile_number.text = edtMobileNumber!!.text.toString()
             tvp_whats_app.text = edtWhatsApp!!.text.toString()
             tvp_company_contact.text = edtCompanyContact!!.text.toString()
             tvp_cust_address.text = edtCustaddress1!!.text.toString()
@@ -9110,6 +9132,7 @@ private var custmoerAssignmentID : String? =null
                         + "\n" + "ID_CustomerAssignment        : " + ID_CustomerAssignment
                         + "\n" + "Customer_Name      : " + Customer_Name
                         + "\n" + "Customer_Mobile    : " + Customer_Mobile
+                        + "\n" + "Customer_Mobile2    : " + Customer_Mobile2
                         + "\n" + "WhatsApp No        : " + strWhatsAppNo
                         + "\n" + "Company Contact    : " + strCompanyContact
                         + "\n" + "Customer_Email     : " + Customer_Email
@@ -9174,6 +9197,7 @@ private var custmoerAssignmentID : String? =null
                         Customer_Address1!!,
                         Customer_Address2!!,
                         Customer_Mobile!!,
+
                         Customer_Email!!,
                         strCompanyContact,
                         FK_Country,
@@ -9211,7 +9235,8 @@ private var custmoerAssignmentID : String? =null
                         ID_CustomerAssignment!!,
                         ID_CollectedBy!!,
                         ID_AuthorizationData!!,
-                        array_product_lead!!
+                        array_product_lead!!,
+                        Customer_Mobile2!!
                     )!!.observe(
                         this,
                         Observer { serviceSetterGetter ->
@@ -9345,6 +9370,8 @@ private var custmoerAssignmentID : String? =null
                         .show()
                 }
             }
+
+
         } catch (e: Exception) {
             Log.e(TAG, "Exception  226666    " + e.toString())
         }
