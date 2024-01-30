@@ -40,7 +40,7 @@ import org.json.JSONObject
 
 class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
 
-    val TAG : String = "ApprovalListActivity"
+    val TAG : String = "ApprovalListDetailActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
 

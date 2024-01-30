@@ -444,24 +444,34 @@ class AttendanceReportListActivity : AppCompatActivity() , View.OnClickListener,
 
     override fun onRestart() {
         super.onRestart()
-        serviceList = 0
 
-        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
-        val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        try {
 
+            serviceList = 0
 
-
-        var dates = tie_Date!!.text.toString()
-        val dateFrom = inputFormat.parse(dates)
-        // val dateFrom = inputFormat.parse("08-04-2022")
-        val strDate = outputFormat.format(dateFrom)
-
-
-        Log.e(TAG,"org3   "+strDate)
+            val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+            val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
 
 
 
-        getAttendanceReport(strDate!!)
+            var dates = tie_Date!!.text.toString()
+            val dateFrom = inputFormat.parse(dates)
+            // val dateFrom = inputFormat.parse("08-04-2022")
+            val strDate = outputFormat.format(dateFrom)
+
+
+            Log.e(TAG,"org3   "+strDate)
+
+
+
+            getAttendanceReport(strDate!!)
+
+        }
+        catch (e:Exception)
+        {
+
+        }
+
     }
     private fun openBottomDate() {
         // BottomSheet
