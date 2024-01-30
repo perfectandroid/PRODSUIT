@@ -16,12 +16,8 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Viewmodel.AssignedToWalkingViewModel
-import com.perfect.prodsuit.Viewmodel.CreateWalkingCustomerViewModel
 import com.perfect.prodsuit.Viewmodel.DashboardCommonViewModel
 import org.json.JSONArray
 import org.json.JSONObject

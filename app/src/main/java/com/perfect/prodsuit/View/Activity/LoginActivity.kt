@@ -429,6 +429,78 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
                                             CompanyCategoryEditer.putString("CompanyCategory", jobj.getString("CompanyCategory"))
                                             CompanyCategoryEditer.commit()
 
+                                            val ModuleListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF54, 0)
+                                            val ModuleListEditer = ModuleListSP.edit()
+                                            ModuleListEditer.putString("ModuleList", jobj.getString("ModuleList"))
+                                            ModuleListEditer.commit()
+
+                                            val FK_DepartmentSP = applicationContext.getSharedPreferences(Config.SHARED_PREF55, 0)
+                                            val FK_DepartmentEditer = FK_DepartmentSP.edit()
+                                            FK_DepartmentEditer.putString("FK_Department", jobj.getString("FK_Department"))
+                                            FK_DepartmentEditer.commit()
+
+                                            val DepartmentSP = applicationContext.getSharedPreferences(Config.SHARED_PREF56, 0)
+                                            val DepartmentEditer = DepartmentSP.edit()
+                                            DepartmentEditer.putString("Department", jobj.getString("Department"))
+                                            DepartmentEditer.commit()
+
+                                            val UtilityListSP = applicationContext.getSharedPreferences(Config.SHARED_PREF57, 0)
+                                            val UtilityListEditer = UtilityListSP.edit()
+                                            UtilityListEditer.putString("UtilityList", jobj.getString("UtilityList"))
+                                            UtilityListEditer.commit()
+
+                                            val LocLongitudeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF58, 0)
+                                            val LocLongitudeEditer = LocLongitudeSP.edit()
+                                            LocLongitudeEditer.putString("LocLongitude", jobj.getString("LocLongitude"))
+                                            LocLongitudeEditer.commit()
+
+                                            val LocLattitudeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF59, 0)
+                                            val LocLattitudeEditer = LocLattitudeSP.edit()
+                                            LocLattitudeEditer.putString("LocLattitude", jobj.getString("LocLattitude"))
+                                            LocLattitudeEditer.commit()
+
+
+                                            val LocLocationNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF60, 0)
+                                            val LocLocationNameEditer = LocLocationNameSP.edit()
+                                            LocLocationNameEditer.putString("LocLocationName", jobj.getString("LocLocationName"))
+                                            LocLocationNameEditer.commit()
+
+                                            val EnteredDateSP = applicationContext.getSharedPreferences(Config.SHARED_PREF61, 0)
+                                            val EnteredDateEditer = EnteredDateSP.edit()
+                                            EnteredDateEditer.putString("EnteredDate", jobj.getString("EnteredDate"))
+                                            EnteredDateEditer.commit()
+
+                                            val EnteredTimeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF62, 0)
+                                            val EnteredTimeEditer = EnteredTimeSP.edit()
+                                            EnteredTimeEditer.putString("EnteredTime", jobj.getString("EnteredTime"))
+                                            EnteredTimeEditer.commit()
+
+                                            val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)
+                                            val StatusEditer = StatusSP.edit()
+                                            StatusEditer.putString("Status", jobj.getString("Status"))
+                                            StatusEditer.commit()
+
+                                            val CRMDetailsSP = applicationContext.getSharedPreferences(Config.SHARED_PREF79, 0)
+                                            val CRMDetailsEditer = CRMDetailsSP.edit()
+                                            CRMDetailsEditer.putString("CRMDetails", jobj.getString("CRMDetails"))
+                                            CRMDetailsEditer.commit()
+
+                                            val FollowUpDetailsSP = applicationContext.getSharedPreferences(Config.SHARED_PREF80, 0)
+                                            val FollowUpDetailsEditer = FollowUpDetailsSP.edit()
+                                            FollowUpDetailsEditer.putString("FollowUpDetails", jobj.getString("FollowUpDetails"))
+                                            FollowUpDetailsEditer.commit()
+
+                                            val PSValueSP = applicationContext.getSharedPreferences(Config.SHARED_PREF81, 0)
+                                            val PSValueEditer = PSValueSP.edit()
+                                            PSValueEditer.putString("PSValue", jobj.getString("PSValue"))
+                                            PSValueEditer.commit()
+
+                                            val PnotificationIDSP = applicationContext.getSharedPreferences(Config.SHARED_PREF82, 0)
+                                            val PnotificationIDEditer = PnotificationIDSP.edit()
+                                            PnotificationIDEditer.putString("PnotificationID", "0")
+                                            PnotificationIDEditer.commit()
+
+
                                             val i = Intent(this@LoginActivity, OTPActivity::class.java)
                                             startActivity(i)
                                             finish()

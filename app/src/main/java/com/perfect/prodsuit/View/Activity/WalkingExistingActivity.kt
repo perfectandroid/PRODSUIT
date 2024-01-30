@@ -143,6 +143,7 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
     var ID_Category: String? = "0"
     var ID_Product: String? = ""
     var checkProject: String = "1"
+    var strProjectName: String = ""
 
     // Add Product 23-01-2024
 
@@ -626,6 +627,7 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
             strCustomer = tie_CustomerName!!.text.toString()
             strPhone = tie_Phone!!.text.toString()
            strDescription = tie_Description!!.text.toString()
+            strProjectName = tie_Project!!.text.toString()
 
 
             Log.i("response232","assignDate="+assignDate)
@@ -1056,12 +1058,15 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
 
                     for (k in 0 until assignedToList.length()) {
                         val jsonObject = assignedToList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("EmpName").length) {
-                            if (jsonObject.getString("EmpName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
-                                assignedToSortList.put(jsonObject)
-                            }
-
+                        //if (textlength <= jsonObject.getString("EmpName").length) {
+                        if (jsonObject.getString("EmpName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())
+                            || jsonObject.getString("DepartmentName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())
+                            || jsonObject.getString("DesignationName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())
+                            || jsonObject.getString("Branch")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())) {
+                            assignedToSortList.put(jsonObject)
                         }
+
+                        //}
                     }
 
                     Log.e(TAG,"assignedToSortList               7103    "+assignedToSortList)
@@ -1133,7 +1138,9 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                createWalkingCustomerViewModel.CreateWalkingCustomer(this,strCustomer!!,strPhone!!,ID_AssignedTo!!,strAssignedDate!!,voiceData!!,VoiceLabel!!,strDescription!!,array_walkingUpdate!!)!!.observe(
+                createWalkingCustomerViewModel.CreateWalkingCustomer(this,strCustomer!!,strPhone!!,ID_AssignedTo!!,strAssignedDate!!,voiceData!!,VoiceLabel!!,strDescription!!,array_walkingUpdate!!,ID_Category!!,
+                    ID_Product!!,
+                    strProjectName!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message

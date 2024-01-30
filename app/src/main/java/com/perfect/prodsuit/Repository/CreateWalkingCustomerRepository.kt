@@ -26,12 +26,12 @@ object CreateWalkingCustomerRepository {
     val TAG: String = "CreateWalkingCustomerRepository"
     private var progressDialog: ProgressDialog? = null
 
-    fun getServicesApiCall(context: Context,strCustomer : String,strPhone : String,ID_AssignedTo : String,strAssignedDate : String,strVoiceData : String,VoiceLabel:String,strDescription : String,leadByMobileNo : JSONArray): MutableLiveData<CreateWalkingCustomerModel> {
-        CreateWalkingCustomer(context, strCustomer,strPhone,ID_AssignedTo,strAssignedDate,strVoiceData,VoiceLabel,strDescription,leadByMobileNo)
+    fun getServicesApiCall(context: Context,strCustomer : String,strPhone : String,ID_AssignedTo : String,strAssignedDate : String,strVoiceData : String,VoiceLabel:String,strDescription : String,leadByMobileNo : JSONArray,ID_Category : String,ID_Product : String,strProjectName : String): MutableLiveData<CreateWalkingCustomerModel> {
+        CreateWalkingCustomer(context, strCustomer,strPhone,ID_AssignedTo,strAssignedDate,strVoiceData,VoiceLabel,strDescription,leadByMobileNo,ID_Category,ID_Product,strProjectName)
         return createWalkingCustomerSetterGetter
     }
 
-    private fun CreateWalkingCustomer(context: Context,strCustomer : String,strPhone : String,ID_AssignedTo : String,strAssignedDate : String,strVoiceData : String,VoiceLabel:String,strDescription : String,leadByMobileNo : JSONArray) {
+    private fun CreateWalkingCustomer(context: Context,strCustomer : String,strPhone : String,ID_AssignedTo : String,strAssignedDate : String,strVoiceData : String,VoiceLabel:String,strDescription : String,leadByMobileNo : JSONArray,ID_Category : String,ID_Product : String,strProjectName : String) {
         try {
             createWalkingCustomerSetterGetter.value =  CreateWalkingCustomerModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -66,6 +66,7 @@ object CreateWalkingCustomerRepository {
 
 //                {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","FK_Company":"1","UserAction":"1","TransMode":"",
 //                    "ID_CustomerAssignment":"0","CusName":"TestData","CusMobile":"0000000000","CaAssignedDate":"02/06/2023","FK_Employee":"2",
+//                    "FK_Product":"3","ProjectName":"","FK_Category":"4",
 //                    "CaDescription":"Collect information","FK_BranchCodeUser":"2","EntrBy":"pomjnhftb"}
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -78,6 +79,9 @@ object CreateWalkingCustomerRepository {
                 requestObject1.put("CusMobile", ProdsuitApplication.encryptStart(strPhone))
                 requestObject1.put("CaAssignedDate", ProdsuitApplication.encryptStart(strAssignedDate))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_AssignedTo))
+                requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
+                requestObject1.put("ProjectName", ProdsuitApplication.encryptStart(strProjectName))
+                requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
                 requestObject1.put("CaDescription", ProdsuitApplication.encryptStart(strDescription))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))

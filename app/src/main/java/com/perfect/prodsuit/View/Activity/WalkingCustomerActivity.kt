@@ -132,6 +132,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
     var ID_Category: String? = "0"
     var ID_Product: String? = ""
     var checkProject: String = "1"
+    var strProjectName: String = ""
 
     // Add Product 23-01-2024
 
@@ -803,6 +804,14 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
                 tv_callhistory  = layout.findViewById(R.id.tv_callhistory)
                 builder.setView(layout)
                 val alertDialog = builder.create()
+
+                if (array_sort.size <= 0){
+                    Log.e(TAG,"839991  Call History is empty")
+                    tv_callhistory!!.visibility = View.VISIBLE
+                }else{
+                    tv_callhistory!!.visibility = View.GONE
+                    Log.e(TAG,"839992  Call History")
+                }
                 sadapter = CallLogListAdapter(this@WalkingCustomerActivity, array_sort)
                 lvCustno!!.setAdapter(sadapter)
                 lvCustno!!.setOnItemClickListener(AdapterView.OnItemClickListener { parent, view, position, id ->
@@ -837,7 +846,9 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
 
                         if (array_sort.size <= 0){
                             Log.e(TAG,"839991  Call History is empty")
+                            tv_callhistory!!.visibility = View.VISIBLE
                         }else{
+                            tv_callhistory!!.visibility = View.GONE
                             Log.e(TAG,"839992  Call History")
                         }
                         sadapter = CallLogListAdapter(this@WalkingCustomerActivity, array_sort)
@@ -917,7 +928,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
         tie_Project!!.setText("")
 
         til_Product!!.visibility = View.VISIBLE
-        til_Project!!.visibility = View.VISIBLE
+        til_Project!!.visibility = View.GONE
 
 
 
@@ -1091,7 +1102,8 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
                      //   if (textlength <= jsonObject.getString("EmpName").length) {
                             if (jsonObject.getString("EmpName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())
                                 || jsonObject.getString("DepartmentName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())
-                                || jsonObject.getString("DesignationName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())) {
+                                || jsonObject.getString("DesignationName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())
+                                || jsonObject.getString("Branch")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())) {
                                 assignedToSortList.put(jsonObject)
                             }
 
@@ -1183,6 +1195,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
             strCustomer = tie_CustomerName!!.text.toString()
             strPhone = tie_Phone!!.text.toString()
             strDescription = tie_Description!!.text.toString()
+            strProjectName = tie_Project!!.text.toString()
 
             if (strCustomer.equals("")) {
                 Config.snackBars(context, v, "Enter Customer Name")
@@ -1229,7 +1242,10 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
                     voiceData!!,
                     VoiceLabel!!,
                     strDescription!!,
-                    array_walkingUpdate!!
+                    array_walkingUpdate!!,
+                    ID_Category!!,
+                    ID_Product!!,
+                    strProjectName!!
                 )!!.observe(
                     this,
                     Observer { serviceSetterGetter ->

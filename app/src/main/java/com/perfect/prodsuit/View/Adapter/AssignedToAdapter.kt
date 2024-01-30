@@ -39,6 +39,7 @@ class AssignedToAdapter (internal var context: Context, internal var jsonArray: 
                 holder.txtName.setText(jsonObject!!.getString("EmpName"))
                 holder.txtDesignationName.setText(jsonObject!!.getString("DesignationName"))
                 holder.txtDepartment.setText(jsonObject!!.getString("DepartmentName"))
+                holder.txtBranch.setText(jsonObject!!.getString("Branch"))
 
                 holder.llAssignedTo!!.setTag(position)
                 holder.llAssignedTo!!.setOnClickListener(View.OnClickListener {
@@ -72,12 +73,14 @@ class AssignedToAdapter (internal var context: Context, internal var jsonArray: 
         internal var txtName        : TextView
         internal var txtDesignationName        : TextView
         internal var txtDepartment        : TextView
+        internal var txtBranch        : TextView
         internal var llAssignedTo    : LinearLayout
         init {
             txtsino                  = v.findViewById<View>(R.id.txtsino) as TextView
             txtName               = v.findViewById<View>(R.id.txtName) as TextView
             txtDesignationName               = v.findViewById<View>(R.id.txtDesignationName) as TextView
             txtDepartment               = v.findViewById<View>(R.id.txtDepartment) as TextView
+            txtBranch               = v.findViewById<View>(R.id.txtBranch) as TextView
             llAssignedTo           = v.findViewById<View>(R.id.llAssignedTo) as LinearLayout
         }
     }
