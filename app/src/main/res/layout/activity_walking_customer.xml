@@ -137,7 +137,7 @@
                                 android:fontFamily="@font/myfont"
                                 app:endIconMode="custom"
                                 app:startIconDrawable="@drawable/svg_walk_customer"
-                                app:startIconTint="@color/textColor"
+                                app:startIconTint="@color/greydark"
                                 style="@style/Widget.App.TextInputLayout">
 
                                 <com.google.android.material.textfield.TextInputEditText
@@ -152,9 +152,9 @@
                                     android:editable="true"
                                     android:drawableTint="@color/textColor"
                                     android:fontFamily="@font/myfont"
-                                    android:textColor="@color/greydarks"
+                                    android:textColor="@color/greydark"
                                     android:drawablePadding="-10dp"
-                                    android:textStyle="normal"/>
+                                    android:textStyle="bold"/>
 
                             </com.google.android.material.textfield.TextInputLayout>
 
@@ -199,9 +199,9 @@
                                         android:paddingLeft="10dp"
                                         android:paddingTop="8dp"
                                         android:paddingBottom="8dp"
-                                        android:textColor="@color/greydarks"
+                                        android:textColor="@color/greydark"
                                         android:textSize="14dp"
-                                        android:textStyle="normal" />
+                                        android:textStyle="bold" />
 
                                 </com.google.android.material.textfield.TextInputLayout>
                                 <ImageView
@@ -355,9 +355,9 @@
                                     android:gravity="center_vertical"
                                     android:paddingTop="1dp"
                                     android:paddingBottom="1dp"
-                                    android:textColor="@color/greydarks"
+                                    android:textColor="@color/greydark"
                                     android:textSize="14dp"
-                                    android:textStyle="normal" />
+                                    android:textStyle="bold" />
 
                             </com.google.android.material.textfield.TextInputLayout>
 
@@ -389,9 +389,9 @@
                                     android:gravity="center_vertical"
                                     android:paddingTop="1dp"
                                     android:paddingBottom="1dp"
-                                    android:textColor="@color/greydarks"
+                                    android:textColor="@color/greydark"
                                     android:textSize="14dp"
-                                    android:textStyle="normal" />
+                                    android:textStyle="bold" />
 
                             </com.google.android.material.textfield.TextInputLayout>
 
@@ -424,9 +424,9 @@
                                     android:gravity="center_vertical"
                                     android:paddingTop="1dp"
                                     android:paddingBottom="1dp"
-                                    android:textColor="@color/greydarks"
+                                    android:textColor="@color/greydark"
                                     android:textSize="14dp"
-                                    android:textStyle="normal" />
+                                    android:textStyle="bold" />
 
                             </com.google.android.material.textfield.TextInputLayout>
 
@@ -454,7 +454,6 @@
                                     android:drawablePadding="-10dp"
                                     android:drawableTint="@color/textColor"
                                     android:editable="false"
-
                                     android:focusableInTouchMode="false"
                                     android:fontFamily="@font/myfont"
                                     android:gravity="center_vertical"
@@ -529,9 +528,9 @@ android:visibility="gone"
                                     android:editable="true"
                                     android:drawableTint="@color/textColor"
                                     android:fontFamily="@font/myfont"
-                                    android:textColor="@color/greydarks"
+                                    android:textColor="@color/greydark"
                                     android:drawablePadding="-10dp"
-                                    android:textStyle="normal"/>
+                                    android:textStyle="bold"/>
 
                             </com.google.android.material.textfield.TextInputLayout>
 

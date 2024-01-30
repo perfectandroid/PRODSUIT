@@ -11,8 +11,8 @@ class PickUpDeliveryUpdateDetailsViewModel : ViewModel(){
 
     var PickUpDeliveryUpdateDetailsData: MutableLiveData<PickUpDeliveryUpdateDetailsModel>? = null
 
-    fun getPickUpDeliveryUpdateDetails(context: Context,SubMode: String, ID_ProductDelivery: String) : LiveData<PickUpDeliveryUpdateDetailsModel>? {
-        PickUpDeliveryUpdateDetailsData = PickUpDeliveryUpdateDetailsRepository.getServicesApiCall(context,SubMode,ID_ProductDelivery)
+    fun getPickUpDeliveryUpdateDetails(context: Context,SubMode: String, ID_ProductDelivery: String, TransMode: String) : LiveData<PickUpDeliveryUpdateDetailsModel>? {
+        PickUpDeliveryUpdateDetailsData = PickUpDeliveryUpdateDetailsRepository.getServicesApiCall(context,SubMode,ID_ProductDelivery,TransMode)
         return PickUpDeliveryUpdateDetailsData
     }
 }

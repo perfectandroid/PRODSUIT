@@ -27,12 +27,12 @@ object DeliveryInformationRepository {
     val deliveryInfromationSetterGetter = MutableLiveData<DeliveryInformationModel>()
     val TAG: String = "DeliveryInformationRepository"
 
-    fun getServicesApiCall(context: Context, SubMode: String, ID_ProductDelivery: String): MutableLiveData<DeliveryInformationModel> {
-        getDeliveryInformation(context, SubMode, ID_ProductDelivery)
+    fun getServicesApiCall(context: Context, SubMode: String, ID_ProductDelivery: String, TransMode: String): MutableLiveData<DeliveryInformationModel> {
+        getDeliveryInformation(context, SubMode, ID_ProductDelivery, TransMode)
         return deliveryInfromationSetterGetter
     }
 
-    private fun getDeliveryInformation(context: Context,SubMode: String, ID_ProductDelivery: String) {
+    private fun getDeliveryInformation(context: Context,SubMode: String, ID_ProductDelivery: String, TransMode: String) {
 
         try {
             deliveryInfromationSetterGetter.value = DeliveryInformationModel("")
@@ -72,6 +72,7 @@ object DeliveryInformationRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_ProductDelivery", ProdsuitApplication.encryptStart(ID_ProductDelivery))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
+                requestObject1.put("TransMode", ProdsuitApplication.encryptStart(TransMode))
 
                 Log.e(TAG,"requestObject1   11111122222   "+requestObject1)
                 Log.e(TAG,"ID_ProductDelivery   875625  "+ID_ProductDelivery)

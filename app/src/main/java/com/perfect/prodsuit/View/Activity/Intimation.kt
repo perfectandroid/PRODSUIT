@@ -2290,8 +2290,9 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             dialogFollowupType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyFollowupType =
                 dialogFollowupType!!.findViewById(R.id.recyFollowupType) as RecyclerView
+            recyFollowupType!!.visibility=View.VISIBLE
             val etsearch = dialogFollowupType!!.findViewById(R.id.etsearch) as EditText
-
+            val txt_nodata = dialogFollowupType!!.findViewById(R.id.txt_nodata) as TextView
             followUpTypeSort = JSONArray()
             for (k in 0 until followUpTypeArrayList.length()) {
                 val jsonObject = followUpTypeArrayList.getJSONObject(k)
@@ -2331,11 +2332,24 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
                         }
                     }
+                    if (followUpTypeSort.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recyFollowupType!!.visibility=View.VISIBLE
+                        Log.e(TAG, "followUpTypeSort               7103    " + followUpTypeSort)
+                        val adapter = FollowupTypeAdapter(this@Intimation, followUpTypeSort)
+                        recyFollowupType!!.adapter = adapter
+                        adapter.setClickListener(this@Intimation)
+                    }
+                    else{
 
-                    Log.e(TAG, "followUpTypeSort               7103    " + followUpTypeSort)
-                    val adapter = FollowupTypeAdapter(this@Intimation, followUpTypeSort)
-                    recyFollowupType!!.adapter = adapter
-                    adapter.setClickListener(this@Intimation)
+                        txt_nodata.visibility=View.VISIBLE
+                        recyFollowupType!!.visibility=View.GONE
+                    }
+//                    Log.e(TAG, "followUpTypeSort               7103    " + followUpTypeSort)
+//                    val adapter = FollowupTypeAdapter(this@Intimation, followUpTypeSort)
+//                    recyFollowupType!!.adapter = adapter
+//                    adapter.setClickListener(this@Intimation)
                 }
             })
 
@@ -2575,7 +2589,9 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             dialogArea!!.setContentView(R.layout.area_list_popup)
             dialogArea!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             val recycArea = dialogArea!!.findViewById(R.id.recycArea) as RecyclerView
+            recycArea.visibility=View.VISIBLE
             val etsearch = dialogArea!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogArea!!.findViewById(R.id.txt_nodata) as TextView
 
             areaSort = JSONArray()
             for (k in 0 until areaArrayList.length()) {
@@ -2617,10 +2633,25 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                         }
                     }
 
-                    Log.e(TAG, "areaSort               7103    " + areaSort)
-                    val adapter = AreaDetailAdapter(this@Intimation, areaSort)
-                    recycArea!!.adapter = adapter
-                    adapter.setClickListener(this@Intimation)
+                    if (areaSort.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recycArea!!.visibility=View.VISIBLE
+
+                        Log.e(TAG, "areaSort               7103    " + areaSort)
+                        val adapter = AreaDetailAdapter(this@Intimation, areaSort)
+                        recycArea!!.adapter = adapter
+                        adapter.setClickListener(this@Intimation)
+                    }
+                    else{
+                        txt_nodata.visibility=View.VISIBLE
+                        recycArea!!.visibility=View.GONE
+                    }
+
+//                    Log.e(TAG, "areaSort               7103    " + areaSort)
+//                    val adapter = AreaDetailAdapter(this@Intimation, areaSort)
+//                    recycArea!!.adapter = adapter
+//                    adapter.setClickListener(this@Intimation)
                 }
             })
 
@@ -2845,6 +2876,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             dialogEmployee!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyEmployee = dialogEmployee!!.findViewById(R.id.recyEmployee) as RecyclerView
             val etsearch = dialogEmployee!!.findViewById(R.id.etsearch) as EditText
+            recyEmployee!!.visibility=View.VISIBLE
+            val txt_nodata = dialogEmployee!!.findViewById(R.id.txt_nodata) as TextView
 
             employeeSort = JSONArray()
             for (k in 0 until employeeArrayList.length()) {
@@ -2886,10 +2919,25 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                         }
                     }
 
-                    Log.e(TAG, "employeeSort               7103    " + employeeSort)
-                    val adapter = EmployeeAdapter(this@Intimation, employeeSort)
-                    recyEmployee!!.adapter = adapter
-                    adapter.setClickListener(this@Intimation)
+                    if (employeeSort.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recyEmployee!!.visibility=View.VISIBLE
+                        Log.e(TAG, "employeeSort               7103    " + employeeSort)
+                        val adapter = EmployeeAdapter(this@Intimation, employeeSort)
+                        recyEmployee!!.adapter = adapter
+                        adapter.setClickListener(this@Intimation)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recyEmployee!!.visibility=View.GONE
+                    }
+
+//                    Log.e(TAG, "employeeSort               7103    " + employeeSort)
+//                    val adapter = EmployeeAdapter(this@Intimation, employeeSort)
+//                    recyEmployee!!.adapter = adapter
+//                    adapter.setClickListener(this@Intimation)
                 }
             })
 
@@ -2979,10 +3027,11 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             dialogLeadinfo!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
 
             recy_comm = dialogLeadinfo!!.findViewById(R.id.recy_comm) as RecyclerView
+            recy_comm!!.visibility=View.VISIBLE
             val etsearch = dialogLeadinfo!!.findViewById(R.id.etsearch) as EditText
             val txt_header = dialogLeadinfo!!.findViewById(R.id.txt_header) as TextView
-
-            txt_header.setText("Lead From Info")
+            val txt_nodata = dialogLeadinfo!!.findViewById(R.id.txt_nodata) as TextView
+            txt_header.setText("Lead From ")
 
             leadfromInfosort = JSONArray()
             for (k in 0 until leadfromInfoArrayList.length()) {
@@ -3022,10 +3071,26 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                         }
                     }
 
-                    Log.e(TAG, "leadfromInfosort               7103    " + leadfromInfosort)
-                    val adapter = LeadFromInfoAdapter(this@Intimation, leadfromInfosort)
-                    recy_comm!!.adapter = adapter
-                    adapter.setClickListener(this@Intimation)
+                    if (leadfromInfosort.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recy_comm!!.visibility=View.VISIBLE
+
+                        Log.e(TAG, "leadfromInfosort               7103    " + leadfromInfosort)
+                        val adapter = LeadFromInfoAdapter(this@Intimation, leadfromInfosort)
+                        recy_comm!!.adapter = adapter
+                        adapter.setClickListener(this@Intimation)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recy_comm!!.visibility=View.GONE
+                    }
+
+//                    Log.e(TAG, "leadfromInfosort               7103    " + leadfromInfosort)
+//                    val adapter = LeadFromInfoAdapter(this@Intimation, leadfromInfosort)
+//                    recy_comm!!.adapter = adapter
+//                    adapter.setClickListener(this@Intimation)
                 }
             })
 
@@ -3125,8 +3190,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             val etsearch = dialogProdCat!!.findViewById(R.id.etsearch) as EditText
             val llsearch = dialogProdCat!!.findViewById(R.id.llsearch) as LinearLayout
 //            llsearch!!.visibility=View.GONE
-
-
+            recyProdCategory!!.visibility=View.VISIBLE
+            val txt_nodata = dialogProdCat!!.findViewById(R.id.txt_nodata) as TextView
             prodCatSort = JSONArray()
             for (k in 0 until prodCategoryArrayList.length()) {
                 val jsonObject = prodCategoryArrayList.getJSONObject(k)
@@ -3167,11 +3232,27 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                         }
                     }
 
-                    Log.e(TAG, "prodCategorySort               7103    " + prodCatSort)
-                    val adapter =
-                        ProductCategoryAdapter1(this@Intimation, prodCatSort)
-                    recyProdCategory!!.adapter = adapter
-                    adapter.setClickListener(this@Intimation)
+                    if (prodCatSort.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recyProdCategory!!.visibility=View.VISIBLE
+
+                        Log.e(TAG, "prodCategorySort               7103    " + prodCatSort)
+                        val adapter =
+                            ProductCategoryAdapter1(this@Intimation, prodCatSort)
+                        recyProdCategory!!.adapter = adapter
+                        adapter.setClickListener(this@Intimation)
+                    }
+                    else{
+                        txt_nodata.visibility=View.VISIBLE
+                        recyProdCategory!!.visibility=View.GONE
+                    }
+
+//                    Log.e(TAG, "prodCategorySort               7103    " + prodCatSort)
+//                    val adapter =
+//                        ProductCategoryAdapter1(this@Intimation, prodCatSort)
+//                    recyProdCategory!!.adapter = adapter
+//                    adapter.setClickListener(this@Intimation)
                 }
             })
 
@@ -3297,8 +3378,9 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             dialogeLeadSource!!.setContentView(R.layout.source_lead)
             dialogeLeadSource!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             source_lead = dialogeLeadSource!!.findViewById(R.id.source_lead) as RecyclerView
+            source_lead!!.visibility=View.VISIBLE
             val etsearch = dialogeLeadSource!!.findViewById(R.id.etsearch) as EditText
-
+            val txt_nodata = dialogeLeadSource!!.findViewById(R.id.txt_nodata) as TextView
             leadSorceSort = JSONArray()
             for (k in 0 until leadSourceList.length()) {
                 val jsonObject = leadSourceList.getJSONObject(k)
@@ -3338,10 +3420,26 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                         }
                     }
 
-                    Log.e(TAG, "leadfromInfosort               7103    " + leadSorceSort)
-                    val adapter = LeadSourceAdapter(this@Intimation, leadSorceSort)
-                    source_lead!!.adapter = adapter
-                    adapter.setClickListener(this@Intimation)
+                    if (leadSorceSort.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        source_lead!!.visibility=View.VISIBLE
+
+                        Log.e(TAG, "leadfromInfosort               7103    " + leadSorceSort)
+                        val adapter = LeadSourceAdapter(this@Intimation, leadSorceSort)
+                        source_lead!!.adapter = adapter
+                        adapter.setClickListener(this@Intimation)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        source_lead!!.visibility=View.GONE
+                    }
+
+//                    Log.e(TAG, "leadfromInfosort               7103    " + leadSorceSort)
+//                    val adapter = LeadSourceAdapter(this@Intimation, leadSorceSort)
+//                    source_lead!!.adapter = adapter
+//                    adapter.setClickListener(this@Intimation)
                 }
             })
 

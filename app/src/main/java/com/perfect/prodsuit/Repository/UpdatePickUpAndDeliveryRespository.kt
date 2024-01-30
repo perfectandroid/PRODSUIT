@@ -67,7 +67,8 @@ object UpdatePickUpAndDeliveryRespository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_Company = context.getSharedPreferences(Config.SHARED_PREF39, 0)
-                val EntrBy     = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_BranchCodeUserSP     = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val EntrBy     = context.getSharedPreferences(Config.SHARED_PREF40, 0)
 
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_Company.getString("FK_Company", null)))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -78,6 +79,7 @@ object UpdatePickUpAndDeliveryRespository {
                 requestObject1.put("PdfDeliveryTime", ProdsuitApplication.encryptStart(PickDeliveryTime))
                 requestObject1.put("PdfDeliveryDate", ProdsuitApplication.encryptStart(PickDeliveryDate))
                 requestObject1.put("Remark", ProdsuitApplication.encryptStart(remark))
+                requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
                 requestObject1.put("FK_BillType", ProdsuitApplication.encryptStart(FK_BillType))
                 requestObject1.put("Status", (Status))
 

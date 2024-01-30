@@ -310,7 +310,7 @@
             android:textSize="12dp"
             android:paddingLeft="4dp"
             android:fontFamily="@font/myfont"
-            android:text="Employee Notes"
+            android:text="Employee Remarks"
             android:textColor="@color/greydarks"
             android:layout_centerVertical="true" />
 

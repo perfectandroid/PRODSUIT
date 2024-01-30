@@ -9,6 +9,7 @@ import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -64,6 +65,8 @@ import java.io.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.max
+import kotlin.math.min
 
 
 class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListener,
@@ -253,6 +256,10 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     var leadInfo = 0
     var leadInfoCount = 0
 
+//    private var mScaleFactor = 1.0f
+//    private lateinit var mScaleGestureDetector: ScaleGestureDetector
+    private lateinit var image: ImageView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -263,6 +270,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         context = this@AccountDetailsActivity
         val builder = StrictMode.VmPolicy.Builder()
         StrictMode.setVmPolicy(builder.build())
+
+//        mScaleGestureDetector = ScaleGestureDetector(this, ScaleListener())
 
         leadHistoryViewModel = ViewModelProvider(this).get(LeadHistoryViewModel::class.java)
         leadDeleteReasonViewModel = ViewModelProvider(this).get(LeadDeleteReasonViewModel::class.java)
@@ -2914,6 +2923,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
 
         try {
+
 //            val inflater = LayoutInflater.from(this@AccountDetailsActivity)
 //            val inflatedLayout1: View = inflater.inflate(R.layout.activity_location, null, false)
 //            llMainDetail!!.addView(inflatedLayout1);
@@ -3110,6 +3120,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                                         crdv_2!!.setOnClickListener(View.OnClickListener {
                                             zoomImage(stream)
                                         })
+
                                     }
 
                                 }
@@ -3155,11 +3166,44 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         val dialogView: View = inflater.inflate(R.layout.alert_image_viewer, null)
         dialogBuilder.setView(dialogView)
 
-        val image = dialogView.findViewById<View>(R.id.id_image) as ImageView
+        image = dialogView.findViewById<View>(R.id.id_image) as ImageView
         Glide.with(this) .load(stream.toByteArray()).into(image!!)
         val alertDialog = dialogBuilder.create()
         alertDialog.show()
     }
+
+//    override fun onTouchEvent(event: MotionEvent): Boolean {
+//        scaleGestureDetector.onTouchEvent(event)
+//        return true
+//    }
+//
+//    private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+//        override fun onScale(detector: ScaleGestureDetector): Boolean {
+//            val scaleFactor = detector.scaleFactor
+//            matrix.postScale(scaleFactor, scaleFactor, detector.focusX, detector.focusY)
+//            image.imageMatrix = matrix
+//            return true
+//        }
+//    }
+
+//    override fun onTouchEvent(motionEvent: MotionEvent): Boolean {
+//        mScaleGestureDetector.onTouchEvent(motionEvent)
+//        return true
+//
+//        Log.e(TAG,"Ontouch  ")
+//    }
+//
+//    private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+//        override fun onScale(scaleGestureDetector: ScaleGestureDetector): Boolean {
+//            mScaleFactor *= scaleGestureDetector.scaleFactor
+//            mScaleFactor = max(0.1f, min(mScaleFactor, 10.0f))
+//            image!!.scaleX = mScaleFactor
+//            image!!.scaleY = mScaleFactor
+//            return true
+//
+//            Log.e(TAG,"Ontouch  2")
+//        }
+//    }
 
     fun ByteArrayToBitmap(byteArray: ByteArray): Bitmap {
         val arrayInputStream = ByteArrayInputStream(byteArray)
