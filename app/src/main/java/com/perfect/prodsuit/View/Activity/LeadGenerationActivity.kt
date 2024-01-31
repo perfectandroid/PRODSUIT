@@ -54,7 +54,9 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener,ItemClickListenerValue {
+class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener,ItemClickListenerValue
+{
+    var strGsValue = ""
     lateinit var cusNameSort: JSONArray
 
     var saveCount: Int = 0
@@ -385,12 +387,12 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private var phoneNo: String? = null
     private var cursor: Cursor? = null
     private var imvContactbook: ImageView? = null
-//    private var adapter :  ArrayAdapter? = null
-private var voicedataByte : ByteArray? =null
-private var voiceString : String? =null
+    //    private var adapter :  ArrayAdapter? = null
+    private var voicedataByte : ByteArray? =null
+    private var voiceString : String? =null
     //314400
-private var voiceCheckID : String? = "0"
-private var custmoerAssignmentID : String? =null
+    private var voiceCheckID : String? = "0"
+    private var custmoerAssignmentID : String? =null
     private var playbtn: ImageView? = null
     private var pausebtn: ImageView? = null
     private var lotti_play: LottieAnimationView? = null
@@ -490,6 +492,7 @@ private var custmoerAssignmentID : String? =null
     }
 
     var countRequestCount = 0
+    var countRequestCount1 = 0
     var requestLicenceCount = 0
     var floorcount = 0
 
@@ -586,10 +589,13 @@ private var custmoerAssignmentID : String? =null
         //   searchNameTitle = resources.getStringArray(R.array.array_NameTitle)
         searchNameTitle =
             arrayOf("Mr. ", "Mrs. ", "Miss. ", "M/s. ", "Dr. ", "Ms. ", "Fr. ", "Sr. ")
-     //    getCalendarId(context)
+        //    getCalendarId(context)
         checkAttendance()
         clearData()
         getLeadRequestLicences()
+
+        Log.e(TAG,"req flag 76787  ="+strGsValue)
+
         DecimelFormatters.setDecimelPlace(edtAmount!!)
         switchTransfer!!.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -671,11 +677,16 @@ private var custmoerAssignmentID : String? =null
                             Log.e(TAG, "msg   5291   " + msg)
                             if (jObject.getString("StatusCode") == "0") {
                                 val jobjt = jObject.getJSONObject("GenralSettingsDetails")
-                                var strGsValue = jobjt.getString("GsValue")
+                                 strGsValue = jobjt.getString("GsValue")
+                             //    strGsValue = "false"
                                 Log.e(TAG, "strGsValue   5292   " + strGsValue)
                                 if (strGsValue.equals("true")) {
                                     Log.e(TAG, "strGsValue   52921   " + strGsValue)
                                     cardLeadRequest!!.visibility = View.VISIBLE
+
+                                    countRequestCount1=0
+                                    getRequestDetails1()
+
                                 } else {
                                     Log.e(TAG, "strGsValue   52922   " + strGsValue)
                                     cardLeadRequest!!.visibility = View.GONE
@@ -731,10 +742,10 @@ private var custmoerAssignmentID : String? =null
 //         pausePosition1 =0
         voiceString= ""
         voiceRequestMode="1"
-       // lotti_play!!.pauseAnimation()
+        // lotti_play!!.pauseAnimation()
         if (player1 != null) {
             player1!!.release()
-           // lotti_play!!.pauseAnimation()
+            // lotti_play!!.pauseAnimation()
             player1 = null
             stopPlayerService()
         }
@@ -1195,6 +1206,7 @@ private var custmoerAssignmentID : String? =null
 
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onClick(v: View) {
         when (v.id) {
             R.id.imback -> {
@@ -1243,6 +1255,8 @@ private var custmoerAssignmentID : String? =null
                     mediaTypeMode = "1"
                     uploadImageMode = "1"
 
+                    llLeadRequest!!.visibility=View.GONE
+
                     hideViews()
                 }
             }
@@ -1272,6 +1286,7 @@ private var custmoerAssignmentID : String? =null
                     mediaTypeMode = "1"
                     uploadImageMode = "1"
 
+                    llLeadRequest!!.visibility=View.GONE
                     hideViews()
                 }
             }
@@ -1296,7 +1311,7 @@ private var custmoerAssignmentID : String? =null
                     leadByMode = "1"
                     mediaTypeMode = "1"
                     uploadImageMode = "1"
-
+                    llLeadRequest!!.visibility=View.GONE
                     hideViews()
                 }
             }
@@ -1522,6 +1537,7 @@ private var custmoerAssignmentID : String? =null
                     rcylisting!!.adapter = adapter
                     adapter.setClickListener(this@LeadGenerationActivity)
 
+                    llLeadRequest!!.visibility=View.GONE
                     hideViews()
                 }
 
@@ -1548,7 +1564,7 @@ private var custmoerAssignmentID : String? =null
                     leadByMode = "1"
                     mediaTypeMode = "1"
                     uploadImageMode = "1"
-
+                    llLeadRequest!!.visibility=View.GONE
                     hideViews()
 
                 }
@@ -1602,12 +1618,45 @@ private var custmoerAssignmentID : String? =null
             }
 
             R.id.tv_LeadRequestClick -> {
+                Log.e(TAG,"leadRequestMode 546546="+leadRequestMode)
                 //  rrrr
-                Config.disableClick(v)
+            //    Config.disableClick(v)
+
+                if(llLeadRequest!!.visibility==View.VISIBLE)
+                {
+                    llLeadRequest!!.visibility = View.GONE
+                }
+                else
+                {
+                    llLeadRequest!!.visibility = View.VISIBLE
+                    //leadfromMode = "0"
+                    voiceRequestMode = "1"
+                    custDetailMode = "1"
+                    companyNameMode = "1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "1"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadRequestMode = "0"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+                       hideViews()
+
+                    countRequestCount = 0
+                    getRequestDetails(v)
+                }
+
+
+                /*
                 if (leadRequestMode.equals("0")) {
                     llLeadRequest!!.visibility = View.GONE
                     leadRequestMode = "1"
-                } else {
+                }
+                else
+                {
                     llLeadRequest!!.visibility = View.VISIBLE
                     //leadfromMode = "0"
                     voiceRequestMode = "1"
@@ -1628,10 +1677,12 @@ private var custmoerAssignmentID : String? =null
                     countRequestCount = 0
                     getRequestDetails(v)
                 }
+
+                */
             }
             R.id.tv_voiceRequestClick -> {
 
-             //   Config.disableClick(v)
+                //   Config.disableClick(v)
                 if (voiceRequestMode.equals("0")) {
                     llVoiceRequest!!.visibility = View.GONE
                     voiceRequestMode = "1"
@@ -1652,7 +1703,7 @@ private var custmoerAssignmentID : String? =null
                     leadByMode = "1"
                     mediaTypeMode = "1"
                     uploadImageMode = "1"
-
+                    llLeadRequest!!.visibility = View.GONE
                     hideViews()
 
                 }
@@ -1754,7 +1805,7 @@ private var custmoerAssignmentID : String? =null
 //                getVoiceNote(custmoerAssignmentID)
 
                 Log.i("response55","voice le="+voiceString!!.length)
-           //     playvoiceNote(voiceString!!)
+                //     playvoiceNote(voiceString!!)
 
 
                 //314400
@@ -1796,6 +1847,8 @@ private var custmoerAssignmentID : String? =null
                     leadByMode = "1"
                     mediaTypeMode = "1"
                     uploadImageMode = "1"
+
+                    llLeadRequest!!.visibility=View.GONE
                     hideViews()
                 }
             }
@@ -1946,6 +1999,8 @@ private var custmoerAssignmentID : String? =null
                     leadByMode = "1"
                     mediaTypeMode = "1"
                     uploadImageMode = "0"
+
+                    llLeadRequest!!.visibility = View.GONE
 
                     hideViews()
                 }
@@ -2230,7 +2285,7 @@ private var custmoerAssignmentID : String? =null
 
             R.id.add_product_btn -> {
 //                clickMode = "1"
-             //   checkProject="1"
+                //   checkProject="1"
                 var clickmode = multipleProductValidation(v)
 
                 Log.i("resperr","clickMode="+clickMode)
@@ -2317,11 +2372,27 @@ private var custmoerAssignmentID : String? =null
                 if (player1 != null) {
                     player1!!.release()
 
-                     lotti_play!!.pauseAnimation()
+                    lotti_play!!.pauseAnimation()
                     player1 = null
                     stopPlayerService()
                 }
                 clearData()
+                Log.e(TAG, "strGsValue   52921 6576  " + strGsValue)
+                if (strGsValue.equals("true")) {
+
+                    cardLeadRequest!!.visibility = View.VISIBLE
+
+                    countRequestCount1=0
+                    getRequestDetails1()
+
+                } else {
+                    Log.e(TAG, "strGsValue   52922   " + strGsValue)
+                    cardLeadRequest!!.visibility = View.GONE
+                }
+
+//                countRequestCount1=0
+//                getRequestDetails1()
+
 //                finish();
 //                startActivity(getIntent());
 //                overridePendingTransition(0, 0);
@@ -2719,9 +2790,9 @@ private var custmoerAssignmentID : String? =null
         if (dateMode.equals("1")) {
             ll_Todate!!.visibility = View.GONE
         }
-        if (leadRequestMode.equals("1")) {
-            llLeadRequest!!.visibility = View.GONE
-        }
+//        if (leadRequestMode.equals("1")) {
+//            llLeadRequest!!.visibility = View.GONE
+//        }
         if (voiceRequestMode.equals("1")) {
             llVoiceRequest!!.visibility = View.GONE
         }
@@ -2795,7 +2866,120 @@ private var custmoerAssignmentID : String? =null
             e.printStackTrace()
         }
     }
+    private fun getRequestDetails1() {
+//        var countLeadBy = 0
+        recyRequest!!.adapter = null
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
 
+                leadRequestViewModel.getLeadRequest(this)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+                        val msg = serviceSetterGetter.message
+                        if (msg!!.length > 0) {
+
+                            val jObject = JSONObject(msg)
+                            Log.e(TAG, "msg   19871   " + msg.length)
+                            Log.e(TAG, "msg   19872   " + msg)
+                            if (jObject.getString("StatusCode") == "0")
+                            {
+                                val jobjt = jObject.getJSONObject("WalkingCustomerDetailsList")
+                                leadRequestArrayList = jobjt.getJSONArray("WalkingCustomerDetails")
+                                if (leadRequestArrayList.length() > 0)
+                                {
+
+                                    llLeadRequest!!.visibility=View.VISIBLE
+                                    recyRequest!!.visibility=View.VISIBLE
+                                    if (countRequestCount1 == 0) {
+                                        countRequestCount1++
+                                        Log.e(TAG, "msg   19873   ")
+
+                                        if (leadRequestArrayList.length() > 4) {
+                                            val params: ViewGroup.LayoutParams =
+                                                recyRequest!!.getLayoutParams()
+                                            params.height = 500
+                                            recyRequest!!.setLayoutParams(params)
+                                        }
+
+//314400
+                                        val lLayout =
+                                            GridLayoutManager(this@LeadGenerationActivity, 1)
+                                        recyRequest!!.layoutManager =
+                                            lLayout as RecyclerView.LayoutManager?
+                                        val adapter = LeadRequestAdapter(
+                                            this@LeadGenerationActivity,
+                                            leadRequestArrayList
+                                        )
+                                        recyRequest!!.adapter = adapter
+                                        adapter.setClickListener(this@LeadGenerationActivity)
+                                        adapter.setClickListener1(this@LeadGenerationActivity)
+
+                                        //  leadByPopup(leadByArrayList)
+                                    }
+
+                                }
+                                else
+                                {
+                                    recyRequest!!.visibility=View.GONE
+                                    llLeadRequest!!.visibility=View.GONE
+
+                                }
+
+                            }
+                            else {
+
+                                recyRequest!!.visibility=View.GONE
+                                llLeadRequest!!.visibility=View.GONE
+
+                                val builder = AlertDialog.Builder(
+                                    this@LeadGenerationActivity,
+                                    R.style.MyDialogTheme
+                                )
+                                builder.setMessage(jObject.getString("EXMessage"))
+                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                }
+                                val alertDialog: AlertDialog = builder.create()
+                                alertDialog.setCancelable(false)
+                                alertDialog.show()
+                            }
+                        } else {
+//                            Toast.makeText(
+//                                applicationContext,
+//                                "Some Technical Issues.",
+//                                Toast.LENGTH_LONG
+//                            ).show()
+
+                        }
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                custDetailMode = "1"
+                companyNameMode = "1"
+                moreCommInfoMode = "1"
+                custProdlMode = "1"
+                locationMode = "1"
+                dateMode = "1"
+                leadRequestMode = "1"
+                leadfromMode = "1"
+                leadThroughMode = "1"
+                leadByMode = "1"
+                mediaTypeMode = "1"
+                uploadImageMode = "1"
+                hideViews()
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+
+        }
+
+    }
     private fun getRequestDetails(v: View) {
 //        var countLeadBy = 0
         recyRequest!!.adapter = null
@@ -4175,9 +4359,9 @@ private var custmoerAssignmentID : String? =null
 //                            }
 //                        } else {
 
-                            val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
-                            val bytes = ByteArrayOutputStream()
-                            thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+                        val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
+                        val bytes = ByteArrayOutputStream()
+                        thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
 //                    destination = File(
 //                        (Environment.getExternalStorageDirectory()).toString() + "/" +
 //                                getString(R.string.app_name),
@@ -4189,87 +4373,87 @@ private var custmoerAssignmentID : String? =null
 //                    )
 //                    val fo: FileOutputStream
 
-                            try {
+                        try {
 //                        if (!destination!!.getParentFile().exists()) {
 //                            destination!!.getParentFile().mkdirs()
 //                        }
 //                        if (!destination!!.exists()) {
 //                            destination!!.createNewFile()
 //                        }
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                                    destination = File(
-                                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
-                                        ""
-                                    )
-                                    // destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)  +"/" +  getString(R.string.app_name));
-                                } else {
-                                    destination = File(
-                                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
-                                        ""
-                                    )
-                                }
-
-                                if (!destination!!.exists()) {
-                                    destination!!.createNewFile()
-                                }
-
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                                 destination = File(
-                                    (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
-                                            "",
-                                    "IMG_" + System.currentTimeMillis() + ".jpg"
+                                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
+                                    ""
                                 )
-                                val fo: FileOutputStream
-
-
-                                fo = FileOutputStream(destination)
-                                fo.write(bytes.toByteArray())
-                                fo.close()
-                            } catch (e: FileNotFoundException) {
-                                e.printStackTrace()
-                                Log.e(TAG, "FileNotFoundException   23671    " + e.toString())
-
-                            } catch (e: IOException) {
-                                e.printStackTrace()
-                                Log.e(TAG, "FileNotFoundException   23672    " + e.toString())
+                                // destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)  +"/" +  getString(R.string.app_name));
+                            } else {
+                                destination = File(
+                                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
+                                    ""
+                                )
                             }
 
-                            if (strImage.equals("1")) {
-                                image1 = destination!!.getAbsolutePath()
-                                Log.e(TAG, "image1  20522    " + image1)
-                                destination = File(image1)
+                            if (!destination!!.exists()) {
+                                destination!!.createNewFile()
+                            }
+
+                            destination = File(
+                                (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
+                                        "",
+                                "IMG_" + System.currentTimeMillis() + ".jpg"
+                            )
+                            val fo: FileOutputStream
 
 
-                                val myBitmap = BitmapFactory.decodeFile(destination.toString())
-                                val converetdImage = getResizedBitmap(myBitmap, 500)
-                                //  val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
-                                if (imgvupload1 != null) {
-                                    imgvupload1!!.setImageBitmap(converetdImage)
-                                }
+                            fo = FileOutputStream(destination)
+                            fo.write(bytes.toByteArray())
+                            fo.close()
+                        } catch (e: FileNotFoundException) {
+                            e.printStackTrace()
+                            Log.e(TAG, "FileNotFoundException   23671    " + e.toString())
+
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                            Log.e(TAG, "FileNotFoundException   23672    " + e.toString())
+                        }
+
+                        if (strImage.equals("1")) {
+                            image1 = destination!!.getAbsolutePath()
+                            Log.e(TAG, "image1  20522    " + image1)
+                            destination = File(image1)
+
+
+                            val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                            val converetdImage = getResizedBitmap(myBitmap, 500)
+                            //  val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
+                            if (imgvupload1 != null) {
                                 imgvupload1!!.setImageBitmap(converetdImage)
-
-                                if (image1 != null) {
-
-                                }
                             }
-                            if (strImage.equals("2")) {
-                                image2 = destination!!.getAbsolutePath()
-                                Log.e(TAG, "image2  20522    " + image2)
-                                destination = File(image2)
+                            imgvupload1!!.setImageBitmap(converetdImage)
 
-                                val myBitmap = BitmapFactory.decodeFile(destination.toString())
-                                val converetdImage = getResizedBitmap(myBitmap, 500)
-                                //   val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
-                                if (imgvupload2 != null) {
-                                    imgvupload2!!.setImageBitmap(converetdImage)
-                                }
+                            if (image1 != null) {
+
+                            }
+                        }
+                        if (strImage.equals("2")) {
+                            image2 = destination!!.getAbsolutePath()
+                            Log.e(TAG, "image2  20522    " + image2)
+                            destination = File(image2)
+
+                            val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                            val converetdImage = getResizedBitmap(myBitmap, 500)
+                            //   val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
+                            if (imgvupload2 != null) {
                                 imgvupload2!!.setImageBitmap(converetdImage)
-
-                                if (image2 != null) {
-
-                                }
                             }
+                            imgvupload2!!.setImageBitmap(converetdImage)
 
-                     //   }
+                            if (image2 != null) {
+
+                            }
+                        }
+
+                        //   }
                     } catch (e: IOException) {
                         e.printStackTrace()
                         Toast.makeText(this@LeadGenerationActivity, "Failed!", Toast.LENGTH_SHORT)
@@ -4736,7 +4920,7 @@ private var custmoerAssignmentID : String? =null
         edtArea!!.setText("")
         edtPost!!.setText("")
         edtWhatsApp!!.setText("")
-      //  edtMobileNumber!!.setText("")
+        //  edtMobileNumber!!.setText("")
         edtCompanyContact!!.setText("")
     }
 
@@ -7770,7 +7954,7 @@ private var custmoerAssignmentID : String? =null
             leadByMode = "1"
             mediaTypeMode = "1"
             uploadImageMode = "1"
-
+            llLeadRequest!!.visibility=View.GONE
             hideViews()
 
 
@@ -7788,12 +7972,12 @@ private var custmoerAssignmentID : String? =null
     {
 
         if (data.equals("LeadrequestVoiceClick")) {
-          //  val bytes: ByteArray = value.getBytes()
-          //  voicedataByte=value.toByteArray()
+            //  val bytes: ByteArray = value.getBytes()
+            //  voicedataByte=value.toByteArray()
             voiceString=value
-           // Log.e("response999222", "data="+data)
+            // Log.e("response999222", "data="+data)
             Log.e("wewewe", "main    value length ="+value.length)
-        //    Log.e("response999222", "value byte="+voicedataByte)
+            //    Log.e("response999222", "value byte="+voicedataByte)
 
             val jsonObject = leadRequestArrayList.getJSONObject(position)
 
@@ -7829,7 +8013,7 @@ private var custmoerAssignmentID : String? =null
 
             lotti_play!!.setAnimation(R.raw.play_wave)
 
-          //  playString(value!!)
+            //  playString(value!!)
 
             backclose.setOnClickListener(View.OnClickListener {
                 dialog.dismiss()
@@ -7922,7 +8106,7 @@ private var custmoerAssignmentID : String? =null
                     }
                 }
 
-             //   playString(value!!)
+                //   playString(value!!)
 
 
 
@@ -7967,25 +8151,25 @@ private var custmoerAssignmentID : String? =null
 
     private fun playString(voiceData: String?) {
 
-            try {
-                val decodedBytes = Base64.getDecoder().decode(voiceData)
-                Log.i("wewewe", "out main:=$voiceData")
-                Log.i("wewewe", "out decodedBytes:=" + decodedBytes)
+        try {
+            val decodedBytes = Base64.getDecoder().decode(voiceData)
+            Log.i("wewewe", "out main:=$voiceData")
+            Log.i("wewewe", "out decodedBytes:=" + decodedBytes)
 
 
-                val  tempAudio=File.createTempFile("TCL","mp3",cacheDir)
-                Log.i("wewewe", "out tempAudio:=" + tempAudio)
-                //   val  tempAudio=File.createTempFile("TCL","mp3",applicationContext.cacheDir)
-                tempAudio.writeBytes(decodedBytes)
-             //   val mediaPlayer=MediaPlayer()
-                player1!!.setDataSource(tempAudio.absolutePath)
-                player1!!.prepare()
-                player1!!.start()
-            }
-            catch (e:IOException)
-            {
-                Log.i("wewewe", "IOException:=" + e)
-            }
+            val  tempAudio=File.createTempFile("TCL","mp3",cacheDir)
+            Log.i("wewewe", "out tempAudio:=" + tempAudio)
+            //   val  tempAudio=File.createTempFile("TCL","mp3",applicationContext.cacheDir)
+            tempAudio.writeBytes(decodedBytes)
+            //   val mediaPlayer=MediaPlayer()
+            player1!!.setDataSource(tempAudio.absolutePath)
+            player1!!.prepare()
+            player1!!.start()
+        }
+        catch (e:IOException)
+        {
+            Log.i("wewewe", "IOException:=" + e)
+        }
 
 
 
@@ -8805,7 +8989,7 @@ private var custmoerAssignmentID : String? =null
 //            val tvp_department = dialogConfirmPop!!.findViewById(R.id.tvp_department) as TextView
 //            val tvp_employee = dialogConfirmPop!!.findViewById(R.id.tvp_employee) as TextView
 
-                       recycle_popup = dialogConfirmPop!!.findViewById(R.id.recycle_popup) as RecyclerView
+            recycle_popup = dialogConfirmPop!!.findViewById(R.id.recycle_popup) as RecyclerView
 //
 //
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
@@ -9873,7 +10057,7 @@ private var custmoerAssignmentID : String? =null
         }
 
 
-       else if (checkProject.equals("1") && strProduct.equals(""))
+        else if (checkProject.equals("1") && strProduct.equals(""))
         {
             Log.i("resperr","checkProject="+checkProject)
             Config.snackBars(context, v, "Select Product")
@@ -9886,7 +10070,7 @@ private var custmoerAssignmentID : String? =null
 //
 //
 //        }
-       else if (strQty.equals("") || fQty == 0) {
+        else if (strQty.equals("") || fQty == 0) {
             if (CompanyCategory.equals("0") || CompanyCategory.equals("1")) {
                 Config.snackBars(context, v, "Enter Quantity")
             } else if (CompanyCategory.equals("2")) {
@@ -10404,17 +10588,17 @@ private var custmoerAssignmentID : String? =null
         Log.i("response09090","check=")
         Log.i("response09090","check="+player1)
         if (player1 != null ) {
-          // stopPlaying()
+            // stopPlaying()
             Log.i("response09090","player1")
             player1!!.stop()
             player1!!.release()
             player1 = null
 //            stopPlayerService()
-       //     super.onBackPressed()
+            //     super.onBackPressed()
 
         }
         stopPlayerService()
-            super.onBackPressed()
+        super.onBackPressed()
 
 
     }
