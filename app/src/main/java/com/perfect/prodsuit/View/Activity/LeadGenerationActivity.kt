@@ -6292,8 +6292,12 @@ private var custmoerAssignmentID : String? =null
         val txtCancel = view.findViewById<TextView>(R.id.txtCancel)
         val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
+
+
         if (dateSelectMode == 0) {
-            date_Picker1.maxDate = System.currentTimeMillis()
+
+            //backdate
+            date_Picker1.minDate = System.currentTimeMillis()
         } else if (dateSelectMode == 1) {
             date_Picker1.setMinDate(System.currentTimeMillis());
             date_Picker1.minDate = System.currentTimeMillis()
@@ -6323,6 +6327,8 @@ private var custmoerAssignmentID : String? =null
                 //  dateSelectMode = 0
 
                 if (dateSelectMode == 0) {
+
+
                     txtDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
                     strDate = strYear + "-" + strMonth + "-" + strDay
                 }
