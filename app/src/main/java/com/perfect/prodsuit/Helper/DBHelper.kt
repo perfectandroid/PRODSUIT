@@ -516,7 +516,27 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         return jsonArray
     }
 
+    fun getDefaultCompanyID() : String{
+        var Company_ID = ""
 
+        try {
+
+            Log.e(TAG, "cursor 52444   ")
+            val dbRead = readableDatabase
+            val cursor: Cursor = dbRead.rawQuery("select * from Company WHERE IP_Default= '1' OR IP_Default= 'true'", null)
+            Log.e(TAG, "count 47002   "+cursor.count)
+
+            if (cursor.count > 0) {
+                if (cursor.moveToFirst()) {
+                    Company_ID =  cursor.getString(0)
+                }
+                Log.e(TAG, "Company_ID 47003   "+Company_ID)
+            }
+        }catch (e: Exception){
+            Log.e(TAG, "Exception 47004   "+e.toString())
+        }
+        return Company_ID
+    }
 
     fun getLastCompanyKey() : String {
 

@@ -1005,31 +1005,32 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
                                     Log.e(TAG,"94555  ID_PKey   "+ID_PKey)
 
+//                                    if (ID_PKey.equals("")){
+//                                        ID_PKey = db!!.getDefaultCompanyID()
+//                                    }
+                                    var ResellerName = jobj.getString("ResellerName")
+                                    var AppIconImageCode = jobj.getString("AppIconImageCode")
+                                    var TechnologyPartnerImage = jobj.getString("TechnologyPartnerImage")
+                                    var ProductName = jobj.getString("ProductName")
+                                    var PlayStoreLink = jobj.getString("PlayStoreLink")
+                                    var AppStoreLink = jobj.getString("AppStoreLink")
+                                    var ContactNumber = jobj.getString("ContactNumber")
+                                    var ContactEmail = jobj.getString("ContactEmail")
+                                    var ContactAddress = jobj.getString("ContactAddress")
+                                    var CertificateName = jobj.getString("CertificateName")
+                                    var TestingURL = jobj.getString("TestingURL")
+                                    var TestingMachineId = jobj.getString("TestingMachineId")
+                                    var TestingImageURL = jobj.getString("TestingImageURL")
+                                    var TestingMobileNo = jobj.getString("TestingMobileNo")
+                                    var TestingBankKey = jobj.getString("TestingBankKey")
+                                    var TestingBankHeader = jobj.getString("TestingBankHeader")
+                                    var AboutUs = jobj.getString("AboutUs")
+                                    var AudioClipEnabled = jobj.getString("AudioClipEnabled")
+                                    var IsLocationDistanceShowing = jobj.getString("IsLocationDistanceShowing")
+                                    var EditMRPLead = jobj.getString("EditMRPLead")
+
                                     if (!ID_PKey.equals("")){
-
-                                        var ResellerName = jobj.getString("ResellerName")
-                                        var AppIconImageCode = jobj.getString("AppIconImageCode")
-                                        var TechnologyPartnerImage = jobj.getString("TechnologyPartnerImage")
-                                        var ProductName = jobj.getString("ProductName")
-                                        var PlayStoreLink = jobj.getString("PlayStoreLink")
-                                        var AppStoreLink = jobj.getString("AppStoreLink")
-                                        var ContactNumber = jobj.getString("ContactNumber")
-                                        var ContactEmail = jobj.getString("ContactEmail")
-                                        var ContactAddress = jobj.getString("ContactAddress")
-                                        var CertificateName = jobj.getString("CertificateName")
-                                        var TestingURL = jobj.getString("TestingURL")
-                                        var TestingMachineId = jobj.getString("TestingMachineId")
-                                        var TestingImageURL = jobj.getString("TestingImageURL")
-                                        var TestingMobileNo = jobj.getString("TestingMobileNo")
-                                        var TestingBankKey = jobj.getString("TestingBankKey")
-                                        var TestingBankHeader = jobj.getString("TestingBankHeader")
-                                        var AboutUs = jobj.getString("AboutUs")
-                                        var AudioClipEnabled = jobj.getString("AudioClipEnabled")
-                                        var IsLocationDistanceShowing = jobj.getString("IsLocationDistanceShowing")
-                                        var EditMRPLead = jobj.getString("EditMRPLead")
-
-
-                                       db!!.insertUpdateReseller(ID_PKey!!,ResellerName,AppIconImageCode,TechnologyPartnerImage,ProductName,PlayStoreLink,AppStoreLink,
+                                        db!!.insertUpdateReseller(ID_PKey!!,ResellerName,AppIconImageCode,TechnologyPartnerImage,ProductName,PlayStoreLink,AppStoreLink,
                                             ContactNumber,ContactEmail,ContactAddress,CertificateName,TestingURL,TestingMachineId,TestingImageURL,TestingMobileNo,
                                             TestingBankKey,TestingBankHeader,AboutUs,AudioClipEnabled,IsLocationDistanceShowing,EditMRPLead)
 
@@ -1038,6 +1039,10 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                                         finish()
 
                                     }else{
+                                        ID_PKey = db!!.getDefaultCompanyID()
+                                        db!!.insertUpdateReseller(ID_PKey!!,ResellerName,AppIconImageCode,TechnologyPartnerImage,ProductName,PlayStoreLink,AppStoreLink,
+                                            ContactNumber,ContactEmail,ContactAddress,CertificateName,TestingURL,TestingMachineId,TestingImageURL,TestingMobileNo,
+                                            TestingBankKey,TestingBankHeader,AboutUs,AudioClipEnabled,IsLocationDistanceShowing,EditMRPLead)
                                         doSplash()
                                     }
 
