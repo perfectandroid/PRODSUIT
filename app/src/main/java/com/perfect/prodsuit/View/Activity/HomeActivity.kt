@@ -205,6 +205,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     var dashboardcount = 0
 
     private lateinit var dataChatRef : DatabaseReference
+    var tableCount = 0
+    var logoutMode = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -1428,23 +1430,62 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         return true
     }
 
+    private fun LogoutRedirection() {
+
+        val db = DBHelper(this, null)
+        var userList = JSONArray()
+        userList = db!!.getRegisteredUserList()
+
+        tableCount = userList.length()
+        logoutMode = 1
+
+
+    }
+
     private fun LogoutBottomSheet() {
         // BottomSheet
+
+        val db = DBHelper(this, null)
+        var userList = JSONArray()
+        userList = db!!.getRegisteredUserList()
+
+        tableCount = userList.length()
+        logoutMode = 1
 
         val dialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.logout_popup, null)
 
         val btnNo = view.findViewById<Button>(R.id.btnNo)
         val btnYes = view.findViewById<Button>(R.id.btnYes)
+        val btnSingleNo = view.findViewById<Button>(R.id.btnSingleNo)
+        val tv_message = view.findViewById<TextView>(R.id.tv_message)
+
+        if (tableCount > 1){
+            tv_message.text = "Do you want to logout Multiple Account?"
+            btnSingleNo!!.visibility = View.VISIBLE
+            btnNo!!.visibility = View.GONE
+        }else{
+            tv_message.text = "Do you want to logout?"
+        }
 
         btnNo.setOnClickListener {
             dialog .dismiss()
             chipNavigationBar!!.setItemSelected(R.id.home, true)
         }
+        btnSingleNo.setOnClickListener {
+            btnSingleNo!!.visibility = View.GONE
+            btnNo!!.visibility = View.VISIBLE
+            val ResellerNameSP = context.getSharedPreferences(Config.SHARED_PREF32, 0)
+            var resellerName = ResellerNameSP.getString("ResellerName", "")
+            tv_message.text = "Do you want to logout "+resellerName+" Account?"
+
+            logoutMode = 0
+
+        }
         btnYes.setOnClickListener {
             dialog.dismiss()
            // dologoutchanges()
-            Config.logOut(context)
+            Config.logOut(context,logoutMode)
             startActivity(Intent(this@HomeActivity, SplashActivity::class.java))
         }
         dialog.setCancelable(false)
@@ -1495,8 +1536,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             btn_Yes.setOnClickListener {
                 dialog1.dismiss()
 //                dologoutchanges()
-                Config.logOut(context)
-                startActivity(Intent(this@HomeActivity, SplashActivity::class.java))
+//                Config.logOut(context)
+//                startActivity(Intent(this@HomeActivity, SplashActivity::class.java))
             }
             dialog1.show()
         } catch (e: Exception) {
@@ -1712,6 +1753,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                     val mpinEditer = mpinSP.edit()
                                     mpinEditer.putString("mpin", newPin)
                                     mpinEditer.commit()
+                                    val db = DBHelper(this, null)
+                                    db!!.updateUserMpin("",newPin,"1")
+
                                     var jobj = jObject.getJSONObject("MPINDetails")
 
                                     val builder = AlertDialog.Builder(

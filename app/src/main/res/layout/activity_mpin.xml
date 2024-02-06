@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:background="@drawable/whitebg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/whitebg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/rl_main">
@@ -20,17 +22,18 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="10dp">
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/iclogout"
                     android:tint="@color/greydark"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    tools:ignore="UseAppTint" />
 
                 <TextView
-                    android:id="@+id/tvForgotMpin"
+                    android:id="@+id/tvForgotMpin1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
@@ -40,6 +43,22 @@
                     android:fontFamily="@font/myfont"
                     android:gravity="center"
                     android:text="Forgot Mpin"
+                    android:textColor="@color/greydark"
+                    android:textSize="16dp"
+                    android:textStyle="normal"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tvRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:drawableLeft="@drawable/register_xml_icon"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/greydark"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center"
+                    android:text="Register"
                     android:textColor="@color/greydark"
                     android:textSize="16dp"
                     android:textStyle="normal" />
@@ -53,7 +72,7 @@
                 android:layout_alignParentRight="true"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:padding="20dp">
+                android:padding="10dp">
 
                 <ImageView
                     android:layout_width="20dp"
@@ -69,7 +88,7 @@
                     android:layout_gravity="right"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/myfont"
-                    android:drawableLeft="@drawable/logout_xml_icon"
+                    android:drawableLeft="@drawable/ic_logout"
                     android:drawableTint="@color/greydark"
                     android:gravity="center"
                     android:text="Logout"
@@ -82,22 +101,92 @@
 
 
         </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="0dp"
             android:orientation="vertical">
+
         <ImageView
+            android:id="@+id/img_logo"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
             android:src="@drawable/otpbg"/>
+
+
+            <LinearLayout
+                android:id="@+id/ll_companyName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:padding="5dp"
+                    android:gravity="center"
+                    android:background="@drawable/shape_mpin_bg"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:fontFamily="@font/myfont"
+                    android:textStyle="bold"
+                    android:hint="Company"
+                    android:visibility="gone"/>
+
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/shape_mpin_bg"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp">
+                <Spinner
+                    android:id="@+id/spinCompany"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="16sp"
+                    android:background="@null"
+                    android:minHeight="0dp" />
+
+                <ImageView
+                    android:id="@+id/imgdrp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/arrow_down"
+                    android:layout_marginRight="10dp"
+                    app:tint="@color/white" />
+            </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lin_fingerprint"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_height="30dp">
+                <ImageView
+                    android:id="@+id/finger_print"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/finger_print"/>
+            </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/tvText"
@@ -110,7 +199,7 @@
                 android:gravity="center"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:paddingBottom="10dp"
+                android:paddingBottom="0dp"
                 android:textStyle="bold"
                 android:text="Enter 6 - Digit MPIN"
                 android:textColor="@color/black"
@@ -122,13 +211,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal"
-            android:layout_margin="10dp"
+
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:weightSum="4.5">
             <EditText
                 android:id="@+id/et_1"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:textSize="30dp"
+                android:layout_height="50dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_marginLeft="1dp"
                 android:layout_weight=".75"
@@ -141,8 +232,8 @@
             <EditText
                 android:id="@+id/et_2"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:textSize="30dp"
+                android:layout_height="50dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_marginLeft="1dp"
                 android:layout_weight=".75"
@@ -155,8 +246,8 @@
             <EditText
                 android:id="@+id/et_3"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:textSize="30dp"
+                android:layout_height="50dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_marginLeft="1dp"
                 android:layout_weight=".75"
@@ -169,8 +260,8 @@
             <EditText
                 android:id="@+id/et_4"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:textSize="30dp"
+                android:layout_height="50dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_marginLeft="1dp"
                 android:layout_weight=".75"
@@ -183,8 +274,8 @@
             <EditText
                 android:id="@+id/et_5"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:textSize="30dp"
+                android:layout_height="50dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_marginLeft="1dp"
                 android:layout_weight=".75"
@@ -197,8 +288,8 @@
             <EditText
                 android:id="@+id/et_6"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:textSize="30dp"
+                android:layout_height="50dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_marginLeft="1dp"
                 android:layout_weight=".75"
@@ -209,18 +300,32 @@
                 android:textColor="@color/black"
                 android:textColorHint="#fff"/>
         </LinearLayout>
+
+
             <LinearLayout
-                android:id="@+id/lin_fingerprint"
+                android:id="@+id/lin_forgot"
                 android:layout_width="match_parent"
                 android:gravity="center"
-                android:layout_height="30dp">
-                <ImageView
-                    android:id="@+id/finger_print"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/finger_print"/>
+                android:layout_height="30dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/tvForgotMpin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/greydark"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center"
+                    android:text="---------  Forgot Mpin  ---------"
+                    android:textColor="@color/grey_dark"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+
             </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
