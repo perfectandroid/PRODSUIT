@@ -25,6 +25,7 @@ import android.widget.Button
 import android.widget.Chronometer
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -47,11 +48,14 @@ import java.util.*
 
 class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
     private val REQUEST_RECORD_AUDIO_PERMISSION = 200
+    private val TIMER_UPDATE_INTERVAL = 1000L
     private val permissions = arrayOf(Manifest.permission.RECORD_AUDIO)
     private var audioRecordingPermissionGranted = false
 
     private var fileName: String? = null
-    private var startRecordingButton: TextView? = null
+   // private var startRecordingButton: TextView? = null
+    private var startRecordingButton: LinearLayout? = null
+    private var pauseRecordingButton: TextView? = null
     private var stopRecordingButton: TextView? = null
     private var playRecordingButton: ImageView? = null
     private var stopPlayingButton: ImageView? = null
@@ -65,8 +69,12 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 
     private var recImg: ImageView? = null
     private var recordTime: Chronometer? = null
+    private lateinit var timerHandler:Handler
+    private lateinit var timerRunnable: Runnable
+    private var elapsedTime =0L
     private var startTime: Long = 0
     private var isRecording = false
+    private var isPaused = false
 
     //  private var isplaying=false
     private var playDialog: Dialog? = null
@@ -88,7 +96,7 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 //        }
 //    }
 
-    @SuppressLint("SuspiciousIndentation")
+    @SuppressLint("SuspiciousIndentation", "MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -112,8 +120,10 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 
         lottimic = findViewById<LottieAnimationView>(R.id.lottieImg)
         tvv_recordiing = findViewById<TextView>(R.id.tvv_recordiing)
+        tvv_recordiing!!.text=""
         lottimic!!.setAnimation(R.raw.record)
-        startRecordingButton = findViewById<TextView>(R.id.activity_main_record)
+        startRecordingButton = findViewById<LinearLayout>(R.id.activity_main_record)
+        pauseRecordingButton = findViewById<TextView>(R.id.activity_main_pause)
 
         stopRecordingButton = findViewById<TextView>(R.id.activity_main_stop)
 //        stopRecordingButton!!.isClickable = false
@@ -126,18 +136,65 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 
 
         startRecordingButton!!.setOnClickListener(View.OnClickListener {
+
+            if (isRecording && !isPaused)
+            {
+                pauseRecording()
+            }
+            else{
+                lottimic!!.loop(true)
+                lottimic!!.playAnimation()
+
+//            recImg!!.visibility=View.GONE
+//            lottimic!!.visibility=View.VISIBLE
+                startRecording()
+
+
+
+                isRecording = true
+                isPaused = false
+                startRecordingButton!!.isClickable = false
+                stopRecordingButton!!.isClickable = true
+
+                startRecordingButton!!.visibility = View.GONE
+                stopRecordingButton!!.visibility = View.VISIBLE
+                pauseRecordingButton!!.visibility = View.VISIBLE
+            }
+
+         /*
             lottimic!!.loop(true)
             lottimic!!.playAnimation()
 
 //            recImg!!.visibility=View.GONE
 //            lottimic!!.visibility=View.VISIBLE
             startRecording()
+
+
+
             isRecording = true
+            isPaused = false
             startRecordingButton!!.isClickable = false
             stopRecordingButton!!.isClickable = true
 
                 startRecordingButton!!.visibility = View.GONE
                 stopRecordingButton!!.visibility = View.VISIBLE
+            pauseRecordingButton!!.visibility = View.VISIBLE
+
+            */
+        })
+
+        pauseRecordingButton!!.setOnClickListener(View.OnClickListener {
+            lottimic!!.loop(false)
+            lottimic!!.pauseAnimation()
+            startRecordingButton!!.isClickable = true
+            stopRecordingButton!!.isClickable = true
+            pauseRecording()
+          //  isRecording = false
+            tvv_recordiing!!.text=""
+            tvv_recordiing!!.text="Pause"
+            startRecordingButton!!.visibility = View.VISIBLE
+            stopRecordingButton!!.visibility = View.VISIBLE
+            pauseRecordingButton!!.visibility = View.GONE
         })
 
 
@@ -150,11 +207,14 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
                 playRecordPopUp()
                 recordTime!!.visibility = View.GONE
                 tvv_recordiing!!.visibility = View.GONE
+                tvv_recordiing!!.text=""
+                tvv_recordiing!!.text="Stop"
                 startRecordingButton!!.isClickable = true
                 stopRecordingButton!!.isClickable = false
 
                 startRecordingButton!!.visibility = View.VISIBLE
                 stopRecordingButton!!.visibility = View.GONE
+                pauseRecordingButton!!.visibility = View.GONE
 
             }
 
@@ -168,6 +228,8 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 
 
     }
+
+
 
     override fun onBackPressed() {
         if (player != null) {
@@ -191,6 +253,7 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
         imback!!.setOnClickListener(this)
         recImg = findViewById<ImageView>(R.id.recImg)
         recordTime = findViewById<Chronometer>(R.id.recordTime)
+        timerHandler= Handler()
 
 
     }
@@ -209,8 +272,93 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
             finish()
         }
     }
+    private fun startTimer()
+    {
+        timerRunnable=object :Runnable{
+            override fun run() {
+                elapsedTime=SystemClock.elapsedRealtime() - recordTime!!.base
+                recordTime!!.text=formatTime(elapsedTime)
+                timerHandler.postDelayed(this,TIMER_UPDATE_INTERVAL)
+            }
+        }
+        recordTime!!.base=SystemClock.elapsedRealtime() -elapsedTime
+        recordTime!!.start()
+        timerHandler.postDelayed(timerRunnable,TIMER_UPDATE_INTERVAL)
+    }
+
+    private fun stopTimer()
+    {
+        timerHandler.removeCallbacks(timerRunnable)
+        recordTime!!.stop()
+    }
+    private fun resetTimer()
+    {
+        recordTime!!.base= SystemClock.elapsedRealtime()
+        elapsedTime =0L
+        recordTime!!.text="00:00"
+    }
+    private  fun formatTime(timeMillis: Long):String
+    {
+        val seconds=(timeMillis/1000).toInt()
+        val minutes=seconds/60
+        val remaingSeconds=seconds % 60
+        return String.format("%02d:%02d",minutes,remaingSeconds)
+    }
+
+    private fun pauseRecording() {
+        recorder!!.pause()
+        stopTimer()
+        isPaused=true
+     //   recordTime!!.stop()
+    }
 
     private fun startRecording() {
+
+        if (isPaused)
+        {
+            tvv_recordiing!!.text=""
+            tvv_recordiing!!.text="Recording...."
+            recorder!!.resume()
+            startTimer()
+        }
+        else
+        {
+            recordTime!!.visibility = View.VISIBLE
+            tvv_recordiing!!.visibility = View.VISIBLE
+            tvv_recordiing!!.text=""
+            tvv_recordiing!!.text="Recording...."
+//            recordTime!!.setBase(SystemClock.elapsedRealtime());
+//            recordTime!!.stop()
+            val uuid = UUID.randomUUID().toString()
+            //     fileName = filesDir.path + "/" + uuid + ".3gp"
+            fileName = filesDir.path + "/" + uuid + ".mp3"
+            Log.i("response999", "out:=" + filesDir.path)
+            Log.i(VoiceRecordingActivity::class.java.getSimpleName(), fileName!!)
+            recorder = MediaRecorder()
+
+            recorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
+            recorder!!.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+            recorder!!.setOutputFile(fileName)
+            recorder!!.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+            try {
+                recorder!!.prepare()
+                recorder!!.start()
+
+             //   recordTime!!.start()
+                startTimer()
+                isRecording = true
+
+            } catch (e: IOException) {
+                Log.e(
+                    VoiceRecordingActivity::class.java.getSimpleName() + ":startRecording()",
+                    "prepare() failed"
+                )
+            }
+            //  recorder!!.start()
+            startRecorderService()
+        }
+
+      /*
         recordTime!!.visibility = View.VISIBLE
         tvv_recordiing!!.visibility = View.VISIBLE
         recordTime!!.setBase(SystemClock.elapsedRealtime());
@@ -241,15 +389,18 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
         }
         //  recorder!!.start()
         startRecorderService()
+        */
     }
 
     private fun stopRecording() {
         if (recorder != null) {
             isRecording = false
+            isPaused = false
 
-
-            recordTime!!.setBase(SystemClock.elapsedRealtime());
-            recordTime!!.stop()
+            stopTimer()
+            resetTimer()
+//            recordTime!!.setBase(SystemClock.elapsedRealtime());
+//            recordTime!!.stop()
 
             recorder!!.stop()
             recorder!!.release()
@@ -351,7 +502,8 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 
             re_record.setOnClickListener(View.OnClickListener {
                 dialog.dismiss()
-
+                isRecording = false
+                isPaused = false
                 if (player1 != null) {
                     player1!!.release()
                     player1 = null
@@ -368,6 +520,7 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
                 startRecordingButton!!.isClickable = false
                 stopRecordingButton!!.isClickable = true
                 stopRecordingButton!!.visibility = View.VISIBLE
+                pauseRecordingButton!!.visibility = View.VISIBLE
                 startRecordingButton!!.visibility = View.GONE
 
 
@@ -377,6 +530,7 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
                 dialog.dismiss()
                 recordTime!!.visibility = View.GONE
                 tvv_recordiing!!.visibility = View.GONE
+                tvv_recordiing!!.text=""
                 stopRecordingButton!!.isClickable = false
                 startRecordingButton!!.isClickable = true
                 startRecordingButton!!.visibility = View.VISIBLE
@@ -804,12 +958,14 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
         when (v.id) {
 
             R.id.imback -> {
-                if (player != null) {
-                    player!!.release()
-                    player = null
-                    stopPlayerService()
-                }
-                finish()
+
+                onBackPressed()
+//                if (player != null) {
+//                    player!!.release()
+//                    player = null
+//                    stopPlayerService()
+//                }
+//                finish()
             }
 //            R.id.activity_main_record ->
 //            {

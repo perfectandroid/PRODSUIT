@@ -10,9 +10,7 @@ import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.LeadGenerateSaveModel
-import com.perfect.prodsuit.Model.PincodeSearchModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONArray
@@ -29,25 +27,88 @@ object LeadGenerateSaveRepository {
     val leadGenSaveSetterGetter = MutableLiveData<LeadGenerateSaveModel>()
     val TAG: String = "LeadGenerateSaveRepository"
 
-    fun getServicesApiCall(context: Context, saveUpdateMode  :String, ID_LeadGenerate  :String,strDate :String,ID_Customer :String,ID_MediaSubMaster :String,
-                           CusNameTitle :String,Customer_Name :String,Customer_Address1 :String,Customer_Address2 :String,Customer_Mobile :String,Customer_Email :String,
-                           strCompanyContact :String,FK_Country :String, FK_States :String,FK_District :String,FK_Post :String,strPincode : String,FK_Area :String,ID_LeadFrom :String,ID_LeadThrough :String,
-                           strLeadThrough :String,strWhatsAppNo :String,strLatitude :String,strLongitue :String, encode1 :String, encode2 :String,
-                           Customer_Mode : String,Customer_Type : String,ID_CustomerAssignment : String,ID_CollectedBy : String,ID_AuthorizationData: String,array_product_lead : JSONArray
+    fun getServicesApiCall(
+        context: Context,
+        saveUpdateMode: String,
+        ID_LeadGenerate: String,
+        strDate: String,
+        ID_Customer: String,
+        ID_MediaSubMaster: String,
+        CusNameTitle: String,
+        Customer_Name: String,
+        Customer_Address1: String,
+        Customer_Address2: String,
+        Customer_Mobile: String,
+        Customer_Email: String,
+        strCompanyContact: String,
+        FK_Country: String,
+        FK_States: String,
+        FK_District: String,
+        FK_Post: String,
+        strPincode: String,
+        FK_Area: String,
+        ID_LeadFrom: String,
+        ID_LeadThrough: String,
+        strLeadThrough: String,
+        strWhatsAppNo: String,
+        strLatitude: String,
+        strLongitue: String,
+        encode1: String,
+        encode2: String,
+        Customer_Mode: String,
+        Customer_Type: String,
+        ID_CustomerAssignment: String,
+        ID_CollectedBy: String,
+        ID_AuthorizationData: String,
+        array_product_lead: JSONArray,
+        customerMobile2: String
     ): MutableLiveData<LeadGenerateSaveModel> {
         saveLeadGenerate(context, saveUpdateMode!!, ID_LeadGenerate!!, strDate, ID_Customer, ID_MediaSubMaster, CusNameTitle,
             Customer_Name, Customer_Address1, Customer_Address2, Customer_Mobile, Customer_Email, strCompanyContact, FK_Country, FK_States, FK_District, FK_Post, strPincode,
-            FK_Area, ID_LeadFrom, ID_LeadThrough, strLeadThrough, strWhatsAppNo, strLatitude, strLongitue, encode1, encode2,Customer_Mode,Customer_Type,ID_CustomerAssignment,ID_CollectedBy,ID_AuthorizationData,array_product_lead)
+            FK_Area, ID_LeadFrom, ID_LeadThrough, strLeadThrough, strWhatsAppNo, strLatitude, strLongitue, encode1, encode2,Customer_Mode,Customer_Type,ID_CustomerAssignment,ID_CollectedBy,ID_AuthorizationData,array_product_lead,customerMobile2)
         Log.e("LeadGenerateSaveRepository"," 226666    ")
         return leadGenSaveSetterGetter
     }
 
-    private fun saveLeadGenerate(context: Context,  saveUpdateMode  :String, ID_LeadGenerate  :String,strDate :String,ID_Customer :String,ID_MediaSubMaster :String,
-                                 CusNameTitle :String,Customer_Name :String,Customer_Address1 :String,Customer_Address2 :String,Customer_Mobile :String,Customer_Email :String,
-                                 strCompanyContact :String,FK_Country :String, FK_States :String,FK_District :String,FK_Post :String,strPincode : String,FK_Area :String,ID_LeadFrom :String,ID_LeadThrough :String,
-                                 strLeadThrough :String,strWhatsAppNo :String,strLatitude :String,strLongitue :String, encode1 :String, encode2 :String,
-                                 Customer_Mode : String,Customer_Type : String,ID_CustomerAssignment : String,ID_CollectedBy : String,ID_AuthorizationData: String,array_product_lead : JSONArray) {
+    private fun saveLeadGenerate(
+        context: Context,
+        saveUpdateMode: String,
+        ID_LeadGenerate: String,
+        strDate: String,
+        ID_Customer: String,
+        ID_MediaSubMaster: String,
+        CusNameTitle: String,
+        Customer_Name: String,
+        Customer_Address1: String,
+        Customer_Address2: String,
+        Customer_Mobile: String,
+        Customer_Email: String,
+        strCompanyContact: String,
+        FK_Country: String,
+        FK_States: String,
+        FK_District: String,
+        FK_Post: String,
+        strPincode: String,
+        FK_Area: String,
+        ID_LeadFrom: String,
+        ID_LeadThrough: String,
+        strLeadThrough: String,
+        strWhatsAppNo: String,
+        strLatitude: String,
+        strLongitue: String,
+        encode1: String,
+        encode2: String,
+        Customer_Mode: String,
+        Customer_Type: String,
+        ID_CustomerAssignment: String,
+        ID_CollectedBy: String,
+        ID_AuthorizationData: String,
+        array_product_lead: JSONArray,
+        customerMobile2: String
+    ) {
 
+
+    //   var Customer_Mobile2 ="9895314400"
         Log.e("TAG","saveLeadGenerate  ")
         Log.e(TAG,"LocationValidation  6421232"
                 +"\n"+"ID_LeadGenerate    : "+ ID_LeadGenerate
@@ -64,6 +125,7 @@ object LeadGenerateSaveRepository {
                 +"\n"+"ID_CustomerAssignment        : "+ ID_CustomerAssignment
                 +"\n"+"Customer_Name      : "+ Customer_Name
                 +"\n"+"Customer_Mobile    : "+ Customer_Mobile
+                +"\n"+"customerMobile2    : "+ customerMobile2
                 +"\n"+"WhatsApp No        : "+ strWhatsAppNo
                 +"\n"+"Company Contact    : "+ strCompanyContact
                 +"\n"+"Customer_Email     : "+ Customer_Email
@@ -220,6 +282,7 @@ object LeadGenerateSaveRepository {
                 requestObject1.put("LgCusAddress", ProdsuitApplication.encryptStart(Customer_Address1))
                 requestObject1.put("LgCusAddress2", ProdsuitApplication.encryptStart(Customer_Address2))
                 requestObject1.put("LgCusMobile", ProdsuitApplication.encryptStart(Customer_Mobile))
+                requestObject1.put("LandNumber", ProdsuitApplication.encryptStart(customerMobile2))
                 requestObject1.put("LgCusEmail", ProdsuitApplication.encryptStart(Customer_Email))
                 requestObject1.put("CusCompany", ProdsuitApplication.encryptStart(strCompanyContact))
                 requestObject1.put("CusPerson", ProdsuitApplication.encryptStart(""))  //Removed

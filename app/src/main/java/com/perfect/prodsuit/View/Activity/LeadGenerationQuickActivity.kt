@@ -3235,7 +3235,8 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                         ID_CustomerAssignment!!,
                         ID_CollectedBy!!,
                         ID_AuthorizationData,
-                        array_product_lead!!
+                        array_product_lead!!,
+                        LeadGenerationActivity.Customer_Mobile2!!
                     )!!.observe(
                         this,
                         Observer { serviceSetterGetter ->

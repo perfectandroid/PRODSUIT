@@ -550,6 +550,74 @@
                             android:background="@color/color_background1"/>
 
                     </LinearLayout>
+                    <!-- mobile no-->
+
+                    <LinearLayout
+                        android:id="@+id/ll_mobile_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:orientation="horizontal">
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="2"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text="Mobile No"/>
+
+                            <TextView
+                                android:layout_width="20dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=":"/>
+
+
+
+                            <TextView
+                                android:id="@+id/tvp_mobile_number"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center_vertical"
+                                android:textColor="@color/greydark"
+                                android:textSize="13dp"
+                                android:textStyle="normal"
+                                android:textAllCaps="false"
+                                android:background="@color/white"
+                                android:padding="5dp"
+                                android:fontFamily="@font/myfont"
+                                android:text=""/>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/color_background1"/>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/ll_whats_app"
