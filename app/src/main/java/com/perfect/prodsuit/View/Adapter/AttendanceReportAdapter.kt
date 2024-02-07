@@ -1,63 +1,156 @@
 package com.perfect.prodsuit.View.Adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.AttendanceReportListActivity
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
-class AttendanceReportAdapter (internal var context: Context, internal var jsonArray: JSONArray):
+
+class AttendanceReportAdapter(
+    internal var context: Context,
+    internal var jsonArray: JSONArray,
+    internal var outPunchArray: JSONArray,
+    internal var date: String
+):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     internal val TAG : String = "AttendanceReportAdapter"
     internal var jsonObject: JSONObject? = null
+    internal var jsonObject1: JSONObject? = null
     private var clickListener: ItemClickListener? = null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
-            R.layout.adapter_attendance_report, parent, false
+            R.layout.adapter__attendance_report1, parent, false
         )
         vh = MainViewHolder(v)
         return vh
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         try {
             jsonObject = jsonArray.getJSONObject(position)
-            if (holder is MainViewHolder) {
+            jsonObject1 = outPunchArray.getJSONObject(position)
 
-                Log.e(TAG,"onBindViewHolder   attendance   "+jsonArray.getJSONObject(position).toString())
+            if (holder is MainViewHolder) {
+                Log.e(TAG,"onBindViewHolder   idcustomerservice and    "+jsonArray.getJSONObject(position).toString())
                 val pos = position+1
 
 
-                    /*holder.txtv_slno.text = ""
-                    holder.txtv_empid.text = jsonObject!!.getString("EmployeeName")
-                    holder.txtv_punchintime.text = "Lead No : "+jsonObject!!.getString("EnteredTime")
 
-                    holder.txtv_punchinlocation.text = "Category : "+jsonObject!!.getString("LocationName")*/
+                holder.txtv_name.text        = jsonObject!!.getString("EmployeeName")
+                holder.txtv_name.setTextColor(R.color.green1)
+                holder.txtv_time1.text        = jsonObject!!.getString("EnteredTime")
+                holder.txtv_loc1.text        = jsonObject!!.getString("LocationName")
+                holder.txtPunchin.text        = jsonObject!!.getString("PunchStatus")
 
-              /*  holder.ll_projectList!!.setTag(position)
-                holder.ll_projectList!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(
+                holder.txtPunchin.setTextColor(ContextCompat.getColor(context, R.color.green1));
+
+
+                holder.txtv_time2.text        = jsonObject1!!.getString("EnteredTime")
+                holder.txtv_loc2.text        = jsonObject1!!.getString("LocationName")
+                holder.txtPunchout.text        = jsonObject1!!.getString("PunchStatus")
+
+                holder.txtPunchout.setTextColor(ContextCompat.getColor(context, R.color.red));
+
+
+                holder.txtv_Designation.text        = jsonObject1!!.getString("Designation")
+
+
+
+                holder.txtDate.text        = jsonObject!!.getString("EnteredDate")
+
+                holder.im_detail!!.setTag(position)
+                holder.im_detail!!.setOnClickListener(View.OnClickListener {
+                    /*clickListener!!.onClick(
                         position,
-                        "ProjectListReportClick"
-                    )
+                        "Service_timeLine"
+                    )*/
+
+                    val intent = Intent(context, AttendanceReportListActivity::class.java)
+                    intent.putExtra("name", holder.txtv_name.text.toString())
+                    intent.putExtra("id", jsonObject1!!.getString("ID_EmployeeAttanceMarking"))
+
+
+                    val inputFormat: DateFormat = SimpleDateFormat("dd/MM/yyyy")
+                    val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+
+
+
+                    var dates =  jsonObject1!!.getString("EnteredDate")
+                    val dateFrom = inputFormat.parse(dates)
+                    // val dateFrom = inputFormat.parse("08-04-2022")
+                    val strDate = outputFormat.format(dateFrom)
+
+
+                    intent.putExtra("date", strDate)
+
+                    context.startActivity(intent)
+
                 })
-*/
+                //  holder.tv_punchDate.text        = jsonObject!!.getString("EnteredTime")
+                /*   if(jsonObject!!.getString("Status").equals("True"))
+                   {
+                       holder.txtv_punchstatus.text        = "Punch In"
+                       holder.pnch_image.setBackgroundResource(R.drawable.punch_in);
+                   }
+                   else
+                   {
+                       holder.txtv_punchstatus.text        = "Punch Out"
+                       holder.pnch_image.setBackgroundResource(R.drawable.punch_out);
+                   }
+
+
+                                   holder.im_tracker!!.setTag(position)
+                                   holder.im_tracker!!.setOnClickListener(View.OnClickListener {
+                                       Config.disableClick(it)
+                                       clickListener!!.onClick(
+                                           position,
+                                           "ServiceTracker"
+                                       )
+                                   })
+
+
+
+                                   holder.llServiceList!!.setTag(position)
+                                   holder.llServiceList!!.setOnClickListener(View.OnClickListener {
+                                       clickListener!!.onClick(
+                                           position,
+                                           "ServiceList"
+                                       )
+                                   })
+
+                                   holder.ll_ticketNumber!!.setTag(position)
+                                   holder.ll_ticketNumber!!.setOnClickListener(View.OnClickListener {
+                                       clickListener!!.onClick(
+                                           position,
+                                           "Service_timeLine"
+                                       )
+                                   })
+                   */
 
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            Log.e(TAG,"Exception   attendance   "+e.toString())
+            Log.e(TAG,"Exception   105   "+e.toString())
         }
     }
 
@@ -70,45 +163,51 @@ class AttendanceReportAdapter (internal var context: Context, internal var jsonA
     }
 
     override fun getItemViewType(position: Int): Int {
-        return position % 2
+        return position
     }
 
     private inner class MainViewHolder(v: View) : RecyclerView.ViewHolder(v) {
-        internal var txtv_slno        : TextView
-        internal var txtv_empid      : TextView
-        internal var txtv_punchintime        : TextView
-        internal var txtv_punchinlocation        : TextView
+        internal var txtv_name          : TextView
+        internal var txtv_Designation          : TextView
+
+        internal var txtv_time1          : TextView
+        internal var txtv_loc1          : TextView
+        internal var txtv_time2          : TextView
+        internal var txtv_loc2          : TextView
 
 
-/*
+        internal var txtPunchin          : TextView
 
-        internal var ll_TicketNo         : LinearLayout
-        internal var ll_TicketDate       : LinearLayout
-        internal var ll_Customer         : LinearLayout
-        internal var ll_Service         : LinearLayout
-        internal var ll_Product          : LinearLayout
-        internal var ll_Complaint        : LinearLayout
-        internal var ll_Mobile        : LinearLayout
-        internal var ll_CurrentStatus    : LinearLayout
-*/
+
+        internal var txtPunchout          : TextView
+        internal var txtDate          : TextView
+
+
+
+
+
+        internal var im_detail          : ImageView
+
 
         init {
+            txtPunchin        = v.findViewById<View>(R.id.txtPunchin) as TextView
+            txtPunchout        = v.findViewById<View>(R.id.txtPunchout) as TextView
 
-            txtv_slno        = v.findViewById<View>(R.id.txtv_slno) as TextView
-            txtv_empid      = v.findViewById<View>(R.id.txtv_empid) as TextView
-            txtv_punchintime        = v.findViewById<View>(R.id.txtv_punchintime) as TextView
-            txtv_punchinlocation         = v.findViewById<View>(R.id.txtv_punchinlocation) as TextView
-        //    tv_Note1         = v.findViewById<View>(R.id.tv_Note1) as TextView
-         //   tv_Note2       = v.findViewById<View>(R.id.tv_Note2) as TextView
+            txtv_name        = v.findViewById<View>(R.id.txtv_name) as TextView
+            txtv_time1        = v.findViewById<View>(R.id.txtPunchinTime) as TextView
+            txtv_loc1        = v.findViewById<View>(R.id.txtPunchinLoc) as TextView
+            txtv_time2        = v.findViewById<View>(R.id.txtPunchoutTime) as TextView
+            txtv_loc2        = v.findViewById<View>(R.id.txtPunchoutLoc) as TextView
+            txtv_Designation  = v.findViewById<View>(R.id.txtv_Designation) as TextView
 
-           /* ll_TicketDate      = v.findViewById<View>(R.id.ll_TicketDate) as LinearLayout
-            ll_Customer        = v.findViewById<View>(R.id.ll_Customer) as LinearLayout
-            ll_Service        = v.findViewById<View>(R.id.ll_Service) as LinearLayout
-            ll_Product         = v.findViewById<View>(R.id.ll_Product) as LinearLayout
-            ll_Complaint       = v.findViewById<View>(R.id.ll_Complaint) as LinearLayout
-            ll_Mobile       = v.findViewById<View>(R.id.ll_Mobile) as LinearLayout
-            ll_CurrentStatus   = v.findViewById<View>(R.id.ll_CurrentStatus) as LinearLayout
-            ll_newList         = v.findViewById<View>(R.id.ll_newList) as LinearLayout*/
+            txtDate  = v.findViewById<View>(R.id.txtDate) as TextView
+
+
+
+
+            //  llback = v.findViewById<View>(R.id.llback) as LinearLayout
+
+            im_detail = v.findViewById<View>(R.id.im_detail) as ImageView
 
         }
     }
