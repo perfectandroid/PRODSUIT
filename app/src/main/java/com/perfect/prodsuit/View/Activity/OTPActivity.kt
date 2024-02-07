@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.DBHelper
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.OTPActivityViewModel
 import org.json.JSONObject
@@ -46,6 +47,8 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
     private var clear: LinearLayout? = null
     var countOtp = 0
 
+    var db : DBHelper? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -56,6 +59,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_otp)
         setRegViews()
         context = this@OTPActivity
+        db = DBHelper(this, null)
         otpActivityViewModel = ViewModelProvider(this).get(OTPActivityViewModel::class.java)
     }
 
@@ -707,6 +711,33 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                         val PnotificationIDEditer = PnotificationIDSP.edit()
                                         PnotificationIDEditer.putString("PnotificationID", "0")
                                         PnotificationIDEditer.commit()
+
+                                        var ID_Company = db!!.getLastInsertCompanyID()
+
+                                        var FK_Employee = jobj.getString("FK_Employee")
+                                        var UserName = jobj.getString("UserName")
+                                        var Address = jobj.getString("Address")
+                                        var MobileNumber = jobj.getString("MobileNumber")
+                                        var Token = jobj.getString("Token")
+                                        var Email = jobj.getString("Email")
+                                        var UserCode = jobj.getString("UserCode")
+                                        var FK_Branch = jobj.getString("FK_Branch")
+                                        var FK_BranchType = jobj.getString("FK_BranchType")
+                                        var FK_Company = jobj.getString("FK_Company")
+                                        var FK_BranchCodeUser = jobj.getString("FK_BranchCodeUser")
+                                        var FK_UserRole = jobj.getString("FK_UserRole")
+                                        var UserRole = jobj.getString("UserRole")
+                                        var IsAdmin = jobj.getString("IsAdmin")
+                                        var IsManager = jobj.getString("IsManager")
+                                        var ID_User = jobj.getString("ID_User")
+                                        var BranchName = jobj.getString("BranchName")
+                                        var FK_Department = jobj.getString("FK_Department")
+                                        var Department = jobj.getString("Department")
+                                        var CompanyCategory = jobj.getString("CompanyCategory")
+
+                                        db!!.insertUpdateLoginUser(ID_Company!!,FK_Employee,UserName,Address,MobileNumber,Token,Email, UserCode,FK_Branch,
+                                            FK_BranchType,FK_Company,FK_BranchCodeUser,FK_UserRole,UserRole,IsAdmin, IsManager,ID_User,
+                                            BranchName,FK_Department,Department,CompanyCategory)
 
 
 

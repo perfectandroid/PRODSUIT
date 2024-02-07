@@ -37,6 +37,7 @@
             android:textStyle="bold"
             android:textSize="18dp" />
         <TextView
+                android:id="@+id/tv_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -81,7 +82,25 @@
                     android:padding="2dp"
                     android:layout_weight="1"
                     android:textAllCaps="false"
-                    android:text="No, cancel" />
+                    android:text="No, cancel"
+                    android:visibility="visible"/>
+
+            <Button
+                android:id="@+id/btnSingleNo"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:textSize="15dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/myfont"
+                android:background="@drawable/btn_bgcolour"
+                android:padding="2dp"
+                android:layout_weight="1"
+                android:textAllCaps="false"
+                android:text="No"
+                android:visibility="gone"/>
+
         </LinearLayout>
 
     <!--    <LinearLayout

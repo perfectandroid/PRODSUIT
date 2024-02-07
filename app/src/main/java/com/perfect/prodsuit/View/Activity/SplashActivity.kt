@@ -27,7 +27,9 @@ import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.BuildConfig
+import com.perfect.prodsuit.Helper.DBHelper
 import com.perfect.prodsuit.Viewmodel.*
+import org.json.JSONArray
 import org.json.JSONObject
 
 class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
@@ -285,6 +287,8 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
     var animBlink: Animation? = null
 
     var distance: Double? = null
+    var ID_PKey: String? = ""
+    var db : DBHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -292,6 +296,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_splash)
         context = this@SplashActivity
+        db = DBHelper(this, null)
 
 //        distance = SphericalUtil.computeDistanceBetween(sydney, Brisbane);
 
@@ -320,16 +325,29 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
         im_app_logo.startAnimation(animBlink);
 
 
+
         val commonAppSP = applicationContext.getSharedPreferences(Config.SHARED_PREF18, 0)
         var chkstatus =commonAppSP.getString("commonApp","")
         val mpinStatusSP = context.getSharedPreferences(Config.SHARED_PREF23, 0)
         var mpinStatus =mpinStatusSP.getString("mpinStatus","")
         Log.e(TAG,"chkstatus   139   "+chkstatus)
+        val ContDeleteModeSP = context.getSharedPreferences(Config.SHARED_PREF84, 0)
+        var contDeleteMode =ContDeleteModeSP.getString("ContDeleteMode","")
+        Log.e(TAG,"contDeleteMode   139   "+contDeleteMode)
 
 
-        if(chkstatus.equals("") || mpinStatus.equals(""))
+//        Config.logOut(context,1)
+//        db!!.deleteIPReseller()
+        db!!.deleteCompanyData()
+        if(chkstatus.equals("") || mpinStatus.equals("") || contDeleteMode.equals("0"))
         {
             Log.i("response44","bod   ")
+
+
+            val ContDeleteModeEditer = ContDeleteModeSP.edit()
+            ContDeleteModeEditer.putString("ContDeleteMode", "")
+            ContDeleteModeEditer.commit()
+
             checkCommonApp = 0
             commonAppChecking()
         }
@@ -337,6 +355,41 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
         {
             Log.i("response44","b.............  ")
 //           showMaintanace()
+
+            var companyrray = JSONArray()
+            companyrray = db!!.getDefaultIP()
+            Log.e(TAG,"pK   33555   "+companyrray)
+
+            if (companyrray.length() > 0){
+                var jsonObject = companyrray.getJSONObject(0)
+
+                val BASE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF7, 0)
+                val BASE_URLEditer = BASE_URLSP.edit()
+                BASE_URLEditer.putString("BASE_URL", jsonObject.getString("Base_Url"))
+                BASE_URLEditer.commit()
+
+                val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
+                val IMAGE_URLEditer = IMAGE_URLSP.edit()
+                IMAGE_URLEditer.putString("IMAGE_URL", jsonObject.getString("Image_Url"))
+                IMAGE_URLEditer.commit()
+
+
+                val CERT_NAMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF8, 0)
+                val CERT_NAMEEditer = CERT_NAMESP.edit()
+                CERT_NAMEEditer.putString("CERT_NAME", jsonObject.getString("Cert_Name"))
+                CERT_NAMEEditer.commit()
+
+                val BANK_KEYESP = applicationContext.getSharedPreferences(Config.SHARED_PREF9, 0)
+                val BANK_KEYEditer = BANK_KEYESP.edit()
+                BANK_KEYEditer.putString("BANK_KEY", jsonObject.getString("Bank_key"))
+                BANK_KEYEditer.commit()
+
+                Log.e(TAG,"37551  "+BASE_URLSP.getString("BASE_URL", null))
+                Log.e(TAG,"37552  "+IMAGE_URLSP.getString("IMAGE_URL", null))
+                Log.e(TAG,"37553  "+CERT_NAMESP.getString("CERT_NAME", null))
+                Log.e(TAG,"37554  "+BANK_KEYESP.getString("BANK_KEY", null))
+            }
+
             versionCheck()
         }
 
@@ -600,11 +653,17 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
             img_Code.setOnClickListener {
                 Config.disableClick(it)
                 if (tie_CompanyCode.text.toString().length>0){
-                    dialog1.dismiss()
-                    txt_valid_code!!.visibility = View.GONE
-                    checkCompanyApp = 0
-                    checkCompanyCode(tie_CompanyCode.text.toString(),Mode)
 
+                    txt_valid_code!!.visibility = View.GONE
+                    var isExist = db!!.ChekCompanyExist(tie_CompanyCode.text.toString())
+                    Log.e(TAG,"isExist  657775   "+isExist)
+                    if (isExist){
+                        warningPopup("Company Already Exist")
+                    }else{
+                        dialog1.dismiss()
+                        checkCompanyApp = 0
+                        checkCompanyCode(tie_CompanyCode.text.toString(),Mode)
+                    }
                 }else{
                     txt_valid_code!!.visibility = View.VISIBLE
                 }
@@ -615,8 +674,17 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                 if (tie_CompanyCode.text.toString().length>0){
                     dialog1.dismiss()
                     txt_valid_code!!.visibility = View.GONE
-                    checkCompanyApp = 0
-                    checkCompanyCode(tie_CompanyCode.text.toString(),Mode)
+                    var isExist = db!!.ChekCompanyExist(tie_CompanyCode.text.toString())
+                    Log.e(TAG,"isExist  657775   "+isExist)
+                    if (isExist){
+                        continueBottom("Company Already Registered,Do You Want To Register Another Comapny",Mode)
+                       // warningPopup("Company Already Exist")
+                    }else{
+                        checkCompanyApp = 0
+                        checkCompanyCode(tie_CompanyCode.text.toString(),Mode)
+
+                      //  addTempBase(tie_CompanyCode.text.toString(),Mode)
+                    }
 
                 }else{
                     txt_valid_code!!.visibility = View.VISIBLE
@@ -634,6 +702,49 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
             Log.e(TAG,"373   "+e.toString())
         }
+
+    }
+
+    private fun addTempBase(companyCode: String,Mode : String) {
+        val BASE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF7, 0)
+        val BASE_URLEditer = BASE_URLSP.edit()
+        BASE_URLEditer.putString("BASE_URL", "https://112.133.227.123:14020/PersuiteAPI/api/")
+        BASE_URLEditer.commit()
+
+        val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
+        val IMAGE_URLEditer = IMAGE_URLSP.edit()
+        IMAGE_URLEditer.putString("IMAGE_URL", "https://112.133.227.123:14020/PersuiteAPI/")
+        IMAGE_URLEditer.commit()
+
+
+        val CERT_NAMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF8, 0)
+        val CERT_NAMEEditer = CERT_NAMESP.edit()
+        CERT_NAMEEditer.putString("CERT_NAME", CERT_NAME)
+        CERT_NAMEEditer.commit()
+
+        val BANK_KEYESP = applicationContext.getSharedPreferences(Config.SHARED_PREF9, 0)
+        val BANK_KEYEditer = BANK_KEYESP.edit()
+        BANK_KEYEditer.putString("BANK_KEY", "-101")
+        BANK_KEYEditer.commit()
+
+        val companyCodeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF17, 0)
+        val companyCodeEditer = companyCodeSP.edit()
+        companyCodeEditer.putString("companyCode", companyCode)
+        companyCodeEditer.commit()
+
+        val commonAppSP = applicationContext.getSharedPreferences(Config.SHARED_PREF18, 0)
+        val commonAppEditer = commonAppSP.edit()
+        commonAppEditer.putString("commonApp", Mode)
+        commonAppEditer.commit()
+
+
+        var BASE_URL = "https://112.133.227.123:14020/PersuiteAPI/api/"
+        var IMAGE_URL = "https://112.133.227.123:14020/PersuiteAPI/"
+        var BankKey = "-101"
+
+        ID_PKey =  db!!.insertDataCompany(BASE_URL,IMAGE_URL,BankKey,
+            CERT_NAME,companyCode,false,false)
+        versionCheck()
 
     }
 
@@ -718,6 +829,19 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
 
 //                                            showMaintanace()
+
+                                            Log.e(TAG,"724441   "+jObject.getString("BASE_URL"))
+                                            Log.e(TAG,"724442   "+jObject.getString("IMAGE_URL"))
+                                            Log.e(TAG,"724443   "+jObject.getString("BankKey"))
+                                            Log.e(TAG,"724444   "+CERT_NAME)
+                                            Log.e(TAG,"724445   "+companyCode)
+
+                                            var BASE_URL = jObject.getString("BASE_URL")
+                                            var IMAGE_URL = jObject.getString("IMAGE_URL")
+                                            var BankKey = jObject.getString("BankKey")
+
+                                            ID_PKey =  db!!.insertDataCompany(BASE_URL,IMAGE_URL,BankKey,
+                                                CERT_NAME,companyCode,false,false)
                                             versionCheck()
 
                                         }
@@ -879,6 +1003,49 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                                     EditMRPLeadEditer.putString("EditMRPLead", jobj.getString("EditMRPLead"))
                                     EditMRPLeadEditer.commit()
 
+                                    Log.e(TAG,"94555  ID_PKey   "+ID_PKey)
+
+//                                    if (ID_PKey.equals("")){
+//                                        ID_PKey = db!!.getDefaultCompanyID()
+//                                    }
+                                    var ResellerName = jobj.getString("ResellerName")
+                                    var AppIconImageCode = jobj.getString("AppIconImageCode")
+                                    var TechnologyPartnerImage = jobj.getString("TechnologyPartnerImage")
+                                    var ProductName = jobj.getString("ProductName")
+                                    var PlayStoreLink = jobj.getString("PlayStoreLink")
+                                    var AppStoreLink = jobj.getString("AppStoreLink")
+                                    var ContactNumber = jobj.getString("ContactNumber")
+                                    var ContactEmail = jobj.getString("ContactEmail")
+                                    var ContactAddress = jobj.getString("ContactAddress")
+                                    var CertificateName = jobj.getString("CertificateName")
+                                    var TestingURL = jobj.getString("TestingURL")
+                                    var TestingMachineId = jobj.getString("TestingMachineId")
+                                    var TestingImageURL = jobj.getString("TestingImageURL")
+                                    var TestingMobileNo = jobj.getString("TestingMobileNo")
+                                    var TestingBankKey = jobj.getString("TestingBankKey")
+                                    var TestingBankHeader = jobj.getString("TestingBankHeader")
+                                    var AboutUs = jobj.getString("AboutUs")
+                                    var AudioClipEnabled = jobj.getString("AudioClipEnabled")
+                                    var IsLocationDistanceShowing = jobj.getString("IsLocationDistanceShowing")
+                                    var EditMRPLead = jobj.getString("EditMRPLead")
+
+                                    if (!ID_PKey.equals("")){
+                                        db!!.insertUpdateReseller(ID_PKey!!,ResellerName,AppIconImageCode,TechnologyPartnerImage,ProductName,PlayStoreLink,AppStoreLink,
+                                            ContactNumber,ContactEmail,ContactAddress,CertificateName,TestingURL,TestingMachineId,TestingImageURL,TestingMobileNo,
+                                            TestingBankKey,TestingBankHeader,AboutUs,AudioClipEnabled,IsLocationDistanceShowing,EditMRPLead)
+
+                                        val i = Intent(this@SplashActivity, WelcomeActivity::class.java)
+                                        startActivity(i)
+                                        finish()
+
+                                    }else{
+                                        ID_PKey = db!!.getDefaultCompanyID()
+                                        db!!.insertUpdateReseller(ID_PKey!!,ResellerName,AppIconImageCode,TechnologyPartnerImage,ProductName,PlayStoreLink,AppStoreLink,
+                                            ContactNumber,ContactEmail,ContactAddress,CertificateName,TestingURL,TestingMachineId,TestingImageURL,TestingMobileNo,
+                                            TestingBankKey,TestingBankHeader,AboutUs,AudioClipEnabled,IsLocationDistanceShowing,EditMRPLead)
+                                        doSplash()
+                                    }
+
 
 
 //                                    val AUDIOSP = applicationContext.getSharedPreferences(Config.SHARED_PREF67, 0)
@@ -957,7 +1124,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                                     }*/
 
 
-                                    doSplash()
+//                                    doSplash()
                                 }catch (e  :Exception){
 
                                     Log.e(TAG,"  319    "+e.toString())
@@ -1185,8 +1352,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
             override fun run() {
                 try {
                     Thread.sleep((4 * 1000).toLong())
+
+
                     val Loginpref = applicationContext.getSharedPreferences(Config.SHARED_PREF, 0)
                     val loginstatus =Loginpref.getString("loginsession", null)
+                    Log.e(TAG,"1354 loginsession  :   "+Loginpref.getString("loginsession", null))
                     if (Loginpref.getString("loginsession", null) == null|| Loginpref.getString(
                             "loginsession",
                             null

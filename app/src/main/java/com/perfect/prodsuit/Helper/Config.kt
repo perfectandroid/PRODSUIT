@@ -40,6 +40,7 @@ import javax.net.ssl.*
 
 object Config {
 
+    var db : DBHelper? = null
     var TAG = "Config"
     var CODE_STOCK_LIST: Int? = 1001
 
@@ -147,6 +148,7 @@ object Config {
 
     const val SHARED_PREF82 = "PnotificationID"  //  PushnotificationChannel
     const val SHARED_PREF83 = "attendance"
+    const val SHARED_PREF84 = "ContDeleteMode" // Multiple Account Mode
 
     var width = 0
     var height = 0
@@ -579,12 +581,13 @@ object Config {
         return value
     }
 
-    fun logOut(context : Context) {
+    fun logOut(context : Context,logoutMode : Int) {
 
 
         try {
 
             deleteFcmToken(context)
+            db = DBHelper(context, null)
 
             val mpinSP = context.getSharedPreferences(
                 Config.SHARED_PREF74,
@@ -594,10 +597,6 @@ object Config {
             mpinEditer.putString("mpin", "")
             mpinEditer.commit()
 
-            val loginSP = context.getSharedPreferences(SHARED_PREF, 0)
-            val loginEditer = loginSP.edit()
-            loginEditer.putString("loginsession", "No")
-            loginEditer.commit()
 
             val FK_EmployeeSP = context.getSharedPreferences(SHARED_PREF1, 0)
             val FK_EmployeeEditer = FK_EmployeeSP.edit()
@@ -702,10 +701,7 @@ object Config {
             companyCodeEditer.putString("companyCode", "")
             companyCodeEditer.commit()
 
-            val commonAppSP = context.getSharedPreferences(SHARED_PREF18, 0)
-            val commonAppEditer = commonAppSP.edit()
-            commonAppEditer.putString("commonApp", "")
-            commonAppEditer.commit()
+
 
 
             val AppIconImageCodeSP = context.getSharedPreferences(SHARED_PREF19, 0)
@@ -728,10 +724,7 @@ object Config {
             PlayStoreLinkEditer.putString("PlayStoreLink", "")
             PlayStoreLinkEditer.commit()
 
-            val mpinStatusSP = context.getSharedPreferences(SHARED_PREF23, 0)
-            val mpinStatusEditer = mpinStatusSP.edit()
-            mpinStatusEditer.putString("mpinStatus", "")
-            mpinStatusEditer.commit()
+
 
 
             /////////////////////////
@@ -929,6 +922,43 @@ object Config {
             val PSValueEditer = PSValueSP.edit()
             PSValueEditer.putString("PSValue", "")
             PSValueEditer.commit()
+
+            val ContDeleteModeSP = context.getSharedPreferences(Config.SHARED_PREF84, 0)
+            val ContDeleteModeEditer = ContDeleteModeSP.edit()
+            ContDeleteModeEditer.putString("ContDeleteMode", "")
+            ContDeleteModeEditer.commit()
+
+
+            if (logoutMode == 1){
+
+                Log.e(TAG,"938881  logoutMode  :  "+logoutMode)
+
+                val loginSP = context.getSharedPreferences(SHARED_PREF, 0)
+                val loginEditer = loginSP.edit()
+                loginEditer.putString("loginsession", "No")
+                loginEditer.commit()
+
+                val commonAppSP = context.getSharedPreferences(SHARED_PREF18, 0)
+                val commonAppEditer = commonAppSP.edit()
+                commonAppEditer.putString("commonApp", "")
+                commonAppEditer.commit()
+
+                val mpinStatusSP = context.getSharedPreferences(SHARED_PREF23, 0)
+                val mpinStatusEditer = mpinStatusSP.edit()
+                mpinStatusEditer.putString("mpinStatus", "")
+                mpinStatusEditer.commit()
+
+                db!!.deleteIPReseller()
+
+            }
+            else{
+                Log.e(TAG,"938882  logoutMode  :  "+logoutMode)
+                db!!.deleteCompanyDefaultIP()
+                var ID_Company = db!!.getLastInsertCompanyID()
+                db!!.updateStatusDefaultIp(ID_Company,true,true,"0")
+
+            }
+
 
 
             val isMyServiceRunning = isServiceRunning(context, NotificationLocationService::class.java)

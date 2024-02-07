@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.DBHelper
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.SetMpinActivityViewModel
 import org.json.JSONObject
@@ -47,6 +48,7 @@ class SetMpinActivity : AppCompatActivity(), View.OnClickListener {
     private var imgShowPin: ImageView? = null
     private var showPin: LinearLayout? = null
     private var clear: LinearLayout? = null
+    var db : DBHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +60,7 @@ class SetMpinActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_setmpin)
         setRegViews()
         context = this@SetMpinActivity
+        db = DBHelper(this, null)
         setmpinActivityViewModel = ViewModelProvider(this).get(SetMpinActivityViewModel::class.java)
     }
 
@@ -517,6 +520,9 @@ class SetMpinActivity : AppCompatActivity(), View.OnClickListener {
                                         mpinEditer.commit()
                                         var jobj = jObject.getJSONObject("MPINDetails")
 
+                                        var ID_Company = db!!.getLastInsertCompanyID()
+                                        db!!.updateUserMpin(ID_Company,Mpin,"0")
+
                                         val builder = AlertDialog.Builder(
                                             this@SetMpinActivity,
                                             R.style.MyDialogTheme
@@ -568,6 +574,11 @@ class SetMpinActivity : AppCompatActivity(), View.OnClickListener {
                                             val mpinStatusEditer = mpinStatusSP.edit()
                                             mpinStatusEditer.putString("mpinStatus", "true")
                                             mpinStatusEditer.commit()
+
+                                            // get Last Inserted Company Key
+
+                                            var pKey = db!!.getLastCompanyKey()
+                                            db!!.updateStatusDefaultIp(pKey,true,true,"0")
 
 
 
