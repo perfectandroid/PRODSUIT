@@ -2651,7 +2651,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             val etsearch = dialogCustSearch!! .findViewById(R.id.etsearch) as EditText
 
             llsearch!!.visibility =View.VISIBLE
-
+            recyCustomer.visibility=View.VISIBLE
+            val txt_nodata = dialogCustSearch!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
             customerSort = JSONArray()
             for (k in 0 until customerArrayList.length()) {
                 val jsonObject = customerArrayList.getJSONObject(k)
@@ -2682,18 +2684,43 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                     for (k in 0 until customerArrayList.length()) {
                         val jsonObject = customerArrayList.getJSONObject(k)
-                        if (textlength <= jsonObject.getString("Name").length) {
-                            if (jsonObject.getString("Name")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                        if (textlength <= jsonObject.getString("Name").length)
+                        {
+                            if (jsonObject.getString("Name")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim()))
+                            {
                                 customerSort.put(jsonObject)
                             }
 
                         }
                     }
 
-                    Log.e(TAG,"employeeAllSort               7103    "+customerSort)
-                    val adapter = CustomerListAdapter(this@CustomerServiceActivity, customerSort)
-                    recyCustomer!!.adapter = adapter
-                    adapter.setClickListener(this@CustomerServiceActivity)
+
+                    if (customerSort.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recyCustomer.visibility=View.VISIBLE
+//                        Log.e(TAG, "employeeSort               7103    " + customerSort)
+//                        val adapter = CustomerAdapter(this@CustomerServiceActivity, customerSort)
+//                        recyCustomer!!.adapter = adapter
+//                        adapter.setClickListener(this@CustomerServiceActivity)
+
+                        Log.e(TAG,"employeeAllSort               7103    "+customerSort)
+                        val adapter = CustomerListAdapter(this@CustomerServiceActivity, customerSort)
+                        recyCustomer!!.adapter = adapter
+                        adapter.setClickListener(this@CustomerServiceActivity)
+
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recyCustomer.visibility=View.GONE
+                    }
+
+//                    Log.e(TAG,"employeeAllSort               7103    "+customerSort)
+//                    val adapter = CustomerListAdapter(this@CustomerServiceActivity, customerSort)
+//                    recyCustomer!!.adapter = adapter
+//                    adapter.setClickListener(this@CustomerServiceActivity)
                 }
             })
 
@@ -4759,6 +4786,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                                         val jobjt = jObject.getJSONObject("PincodeDetails")
                                         pinCodeArrayList = jobjt.getJSONArray("PincodeDetailsList")
+
+                                        Log.e(TAG, "list  332223   " + pinCodeArrayList)
 //                                        val jobjt = jObject.getJSONObject("PincodeDetails")
 //
 //                                        FK_Country = jobjt.getString("FK_Country")
@@ -6573,6 +6602,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             val recycCountry = dialogCountry!!.findViewById(R.id.recycCountry) as RecyclerView
             val etsearch = dialogCountry!!.findViewById(R.id.etsearch) as EditText
 
+            recycCountry.visibility=View.VISIBLE
+            val txt_nodata = dialogCountry!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
+
+
             countrySort = JSONArray()
             for (k in 0 until countryArrayList.length()) {
                 val jsonObject = countryArrayList.getJSONObject(k)
@@ -6613,10 +6647,30 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                         }
                     }
 
-                    Log.e(TAG, "countrySort               7103    " + countrySort)
-                    val adapter = CountryDetailAdapter(this@CustomerServiceActivity, countrySort)
-                    recycCountry!!.adapter = adapter
-                    adapter.setClickListener(this@CustomerServiceActivity)
+
+                    if (countrySort!!.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recycCountry.visibility=View.VISIBLE
+                        Log.e(TAG, "countrySort               7103    " + countrySort)
+                        val adapter = CountryDetailAdapter(this@CustomerServiceActivity, countrySort)
+                        recycCountry!!.adapter = adapter
+                        adapter.setClickListener(this@CustomerServiceActivity)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recycCountry.visibility=View.GONE
+                    }
+
+
+
+
+
+//                    Log.e(TAG, "countrySort               7103    " + countrySort)
+//                    val adapter = CountryDetailAdapter(this@CustomerServiceActivity, countrySort)
+//                    recycCountry!!.adapter = adapter
+//                    adapter.setClickListener(this@CustomerServiceActivity)
                 }
             })
 
@@ -6632,7 +6686,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     }
 
     private fun getState() {
-
+Log.e(TAG,"country 34554=="+FK_Country)
 //        var stateDet = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -6714,6 +6768,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             val recycState = dialogState!!.findViewById(R.id.recycState) as RecyclerView
             val etsearch = dialogState!!.findViewById(R.id.etsearch) as EditText
 
+
+            recycState.visibility=View.VISIBLE
+            val txt_nodata = dialogState!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
+
             stateSort = JSONArray()
             for (k in 0 until stateArrayList.length()) {
                 val jsonObject = stateArrayList.getJSONObject(k)
@@ -6755,10 +6814,25 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                         }
                     }
 
-                    Log.e(TAG, "stateSort               7103    " + stateSort)
-                    val adapter = StateDetailAdapter(this@CustomerServiceActivity, stateSort)
-                    recycState!!.adapter = adapter
-                    adapter.setClickListener(this@CustomerServiceActivity)
+                    if (stateSort.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recycState.visibility=View.VISIBLE
+
+                        Log.e(TAG, "stateSort               7103    " + stateSort)
+                        val adapter = StateDetailAdapter(this@CustomerServiceActivity, stateSort)
+                        recycState!!.adapter = adapter
+                        adapter.setClickListener(this@CustomerServiceActivity)
+                    }
+                    else{
+                        txt_nodata.visibility=View.VISIBLE
+                        recycState.visibility=View.GONE
+                    }
+
+//                    Log.e(TAG, "stateSort               7103    " + stateSort)
+//                    val adapter = StateDetailAdapter(this@CustomerServiceActivity, stateSort)
+//                    recycState!!.adapter = adapter
+//                    adapter.setClickListener(this@CustomerServiceActivity)
                 }
             })
 
@@ -6775,6 +6849,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
     }
 
     private fun getDistrict() {
+        Log.e(TAG, "state   2286565   " + FK_States)
 //        var distDet = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -6856,6 +6931,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             dialogDistrict!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             val recycDistrict = dialogDistrict!!.findViewById(R.id.recycDistrict) as RecyclerView
             val etsearch = dialogDistrict!!.findViewById(R.id.etsearch) as EditText
+            recycDistrict.visibility=View.VISIBLE
+            val txt_nodata = dialogDistrict!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
 
             districtSort = JSONArray()
             for (k in 0 until districtArrayList.length()) {
@@ -6898,10 +6976,26 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                         }
                     }
 
-                    Log.e(TAG, "districtSort               7103    " + districtSort)
-                    val adapter = DistrictDetailAdapter(this@CustomerServiceActivity, districtSort)
-                    recycDistrict!!.adapter = adapter
-                    adapter.setClickListener(this@CustomerServiceActivity)
+
+                    if (districtSort.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recycDistrict.visibility=View.VISIBLE
+                        Log.e(TAG, "districtSort               7103    " + districtSort)
+                        val adapter = DistrictDetailAdapter(this@CustomerServiceActivity, districtSort)
+                        recycDistrict!!.adapter = adapter
+                        adapter.setClickListener(this@CustomerServiceActivity)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recycDistrict.visibility=View.GONE
+                    }
+
+//                    Log.e(TAG, "districtSort               7103    " + districtSort)
+//                    val adapter = DistrictDetailAdapter(this@CustomerServiceActivity, districtSort)
+//                    recycDistrict!!.adapter = adapter
+//                    adapter.setClickListener(this@CustomerServiceActivity)
                 }
             })
 
@@ -6998,6 +7092,10 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             recycArea = dialogArea!!.findViewById(R.id.recycArea) as RecyclerView
             val etsearch = dialogArea!!.findViewById(R.id.etsearch) as EditText
 
+            recycArea!!.visibility=View.VISIBLE
+            val txt_nodata = dialogArea!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
+
             areaSort = JSONArray()
             for (k in 0 until areaArrayList.length()) {
                 val jsonObject = areaArrayList.getJSONObject(k)
@@ -7038,10 +7136,25 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                         }
                     }
 
-                    Log.e(TAG, "areaSort               7103    " + areaSort)
-                    val adapter = AreaDetailAdapter(this@CustomerServiceActivity, areaSort)
-                    recycArea!!.adapter = adapter
-                    adapter.setClickListener(this@CustomerServiceActivity)
+                    if (areaSort.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recycArea!!.visibility=View.VISIBLE
+
+                        Log.e(TAG, "areaSort               7103    " + areaSort)
+                        val adapter = AreaDetailAdapter(this@CustomerServiceActivity, areaSort)
+                        recycArea!!.adapter = adapter
+                        adapter.setClickListener(this@CustomerServiceActivity)
+                    }
+                    else{
+                        txt_nodata.visibility=View.VISIBLE
+                        recycArea!!.visibility=View.GONE
+                    }
+
+//                    Log.e(TAG, "areaSort               7103    " + areaSort)
+//                    val adapter = AreaDetailAdapter(this@CustomerServiceActivity, areaSort)
+//                    recycArea!!.adapter = adapter
+//                    adapter.setClickListener(this@CustomerServiceActivity)
                 }
             })
 
@@ -7139,6 +7252,10 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             val recycPost = dialogPost!!.findViewById(R.id.recycPost) as RecyclerView
             val etsearch = dialogPost!!.findViewById(R.id.etsearch) as EditText
 
+            recycPost.visibility=View.VISIBLE
+            val txt_nodata = dialogPost!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
+
             postSort = JSONArray()
             for (k in 0 until postArrayList.length()) {
                 val jsonObject = postArrayList.getJSONObject(k)
@@ -7179,10 +7296,25 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                         }
                     }
 
-                    Log.e(TAG, "postSort               7103    " + postSort)
-                    val adapter = PostDetailAdapter(this@CustomerServiceActivity, postSort)
-                    recycPost!!.adapter = adapter
-                    adapter.setClickListener(this@CustomerServiceActivity)
+                    if (postSort.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recycPost!!.visibility=View.VISIBLE
+                        Log.e(TAG, "postSort               7103    " + postSort)
+                        val adapter = PostDetailAdapter(this@CustomerServiceActivity, postSort)
+                        recycPost!!.adapter = adapter
+                        adapter.setClickListener(this@CustomerServiceActivity)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recycPost!!.visibility=View.GONE
+                    }
+
+//                    Log.e(TAG, "postSort               7103    " + postSort)
+//                    val adapter = PostDetailAdapter(this@CustomerServiceActivity, postSort)
+//                    recycPost!!.adapter = adapter
+//                    adapter.setClickListener(this@CustomerServiceActivity)
                 }
             })
 
