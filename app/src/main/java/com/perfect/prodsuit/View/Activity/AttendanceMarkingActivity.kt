@@ -184,7 +184,7 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
                 onBackPressed()
             }
             R.id.tv_attndnce -> {
-                val i = Intent(this@AttendanceMarkingActivity, AttendanceReportActivity::class.java)
+                val i = Intent(this@AttendanceMarkingActivity, AttendanceReportsActivity::class.java)
                 startActivity(i)
                 finish()
             }

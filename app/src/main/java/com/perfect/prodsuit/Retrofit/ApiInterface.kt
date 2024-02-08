@@ -925,8 +925,7 @@ interface ApiInterface {
     @POST("UserValidations/EmployeeLocationDistance")
     fun getEmpLocationList(@Body body: RequestBody): Call<String>
 
-    @POST("UserValidations/AttendanceDetails")
-    fun getAttendanceReport(@Body body: RequestBody): Call<String>
+
 
 
 
@@ -950,5 +949,13 @@ interface ApiInterface {
 
     @POST("DashBoard/OrderTrackingTileDashBoard")
     fun getPickDeliveryOrderTrackingTileDashBoard(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/AttendanceDetails")
+    fun getAttendanceReport(@Body body: RequestBody): Call<String>
+
+
+    @POST("UserValidations/AttendancePunchDetails")
+    fun getPunchReport(@Body body: RequestBody): Call<String>
+
 
 }

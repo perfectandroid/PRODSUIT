@@ -2,10 +2,18 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.gms.google-services'
+
+    id 'kotlin-kapt'
 }
 
 android {
+    buildFeatures {
 
+        dataBinding = true
+
+        // for view binding:
+        // viewBinding = true
+    }
     signingConfigs {
         // HIDE
 //        release {
