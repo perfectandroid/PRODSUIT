@@ -71,7 +71,7 @@ object CompanyLogoRepository {
                 requestObject1.put("FK_User", ProdsuitApplication.encryptStart(ID_UserSP.getString("ID_User", null)))
 
 
-                Log.e(TAG,"requestObject companycode  731   "+requestObject1)
+                Log.e(TAG,"requestObject companycode  er   "+requestObject1)
                 Log.i("jhghgghghg","logo====   "+requestObject1)
 
             } catch (e: Exception) {

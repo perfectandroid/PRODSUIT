@@ -1957,12 +1957,14 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                     logo = jobjt!!.getString("CompanyLogo")
                                     Log.i("DIL", count)
                                     Log.i("logo1212","logo======"+logo);
+
+                                    Log.e(TAG,"1961 type   "+type)
                                     if(type.equals("0"))
                                     {
                                         tv_Status!!.visibility=View.GONE;
                                         if(!logo.equals(""))
                                         {
-
+                                            Log.e(TAG,"19612 type   "+logo)
                                             val decodedString = Base64.decode(logo, Base64.DEFAULT)
                                             ByteArrayToBitmap(decodedString)
                                             val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
@@ -1976,7 +1978,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                     {
                                         if(!logo.equals(""))
                                         {
-
+                                            Log.e(TAG,"19613 type   "+logo)
                                             val decodedString = Base64.decode(logo, Base64.DEFAULT)
                                             ByteArrayToBitmap(decodedString)
                                             val decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)

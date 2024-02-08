@@ -1030,6 +1030,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                                     var EditMRPLead = jobj.getString("EditMRPLead")
 
                                     if (!ID_PKey.equals("")){
+                                        Log.e(TAG,"103331 ID_PKey  "+ID_PKey)
                                         db!!.insertUpdateReseller(ID_PKey!!,ResellerName,AppIconImageCode,TechnologyPartnerImage,ProductName,PlayStoreLink,AppStoreLink,
                                             ContactNumber,ContactEmail,ContactAddress,CertificateName,TestingURL,TestingMachineId,TestingImageURL,TestingMobileNo,
                                             TestingBankKey,TestingBankHeader,AboutUs,AudioClipEnabled,IsLocationDistanceShowing,EditMRPLead)
@@ -1039,7 +1040,9 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                                         finish()
 
                                     }else{
+                                        Log.e(TAG,"103332 ID_PKey  "+ID_PKey)
                                         ID_PKey = db!!.getDefaultCompanyID()
+                                        Log.e(TAG,"103333 ID_PKey  "+ID_PKey)
                                         db!!.insertUpdateReseller(ID_PKey!!,ResellerName,AppIconImageCode,TechnologyPartnerImage,ProductName,PlayStoreLink,AppStoreLink,
                                             ContactNumber,ContactEmail,ContactAddress,CertificateName,TestingURL,TestingMachineId,TestingImageURL,TestingMobileNo,
                                             TestingBankKey,TestingBankHeader,AboutUs,AudioClipEnabled,IsLocationDistanceShowing,EditMRPLead)

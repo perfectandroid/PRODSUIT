@@ -6,10 +6,13 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -33,7 +36,9 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
     lateinit var materialusageProjectViewModel: MaterialUsageProjectViewModel
     var projectcount = 0
     lateinit var projectArrayList  : JSONArray
+    lateinit var projectArrayMain  : JSONArray
     private var recycProject       : RecyclerView?   = null
+    private var etsearch       : EditText?   = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +58,7 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         recycProject = findViewById<RecyclerView>(R.id.recycProject)
+        etsearch = findViewById<EditText>(R.id.etsearch)
         imback!!.setOnClickListener(this)
 
     }
@@ -119,47 +125,55 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
                                     projectcount++
 
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   114455   "+msg)
+                                    Log.e(TAG,"msg   1144551   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("ProjectList")
-                                        projectArrayList = jobjt.getJSONArray("ProjectListDetails")
-                                        if (projectArrayList.length()>0){
+                                        projectArrayMain = jobjt.getJSONArray("ProjectListDetails")
+                                        Log.e(TAG,"projectArrayList   1144552   "+projectArrayMain.length())
+                                        if (projectArrayMain.length()>0){
+
+                                            projectArrayList = JSONArray()
+                                            for (k in 0 until projectArrayMain.length()) {
+                                                val jsonObject = projectArrayMain.getJSONObject(k)
+                                                // reportNamesort.put(k,jsonObject)
+                                                projectArrayList.put(jsonObject)
+                                            }
 
                                             val lLayout = GridLayoutManager(this@ProjectListActivity, 1)
                                             recycProject!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            val adapter = ProjectListAdapter(this@ProjectListActivity, projectArrayList)
+                                            val adapter = ProjectListAdapter(this@ProjectListActivity, projectArrayList,0)
                                             recycProject!!.adapter = adapter
                                             adapter.setClickListener(this@ProjectListActivity)
 
-//                                            etsearch!!.addTextChangedListener(object : TextWatcher {
-//                                                override fun afterTextChanged(p0: Editable?) {
-//                                                }
-//
-//                                                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                                                }
-//
-//                                                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//
-//                                                    //  list_view!!.setVisibility(View.VISIBLE)
-//                                                    val textlength = etsearch!!.text.length
-//                                                    projectSort = JSONArray()
-//
-//                                                    for (k in 0 until projectArraylist.length()) {
-//                                                        val jsonObject = projectArraylist.getJSONObject(k)
-//                                                        if (textlength <= jsonObject.getString("ProjName").length) {
-//                                                            if (jsonObject.getString("ProjName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
-//                                                                projectSort.put(jsonObject)
-//                                                            }
-//
-//                                                        }
-//                                                    }
-//
-//                                                    Log.e(TAG,"projectSort               7103    "+projectSort)
-//                                                    val adapter = ProjectAdapter(this@MaterialRequestActivity, projectSort)
-//                                                    recylist!!.adapter = adapter
-//                                                    adapter.setClickListener(this@MaterialRequestActivity)
-//                                                }
-//                                            })
+                                            etsearch!!.addTextChangedListener(object : TextWatcher {
+                                                override fun afterTextChanged(p0: Editable?) {
+                                                }
+
+                                                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                                                }
+
+                                                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                                                    //  list_view!!.setVisibility(View.VISIBLE)
+                                                    val textlength = etsearch!!.text.length
+                                                    projectArrayList = JSONArray()
+
+                                                    for (k in 0 until projectArrayMain.length()) {
+                                                        val jsonObject = projectArrayMain.getJSONObject(k)
+                                                        if (textlength <= jsonObject.getString("ProjName").length) {
+                                                            if (jsonObject.getString("ProjName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
+                                                                projectArrayList.put(jsonObject)
+                                                            }
+
+                                                        }
+                                                    }
+
+                                                    Log.e(TAG,"projectSort               7103    "+projectArrayList)
+                                                    val adapter = ProjectListAdapter(this@ProjectListActivity, projectArrayList,0)
+                                                    recycProject!!.adapter = adapter
+                                                    adapter.setClickListener(this@ProjectListActivity)
+                                                }
+                                            })
 
                                         }
                                     } else {

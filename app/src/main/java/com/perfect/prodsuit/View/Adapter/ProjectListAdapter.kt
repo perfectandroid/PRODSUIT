@@ -8,17 +8,19 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
 
-class ProjectListAdapter (internal var context: Context, internal var jsonArray: JSONArray):
+class ProjectListAdapter (internal var context: Context, internal var jsonArray: JSONArray,internal var mode: Int):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         internal val TAG : String = "ProjectListAdapter"
         internal var jsonObject: JSONObject? = null
         private var clickListener: ItemClickListener? = null
+        private var selectPos: Int = 0
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val vh: RecyclerView.ViewHolder
@@ -44,6 +46,14 @@ class ProjectListAdapter (internal var context: Context, internal var jsonArray:
                 holder.tv_StartDate.text        = jsonObject!!.getString("StartDate")
                 holder.tv_FinishDate.text        = jsonObject!!.getString("FinishDate")
                 holder.tv_FinalAmount.text        = jsonObject!!.getString("FinalAmount")
+
+                if (mode != 0){
+                    if (selectPos == position){
+                        holder.ll_subTab.visibility = View.VISIBLE
+                    }else{
+                        holder.ll_subTab.visibility = View.GONE
+                    }
+                }
 
                 holder.ll_material_usage!!.setTag(position)
                 holder.ll_material_usage!!.setOnClickListener(View.OnClickListener {
@@ -76,6 +86,14 @@ class ProjectListAdapter (internal var context: Context, internal var jsonArray:
                         "materialTransactionClick"
                     )
                 })
+
+                holder.ll_mainTab!!.setTag(position)
+                holder.ll_mainTab!!.setOnClickListener(View.OnClickListener {
+                    selectPos = position
+                    mode = 1
+                    notifyDataSetChanged()
+                    Config.Utils.hideSoftKeyBoard(context,it)
+                })
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -100,8 +118,8 @@ class ProjectListAdapter (internal var context: Context, internal var jsonArray:
         internal var tv_CreatedDate             : TextView
         internal var tv_ProjectName             : TextView
         internal var tv_Customer                : TextView
-        internal var tv_Address                : TextView
-        internal var tv_MobileNumber                : TextView
+        internal var tv_Address                 : TextView
+        internal var tv_MobileNumber            : TextView
         internal var tv_StartDate               : TextView
         internal var tv_FinishDate              : TextView
         internal var tv_FinalAmount             : TextView
@@ -109,12 +127,14 @@ class ProjectListAdapter (internal var context: Context, internal var jsonArray:
         internal var ll_material_request        : LinearLayout
         internal var ll_project_followup        : LinearLayout
         internal var ll_project_transaction     : LinearLayout
+        internal var ll_mainTab                 : LinearLayout
+        internal var ll_subTab                  : LinearLayout
         init {
             tv_ShortName                    = v.findViewById<View>(R.id.tv_ShortName) as TextView
             tv_CreatedDate                  = v.findViewById<View>(R.id.tv_CreatedDate) as TextView
             tv_ProjectName                  = v.findViewById<View>(R.id.tv_ProjectName) as TextView
             tv_Customer                     = v.findViewById<View>(R.id.tv_Customer) as TextView
-            tv_Address                     = v.findViewById<View>(R.id.tv_Address) as TextView
+            tv_Address                      = v.findViewById<View>(R.id.tv_Address) as TextView
             tv_MobileNumber                     = v.findViewById<View>(R.id.tv_MobileNumber) as TextView
             tv_StartDate                    = v.findViewById<View>(R.id.tv_StartDate) as TextView
             tv_FinishDate                   = v.findViewById<View>(R.id.tv_FinishDate) as TextView
@@ -123,6 +143,8 @@ class ProjectListAdapter (internal var context: Context, internal var jsonArray:
             ll_material_request             = v.findViewById<View>(R.id.ll_material_request) as LinearLayout
             ll_project_followup             = v.findViewById<View>(R.id.ll_project_followup) as LinearLayout
             ll_project_transaction          = v.findViewById<View>(R.id.ll_project_transaction) as LinearLayout
+            ll_mainTab                      = v.findViewById<View>(R.id.ll_mainTab) as LinearLayout
+            ll_subTab                       = v.findViewById<View>(R.id.ll_subTab) as LinearLayout
         }
     }
     fun setClickListener(itemClickListener: ItemClickListener?) {
