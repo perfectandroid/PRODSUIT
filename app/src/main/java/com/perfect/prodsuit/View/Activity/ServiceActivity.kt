@@ -80,19 +80,21 @@ class ServiceActivity : AppCompatActivity() , View.OnClickListener {
                 finish()
             }
             R.id.llCustomerService->{
+                Config.disableClick(v)
                 val i = Intent(this@ServiceActivity, CustomerServiceActivity::class.java)
                 startActivity(i)
             }
             R.id.llServiceFollowup->{
 //                val i = Intent(this@ServiceActivity, ServiceFollowUPActiivty::class.java)
 //                startActivity(i)
+                Config.disableClick(v)
                 val i = Intent(this@ServiceActivity, ServiceFollowUpListActivity::class.java)
                 startActivity(i)
             }
             R.id.llServiceAssign->{
 //                val i = Intent(this@ServiceActivity, ServiceAssignActivity::class.java)
 //                startActivity(i)
-
+                Config.disableClick(v)
                 val i = Intent(this@ServiceActivity, ServiceAssignTabActivity::class.java)
                 startActivity(i)
             }

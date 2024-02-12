@@ -18,6 +18,8 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     var TAG = "DBHelper"
 
     override fun onCreate(db: SQLiteDatabase) {
+
+        Log.e(TAG," 2222221   ")
         // TODO Auto-generated method stub
         db.execSQL("create table travel_location " + "(id integer primary key, date text,time text,battery text, address text)")
         db.execSQL("create table chat_all_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text)")
@@ -55,7 +57,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // TODO Auto-generated method stub
-
+        Log.e(TAG," 2222222   ")
         if (oldVersion < 2) {
             db.execSQL("create table chat_all_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text)")
             db.execSQL("create table chat_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text,senderID text)") //,userToken text
@@ -80,7 +82,19 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
            // db.execSQL("create table chat_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text,senderID text,userToken text)")
         }
         else if (oldVersion < 5) {
+            Log.e(TAG," 22222221   ")
             Log.e(TAG,"58888   "+oldVersion +   " : "+newVersion)
+//            db.execSQL(
+//                "create table Company " + "(ID_Company integer primary key,Base_Url text,Image_Url text, Bank_key text,Cert_Name text,Company_Code text, Company_Status Boolean, IP_Default Boolean)"
+//            )
+//
+//            db.execSQL(
+//                "create table ResellerDetails " + "(ID_Reseller integer primary key,ID_Company text,ResellerName text,AppIconImageCode text, TechnologyPartnerImage text," +
+//                        "ProductName text,PlayStoreLink text, AppStoreLink text, ContactNumber text, ContactEmail text, ContactAddress text, CertificateName text, TestingURL text," +
+//                        " TestingMachineId text, TestingImageURL text, TestingMobileNo text, TestingBankKey text, TestingBankHeader text, AboutUs text, AudioClipEnabled text," +
+//                        " IsLocationDistanceShowing text, EditMRPLead text)"
+//            )
+
             db.execSQL(
                 "create table Company " + "(ID_Company integer primary key,Base_Url text,Image_Url text, Bank_key text,Cert_Name text,Company_Code text, Company_Status Boolean, IP_Default Boolean)"
             )
@@ -92,23 +106,19 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                         " IsLocationDistanceShowing text, EditMRPLead text)"
             )
 
-
-
-
-        }
-        if (oldVersion < 6){
             db.execSQL(
                 "create table LoginUser " + "(ID_LoginUser integer primary key,ID_Company text,FK_Employee text, UserName text,Address text,MobileNumber text," +
                         " Token text, UserCode text, FK_Branch text, BranchName text, FK_BranchType text, FK_Company text, FK_BranchCodeUser text, FK_UserRole text," +
-                        " UserRole text, IsAdmin text, IsManager text, ID_User text, FK_Department text, Department text, CompanyCategory text)"
+                        " UserRole text, IsAdmin text, IsManager text, ID_User text, FK_Department text, Department text, CompanyCategory text,userMpin text)"
             )
-        }
-        if (oldVersion < 7){
-            db.execSQL("ALTER TABLE LoginUser ADD COLUMN userMpin text")
+
+
         }
 
         // onCreate(db)
     }
+
+
 
     fun addFirebaseUser(
         name: String,
@@ -727,11 +737,17 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     }
 
     fun deleteCompanyData() {
-        val dbWrite = writableDatabase
 
-        dbWrite.execSQL("delete from LoginUser where ID_Company in (select ID_Company from Company where Company_Status != '1' and Company_Status != 'true' ) ")
-        dbWrite.execSQL("delete from ResellerDetails where ID_Company in (select ID_Company from Company where Company_Status != '1' and Company_Status != 'true' ) ")
-        dbWrite.execSQL("delete from Company where ID_Company in (select ID_Company from Company where Company_Status != '1' and Company_Status != 'true' ) ")
+        try {
+            val dbWrite = writableDatabase
+
+            dbWrite.execSQL("delete from LoginUser where ID_Company in (select ID_Company from Company where Company_Status != '1' and Company_Status != 'true' ) ")
+            dbWrite.execSQL("delete from ResellerDetails where ID_Company in (select ID_Company from Company where Company_Status != '1' and Company_Status != 'true' ) ")
+            dbWrite.execSQL("delete from Company where ID_Company in (select ID_Company from Company where Company_Status != '1' and Company_Status != 'true' ) ")
+        }catch (e: Exception){
+            Log.e(TAG,"73888    "+e.toString())
+        }
+
 
     }
 
@@ -897,10 +913,10 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         private val DATABASE_NAME = "prodsuite"
 
         // below is the variable for database version
-        private val DATABASE_VERSION = 7
+        private val DATABASE_VERSION = 5
 
         // DATABASE_VERSION = 4 , table chat_user , add new colum 'userToken'
-        // DATABASE_VERSION = 5 , create table company & ResellerDetails
+        // DATABASE_VERSION = 5 , create table company , ResellerDetails & LoginUser
 
     }
 }
