@@ -65,7 +65,6 @@
 
     <application
         android:name=".View.lifes.MyApp"
-        android:allowBackup="true"
         android:exported="true"
         android:foregroundServiceType="location"
         android:grantUriPermissions="true"
