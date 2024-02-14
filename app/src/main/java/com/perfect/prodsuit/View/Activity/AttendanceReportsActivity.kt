@@ -7,8 +7,6 @@ import android.app.ProgressDialog
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -23,9 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.ItemClickListener
-import com.perfect.prodsuit.View.Adapter.AssignedListAdapter
 import com.perfect.prodsuit.View.Adapter.AttendanceReportAdapter
-import com.perfect.prodsuit.View.Adapter.EmployeeAllAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -160,16 +156,35 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
 
 
 
-        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         System.out.println(" C DATE is  "+currentDate)
+
         tie_Date!!.setText(currentDate)
+
+
+
         serviceList = 0
-        strToDate=tie_Date!!.text.toString()
-        getPunchReport(strToDate!!)
 
 
-        if(strToDate!!.equals("Date")||strToDate!!.equals("")||strToDate!!.equals(null))
+        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+        val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+
+
+        var dates = tie_Date!!.text.toString()
+        val dateFrom = inputFormat.parse(dates)
+        // val dateFrom = inputFormat.parse("08-04-2022")
+        val strDate = outputFormat.format(dateFrom)
+
+
+
+
+    //    strToDate=tie_Date!!.text.toString()
+        getPunchReport(strDate!!)
+
+
+     /*   if(strToDate!!.equals("Date")||strToDate!!.equals("")||strToDate!!.equals(null))
         {
             til_Date!!.setError("Please select a Date")
             til_Date!!.setErrorIconDrawable(null)
@@ -185,7 +200,7 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
 
 
         }
-
+*/
     }
 
 
