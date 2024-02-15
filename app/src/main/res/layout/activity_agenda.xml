@@ -182,7 +182,7 @@
                             android:padding="10dp"
                             android:src="@drawable/filter1"
                             android:tint="@color/white"
-                            android:visibility="gone"
+                            android:visibility="visible"
 
                             tools:ignore="UseAppTint" />
 
