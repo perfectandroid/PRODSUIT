@@ -10,11 +10,11 @@ import com.perfect.prodsuit.Repository.AgendaListRepository
 
 class AgendaListViewModel : ViewModel() {
     var agendalistLiveData: MutableLiveData<AgendaListModel>? = null
-    fun getAgendalist(context: Context,ReqMode : String,SubMode : String,ID_FinancePlanType : String,AsOnDate : String,ID_Category : String,ID_Area : String,Demand : String
-    ):LiveData<AgendaListModel>?
+    fun getAgendalist(context: Context,ReqMode : String,SubMode : String,ID_FinancePlanType : String,AsOnDate : String,ID_Category : String,ID_Area : String,
+                      Demand : String,ID_Branch : String,ID_Employee : String):LiveData<AgendaListModel>?
     {
         Log.i("responseww","AsOnDate view model=  "+AsOnDate)
-        agendalistLiveData=AgendaListRepository.getAgendaApiCall(context,ReqMode,SubMode,ID_FinancePlanType,AsOnDate,ID_Category,ID_Area,Demand)
+        agendalistLiveData=AgendaListRepository.getAgendaApiCall(context,ReqMode,SubMode,ID_FinancePlanType,AsOnDate,ID_Category,ID_Area,Demand,ID_Branch,ID_Employee)
         return agendalistLiveData
     }
 }

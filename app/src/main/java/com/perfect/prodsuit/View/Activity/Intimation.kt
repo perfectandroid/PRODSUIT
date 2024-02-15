@@ -398,6 +398,22 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         tie_ScheduledDate!!.setOnClickListener(this)
         tie_ScheduledTime!!.setOnClickListener(this)
         img_filter!!.setOnClickListener(this)
+
+        val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
+        var isAdmin = IsAdminSP.getString("IsAdmin", null)
+
+        val IsManagerSP = applicationContext.getSharedPreferences(Config.SHARED_PREF75, 0)
+        var IsManager = IsManagerSP.getString("IsManager", null)
+
+        Log.e(TAG,"51021  IsAdminSP  : "+isAdmin)
+        Log.e(TAG,"51022  IsManager  : "+IsManager)
+
+        if (isAdmin.equals("1") && IsManager.equals("0")) {
+                tie_Branch!!.isEnabled = true
+        }
+        else if (isAdmin.equals("0") && IsManager.equals("1")){
+                tie_Branch!!.isEnabled = false
+        }
     }
 
 
@@ -3735,6 +3751,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
     }
     private fun getBranch() {
         var branch = 0
+        var SubMode = "1"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -3743,7 +3760,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                branchViewModel.getBranch(this, "0")!!.observe(
+                branchViewModel.getBranch(this, "0",SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message

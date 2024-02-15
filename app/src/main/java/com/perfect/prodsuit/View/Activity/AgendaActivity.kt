@@ -242,6 +242,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
     var imgv_filter1: ImageView? = null
     var imgv_filter: ImageView? = null
     var imgv_filterEmi: ImageView? = null
+    var imgv_filter2: ImageView? = null
 
 
     var txtSelectPend: TextView? = null
@@ -315,6 +316,15 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
     lateinit var agendalistViewModel: AgendaListViewModel
 
+    private var temp_ID_Branch: String = "0"
+    private var temp_Branch: String = ""
+    private var temp_ID_Employee: String = "0"
+    private var temp_Employee: String = ""
+    private var temp_ID_Branch1: String = ""
+    private var temp_Branch1: String = ""
+    private var temp_ID_Employee1: String = ""
+    private var temp_Employee1: String = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -347,6 +357,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 ////        registerReceiver(myReceiver, intentFilter)
 
         setRegViews()
+        loadLoginEmpDetails()
 
 
         SubMode = "1"
@@ -355,6 +366,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         criteria = ""
         ID_LeadGenerate = ""
 
+        agendaAllListCount = 0
         getAgendaList()
 
 
@@ -362,6 +374,24 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
         //    getAgendatypes()
         //    getActionTypes()
+
+    }
+
+    private fun loadLoginEmpDetails() {
+        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+
+        val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
+        val BranchSP = context.getSharedPreferences(Config.SHARED_PREF45, 0)
+        ID_Branch = FK_BranchSP.getString("FK_Branch", null).toString()
+
+
+
+        temp_ID_Branch = FK_BranchSP.getString("FK_Branch", null).toString()
+        temp_Branch = BranchSP.getString("BranchName", null).toString()
+        temp_ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+        temp_Employee = UserNameSP.getString("UserName", null).toString()
 
     }
 
@@ -391,9 +421,9 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         val BranchNameSP = applicationContext.getSharedPreferences(Config.SHARED_PREF45, 0)
         val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
         val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
-
-        ID_Branch = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
-        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+//
+//        ID_Branch = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
+//        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
         ID_Lead_Details = ""
         strLeadValue = ""
 
@@ -604,6 +634,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         ReqMode = "105"
         SubMode = "0"
         context = this@AgendaActivity
+        Log.e(TAG,"6363 ID_Branch     "+ID_Branch)
+        Log.e(TAG,"6363 ID_Employee   "+ID_Employee)
         agendalistViewModel = ViewModelProvider(this).get(AgendaListViewModel::class.java)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -621,7 +653,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                     AsOnDate!!,
                     ID_Category!!,
                     ID_Area!!,
-                    Demand!!
+                    Demand!!,ID_Branch!!,ID_Employee!!
 
                 )!!.observe(
                     this
@@ -895,9 +927,11 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
         imgv_filter = findViewById(R.id.imgv_filter)
         imgv_filter1 = findViewById(R.id.imgv_filter1)
+        imgv_filter2 = findViewById(R.id.imgv_filter2)
         val imgv_sort = findViewById<ImageView>(R.id.imgv_sort)
 
         imgv_filter!!.setOnClickListener(this)
+        imgv_filter2!!.setOnClickListener(this)
         imgv_filter1!!.setOnClickListener(this)
         imgv_sort!!.setOnClickListener(this)
         imgv_filterEmi!!.setOnClickListener(this)
@@ -1053,13 +1087,15 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 rv_todolist1!!.visibility = View.GONE
                 textid!!.text="LEAD"
                 imgv_filterEmi!!.visibility=View.GONE
+                imgv_filter!!.visibility = View.GONE
                 imgv_filter1!!.visibility = View.GONE
+                Log.e(TAG,"121212   ")
+                imgv_filter2!!.visibility = View.VISIBLE
 
                 coun!!.visibility = View.VISIBLE
                 coun!!.text=leadArrayList.length().toString()
                 rv_todolist!!.visibility = View.VISIBLE
                 firstpage!!.visibility = View.VISIBLE
-                imgv_filter!!.visibility = View.VISIBLE
                 fab_Reminder!!.visibility = View.VISIBLE
 
 
@@ -1224,7 +1260,9 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             R.id.imgv_filter -> {
                 // filterData()
                 Config.disableClick(v)
-                filterBottomData()
+              //  filterBottomData()
+
+                filterBottomDataManagment()
 
 
             }
@@ -1236,6 +1274,15 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 //   showFilterAlertService()
 
             }
+
+            R.id.imgv_filter2 -> {
+                // filterData()
+                Config.disableClick(v)
+                filterBottomData()
+
+            }
+
+
             R.id.imgv_filterEmi -> {
                 Config.disableClick(v)
                 filterBottomSheetEmi()
@@ -1323,6 +1370,179 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 }
             }
         }
+    }
+
+    private fun filterBottomDataManagment() {
+
+        try {
+            val dialog = BottomSheetDialog(this)
+            val layout1 = layoutInflater.inflate(R.layout.filter_manage, null)
+
+            val ll_admin_staff = layout1.findViewById(R.id.ll_admin_staff) as LinearLayout
+
+            val txtCancel = layout1.findViewById(R.id.txtCancel) as TextView
+            val txtSubmit = layout1.findViewById(R.id.txtSubmit) as TextView
+            val refresh = layout1.findViewById(R.id.refresh) as ImageView
+
+
+            tie_Employee = layout1.findViewById(R.id.tie_Employee) as TextInputEditText
+            tie_Branch = layout1.findViewById(R.id.tie_Branch) as TextInputEditText
+
+            val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
+            var isAdmin = IsAdminSP.getString("IsAdmin", null)
+
+            val IsManagerSP = applicationContext.getSharedPreferences(Config.SHARED_PREF75, 0)
+            var IsManager = IsManagerSP.getString("IsManager", null)
+
+            Log.e(TAG,"51021  IsAdminSP  : "+isAdmin)
+            Log.e(TAG,"51022  IsManager  : "+IsManager)
+
+            if (isAdmin.equals("1") && IsManager.equals("0")) {
+                ll_admin_staff!!.visibility = View.VISIBLE
+//                tie_Branch!!.isEnabled = true
+//                tie_Employee!!.isEnabled = true
+            }
+            else if (isAdmin.equals("0") && IsManager.equals("1")){
+                ll_admin_staff!!.visibility = View.VISIBLE
+//                tie_Branch!!.isEnabled = false
+//                tie_Employee!!.isEnabled = true
+            }else{
+//                tie_Branch!!.isEnabled = false
+//                tie_Employee!!.isEnabled = false
+            }
+
+
+            Log.e(TAG,"52444   ")
+            Log.e(TAG,"524441 temp_Employee1  :  "+temp_Employee1)
+            Log.e(TAG,"524442 temp_ID_Employee1  :  "+temp_ID_Employee1)
+            Log.e(TAG,"524443 temp_ID_Branch1  :  "+temp_ID_Branch1)
+            Log.e(TAG,"524444 temp_Branch1  :  "+temp_Branch1)
+
+            if (temp_Employee1.equals("")){
+                tie_Employee!!.setText(temp_Employee)
+            }else{
+                tie_Employee!!.setText(temp_Employee1)
+            }
+
+            if (temp_ID_Employee1.equals("")){
+                ID_Employee  =temp_ID_Employee
+            }else{
+                ID_Employee  =temp_ID_Employee1
+            }
+
+            if (temp_ID_Branch1.equals("")){
+                ID_Branch = temp_ID_Branch
+            }else{
+                ID_Branch = temp_ID_Branch1
+            }
+
+            if (temp_Branch1.equals("")){
+                tie_Branch!!.setText(temp_Branch)
+            }else{
+                tie_Branch!!.setText(temp_Branch1)
+            }
+
+            txtCancel.setOnClickListener {
+                temp_ID_Branch1 = ""
+                temp_Branch1 = ""
+                temp_ID_Employee1 = ""
+                temp_Employee1 = ""
+
+                dialog.dismiss()
+
+            }
+
+            txtSubmit.setOnClickListener {
+
+                if (ID_Branch.equals("")){
+                    Toast.makeText(applicationContext, "Select Branch", Toast.LENGTH_SHORT).show()
+
+                }else if (ID_Employee.equals("")){
+                    Toast.makeText(applicationContext, "Select Employee", Toast.LENGTH_SHORT).show()
+                }else{
+                    dialog.dismiss()
+                    agendaAllListCount = 0
+                    getAgendaList()
+                }
+//
+//                else{
+
+//                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+//                ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+//
+//                val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+//                UserName = UserNameSP.getString("UserName", null).toString()
+
+                Log.e(TAG,"002  "+ID_Employee)
+                Log.e(TAG,"927  "+temp_Employee)
+
+//                }
+
+            }
+
+            refresh.setOnClickListener {
+//                dialog.dismiss()
+
+                temp_ID_Branch1 = ""
+                temp_Branch1 = ""
+                temp_ID_Employee1 = ""
+                temp_Employee1 = ""
+
+                ID_Branch = temp_ID_Branch
+                tie_Branch!!.setText(temp_Branch)
+                ID_Employee = temp_ID_Employee
+
+                tie_Employee!!.setText(temp_Employee)
+                Log.e(TAG,"002  "+ID_Employee)
+
+                Log.e(TAG,"5244421 temp_Employee1  :  "+temp_Employee1)
+                Log.e(TAG,"5244422 temp_ID_Employee1  :  "+temp_ID_Employee1)
+                Log.e(TAG,"5244423 temp_ID_Branch1  :  "+temp_ID_Branch1)
+                Log.e(TAG,"5244424 temp_Branch1  :  "+temp_Branch1)
+            }
+
+            tie_Branch!!.setOnClickListener(View.OnClickListener {
+                Config.disableClick(it)
+
+                if (isAdmin.equals("1") && IsManager.equals("0")) {
+                    branch = 0
+                    getBranch()
+                }
+
+            })
+
+
+            tie_Employee!!.setOnClickListener(View.OnClickListener {
+                Config.disableClick(it)
+//                ID_Employee = ""
+//                leadDetailsAll = 0
+//                getEmployeeAllD()
+                Log.e(TAG," 796   tie_Employee"+ID_Employee)
+
+
+                if (isAdmin.equals("1") && IsManager.equals("0")) {
+                    empUseBranch = 0
+                    getEmpByBranch()
+                }
+                else if (isAdmin.equals("0") && IsManager.equals("1")){
+                    empUseBranch = 0
+                    getEmpByBranch()
+                }
+
+            })
+
+
+
+
+
+            dialog.setCancelable(false)
+            dialog!!.setContentView(layout1)
+            dialog.show()
+
+        }catch (e: Exception){
+            Log.e(TAG,"777  Exception   "+e.toString())
+        }
+
     }
 
 
@@ -2974,6 +3194,15 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             ID_Branch = jsonObject.getString("ID_Branch")
             tie_Branch!!.setText(jsonObject.getString("BranchName"))
 
+            temp_ID_Branch1 = jsonObject.getString("ID_Branch")
+            temp_Branch1 = jsonObject.getString("BranchName")
+
+            ID_Employee = ""
+            tie_Employee!!.setText("")
+
+            temp_ID_Employee1 = ""
+            temp_Employee1 = ""
+
 
         }
 
@@ -2984,6 +3213,9 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             Log.e(TAG, "ID_Employee   " + jsonObject.getString("ID_Employee"))
             ID_Employee = jsonObject.getString("ID_Employee")
             tie_Employee!!.setText(jsonObject.getString("EmpName"))
+
+            temp_ID_Employee1 = jsonObject.getString("ID_Employee")
+            temp_Employee1 = jsonObject.getString("EmpName")
 
 
         }
@@ -3723,7 +3955,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
 
     private fun getBranch() {
-//         var branch = 0
+        var SubMode = "1"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -3732,7 +3964,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                branchViewModel.getBranch(this, "0")!!.observe(
+                branchViewModel.getBranch(this, "0",SubMode!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -4973,7 +5205,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             firstpage!!.visibility = View.GONE
             secondpage!!.visibility = View.GONE
             thirdpage!!.visibility = View.GONE
-            imgv_filter!!.visibility = View.GONE
+            imgv_filter!!.visibility = View.VISIBLE
+            imgv_filter2!!.visibility = View.GONE
             imgv_filter1!!.visibility = View.GONE
             fab_Reminder!!.visibility = View.GONE
             imgv_filterEmi!!.visibility=View.GONE

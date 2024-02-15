@@ -110,7 +110,7 @@ object ServiceNewListReportRepository {
                 requestObject1.put("TicketNo", "0")
 
 
-                Log.e(BranchRepository.TAG,"78  getBranch  "+requestObject1)
+                Log.e(TAG,"78  getBranch  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

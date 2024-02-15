@@ -20,9 +20,6 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ProjectSiteVisitTabAdapter
-import com.perfect.prodsuit.View.Adapter.ServiceCountAdapter
-import com.perfect.prodsuit.Viewmodel.BranchViewModel
-import com.perfect.prodsuit.Viewmodel.ServiceCountViewModel
 import com.perfect.prodsuit.Viewmodel.SiteVisitCountViewModel
 import org.json.JSONArray
 import org.json.JSONObject

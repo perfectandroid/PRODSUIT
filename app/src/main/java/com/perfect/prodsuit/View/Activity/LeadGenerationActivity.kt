@@ -6754,6 +6754,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
     private fun getBranch() {
 //         var branch = 0
+        var SubMode = "0"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -6762,7 +6763,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                branchViewModel.getBranch(this, ID_BranchType)!!.observe(
+                branchViewModel.getBranch(this, ID_BranchType,SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {

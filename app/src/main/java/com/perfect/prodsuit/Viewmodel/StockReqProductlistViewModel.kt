@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.StockReqProductlistModel
-import com.perfect.prodsuit.Repository.BranchRepository
 import com.perfect.prodsuit.Repository.StockReqProductListRepository
 
 class StockReqProductlistViewModel  : ViewModel() {
