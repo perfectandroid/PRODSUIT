@@ -207,6 +207,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     var tableCount = 0
     var logoutMode = 1
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)

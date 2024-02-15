@@ -326,21 +326,7 @@ class FavActivity : AppCompatActivity() , View.OnClickListener, ItemClickListene
             rclrvw_favlist!!.adapter = adapter
 
         }
-        if (data.equals("delete")){
 
-            db = DataBaseHelper(context, null)
-
-            // on below line we are calling a method to delete our
-            // course and we are comparing it with our course name.
-
-            // on below line we are calling a method to delete our
-            // course and we are comparing it with our course name.
-            db!!.deleteitem(value)
-            rclrvw_favlist!!.removeViewAt(position);
-
-            Toast.makeText(context, "Deleted successfully", Toast.LENGTH_SHORT).show();
-
-        }
 
     }
 }

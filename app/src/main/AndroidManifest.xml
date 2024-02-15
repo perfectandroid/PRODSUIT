@@ -844,6 +844,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
+            android:name=".View.Activity.FavActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name=".View.Activity.HomeDashBoardDetailPageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"

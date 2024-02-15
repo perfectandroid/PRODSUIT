@@ -1,8 +1,8 @@
 package com.perfect.prodsuit.View.Adapter
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,19 +14,17 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.favourites.DataBaseHelper
-import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.ItemClickListenerValue
-import com.perfect.prodsuit.Model.FavlistModel
 import com.perfect.prodsuit.Model.InsertFavModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.DashBoardActivity
+import com.perfect.prodsuit.View.Activity.FavActivity
 import com.perfect.prodsuit.View.Activity.LeadActivity
 import com.perfect.prodsuit.View.Activity.LeadGenerationQuickActivity
 import com.perfect.prodsuit.View.Activity.ProjectActivity
 import com.perfect.prodsuit.View.Activity.ReportMainActivity
 import com.perfect.prodsuit.View.Activity.ServiceActivity
 import org.json.JSONObject
-import java.util.ArrayList
 
 
 class FavListAdapter1(
@@ -63,10 +61,23 @@ class FavListAdapter1(
 
                 holder.imgv_del!!.setTag(position)
                 holder.imgv_del!!.setOnClickListener(View.OnClickListener {
-                    clickListener!!.onClick(position, "delete",title)
+                  //  clickListener!!.onClick(position, "delete",title)
 
 
+                    db = DataBaseHelper(context, null)
 
+                    // on below line we are calling a method to delete our
+                    // course and we are comparing it with our course name.
+
+                    // on below line we are calling a method to delete our
+                    // course and we are comparing it with our course name.
+                    db!!.deleteitem(title)
+                    //   rclrvw_favlist!!.removeViewAt(position);
+
+                    Toast.makeText(context, "Deleted successfully", Toast.LENGTH_SHORT).show();
+                    val myIntent = Intent(context, FavActivity::class.java)
+                    context.startActivity(myIntent)
+                    (context as Activity).finish()
                    // Log.e(TAG,"deleted   ")
                 })
 
