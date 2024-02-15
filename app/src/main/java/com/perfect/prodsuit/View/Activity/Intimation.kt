@@ -385,7 +385,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         btnSubmit = findViewById(R.id.btnSubmit)
         btnReset = findViewById(R.id.btnReset)
         tie_module!!.setOnClickListener(this)
-        tie_Branch!!.setOnClickListener(this)
+//        tie_Branch!!.setOnClickListener(this)
         tie_Channel!!.setOnClickListener(this)
         tie_shedule!!.setOnClickListener(this)
         imback!!.setOnClickListener(this)
@@ -409,10 +409,11 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
         Log.e(TAG,"51022  IsManager  : "+IsManager)
 
         if (isAdmin.equals("1") && IsManager.equals("0")) {
-                tie_Branch!!.isEnabled = true
+            tie_Branch!!.setOnClickListener(this)
+            tie_Branch!!.isEnabled = true
         }
         else if (isAdmin.equals("0") && IsManager.equals("1")){
-                tie_Branch!!.isEnabled = false
+            tie_Branch!!.isEnabled = false
         }
     }
 
@@ -432,6 +433,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                     getModule()
                 }
                 R.id.tie_Branch -> {
+
                     Config.disableClick(v)
                     getBranch()
                 }

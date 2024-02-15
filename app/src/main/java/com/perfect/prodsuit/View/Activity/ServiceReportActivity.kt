@@ -201,10 +201,10 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
 
         tie_ReportName!!.setOnClickListener(this)
-        tie_Branch!!.setOnClickListener(this)
+      //  tie_Branch!!.setOnClickListener(this)
         tie_FromDate!!.setOnClickListener(this)
         tie_ToDate!!.setOnClickListener(this)
-        tie_EmployeeName!!.setOnClickListener(this)
+     //   tie_EmployeeName!!.setOnClickListener(this)
         tie_ComplaintService!!.setOnClickListener(this)
         tie_ComplaintType!!.setOnClickListener(this)
 
