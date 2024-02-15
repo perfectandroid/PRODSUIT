@@ -60,7 +60,8 @@
                                 android:paddingLeft="10dp"
                                 app:civ_border_width="3dp"
                                 app:civ_circle_background_color="@color/white"
-                                android:layout_marginTop="5dp"/>
+                                android:layout_marginTop="5dp"
+                                tools:ignore="MissingClass" />
 
                             <TextView
                                 android:id="@+id/name_employee"
@@ -148,7 +149,18 @@
                                     android:textSize="7dp"
                                     android:textStyle="bold" />
                             </RelativeLayout>
-
+                            <ImageView
+                                android:id="@+id/imgv_fav"
+                                android:layout_width="50dp"
+                                android:layout_height="60dp"
+                                android:layout_alignParentTop="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginLeft="0dp"
+                                android:layout_marginTop="-1dp"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_favorite"
+                                android:tint="@color/colorPrimary"
+                                tools:ignore="UseAppTint" />
                             <ImageView
                                 android:id="@+id/btn_menu"
                                 android:layout_width="50dp"
