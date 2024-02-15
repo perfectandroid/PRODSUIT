@@ -386,11 +386,26 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
 
             txtCancel.setOnClickListener {
                 dialog.dismiss()
-
+                ID_Branch2 = ""
+                branchName2 = ""
+                ID_employee2 = ""
+                emp_name = ""
             }
 
             txtSubmit.setOnClickListener {
-                dialog.dismiss()
+            //    dialog.dismiss()
+
+                if (ID_Branch.equals("")){
+                    Toast.makeText(applicationContext, "Select Branch", Toast.LENGTH_SHORT).show()
+
+                }else if (ID_Employee.equals("")){
+                    Toast.makeText(applicationContext, "Select Employee", Toast.LENGTH_SHORT).show()
+                }else{
+                    dialog.dismiss()
+
+                    getCounts()
+                }
+
 //                if (ID_employee2.equals("")){
 //                    Toast.makeText(applicationContext, "Select Employee", Toast.LENGTH_SHORT).show()
 //
@@ -406,8 +421,8 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
 
                     Log.e(TAG,"002  "+ID_Employee)
                     Log.e(TAG,"927  "+emp_name)
-                    dialog.dismiss()
-                    getCounts()
+                 /*   dialog.dismiss()
+                    getCounts()*/
 //                }
 
             }
@@ -486,7 +501,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
 
 
     private fun getBranch() {
-
+        var SubMode = "1"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -495,7 +510,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                branchViewModel.getBranch(this, "0")!!.observe(
+                branchViewModel.getBranch(this, "0",SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message

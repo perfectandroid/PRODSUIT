@@ -27,12 +27,12 @@ object BranchRepository {
     val branchSetterGetter = MutableLiveData<BranchModel>()
     val TAG: String = "BranchRepository"
 
-    fun getServicesApiCall(context: Context,ID_BranchType : String): MutableLiveData<BranchModel> {
-        getBranch(context,ID_BranchType)
+    fun getServicesApiCall(context: Context,ID_BranchType : String,SubMode : String): MutableLiveData<BranchModel> {
+        getBranch(context,ID_BranchType,SubMode)
         return branchSetterGetter
     }
 
-    private fun getBranch(context: Context,ID_BranchType : String) {
+    private fun getBranch(context: Context,ID_BranchType : String,SubMode : String) {
         try {
             branchSetterGetter.value = BranchModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -69,6 +69,7 @@ object BranchRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_BranchType", ProdsuitApplication.encryptStart(ID_BranchType))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
                 Log.e(TAG,"78  getBranch  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()

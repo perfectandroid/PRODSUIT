@@ -201,10 +201,10 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
 
         tie_ReportName!!.setOnClickListener(this)
-        tie_Branch!!.setOnClickListener(this)
+      //  tie_Branch!!.setOnClickListener(this)
         tie_FromDate!!.setOnClickListener(this)
         tie_ToDate!!.setOnClickListener(this)
-        tie_EmployeeName!!.setOnClickListener(this)
+     //   tie_EmployeeName!!.setOnClickListener(this)
         tie_ComplaintService!!.setOnClickListener(this)
         tie_ComplaintType!!.setOnClickListener(this)
 
@@ -215,6 +215,22 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
         btnSubmit!!.setOnClickListener(this)
         btnReset!!.setOnClickListener(this)
+
+        val IsAdminSP = context.getSharedPreferences(Config.SHARED_PREF43, 0)
+        var isAdmin = IsAdminSP.getString("IsAdmin", null)
+
+        val IsManagerSP = applicationContext.getSharedPreferences(Config.SHARED_PREF75, 0)
+        var IsManager = IsManagerSP.getString("IsManager", null)
+
+        if (isAdmin.equals("1") && IsManager.equals("0")) {
+            tie_Branch!!.setOnClickListener(this)
+            tie_EmployeeName!!.setOnClickListener(this)
+
+        }
+        else if (isAdmin.equals("0") && IsManager.equals("1")){
+            tie_EmployeeName!!.setOnClickListener(this)
+
+        }
     }
 
     private fun loadLoginEmpDetails() {
@@ -1174,6 +1190,7 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
     private fun getBranch() {
         var branch = 0
+        var SubMode = "1"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1182,7 +1199,7 @@ class ServiceReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                branchViewModel.getBranch(this, "0")!!.observe(
+                branchViewModel.getBranch(this, "0",SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message

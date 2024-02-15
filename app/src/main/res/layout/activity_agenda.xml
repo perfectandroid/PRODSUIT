@@ -182,6 +182,21 @@
                             android:padding="10dp"
                             android:src="@drawable/filter1"
                             android:tint="@color/white"
+                            android:visibility="visible"
+
+                            tools:ignore="UseAppTint" />
+
+                        <ImageView
+                            android:id="@+id/imgv_filter2"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_margin="10dp"
+                            android:layout_weight="3"
+                            android:padding="10dp"
+                            android:src="@drawable/filter1"
+                            android:tint="@color/white"
                             android:visibility="gone"
 
                             tools:ignore="UseAppTint" />

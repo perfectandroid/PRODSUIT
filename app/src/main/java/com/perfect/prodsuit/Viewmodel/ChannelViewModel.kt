@@ -4,9 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.perfect.prodsuit.Model.BranchModel
 import com.perfect.prodsuit.Model.ChannelModel
-import com.perfect.prodsuit.Repository.BranchRepository
 import com.perfect.prodsuit.Repository.ChannelRepository
 
 class ChannelViewModel: ViewModel() {

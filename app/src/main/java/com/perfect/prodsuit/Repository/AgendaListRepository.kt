@@ -34,10 +34,10 @@ object AgendaListRepository {
         AsOnDate: String,
         ID_Category: String,
         ID_Area: String,
-        Demand: String
+        Demand: String,ID_Branch : String,ID_Employee : String
     ): MutableLiveData<AgendaListModel> {
         Log.e("responseww","AsOnDate repo=  "+AsOnDate)
-        getAgenda(context,ReqMode,SubMode,ID_FinancePlanType,AsOnDate,ID_Category,ID_Area,Demand)
+        getAgenda(context,ReqMode,SubMode,ID_FinancePlanType,AsOnDate,ID_Category,ID_Area,Demand,ID_Branch,ID_Employee)
         return agendaListSetterGetter
     }
 
@@ -49,7 +49,7 @@ object AgendaListRepository {
         AsOnDate: String,
         ID_Category: String,
         ID_Area: String,
-        Demand: String
+        Demand: String,ID_Branch : String,ID_Employee : String
     ) {
 
         try {
@@ -108,8 +108,8 @@ object AgendaListRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser",null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
-                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_Employee.getString("FK_Employee", null)))
+                requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(ID_Branch))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
                 requestObject1.put("FromDate", ProdsuitApplication.encryptStart(AsOnDate))
                 requestObject1.put("ToDate", ProdsuitApplication.encryptStart(AsOnDate))
                 requestObject1.put("Demand", ProdsuitApplication.encryptStart(Demand))

@@ -42,6 +42,7 @@ import com.google.android.libraries.places.internal.it
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import com.google.gson.JsonArray
 import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListenerData
@@ -171,6 +172,8 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
         imageView = findViewById<ImageView>(R.id.img_filter)
         recyclerView = findViewById(R.id.recycler)
        // swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
+
+        serviceFollowUpArrayList = JSONArray()
     }
 
     private fun loadData() {
@@ -895,23 +898,29 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                     status=""
                 }
 
-                var x = 0
-                for (i in 0 until serviceFollowUpArrayList.length()) {
-                    val item = serviceFollowUpArrayList.getJSONObject(i)
+                try {
+                    var x = 0
+                    for (i in 0 until serviceFollowUpArrayList.length()) {
+                        val item = serviceFollowUpArrayList.getJSONObject(i)
 
-                    Log.e(TAG, "list data 334455" +serviceFollowUpArrayList.getJSONObject(i))
-                    Log.e(TAG, "list data 334455 date==" +date)
-                    Log.v("fdfddefe", "i" + i)
-                    if (item.getString("Ticket").toLowerCase().contains(ticketNumber.toLowerCase()) &&
-                        //item.getString("product").toLowerCase().contains(product.toLowerCase()) &&
-                        item.getString("Customer").toLowerCase().contains(customer.toLowerCase()) &&
-                        item.getString("CurrentStatus").toLowerCase().contains(status.toLowerCase()) &&
-                        item.getString("TicketDate").toLowerCase().contains(date.toLowerCase())
-                    ) {
-                        jsonArrayFilterd.put(item)
+                        Log.e(TAG, "list data 33445511    " +serviceFollowUpArrayList.getJSONObject(i))
+                        Log.e(TAG, "list data 33445512 date==" +date)
+                        Log.v("fdfddefe", "i" + i)
+                        if (item.getString("Ticket").toLowerCase().contains(ticketNumber.toLowerCase()) &&
+                            //item.getString("product").toLowerCase().contains(product.toLowerCase()) &&
+                            item.getString("Customer").toLowerCase().contains(customer.toLowerCase()) &&
+                            item.getString("CurrentStatus").toLowerCase().contains(status.toLowerCase()) &&
+                            item.getString("TicketDate").toLowerCase().contains(date.toLowerCase())
+                        ) {
+                            jsonArrayFilterd.put(item)
+                        }
+
                     }
+                }catch (e: Exception) {
+                    Log.e(TAG, "list data 33445513   " +e.toString())
 
                 }
+
                 Log.e("fdfddefe", "json size=" + jsonArrayFilterd.length())
 
             if (jsonArrayFilterd.length()>0)

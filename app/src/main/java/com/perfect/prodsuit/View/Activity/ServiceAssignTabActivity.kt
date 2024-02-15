@@ -812,6 +812,7 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
 
     private fun getBranch() {
 //        var branch = 0
+        var SubMode = "1"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -820,7 +821,7 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                branchViewModel.getBranch(this, "0")!!.observe(
+                branchViewModel.getBranch(this, "0",SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
