@@ -22,6 +22,7 @@ import org.json.JSONObject
 
 class OTPActivity : AppCompatActivity(), View.OnClickListener {
 
+    var TAG : String? = null
     lateinit var context: Context
     lateinit var otpActivityViewModel: OTPActivityViewModel
     var show: Boolean = false
@@ -57,10 +58,15 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         setContentView(R.layout.activity_otp)
+        Log.e(TAG,"6000001   ")
         setRegViews()
+        Log.e(TAG,"6000002   ")
         context = this@OTPActivity
+        Log.e(TAG,"6000003   ")
         db = DBHelper(this, null)
+        Log.e(TAG,"6000004   ")
         otpActivityViewModel = ViewModelProvider(this).get(OTPActivityViewModel::class.java)
+        Log.e(TAG,"6000005   ")
     }
 
     private fun setRegViews() {
