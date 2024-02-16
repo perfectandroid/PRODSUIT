@@ -71,7 +71,6 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
-import java.sql.Date
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -148,7 +147,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     var strLatitude : String = ""
     var IsOnline : String = "2"
     var SubMode : String = ""
-
+    private var imgv_fav: ImageView? = null
     lateinit var attendanceAddViewModel: AttendanceAddViewModel
     lateinit var dashboardcountViewModel: DashBoardCountViewModel
     val UPDATE_INTERVAL = 1500L
@@ -208,6 +207,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     var tableCount = 0
     var logoutMode = 1
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -981,6 +981,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     private fun setRegViews() {
         swipe=findViewById(R.id.swipeRefreshLayout)
+        imgv_fav=findViewById(R.id.imgv_fav)
         drawer_layout = findViewById(R.id.drawer_layout)
         nav_view = findViewById(R.id.nav_view)
         btn_menu = findViewById(R.id.btn_menu)
@@ -997,6 +998,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         tv_Status = findViewById(R.id.tv_Status)
         txtv_notfcount= findViewById(R.id.txtv_notfcount)
         recy_count_home= findViewById(R.id.recy_count_home)
+
+
 
 //        tvv_count_home_1= findViewById(R.id.tvv_count_home_1)
 //        tvv_name_home_2= findViewById(R.id.tvv_name_home_2)
@@ -1034,6 +1037,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         ll_report!!.setOnClickListener(this)
         rlnotification!!.setOnClickListener(this)
         imgAttendance!!.setOnClickListener(this)
+        imgv_fav!!.setOnClickListener(this)
 //        llcompany_name1!!.setOnClickListener(this)
       //  txtv_notfcount!!.setOnClickListener(this)
 
@@ -1207,6 +1211,13 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     override fun onClick(v: View?) {
         when(v?.id){
+
+            R.id.imgv_fav -> {
+                val i = Intent(this@HomeActivity, FavActivity::class.java)
+                startActivity(i)
+            }
+
+
             R.id.btn_menu -> {
                 if (drawer_layout!!.isDrawerOpen(GravityCompat.START)) {
                     drawer_layout!!.closeDrawer(GravityCompat.START)
