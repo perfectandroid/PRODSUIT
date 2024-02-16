@@ -57,8 +57,30 @@ class FavListAdapter1(
                 Log.e(TAG,"Currenaddedtitem"+currentItem.title)
                 holder.txtv_fav.text = currentItem.title
                 var title=holder.txtv_fav.text.toString()
-
-
+                if(title.equals("QuickLead"))
+                {
+                    holder.imgv_fav!!.setBackgroundResource(R.drawable.svg_lead_gen_sub)
+                }
+                else if(title.equals("Dashboard"))
+                {
+                    holder.imgv_fav!!.setBackgroundResource(R.drawable.dashboard_home)
+                }
+                else if(title.equals("Lead"))
+                {
+                    holder.imgv_fav!!.setBackgroundResource(R.drawable.lead_home)
+                }
+                else if(title.equals("Service"))
+                {
+                    holder.imgv_fav!!.setBackgroundResource(R.drawable.svg_ser_cs)
+                }
+                else if(title.equals("Project"))
+                {
+                    holder.imgv_fav!!.setBackgroundResource(R.drawable.dash_project)
+                }
+                else if(title.equals("Report"))
+                {
+                    holder.imgv_fav!!.setBackgroundResource(R.drawable.dash_collection)
+                }
                 holder.imgv_del!!.setTag(position)
                 holder.imgv_del!!.setOnClickListener(View.OnClickListener {
                   //  clickListener!!.onClick(position, "delete",title)
@@ -86,33 +108,51 @@ class FavListAdapter1(
                 holder.crdv_1!!.setOnClickListener(View.OnClickListener {
                     if(title.equals("QuickLead"))
                     {
+
                         val intent = Intent(context, LeadGenerationQuickActivity::class.java)
                         context.startActivity(intent)
+                        (context as Activity).finish()
+
                     }
                     else if(title.equals("Dashboard"))
                     {
+
                         val intent = Intent(context, DashBoardActivity::class.java)
                         context.startActivity(intent)
+                        (context as Activity).finish()
+
                     }
                     else if(title.equals("Lead"))
                     {
+
                         val intent = Intent(context, LeadActivity::class.java)
                         context.startActivity(intent)
+                        (context as Activity).finish()
+
                     }
                     else if(title.equals("Service"))
                     {
+
                         val intent = Intent(context, ServiceActivity::class.java)
                         context.startActivity(intent)
+                        (context as Activity).finish()
+
                     }
                     else if(title.equals("Project"))
                     {
+
                         val intent = Intent(context, ProjectActivity::class.java)
                         context.startActivity(intent)
+                        (context as Activity).finish()
+
                     }
                     else if(title.equals("Report"))
                     {
+
                         val intent = Intent(context, ReportMainActivity::class.java)
                         context.startActivity(intent)
+                        (context as Activity).finish()
+
                     }
                 })
 
@@ -142,6 +182,7 @@ class FavListAdapter1(
         internal var txtv_fav    : TextView
         internal var crdv_1    : CardView
         internal var imgv_del    : ImageView
+        internal var imgv_fav    : ImageView
 
         init {
 //            txtSino        = v.findViewById<View>(R.id.txtSino) as TextView
@@ -150,6 +191,7 @@ class FavListAdapter1(
             llfav  = v.findViewById<View>(R.id.llfav) as LinearLayout
             crdv_1= v.findViewById<CardView>(R.id.crdv_1)
             imgv_del= v.findViewById<ImageView>(R.id.imgv_del)
+            imgv_fav= v.findViewById<ImageView>(R.id.imgv_fav)
         }
     }
 
