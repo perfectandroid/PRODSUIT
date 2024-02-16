@@ -35,37 +35,6 @@ object MaterialUsageProjectRepository {
     private fun getMaterialUsage(context: Context) {
 
 
-//        try {
-//            materialUsageSetterGetter.value = MaterialUsageProjectModel("")
-//            var strValue = "{\n" +
-//                    "  \"UsageDetails\": {\n" +
-//                    "    \"UsageDetailList\": [\n" +
-//                    "      {\n" +
-//                    "        \"ID_Usage\": \"1\",\n" +
-//                    "        \"Usage\": \"Usage\"\n" +
-//                    "      },\n" +
-//                    "      {\n" +
-//                    "        \"ID_Usage\": \"2\",\n" +
-//                    "        \"Usage\": \"Wastage\"\n" +
-//                    "      },\n" +
-//                    "      {\n" +
-//                    "        \"ID_Usage\": \"3\",\n" +
-//                    "        \"Usage\": \"Damage\"\n" +
-//                    "      }\n" +
-//                    "    ],\n" +
-//                    "    \"ResponseCode\": \"0\",\n" +
-//                    "    \"ResponseMessage\": \"Transaction Verified\"\n" +
-//                    "  },\n" +
-//                    "  \"StatusCode\": 0,\n" +
-//                    "  \"EXMessage\": \"Transaction Verified\"\n" +
-//                    "}"
-//
-//            materialUsageSetterGetter.value = MaterialUsageProjectModel(strValue)
-//        }
-//        catch (e : Exception){
-//
-//        }
-
 
         try {
             materialUsageSetterGetter.value = MaterialUsageProjectModel("")

@@ -14,6 +14,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -38,6 +39,7 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
     lateinit var projectArrayList  : JSONArray
     lateinit var projectArrayMain  : JSONArray
     private var recycProject       : RecyclerView?   = null
+    private var tv_notfound        : TextView?   = null
     private var etsearch       : EditText?   = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,6 +60,7 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         recycProject = findViewById<RecyclerView>(R.id.recycProject)
+        tv_notfound = findViewById<TextView>(R.id.tv_notfound)
         etsearch = findViewById<EditText>(R.id.etsearch)
         imback!!.setOnClickListener(this)
 
@@ -72,6 +75,13 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
             }
 
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        Log.e(TAG,"741  onRestart ")
+        projectcount = 0
+        getProject()
     }
 
     override fun onClick(position: Int, data: String) {
@@ -139,11 +149,20 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
                                                 projectArrayList.put(jsonObject)
                                             }
 
-                                            val lLayout = GridLayoutManager(this@ProjectListActivity, 1)
-                                            recycProject!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                                            val adapter = ProjectListAdapter(this@ProjectListActivity, projectArrayList,0)
-                                            recycProject!!.adapter = adapter
-                                            adapter.setClickListener(this@ProjectListActivity)
+                                            if (projectArrayList.length() == 0){
+                                                tv_notfound!!.visibility = View.VISIBLE
+                                                recycProject!!.visibility = View.GONE
+                                            }else{
+                                                tv_notfound!!.visibility = View.GONE
+                                                recycProject!!.visibility = View.VISIBLE
+                                                val lLayout = GridLayoutManager(this@ProjectListActivity, 1)
+                                                recycProject!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                                val adapter = ProjectListAdapter(this@ProjectListActivity, projectArrayList,0)
+                                                recycProject!!.adapter = adapter
+                                                adapter.setClickListener(this@ProjectListActivity)
+                                            }
+
+
 
                                             etsearch!!.addTextChangedListener(object : TextWatcher {
                                                 override fun afterTextChanged(p0: Editable?) {
@@ -168,25 +187,37 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
                                                         }
                                                     }
 
-                                                    Log.e(TAG,"projectSort               7103    "+projectArrayList)
-                                                    val adapter = ProjectListAdapter(this@ProjectListActivity, projectArrayList,0)
-                                                    recycProject!!.adapter = adapter
-                                                    adapter.setClickListener(this@ProjectListActivity)
+                                                    if (projectArrayList.length() == 0){
+                                                        tv_notfound!!.visibility = View.VISIBLE
+                                                        recycProject!!.visibility = View.GONE
+                                                    }else{
+                                                        tv_notfound!!.visibility = View.GONE
+                                                        recycProject!!.visibility = View.VISIBLE
+                                                        Log.e(TAG,"projectSort               7103    "+projectArrayList)
+                                                        val adapter = ProjectListAdapter(this@ProjectListActivity, projectArrayList,0)
+                                                        recycProject!!.adapter = adapter
+                                                        adapter.setClickListener(this@ProjectListActivity)
+                                                    }
+
+
                                                 }
                                             })
 
                                         }
                                     } else {
-                                        val builder = AlertDialog.Builder(
-                                            this@ProjectListActivity,
-                                            R.style.MyDialogTheme
-                                        )
-                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                        }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()
+//                                        val builder = AlertDialog.Builder(
+//                                            this@ProjectListActivity,
+//                                            R.style.MyDialogTheme
+//                                        )
+//                                        builder.setMessage(jObject.getString("EXMessage"))
+//                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                        }
+//                                        val alertDialog: AlertDialog = builder.create()
+//                                        alertDialog.setCancelable(false)
+//                                        alertDialog.show()
+
+                                        tv_notfound!!.visibility = View.VISIBLE
+                                        recycProject!!.visibility = View.GONE
                                     }
                                 }
 

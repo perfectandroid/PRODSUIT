@@ -53,6 +53,9 @@ class ProjectListAdapter (internal var context: Context, internal var jsonArray:
                     }else{
                         holder.ll_subTab.visibility = View.GONE
                     }
+                }else{
+                    holder.ll_subTab.visibility = View.GONE
+
                 }
 
                 holder.ll_material_usage!!.setTag(position)
@@ -89,9 +92,24 @@ class ProjectListAdapter (internal var context: Context, internal var jsonArray:
 
                 holder.ll_mainTab!!.setTag(position)
                 holder.ll_mainTab!!.setOnClickListener(View.OnClickListener {
-                    selectPos = position
-                    mode = 1
-                    notifyDataSetChanged()
+
+                    if (mode == 1){
+                        if ( selectPos == position){
+                            selectPos = position
+                            mode = 0
+                            notifyDataSetChanged()
+                        }else{
+                            selectPos = position
+                            mode = 1
+                            notifyDataSetChanged()
+                        }
+
+                    }else{
+                        selectPos = position
+                        mode = 1
+                        notifyDataSetChanged()
+                    }
+
                     Config.Utils.hideSoftKeyBoard(context,it)
                 })
             }
