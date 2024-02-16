@@ -87,6 +87,8 @@ object LeadInfoRepository {
                 ) {
                     try {
                         val jObject = JSONObject(response.body())
+                        Log.e(TAG,"Response Lead Todays"+response.body()
+                        )
                         val leads = ArrayList<LeadInfoModel>()
                         leads.add(LeadInfoModel(response.body()))
                         val msg = leads[0].message

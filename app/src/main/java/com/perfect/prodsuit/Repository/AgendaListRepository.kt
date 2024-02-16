@@ -117,7 +117,7 @@ object AgendaListRepository {
                 requestObject1.put("FK_Area", ProdsuitApplication.encryptStart(ID_Area))
                 requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
 
-                Log.e(TAG,"requestObject1   ...... "+requestObject1)
+                Log.e(TAG,"requestObject1   agenda "+requestObject1)
 
 
             }

@@ -204,7 +204,7 @@ class FavActivity : AppCompatActivity() , View.OnClickListener, ItemClickListene
         Log.i(TAG,"CATEEEE"+categoriesList.toString())
         favpopup(categoriesList)
 
-        rclrvw_favlist!!.visibility=View.GONE
+        rclrvw_favlist!!.visibility=View.VISIBLE
 /*
 
 
@@ -282,7 +282,7 @@ class FavActivity : AppCompatActivity() , View.OnClickListener, ItemClickListene
 
             val window: Window? = dialogReason!!.getWindow()
             window!!.setBackgroundDrawableResource(android.R.color.transparent);
-            window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+          //  window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
 
             rclrv_favpop = dialogReason!!.findViewById(R.id.rclrv_favpop) as RecyclerView
 
