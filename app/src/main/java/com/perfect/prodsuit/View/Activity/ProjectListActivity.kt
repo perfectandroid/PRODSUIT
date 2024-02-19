@@ -41,6 +41,7 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
     private var recycProject       : RecyclerView?   = null
     private var tv_notfound        : TextView?   = null
     private var etsearch       : EditText?   = null
+    private var clearIcon       : ImageView?   = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +63,9 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
         recycProject = findViewById<RecyclerView>(R.id.recycProject)
         tv_notfound = findViewById<TextView>(R.id.tv_notfound)
         etsearch = findViewById<EditText>(R.id.etsearch)
+        clearIcon = findViewById<ImageView>(R.id.clearIcon)
         imback!!.setOnClickListener(this)
+        clearIcon!!.setOnClickListener(this)
 
     }
 
@@ -72,6 +75,9 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
         when(v.id){
             R.id.imback->{
                 finish()
+            }
+            R.id.clearIcon->{
+                etsearch!!.setText("")
             }
 
         }
