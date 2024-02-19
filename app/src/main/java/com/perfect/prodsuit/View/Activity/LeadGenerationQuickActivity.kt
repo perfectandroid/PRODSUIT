@@ -64,6 +64,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
     private var edt_customer: EditText? = null
     private var edtCustname: EditText? = null
     private var edtCustphone: EditText? = null
+    private var edtCustAddres2: EditText? = null
 //
     private var edtProdcategory: EditText? = null
     private var edtProdproduct: EditText? = null
@@ -370,6 +371,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         edt_customer = findViewById<EditText>(R.id.edt_customer)
         edtCustname = findViewById<EditText>(R.id.edtCustname)
         edtCustphone = findViewById<EditText>(R.id.edtCustphone)
+        edtCustAddres2 = findViewById<EditText>(R.id.edtCustAddres2)
         edtProdcategory = findViewById<EditText>(R.id.edtProdcategory)
         edtProdproduct = findViewById<EditText>(R.id.edtProdproduct)
         edtProjectName = findViewById<EditText>(R.id.edtProjectName)
@@ -2581,6 +2583,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             actv_namTitle!!.setText(jsonObject.getString("CusNameTitle"))
             edtCustname!!.setText(jsonObject.getString("CusName"))
             edtCustphone!!.setText(jsonObject.getString("CusPhnNo"))
+            edtCustAddres2!!.setText(jsonObject.getString("CusAddress2"))
 
 
 //            edtCustemail!!.setText(jsonObject.getString("CusEmail"))
@@ -2802,6 +2805,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         CusNameTitle = actv_namTitle!!.text.toString()
         Customer_Name = edtCustname!!.text.toString()
         Customer_Mobile = edtCustphone!!.text.toString()
+        Customer_Address2 = edtCustAddres2!!.text.toString()
 
         val MobilePattern = "[0-9]{10}"
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
@@ -3371,6 +3375,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         edt_customer!!.setText("")
         edtCustname!!.setText("")
         edtCustphone!!.setText("")
+        edtCustAddres2!!.setText("")
         strCustomer = ""
 
 

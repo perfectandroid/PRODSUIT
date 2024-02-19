@@ -721,6 +721,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
 
     private fun getEmpByBranch() {
 //         var branch = 0
+        var SubMode = "0"
         Log.v("sfsdfsdfdf","branch"+ID_Branch)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -730,7 +731,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                empByBranchViewModel.getEmpByBranch(this, ID_Branch)!!.observe(
+                empByBranchViewModel.getEmpByBranch(this, ID_Branch,SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {

@@ -26,12 +26,12 @@ object EmpByBranchRepository {
     val empByBranchSetterGetter = MutableLiveData<EmpByBranchModel>()
     val TAG: String = "EmpByBranchRepository"
 
-    fun getServicesApiCall(context: Context, ID_Branch : String): MutableLiveData<EmpByBranchModel> {
-        getEmpByBranch(context, ID_Branch)
+    fun getServicesApiCall(context: Context, ID_Branch : String, SubMode : String): MutableLiveData<EmpByBranchModel> {
+        getEmpByBranch(context, ID_Branch,SubMode)
         return empByBranchSetterGetter
     }
 
-    private fun getEmpByBranch(context: Context, ID_Branch: String) {
+    private fun getEmpByBranch(context: Context, ID_Branch: String, SubMode: String) {
 
         try {
             empByBranchSetterGetter.value = EmpByBranchModel("")
@@ -75,6 +75,7 @@ object EmpByBranchRepository {
                // requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_Branch", ProdsuitApplication.encryptStart(ID_Branch))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
 
                 Log.e(TAG,"791  getEmpUsingBranch    "+requestObject1)
 

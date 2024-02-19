@@ -4092,7 +4092,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
     }
 
     private fun getEmpByBranch() {
-//         var branch = 0
+//         var branch =
+        var SubMode = "1"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -4101,7 +4102,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                empByBranchViewModel.getEmpByBranch(this, ID_Branch)!!.observe(
+                empByBranchViewModel.getEmpByBranch(this, ID_Branch,SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {

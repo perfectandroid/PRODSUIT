@@ -61,7 +61,8 @@
                     android:text="Register"
                     android:textColor="@color/greydark"
                     android:textSize="16dp"
-                    android:textStyle="normal" />
+                    android:textStyle="normal"
+                    android:visibility="gone"/>
 
 
             </LinearLayout>

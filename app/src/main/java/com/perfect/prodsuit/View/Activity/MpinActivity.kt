@@ -104,9 +104,19 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         setLogoHeight()
+        val commonAppSP = applicationContext.getSharedPreferences(Config.SHARED_PREF18, 0)
+        var commonApp =   commonAppSP.getString("commonApp", null)
+
+        if (commonApp.equals("1")){
+            tvRegister!!.visibility = View.VISIBLE
+        }else{
+            tvRegister!!.visibility = View.GONE
+        }
 
 
     }
+
+
 
     private fun setLogoHeight() {
         var userList = JSONArray()
