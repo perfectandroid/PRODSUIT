@@ -6,7 +6,10 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -26,13 +29,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.material.snackbar.Snackbar
 import com.perfect.nbfcmscore.Helper.PicassoTrustAll
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DBHelper
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.LoginActivityViewModel
 import org.json.JSONObject
-import java.util.*
 
 class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedListener {
 
@@ -56,6 +60,7 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
     var img_technology: ImageView? = null
 
     var db : DBHelper? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,6 +110,9 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
             val intent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
             startActivityForResult(intent, RC_SIGN_IN)
         }
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun deleteChatData() {
@@ -597,8 +605,11 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
                         progressDialog!!.dismiss()
                     }
                     false -> {
-                        Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                            .show()
+//                        Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                            .show()
+//                        val snackbar = Snackbar.make(Config.rootView, "Offline", Snackbar.LENGTH_INDEFINITE)
+//                        snackbar.setBackgroundTint(Color.parseColor("#FF4848"))
+//                        snackbar.show()
                     }
                 }
             }
@@ -674,6 +685,13 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
             return true
         }
 
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 }

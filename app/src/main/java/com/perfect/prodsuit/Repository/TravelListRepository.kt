@@ -85,6 +85,7 @@ object TravelListRepository {
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
 //                val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 //                {"BankKey":"-500","Token":"3FD0BD83-1BB2-48B2-B64B-71D2092B6795","FK_Company":"1","LocationEnteredDate":"2023-06-09",
 //                    "FK_Departement":"0","FK_Employee":"0","FK_Designation":"0"}
@@ -99,6 +100,7 @@ object TravelListRepository {
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(ID_Branch))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
                 requestObject1.put("URLKey", ProdsuitApplication.encryptStart(mapKey))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 Log.v("sfsdfdsfd","requestObject1  "+requestObject1)
                 Log.e(TAG,"getEmpLocatiolList  564654656   "+requestObject1)
             } catch (e: Exception) {

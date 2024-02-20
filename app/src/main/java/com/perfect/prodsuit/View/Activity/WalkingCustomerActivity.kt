@@ -5,9 +5,11 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.media.MediaPlayer
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CallLog
@@ -29,6 +31,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.CalllogModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.AssignedToAdapter
@@ -152,6 +155,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
     var voiceData2: String? = ""
     private var voicedataByte: ByteArray? = null
     private var voicedataByte2: ByteArray? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -195,6 +199,8 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
             }
         }
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -1405,5 +1411,11 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
         }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
 
 }

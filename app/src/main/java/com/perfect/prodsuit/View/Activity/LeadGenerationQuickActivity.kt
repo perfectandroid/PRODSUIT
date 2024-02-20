@@ -7,12 +7,14 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -37,6 +39,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
@@ -282,6 +285,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 //        Manifest.permission.READ_EXTERNAL_STORAGE,
 //        // Add other permissions as needed
 //    )
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -337,6 +341,9 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         }else{
             Log.e(TAG,"325552     Not Granted")
         }
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -3627,6 +3634,14 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         } else {
           //  Toast.makeText(this@LeadGenerationQuickActivity, "Permission already granted", Toast.LENGTH_SHORT).show()
         }
+    }
+
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
 }

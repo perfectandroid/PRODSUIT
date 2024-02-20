@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
@@ -74,6 +77,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
     var followList = 0
     var newList = 0
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     @SuppressLint("SuspiciousIndentation")
@@ -225,7 +229,8 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
         //
 
-
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 
@@ -953,5 +958,11 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
         dialog.show()
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
 
 }

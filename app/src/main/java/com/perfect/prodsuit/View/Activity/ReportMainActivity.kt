@@ -2,6 +2,8 @@ package com.perfect.prodsuit.View.Activity
 
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +15,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import org.json.JSONObject
 
@@ -28,6 +31,7 @@ class ReportMainActivity : AppCompatActivity(), View.OnClickListener {
     private var llLeadReport: LinearLayout? = null
     private var llServiceReport: LinearLayout? = null
     private var llProjectReport: LinearLayout? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
       //  setContentView(R.layout.activity_report_main)
@@ -36,6 +40,9 @@ class ReportMainActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_report_main)
         context=this@ReportMainActivity
         setRegViews()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -121,5 +128,12 @@ class ReportMainActivity : AppCompatActivity(), View.OnClickListener {
 //                startActivity(i)
             }
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }

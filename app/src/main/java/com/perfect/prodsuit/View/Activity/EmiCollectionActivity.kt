@@ -7,12 +7,14 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -209,6 +211,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
     private var strAgentDate:String?=""
     private var strAgentTime:String?=""
     var saveAttendanceMark = false
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -240,7 +243,8 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
 
 
-
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
 
     }
@@ -658,8 +662,8 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1278,8 +1282,8 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1411,8 +1415,8 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1783,8 +1787,8 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -2005,5 +2009,11 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         handler.removeCallbacks(runnable!!) //stop handler when activity not visible super.onPause();
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
 
 }

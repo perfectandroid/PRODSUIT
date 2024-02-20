@@ -5,7 +5,9 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Bitmap
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -22,6 +24,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ProductInfoListAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceInfoListAdapter
@@ -89,6 +92,7 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
     var NetAmount: Double? = 0.0
 
     var modeClosed = 0
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     lateinit var closedTicketViewModel: ClosedTicketViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,6 +119,9 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
         Log.e(TAG, "CusAddress===="+customer_address)
         Log.e(TAG, "Idcust===="+Idcudtomerregisterdetails)
         setRegViews()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -605,6 +612,8 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onRestart() {
         super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
         //serviceList = 0
 //        getClosedTicketList()
     }

@@ -3,9 +3,11 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.ConnectivityManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -24,6 +26,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ExpenseAdapter
 import com.perfect.prodsuit.Viewmodel.*
@@ -55,6 +58,7 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
     lateinit var addRemarkViewModel: AddremarkViewModel
     var ID_LeadGenerate:String?=""
     var ID_LeadGenerateProduct:String?=""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
     companion object{
 
         var agentnote = ""
@@ -78,6 +82,9 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
         Log.e(TAG,"IDS  76891   "+ID_LeadGenerate)
         Log.e(TAG,"IDS  76892   "+ID_LeadGenerateProduct)
         getCurrentDateNTime();
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
 
     }
@@ -227,6 +234,14 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
     }
 
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
+
+
 
     private fun getAddremark(agentnote: String, customernote: String) {
         addRemarkViewModel = ViewModelProvider(this).get(AddremarkViewModel::class.java)
@@ -291,8 +306,8 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
 

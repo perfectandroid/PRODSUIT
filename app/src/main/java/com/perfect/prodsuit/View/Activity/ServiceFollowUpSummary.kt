@@ -1,6 +1,8 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -20,6 +22,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.PaymentMethodModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.PaymentMethodAdapter
@@ -63,6 +66,7 @@ class ServiceFollowUpSummary : AppCompatActivity(), View.OnClickListener, ItemCl
     val paymentMethodArray = ArrayList<PaymentMethodModel>()
     var isEdit:Boolean=false
     var editPosition:Int=0
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -82,6 +86,9 @@ class ServiceFollowUpSummary : AppCompatActivity(), View.OnClickListener, ItemCl
         setId()
         setListners()
         LoadData()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun LoadData() {
@@ -536,5 +543,12 @@ class ServiceFollowUpSummary : AppCompatActivity(), View.OnClickListener, ItemCl
         shake.setDuration(500)
         shake.setInterpolator(CycleInterpolator(7F))
         return shake
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }

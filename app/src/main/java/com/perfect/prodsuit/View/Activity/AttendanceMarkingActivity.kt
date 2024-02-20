@@ -7,12 +7,14 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -30,6 +32,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.AttanceMarkingUpdateViewModel
 import de.hdodenhof.circleimageview.CircleImageView
@@ -74,6 +77,7 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
     var updateCount = 0
 
     private val REQUEST_ID_MULTIPLE_PERMISSIONS = 2
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,6 +92,9 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
         runTimePermission()
         getLastLocation()
 
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -423,6 +430,9 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
             getLastLocation()
         }.also { runnable = it }, delay!!.toLong())
         super.onRestart()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun confirmBottomSheet(type : String) {
@@ -576,8 +586,8 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }

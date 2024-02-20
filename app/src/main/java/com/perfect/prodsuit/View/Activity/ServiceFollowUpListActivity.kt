@@ -6,12 +6,14 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -46,6 +48,7 @@ import com.google.gson.JsonArray
 import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListenerData
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.ServiceCostModelMain
 import com.perfect.prodsuit.Model.ServiceFollowUpListModel
@@ -116,6 +119,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
     var updateLocCount = 0
 
     lateinit var locationUpdateViewModel: LocationUpdateViewModel
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -138,6 +142,9 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
         getServiceFollowUpList()
         setListners()
         Log.v("fssdfdsfdd", "" + ProdsuitApplication.encryptStart("22"));
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setListners() {
@@ -1378,5 +1385,8 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
         serviceFollowUpDet = 0
         getServiceFollowUpList()
         setListners()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 }

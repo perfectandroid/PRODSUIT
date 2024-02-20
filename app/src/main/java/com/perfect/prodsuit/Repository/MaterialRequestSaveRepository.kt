@@ -78,6 +78,7 @@ object MaterialRequestSaveRepository {
                 val ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 
 
@@ -94,6 +95,7 @@ object MaterialRequestSaveRepository {
                 requestObject1.put("FK_Team", ProdsuitApplication.encryptStart(ID_Team))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("MaRequestProductDetails", saveDetailArray)
 
                 Log.e(TAG,"getUpdateMaterialRequest   1011   "+requestObject1)

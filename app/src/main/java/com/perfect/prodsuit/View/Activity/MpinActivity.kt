@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.os.CancellationSignal
@@ -24,6 +26,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DBHelper
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.ModelServiceAttendedTemp
 import com.perfect.prodsuit.Model.MpinUserModel
 import com.perfect.prodsuit.R
@@ -80,6 +83,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
     var mpinUserModel = ArrayList<MpinUserModel>()
     var tableCount = 0
     var logoutMode = 1
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,6 +117,8 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
             tvRegister!!.visibility = View.GONE
         }
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -1615,8 +1621,8 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1741,8 +1747,8 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1844,6 +1850,14 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         dialog!!.setContentView(view)
 
         dialog.show()
+    }
+
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
 }

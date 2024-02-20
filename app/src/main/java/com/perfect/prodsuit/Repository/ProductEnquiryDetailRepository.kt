@@ -64,6 +64,7 @@ object ProductEnquiryDetailRepository {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 
 //                {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","FK_Company":"1","FK_Category":"1","FK_Branch":"0","FK_Product":"402","Name":""}
@@ -75,6 +76,7 @@ object ProductEnquiryDetailRepository {
                 requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
                 requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
                 requestObject1.put("Name", ProdsuitApplication.encryptStart(""))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 Log.e(TAG,"requestObject1   545   "+requestObject1)
             } catch (e: Exception) {

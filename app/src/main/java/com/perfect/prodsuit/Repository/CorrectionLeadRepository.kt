@@ -108,6 +108,7 @@ object CorrectionLeadRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val EnterBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
@@ -118,6 +119,7 @@ object CorrectionLeadRepository {
                 requestObject1.put("ID_LeadGenerate", ProdsuitApplication.encryptStart(FK_TransMaster))
                 requestObject1.put("FK_AuthorizationData", ProdsuitApplication.encryptStart(ID_AuthorizationData))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 Log.e(TAG,"requestObject1   4568   "+requestObject1)

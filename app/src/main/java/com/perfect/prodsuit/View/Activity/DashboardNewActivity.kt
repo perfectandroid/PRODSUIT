@@ -5,8 +5,10 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -24,6 +26,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
@@ -49,6 +52,7 @@ DashboardNewActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLis
     var recyclervw_dashboard: RecyclerView? = null
 
     private var temp_DueDays: String = ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
 
@@ -64,6 +68,9 @@ DashboardNewActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLis
 
         dashmoduleCount = 0
         getDashboardModules()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 
@@ -162,8 +169,8 @@ DashboardNewActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLis
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -181,6 +188,9 @@ DashboardNewActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLis
         super.onRestart()
         dashmoduleCount = 0
         getDashboardModules()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     override fun onFocusChange(p0: View?, p1: Boolean) {

@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -223,6 +225,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     var serUpdateCount = 0
     private var txt_Warning : TextView? = null
     var saveAttendanceMark = false
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -255,6 +258,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         depmode = 0
         getDepartment()
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun getCurrentdateTime() {
@@ -2904,6 +2909,13 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                     .show()
             }
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
 }

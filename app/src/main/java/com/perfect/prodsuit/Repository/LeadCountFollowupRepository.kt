@@ -70,6 +70,7 @@ object LeadCountFollowupRepository {
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
              /*   requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("15"))*/
@@ -90,6 +91,7 @@ object LeadCountFollowupRepository {
                 requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
                 requestObject1.put("DashMode", ProdsuitApplication.encryptStart("8"))
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart("1"))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
 

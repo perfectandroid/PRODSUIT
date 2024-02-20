@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -22,6 +24,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ProjectListAdapter
 import com.perfect.prodsuit.Viewmodel.MaterialUsageProjectViewModel
@@ -41,6 +44,7 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
     private var recycProject       : RecyclerView?   = null
     private var tv_notfound        : TextView?   = null
     private var etsearch       : EditText?   = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
     private var clearIcon       : ImageView?   = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +60,9 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
 
         projectcount = 0
         getProject()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -88,6 +95,9 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
         Log.e(TAG,"741  onRestart ")
         projectcount = 0
         getProject()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     override fun onClick(position: Int, data: String) {
@@ -251,7 +261,6 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
             }
         }
     }
-
 
 
 

@@ -8,8 +8,10 @@ import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -33,6 +35,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BranchAdapter
 import com.perfect.prodsuit.View.Adapter.EmployeeAllAdapter
@@ -134,6 +137,7 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
     var tie_LeadValue: TextInputEditText? = null
 
     var toDoDet = 0
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -193,6 +197,9 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
         toDoDet = 0
         tie_Employee?.isEnabled = false
         getTodoList()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
     companion object {
         var name = ""
@@ -2055,6 +2062,8 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
         Log.e(TAG,"741  onRestart ")
         toDoDet = 0
         getTodoList()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 

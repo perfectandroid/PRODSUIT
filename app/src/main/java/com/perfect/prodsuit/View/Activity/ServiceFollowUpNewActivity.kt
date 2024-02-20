@@ -6,10 +6,12 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.nfc.cardemulation.CardEmulation
 import android.os.Bundle
 import android.provider.Settings
@@ -299,6 +301,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     lateinit var followupStatusUpdateViewModel: FollowupStatusUpdateViewModel
     var statusCount = 0
     var saveAttendanceMark = false
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -336,6 +339,9 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
         }
 
         setRunningStatus()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -4132,6 +4138,12 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     }
 
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
 
 
 }

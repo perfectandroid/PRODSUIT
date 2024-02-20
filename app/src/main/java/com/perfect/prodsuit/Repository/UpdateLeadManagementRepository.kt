@@ -118,6 +118,7 @@ object UpdateLeadManagementRepository {
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
@@ -156,6 +157,8 @@ object UpdateLeadManagementRepository {
                 requestObject1.put("LocationLandMark1", encode1)
                 requestObject1.put("LocationLandMark2", encode2)
                 requestObject1.put("ForAllProduct", ForAllProduct)
+
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 Log.v(TAG,"requestObject1   1581   "+requestObject1)

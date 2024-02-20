@@ -3,8 +3,10 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -28,6 +30,7 @@ import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DecimalRemover
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
@@ -273,6 +276,7 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
     var txtv_ServiceTktFollowUpTile_two: TextView? = null
     var txtv_ServiceTktTile_three: TextView? = null
     var txtv_amcDueTile_four: TextView? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -323,6 +327,8 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 //        crmcomplaintwiseCount = 0
 //        getCRMcomplaintwiseData()
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun getCurrentDate() {
@@ -3356,6 +3362,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
         }
     }
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
+    }
 
 }

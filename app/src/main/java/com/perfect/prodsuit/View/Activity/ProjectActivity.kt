@@ -2,6 +2,8 @@ package com.perfect.prodsuit.View.Activity
 
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,6 +11,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 
 class ProjectActivity : AppCompatActivity() , View.OnClickListener  {
@@ -21,6 +24,7 @@ class ProjectActivity : AppCompatActivity() , View.OnClickListener  {
     private var llProjectFollowup: LinearLayout? = null
     private var llMaterialRequest: LinearLayout? = null
     private var llProjectTransaction: LinearLayout? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +37,8 @@ class ProjectActivity : AppCompatActivity() , View.OnClickListener  {
         setRegViews()
 
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -94,5 +100,12 @@ class ProjectActivity : AppCompatActivity() , View.OnClickListener  {
 
             }
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }

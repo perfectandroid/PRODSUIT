@@ -63,6 +63,7 @@ object LeadRequestRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 //                {"ReqMode":"Pwq34Rtdxss=\n","SubMode":"4loivAI89ZU=","BankKey":"\/mXqmq3ZMvs=\n","FK_Employee":"07\/ybAx1yS4=\n","FK_Company":"vJ\/8asrP+O0=\n",
 //                    "Token":"UJKVOZNetDYdsvmY84dsd5q5e7F+2nmEciW+y5WDWAOyVD2b4auSWw==\n","Name":"j4rFcTOFBx0=\n","Todate":"j4rFcTOFBx0=\n","criteria":"j4rFcTOFBx0=\n"}
@@ -76,6 +77,7 @@ object LeadRequestRepository {
                 requestObject1.put("Name", ProdsuitApplication.encryptStart(""))
                 requestObject1.put("Todate", ProdsuitApplication.encryptStart(""))
                 requestObject1.put("criteria", ProdsuitApplication.encryptStart(""))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 Log.e(TAG,"requestObject1   82   "+requestObject1)

@@ -52,6 +52,7 @@ object GetGenralSettingsRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 //                {"FK_Company":"vJ\/8asrP+O0=\n","ReqMode":"ZhNnS5SRcks=","BankKey":"\/mXqmq3ZMvs=\n","Name":"wKuLGLC/nu8=",
 //                    "Token":"0KjNuKHR16rDwHCS09BASBwyc4DHIeNqEVyN8kfrQtASybLeZjOwwA==\n"}
@@ -61,6 +62,7 @@ object GetGenralSettingsRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Name", ProdsuitApplication.encryptStart(nameKey))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 Log.e(TAG,"requestObject1   671   "+requestObject1)
 

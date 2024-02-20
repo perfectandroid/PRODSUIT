@@ -63,6 +63,7 @@ object OtherChargeTaxCalculationRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 //               {"ReqMode":"118","EntrBy":"sreejisha","FK_Company":"1","FK_TaxGroup":7,"IncludeTax":"0","Amount":10}
 
@@ -73,6 +74,7 @@ object OtherChargeTaxCalculationRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("IncludeTax", ProdsuitApplication.encryptStart(IncludeTaxCalc))
                 requestObject1.put("Amount", ProdsuitApplication.encryptStart(AmountTaxCalc))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 Log.e(TAG,"getOtherChargeTaxCalculationDetails  6733331   "+requestObject1)

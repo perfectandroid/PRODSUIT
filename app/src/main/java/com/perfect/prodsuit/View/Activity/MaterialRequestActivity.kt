@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -23,6 +25,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.ModelUsageProduct
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
@@ -126,6 +129,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
     var jsonObj: JSONObject? = null
 
     lateinit var materialRequestSaveViewModel: MaterialRequestSaveViewModel
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -152,6 +156,9 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
         detailMode = "0"
 
         hideViews()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -1658,6 +1665,12 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
             tie_Quantity!!.setText(modelUsageProduct[position].Quantity)
 
         }
+
+    }
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 }

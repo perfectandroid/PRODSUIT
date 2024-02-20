@@ -3,6 +3,8 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ProjectSitevisitReportAdapter
 import com.perfect.prodsuit.View.Adapter.ProjectStatusListReportAdapter
@@ -55,6 +58,8 @@ class ProjectReportDetailActivity : AppCompatActivity(), View.OnClickListener, I
     lateinit var reportStatusListProjectViewModel: ReportStatusListProjectViewModel
     lateinit var projectListArrayList: JSONArray
 //    var recySiteVisit : RecyclerView? = null
+
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,6 +108,8 @@ class ProjectReportDetailActivity : AppCompatActivity(), View.OnClickListener, I
             getProjectListReport(ReportMode!!, strFromdate!!, strTodate!!, CatID!!)
         }
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -389,5 +396,11 @@ class ProjectReportDetailActivity : AppCompatActivity(), View.OnClickListener, I
         }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
 
 }

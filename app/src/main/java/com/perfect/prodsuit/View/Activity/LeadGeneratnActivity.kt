@@ -6,11 +6,13 @@ import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -45,6 +47,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.View.Adapter.CustomerAdapter
 import org.json.JSONArray
 import java.text.ParseException
@@ -147,6 +150,7 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
         var ID_Customer = ""
     }
 
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -162,6 +166,9 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
 
         customersearchViewModel = ViewModelProvider(this).get(CustomerSearchViewModel::class.java)
         getCalendarId(context)
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -1031,6 +1038,13 @@ class LeadGeneratnActivity : AppCompatActivity()  , View.OnClickListener, OnMapR
             }
         val alert = builder.create()
         alert.show()
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 }

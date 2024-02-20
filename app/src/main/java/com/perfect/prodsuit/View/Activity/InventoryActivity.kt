@@ -3,6 +3,8 @@ package com.perfect.prodsuit.View.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -10,6 +12,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 
 class InventoryActivity : AppCompatActivity(), View.OnClickListener {
@@ -20,6 +23,7 @@ class InventoryActivity : AppCompatActivity(), View.OnClickListener {
 
     private var llstockrequest: LinearLayout? = null
     private var llstocktransfer: LinearLayout? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +33,9 @@ class InventoryActivity : AppCompatActivity(), View.OnClickListener {
         context = this@InventoryActivity
 
         setRegViews()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -63,5 +70,10 @@ class InventoryActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
+    }
 }

@@ -6,11 +6,13 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -37,6 +39,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import java.util.*
 
@@ -74,6 +77,7 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
     var gps_enabled = false
     var network_enabled = false
     var modeLocation : String? = ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
 
@@ -168,6 +172,9 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
                 finish()
             }
         }
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun checkLocationEnabled(): Boolean {
@@ -443,6 +450,13 @@ class LocationPickerActivity : AppCompatActivity(), OnMapReadyCallback, Location
     override fun onConnectionFailed(p0: ConnectionResult) {
 
         Log.e(TAG,"Exception   2382   "+p0.toString())
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
 }

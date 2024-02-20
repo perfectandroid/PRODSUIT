@@ -7,11 +7,13 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.location.Location
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -41,6 +43,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.View.Adapter.FollowupTypeAdapter
 import com.perfect.prodsuit.View.Adapter.ProductStatusAdapter
 import com.perfect.prodsuit.Viewmodel.FollowUpTypeViewModel
@@ -108,6 +111,7 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
     private var mMinute:Int = 0
 
     private var DateType:Int = 0
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     companion object {
         var ID_LeadGenerateProduct :String = ""
@@ -140,6 +144,8 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         ID_LeadGenerateProduct = intent!!.getStringExtra("ID_LeadGenerateProduct").toString()
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         getLastLocation()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -1085,6 +1091,13 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
 }

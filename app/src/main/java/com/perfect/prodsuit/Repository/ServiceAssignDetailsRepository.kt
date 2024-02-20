@@ -70,6 +70,7 @@ object ServiceAssignDetailsRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 
 //                {"BankKey":"\/mXqmq3ZMvs=\n","Token":"UiTI0u3X5Hi1ccJKlEWFJuLY68Chy5zUgJHTcIeSgZL6+Gujr4rHnA==\n","ReqMode":"DT65YrVxy3g=",
@@ -82,6 +83,7 @@ object ServiceAssignDetailsRepository {
                 requestObject1.put("FK_Customerserviceregister", ProdsuitApplication.encryptStart(ID_CustomerServiceRegister))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("FK_CustomerserviceregisterProductDetails", ProdsuitApplication.encryptStart(FK_CustomerserviceregisterProductDetails))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
 

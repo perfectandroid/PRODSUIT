@@ -63,6 +63,7 @@ object CreateWalkingCustomerRepository {
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 //                {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","FK_Company":"1","UserAction":"1","TransMode":"",
 //                    "ID_CustomerAssignment":"0","CusName":"TestData","CusMobile":"0000000000","CaAssignedDate":"02/06/2023","FK_Employee":"2",
@@ -88,6 +89,7 @@ object CreateWalkingCustomerRepository {
                 requestObject1.put("VoiceData", strVoiceData)
                 requestObject1.put("VoiceLabel", "Voice")
                 requestObject1.put("leadByMobileNo", leadByMobileNo)
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 Log.e("wewewe","sent length==   "+strVoiceData.length)
              //   Log.e(TAG,"requestObject1   671   "+requestObject1)

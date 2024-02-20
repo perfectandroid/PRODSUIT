@@ -1,8 +1,10 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.content.Context
+import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +18,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 
 
@@ -29,6 +32,7 @@ class LocationMarkingActivity : AppCompatActivity(), View.OnClickListener, OnMap
     var NewCastle = LatLng(-32.916668, 151.750000)
     var Brisbane = LatLng(-27.470125, 153.021072)
     private var locationArrayList: ArrayList<LatLng>? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +51,8 @@ class LocationMarkingActivity : AppCompatActivity(), View.OnClickListener, OnMap
 //        mapView!!.onCreate(savedInstanceState);
 //        mapView!!.getMapAsync(this);
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -146,6 +152,13 @@ class LocationMarkingActivity : AppCompatActivity(), View.OnClickListener, OnMap
     override fun onResume() {
         super.onResume()
         mapView!!.onResume()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
     override fun onPause() {

@@ -3,7 +3,9 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
 import android.graphics.Color
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -25,6 +27,7 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.ModelDashExpenseChart
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
@@ -119,6 +122,7 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
     var accountsTileAdapter:  AccountsTileAdapter? = null
     private var tv_acc_tileName: TextView? = null
 
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
 
@@ -148,6 +152,9 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
         TabMode       = 0
         ContinueMode  = 0
         hideViews()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -312,6 +319,13 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
+
     private fun getAccountsTileData() {
         noDataP_L=false
 
@@ -419,8 +433,8 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
 
@@ -538,8 +552,8 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -722,8 +736,8 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -791,8 +805,8 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -858,8 +872,8 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -924,8 +938,8 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }

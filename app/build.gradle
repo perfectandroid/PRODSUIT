@@ -165,6 +165,8 @@ dependencies {
     //pyramid map
     implementation 'com.github.dhaval-android:funnel_meter_chartview:1.0.0'	;
 
+    implementation 'com.google.android.material:material:1.4.0'
+
 
 
 }

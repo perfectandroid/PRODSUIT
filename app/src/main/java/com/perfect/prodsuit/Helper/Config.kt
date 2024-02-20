@@ -4,22 +4,31 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityManager
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
+import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.gms.tasks.Task
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
 import com.perfect.prodsuit.R
@@ -159,6 +168,12 @@ object Config {
     const val PLEASE_TRY_AGAIN = "Some Technical Issues, Please try again in sometime"
     const val notificationBack = false // String False / True
     const val INVALID_MOBILE = "Invalid Mobile Number"
+
+    lateinit var rootView: View
+    var dialog : Dialog? = null
+    fun Context.runOnUiThread(action: () -> Unit) {
+        Handler(Looper.getMainLooper()).post { action() }
+    }
 
     fun getHostnameVerifier(): HostnameVerifier {
         return HostnameVerifier { hostname, session -> true }

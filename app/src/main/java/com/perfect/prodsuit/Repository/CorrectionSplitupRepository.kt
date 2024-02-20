@@ -107,6 +107,7 @@ object CorrectionSplitupRepository {
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 //                {
 //                    "BankKey": "-500",
@@ -121,6 +122,7 @@ object CorrectionSplitupRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("FK_User", ProdsuitApplication.encryptStart(FK_UserSP.getString("ID_User", null)))
                 requestObject1.put("Module", ProdsuitApplication.encryptStart(TransMode))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 Log.e(TAG,"126   getAuthorizationCorrectionDetailsList  "+requestObject1)

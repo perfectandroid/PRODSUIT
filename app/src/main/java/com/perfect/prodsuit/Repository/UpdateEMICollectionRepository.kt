@@ -102,6 +102,7 @@ object UpdateEMICollectionRepository {
                 val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 
 //                {"BankKey":"-500","Token":"F2E50452-6F21-44A4-B81D-733A59DEE381","TrnsDate":"2023-05-08","FK_Company":"1","FK_BranchCodeUser":"3","EntrBy":"Sree","AccountMode":"2",
@@ -131,6 +132,7 @@ object UpdateEMICollectionRepository {
                 requestObject1.put("Address", ProdsuitApplication.encryptStart(strLocationAddress))
                 requestObject1.put("LocationEnteredDate", ProdsuitApplication.encryptStart(strAgentDate))
                 requestObject1.put("LocationEnteredTime", ProdsuitApplication.encryptStart(strAgentTime))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                Log.e(TAG,"114  SAVE   "+requestObject1)

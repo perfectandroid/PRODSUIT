@@ -8,7 +8,9 @@ import android.app.TimePickerDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -22,6 +24,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.GetGenralSettingsViewModel
 import org.json.JSONObject
@@ -56,6 +59,7 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
     lateinit var context: Context
 
     lateinit var getGenralSettingsViewModel: GetGenralSettingsViewModel
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +72,9 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
         getCalendarId(context)
         bottombarnav()
         getLeadRequestLicences()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -479,6 +486,11 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
 
         }
     }
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
+    }
 
 }

@@ -5,7 +5,9 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -184,6 +186,7 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     var UserAction = "1" // Save =  1 , Update = 2
 
     var saveAttendanceMark = false
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -205,6 +208,9 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         setRegViews()
 
         checkAttendance()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -2394,6 +2400,13 @@ class StockRequestActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
 
         }
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 

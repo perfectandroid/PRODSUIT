@@ -6,7 +6,9 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -28,6 +30,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.ClickListener
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.NotificationAdapter
 import com.perfect.prodsuit.View.Adapter.PickupDeliveryListAdapter
@@ -100,6 +103,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
     var updateLocCount = 0
     var swipe: SwipeRefreshLayout?=null
     var adapter: NotificationAdapter? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -136,6 +140,9 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
             adapter?.notifyDataSetChanged()
             swipe?.isRefreshing=false
         }
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -707,6 +714,8 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
         super.onRestart()
         pickDeliveryCount = 0
         getPickUpDeliveryList()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 }
 

@@ -67,6 +67,7 @@ object ReportStatuslistProjectRepository {
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
@@ -85,6 +86,7 @@ object ReportStatuslistProjectRepository {
                 requestObject1.put("FK_Machine", "10")
                 requestObject1.put("Criteria", "0")
                 requestObject1.put("TableCount", "1")
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                  Log.e(TAG,"78  getBranch  "+requestObject1)
             } catch (e: Exception) {

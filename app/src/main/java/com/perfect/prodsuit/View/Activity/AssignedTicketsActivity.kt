@@ -2,6 +2,8 @@ package com.perfect.prodsuit.View.Activity
 
 import android.app.*
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -17,6 +19,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.View.Adapter.AssignedTicketsAdapter
 
 class AssignedTicketsActivity :AppCompatActivity() , View.OnClickListener, ItemClickListener {
@@ -35,6 +38,7 @@ class AssignedTicketsActivity :AppCompatActivity() , View.OnClickListener, ItemC
 
     var date :String = ""
     var FK_Emp :String = ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +56,9 @@ class AssignedTicketsActivity :AppCompatActivity() , View.OnClickListener, ItemC
         Log.e(TAG,"Parameters    "+FK_Emp+"\n"+date)
         getAssignedTicketList()
 
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 
@@ -192,8 +199,8 @@ class AssignedTicketsActivity :AppCompatActivity() , View.OnClickListener, ItemC
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -202,6 +209,9 @@ class AssignedTicketsActivity :AppCompatActivity() , View.OnClickListener, ItemC
         super.onRestart()
         //serviceList = 0
         getAssignedTicketList()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 

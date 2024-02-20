@@ -2,7 +2,9 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
 import android.graphics.Paint
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -23,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ProductSimilarAdapter
 import com.perfect.prodsuit.View.Adapter.ProductViewPagerAdapter
@@ -81,6 +84,8 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener, 
     var img_list: ImageView? = null
     var img_grid: ImageView? = null
 
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -98,6 +103,8 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener, 
         getDetail()
 
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
     private fun setGridList() {
         if (modelg == 1){
@@ -547,6 +554,13 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener, 
         }
         smoothScroller.targetPosition = position
         recyclerView.layoutManager?.startSmoothScroll(smoothScroller)
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
 }

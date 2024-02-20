@@ -64,6 +64,7 @@ object ServiceOngoingListRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
@@ -84,6 +85,7 @@ object ServiceOngoingListRepository {
                 requestObject1.put("CSRTickno", ProdsuitApplication.encryptStart(strTicketNo))
                 requestObject1.put("CusName", ProdsuitApplication.encryptStart(strCustomer))
                 requestObject1.put("CusMobile", ProdsuitApplication.encryptStart(strMobile))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 Log.e(TAG,"requestObject1   82   "+requestObject1)

@@ -5,8 +5,10 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -34,6 +36,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.DocumentDetailAdapter
 import com.perfect.prodsuit.Viewmodel.DocumentDetailViewModel
@@ -66,6 +69,7 @@ class DocumentListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
     lateinit var documentArrayList : JSONArray
 
     private var destination: File? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,6 +97,9 @@ class DocumentListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         Log.e(TAG,"ID_LeadGenerateProduct  392   "+ID_LeadGenerateProduct)
 
         getDocumentDetail(ID_LeadGenerate,ID_LeadGenerateProduct)
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 
@@ -185,8 +192,8 @@ class DocumentListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
 
         }
@@ -369,8 +376,8 @@ class DocumentListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
 
         }
@@ -401,4 +408,10 @@ class DocumentListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
 }

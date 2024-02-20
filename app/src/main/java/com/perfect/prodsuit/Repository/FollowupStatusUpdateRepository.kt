@@ -66,6 +66,7 @@ object FollowupStatusUpdateRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 
 
@@ -86,6 +87,7 @@ object FollowupStatusUpdateRepository {
                 requestObject1.put("LocationEnteredDate", ProdsuitApplication.encryptStart(curDate))
                 requestObject1.put("LocationEnteredTime", ProdsuitApplication.encryptStart(curTime))
                 requestObject1.put("Status", ProdsuitApplication.encryptStart(journeyType))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 Log.e(TAG,"requestObject1  910   "+requestObject1)

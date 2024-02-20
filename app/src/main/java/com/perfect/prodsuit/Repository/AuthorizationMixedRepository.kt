@@ -64,6 +64,7 @@ object AuthorizationMixedRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 
 
@@ -72,6 +73,7 @@ object AuthorizationMixedRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(FK_UserCodeSP.getString("UserCode", null)))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 Log.e(TAG,"78 getAuthorizationModuleList  "+requestObject1)

@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.TodoListAdapter
 import com.perfect.prodsuit.Viewmodel.AddNoteViewModel
@@ -52,6 +55,7 @@ class AddNoteActivity : AppCompatActivity(), View.OnClickListener{
     var datePickerFrom1: DatePicker? = null
     var txtnxt_actndte: TextView? = null
     var strDate = ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     companion object{
         var date1= ""
@@ -66,6 +70,8 @@ class AddNoteActivity : AppCompatActivity(), View.OnClickListener{
         context = this@AddNoteActivity
         setRegViews()
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -179,10 +185,17 @@ class AddNoteActivity : AppCompatActivity(), View.OnClickListener{
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                        .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                        .show()
             }
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
     override fun onClick(v: View) {

@@ -77,6 +77,7 @@ object PostRepository {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
@@ -86,7 +87,8 @@ object PostRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart("4"))
                 requestObject1.put("FK_Area", ProdsuitApplication.encryptStart(FK_Area))
-               // requestObject1.put("FK_Area", ProdsuitApplication.encryptStart(FK_Area_new))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                // requestObject1.put("FK_Area", ProdsuitApplication.encryptStart(FK_Area_new))
 
                 Log.e(TAG,"FK_Area   74   "+ FK_Area+"  :  ")
                // Log.e(TAG,"FK_Area_new   74   "+ FK_Area_new+"  :  ")

@@ -72,6 +72,7 @@ object ServiceRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
@@ -80,6 +81,7 @@ object ServiceRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(""))
                 requestObject1.put("ID_Category", ProdsuitApplication.encryptStart(ID_Category))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                // requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
 
 

@@ -3,8 +3,10 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +27,7 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Repository.AreaListRepository
@@ -134,6 +137,8 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
     var recyc_Production: RecyclerView?   = null
     private var ll_production: LinearLayout? = null
 
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -156,6 +161,9 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
         TabMode = 0
         ContinueMode = 0
         hideViews()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -1459,4 +1467,11 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
 //            ll_recyUpcomingStock!!.visibility = View.VISIBLE
 //        }
 //    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
 }

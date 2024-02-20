@@ -72,6 +72,7 @@ object LeadFromInfoRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("33"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -82,6 +83,7 @@ object LeadFromInfoRepository {
                 requestObject1.put("FK_Machine", ProdsuitApplication.encryptStart("10"))
                 requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart(ID_LeadFrom))
                 requestObject1.put("TransMode", ProdsuitApplication.encryptStart(TransMode))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 Log.e(TAG,"requestObject1   80   "+requestObject1)
