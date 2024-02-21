@@ -1329,6 +1329,30 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
 
 
         }
+
+        if (data.equals("ServiceCount")) {
+
+
+            val jsonObject = countlistSort.getJSONObject(position)
+
+            var submode = jsonObject!!.getString("MasterID")
+            var label=jsonObject!!.getString("Field")
+
+            val i = Intent(context, ServiceAssignListActivity::class.java)
+            i.putExtra("SubMode",submode)
+            i.putExtra("ID_Branch",ID_Branch)
+            i.putExtra("FK_Area",FK_Area)
+            i.putExtra("ID_Employee",ID_Employee)
+            i.putExtra("strFromDate",strFromDate)
+            i.putExtra("strToDate",strToDate)
+            i.putExtra("strCustomer",strCustomer)
+            i.putExtra("strMobile",strMobile)
+            i.putExtra("strTicketNo",strTicketNo)
+            i.putExtra("strDueDays",strDueDays)
+            i.putExtra("label",label)
+            startActivity(i)
+
+        }
     }
 
 //    private fun setOnFocusChangeListener(textView: TextView) {

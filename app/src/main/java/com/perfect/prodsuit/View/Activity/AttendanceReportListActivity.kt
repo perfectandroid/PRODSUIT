@@ -23,13 +23,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.View.Adapter.AttendanceListAdapter
-import com.perfect.prodsuit.View.Adapter.AttendanceReportAdapter
-import com.perfect.prodsuit.View.Adapter.EmployeeAdapter
-import com.perfect.prodsuit.View.Adapter.FollowupActionAdapter
-import com.perfect.prodsuit.View.Adapter.ServiceListAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject

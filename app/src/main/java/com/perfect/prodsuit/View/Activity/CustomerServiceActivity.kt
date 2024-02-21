@@ -1262,7 +1262,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
               //  til_Address!!.setError("You need to enter a name");
                 checkAttendance()
                 if (saveAttendanceMark){
-                    validation()
+                    validation(v)
                 }
 
 
@@ -1620,6 +1620,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         contDetailMode = "1"
         requestedMode  = "1"
         attDetailMode  = "1"
+        locDetailMode  = "1"
         hideViews()
 
         // Customer Details
@@ -1682,6 +1683,16 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         tie_FromTime!!.setText("")
         tie_ToTime!!.setText("")
 
+        tie_Location!!.setText("")
+        locAddress = ""
+        locCity =  ""
+        locState =  ""
+        locCountry =  ""
+        locpostalCode =  ""
+        locKnownName =  ""
+        strLatitude =  ""
+        strLongitue =  ""
+
         // Attended Details
         ID_Status = ""
         ID_AttendedBy = ""
@@ -1706,7 +1717,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
     }
 
-    private fun validation() {
+    private fun validation(v : View) {
         strDate = tie_Date!!.text.toString()
         strTime = tie_Time!!.text.toString()
         strCustomerName = tie_CustomerName!!.text.toString()
@@ -1802,12 +1813,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                   +"\n"+"ID EmpMedia    :  "+ID_EmpMedia
                   +"\n"+"ID Media       :  "+ID_ServiceMedia)
 
-            validation1()
+            validation1(v)
 
         }
     }
 
-    private fun validation1() {
+    private fun validation1(v : View) {
         Log.e(TAG,"Validation   1")
       //  strCategory = tie_CompCategory!!.text.toString()
         strCategory = tie_Category!!.text.toString()
@@ -1920,13 +1931,48 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             strAttendedBy = tie_Attendedby!!.text.toString()
 
 
-            confirmationPopup()
+         //   confirmationPopup()
+            validateDate(v)
+
+
 
         }
         Log.e(TAG,"Validation   6")
         Log.e(TAG,"Validation   1"+ID_CompCategory)
         Log.e(TAG,"Validation   1"+ID_ComplaintList)
         Log.e(TAG,"Validation   1"+ID_Services)
+    }
+
+    private fun validateDate(v : View) {
+        var isValid3 = true
+        if (!strToDate.equals("")){
+            isValid3 = Config.convertTimemills(strFromDate!!,strToDate!!)
+            Log.e(TAG,"1926001    "+isValid3)
+        }
+
+        if (isValid3){
+            validateTime(v)
+        }else{
+            Config.snackBars(context,v,"To date should be greaterthan or equal to From date")
+        }
+
+    }
+
+    private fun validateTime(v : View) {
+        Log.e(TAG,"1926002    ")
+        var isValid4 = true
+        if (!strFromTime.equals("") && !strToTime.equals("")){
+            isValid4 = Config.checkTimemills(strFromTime!!,strToTime!!)
+        }
+
+        if (isValid4){
+
+            Log.e(TAG,"1926003    ")
+            confirmationPopup()
+        }else{
+            Config.snackBars(context,v,"To Time should be greater than From Time.")
+        }
+
     }
 
     private fun confirmationPopup() {
@@ -2340,12 +2386,14 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
 
         if (dateMode == 0){
+            Log.e(TAG,"13451   "+dateMode)
             date_Picker1.maxDate = System.currentTimeMillis()
         }else if (dateMode == 1){
-
+            Log.e(TAG,"13452   "+dateMode)
             date_Picker1.minDate = System.currentTimeMillis()
         }
         else if (dateMode == 2){
+            Log.e(TAG,"13453   "+dateMode)
             date_Picker1.minDate = System.currentTimeMillis()
         }
 
@@ -3565,12 +3613,18 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             dialogCategory!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyCategory = dialogCategory!! .findViewById(R.id.recyCategory) as RecyclerView
             val etsearch = dialogCategory!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogCategory!! .findViewById(R.id.txt_nodata) as TextView
 
             categorySort = JSONArray()
             for (k in 0 until categoryArrayList.length()) {
                 val jsonObject = categoryArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 categorySort.put(jsonObject)
+            }
+
+            if (categorySort.length() <= 0){
+                recyCategory!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
 
@@ -3606,6 +3660,13 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                         }
                     }
 
+                    if (categorySort.length() <= 0){
+                        recyCategory!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyCategory!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
+                    }
                     Log.e(TAG,"categorySort               7103    "+categorySort)
                     val adapter = CategoryAdapter(this@CustomerServiceActivity, categorySort)
                     recyCategory!!.adapter = adapter
@@ -3707,14 +3768,21 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             recyCategory = dialogSubCategory!! .findViewById(R.id.recyCategory) as RecyclerView
             val etsearch = dialogSubCategory!! .findViewById(R.id.etsearch) as EditText
             val tv_header = dialogSubCategory!! .findViewById(R.id.tv_header) as TextView
+            val txt_nodata = dialogSubCategory!! .findViewById(R.id.txt_nodata) as TextView
 
             tv_header.setText("Sub Category")
+            txt_nodata.setText("Inavalid Sub Category")
 
             subCategorySort = JSONArray()
             for (k in 0 until subCategoryArrayList.length()) {
                 val jsonObject = subCategoryArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 subCategorySort.put(jsonObject)
+            }
+
+            if (subCategorySort.length() <= 0){
+                recyCategory!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
 
@@ -3748,6 +3816,13 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                             }
 
                         }
+                    }
+                    if (subCategorySort.length() <= 0){
+                        recyCategory!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyCategory!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"categorySort               7103    "+subCategorySort)
@@ -3849,6 +3924,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             recyBrand = dialogBrand!! .findViewById(R.id.recyBrand) as RecyclerView
             val etsearch = dialogBrand!! .findViewById(R.id.etsearch) as EditText
             val tv_header = dialogBrand!! .findViewById(R.id.tv_header) as TextView
+            val txt_nodata = dialogBrand!! .findViewById(R.id.txt_nodata) as TextView
 
 
             brandSort = JSONArray()
@@ -3858,6 +3934,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 brandSort.put(jsonObject)
             }
 
+
+            if (brandSort.length() <= 0){
+                recyBrand!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
+            }
 
             val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
             recyBrand!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -3889,6 +3970,14 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                             }
 
                         }
+                    }
+
+                    if (brandSort.length() <= 0){
+                        recyBrand!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyBrand!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"brandSort               7103    "+brandSort)
@@ -3989,7 +4078,9 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             dialogCompany!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyCompany = dialogCompany!! .findViewById(R.id.recyCompany) as RecyclerView
             val etsearch = dialogCompany!! .findViewById(R.id.etsearch) as EditText
+            val tv_heading = dialogCompany!! .findViewById(R.id.tv_heading) as TextView
 
+            tv_heading.text = "Company"
             companySort = JSONArray()
             for (k in 0 until companyArrayList.length()) {
                 val jsonObject = companyArrayList.getJSONObject(k)
@@ -4269,6 +4360,7 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             dialogService!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyService = dialogService!! .findViewById(R.id.recyService) as RecyclerView
             val etsearch = dialogService!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogService!! .findViewById(R.id.txt_nodata) as TextView
 
             serviceSort = JSONArray()
             for (k in 0 until serviceArrayList.length()) {
@@ -4276,6 +4368,12 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                 // reportNamesort.put(k,jsonObject)
                 serviceSort.put(jsonObject)
             }
+
+            if (serviceSort.length() <= 0){
+                recyService!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
+            }
+
 
 
             val lLayout = GridLayoutManager(this@CustomerServiceActivity, 1)
@@ -4308,6 +4406,14 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                             }
 
                         }
+                    }
+
+                    if (serviceSort.length() <= 0){
+                        recyService!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyService!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"serviceSort               1556    "+serviceSort)
@@ -4405,12 +4511,17 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
             dialogComplaint!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyComplaint = dialogComplaint!! .findViewById(R.id.recyComplaint) as RecyclerView
             val etsearch = dialogComplaint!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogComplaint!! .findViewById(R.id.txt_nodata) as TextView
 
             complaintSort = JSONArray()
             for (k in 0 until complaintArrayList.length()) {
                 val jsonObject = complaintArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 complaintSort.put(jsonObject)
+            }
+            if (complaintSort.length() <= 0){
+                recyComplaint!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
 
@@ -4445,6 +4556,15 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                         }
                     }
+
+                    if (complaintSort.length() <= 0){
+                        recyComplaint!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyComplaint!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
+                    }
+
 
                     Log.e(TAG,"complaintSort               2203    "+complaintSort)
                     val adapter = ServiceComplaintAdapter(this@CustomerServiceActivity, complaintSort)
@@ -4733,6 +4853,8 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 //                tie_CN_District!!.setText("")
                 tie_CN_Area!!.setText("")
                 tie_CN_Post!!.setText("")
+                til_CN_Area!!.setError(null);
+                til_CN_Area!!.isErrorEnabled = false
 
                 defaultCount = 0
                 getDefaultValueSettings()

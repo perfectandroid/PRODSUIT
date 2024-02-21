@@ -27,7 +27,7 @@ object DistrictRepository {
     val TAG: String = "DistrictRepository"
 
     fun getServicesApiCall(context: Context,FK_States :String): MutableLiveData<DistrictModel> {
-        getDistrict(context, LeadGenerationActivity.FK_States)
+        getDistrict(context, FK_States)
         return districtSetterGetter
     }
 

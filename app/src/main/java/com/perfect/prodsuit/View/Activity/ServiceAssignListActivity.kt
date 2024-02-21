@@ -472,19 +472,23 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 
         if (data.equals("ServiceList")) {
             val jsonObject = serviceListArrayList.getJSONObject(position)
-         //   ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
-          //  FK_CustomerserviceregisterProductDetails = jsonObject.getString("ID_CustomerServiceRegisterProductDetails")
+            ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
+            FK_CustomerserviceregisterProductDetails = jsonObject.getString("ID_CustomerServiceRegisterProductDetails")
+            Log.e(TAG,"489991    "+serviceListArrayList)
+
             TicketDate = jsonObject.getString("TicketDate")
             TicketStatus = jsonObject.getString("TicketStatus")
 
 
             if(!TicketStatus.equals("3"))
             {
-                val idcustservceregstSP = context.getSharedPreferences(Config.SHARED_PREF72, 0)
-                ID_CustomerServiceRegister = idcustservceregstSP.getString("idcustsrvceregist","")
+//                val idcustservceregstSP = context.getSharedPreferences(Config.SHARED_PREF72, 0)
+//                ID_CustomerServiceRegister = idcustservceregstSP.getString("idcustsrvceregist","")
+//
+//                val idcustservceregstprdctdetlSP = context.getSharedPreferences(Config.SHARED_PREF73, 0)
+//                FK_CustomerserviceregisterProductDetails = idcustservceregstprdctdetlSP.getString("idcustsrvceregistproductdetail","")
 
-                val idcustservceregstprdctdetlSP = context.getSharedPreferences(Config.SHARED_PREF73, 0)
-                FK_CustomerserviceregisterProductDetails = idcustservceregstprdctdetlSP.getString("idcustsrvceregistproductdetail","")
+                Log.e(TAG,"489992    "+ID_CustomerServiceRegister+"  :  "+FK_CustomerserviceregisterProductDetails)
 
 
                 Log.i("FKK",FK_CustomerserviceregisterProductDetails.toString()+"\n"+ID_CustomerServiceRegister)

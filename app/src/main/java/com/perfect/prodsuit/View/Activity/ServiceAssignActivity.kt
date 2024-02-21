@@ -1057,6 +1057,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
             R.id.txtv_custbalnce->{
 
+                Config.disableClick(v)
                 val i = Intent(this@ServiceAssignActivity, CustomerBalanceActivity::class.java)
                 i.putExtra("TicketDate",TicketDate)
                 i.putExtra("Id_Cust",stridCustomer)
@@ -1337,7 +1338,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                         ticketMode = "1"
                         serviceMode  = "1"
                         productMode = "1"
-                        listMode = "0"
+                        listMode = "1"
                         hideViews()
                     }else{
                         til_Employee!!.setError(" Employee already exists.");
@@ -2012,6 +2013,9 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             dialogDepartment!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyDeaprtment = dialogDepartment!! .findViewById(R.id.recyDeaprtment) as RecyclerView
             val etsearch = dialogDepartment!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogDepartment!! .findViewById(R.id.txt_nodata) as TextView
+
+            txt_nodata.text = "Invalid Department"
 
             departmentSort = JSONArray()
             for (k in 0 until departmentArrayList.length()) {
@@ -2019,6 +2023,12 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 // reportNamesort.put(k,jsonObject)
                 departmentSort.put(jsonObject)
             }
+
+            if (departmentSort.length() <= 0){
+                recyDeaprtment!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
+            }
+
 
             val lLayout = GridLayoutManager(this@ServiceAssignActivity, 1)
             recyDeaprtment!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -2049,6 +2059,14 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                             }
 
                         }
+                    }
+
+                    if (departmentSort.length() <= 0){
+                        recyDeaprtment!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyDeaprtment!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"departmentSort               7103    "+departmentSort)
@@ -2145,12 +2163,20 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             dialogEmployee!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyEmployee = dialogEmployee!! .findViewById(R.id.recyEmployee) as RecyclerView
             val etsearch = dialogEmployee!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogEmployee!! .findViewById(R.id.txt_nodata) as TextView
+
+            txt_nodata.text = "Invalid Employee"
 
             employeeSort = JSONArray()
             for (k in 0 until employeeArrayList.length()) {
                 val jsonObject = employeeArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 employeeSort.put(jsonObject)
+            }
+
+            if (employeeSort.length() <= 0){
+                recyEmployee!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
 
@@ -2184,6 +2210,15 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
                         }
                     }
+
+                    if (employeeSort.length() <= 0){
+                        recyEmployee!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyEmployee!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
+                    }
+
 
                     Log.e(TAG,"employeeSort               7103    "+employeeSort)
                     val adapter = EmployeeAdapter(this@ServiceAssignActivity, employeeSort)
@@ -2332,6 +2367,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     }
 
     private fun hideViews() {
+
         lnrHead_Ticket!!.visibility = View.VISIBLE
         lnrHead_Service!!.visibility = View.VISIBLE
         lnrHead_Product!!.visibility = View.VISIBLE
@@ -2359,6 +2395,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
         if (pickupMode.equals("1")) {
             lnrHead_Pickup!!.visibility = View.GONE
         }
+
     }
 
 
@@ -2489,7 +2526,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 ticketMode = "1"
                 serviceMode  = "1"
                 productMode = "0"
-                listMode = "1"
+                listMode = "0"
 
                 hideViews()
 

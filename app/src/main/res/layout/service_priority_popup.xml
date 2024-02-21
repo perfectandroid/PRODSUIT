@@ -23,7 +23,8 @@
         android:layout_height="55dp"
         android:background="@drawable/shape_gradient_pop"
         android:paddingBottom="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
         <!--                android:background="#e97a7a"-->
         <LinearLayout
             android:layout_width="match_parent"

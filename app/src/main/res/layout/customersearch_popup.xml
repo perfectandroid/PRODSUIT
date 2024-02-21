@@ -86,11 +86,9 @@
             android:gravity="center"
             android:textColor="@color/black1"
             android:textSize="17dp"
-
             android:fontFamily="@font/myfont"
             android:visibility="gone"
             android:padding="15dp"
-
             android:text="Invalid Customer"/>
 
     </LinearLayout>

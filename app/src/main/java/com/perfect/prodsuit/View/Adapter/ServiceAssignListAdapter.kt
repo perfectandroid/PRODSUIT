@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.AssignedTicketsActivity
@@ -55,6 +56,7 @@ class ServiceAssignListAdapter(
 
                 holder.im_delete!!.setTag(position)
                 holder.im_delete!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     clickListener!!.onClick(
                         position,
                         "deleteArrayList"
@@ -63,6 +65,7 @@ class ServiceAssignListAdapter(
 
                 holder.im_edit!!.setTag(position)
                 holder.im_edit!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     clickListener!!.onClick(
                         position,
                         "editArrayList"
@@ -71,6 +74,7 @@ class ServiceAssignListAdapter(
 
                 holder.im_asgned!!.setTag(position)
                 holder.im_asgned!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     jsonObject = jsonArray.getJSONObject(position)
                     var fkemployee= jsonObject!!.getString("ID_Employee")
                     var date=dateattend

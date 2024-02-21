@@ -26,8 +26,6 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.EmiListAdapter
-import com.perfect.prodsuit.View.Adapter.ServiceListAdapter
-import com.perfect.prodsuit.Viewmodel.EMIAccountDetailsViewModel
 import com.perfect.prodsuit.Viewmodel.EmiListViewModel
 import com.perfect.prodsuit.Viewmodel.ProductCategoryViewModel
 import org.json.JSONArray
