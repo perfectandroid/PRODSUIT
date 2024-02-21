@@ -175,6 +175,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     var ID_ActionType : String?= ""
     var ID_Employee : String?= ""
     var ID_Status : String?= ""
+    var IsEnable : String?= ""
 
     var ID_NextAction : String?= ""
     var ID_NextActionType : String?= ""
@@ -2654,7 +2655,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             val jsonObject = prodStatusSort.getJSONObject(position)
             Log.e(TAG,"ID_Status   "+jsonObject.getString("ID_Status"))
             ID_Status = jsonObject.getString("ID_Status")
-            var IsEnable = jsonObject.getString("IsEnable")
+            IsEnable = jsonObject.getString("IsEnable")
             tie_Status!!.setText(jsonObject.getString("StatusName"))
             til_Date!!.hint = (jsonObject.getString("StatusName")+" Date")
 
@@ -2746,6 +2747,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
         ID_Employee = ""
         ID_Status = ""
+        IsEnable = ""
 
         tie_NextAction!!.setText("")
         tie_NextActionType!!.setText("")
@@ -2893,10 +2895,12 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //                    Log.e(TAG,"duration   2463   "+duration)
                     strCallDuration = "00:00:00"
 
-                    saveUpdate()
+//                    saveUpdate()
 //                    saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
 //                        strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
 //                        strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
+
+                    validateNextAction(v)
                 }
 
             }
@@ -2961,13 +2965,63 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //                    strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
 
                 strCallDuration = "00:00:00"
-                saveUpdate()
+                validateNextAction(v)
+                //saveUpdate()
             }
 
 
 
 
         }
+    }
+
+    private fun validateNextAction(v :  View) {
+        if (IsEnable.equals("1")){
+            if (ID_NextAction.equals("")){
+                bottomWithoutNextAction()
+            }else{
+
+                if (ID_NextActionType.equals("")){
+                    Config.snackBars(context,v,"Select Action Type")
+                }else if (tie_NextFollowupDate!!.text.toString().equals("")){
+                    Config.snackBars(context,v,"Select Next Followup Date")
+                }else if (ID_Priority.equals("")){
+                    Config.snackBars(context,v,"Select Priority")
+                }else if (ID_Department.equals("")){
+                    Config.snackBars(context,v,"Select Department")
+                }else if (ID_NextEmployee.equals("")){
+                    Config.snackBars(context,v,"Select Employee")
+                }else{
+                    saveUpdate()
+                }
+            }
+        }else{
+            saveUpdate()
+        }
+    }
+
+    private fun bottomWithoutNextAction() {
+        // BottomSheet
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.confirm_followup_next, null)
+
+        val btnNo = view.findViewById<Button>(R.id.btn_No)
+        val btnYes = view.findViewById<Button>(R.id.btn_Yes)
+
+        btnNo.setOnClickListener {
+            dialog .dismiss()
+
+        }
+        btnYes.setOnClickListener {
+            dialog.dismiss()
+            saveUpdate()
+
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
     }
 
     fun getResizedBitmap(image: Bitmap, maxSize: Int): Bitmap {
