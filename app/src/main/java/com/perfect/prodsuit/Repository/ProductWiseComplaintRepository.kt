@@ -65,6 +65,7 @@ object ProductWiseComplaintRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -73,6 +74,7 @@ object ProductWiseComplaintRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Critrea5", ProdsuitApplication.encryptStart(ID_Category))
                 requestObject1.put("Critrea6", ProdsuitApplication.encryptStart(ID_Product))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 Log.e(TAG,"requestObject1   80   "+requestObject1)

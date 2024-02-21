@@ -64,6 +64,8 @@ object AddremarkRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("58"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
@@ -72,6 +74,7 @@ object AddremarkRepository {
                 requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
                 requestObject1.put("CustomerNote", ProdsuitApplication.encryptStart(customernote))
                 requestObject1.put("EmployeeNote", ProdsuitApplication.encryptStart(agentnote))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 Log.e("TAG","739   "+ID_LeadGenerate+"  :  "+ID_LeadGenerateProduct+"  :  "+customernote+"  :  "+agentnote)
                 Log.i("requestobject",requestObject1.toString()+"\n"+AccountDetailsActivity.ID_ActionType+"\n"+AccountDetailsActivity.ID_LeadGenerateProduct)
             } catch (e: Exception) {

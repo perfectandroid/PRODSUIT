@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.CorrectionModuleListAdapter
 import com.perfect.prodsuit.View.Adapter.ProductPriorityAdapter
@@ -40,6 +43,7 @@ class CorrectionModuleListActivity : AppCompatActivity(), View.OnClickListener, 
     var correctionmodulecount = 0
     var jsonObj: JSONObject? = null
     var Module_sub = "1"
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +59,9 @@ class CorrectionModuleListActivity : AppCompatActivity(), View.OnClickListener, 
         correctionmodulecount = 0
         getCorrectionModuleList()
         setRegViews()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews(){
@@ -134,8 +141,8 @@ class CorrectionModuleListActivity : AppCompatActivity(), View.OnClickListener, 
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -184,6 +191,9 @@ class CorrectionModuleListActivity : AppCompatActivity(), View.OnClickListener, 
         super.onRestart()
         correctionmodulecount = 0
         getCorrectionModuleList()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 //        Config.setRedirection(context,"")
     }
 }

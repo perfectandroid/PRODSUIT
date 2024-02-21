@@ -63,6 +63,7 @@ object EmiAccountDetailsRepository {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 //                {"BankKey":"-500","Token":"1E018EC4-9978-4FCE-A763-455F59DF3540","ReqMode":"103",
 //                    "ID_CustomerWiseEMI":"14","TrnsDate":"2023-03-10","FK_Company":"1","AccountMode":"2"}
@@ -75,6 +76,7 @@ object EmiAccountDetailsRepository {
                 requestObject1.put("TrnsDate", ProdsuitApplication.encryptStart(strCurrentDate))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company",null)))
                 requestObject1.put("AccountMode", ProdsuitApplication.encryptStart("2"))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 Log.e("requestobject  7012  ","\n"+requestObject1)
 

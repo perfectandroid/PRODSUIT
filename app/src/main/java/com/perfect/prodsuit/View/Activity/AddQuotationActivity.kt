@@ -6,9 +6,11 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -23,6 +25,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Helper.UriUtil
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.AddQuotationViewModel
@@ -70,6 +73,7 @@ class AddQuotationActivity : AppCompatActivity(), View.OnClickListener{
     var etxt_remark: EditText? = null
     lateinit var addQuotationViewModel: AddQuotationViewModel
     private var progressDialog: ProgressDialog? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +82,9 @@ class AddQuotationActivity : AppCompatActivity(), View.OnClickListener{
         setRegViews()
 
         getDate()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
     private fun getDate() {
@@ -133,6 +140,13 @@ class AddQuotationActivity : AppCompatActivity(), View.OnClickListener{
         txtv_date!!.setText("")
         etxt_remark!!.setText("")
 
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -417,8 +431,8 @@ class AddQuotationActivity : AppCompatActivity(), View.OnClickListener{
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                        .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                        .show()
             }
         }
     }

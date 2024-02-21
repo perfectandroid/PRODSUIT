@@ -188,6 +188,7 @@
                                                     android:fontFamily="@font/myfont"
                                                     android:paddingLeft="5dp"
                                                     android:text="Name"
+                                                    android:textColor="@color/greydark"
                                                     android:textSize="14dp"
                                                     android:visibility="visible" />
                                                 <!--                                                    android:drawableLeft="@drawable/call_svg"-->
@@ -222,6 +223,7 @@
                                                         android:padding="7dp"
                                                         android:singleLine="true"
                                                         android:text=""
+                                                        android:textColor="@color/greydark"
                                                         android:textSize="14dp" />
 
                                                     <ImageView
@@ -282,6 +284,7 @@
                                                 android:fontFamily="@font/myfont"
                                                 android:paddingLeft="5dp"
                                                 android:text=""
+                                                android:textColor="@color/greydark"
                                                 android:textSize="15dp"
                                                 android:visibility="visible" />
 
@@ -298,6 +301,7 @@
                                                 android:padding="5dp"
                                                 android:textSize="15dp"
                                                 android:singleLine="true"
+                                                android:textColor="@color/greydark"
                                                 android:background="@drawable/shape_bg_mandatory"
                                                 android:text="" />
                                             <ImageView
@@ -323,6 +327,7 @@
                                             android:layout_marginBottom="0dp"
                                             android:padding="7dp"
                                             android:textSize="15dp"
+                                            android:textColor="@color/greydark"
                                             android:singleLine="true"
                                             android:inputType="number"
                                             android:maxLength="15"
@@ -496,6 +501,7 @@
                                                         android:drawableLeft="@drawable/rupees"
                                                         android:drawableTint="@color/greydark"
                                                         android:fontFamily="@font/myfont"
+                                                        android:textColor="@color/greydark"
                                                         android:hint="MRP"
                                                         android:inputType="number"
                                                         android:maxLength="12"
@@ -594,6 +600,7 @@
                                                     android:padding="7dp"
                                                     android:singleLine="false"
                                                     android:maxLines="3"
+                                                    android:textColor="@color/greydark"
                                                     android:maxLength="200"
                                                     android:text=""
                                                     android:textSize="15dp" />
@@ -633,6 +640,7 @@
                                                     android:focusableInTouchMode="false"
                                                     android:fontFamily="@font/myfont"
                                                     android:hint="Action"
+                                                    android:textColor="@color/greydark"
                                                     android:padding="7dp"
                                                     android:singleLine="true"
                                                     android:text=""
@@ -684,6 +692,7 @@
                                                         android:focusableInTouchMode="false"
                                                         android:hint="Action Type"
                                                         android:fontFamily="@font/myfont"
+                                                        android:textColor="@color/greydark"
                                                         android:padding="7dp"
                                                         android:singleLine="true"
                                                         android:text=""
@@ -713,6 +722,7 @@
                                                         android:fontFamily="@font/myfont"
                                                         android:padding="7dp"
                                                         android:singleLine="true"
+                                                        android:textColor="@color/greydark"
                                                         android:text=""
                                                         android:textSize="15dp" />
 
@@ -733,6 +743,7 @@
                                                         android:padding="7dp"
                                                         android:singleLine="true"
                                                         android:text=""
+                                                        android:textColor="@color/greydark"
                                                         android:textSize="15dp" />
 
 
@@ -883,6 +894,7 @@
                                                         android:padding="7dp"
                                                         android:singleLine="true"
                                                         android:text=""
+                                                        android:textColor="@color/greydark"
                                                         android:textSize="15dp" />
                                                 </RelativeLayout>
 

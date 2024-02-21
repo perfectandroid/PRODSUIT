@@ -78,6 +78,7 @@ object CustomerDueRepository {
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
@@ -85,6 +86,7 @@ object CustomerDueRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart(ID_Customer))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 Log.e(TAG,"requestObject1   901   "+requestObject1)

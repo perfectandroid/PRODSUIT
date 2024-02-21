@@ -63,6 +63,7 @@ object PickDeliveriListRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val Entr_By = context.getSharedPreferences(Config.SHARED_PREF36,0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
                 //  requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("13"))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("94"))
@@ -81,6 +82,8 @@ object PickDeliveriListRepository {
                 requestObject1.put("CusName", ProdsuitApplication.encryptStart(strCustomer))
                 requestObject1.put("CusMobile", ProdsuitApplication.encryptStart(strMobile))
                 requestObject1.put("TicketNo", ProdsuitApplication.encryptStart(strTicketNo))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+
 
                 Log.e(TAG,"requestObject1   000111524   "+requestObject1)
             } catch (e: Exception) {

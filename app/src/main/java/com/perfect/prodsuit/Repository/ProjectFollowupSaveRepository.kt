@@ -69,6 +69,7 @@ object ProjectFollowupSaveRepository {
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 
 //                { "UserAction":"1","FK_Project":"2","FK_Stage":"111","EffectDate":"2023-10-31","CurrentStatus":"2","StatusDate":"2023-10-31","Remarks":"Test",
@@ -88,6 +89,7 @@ object ProjectFollowupSaveRepository {
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("EntrBy", null)))
                 requestObject1.put("Reason", ProdsuitApplication.encryptStart(strReason))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 Log.e(TAG,"93333  SaveProjectFollowUp    "+requestObject1)

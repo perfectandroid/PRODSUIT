@@ -8,7 +8,9 @@ import android.app.TimePickerDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -22,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -48,6 +51,7 @@ class ReportActivity : AppCompatActivity() , View.OnClickListener{
     private var imback: ImageView? = null
     private var chipNavigationBar: ChipNavigationBar? = null
     lateinit var context: Context
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -58,6 +62,8 @@ class ReportActivity : AppCompatActivity() , View.OnClickListener{
         bottombarnav()
         getCalendarId(context)
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -394,6 +400,13 @@ class ReportActivity : AppCompatActivity() , View.OnClickListener{
             }
         val alert = builder.create()
         alert.show()
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 }

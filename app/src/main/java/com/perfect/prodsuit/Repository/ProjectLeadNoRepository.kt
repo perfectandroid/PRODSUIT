@@ -63,6 +63,7 @@ object ProjectLeadNoRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
               //  {"BankKey":"","FK_Company":"1","ReqMode":"1","SubMode":"2"}
 
@@ -71,6 +72,7 @@ object ProjectLeadNoRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 Log.e(TAG,"78  getBranch  "+requestObject1)

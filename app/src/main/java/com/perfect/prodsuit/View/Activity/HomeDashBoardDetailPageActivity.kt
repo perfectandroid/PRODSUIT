@@ -3,6 +3,8 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.DashCountDetailstAdapter
 import com.perfect.prodsuit.Viewmodel.HomeDashBoardCountDetailsViewModel
@@ -34,6 +37,7 @@ class HomeDashBoardDetailPageActivity : AppCompatActivity(), View.OnClickListene
     private var Criteria: String? = ""
     private var ReqMode: String? = ""
 //    private var Module_sub: String? = ""
+private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,6 +59,9 @@ class HomeDashBoardDetailPageActivity : AppCompatActivity(), View.OnClickListene
 
         CountDetailCount = 0
         getCountDetailList()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -130,8 +137,8 @@ class HomeDashBoardDetailPageActivity : AppCompatActivity(), View.OnClickListene
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -142,5 +149,12 @@ class HomeDashBoardDetailPageActivity : AppCompatActivity(), View.OnClickListene
                 finish()
             }
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }

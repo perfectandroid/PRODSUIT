@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ExpenseAdapter
 import com.perfect.prodsuit.Viewmodel.ExpenseViewModel
@@ -42,6 +45,7 @@ class ExpenseActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     var tie_FromDate : TextInputEditText? = null
     var tie_ToDate : TextInputEditText? = null
     var dateSelectMode : Int = 0
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +60,9 @@ class ExpenseActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         val formattedDate = simpleDateFormat.format(c)
 
         getExpenses(formattedDate, formattedDate)
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -335,8 +342,8 @@ class ExpenseActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -347,6 +354,13 @@ class ExpenseActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
             i.putExtra("jsonObject",jsonObject.toString())
             startActivity(i)
         }*/
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
 }

@@ -9,8 +9,10 @@ import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -34,6 +36,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BranchAdapter
 import com.perfect.prodsuit.View.Adapter.EmployeeAllAdapter
@@ -130,6 +133,7 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
     var tie_LeadValue: TextInputEditText? = null
 
     var overDueDet = 0
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -177,6 +181,10 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
 //        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
         overDueDet = 0
         getOverdueList()
+
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     companion object {
@@ -1860,6 +1868,8 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         Log.e(TAG,"741  onRestart ")
         overDueDet = 0
         getOverdueList()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 //
 //    override fun onBackPressed() {

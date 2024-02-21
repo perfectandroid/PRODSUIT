@@ -65,11 +65,13 @@ object ChatRegisterUserListRepository {
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 //                {"BankKey":"-500","ReqMode":"130","Token":"02350582-6179-4097-93F6-17FEFB46CC83","FK_Company":"1","ID_Employee":"40","EntrBy":"SONAKM"}
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))

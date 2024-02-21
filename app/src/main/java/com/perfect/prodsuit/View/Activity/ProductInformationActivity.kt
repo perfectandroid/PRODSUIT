@@ -2,6 +2,8 @@ package com.perfect.prodsuit.View.Activity
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,6 +15,7 @@ import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 
 class ProductInformationActivity : AppCompatActivity(), View.OnClickListener {
@@ -20,6 +23,7 @@ class ProductInformationActivity : AppCompatActivity(), View.OnClickListener {
     var TAG  ="ProductInformationActivity"
     lateinit var context: Context
     private var progressDialog: ProgressDialog? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +34,9 @@ class ProductInformationActivity : AppCompatActivity(), View.OnClickListener {
         context = this@ProductInformationActivity
 
         setRegViews()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 
@@ -46,6 +53,13 @@ class ProductInformationActivity : AppCompatActivity(), View.OnClickListener {
             }
 
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
 }

@@ -64,6 +64,7 @@ object WarrantyModeRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_BranchCodeUserSP= context.getSharedPreferences(Config.SHARED_PREF40, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("85"))
@@ -72,6 +73,7 @@ object WarrantyModeRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser",null)))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 Log.e(TAG,"getDepartment  788   "+requestObject1)
             } catch (e: Exception) {

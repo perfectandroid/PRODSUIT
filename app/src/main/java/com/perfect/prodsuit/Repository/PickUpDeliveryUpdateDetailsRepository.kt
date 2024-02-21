@@ -63,6 +63,7 @@ object PickUpDeliveryUpdateDetailsRepository {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("95"))
@@ -72,6 +73,8 @@ object PickUpDeliveryUpdateDetailsRepository {
                 requestObject1.put("ID_ProductDelivery", ProdsuitApplication.encryptStart(ID_ProductDelivery))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
                 requestObject1.put("TransMode", ProdsuitApplication.encryptStart(TransMode))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+
 
                 Log.e(TAG,"requestObject1   554122566   "+requestObject1)
                 Log.e(TAG,"ID_ProductDelivery   8756546   "+ID_ProductDelivery)

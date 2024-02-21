@@ -8,6 +8,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -16,6 +17,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -312,6 +314,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //    private var ll_emi_Pickup : LinearLayout? = null
 
     var tabshow: String = "1"
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
 
@@ -371,6 +374,9 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //        locKnownName = getStringExtra("knownName")
 //        strLatitude = getStringExtra("strLatitude")
 //        strLongitue = getStringExtra("strLongitue")
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -4089,6 +4095,14 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //            Log.e(TAG, "110   Valid   : Enter Amount")
 //            Config.snackBarWarning(context, view, "Enter Amount")
 
+
+    }
+
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 

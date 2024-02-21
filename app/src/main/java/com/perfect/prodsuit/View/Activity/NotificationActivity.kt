@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -22,6 +24,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.NotificationAdapter
 import com.perfect.prodsuit.Viewmodel.NotificationReadStatusViewModel
@@ -46,6 +49,7 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     private val updateWidgetHandler = Handler()
 
     var swipe: SwipeRefreshLayout?=null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +65,8 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             adapter?.notifyDataSetChanged()
             swipe?.isRefreshing=false
         }
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
     companion object {
@@ -435,6 +441,13 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
         }
 
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 }

@@ -5,8 +5,10 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.Typeface
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
@@ -23,6 +25,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ApproveAdapter
 import com.perfect.prodsuit.View.Adapter.ApproveListAdapter
@@ -65,6 +68,7 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
     var jsonObj: JSONObject? = null
     var reasonCount = 0
     private var tv_listCount: TextView?          = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,6 +90,9 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
         approveCount = 0
         getAppoval(Module)
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -520,6 +527,9 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         super.onRestart()
         approveCount = 0
         getAppoval(Module)
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 }

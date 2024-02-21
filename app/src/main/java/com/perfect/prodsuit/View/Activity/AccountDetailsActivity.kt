@@ -6,13 +6,14 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -47,7 +48,6 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.libraries.places.internal.it
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.tabs.TabLayout
@@ -55,6 +55,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
@@ -65,8 +66,6 @@ import java.io.*
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.max
-import kotlin.math.min
 
 
 class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListener,
@@ -259,7 +258,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 //    private var mScaleFactor = 1.0f
 //    private lateinit var mScaleGestureDetector: ScaleGestureDetector
     private lateinit var image: ImageView
-
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -320,6 +319,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
         }
         addTabItem()
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -620,6 +621,13 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 }
             }
         })
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
     private fun setReminder() {
@@ -1109,8 +1117,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1206,8 +1214,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1483,8 +1491,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1877,8 +1885,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
              //   progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
 
         }
@@ -2009,8 +2017,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -2069,8 +2077,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -2128,8 +2136,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     })
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -2283,8 +2291,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     })
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -2339,8 +2347,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     })
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -2392,8 +2400,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     })
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -2446,8 +2454,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     })
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
 
@@ -2539,8 +2547,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 }
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -2759,8 +2767,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
 
         }    }
@@ -2910,8 +2918,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 // progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
 
         }
@@ -2920,10 +2928,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
     }
 
     private fun getLocation() {
-
-
         try {
-
 //            val inflater = LayoutInflater.from(this@AccountDetailsActivity)
 //            val inflatedLayout1: View = inflater.inflate(R.layout.activity_location, null, false)
 //            llMainDetail!!.addView(inflatedLayout1);
@@ -2961,6 +2966,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
 
                                     } else {
+                                        ll_location!!.visibility = View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@AccountDetailsActivity,
                                             R.style.MyDialogTheme
@@ -2988,8 +2994,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                     progressDialog!!.dismiss()
                 }
                 false -> {
-                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                        .show()
+//                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                        .show()
                 }
             }
         }catch (e : Exception){
@@ -3154,8 +3160,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -3289,8 +3295,8 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
 
         }

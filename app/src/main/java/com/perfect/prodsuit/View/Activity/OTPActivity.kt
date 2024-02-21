@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
@@ -16,6 +18,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DBHelper
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.OTPActivityViewModel
 import org.json.JSONObject
@@ -49,6 +52,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
     var countOtp = 0
 
     var db : DBHelper? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +70,9 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
         db = DBHelper(this, null)
         Log.e(TAG,"6000004   ")
         otpActivityViewModel = ViewModelProvider(this).get(OTPActivityViewModel::class.java)
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
         Log.e(TAG,"6000005   ")
     }
 
@@ -782,8 +789,8 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -795,6 +802,13 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
         et_4!!.text.clear()
         et_5!!.text.clear()
         et_6!!.text.clear()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
 }

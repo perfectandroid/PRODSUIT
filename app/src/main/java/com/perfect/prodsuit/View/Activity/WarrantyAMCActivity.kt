@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -23,6 +25,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -43,6 +46,7 @@ class WarrantyAMCActivity : AppCompatActivity() , View.OnClickListener, ItemClic
     var imgv_filter: ImageView? = null
     var txtv_headlabel: TextView? = null
     var tv_listCount: TextView? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
 
@@ -58,6 +62,8 @@ class WarrantyAMCActivity : AppCompatActivity() , View.OnClickListener, ItemClic
         setRegViews()
 
         getWarrantyAmcList()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -208,6 +214,8 @@ class WarrantyAMCActivity : AppCompatActivity() , View.OnClickListener, ItemClic
         super.onRestart()
         //serviceList = 0
         getWarrantyAmcList()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 

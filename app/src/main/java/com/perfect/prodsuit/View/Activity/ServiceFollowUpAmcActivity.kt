@@ -4,7 +4,9 @@ import android.Manifest
 import android.app.Activity
 import android.app.DownloadManager
 import android.content.Context
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.ItemClickListenerData
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.AmcFollowUpModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.AmcFollowUpAdapter
@@ -38,6 +41,7 @@ class ServiceFollowUpAmcActivity : AppCompatActivity(), View.OnClickListener,
     private val READ_STORAGE_PERMISSION_REQUEST_CODE = 41
     var manager: DownloadManager? = null
     lateinit var url:String
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_service_follow_up_amc)
@@ -46,6 +50,9 @@ class ServiceFollowUpAmcActivity : AppCompatActivity(), View.OnClickListener,
         setListners()
         loadData()
         tv_invoice.text = "Invoice No: " + invoiceNumber
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setId() {
@@ -171,6 +178,13 @@ class ServiceFollowUpAmcActivity : AppCompatActivity(), View.OnClickListener,
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             downloadFile(url)
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }
 

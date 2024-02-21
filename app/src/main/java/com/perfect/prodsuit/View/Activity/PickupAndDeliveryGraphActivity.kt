@@ -3,8 +3,10 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -29,6 +31,7 @@ import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.ProjectDelayBarModel
 import com.perfect.prodsuit.Model.VehicleDetailsBarModel
 import com.perfect.prodsuit.R
@@ -102,6 +105,7 @@ class PickupAndDeliveryGraphActivity : AppCompatActivity(), View.OnClickListener
     private var tv_nameOrderTrackingTle: TextView? = null
     private var tv_remarkOrderTrackingTle: TextView? = null
     private var recycler_OrderTracking_tile: RecyclerView? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,6 +121,9 @@ class PickupAndDeliveryGraphActivity : AppCompatActivity(), View.OnClickListener
 
         vehicleDetailsCount = 0
         getVehicleDetailsGraph()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -507,6 +514,13 @@ class PickupAndDeliveryGraphActivity : AppCompatActivity(), View.OnClickListener
 
         }
 
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 

@@ -3,7 +3,9 @@ package com.perfect.prodsuit.View.Activity
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
 import android.database.Cursor
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -17,6 +19,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.favourites.DataBaseHelper
 import com.perfect.prodsuit.Helper.ItemClickListenerValue
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.FavlistModel
 import com.perfect.prodsuit.Model.InsertFavModel
 import com.perfect.prodsuit.R
@@ -139,6 +142,8 @@ class FavActivity : AppCompatActivity() , View.OnClickListener, ItemClickListene
     val jsons= JSONObject()
     var recyReportName: RecyclerView? = null
 
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -170,7 +175,8 @@ class FavActivity : AppCompatActivity() , View.OnClickListener, ItemClickListene
         //  serviceList = 0
 
 
-
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun getFavList() {
@@ -265,6 +271,9 @@ class FavActivity : AppCompatActivity() , View.OnClickListener, ItemClickListene
 
     override fun onRestart() {
         super.onRestart()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
         //  serviceList = 0
         //   getServiceNewList()
     }

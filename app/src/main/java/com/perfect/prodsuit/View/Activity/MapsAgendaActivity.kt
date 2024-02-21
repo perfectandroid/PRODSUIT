@@ -2,7 +2,9 @@ package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -19,6 +21,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 
 class MapsAgendaActivity : FragmentActivity() , OnMapReadyCallback, View.OnClickListener{
@@ -31,6 +34,7 @@ class MapsAgendaActivity : FragmentActivity() , OnMapReadyCallback, View.OnClick
 
     var tv_LocationName: TextView? = null
     var fabSiteVisit: FloatingActionButton? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +60,9 @@ class MapsAgendaActivity : FragmentActivity() , OnMapReadyCallback, View.OnClick
         val supportMapFragment = (supportFragmentManager.findFragmentById(R.id.myMap) as
                 SupportMapFragment?)!!
         supportMapFragment.getMapAsync(this@MapsAgendaActivity)
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -112,6 +119,13 @@ class MapsAgendaActivity : FragmentActivity() , OnMapReadyCallback, View.OnClick
                 startActivity(i)
             }
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
 }

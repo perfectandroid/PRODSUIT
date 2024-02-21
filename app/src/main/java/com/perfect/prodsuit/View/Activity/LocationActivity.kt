@@ -3,8 +3,10 @@ package com.perfect.prodsuit.View.Activity
 import android.Manifest
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.Location
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -21,6 +23,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.LocationViewModel
 
@@ -40,6 +43,7 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
     var latitude=""
     var longitude=""
     var count =""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +66,8 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
 //        fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(this@LocationActivity)
 //        fetchLocation()
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
     private fun fetchLocation() {
@@ -161,6 +167,12 @@ class LocationActivity : AppCompatActivity(), OnMapReadyCallback, View.OnClickLi
     }
 
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
 }
 
 

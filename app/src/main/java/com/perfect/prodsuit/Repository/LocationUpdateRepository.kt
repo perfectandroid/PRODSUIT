@@ -73,6 +73,7 @@ object LocationUpdateRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 //                {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","FK_Company":"1","TransMode":"LFLR","EntrBy":"2","ID_ImageLocation":"5",
 //                    "FK_Master":"351","LocLatitude":"11.247589511","LocLongitude":"75.834220611",
@@ -94,6 +95,7 @@ object LocationUpdateRepository {
                 requestObject1.put("LocationEnteredTime", ProdsuitApplication.encryptStart("18:25:22"))
                 requestObject1.put("LocationLandMark1", ProdsuitApplication.encryptStart(""))
                 requestObject1.put("LocationLandMark2", ProdsuitApplication.encryptStart(""))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 Log.e("requestobject  9875  ","\n"+requestObject1)
 

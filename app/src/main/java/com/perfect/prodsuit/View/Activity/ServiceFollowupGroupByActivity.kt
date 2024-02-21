@@ -3,6 +3,8 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ClickListener
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Repository.AreaListRepository.progressDialog
@@ -36,12 +39,16 @@ class ServiceFollowupGroupByActivity : AppCompatActivity(), ItemClickListener {
     var mainProductInfo                                 = 0
 
     lateinit var SubproductDetailsList : JSONArray
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_groupby_service_followup)
         context = this@ServiceFollowupGroupByActivity
         subProductViewModel = ViewModelProvider(this).get(SubProductViewModel::class.java)
         setRegviews()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegviews() {
@@ -173,6 +180,13 @@ class ServiceFollowupGroupByActivity : AppCompatActivity(), ItemClickListener {
 
 
 
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 }

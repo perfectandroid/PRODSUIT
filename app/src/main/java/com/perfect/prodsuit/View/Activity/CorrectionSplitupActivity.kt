@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.CorrectionSplitupAdapter
 import com.perfect.prodsuit.Viewmodel.CorrectionSplitupViewModel
@@ -38,7 +41,7 @@ class CorrectionSplitupActivity : AppCompatActivity(), View.OnClickListener, Ite
     var TransMode = ""
     private var Module_sub: String? = ""
 //    var Module = ""
-
+private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +69,9 @@ class CorrectionSplitupActivity : AppCompatActivity(), View.OnClickListener, Ite
 
         correctionCount = 0
         getCorrectionSplitData(TransMode)
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun getCorrectionSplitData(TransMode : String) {
@@ -123,8 +129,8 @@ class CorrectionSplitupActivity : AppCompatActivity(), View.OnClickListener, Ite
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -164,6 +170,9 @@ class CorrectionSplitupActivity : AppCompatActivity(), View.OnClickListener, Ite
         correctionCount = 0
         getCorrectionSplitData(TransMode)
 //        Config.setRedirection(context,"")
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 //    override fun onBackPressed() {

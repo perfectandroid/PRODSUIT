@@ -1,6 +1,8 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.ItemClickListenerData
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.AmcFollowUpListModel
 import com.perfect.prodsuit.Model.ServiceCostModelMain
 import com.perfect.prodsuit.Model.ServiceFollowUpListModel
@@ -26,12 +29,16 @@ class ServiceFollowUpAmcListActivity : AppCompatActivity(), View.OnClickListener
     lateinit var imback: ImageView
     lateinit var jsonArray: JSONArray
     private lateinit var recyclerView: RecyclerView
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_service_follow_up_amc_list)
         setId()
         setListners()
         loadData()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setId() {
@@ -111,5 +118,12 @@ class ServiceFollowUpAmcListActivity : AppCompatActivity(), View.OnClickListener
             intent.putExtra("invoice", invoice)
             startActivity(intent)
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }

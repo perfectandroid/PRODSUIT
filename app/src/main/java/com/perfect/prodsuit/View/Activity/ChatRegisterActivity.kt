@@ -1,6 +1,8 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +13,7 @@ import android.widget.Toast
 import com.google.firebase.database.*
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DBHelper
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 
 class ChatRegisterActivity : AppCompatActivity() {
@@ -19,6 +22,7 @@ class ChatRegisterActivity : AppCompatActivity() {
     private lateinit var databaseRef : DatabaseReference
 //    var userList =  mutableListOf<UserList>()
     var db : DBHelper? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
 
@@ -46,6 +50,8 @@ class ChatRegisterActivity : AppCompatActivity() {
             finish()
         }
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun registerFirebaseUser() {
@@ -145,6 +151,13 @@ class ChatRegisterActivity : AppCompatActivity() {
         var mobile = "8075283549"
         var name = "Ranjith"
         var email = "ranjith@gmail.com"
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 }

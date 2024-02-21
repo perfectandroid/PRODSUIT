@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -21,6 +23,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.EmployeeAdapter
 import com.perfect.prodsuit.View.Adapter.ServicePriorityAdapter
@@ -131,7 +134,7 @@ class DeliveryAssignActivity : AppCompatActivity()  , View.OnClickListener, Item
 
 
     var btnSave: Button? = null
-
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -154,6 +157,10 @@ class DeliveryAssignActivity : AppCompatActivity()  , View.OnClickListener, Item
 
         serAssignCount = 0
         getServiceAssignDetails()
+
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -442,8 +449,8 @@ class DeliveryAssignActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -667,8 +674,8 @@ class DeliveryAssignActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -804,8 +811,8 @@ class DeliveryAssignActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }

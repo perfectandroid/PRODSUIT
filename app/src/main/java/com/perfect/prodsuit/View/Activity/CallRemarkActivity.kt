@@ -1,6 +1,8 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +12,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import java.util.*
 
@@ -48,6 +51,8 @@ class CallRemarkActivity : AppCompatActivity() , View.OnClickListener {
     var toDateMode : String?= "1"  // GONE
     var MentionDateMode : String?= "1"  // GONE
 
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
+
     companion object {
 
         var strCallStatus : String?= ""
@@ -64,6 +69,9 @@ class CallRemarkActivity : AppCompatActivity() , View.OnClickListener {
 
         setRegViews()
         removeData()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun removeData() {
@@ -324,5 +332,12 @@ class CallRemarkActivity : AppCompatActivity() , View.OnClickListener {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }

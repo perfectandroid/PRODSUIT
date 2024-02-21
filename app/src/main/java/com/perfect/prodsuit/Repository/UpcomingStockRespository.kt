@@ -68,11 +68,13 @@ object UpcomingStockRespository {
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("TransDate", ProdsuitApplication.encryptStart(TransDate))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 //                requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-08"))
 
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))

@@ -5,7 +5,9 @@ import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -26,6 +28,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.checkProject
 import com.perfect.prodsuit.View.Adapter.*
@@ -185,6 +188,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     var FromDate: String = ""
     var ToDate: String = ""
     val sdf = SimpleDateFormat("yyyy-MM-dd")
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -225,6 +229,9 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         val currentTime1 = SimpleDateFormat("HH:mm:ss a", Locale.getDefault()).format(Date())
 
         loadLoginEmpDetails()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
 
     }
@@ -2909,6 +2916,13 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             }
         }
         alertDialog.show()
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 

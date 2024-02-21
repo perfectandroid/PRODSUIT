@@ -5,6 +5,8 @@ import android.app.Dialog
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +23,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.View.Adapter.AttendanceReportAdapter
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -117,6 +120,7 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
     private var tie_Date: TextInputEditText? = null
     private var til_Date: TextInputLayout? = null
     private var til_Emp: TextInputLayout? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -201,6 +205,9 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
 
         }
 */
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 
@@ -376,8 +383,8 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -418,6 +425,9 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
 
     override fun onRestart() {
         super.onRestart()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
         /*  serviceList = 0
 
           val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")

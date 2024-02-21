@@ -6,11 +6,13 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -41,6 +43,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import java.util.*
 
@@ -88,6 +91,7 @@ class AttendancePickerActivity : AppCompatActivity(), OnMapReadyCallback, Locati
     var modeLocation : String? = "1"
     var lati : String?= ""
     var longi : String?= ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,6 +115,8 @@ class AttendancePickerActivity : AppCompatActivity(), OnMapReadyCallback, Locati
         mapFragment.getMapAsync(this)
 
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun checkLocationEnabled(): Boolean {
@@ -421,6 +427,13 @@ class AttendancePickerActivity : AppCompatActivity(), OnMapReadyCallback, Locati
 
         Log.e(TAG,"Exception   2382   "+p0.toString())
         Toast.makeText(applicationContext,"connection failed", Toast.LENGTH_SHORT).show()
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 

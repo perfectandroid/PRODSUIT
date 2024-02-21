@@ -78,6 +78,7 @@ object PaymentInfoRepository {
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 //                {"ReqMode":"128","FK_Project":41,"BankKey":"","FK_Company":"1","FK_Stages":"0","AsOnDate":"2024-01-03","FK_Employee":"1",
 //                "FK_TransactionType"::2,"FK_PetyCashier":"5"}
@@ -87,6 +88,7 @@ object PaymentInfoRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 requestObject1.put("FK_Project", ProdsuitApplication.encryptStart(ID_Project))
                 requestObject1.put("FK_Stages", ProdsuitApplication.encryptStart(ID_Stage))

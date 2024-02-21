@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -27,6 +29,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.ModelWalkingExist
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.AssignedToAdapter
@@ -144,6 +147,7 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
     var ID_Product: String? = ""
     var checkProject: String = "1"
     var strProjectName: String = ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     // Add Product 23-01-2024
 
@@ -179,6 +183,9 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
         }catch (e: Exception){
 
         }
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -1212,5 +1219,11 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
         }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
 
 }

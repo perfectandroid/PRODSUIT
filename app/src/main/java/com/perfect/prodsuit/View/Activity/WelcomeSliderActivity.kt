@@ -2,7 +2,9 @@ package com.perfect.prodsuit.View.Activity
 
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -15,6 +17,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Helper.PrefManager
 import com.perfect.prodsuit.R
 
@@ -28,6 +31,7 @@ class WelcomeSliderActivity : AppCompatActivity() {
     private var btnSkip: TextView? = null
     private var btnNext: TextView? = null
     private var prefManager: PrefManager? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +68,8 @@ class WelcomeSliderActivity : AppCompatActivity() {
                 launchHomeScreen()
             }
         }
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun addBottomDots(currentPage: Int) {
@@ -147,6 +153,12 @@ class WelcomeSliderActivity : AppCompatActivity() {
             val view = `object` as View
             container.removeView(view)
         }
+    }
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
 }

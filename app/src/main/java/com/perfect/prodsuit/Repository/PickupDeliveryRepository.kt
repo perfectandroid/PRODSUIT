@@ -63,6 +63,7 @@ object PickupDeliveryRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val Entr_By  = context.getSharedPreferences(Config.SHARED_PREF36,0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("94"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -80,6 +81,8 @@ object PickupDeliveryRepository {
                 requestObject1.put("CusName", ProdsuitApplication.encryptStart(strCustomer))
                 requestObject1.put("CusMobile", ProdsuitApplication.encryptStart(strMobile))
                 requestObject1.put("TicketNo", ProdsuitApplication.encryptStart(strTicketNo))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+
 
                 Log.e(TAG,"requestObject1   8888   "+requestObject1)
                 Log.e(TAG,"requestObject1   4444  "+strFromDate)

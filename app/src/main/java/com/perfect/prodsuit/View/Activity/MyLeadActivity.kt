@@ -8,8 +8,10 @@ import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -33,6 +35,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BranchAdapter
 import com.perfect.prodsuit.View.Adapter.EmployeeAllAdapter
@@ -128,6 +131,7 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
     var tie_LeadValue: TextInputEditText? = null
 
     var UpcomingDet = 0
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -177,6 +181,9 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
      //   tie_Employee!!.setText( UserNameSP.getString("UserName", null))
         UpcomingDet = 0
         getMyLead()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
     companion object {
         var submode = "4"
@@ -1970,6 +1977,9 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         Log.e(TAG,"741  onRestart ")
         UpcomingDet = 0
         getMyLead()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 }

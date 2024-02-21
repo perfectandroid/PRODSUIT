@@ -3,6 +3,8 @@ package com.perfect.prodsuit.View.Activity
 import CustomerBalanceViewModel
 import android.app.*
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.CusbalListAdapter
 import org.json.JSONArray
@@ -30,6 +33,7 @@ class CustomerBalanceActivity : AppCompatActivity(), View.OnClickListener,ItemCl
     var imback :ImageView? = null
     var TicketDate: String? = ""
     var ID_Cust: String? = ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -43,6 +47,9 @@ class CustomerBalanceActivity : AppCompatActivity(), View.OnClickListener,ItemCl
         ID_Cust = intent.getStringExtra("Id_Cust")
         setRegViews()
         getCustomerBalance(TicketDate,ID_Cust)
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -152,9 +159,16 @@ class CustomerBalanceActivity : AppCompatActivity(), View.OnClickListener,ItemCl
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }

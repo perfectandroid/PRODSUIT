@@ -3,8 +3,10 @@ package com.perfect.prodsuit.View.Activity
 import android.Manifest
 import android.app.AlertDialog
 import android.content.DialogInterface
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.Location
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.view.Window
@@ -25,6 +27,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 
 
@@ -40,6 +43,7 @@ class LocationPickersActivity : AppCompatActivity(), OnMapReadyCallback,
     var mLastLocation: Location? = null
     var mCurrLocationMarker: Marker? = null
     val MY_PERMISSIONS_REQUEST_LOCATION = 99
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +54,9 @@ class LocationPickersActivity : AppCompatActivity(), OnMapReadyCallback,
 
         mapFrag = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFrag!!.getMapAsync(this)
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     override fun onPause() {
@@ -190,7 +197,12 @@ class LocationPickersActivity : AppCompatActivity(), OnMapReadyCallback,
         }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
+    }
 
 
 }

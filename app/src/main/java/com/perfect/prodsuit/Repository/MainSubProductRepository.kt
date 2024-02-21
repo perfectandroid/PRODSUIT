@@ -70,6 +70,7 @@ object MainSubProductRepository {
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 //                {"BankKey":"-500","Token":"C3B1C164-FA1D-4FA2-BD65-3049F80C394A","ReqMode":"115","FK_Product":"10716","FK_Company":"1"}
 
@@ -79,6 +80,7 @@ object MainSubProductRepository {
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
                 requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(iD_Prod))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 Log.e(TAG,"84444   requestObject1   "+requestObject1)
 

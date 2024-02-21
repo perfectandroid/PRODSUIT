@@ -9,8 +9,10 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -305,6 +307,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     lateinit var projectLeadNoViewModel: ProjectLeadNoViewModel
     private var ReqMode :  String? =  ""
     private var SubMode :  String? =  ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -349,6 +352,9 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             tie_InspectionCharge!!.setText(strInspectCharge)
             ID_SiteVisitAssignment = jsonObj!!.getString("ID_SiteVisitAssignment")
         }
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -4357,6 +4363,13 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             }
         }
 
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 }

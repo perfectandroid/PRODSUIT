@@ -64,6 +64,7 @@ object ServiceFollowUpServiceTypeRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
                 Log.v("sdasd22efvvv","BankKey "+BankKeySP.getString("BANK_KEY", null))
                 Log.v("sdasd22efvvv","Token "+TokenSP.getString("Token", null))
                 Log.v("sdasd22efvvv","ReqMode "+116)
@@ -80,6 +81,7 @@ object ServiceFollowUpServiceTypeRepository {
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(ID_Branch))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 Log.e(TAG,"requestObject1 ww "+requestObject1)
                 Log.v("sdasd22efvvv","requestObject2 "+requestObject1.toString())

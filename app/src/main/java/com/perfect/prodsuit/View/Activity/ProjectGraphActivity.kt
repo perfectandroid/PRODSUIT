@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -32,6 +34,7 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Repository.AreaListRepository
@@ -213,6 +216,7 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
     var recyTotalStagewiseDue                     : RecyclerView?   = null
     private lateinit var TotalStagewiseDueChart   : BarChart
 
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
 
@@ -246,7 +250,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
         ContinueMode = 0
         hideViews()
 
-
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -2330,6 +2335,13 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
             tvv_lemo_projectDelayed!!.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, drawableLess, null)
             ll_projectDelayedRecyc!!.visibility = View.VISIBLE
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
 }

@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +26,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.EmiListAdapter
 import com.perfect.prodsuit.Viewmodel.EmiListViewModel
@@ -69,6 +72,7 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
 
     private var ReqMode:String?=""
     private var SubMode:String?=""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,6 +115,9 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
         setHeader()
         emiCount = 0
         getEmiList()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setHeader() {
@@ -279,8 +286,8 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -397,6 +404,8 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
         onRestartCount = 1
         emiCount = 0
         getEmiList()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 }

@@ -5,8 +5,10 @@ import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -24,6 +26,7 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.View.Adapter.CustomerAdapter
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.CustomerAddViewModel
 import com.perfect.prodsuit.Viewmodel.CustomerSearchViewModel
@@ -72,6 +75,8 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
         var strPhone = ""
         var strAddress = ""
         var ID_Customer = ""
+
+        private lateinit var networkChangeReceiver: NetworkChangeReceiver
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,6 +98,9 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
         strPhone = ""
         strAddress = ""
         ID_Customer = ""
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -253,8 +261,8 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -605,6 +613,13 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
             }
         val alert = builder.create()
         alert.show()
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 }

@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -24,6 +26,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DecimalToWordsConverter
 import com.perfect.prodsuit.Helper.DecimelFormatters
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
@@ -196,6 +199,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     lateinit var paymentInfoList: JSONArray
 
     private var paymentAdapter : PaymentInfoAdapter? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -234,7 +238,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         hideShow("0")
         setMandatoryField("0")
 
-
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -3017,5 +3022,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
 
 }

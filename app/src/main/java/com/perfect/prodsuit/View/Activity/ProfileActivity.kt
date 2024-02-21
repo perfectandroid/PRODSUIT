@@ -5,7 +5,9 @@ import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -21,6 +23,7 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.nbfcmscore.Helper.PicassoTrustAll
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.ProfileViewModel
 import org.json.JSONObject
@@ -74,6 +77,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
 //    private var img_logo: ImageView? = null
 
 
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -89,6 +93,9 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
 
         val LOGIN_DATETIMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF30, 0)
         tv_DateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -604,5 +611,12 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
 
     override fun onClick(position: Int, data: String) {
         TODO("Not yet implemented")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }

@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -23,6 +25,7 @@ import com.google.gson.Gson
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DBHelper
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.ChatAllUserList
 import com.perfect.prodsuit.Model.ChatMessageList
 import com.perfect.prodsuit.Model.ChatRegisterUsersModel
@@ -64,6 +67,8 @@ class ChatUserListActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     var chatRegisterCount = 0
     var chatRegisterUsersModel = ArrayList<ChatRegisterUsersModel>()
 
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,6 +98,8 @@ class ChatUserListActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         getChatUser()
         deleteChatList()
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun deleteChatList() {
@@ -398,8 +405,8 @@ class ChatUserListActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -445,5 +452,8 @@ class ChatUserListActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         super.onRestart()
         // Activity is restarting
         getChatUser()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 }

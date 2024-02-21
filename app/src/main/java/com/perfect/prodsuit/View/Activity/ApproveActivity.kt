@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ApproveAdapter
 import com.perfect.prodsuit.View.Adapter.AuthDsahboardAdapter
@@ -50,6 +53,7 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
     var idMode = ""
 
     private var tv_listCount: TextView?          = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +73,9 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
         //////////////////////////
         authCount = 0
         getAuthdah()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun getAuthdah() {
@@ -172,8 +179,8 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
               //  progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -260,8 +267,8 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -320,5 +327,8 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
         super.onRestart()
         approveCount = 0
         getAppoval()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 }

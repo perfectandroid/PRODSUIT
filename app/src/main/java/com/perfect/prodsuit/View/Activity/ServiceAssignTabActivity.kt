@@ -5,8 +5,10 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -24,6 +26,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.AreaViewModel
@@ -127,6 +130,7 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
     private var temp_Mobile: String = ""
     private var temp_TicketNo: String = ""
     private var temp_DueDays: String = ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
 
@@ -148,6 +152,9 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
         loadLoginEmpDetails("0")
         serviceCount = 0
         getserviceCounts()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun getSessionLoginUserDetails() {
@@ -1463,6 +1470,8 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
         super.onRestart()
         serviceCount = 0
         getserviceCounts()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 

@@ -6,8 +6,10 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -30,6 +32,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Helper.UriUtil
 import com.perfect.prodsuit.Helper.UriUtil.getDataColumn
 import com.perfect.prodsuit.R
@@ -91,6 +94,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
     var strSubject : String = ""
     var strDescription : String = ""
     var documentPath : String = ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     lateinit var saveDocumentViewModel: SaveDocumentViewModel
@@ -110,6 +114,9 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
         checkAttendance()
         ID_LeadGenerateProduct = intent.getStringExtra("ID_LeadGenerateProduct")!!
         Log.e(TAG,"ID_LeadGenerateProduct  89    "+ID_LeadGenerateProduct)
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -308,6 +315,13 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
         tie_Date!!.setText(currentDate)
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
     private fun selectImage() {
@@ -887,8 +901,8 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
 

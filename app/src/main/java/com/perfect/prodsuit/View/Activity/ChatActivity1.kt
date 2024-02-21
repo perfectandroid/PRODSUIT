@@ -1,6 +1,8 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +20,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DBHelper
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.AccBankBalanceModel
 import com.perfect.prodsuit.R
@@ -73,7 +76,7 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
     var modelCount = 0
 
     var db : DBHelper? = null
-
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -258,6 +261,8 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
             }
         })
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun changeTimeformate(formatedTime: String): String {
@@ -536,6 +541,9 @@ class ChatActivity1 : AppCompatActivity() , View.OnClickListener{
     override fun onRestart() {
         super.onRestart()
         active = true
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
     fun isKeyChecking(context: Context): Boolean {
 
