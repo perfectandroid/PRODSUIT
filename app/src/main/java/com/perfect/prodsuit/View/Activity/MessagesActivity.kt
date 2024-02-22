@@ -2,8 +2,10 @@ package com.perfect.prodsuit.View.Activity
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,6 +15,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 
 class MessagesActivity : AppCompatActivity() , View.OnClickListener{
@@ -38,6 +41,8 @@ class MessagesActivity : AppCompatActivity() , View.OnClickListener{
         var chk_email  :String  = "fasle"
         var chk_text   :String  = "fasle"
     }
+
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +87,8 @@ class MessagesActivity : AppCompatActivity() , View.OnClickListener{
                 chk_text = "false"
             }
         }
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun removeData() {
@@ -200,6 +207,13 @@ class MessagesActivity : AppCompatActivity() , View.OnClickListener{
         chkText: String
     ) {
         Log.e(TAG, "sendData 16693    " + mobile + "  " + mailid + "  " + subject + "  " + message + "  " + chkWhats + "  " + chkEmail + "  " + chkText)
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
 }

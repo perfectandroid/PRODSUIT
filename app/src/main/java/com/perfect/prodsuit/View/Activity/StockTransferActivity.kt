@@ -6,9 +6,11 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -197,6 +199,7 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
     var STRequest = "0"  // Request =1, Transfer = 0
 
     var saveAttendanceMark = false
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -217,6 +220,9 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
         setRegViews()
 
         checkAttendance()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -2723,6 +2729,13 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
 
         }
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 

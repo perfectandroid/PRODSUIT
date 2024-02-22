@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -20,6 +22,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.ItemClickListenerData
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ReportNameAdapter
 import com.perfect.prodsuit.Viewmodel.ReportNameViewModel
@@ -38,7 +41,7 @@ class   CollectionReportActivity : AppCompatActivity(), View.OnClickListener, It
     var recyReportName: RecyclerView? = null
     lateinit var reportNamesort: JSONArray
     private var ReportMode: String = ""
-
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +51,9 @@ class   CollectionReportActivity : AppCompatActivity(), View.OnClickListener, It
         context = this@CollectionReportActivity
         reportNameViewModel = ViewModelProvider(this).get(ReportNameViewModel::class.java)
         setRegViews()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -117,8 +123,8 @@ class   CollectionReportActivity : AppCompatActivity(), View.OnClickListener, It
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -222,6 +228,13 @@ class   CollectionReportActivity : AppCompatActivity(), View.OnClickListener, It
             Log.i("responseclicked","clicked"+jsonObject.toString())
 
         }
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 }

@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -24,6 +26,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.ItemClickListenerData
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -45,7 +48,7 @@ class ClosedTicketActivity : AppCompatActivity() , View.OnClickListener, ItemCli
     var txtv_headlabel: TextView? = null
     var tv_listCount: TextView? = null
     var Idcudtomerregisterdetails: String? = "0"
-
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +63,9 @@ class ClosedTicketActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         setRegViews()
 
         getClosedTicketList()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -175,8 +181,8 @@ class ClosedTicketActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -223,6 +229,8 @@ class ClosedTicketActivity : AppCompatActivity() , View.OnClickListener, ItemCli
         super.onRestart()
         //serviceList = 0
         getClosedTicketList()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     override fun onClick(position: Int, data: String, jsonObject: JSONObject) {

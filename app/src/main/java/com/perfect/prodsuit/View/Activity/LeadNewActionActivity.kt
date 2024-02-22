@@ -4,7 +4,9 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
 import android.graphics.Color
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
@@ -79,6 +82,7 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
     var recyEmployee: RecyclerView? = null
 
     lateinit var saveNewActionViewModel: SaveNewActionViewModel
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     companion object{
         var ID_NextAction : String = ""
@@ -106,6 +110,9 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
 
         setRegViews()
         ResetData()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 
@@ -807,5 +814,12 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
                     .show()
             }
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }

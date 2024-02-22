@@ -4,7 +4,9 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
 import android.graphics.Color
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
@@ -70,6 +73,8 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
     var recyDeaprtment: RecyclerView? = null
     var recyEmployee: RecyclerView? = null
 
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
+
     companion object{
         var ID_NextAction : String = ""
         var ID_ActionType : String = ""
@@ -96,6 +101,9 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
 
         setRegViews()
         ResetData()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 

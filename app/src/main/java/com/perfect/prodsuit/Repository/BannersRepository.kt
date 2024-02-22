@@ -49,8 +49,13 @@ object BannersRepository {
             val requestObject1 = JSONObject()
             try {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
+
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("12"))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
 
                 Log.e(TAG,"requestObject1   545   "+requestObject1)
             } catch (e: Exception) {

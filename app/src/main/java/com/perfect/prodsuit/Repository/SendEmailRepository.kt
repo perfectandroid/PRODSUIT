@@ -60,6 +60,7 @@ object SendEmailRepository {
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37,0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("31"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -69,6 +70,7 @@ object SendEmailRepository {
                 requestObject1.put("Subject", ProdsuitApplication.encryptStart(messageSubject))
                 requestObject1.put("Body", ProdsuitApplication.encryptStart(messageBody))
                 requestObject1.put("ToEmail", ProdsuitApplication.encryptStart(mailid))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 Log.e(TAG,"requestObject1   4500   "+requestObject1)
             } catch (e: Exception) {

@@ -128,6 +128,17 @@
                                 android:layout_weight="1"
                                 android:drawablePadding="10dp"
                                 android:paddingRight="10dp"/>
+
+                            <ImageView
+                                android:id="@+id/clearIcon"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="6"
+                                android:src="@drawable/vtr_clear"
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="0dp"
+                                android:visibility="visible"
+                                app:tint="@color/grey_dark" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -162,7 +173,7 @@
                         android:layout_marginRight="5dp"
                         android:tint="@color/black"
                         android:textColor="@color/black"
-                        android:textSize="20dp"
+                        android:textSize="16dp"
                         android:textStyle="normal"
                         android:textAllCaps="false"
                         android:fontFamily="@font/myfont"

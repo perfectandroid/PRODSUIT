@@ -5,8 +5,10 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -40,6 +42,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DecimalRemover
 import com.perfect.prodsuit.Helper.FullLenghRecyclertview
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Repository.AreaListRepository
@@ -315,6 +318,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     var LeadTileCount  = 0
     var LeadAvgCount  = 0
     var LeadTileOutstandCount  = 0
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     var TAG  ="TileGraphActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -369,6 +373,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         // ll_tile1!!.setBackgroundColor(getResources().getColor(R.color.tileclick));
 
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun getLeadOutstandTile() {
@@ -1295,6 +1301,10 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
     override fun onRestart() {
         super.onRestart()
        // getLeadTile()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
     override fun onClick(position: Int, data: String) {

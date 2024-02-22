@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -24,6 +26,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ProjectAdapter
 import com.perfect.prodsuit.View.Adapter.ProjectStatusAdapter
@@ -105,6 +108,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
     var CreatedDate                                       = ""
     var DueDate                                       = ""
     var jsonObj: JSONObject? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -152,6 +156,9 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
             Log.e(TAG,"124442    "+"date1 is less than date2")
             println("date1 is less than date2")
         }
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -1108,5 +1115,12 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
             tie_CurrentStatus!!.setText(jsonObject.getString("StatusName"))
 
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }

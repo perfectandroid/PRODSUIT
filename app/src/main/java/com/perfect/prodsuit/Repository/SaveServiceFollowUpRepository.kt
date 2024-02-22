@@ -105,6 +105,7 @@ object SaveServiceFollowUpRepository {
                 val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
@@ -126,6 +127,7 @@ object SaveServiceFollowUpRepository {
                 requestObject1.put("NextActionDateLead", ProdsuitApplication.encryptStart(strFollowUpDateNew))
                 requestObject1.put("FK_BillType", ProdsuitApplication.encryptStart(ID_Billtype))
                 requestObject1.put("FK_EmployeeLead", ProdsuitApplication.encryptStart(ID_AssignedTo))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 if (saveServiceAttendedArray.length() == 0){
                     requestObject1.put("ServiceDetails","")

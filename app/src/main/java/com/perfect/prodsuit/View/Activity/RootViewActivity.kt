@@ -5,7 +5,9 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent.getIntent
+import android.content.IntentFilter
 import android.graphics.Color
+import android.net.ConnectivityManager
 import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -32,6 +34,7 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.internal.it
 import com.google.gson.Gson
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.EmployeeWiseLocationListViewModel
 import okhttp3.OkHttpClient
@@ -66,6 +69,7 @@ class RootViewActivity : AppCompatActivity(), OnMapReadyCallback {
     var StartingPoint = ""
     var EndingPoint = ""
     var DistanceTravelled = 0.0
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,6 +99,8 @@ class RootViewActivity : AppCompatActivity(), OnMapReadyCallback {
 
         loadTravelPath(item_response)
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun loadTravelPath(itemResponse: String?) {
@@ -460,5 +466,12 @@ class RootViewActivity : AppCompatActivity(), OnMapReadyCallback {
 //        {
 //
 //        }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }

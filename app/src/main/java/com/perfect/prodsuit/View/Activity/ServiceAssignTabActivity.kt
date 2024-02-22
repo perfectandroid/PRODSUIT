@@ -5,8 +5,10 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -24,6 +26,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.AreaViewModel
@@ -127,6 +130,7 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
     private var temp_Mobile: String = ""
     private var temp_TicketNo: String = ""
     private var temp_DueDays: String = ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
 
@@ -148,6 +152,9 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
         loadLoginEmpDetails("0")
         serviceCount = 0
         getserviceCounts()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun getSessionLoginUserDetails() {
@@ -947,6 +954,7 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
 
     private fun getEmpByBranch() {
 //         var branch = 0
+        var SubMode = "1"
         Log.v("sfsdfsdfdf","branch"+ID_Branch)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -956,7 +964,7 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                empByBranchViewModel.getEmpByBranch(this, ID_Branch)!!.observe(
+                empByBranchViewModel.getEmpByBranch(this, ID_Branch,SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -1328,6 +1336,30 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
 
 
         }
+
+        if (data.equals("ServiceCount")) {
+
+
+            val jsonObject = countlistSort.getJSONObject(position)
+
+            var submode = jsonObject!!.getString("MasterID")
+            var label=jsonObject!!.getString("Field")
+
+            val i = Intent(context, ServiceAssignListActivity::class.java)
+            i.putExtra("SubMode",submode)
+            i.putExtra("ID_Branch",ID_Branch)
+            i.putExtra("FK_Area",FK_Area)
+            i.putExtra("ID_Employee",ID_Employee)
+            i.putExtra("strFromDate",strFromDate)
+            i.putExtra("strToDate",strToDate)
+            i.putExtra("strCustomer",strCustomer)
+            i.putExtra("strMobile",strMobile)
+            i.putExtra("strTicketNo",strTicketNo)
+            i.putExtra("strDueDays",strDueDays)
+            i.putExtra("label",label)
+            startActivity(i)
+
+        }
     }
 
 //    private fun setOnFocusChangeListener(textView: TextView) {
@@ -1438,6 +1470,8 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
         super.onRestart()
         serviceCount = 0
         getserviceCounts()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 

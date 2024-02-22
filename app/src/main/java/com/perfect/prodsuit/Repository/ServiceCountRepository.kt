@@ -65,6 +65,7 @@ object ServiceCountRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 //                {"BankKey":"\/mXqmq3ZMvs=\n","Token":"0KjNuKHR16rDwHCS09BASBwyc4DHIeNqEVyN8kfrQtASybLeZjOwwA==\n","SubMode":"vJ/8asrP+O0=",
 //                    "FK_Branch":"KZtbclVmL7w=","FK_Product":"KZtbclVmL7w=",
@@ -93,6 +94,7 @@ object ServiceCountRepository {
                 requestObject1.put("CSRTickno", ProdsuitApplication.encryptStart(strTicketNo))
                 requestObject1.put("CusName", ProdsuitApplication.encryptStart(strCustomer))
                 requestObject1.put("CusMobile", ProdsuitApplication.encryptStart(strMobile))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 Log.e(TAG,"9888  getBranch  "+requestObject1)

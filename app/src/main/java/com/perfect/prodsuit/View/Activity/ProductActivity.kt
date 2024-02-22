@@ -5,8 +5,10 @@ import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.ConnectivityManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,6 +29,7 @@ import org.json.JSONObject
 import android.view.*
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import java.text.ParseException
@@ -132,6 +135,8 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
         var strNeedCheck : String = "0"
     }
 
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -171,6 +176,9 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
                 strNeedCheck = "0"
             }
         }
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun clearData() {
@@ -1617,6 +1625,13 @@ class ProductActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLi
             }
         val alert = builder.create()
         alert.show()
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 }

@@ -82,6 +82,7 @@ object StatusListTicketReportRepository {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("53"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -96,6 +97,7 @@ object StatusListTicketReportRepository {
                 requestObject1.put("FK_Priority", ProdsuitApplication.encryptStart(ID_Priority))
                 requestObject1.put("ActStatus", ProdsuitApplication.encryptStart(ID_Status))
                 requestObject1.put("GroupId", ProdsuitApplication.encryptStart(GroupId))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 Log.e(TAG,"ReportMode   98   "+ReportMode)
                 Log.e(TAG,"requestObject1   98   "+requestObject1)

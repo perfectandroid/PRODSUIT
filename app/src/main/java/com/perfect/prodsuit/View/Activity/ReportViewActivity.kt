@@ -6,7 +6,9 @@ import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -23,6 +25,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.DashrrporttypeModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.DashReporttypeListAdapter
@@ -85,6 +88,7 @@ class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
 
     private var strDashboardType           : String?                   = ""
     private var strDashboardTypeId        : String?                   = ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,6 +105,9 @@ class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
         tie_ToDate!!.setText(currentDate)
         txttoDate!!.text = currentDate
         getCalendarId(context)
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -787,6 +794,12 @@ class ReportViewActivity : AppCompatActivity() , View.OnClickListener {
         dialog.show()
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
 
 
 }

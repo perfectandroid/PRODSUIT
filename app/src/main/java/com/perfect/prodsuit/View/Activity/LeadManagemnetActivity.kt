@@ -5,7 +5,9 @@ import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -26,6 +28,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.AgendaCountViewModel
@@ -114,6 +117,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
     private var dialogEmployeeAll: Dialog? = null
     var recyEmployeeAll: RecyclerView? = null
 
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -145,6 +149,9 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
 
         Log.e(TAG,"")
         getCounts()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -1045,10 +1052,13 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
         super.onRestart()
         Log.e(TAG,"741  onRestart ")
         getCounts()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun getEmpByBranch(i: Int) {
 //         var branch = 0
+        var SubMode = "1"
         Log.v("sfsdfsdfdf", "branch" + ID_Branch)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -1058,7 +1068,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                empByBranchViewModel.getEmpByBranch(this, ID_Branch)!!.observe(
+                empByBranchViewModel.getEmpByBranch(this, ID_Branch,SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -1244,6 +1254,8 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
         }
 
     }
+
+
 
 
 }

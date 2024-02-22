@@ -5,12 +5,14 @@ import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -49,6 +51,7 @@ import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.ItemClickListenerData
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Receivers.PhoneStatReceiver
 import com.perfect.prodsuit.View.Adapter.*
@@ -324,6 +327,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
     private var temp_Branch1: String = ""
     private var temp_ID_Employee1: String = ""
     private var temp_Employee1: String = ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -375,6 +379,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         //    getAgendatypes()
         //    getActionTypes()
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun loadLoginEmpDetails() {
@@ -629,6 +635,13 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         getEmiList()
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
+
     private fun getAgendaList() {
         Log.e("responseww", "AsOnDate=  " + AsOnDate)
         ReqMode = "105"
@@ -739,8 +752,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.dismiss()
             }
             else -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -866,8 +879,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1782,8 +1795,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
 
         }
@@ -2235,8 +2248,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -2608,8 +2621,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -2744,8 +2757,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog1!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
 
         }
@@ -3855,8 +3868,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
 
         }
@@ -4016,8 +4029,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -4092,7 +4105,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
     }
 
     private fun getEmpByBranch() {
-//         var branch = 0
+//         var branch =
+        var SubMode = "1"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -4101,7 +4115,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                empByBranchViewModel.getEmpByBranch(this, ID_Branch)!!.observe(
+                empByBranchViewModel.getEmpByBranch(this, ID_Branch,SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -4154,8 +4168,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -4295,8 +4309,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -4861,8 +4875,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -5182,8 +5196,8 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }

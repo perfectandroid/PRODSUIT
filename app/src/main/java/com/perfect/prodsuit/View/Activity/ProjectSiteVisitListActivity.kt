@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -22,6 +24,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.LeadNoAdapter
 import com.perfect.prodsuit.View.Adapter.ProjectLeadListAdapter
@@ -48,6 +51,7 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
 
     private var ReqMode :  String? =  ""
     private var SubMode :  String? =  ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -107,6 +111,8 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
             }
         })
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun getLeadDetails() {
@@ -219,5 +225,12 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
             i.putExtra("jsonObject",jsonObject.toString())
             startActivity(i)
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }

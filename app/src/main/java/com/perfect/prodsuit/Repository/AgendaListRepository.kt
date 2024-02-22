@@ -100,6 +100,7 @@ object AgendaListRepository {
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val FK_Employee = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
@@ -116,6 +117,7 @@ object AgendaListRepository {
                 requestObject1.put("FK_FinancePlanType", ProdsuitApplication.encryptStart(ID_FinancePlanType))
                 requestObject1.put("FK_Area", ProdsuitApplication.encryptStart(ID_Area))
                 requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 Log.e(TAG,"requestObject1   agenda "+requestObject1)
 

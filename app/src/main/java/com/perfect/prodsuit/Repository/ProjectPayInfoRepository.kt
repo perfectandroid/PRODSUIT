@@ -69,6 +69,7 @@ object ProjectPayInfoRepository {
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 
 
@@ -87,6 +88,7 @@ object ProjectPayInfoRepository {
 //                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(Config.convertDate(TransDate)))
 //                requestObject1.put("DashMode", ProdsuitApplication.encryptStart(DashMode))
 //                requestObject1.put("DashType", ProdsuitApplication.encryptStart(DashType))
+//                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 Log.e(TAG,"92222   getCRMTileDashBoardDetails  "+requestObject1)

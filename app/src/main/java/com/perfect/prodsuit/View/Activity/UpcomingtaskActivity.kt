@@ -8,8 +8,10 @@ import android.app.ProgressDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -33,6 +35,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.BranchAdapter
 import com.perfect.prodsuit.View.Adapter.EmployeeAllAdapter
@@ -129,6 +132,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     var tie_LeadValue: TextInputEditText? = null
 
     var UpcomingDet = 0
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -178,6 +182,8 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
      //   tie_Employee!!.setText( UserNameSP.getString("UserName", null))
         UpcomingDet = 0
         getUpcomingtasksList()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
     companion object {
         var submode = "3"
@@ -1547,6 +1553,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     private fun getEmpByBranch() {
 //         var branch = 0
+        var SubMode = "0"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1555,7 +1562,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                empByBranchViewModel.getEmpByBranch(this, ID_Branch)!!.observe(
+                empByBranchViewModel.getEmpByBranch(this, ID_Branch,SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -1959,6 +1966,8 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         Log.e(TAG,"741  onRestart ")
         UpcomingDet = 0
         getUpcomingtasksList()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 }

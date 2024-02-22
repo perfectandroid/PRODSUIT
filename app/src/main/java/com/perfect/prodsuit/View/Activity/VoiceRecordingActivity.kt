@@ -4,11 +4,13 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.media.AudioFormat
 import android.media.MediaPlayer
 import android.media.MediaPlayer.OnCompletionListener
 import android.media.MediaRecorder
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -31,6 +33,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.airbnb.lottie.LottieAnimationView
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Helper.PlayerService
 import com.perfect.prodsuit.Helper.RecorderService
 import com.perfect.prodsuit.R
@@ -83,6 +86,7 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
     private var voicedatabyte: ByteArray? = null
     private var RECORD_PLAY: Int? = 1038
     var  checkClick= ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     private val handler = Handler(Looper.getMainLooper())
 //    private val timeRunnable = object : Runnable {
@@ -226,6 +230,8 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 //        setResult(RECORD_PLAY!!,intent)
 //        finish()
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -976,5 +982,12 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
 
 
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }

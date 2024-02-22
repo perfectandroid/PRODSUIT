@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +21,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.View.Adapter.AttendanceReportAdapter
 import com.perfect.prodsuit.Viewmodel.*
@@ -131,6 +134,7 @@ class AttendanceReportActivity : AppCompatActivity() , View.OnClickListener, Ite
     var strVisitDate : String?= ""
     var saveAttendanceMark = false
     val jsons= JSONObject()
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -181,6 +185,8 @@ class AttendanceReportActivity : AppCompatActivity() , View.OnClickListener, Ite
         getServiceNewList()*/
 
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 
@@ -355,8 +361,8 @@ class AttendanceReportActivity : AppCompatActivity() , View.OnClickListener, Ite
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -418,6 +424,9 @@ class AttendanceReportActivity : AppCompatActivity() , View.OnClickListener, Ite
         super.onRestart()
         serviceList = 0
         getAttedanceReport(strToDate)
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun openBottomDate() {

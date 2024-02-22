@@ -144,19 +144,24 @@ class NotificationLocationService : Service() {
         Log.e(TAG,"TIMER_INTERVAL   TIMER_INTERVAL  "+TIMER_INTERVAL)
         timer.scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
-                val UtilityListSP = context.getSharedPreferences(Config.SHARED_PREF57, 0)
-                if (!UtilityListSP.getString("UtilityList", "").equals("")){
 
-                    val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
-                    var bTracker = jsonObj!!.getString("LOCATION_TRACKING").toBoolean()
-                    Log.e(TAG,"15551   "+bTracker)
-                    if (bTracker){
-                        Log.e(TAG,"15552   "+bTracker)
-                        sendNotification()
-                    }else{
-                        Log.e(TAG,"15553   "+bTracker)
-                        stopForeground(true)
+                try {
+                    val UtilityListSP = context.getSharedPreferences(Config.SHARED_PREF57, 0)
+                    if (!UtilityListSP.getString("UtilityList", "").equals("")){
+
+                        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+                        var bTracker = jsonObj!!.getString("LOCATION_TRACKING").toBoolean()
+                        Log.e(TAG,"15551   "+bTracker)
+                        if (bTracker){
+                            Log.e(TAG,"15552   "+bTracker)
+                            sendNotification()
+                        }else{
+                            Log.e(TAG,"15553   "+bTracker)
+                            stopForeground(true)
+                        }
                     }
+                }catch (e: Exception){
+                    Log.e(TAG,"15553444  "+e.toString())
                 }
 
 

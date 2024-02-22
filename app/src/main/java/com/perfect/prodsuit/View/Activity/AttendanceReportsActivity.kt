@@ -188,14 +188,14 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
         getPunchReport(strDate!!)
 
 
-        /*   if(strToDate!!.equals("Date")||strToDate!!.equals("")||strToDate!!.equals(null))
-           {
-               til_Date!!.setError("Please select a Date")
-               til_Date!!.setErrorIconDrawable(null)
+     /*   if(strToDate!!.equals("Date")||strToDate!!.equals("")||strToDate!!.equals(null))
+        {
+            til_Date!!.setError("Please select a Date")
+            til_Date!!.setErrorIconDrawable(null)
 
-               Log.i(TAG,"Date : "+strToDate)
-           }
-           else {
+            Log.i(TAG,"Date : "+strToDate)
+        }
+        else {
 
 
 

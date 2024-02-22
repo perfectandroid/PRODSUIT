@@ -5,7 +5,9 @@ import android.app.*
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
@@ -23,6 +25,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.View.Adapter.LeadGenerateReportAdapter
 import com.perfect.prodsuit.View.Adapter.PriorityWiseReportAdapter
 import com.perfect.prodsuit.View.Adapter.ProductWiseReportAdapter
@@ -76,6 +79,7 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
 
     lateinit var priorityWiseReportArrayList : JSONArray
     var recyPriorityWise  : RecyclerView? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,6 +130,9 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
 //            Priority Wise Lead
             getPriorityWiseReportview(strFromdate,strTodate,strDashboardTypeId)
         }
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 
@@ -761,6 +768,13 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
             }
 
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
 }

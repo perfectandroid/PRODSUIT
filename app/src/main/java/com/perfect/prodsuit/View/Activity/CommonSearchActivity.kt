@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +19,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.AuthDsahboardAdapter
 import com.perfect.prodsuit.View.Adapter.AuthorizationMixedAdapter
@@ -57,6 +60,7 @@ class CommonSearchActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     private var dialogModuleSheet : Dialog? = null
 
     var ID_Module = ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +72,8 @@ class CommonSearchActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         commonSearchListViewModel = ViewModelProvider(this).get(CommonSearchListViewModel::class.java)
         searchModuleViewModel = ViewModelProvider(this).get(SearchModuleViewModel::class.java)
         setRegViews()
-
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -117,6 +122,13 @@ class CommonSearchActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
 
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
 
@@ -192,8 +204,8 @@ class CommonSearchActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -266,8 +278,8 @@ class CommonSearchActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }

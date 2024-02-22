@@ -5,6 +5,9 @@ import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.graphics.Color
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -22,12 +25,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.Helper.DBHelper
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -297,8 +302,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
     var animBlink: Animation? = null
 
     var distance: Double? = null
+    var checkno = 0
     var ID_PKey: String? = ""
     var db : DBHelper? = null
+
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -335,6 +343,13 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
         im_app_logo.startAnimation(animBlink);
 
 
+//        checkno = 0
+//        if (checkno == 0){
+
+//            Config.RegisterNetworkCallback(context,this,checkno)
+//        Config.checkNetworkConnection(context,this)
+//            checkno++
+//        }
 
         val commonAppSP = applicationContext.getSharedPreferences(Config.SHARED_PREF18, 0)
         var chkstatus =commonAppSP.getString("commonApp","")
@@ -404,6 +419,8 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
         }
 
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun versionCheck() {
@@ -477,8 +494,14 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                         })
                 }
                 false -> {
-                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                        .show()
+//                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                        .show()
+
+
+//                    val snackbar = Snackbar.make(Config.rootView, "Offline", Snackbar.LENGTH_INDEFINITE)
+//                    snackbar.setBackgroundTint(Color.parseColor("#FF4848"))
+//                    snackbar.show()
+//                    checkno = 1
                 }
             }
         } catch (e: Exception) {
@@ -631,8 +654,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                         })
                 }
                 false -> {
-                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                        .show()
+//                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                        .show()
+//                    val snackbar = Snackbar.make(Config.rootView, "Offline", Snackbar.LENGTH_INDEFINITE)
+//                    snackbar.setBackgroundTint(Color.parseColor("#FF4848"))
+//                    snackbar.show()
                 }
             }
         }catch (e: Exception){
@@ -874,8 +900,12 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                         })
                 }
                 false -> {
-                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                        .show()
+//                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                        .show()
+
+//                    val snackbar = Snackbar.make(Config.rootView, "Offline", Snackbar.LENGTH_INDEFINITE)
+//                    snackbar.setBackgroundTint(Color.parseColor("#FF4848"))
+//                    snackbar.show()
                 }
             }
         }catch (e: Exception){
@@ -1166,8 +1196,12 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                     })
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
+
+//                val snackbar = Snackbar.make(Config.rootView, "Offline", Snackbar.LENGTH_INDEFINITE)
+//                snackbar.setBackgroundTint(Color.parseColor("#FF4848"))
+//                snackbar.show()
             }
         }
     }
@@ -1285,8 +1319,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                     })
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
+//                val snackbar = Snackbar.make(Config.rootView, "Offline", Snackbar.LENGTH_INDEFINITE)
+//                snackbar.setBackgroundTint(Color.parseColor("#FF4848"))
+//                snackbar.show()
             }
         }
     }
@@ -1413,6 +1450,14 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
     }
 
     override fun onAnimationRepeat(animation: Animation?) {
+
+    }
+
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 

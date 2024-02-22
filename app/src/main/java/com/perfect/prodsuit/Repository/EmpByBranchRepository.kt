@@ -26,12 +26,12 @@ object EmpByBranchRepository {
     val empByBranchSetterGetter = MutableLiveData<EmpByBranchModel>()
     val TAG: String = "EmpByBranchRepository"
 
-    fun getServicesApiCall(context: Context, ID_Branch : String): MutableLiveData<EmpByBranchModel> {
-        getEmpByBranch(context, ID_Branch)
+    fun getServicesApiCall(context: Context, ID_Branch : String, SubMode : String): MutableLiveData<EmpByBranchModel> {
+        getEmpByBranch(context, ID_Branch,SubMode)
         return empByBranchSetterGetter
     }
 
-    private fun getEmpByBranch(context: Context, ID_Branch: String) {
+    private fun getEmpByBranch(context: Context, ID_Branch: String, SubMode: String) {
 
         try {
             empByBranchSetterGetter.value = EmpByBranchModel("")
@@ -68,6 +68,7 @@ object EmpByBranchRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("23"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -75,6 +76,8 @@ object EmpByBranchRepository {
                // requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_Branch", ProdsuitApplication.encryptStart(ID_Branch))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
 
                 Log.e(TAG,"791  getEmpUsingBranch    "+requestObject1)
 

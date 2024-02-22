@@ -258,7 +258,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_margin="1dp"
                                             app:cardBackgroundColor="@color/white"
-                                            android:visibility="visible">
+                                            android:visibility="gone">
 
 <!--                                            app:cardPreventCornerOverlap="true"-->
 <!--                                            app:cardCornerRadius="10dp"-->
@@ -779,7 +779,7 @@
                                             android:layout_height="wrap_content"
                                             android:layout_margin="1dp"
                                             app:cardBackgroundColor="@color/white"
-                                            android:visibility="gone">
+                                            android:visibility="visible">
 
 <!--                                            app:cardCornerRadius="10dp"-->
 <!--                                            app:cardElevation="5dp"-->
@@ -861,20 +861,20 @@
                                                         android:id="@+id/tie_NextActionType"
                                                         android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
+                                                        android:drawableLeft="@drawable/svg_fd_actiontype"
+                                                        android:drawableRight="@drawable/arrow_down"
+                                                        android:drawablePadding="5dp"
+                                                        android:drawableTint="@color/textColor"
+                                                        android:editable="false"
+                                                        android:focusableInTouchMode="false"
+                                                        android:fontFamily="@font/myfont"
                                                         android:gravity="center_vertical"
                                                         android:paddingLeft="10dp"
                                                         android:paddingTop="8dp"
                                                         android:paddingBottom="8dp"
-                                                        android:drawableRight="@drawable/arrow_down"
-                                                        android:drawableLeft="@drawable/svg_fd_actiontype"
-                                                        android:drawablePadding="5dp"
-                                                        android:drawableTint="@color/textColor"
-                                                        android:textSize="14dp"
-                                                        android:focusableInTouchMode="false"
-                                                        android:editable="false"
-                                                        android:fontFamily="@font/myfont"
                                                         android:textColor="@color/greydarks"
-                                                        android:textStyle="normal"/>
+                                                        android:textSize="14dp"
+                                                        android:textStyle="normal" />
 
                                                 </com.google.android.material.textfield.TextInputLayout>
 

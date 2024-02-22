@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ProjectSiteVisitTabAdapter
 import com.perfect.prodsuit.Viewmodel.SiteVisitCountViewModel
@@ -34,6 +37,8 @@ class ProjectSiteVisitTabActivity : AppCompatActivity() , View.OnClickListener, 
     lateinit var siteVisitCountViewModel: SiteVisitCountViewModel
     var recyc_sitevisit: RecyclerView? = null
     lateinit var siteVisitArrayList: JSONArray
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +53,9 @@ class ProjectSiteVisitTabActivity : AppCompatActivity() , View.OnClickListener, 
 
         sitVisitCount = 0
         getSiteVisitCount()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -200,5 +208,11 @@ class ProjectSiteVisitTabActivity : AppCompatActivity() , View.OnClickListener, 
 
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
 
 }

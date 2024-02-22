@@ -64,6 +64,7 @@ object AuthRejectRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 //               {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","FK_Company":"1","AuthID":"12399","EntrBy":"riyaske","FK_Reason":"","Reason":""}
 
@@ -77,6 +78,7 @@ object AuthRejectRepository {
                 requestObject1.put("FK_Reason", ProdsuitApplication.encryptStart(ID_Reason))
                 requestObject1.put("Reason", ProdsuitApplication.encryptStart(strReason))
                 requestObject1.put("SkipPrev", ProdsuitApplication.encryptStart(ActiveCorrectionOption))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
 

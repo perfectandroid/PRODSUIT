@@ -7,12 +7,14 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -37,6 +39,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
@@ -64,6 +67,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
     private var edt_customer: EditText? = null
     private var edtCustname: EditText? = null
     private var edtCustphone: EditText? = null
+    private var edtCustAddres2: EditText? = null
 //
     private var edtProdcategory: EditText? = null
     private var edtProdproduct: EditText? = null
@@ -281,6 +285,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 //        Manifest.permission.READ_EXTERNAL_STORAGE,
 //        // Add other permissions as needed
 //    )
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -337,6 +342,9 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             Log.e(TAG,"325552     Not Granted")
         }
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
     private fun checkAndRequestPermissions1(): Boolean {
@@ -370,6 +378,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         edt_customer = findViewById<EditText>(R.id.edt_customer)
         edtCustname = findViewById<EditText>(R.id.edtCustname)
         edtCustphone = findViewById<EditText>(R.id.edtCustphone)
+        edtCustAddres2 = findViewById<EditText>(R.id.edtCustAddres2)
         edtProdcategory = findViewById<EditText>(R.id.edtProdcategory)
         edtProdproduct = findViewById<EditText>(R.id.edtProdproduct)
         edtProjectName = findViewById<EditText>(R.id.edtProjectName)
@@ -2581,6 +2590,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             actv_namTitle!!.setText(jsonObject.getString("CusNameTitle"))
             edtCustname!!.setText(jsonObject.getString("CusName"))
             edtCustphone!!.setText(jsonObject.getString("CusPhnNo"))
+            edtCustAddres2!!.setText(jsonObject.getString("CusAddress2"))
 
 
 //            edtCustemail!!.setText(jsonObject.getString("CusEmail"))
@@ -2802,6 +2812,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         CusNameTitle = actv_namTitle!!.text.toString()
         Customer_Name = edtCustname!!.text.toString()
         Customer_Mobile = edtCustphone!!.text.toString()
+        Customer_Address2 = edtCustAddres2!!.text.toString()
 
         val MobilePattern = "[0-9]{10}"
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
@@ -3371,6 +3382,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         edt_customer!!.setText("")
         edtCustname!!.setText("")
         edtCustphone!!.setText("")
+        edtCustAddres2!!.setText("")
         strCustomer = ""
 
 
@@ -3622,6 +3634,14 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         } else {
           //  Toast.makeText(this@LeadGenerationQuickActivity, "Permission already granted", Toast.LENGTH_SHORT).show()
         }
+    }
+
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 
 }

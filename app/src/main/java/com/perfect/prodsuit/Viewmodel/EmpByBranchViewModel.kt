@@ -11,8 +11,8 @@ class EmpByBranchViewModel : ViewModel() {
 
     var EmpByBranchData: MutableLiveData<EmpByBranchModel>? = null
 
-    fun getEmpByBranch(context: Context, ID_Branch : String ) : LiveData<EmpByBranchModel>? {
-        EmpByBranchData = EmpByBranchRepository.getServicesApiCall(context,ID_Branch)
+    fun getEmpByBranch(context: Context, ID_Branch : String , SubMode : String ) : LiveData<EmpByBranchModel>? {
+        EmpByBranchData = EmpByBranchRepository.getServicesApiCall(context,ID_Branch,SubMode)
         return EmpByBranchData
     }
 }

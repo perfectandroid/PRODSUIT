@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.ServiceAssignListActivity
@@ -136,29 +137,30 @@ class ServiceCountAdapter(
 
                 holder.ll_new!!.setTag(position)
                 holder.ll_new!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     clickListener!!.onClick(
                         position,
                         "ServiceCount"
                     )
-                    jsonObject = jsonArray.getJSONObject(position)
-                    var submode = jsonObject!!.getString("MasterID")
-                    var label=jsonObject!!.getString("Field")
-                    Log.e(TAG,"Position   "+position+"\n"+submode+"\n"+"Details : "+ID_Branch+"\n"+FK_Area+"\n"+ID_Employee+"\n"+strFromDate+"\n"+strToDate+"\n"+
-                    strCustomer)
-
-                    val i = Intent(context, ServiceAssignListActivity::class.java)
-                    i.putExtra("SubMode",submode)
-                    i.putExtra("ID_Branch",ID_Branch)
-                    i.putExtra("FK_Area",FK_Area)
-                    i.putExtra("ID_Employee",ID_Employee)
-                    i.putExtra("strFromDate",strFromDate)
-                    i.putExtra("strToDate",strToDate)
-                    i.putExtra("strCustomer",strCustomer)
-                    i.putExtra("strMobile",strMobile)
-                    i.putExtra("strTicketNo",strTicketNo)
-                    i.putExtra("strDueDays",strDueDays)
-                    i.putExtra("label",label)
-                    context.startActivity(i)
+//                    jsonObject = jsonArray.getJSONObject(position)
+//                    var submode = jsonObject!!.getString("MasterID")
+//                    var label=jsonObject!!.getString("Field")
+//                    Log.e(TAG,"Position   "+position+"\n"+submode+"\n"+"Details : "+ID_Branch+"\n"+FK_Area+"\n"+ID_Employee+"\n"+strFromDate+"\n"+strToDate+"\n"+
+//                    strCustomer)
+//
+//                    val i = Intent(context, ServiceAssignListActivity::class.java)
+//                    i.putExtra("SubMode",submode)
+//                    i.putExtra("ID_Branch",ID_Branch)
+//                    i.putExtra("FK_Area",FK_Area)
+//                    i.putExtra("ID_Employee",ID_Employee)
+//                    i.putExtra("strFromDate",strFromDate)
+//                    i.putExtra("strToDate",strToDate)
+//                    i.putExtra("strCustomer",strCustomer)
+//                    i.putExtra("strMobile",strMobile)
+//                    i.putExtra("strTicketNo",strTicketNo)
+//                    i.putExtra("strDueDays",strDueDays)
+//                    i.putExtra("label",label)
+//                    context.startActivity(i)
 
                 })
 

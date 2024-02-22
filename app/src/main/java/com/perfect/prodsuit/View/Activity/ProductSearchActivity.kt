@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -23,6 +25,7 @@ import com.impulsive.zoomimageview.ZoomImageView
 import com.perfect.nbfcmscore.Helper.PicassoTrustAll
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ProductCategoryAdapter
 import com.perfect.prodsuit.View.Adapter.ProductDetailAdapter
@@ -85,6 +88,8 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     var isFilter: String? = "0" // 0 = No Filter 1 =  Filter
     private var modelg = 1 // 1 = List 2 =  Grid
 
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
+
 
 
 
@@ -125,6 +130,8 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             }
         }
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -699,5 +706,12 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             ll_main_page!!.visibility = View.VISIBLE
             ll_filter_page!!.visibility = View.GONE
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }

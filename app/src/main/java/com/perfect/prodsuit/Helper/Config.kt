@@ -4,22 +4,31 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityManager
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
+import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.gms.tasks.Task
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
 import com.perfect.prodsuit.R
@@ -34,6 +43,8 @@ import java.security.cert.CertificateException
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
 import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.net.ssl.*
 
@@ -159,6 +170,12 @@ object Config {
     const val PLEASE_TRY_AGAIN = "Some Technical Issues, Please try again in sometime"
     const val notificationBack = false // String False / True
     const val INVALID_MOBILE = "Invalid Mobile Number"
+
+    lateinit var rootView: View
+    var dialog : Dialog? = null
+    fun Context.runOnUiThread(action: () -> Unit) {
+        Handler(Looper.getMainLooper()).post { action() }
+    }
 
     fun getHostnameVerifier(): HostnameVerifier {
         return HostnameVerifier { hostname, session -> true }
@@ -1370,6 +1387,55 @@ object Config {
        return  result
     }
 
+    fun checkTimemills(time1: String , time2: String): Boolean {
+        var result = false
+        try {
+
+            Log.e(TAG,"137771  "+time1+"  :   "+time2)
+            val inputPattern = "h:mm a"
+            val outputPattern = "HH:mm"
+
+            var date1: Date? = null
+            var time11: String? = null
+            var date2: Date? = null
+            var time22: String? = null
+
+            val inputFormat = SimpleDateFormat(inputPattern)
+            val outputFormat = SimpleDateFormat(outputPattern)
+
+            date1 = inputFormat.parse(time1);
+            time11 = outputFormat.format(date1);
+            date2 = inputFormat.parse(time2);
+            time22 = outputFormat.format(date2);
+
+            Log.e(TAG,"137772  "+date1+"  :   "+time11)
+            Log.e(TAG,"137773  "+date2+"  :   "+time22)
+
+            val timeInMillis1 = timeStringToMilliseconds(time11)
+            val timeInMillis2 = timeStringToMilliseconds(time22)
+
+            Log.e(TAG,"137774  "+timeInMillis1+"  :   "+timeInMillis2)
+
+            if (timeInMillis1 <= timeInMillis2){
+                result = true
+            }else{
+                result = false
+            }
+
+
+        }catch (e : Exception){
+            Log.e(TAG,"1377755  "+e.toString())
+        }
+
+        return  result
+    }
+
+
+    fun timeStringToMilliseconds(timeString: String): Long {
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")
+        val localTime = LocalTime.parse(timeString, formatter)
+        return localTime.toNanoOfDay() / 1_000_000 // Convert nanoseconds to milliseconds
+    }
     fun convert12HourTo24Hour(time12: String): String {
         val inputFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
         val outputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())

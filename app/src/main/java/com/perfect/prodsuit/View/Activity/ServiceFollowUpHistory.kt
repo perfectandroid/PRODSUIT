@@ -2,6 +2,8 @@ package com.perfect.prodsuit.View.Activity
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.AttendanceFollowUpModel
 import com.perfect.prodsuit.Model.HistoryFollowUpModel
 import com.perfect.prodsuit.R
@@ -41,6 +44,7 @@ class ServiceFollowUpHistory : AppCompatActivity(), View.OnClickListener {
     var ID_Employee: String = ""
     private var progressDialog: ProgressDialog? = null
     var jsonArrayFollowUpHistory: JSONArray = JSONArray()
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -61,6 +65,9 @@ class ServiceFollowUpHistory : AppCompatActivity(), View.OnClickListener {
         // loadArray()
         loadHistory()
 //        SetDataToRecycler(jsonArrayHistory)
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setId() {
@@ -197,5 +204,12 @@ class ServiceFollowUpHistory : AppCompatActivity(), View.OnClickListener {
                 onBackPressed()
             }
         }
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }

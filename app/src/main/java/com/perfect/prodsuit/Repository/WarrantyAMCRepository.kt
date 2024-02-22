@@ -68,6 +68,7 @@ object WarrantyAMCRepository {
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_Employee = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("1"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -82,6 +83,7 @@ object WarrantyAMCRepository {
                 requestObject1.put("Critrea3", ProdsuitApplication.encryptStart("10"))
                 requestObject1.put("Critrea2", ProdsuitApplication.encryptStart("1"))
                 requestObject1.put("Critrea1", ProdsuitApplication.encryptStart("0"))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 Log.e(TAG,"requestObject1   warranty   "+requestObject1)

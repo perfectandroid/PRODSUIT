@@ -65,6 +65,7 @@ object ServCompanantRepository {
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 //                {"Token":"02350582-6179-4097-93F6-17FEFB46CC83","TransMode":"CUSF","ReqMode":"13","FK_Company":"1","Criteria":"3","Criteria3":"10044","NameCriteria":"L"}
 //                Criteria3:EmployeeID
@@ -80,6 +81,7 @@ object ServCompanantRepository {
                 requestObject1.put("Criteria3", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("Criteria", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
                 requestObject1.put("NameCriteria", ProdsuitApplication.encryptStart(""))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 Log.e(TAG,"requestObject1 84444 "+requestObject1)
                 Log.v("sdasd22efvvv","requestObject2 "+requestObject1.toString())

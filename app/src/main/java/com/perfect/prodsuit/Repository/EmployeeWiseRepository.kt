@@ -70,6 +70,7 @@ object EmployeeWiseRepository {
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+                val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
 
 
                 val sdf = SimpleDateFormat("yyyy-MM-dd")
@@ -88,6 +89,7 @@ object EmployeeWiseRepository {
                 requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
                 requestObject1.put("DashMode", ProdsuitApplication.encryptStart("2"))
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))
+                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 Log.e(TAG,"requestObject1   employeewise   "+requestObject1)
 
 

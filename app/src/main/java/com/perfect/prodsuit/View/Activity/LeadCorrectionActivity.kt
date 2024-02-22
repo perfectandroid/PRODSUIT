@@ -4,6 +4,8 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -21,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.ModelLeadCorrectionDetails
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.CorrectionProductAdapter
@@ -107,6 +110,8 @@ class LeadCorrectionActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     private var Module_sub: String? = ""
     private var ID_AuthorizationData: String? = ""
 
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lead_correction)
@@ -139,6 +144,9 @@ class LeadCorrectionActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
         correctioncount = 0
         getCorrectionDetails(TransMode, FK_TransMaster!!, ID_AuthorizationData!!)
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -304,8 +312,8 @@ class LeadCorrectionActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             }
 
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -718,8 +726,8 @@ class LeadCorrectionActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 }
 
                 false -> {
-                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                        .show()
+//                    Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                        .show()
                 }
             }
         } catch (e: Exception) {
@@ -731,5 +739,12 @@ class LeadCorrectionActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
     override fun onClick(position: Int, data: String) {
         TODO("Not yet implemented")
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }

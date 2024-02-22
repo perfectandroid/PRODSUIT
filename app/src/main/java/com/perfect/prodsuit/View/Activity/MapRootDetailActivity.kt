@@ -3,6 +3,8 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.maps.MapView
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.MapRootDetailAdapter
 import com.perfect.prodsuit.View.Adapter.TrackerAdapter1
@@ -42,6 +45,7 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
     private var tv_employeee: TextView? = null
     private var tv_EnteredDate: TextView? = null
     var recyMapRoot: RecyclerView? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +68,9 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
             EmployeeLocation = 0
             getEmployeeWiseList()
         }
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
 
@@ -164,4 +171,10 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
         }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
 }

@@ -5,6 +5,8 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -23,6 +25,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.View.Adapter.EmployeeAdapter
 import com.perfect.prodsuit.View.Adapter.FollowupActionAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceListAdapter
@@ -136,6 +139,8 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
     var strVisitDate : String?= ""
     var saveAttendanceMark = false
     val jsons= JSONObject()
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -169,6 +174,8 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
         getServiceNewList()
 
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 
@@ -472,19 +479,23 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 
         if (data.equals("ServiceList")) {
             val jsonObject = serviceListArrayList.getJSONObject(position)
-         //   ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
-          //  FK_CustomerserviceregisterProductDetails = jsonObject.getString("ID_CustomerServiceRegisterProductDetails")
+            ID_CustomerServiceRegister = jsonObject.getString("ID_CustomerServiceRegister")
+            FK_CustomerserviceregisterProductDetails = jsonObject.getString("ID_CustomerServiceRegisterProductDetails")
+            Log.e(TAG,"489991    "+serviceListArrayList)
+
             TicketDate = jsonObject.getString("TicketDate")
             TicketStatus = jsonObject.getString("TicketStatus")
 
 
             if(!TicketStatus.equals("3"))
             {
-                val idcustservceregstSP = context.getSharedPreferences(Config.SHARED_PREF72, 0)
-                ID_CustomerServiceRegister = idcustservceregstSP.getString("idcustsrvceregist","")
+//                val idcustservceregstSP = context.getSharedPreferences(Config.SHARED_PREF72, 0)
+//                ID_CustomerServiceRegister = idcustservceregstSP.getString("idcustsrvceregist","")
+//
+//                val idcustservceregstprdctdetlSP = context.getSharedPreferences(Config.SHARED_PREF73, 0)
+//                FK_CustomerserviceregisterProductDetails = idcustservceregstprdctdetlSP.getString("idcustsrvceregistproductdetail","")
 
-                val idcustservceregstprdctdetlSP = context.getSharedPreferences(Config.SHARED_PREF73, 0)
-                FK_CustomerserviceregisterProductDetails = idcustservceregstprdctdetlSP.getString("idcustsrvceregistproductdetail","")
+                Log.e(TAG,"489992    "+ID_CustomerServiceRegister+"  :  "+FK_CustomerserviceregisterProductDetails)
 
 
                 Log.i("FKK",FK_CustomerserviceregisterProductDetails.toString()+"\n"+ID_CustomerServiceRegister)
@@ -1172,6 +1183,8 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
         super.onRestart()
         serviceList = 0
         getServiceNewList()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 

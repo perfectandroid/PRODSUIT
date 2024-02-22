@@ -4,7 +4,9 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
 import android.database.Cursor
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CallLog
@@ -23,6 +25,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.FollowupTypeAdapter
 import com.perfect.prodsuit.View.Adapter.ProductStatusAdapter
@@ -110,6 +113,7 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
     lateinit var prodStatusSort : JSONArray
     private var dialogProdStatus : Dialog? = null
     var recyProdStatus: RecyclerView? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,10 +122,14 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
         setContentView(R.layout.activity_add_remark_multiple)
         context = this@AddRemarkMultipleActivity
 
+
         followUpTypeViewModel = ViewModelProvider(this).get(FollowUpTypeViewModel::class.java)
         productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
 
         setRegViews()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
        // getActiontype()
 
@@ -411,6 +419,13 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
         dialog.show()
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
+
     private fun getCallDetails() {
 
         try {
@@ -564,8 +579,8 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -684,8 +699,8 @@ class AddRemarkMultipleActivity : AppCompatActivity(), View.OnClickListener , It
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }

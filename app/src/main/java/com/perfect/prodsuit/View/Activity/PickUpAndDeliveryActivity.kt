@@ -6,8 +6,10 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -23,6 +25,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
@@ -112,6 +115,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
     private var strProduct: String = ""
     private var strstatus: String = ""
     private var stProduct: String = ""
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,6 +132,8 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
         getCounts = 0
         getCounts()
         loadLoginEmpDetails("0")
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -721,6 +727,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
 
     private fun getEmpByBranch() {
 //         var branch = 0
+        var SubMode = "0"
         Log.v("sfsdfsdfdf","branch"+ID_Branch)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -730,7 +737,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                empByBranchViewModel.getEmpByBranch(this, ID_Branch)!!.observe(
+                empByBranchViewModel.getEmpByBranch(this, ID_Branch,SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -1060,5 +1067,13 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
 //        temp_TicketNo = ""
 //        temp_DueDays = ""
 //    }
+
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
 
 }

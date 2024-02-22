@@ -13,6 +13,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -206,7 +207,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     private lateinit var dataChatRef : DatabaseReference
     var tableCount = 0
     var logoutMode = 1
-
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -283,6 +284,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         }
 
         firebaseNotificationCount()
+
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
         
     }
 
@@ -691,7 +695,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         getDashBoardCount()
         Config.setRedirection(context,"")
 
-
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
            // getCalendarId(context)
             // Toast.makeText(applicationContext,"granted",Toast.LENGTH_LONG).show()
@@ -865,8 +870,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1806,8 +1811,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                        .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                        .show()
             }
         }
     }
@@ -1930,8 +1935,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -2017,8 +2022,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                        .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                        .show()
             }
         }
     }

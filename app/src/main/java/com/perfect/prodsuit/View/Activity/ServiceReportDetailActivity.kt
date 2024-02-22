@@ -3,6 +3,8 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ServiceNewListReportAdapter
 import com.perfect.prodsuit.View.Adapter.ServiceOutstandingReportAdapter
@@ -64,6 +67,7 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
     lateinit var serviceOutstandingListReportViewModel: ServiceOutstandingListReportViewModel
     lateinit var outstandingListReportArrayList : JSONArray
     var recyOutStanding  : RecyclerView? = null
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,6 +128,8 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
             getServiceListReport(ReportMode!!,ID_Branch!!,ID_Employee!!,strFromdate!!,strTodate!!,ID_Product!!,ID_CompService!!,ID_ComplaintList!!)
         }
 
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun setRegViews() {
@@ -779,6 +785,12 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
     }
 
 
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
+    }
 
 
 }

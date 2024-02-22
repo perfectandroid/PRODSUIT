@@ -2,10 +2,12 @@ package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.StrictMode
 import android.util.Log
@@ -20,6 +22,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import java.util.*
 
@@ -33,6 +36,7 @@ class LocationCollectionActivity : AppCompatActivity() , OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     var latitude="37.4233438"
     var longitude="-122.0728817"
+    private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +52,8 @@ class LocationCollectionActivity : AppCompatActivity() , OnMapReadyCallback {
 //        longitude= "75.8341995"
         fusedLocationProviderClient =  LocationServices.getFusedLocationProviderClient(this@LocationCollectionActivity)
         fetchLocation()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
     private fun fetchLocation() {
@@ -127,5 +133,12 @@ class LocationCollectionActivity : AppCompatActivity() , OnMapReadyCallback {
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng))
         googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 5f))
         googleMap.addMarker(markerOptions)
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+
     }
 }
