@@ -406,6 +406,8 @@ class LeadCorrectionActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     val jsonObject2 = JSONObject()
                     var jobjt = array_product_lead.getJSONObject(i)
 
+
+
 //                    val strrfollowup = jsonObject.getString("NextActionDate")
 //                    var folloupdate = ""
 //                    if (!strrfollowup.equals("")){

@@ -69,10 +69,26 @@ class AttendanceReportAdapter(
                 holder.txtv_loc2.text        = jsonObject1!!.getString("LocationName")
                 holder.txtPunchout.text        = jsonObject1!!.getString("PunchStatus")
 
+
+                if(jsonObject1!!.getString("EnteredTime").equals(""))
+                {
+                    holder.txtv_time2.visibility=View.GONE
+                }
+                if(jsonObject1!!.getString("LocationName").equals(""))
+                {
+                    holder.txtv_loc2.visibility=View.GONE
+                }
+                if(jsonObject1!!.getString("PunchStatus").equals(""))
+                {
+                    holder.txtPunchout.visibility=View.GONE
+                }
+
+
+
                 holder.txtPunchout.setTextColor(ContextCompat.getColor(context, R.color.red));
 
 
-                holder.txtv_Designation.text        = jsonObject1!!.getString("Designation")
+                holder.txtv_Designation.text        = jsonObject!!.getString("Designation")
 
 
 
