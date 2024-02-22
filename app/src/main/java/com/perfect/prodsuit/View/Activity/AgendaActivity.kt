@@ -560,7 +560,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
 
 
-            builder.setMessage("No data Found")
+            builder.setMessage("No Emi Found")
             builder.setPositiveButton("Ok") { dialogInterface, which ->
              //   dialogInterface.dismiss()
                 onBackPressed()
@@ -586,7 +586,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
 
 
-            builder.setMessage("No data Found")
+            builder.setMessage("No Service Found")
             builder.setPositiveButton("Ok") { dialogInterface, which ->
              //   dialogInterface.dismiss()
                 onBackPressed()
@@ -615,7 +615,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
 
 
-            builder.setMessage("No data Found")
+            builder.setMessage("No Lead Found")
             builder.setPositiveButton("Ok") { dialogInterface, which ->
               //  dialogInterface.dismiss()
                 onBackPressed()
@@ -2294,7 +2294,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                         this@AgendaActivity,
                         R.style.MyDialogTheme
                     )
-                    builder.setMessage("No Data Found")
+                    builder.setMessage("No Service found")
                     builder.setPositiveButton("OK") { dialogInterface, which ->
                         dialogInterface.dismiss()
                         toDoDet = 0
@@ -2358,7 +2358,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                         R.style.MyDialogTheme
                     )
                     coun!!.text="0"
-                    builder.setMessage("No Data Found")
+                    builder.setMessage("No Emi Found")
                     builder.setPositiveButton("OK") { dialogInterface, which ->
                         dialogInterface.dismiss()
                         emiCount = 0
@@ -2456,7 +2456,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
     }
 
-    private fun getTodoList2() {
+   /* private fun getTodoList2() {
         Log.i("response2", "getTodoList2")
 //        var toDoDet = 0
         // rv_todolist!!.adapter = null
@@ -2568,7 +2568,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                                 this@AgendaActivity,
                                                 R.style.MyDialogTheme
                                             )
-                                            builder.setMessage("No Data FOund")
+                                            builder.setMessage("No Data Found")
                                             builder.setPositiveButton("Ok") { dialogInterface, which ->
                                                 dialogInterface.dismiss()
                                                 toDoDet = 0
@@ -2625,7 +2625,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 //                    .show()
             }
         }
-    }
+    }*/
 
 
 //    private fun getAgendaCounts() {
