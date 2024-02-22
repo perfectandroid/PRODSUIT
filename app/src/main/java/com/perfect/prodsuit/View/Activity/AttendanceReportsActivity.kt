@@ -73,9 +73,6 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
     private var til_AttendedBy: TextInputLayout? = null
     private var crdv_empdetail: CardView? = null
 
-
-
-
     var exmessage : String? = ""
 
 
@@ -206,8 +203,8 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
            }
    */
 
-      /*  networkChangeReceiver = NetworkChangeReceiver()
-        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))*/
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
 
@@ -426,8 +423,8 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
     override fun onRestart() {
         super.onRestart()
 
-       /* networkChangeReceiver = NetworkChangeReceiver()
-        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))*/
+        networkChangeReceiver = NetworkChangeReceiver()
+        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
         /*  serviceList = 0
 
           val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
