@@ -402,7 +402,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     var isplaying1 = false
     var pausePosition1 = 0
     companion object {
-        var checkProject: String = "1"
+     //   var checkProject: String = "1"
+        var checkProject: String = "0"
 
         var LeadFromType: String? = ""   //  0-Text ,  1-Dropdown ,  2-None
         var HasSubMedia: String? = ""   //  0-None ,  1-Has
@@ -456,7 +457,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         var leadByMode: String? = "1" // GONE
         var mediaTypeMode: String? = "1" // GONE
         var uploadImageMode: String? = "1" // GONE
-        var ID_Category: String? = "0"
+        var ID_Category: String? = ""
         var ID_Product: String? = ""
         var ID_Status: String? = ""
         var ID_Priority: String? = ""
@@ -688,14 +689,14 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                 Log.e(TAG, "strGsValue   5292   " + strGsValue)
                                 if (strGsValue.equals("true")) {
                                     Log.e(TAG, "strGsValue   52921   " + strGsValue)
-                                    cardLeadRequest!!.visibility = View.VISIBLE
-
+//                                    cardLeadRequest!!.visibility = View.VISIBLE
+//
                                     countRequestCount1=0
                                     getRequestDetails1()
 
                                 } else {
                                     Log.e(TAG, "strGsValue   52922   " + strGsValue)
-                                    cardLeadRequest!!.visibility = View.GONE
+                                  //  cardLeadRequest!!.visibility = View.GONE
                                 }
 //                                leadRequestArrayList = jobjt.getJSONArray("CollectedByUsers")
 //                                if (leadRequestArrayList.length() > 0) {
@@ -803,7 +804,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
         edtCompanyContact!!.setText("")
 
-        ID_Category = "0"
+      //  ID_Category = "0"
+        ID_Category = ""
         ID_Product = ""
         strProdName = ""
         strQty = ""
@@ -2294,7 +2296,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 //   checkProject="1"
                 var clickmode = multipleProductValidation(v)
 
-                Log.i("resperr","clickMode="+clickMode)
+                Log.i("resperr778","clickMode="+clickMode)
                 if (clickMode!!.equals("1")) {
 
                     if (arrupdateedit!!.equals("0")) {
@@ -2325,7 +2327,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 edtProjectName!!.visibility = View.GONE
                 edtProdpriority!!.visibility = View.VISIBLE
                 strQty = ""
-                ID_Category = "0"
+                ID_Category = ""
                 CompanyCategory = ""
                 strExpecteddate = ""
                 strFeedback = ""
@@ -2386,7 +2388,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 Log.e(TAG, "strGsValue   52921 6576  " + strGsValue)
                 if (strGsValue.equals("true")) {
 
-                    cardLeadRequest!!.visibility = View.VISIBLE
+               //     cardLeadRequest!!.visibility = View.VISIBLE
 
                     countRequestCount1=0
                     getRequestDetails1()
@@ -2899,6 +2901,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                 leadRequestArrayList = jobjt.getJSONArray("WalkingCustomerDetails")
                                 if (leadRequestArrayList.length() > 0)
                                 {
+                                    cardLeadRequest!!.visibility = View.VISIBLE
 
                                     llLeadRequest!!.visibility=View.VISIBLE
                                     recyRequest!!.visibility=View.VISIBLE
@@ -2932,6 +2935,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                 }
                                 else
                                 {
+                                    cardLeadRequest!!.visibility = View.GONE
                                     recyRequest!!.visibility=View.GONE
                                     llLeadRequest!!.visibility=View.GONE
 
@@ -2939,20 +2943,20 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
                             }
                             else {
-
+                                cardLeadRequest!!.visibility = View.GONE
                                 recyRequest!!.visibility=View.GONE
                                 llLeadRequest!!.visibility=View.GONE
-
-                                val builder = AlertDialog.Builder(
-                                    this@LeadGenerationActivity,
-                                    R.style.MyDialogTheme
-                                )
-                                builder.setMessage(jObject.getString("EXMessage"))
-                                builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                }
-                                val alertDialog: AlertDialog = builder.create()
-                                alertDialog.setCancelable(false)
-                                alertDialog.show()
+//
+//                                val builder = AlertDialog.Builder(
+//                                    this@LeadGenerationActivity,
+//                                    R.style.MyDialogTheme
+//                                )
+//                                builder.setMessage(jObject.getString("EXMessage")+"gvbjnbnbbb")
+//                                builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                                }
+//                                val alertDialog: AlertDialog = builder.create()
+//                                alertDialog.setCancelable(false)
+//                                alertDialog.show()
                             }
                         } else {
 //                            Toast.makeText(
@@ -8215,6 +8219,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         }
     }
     private fun LeadValidations(v: View) {
+        llLeadRequest!!.visibility=View.GONE
         Log.e(TAG, "LeadValidations  3732   " + ID_Customer + "  " + ID_Customer!!.length)
         Log.e(
             TAG,
@@ -10052,40 +10057,161 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
         Log.e(TAG, "   stramount        " + stramount + "===" + MRRP)
 
+        Log.e(TAG, "54353454 category=" + ID_Category)
+        Log.e(TAG, "54353454 checkProject=" + checkProject)
+
         Log.e("", "tttttt" + strQty)
         Log.i("resperr","p="+strProduct)
         Log.i("resperr","checkProject="+checkProject)
 
-        if (checkProject.equals("0") && strProject.equals(""))
-        {
-            Log.i("resperr","checkProject="+checkProject)
-            Config.snackBars(context, v, "Enter Model")
-
-        }
-
-
-        else if (checkProject.equals("1") && strProduct.equals(""))
-        {
-            Log.i("resperr","checkProject="+checkProject)
-            Config.snackBars(context, v, "Select Product")
-
-        }
-
-//        if (checkProject.equals("1")) {
+//        if (checkProject.equals("0") && strProject.equals(""))
+//        {
+//            Log.i("resperr","checkProject="+checkProject)
+//            Config.snackBars(context, v, "Enter Model")
+//
+//        }
+//
+//
+//        else if (checkProject.equals("0") && strProduct.equals(""))
+//        {
 //            Log.i("resperr","checkProject="+checkProject)
 //            Config.snackBars(context, v, "Select Product")
 //
-//
 //        }
-        else if (strQty.equals("") || fQty == 0) {
-            if (CompanyCategory.equals("0") || CompanyCategory.equals("1")) {
-                Config.snackBars(context, v, "Enter Quantity")
-            } else if (CompanyCategory.equals("2")) {
-                Config.snackBars(context, v, "Enter No.of Passengers")
-            }else{
-                Config.snackBars(context, v, "Enter Quantity")
+
+       if (ID_Category.equals(""))
+        {
+            Log.i("resperr","checkProject="+checkProject)
+            Config.snackBars(context, v, "Select Category")
+
+        }
+       else if (!ID_Product.equals(""))
+       {
+
+
+           //.....................
+
+            if (strQty.equals("") || fQty == 0) {
+           if (CompanyCategory.equals("0") || CompanyCategory.equals("1"))
+           {
+               Config.snackBars(context, v, "Enter Quantity ")
+           } else if (CompanyCategory.equals("2")) {
+               Config.snackBars(context, v, "Enter No.of Passengers")
+           }else{
+               Config.snackBars(context, v, "Enter Quantity  ")
+           }
+       }
+
+           else{
+                 if (CompanyCategory.equals("2") && strExpecteddate.equals("")) {
+                    Config.snackBars(context, v, "Expected date")
+
+                }else if ((MRRP.toFloat() != "0.00".toFloat()) && (stramount.toFloat() > MRRP.toFloat())) {
+                    Config.snackBars(context, v, "Offer Price Should be less than or Equal to MRP")
+                }
+                else if (strFeedback.equals("")) {
+                    Config.snackBars(context, v, "Enter Enquiry Note ")
+
+
+                } else if (ID_Status.equals("")) {
+                    Config.snackBars(context, v, "Select Action")
+
+
+                } else if (ID_Status.equals("1"))
+                {
+
+                    Log.v("gfdfgdfgdf", "ProductValidations  373221   " + ID_Status)
+                    Log.v("gfdfgdfgdfygyhuhuhu", "ID_NextAction  373221   " + ID_NextAction)
+
+                    if (ID_NextAction.equals("")) {
+                        Config.snackBars(context, v, "Select Followup Action")
+
+                    } else if (ID_ActionType.equals("")) {
+                        Config.snackBars(context, v, "Select Action type")
+
+                    } else if (strFollowupdate.equals("")) {
+                        Config.snackBars(context, v, "Select Followup Date")
+
+
+                    } else if (ID_Employee.equals("")) {
+                        Config.snackBars(context, v, "Select Assigned To")
+
+                    } else if (ID_Priority.equals("")) {
+                        Config.snackBars(context, v, "Select Priority")
+                        Log.e(TAG, "   stramount1        " + stramount + "===" + MRRP)
+
+                    }
+//            else if (!MRRP.equals("0")){
+//                else if(MRRP.toFloat() != "0".toFloat()){
+//
+//                Log.v("tttttyyuuiii", "in")
+//
+//                if (stramount.toFloat() <= MRRP.toFloat()) {
+//
+//                    clickMode = "1"
+//                } else {
+//
+//                    Log.e(TAG, "   Valid   : Enter Amount DD     " + stramount + "===" + MRRP)
+//                    Config.snackBars(context, v, "Offer Price Should be less than or Equal to MRP")
+////                addMultipleProduct()
+//                }
+//            }
+                    else{
+                        Log.v("gfdfgdfgdf", "else")
+                        clickMode = "1"
+                    }
+
+
+
+                }
+                else
+                {
+                    Log.v("gfdfgdfgdf", "ProductValidations  dfgdfgdfgff   " + ID_Status)
+                    if (ID_Priority.equals("")) {
+                        Config.snackBars(context, v, "Select Priority")
+
+                    }
+//            else if(MRRP.toFloat() != "0".toFloat()){
+//
+//                Log.e(TAG, "   111122220000 innn     " + stramount + "===" + MRRP)
+////            else if (!MRRP.equals("0")){
+//                if (stramount.toFloat() <= MRRP.toFloat()) {
+//                    clickMode = "1"
+//
+//                } else {
+//
+//                    Log.e(TAG, "   Valid   : Enter Amount DD     " + stramount + "===" + MRRP)
+//                    Config.snackBars(context, v, "Offer Price Should be less than or Equal to MR1P")
+////                addMultipleProduct()
+//                }
+//            }
+                    else{
+                        clickMode = "1"
+                    }
+                }
             }
-        } else if (CompanyCategory.equals("2") && strExpecteddate.equals("")) {
+
+
+
+
+           //...................................
+       }
+
+
+
+//       else if (strQty.equals("") || fQty == 0) {
+//            if (CompanyCategory.equals("0") || CompanyCategory.equals("1"))
+//            {
+//                Config.snackBars(context, v, "Enter Quantity")
+//            } else if (CompanyCategory.equals("2")) {
+//                Config.snackBars(context, v, "Enter No.of Passengers")
+//            }else{
+//                Config.snackBars(context, v, "Enter Quantity")
+//            }
+//        }
+
+
+       else if (CompanyCategory.equals("2") && strExpecteddate.equals("")) {
             Config.snackBars(context, v, "Expected date")
 
         }else if ((MRRP.toFloat() != "0".toFloat()) && (stramount.toFloat() > MRRP.toFloat())) {
@@ -10145,7 +10271,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 
 
-        } else
+        }
+       else
         {
             Log.v("gfdfgdfgdf", "ProductValidations  dfgdfgdfgff   " + ID_Status)
             if (ID_Priority.equals("")) {
@@ -10273,7 +10400,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         edtAmount!!.setText("")
 
         strQty = ""
-        ID_Category = "0"
+        ID_Category = ""
         CompanyCategory = ""
         strExpecteddate = ""
         strFeedback = ""
@@ -10284,6 +10411,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         ID_ProductLocation = "0"
         strFollowupdate = ""
         ProductMRP = ""
+        edtProjectName!!.setText("")
         hideViews()
 
 
@@ -10548,7 +10676,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                         tv_Mrp!!.setText("")
                                         edtProdcategory!!.setText("")
                                         edtProdproduct!!.setText("")
-                                        ID_Category = "0"
+                                        ID_Category = ""
                                         ID_Product = ""
 
 
