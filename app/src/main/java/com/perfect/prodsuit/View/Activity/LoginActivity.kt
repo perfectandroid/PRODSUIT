@@ -252,6 +252,7 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
                                 if (msg!!.length > 0) {
                                     if (countLogin == 0) {
                                         countLogin++
+                                        Log.e(TAG, "msg   login   " + msg)
                                         val jObject = JSONObject(msg)
                                         if (jObject.getString("StatusCode") == "0") {
 

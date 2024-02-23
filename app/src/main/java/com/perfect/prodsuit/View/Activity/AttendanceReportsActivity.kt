@@ -73,9 +73,6 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
     private var til_AttendedBy: TextInputLayout? = null
     private var crdv_empdetail: CardView? = null
 
-
-
-
     var exmessage : String? = ""
 
 
@@ -184,7 +181,7 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
 
 
 
-    //    strToDate=tie_Date!!.text.toString()
+        //    strToDate=tie_Date!!.text.toString()
         getPunchReport(strDate!!)
 
 
@@ -203,8 +200,8 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
 
 
 
-        }
-*/
+           }
+   */
 
         networkChangeReceiver = NetworkChangeReceiver()
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
@@ -322,6 +319,8 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
 
                                             serviceListSort = JSONArray()
                                             outPunchSort = JSONArray()
+                                            val len =attendancefirstpunchArrayList.length()+1
+                                            val len1 =attendancefirstpunchArrayList.length()+1
 
                                             for (k in 0 until attendancefirstpunchArrayList.length()) {
                                                 val jsonObject = attendancefirstpunchArrayList.getJSONObject(k)
@@ -335,8 +334,11 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
                                                 // reportNamesort.put(k,jsonObject)
                                                 outPunchSort.put(jsonObject)
                                             }
-                                            Log.e(TAG, "msg   punchinArray   " + serviceListSort.toString())
-                                            Log.e(TAG, "msg   punchoutArray   " + outPunchSort.toString())
+                                            Log.e(TAG, "msg   punchinArray   " + serviceListSort.length().toString())
+                                            Log.e(TAG, "msg   punchoutArray   " + outPunchSort.length().toString())
+
+
+
 
 
                                             //   tv_listCount!!.setText(""+serviceListSort.length())

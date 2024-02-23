@@ -1513,7 +1513,7 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_toLeftOf="@+id/img_search"
-                                                    android:background="@drawable/shape_bg"
+                                                    android:background="@drawable/shape_bg_mandatory"
                                                     android:drawableRight="@drawable/arrowright"
                                                     android:drawableLeft="@drawable/lead_categorys"
                                                     android:drawableTint="@color/greydark"
@@ -1531,7 +1531,7 @@
                                                     android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:layout_toLeftOf="@+id/img_search"
-                                                    android:background="@drawable/shape_bg_mandatory"
+                                                    android:background="@drawable/shape_bg"
                                                     android:drawableLeft="@drawable/lead_categorys"
                                                     android:drawableTint="@color/greydark"
                                                     android:hint="Model "
@@ -1561,7 +1561,8 @@
                                                             android:id="@+id/edtProdproduct"
                                                             android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
-                                                            android:background="@drawable/shape_bg_mandatory"
+
+                                                            android:background="@drawable/shape_bg"
                                                             android:drawableLeft="@drawable/lead_productss"
                                                             android:drawableRight="@drawable/arrowright"
                                                             android:drawableTint="@color/greydark"
@@ -1667,13 +1668,13 @@
                                                         android:drawableLeft="@drawable/lead_quantitys"
                                                         android:drawableTint="@color/greydark"
                                                         android:gravity="center_vertical"
-                                                        android:hint="Qty"
+                                                        android:hint="0"
                                                         android:fontFamily="@font/myfont"
                                                         android:inputType="number"
                                                         android:maxLength="5"
                                                         android:padding="7dp"
                                                         android:singleLine="true"
-                                                        android:text=""
+                                                        android:text="0"
                                                         android:textSize="15dp" />
 
 
