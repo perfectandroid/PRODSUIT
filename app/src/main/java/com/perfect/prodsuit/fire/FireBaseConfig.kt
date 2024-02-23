@@ -24,7 +24,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.IOException
 
 
-object FireBaseConfig {
+    object FireBaseConfig {
 
     var TAG = "FireBaseConfig"
     var deviceId = ""

@@ -38,6 +38,7 @@ import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import org.w3c.dom.Text
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -169,6 +170,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var replacedcount                                   = 0
     var ReplceModeSub                                   = ""
     var WarrantyMode                                    = ""
+    var TicketRegDate                                    = ""
     //................................
 
 
@@ -500,6 +502,7 @@ Log.v("adasdasds","modeTab "+modeTab)
             Log.e(TAG,"MODE  421114   ")
             Log.v("adasdasds","modeTab5 ")
             finalSave()
+
         }
     }
 
@@ -972,8 +975,13 @@ Log.v("adasdasds","modeTab "+modeTab)
                                         FK_Product = serviceFollowUpInfoObjectList.getString("FK_Product")
                                         NameCriteria = serviceFollowUpInfoObjectList.getString("CusNumber")
                                         tv_followupticket!!.setText(serviceFollowUpInfoObjectList.getString("Ticket"))
+                                        TicketRegDate = serviceFollowUpInfoObjectList.getString("RegisterdOn")
 
 //                                        Log.e(TAG, "leadShow")
+
+//                                        if (PSValue.equals("1")){
+//
+//                                        }
 
                                             serviceFollowUpServiceType = 0
                                             getServiceDetails(FK_Product!!,NameCriteria!!)
@@ -1319,6 +1327,8 @@ Log.v("adasdasds","modeTab "+modeTab)
                                     serviceFollowUpAttendance++
                                     val jObject = JSONObject(msg)
                                     if (jObject.getString("StatusCode") == "0") {
+                                        serviceFollowUpAttendanceArrayList = JSONArray()
+                                        modelFollowUpAttendance.clear()
                                         val jobjt = jObject.getJSONObject("Attendancedetails")
                                         serviceFollowUpAttendanceArrayList = jobjt.getJSONArray("AttendancedetailsList")
                                         Log.e(TAG,"1337  "+serviceFollowUpAttendanceArrayList)
@@ -1760,6 +1770,7 @@ Log.v("adasdasds","modeTab "+modeTab)
 
             img_PayRefresh!!.setOnClickListener {
                 arrAddUpdate = "0"
+                ID_PaymentMethod = ""
                 edtPayMethod!!.setText("")
                 edtPayRefNo!!.setText("")
                 edtPayAmount!!.setText("")
@@ -1879,14 +1890,14 @@ Log.v("adasdasds","modeTab "+modeTab)
                         }
 
                         val edtAmt = DecimelFormatters.set2DecimelPlace(strAmnt!!.toFloat())
+                        var payAmount = DecimalToWordsConverter.commaRemover(edtPayAmount!!.text.toString())
                         var txt = edtPayAmount!!.text.toString()
                         // Log.e(TAG,"2830213    "+  DecimalToWordsConverter.getDecimelFormateForEditText(txt))
 
                         //  edtPayAmount!!.setText(DecimalToWordsConverter.getDecimelFormateForEditText(txt))
-                        if (edtPayAmount!!.text.toString().equals("")) {
+                        if (!edtPayAmount!!.text.toString().equals("") && payAmount.toFloat() > 0) {
 //                        txt_pay_method!!.setTextColor(ContextCompat.getColorStateList(context,R.color.color_mandatory))
-                        } else {
-                            //   til_DeliveryDate!!.isErrorEnabled = false
+
                             edtPayAmount!!.setText(
                                 DecimalToWordsConverter.getDecimelFormateForEditText(
                                     strAmnt!!
@@ -1898,6 +1909,20 @@ Log.v("adasdasds","modeTab "+modeTab)
                                     R.color.black
                                 )
                             )
+
+                        } else {
+                            //   til_DeliveryDate!!.isErrorEnabled = false
+//                            edtPayAmount!!.setText(
+//                                DecimalToWordsConverter.getDecimelFormateForEditText(
+//                                    strAmnt!!
+//                                )
+//                            )
+//                            txt_pay_Amount!!.setTextColor(
+//                                ContextCompat.getColorStateList(
+//                                    context,
+//                                    R.color.black
+//                                )
+//                            )
                         }
                         edtPayAmount!!.setSelection(edtPayAmount!!.length())
                         edtPayAmount!!.addTextChangedListener(this)
@@ -1960,7 +1985,6 @@ Log.v("adasdasds","modeTab "+modeTab)
         var hasId = hasPayMethod(arrPayment, "MethodID", ID_PaymentMethod!!)
 
 
-
         if (ID_PaymentMethod.equals("")) {
             Log.e(TAG, "110   Valid   : Select Payment Method")
             edtPayMethod!!.setError("Select Payment Method", null)
@@ -1989,6 +2013,17 @@ Log.v("adasdasds","modeTab "+modeTab)
             )
             Log.e(TAG, "110   Valid   : Enter Amount")
             Config.snackBarWarning(context, view, "Enter Amount")
+
+        }else if (payAmount.toFloat() <= 0) {
+//            else if (edtPayAmount!!.text.toString().equals("")){
+            txt_pay_Amount!!.setTextColor(
+                ContextCompat.getColorStateList(
+                    context,
+                    R.color.color_mandatory
+                )
+            )
+            Log.e(TAG, "110   Valid   : Enter Amount")
+            Config.snackBarWarning(context, view, "Amount Should be greater than 0")
 
         } else if (balAmount < payAmount.toFloat()) {
             Log.e(TAG, "110   Valid   : Enter Amount DD")
@@ -2114,9 +2149,20 @@ Log.v("adasdasds","modeTab "+modeTab)
                     strMonth = "0" + strMonth
                 }
 
-
+                Log.e(TAG,"2132221   TicketRegDate    "+TicketRegDate)
                 if (DateType == 0) {
-                    tie_DateAttended!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                    var Datess = "" + strDay + "-" + strMonth + "-" + strYear
+                    var isValid = Config.convertTimemills(TicketRegDate,Datess)
+                    if (isValid){
+                        tie_DateAttended!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                    }else{
+                        Log.e(TAG,"2132222   TicketRegDate    "+TicketRegDate+"  :  "+Datess+"  :  ")
+                        tie_DateAttended!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                       // Config.snackBars(context,it,"Attended Date Should be greater than or equal to Ticket register Date")
+                        Config.showCustomToast("Attended Date Should be greater than or equal to Ticket register Date",context)
+                    }
+
+
                 }
                 if (DateType == 1) {
                     var empModel = actionTakenSelected[modEditPosition]
@@ -3063,15 +3109,34 @@ Log.v("adasdasds","modeTab "+modeTab)
                             Config.showCustomToast("Net Amount & Payment Amount should be equal",context)
 //                            Toast.makeText(applicationContext,"Net Amount & Payment Amount should be equal",Toast.LENGTH_SHORT).show()
                         }else{
-                            serviceFollowUpAttendance=0
-                            loadAttendance()
+
+                            var Datess = tie_DateAttended!!.text.toString()
+                            var isValid = Config.convertTimemills(TicketRegDate,Datess)
+                            if (isValid){
+                                serviceFollowUpAttendance=0
+                                loadAttendance()
+                            }else{
+                                Config.showCustomToast("Attended Date Should be greater than or equal to Ticket register Date",context)
+                            }
+
+//                            serviceFollowUpAttendance=0
+//                            loadAttendance()
                         }
 
                         Log.e(TAG,"  252222    Select payment methode   ")
                     }else{
                         Log.e(TAG,"  252223    Select payment methode   ")
-                        serviceFollowUpAttendance=0
-                        loadAttendance()
+                        var Datess = tie_DateAttended!!.text.toString()
+                        var isValid = Config.convertTimemills(TicketRegDate,Datess)
+                        if (isValid){
+                            serviceFollowUpAttendance=0
+                            loadAttendance()
+                        }else{
+                            Config.showCustomToast("Attended Date Should be greater than or equal to Ticket register Date",context)
+                        }
+
+//                        serviceFollowUpAttendance=0
+//                        loadAttendance()
                     }
                 }
             }
@@ -3966,8 +4031,8 @@ Log.v("adasdasds","modeTab "+modeTab)
         if (data.equals("WarrantyModeList")){
 
             var empModel = servicepartsReplacedModel[position]
-            WarrantyMode = empModel.WarrantyMode
-            ReplceModeSub = empModel.ReplceMode
+//            WarrantyMode = empModel.WarrantyMode
+//            ReplceModeSub = empModel.ReplceMode
 
             modEditPosition = position
 //            warrantyEditPosition = position
@@ -3981,8 +4046,8 @@ Log.v("adasdasds","modeTab "+modeTab)
             modEditPosition = position
 
             var empModel = servicepartsReplacedModel[position]
-            WarrantyMode = empModel.WarrantyMode
-            ReplceModeSub = empModel.ReplceMode
+//            WarrantyMode = empModel.WarrantyMode
+//            ReplceModeSub = empModel.ReplceMode
 
             Log.e(TAG,"1018 check     "+position)
             replacedcount = 0
@@ -4550,12 +4615,20 @@ Log.v("adasdasds","modeTab "+modeTab)
             recyFollowupType =
                 dialogFollowupType!!.findViewById(R.id.recyFollowupType) as RecyclerView
             val etsearch = dialogFollowupType!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogFollowupType!! .findViewById(R.id.txt_nodata) as TextView
+
+            txt_nodata.text = "Invalid Action Type"
 
             followUpTypeSort = JSONArray()
             for (k in 0 until followUpTypeArrayList.length()) {
                 val jsonObject = followUpTypeArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 followUpTypeSort.put(jsonObject)
+            }
+
+            if (followUpTypeSort.length() <= 0){
+                recyFollowupType!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
             val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
@@ -4589,6 +4662,14 @@ Log.v("adasdasds","modeTab "+modeTab)
                             }
 
                         }
+                    }
+
+                    if (followUpTypeSort.length() <= 0){
+                        recyFollowupType!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyFollowupType!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "followUpTypeSort               7103    " + followUpTypeSort)
@@ -4687,12 +4768,21 @@ Log.v("adasdasds","modeTab "+modeTab)
             dialogEmployee!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyEmployee = dialogEmployee!!.findViewById(R.id.recyEmployee) as RecyclerView
             val etsearch = dialogEmployee!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogEmployee!! .findViewById(R.id.txt_nodata) as TextView
+
+            txt_nodata.text = "Invalid Employee"
+
 
             employeeSort = JSONArray()
             for (k in 0 until employeeArrayList.length()) {
                 val jsonObject = employeeArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 employeeSort.put(jsonObject)
+            }
+
+            if (employeeSort.length() <= 0){
+                recyEmployee!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
             val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
@@ -4728,6 +4818,14 @@ Log.v("adasdasds","modeTab "+modeTab)
                         }
                     }
 
+                    if (employeeSort.length() <= 0){
+                        recyEmployee!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyEmployee!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
+                    }
+
                     Log.e(TAG, "employeeSort               7103    " + employeeSort)
                     val adapter = EmployeeAdapter(this@ServiceFollowUPActiivty, employeeSort)
                     recyEmployee!!.adapter = adapter
@@ -4760,8 +4858,9 @@ Log.v("adasdasds","modeTab "+modeTab)
                                 if (compnantMode == 0) {
                                     compnantMode++
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg  58011   "+msg)
+                                    Log.e(TAG,"msg  5801121   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
+                                        Log.e(TAG,"jObject  5801122   "+jObject)
                                         val jobjt = jObject.getJSONObject("ProductListDetails")
                                         servCompanantArray = jobjt.getJSONArray("ProductSearchList")
                                         Log.e(TAG,"2495    "+servCompanantArray)
@@ -5848,7 +5947,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                             if (msg!!.length > 0) {
 
                                 Log.i("resp900","msg=="+msg)
-                                Log.e(TAG,"msg "+msg)
+                                Log.e(TAG,"msg 58555 "+msg)
 
                                 if (warrantycount == 0) {
                                     warrantycount++
@@ -6049,12 +6148,20 @@ Log.v("adasdasds","modeTab "+modeTab)
             dialogCategory!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyCategory = dialogCategory!! .findViewById(R.id.recyCategory) as RecyclerView
             val etsearch = dialogCategory!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogCategory!! .findViewById(R.id.txt_nodata) as TextView
+
+            txt_nodata.text = "Invalid Category"
 
             categorySort = JSONArray()
             for (k in 0 until categoryArrayList.length()) {
                 val jsonObject = categoryArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 categorySort.put(jsonObject)
+            }
+
+            if (categorySort.length() <= 0){
+                recyCategory!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
 
@@ -6088,6 +6195,15 @@ Log.v("adasdasds","modeTab "+modeTab)
                             }
 
                         }
+                    }
+
+
+                    if (categorySort.length() <= 0){
+                        recyCategory!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyCategory!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"categorySort               7103    "+categorySort)
@@ -6192,14 +6308,21 @@ Log.v("adasdasds","modeTab "+modeTab)
             recyCategory = dialogSubCategory!! .findViewById(R.id.recyCategory) as RecyclerView
             val etsearch = dialogSubCategory!! .findViewById(R.id.etsearch) as EditText
             val tv_header = dialogSubCategory!! .findViewById(R.id.tv_header) as TextView
+            val txt_nodata = dialogSubCategory!! .findViewById(R.id.txt_nodata) as TextView
 
             tv_header.setText("Sub Category")
+            txt_nodata.text = "Invalid Sub Category"
+
 
             subCategorySort = JSONArray()
             for (k in 0 until subCategoryArrayList.length()) {
                 val jsonObject = subCategoryArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 subCategorySort.put(jsonObject)
+            }
+            if (subCategorySort.length() <= 0){
+                recyCategory!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
 
@@ -6233,6 +6356,14 @@ Log.v("adasdasds","modeTab "+modeTab)
                             }
 
                         }
+                    }
+
+                    if (subCategorySort.length() <= 0){
+                        recyCategory!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyCategory!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"categorySort               7103    "+subCategorySort)
@@ -6334,6 +6465,9 @@ Log.v("adasdasds","modeTab "+modeTab)
             recyBrand = dialogBrand!! .findViewById(R.id.recyBrand) as RecyclerView
             val etsearch = dialogBrand!! .findViewById(R.id.etsearch) as EditText
             val tv_header = dialogBrand!! .findViewById(R.id.tv_header) as TextView
+            val txt_nodata = dialogBrand!! .findViewById(R.id.txt_nodata) as TextView
+
+            txt_nodata.text = "Invalid Brand"
 
 
             brandSort = JSONArray()
@@ -6342,6 +6476,12 @@ Log.v("adasdasds","modeTab "+modeTab)
                 // reportNamesort.put(k,jsonObject)
                 brandSort.put(jsonObject)
             }
+
+            if (brandSort.length() <= 0){
+                recyBrand!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
+            }
+
 
 
             val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
@@ -6374,6 +6514,14 @@ Log.v("adasdasds","modeTab "+modeTab)
                             }
 
                         }
+                    }
+
+                    if (brandSort.length() <= 0){
+                        recyBrand!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyBrand!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"brandSort               7103    "+brandSort)
@@ -6471,12 +6619,20 @@ Log.v("adasdasds","modeTab "+modeTab)
             dialogComplaint!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyComplaint = dialogComplaint!! .findViewById(R.id.recyComplaint) as RecyclerView
             val etsearch = dialogComplaint!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogComplaint    !! .findViewById(R.id.txt_nodata) as TextView
+
+            txt_nodata.text = "Invalid Complaint"
 
             complaintSort = JSONArray()
             for (k in 0 until complaintArrayList.length()) {
                 val jsonObject = complaintArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 complaintSort.put(jsonObject)
+            }
+
+            if (complaintSort.length() <= 0){
+                recyComplaint!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
 
@@ -6510,6 +6666,14 @@ Log.v("adasdasds","modeTab "+modeTab)
                             }
 
                         }
+                    }
+
+                    if (complaintSort.length() <= 0){
+                        recyComplaint!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyComplaint!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"complaintSort               2203    "+complaintSort)

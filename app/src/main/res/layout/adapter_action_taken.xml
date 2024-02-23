@@ -208,6 +208,8 @@
                                 android:paddingLeft="2dp"
                                 android:paddingRight="10dp"
                                 android:text=""
+                                android:maxLines="3"
+                                android:maxLength="150"
                                 android:textColor="@color/black"
                                 android:textSize="14dp"
                                 android:textStyle="normal" />
@@ -261,6 +263,8 @@
                                 android:paddingLeft="2dp"
                                 android:paddingRight="10dp"
                                 android:text=""
+                                android:maxLines="3"
+                                android:maxLength="150"
                                 android:textColor="@color/black"
                                 android:textSize="14dp"
                                 android:textStyle="normal" />
