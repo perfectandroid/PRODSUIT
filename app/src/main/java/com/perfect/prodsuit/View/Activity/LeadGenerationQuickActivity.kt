@@ -22,6 +22,8 @@ import android.os.Environment
 import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.text.Editable
+import android.text.InputFilter
+import android.text.InputFilter.LengthFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
@@ -50,6 +52,7 @@ import java.io.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
     lateinit var cusNameSort: JSONArray
@@ -447,11 +450,15 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                 SubModeSearch = "1"
                 edt_customer!!.setInputType(InputType.TYPE_CLASS_TEXT)
                 edt_customer!!.setText("")
+
+
+
             }
             if (position == 1) {
                 SubModeSearch = "2"
                 edt_customer!!.setInputType(InputType.TYPE_CLASS_NUMBER)
                 edt_customer!!.setText("")
+                edt_customer!!.filters = arrayOf(InputFilter.LengthFilter(15))
             }
 
         }
@@ -1347,12 +1354,17 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdDetail = dialogProdDet!!.findViewById(R.id.recyProdDetail) as RecyclerView
             val etsearch = dialogProdDet!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogProdDet!! .findViewById(R.id.txt_nodata) as TextView
 
             prodDetailSort = JSONArray()
             for (k in 0 until prodDetailArrayList.length()) {
                 val jsonObject = prodDetailArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 prodDetailSort.put(jsonObject)
+            }
+            if (prodDetailSort.length() <= 0){
+                recyProdDetail!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
             val lLayout = GridLayoutManager(this@LeadGenerationQuickActivity, 1)
@@ -1386,6 +1398,13 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                             }
 
                         }
+                    }
+                    if (prodDetailSort.length() <= 0){
+                        recyProdDetail!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyProdDetail!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "prodDetailSort               7103    " + prodDetailSort)
@@ -1489,6 +1508,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             recyProdPriority =
                 dialogProdPriority!!.findViewById(R.id.recyProdPriority) as RecyclerView
             val etsearch = dialogProdPriority!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogProdPriority!! .findViewById(R.id.txt_nodata) as TextView
 
             prodPrioritySort = JSONArray()
             for (k in 0 until prodPriorityArrayList.length()) {
@@ -1496,7 +1516,10 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                 // reportNamesort.put(k,jsonObject)
                 prodPrioritySort.put(jsonObject)
             }
-
+            if (prodPrioritySort.length() <= 0){
+                recyProdPriority!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
+            }
 
             val lLayout = GridLayoutManager(this@LeadGenerationQuickActivity, 1)
             recyProdPriority!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -1529,6 +1552,14 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                             }
 
                         }
+                    }
+
+                    if (prodPrioritySort.length() <= 0){
+                        recyProdPriority!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyProdPriority!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "reportNamesort               7103    " + prodPrioritySort)
@@ -1668,6 +1699,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             recyFollowupAction =
                 dialogFollowupAction!!.findViewById(R.id.recyFollowupAction) as RecyclerView
             val etsearch = dialogFollowupAction!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogFollowupAction!! .findViewById(R.id.txt_nodata) as TextView
 
             followUpActionSort = JSONArray()
             for (k in 0 until followUpActionArrayList.length()) {
@@ -1676,6 +1708,11 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                 followUpActionSort.put(jsonObject)
             }
 
+
+            if (followUpActionSort.length() <= 0){
+                recyFollowupAction!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
+            }
             val lLayout = GridLayoutManager(this@LeadGenerationQuickActivity, 1)
             recyFollowupAction!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
@@ -1707,6 +1744,14 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                             }
 
                         }
+                    }
+
+                    if (followUpActionSort.length() <= 0){
+                        recyFollowupAction!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyFollowupAction!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "followUpActionSort               7103    " + followUpActionSort)
@@ -1815,9 +1860,9 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             dialogFollowupType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogFollowupType!!.setContentView(R.layout.followup_type_popup)
             dialogFollowupType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
-            recyFollowupType =
-                dialogFollowupType!!.findViewById(R.id.recyFollowupType) as RecyclerView
+            recyFollowupType = dialogFollowupType!!.findViewById(R.id.recyFollowupType) as RecyclerView
             val etsearch = dialogFollowupType!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogFollowupType!! .findViewById(R.id.txt_nodata) as TextView
 
             followUpTypeSort = JSONArray()
             for (k in 0 until followUpTypeArrayList.length()) {
@@ -1825,6 +1870,12 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                 // reportNamesort.put(k,jsonObject)
                 followUpTypeSort.put(jsonObject)
             }
+
+            if (followUpTypeSort.length() <= 0){
+                recyFollowupType!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
+            }
+
 
             val lLayout = GridLayoutManager(this@LeadGenerationQuickActivity, 1)
             recyFollowupType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -1857,6 +1908,14 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                             }
 
                         }
+                    }
+
+                    if (followUpTypeSort.length() <= 0){
+                        recyFollowupType!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyFollowupType!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "followUpTypeSort               7103    " + followUpTypeSort)

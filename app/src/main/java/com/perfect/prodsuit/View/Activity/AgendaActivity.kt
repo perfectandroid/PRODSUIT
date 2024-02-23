@@ -465,7 +465,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 this@AgendaActivity,
                 R.style.MyDialogTheme
             )
-            builder.setMessage("No Data")
+            builder.setMessage("No List are available.")
             builder.setPositiveButton("OK") { dialogInterface, which ->
                 finish()
 
@@ -560,7 +560,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
 
 
-            builder.setMessage("No Emi Found")
+            builder.setMessage("Emi list is unavailable.")
             builder.setPositiveButton("Ok") { dialogInterface, which ->
              //   dialogInterface.dismiss()
                 onBackPressed()
@@ -586,7 +586,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
 
 
-            builder.setMessage("No Service Found")
+            builder.setMessage("Service list is unavailable.")
             builder.setPositiveButton("Ok") { dialogInterface, which ->
              //   dialogInterface.dismiss()
                 onBackPressed()
@@ -615,7 +615,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
 
 
-            builder.setMessage("No Lead Found")
+            builder.setMessage("Lead list is unavailable.")
             builder.setPositiveButton("Ok") { dialogInterface, which ->
               //  dialogInterface.dismiss()
                 onBackPressed()
@@ -2294,7 +2294,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                         this@AgendaActivity,
                         R.style.MyDialogTheme
                     )
-                    builder.setMessage("No Service found")
+                    builder.setMessage("Service list is unavailable.")
                     builder.setPositiveButton("OK") { dialogInterface, which ->
                         dialogInterface.dismiss()
                         toDoDet = 0
@@ -2358,7 +2358,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                         R.style.MyDialogTheme
                     )
                     coun!!.text="0"
-                    builder.setMessage("No Emi Found")
+                    builder.setMessage("Emi list is unavailable.")
                     builder.setPositiveButton("OK") { dialogInterface, which ->
                         dialogInterface.dismiss()
                         emiCount = 0

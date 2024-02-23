@@ -81,6 +81,7 @@ object AssignedToWalkingRepository {
                     try {
 
                         val jObject = JSONObject(response.body())
+                        Log.e(TAG,"Walking Response"+response.body())
                         val leads = ArrayList<AssignedToWalkingModel>()
                         leads.add(AssignedToWalkingModel(response.body()))
                         val msg = leads[0].message

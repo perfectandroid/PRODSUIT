@@ -219,10 +219,9 @@
                                                         android:background="@android:color/transparent"
                                                         android:fontFamily="@font/myfont"
                                                         android:hint="Search"
-                                                        android:maxLength="25"
                                                         android:padding="7dp"
                                                         android:singleLine="true"
-                                                        android:text=""
+                                                        android:maxLength="25"
                                                         android:textColor="@color/greydark"
                                                         android:textSize="14dp" />
 
