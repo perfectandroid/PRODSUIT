@@ -36,10 +36,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         Log.e(TAG,"remoteMessage  999900    "+remoteMessage)
         context = this
-        if (!remoteMessage.data.isEmpty()) {
+        if (!remoteMessage.equals("")) {
             Log.e(TAG,"remoteMessage  9999001    "+remoteMessage.data.get("title"))
             Log.e(TAG,"remoteMessage  9999001    "+remoteMessage.data.get("body"))
-            Log.e(TAG,"remoteMessage  9999001    "+remoteMessage.data.get("mode"))
+//            Log.e(TAG,"remoteMessage  9999001    "+remoteMessage.data.get("mode"))
 
             if (remoteMessage.data.get("mode").equals("1")){
                 Log.e(TAG,"remoteMessage  99990012    "+remoteMessage.data.get("body"))

@@ -85,19 +85,24 @@ class NotificationService : Service() {
     private fun startTimer() {
         Log.v("sdfdsfdsddd","startTimer")
         Log.e(TAG,"NotificationService   startTimer")
-        TIMER_INTERVAL = Config.getMilliSeconds(applicationContext).toLong()
-        timer.scheduleAtFixedRate(object : TimerTask() {
-            override fun run() {
+        try {
+            TIMER_INTERVAL = Config.getMilliSeconds(applicationContext).toLong()
+            timer.scheduleAtFixedRate(object : TimerTask() {
+                override fun run() {
 
-                Log.v("sdfdsfdsddd","run")
-                // Perform the desired task here
-                var isFor = Config.isAppInForeground(applicationContext)
-                Log.e(TAG,"NotificationService  isFor  :   "+isFor)
-                Log.e("NotificationService  123454  :  ", "Timer task executed")
+                    Log.v("sdfdsfdsddd","run")
+                    // Perform the desired task here
+                    var isFor = Config.isAppInForeground(applicationContext)
+                    Log.e(TAG,"NotificationService  isFor  :   "+isFor)
+                    Log.e("NotificationService  123454  :  ", "Timer task executed")
 
-                sendNotification()
-            }
-        }, 0, TIMER_INTERVAL)
+                    sendNotification()
+                }
+            }, 0, TIMER_INTERVAL)
+        }catch (e: Exception){
+
+        }
+
     }
 
     private fun stopTimer() {

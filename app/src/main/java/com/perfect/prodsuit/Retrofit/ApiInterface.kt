@@ -92,7 +92,7 @@ interface ApiInterface {
     @POST("UserValidations/LeadManagementDetailsList")
     fun getLeadManagementDetailsList(@Body body: RequestBody): Call<String>
 
-    @POST("Agenda/AgendaCount")
+    @POST("")
     fun getAgendaDetailsList(@Body body: RequestBody): Call<String>
 
 

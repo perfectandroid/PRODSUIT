@@ -1064,6 +1064,7 @@
                                                         android:focusableInTouchMode="false"
                                                         android:paddingLeft="2dp"
                                                         android:paddingRight="10dp"
+                                                        android:singleLine="true"
                                                         android:text=""
                                                         android:textColor="@color/black"
                                                         android:textSize="14dp"
