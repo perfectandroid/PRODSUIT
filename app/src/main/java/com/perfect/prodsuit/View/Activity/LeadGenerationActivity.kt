@@ -3393,6 +3393,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             recyLeadby = dialogLeadBy!!.findViewById(R.id.recyLeadby) as RecyclerView
             val etsearch = dialogLeadBy!!.findViewById(R.id.etsearch) as EditText
             val referdby = dialogLeadBy!!.findViewById(R.id.txt_referedby) as TextView
+            val txt_nodata = dialogLeadBy!! .findViewById(R.id.txt_nodata) as TextView
             referdby.text="Referred By"
 
             leadBySort = JSONArray()
@@ -3401,6 +3402,12 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 // reportNamesort.put(k,jsonObject)
                 leadBySort.put(jsonObject)
             }
+            if (leadBySort.length() <= 0){
+                recyLeadby!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
+            }
+
+
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recyLeadby!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -3434,7 +3441,13 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
                         }
                     }
-
+                    if (leadBySort.length() <= 0){
+                        recyLeadby!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyLeadby!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
+                    }
                     Log.e(TAG, "leadBySort               7103    " + leadBySort)
                     val adapter = LeadByAdapter(this@LeadGenerationActivity, leadBySort)
                     recyLeadby!!.adapter = adapter
@@ -3525,12 +3538,16 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             dialogLeadFrom!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyLeadFrom = dialogLeadFrom!!.findViewById(R.id.recyLeadFrom) as RecyclerView
             val etsearch = dialogLeadFrom!!.findViewById(R.id.etsearch) as EditText
-
+            val txt_nodata = dialogLeadFrom!! .findViewById(R.id.txt_nodata) as TextView
             leadFromSort = JSONArray()
             for (k in 0 until leadFromArrayList.length()) {
                 val jsonObject = leadFromArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 leadFromSort.put(jsonObject)
+            }
+            if (leadFromSort.length() <= 0){
+                recyLeadFrom!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
 
@@ -3565,6 +3582,14 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                             }
 
                         }
+                    }
+
+                    if (leadFromSort.length() <= 0){
+                        recyLeadFrom!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyLeadFrom!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "reportNamesort               7103    " + leadFromSort)
@@ -5017,6 +5042,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             dialogCountry!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             val recycCountry = dialogCountry!!.findViewById(R.id.recycCountry) as RecyclerView
             val etsearch = dialogCountry!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogCountry!! .findViewById(R.id.txt_nodata) as TextView
 
             countrySort = JSONArray()
             for (k in 0 until countryArrayList.length()) {
@@ -5024,6 +5050,11 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 // reportNamesort.put(k,jsonObject)
                 countrySort.put(jsonObject)
             }
+            if (countrySort.length() <= 0){
+                recycCountry!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
+            }
+
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recycCountry!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -5056,6 +5087,14 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                             }
 
                         }
+                    }
+
+                    if (countrySort.length() <= 0){
+                        recycCountry!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recycCountry!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "countrySort               7103    " + countrySort)
@@ -5159,7 +5198,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             dialogState!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             val recycState = dialogState!!.findViewById(R.id.recycState) as RecyclerView
             val etsearch = dialogState!!.findViewById(R.id.etsearch) as EditText
-
+            val txt_nodata = dialogState!! .findViewById(R.id.txt_nodata) as TextView
             stateSort = JSONArray()
             for (k in 0 until stateArrayList.length()) {
                 val jsonObject = stateArrayList.getJSONObject(k)
@@ -5167,7 +5206,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 stateSort.put(jsonObject)
             }
 
-
+            if (stateSort.length() <= 0){
+                recycState!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
+            }
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recycState!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
@@ -5200,6 +5242,15 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
                         }
                     }
+
+                    if (stateSort.length() <= 0){
+                        recycState!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recycState!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
+                    }
+
 
                     Log.e(TAG, "stateSort               7103    " + stateSort)
                     val adapter = StateDetailAdapter(this@LeadGenerationActivity, stateSort)
@@ -5303,6 +5354,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             dialogDistrict!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             val recycDistrict = dialogDistrict!!.findViewById(R.id.recycDistrict) as RecyclerView
             val etsearch = dialogDistrict!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogDistrict!! .findViewById(R.id.txt_nodata) as TextView
 
             districtSort = JSONArray()
             for (k in 0 until districtArrayList.length()) {
@@ -5311,6 +5363,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 districtSort.put(jsonObject)
             }
 
+            if (districtSort.length() <= 0){
+                recycDistrict!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
+            }
 
             val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
             recycDistrict!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -5344,6 +5400,15 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
                         }
                     }
+
+                    if (districtSort.length() <= 0){
+                        recycDistrict!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recycDistrict!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
+                    }
+
 
                     Log.e(TAG, "districtSort               7103    " + districtSort)
                     val adapter = DistrictDetailAdapter(this@LeadGenerationActivity, districtSort)

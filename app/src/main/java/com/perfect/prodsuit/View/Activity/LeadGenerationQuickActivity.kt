@@ -3463,9 +3463,9 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         ID_Employee = ""
 
         edtProdcategory!!.setText("")
-        edtProdproduct!!.setText("")
+       // edtProdproduct!!.setText("")
         edtProjectName!!.setText("")
-        edtProdqty!!.setText("")
+      //  edtProdqty!!.setText("")
         edtProdfeedback!!.setText("")
         edtExpecteddate!!.setText("")
         edtProdpriority!!.setText("")
@@ -3475,9 +3475,9 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         edtFollowdate!!.setText(currentDate)
 
         edtEmployee!!.setText("")
-        edtAmount!!.setText("")
+     //   edtAmount!!.setText("")
 
-        tv_Mrp!!.setText("")
+      //  tv_Mrp!!.setText("")
         ProductMRP = ""
         strPincode = ""
 
