@@ -26,12 +26,12 @@ object PickupDeliveryRepository {
     val pickupdeliveryCountSetterGetter = MutableLiveData<PickupDeliveryModel>()
     val TAG: String = "PickupDeliveryRepository"
 
-    fun getServicesApiCall(context: Context, ID_Employee: String,FK_Area: String,strFromDate: String, strToDate: String, strarea: String, strCustomer: String, strMobile: String, stProduct: String, strTicketNo: String,status_id: String): MutableLiveData<PickupDeliveryModel> {
-        getPickupDeliveryCounts(context, ID_Employee,FK_Area,strFromDate,strToDate,strarea,strCustomer,strMobile,stProduct,strTicketNo,status_id)
+    fun getServicesApiCall(context: Context,FK_Area: String,strFromDate: String, strToDate: String, strarea: String, strCustomer: String, strMobile: String, stProduct: String, strTicketNo: String,status_id: String): MutableLiveData<PickupDeliveryModel> {
+        getPickupDeliveryCounts(context, FK_Area,strFromDate,strToDate,strarea,strCustomer,strMobile,stProduct,strTicketNo,status_id)
         return pickupdeliveryCountSetterGetter
     }
 
-    private fun getPickupDeliveryCounts(context: Context,ID_Employee: String,FK_Area: String,strFromDate: String, strToDate: String, strarea: String, strCustomer: String, strMobile: String, strProoduct: String, strTicketNo: String, status_id: String) {
+    private fun getPickupDeliveryCounts(context: Context,FK_Area: String,strFromDate: String, strToDate: String, strarea: String, strCustomer: String, strMobile: String, strProoduct: String, strTicketNo: String, status_id: String) {
 
         try {
             pickupdeliveryCountSetterGetter.value = PickupDeliveryModel("")
@@ -64,11 +64,12 @@ object PickupDeliveryRepository {
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val Entr_By  = context.getSharedPreferences(Config.SHARED_PREF36,0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("94"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee",null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(Entr_By.getString("UserCode", null)))
                 requestObject1.put("FK_BranchCodeUser",ProdsuitApplication.encryptStart("1"))

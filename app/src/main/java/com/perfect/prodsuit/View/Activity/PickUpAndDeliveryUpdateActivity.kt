@@ -9,20 +9,13 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.IntentSender
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
 import android.net.ConnectivityManager
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.os.Handler
 import android.provider.Settings
 import android.text.Editable
 import android.text.TextWatcher
@@ -37,26 +30,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.*
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.locCountry
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -187,6 +169,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private var StandByAmount: String? = ""
     private var FK_BillType: String? = ""
     private var tempremark = ""
+    var Balanacepayment = ""
 
 
     private var til_PickDeliveryDate: TextInputLayout? = null
@@ -230,6 +213,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     lateinit var billtypeArrayList: JSONArray
     lateinit var pickupDeliveryUpdateDetailsArrayList: JSONArray
     lateinit var prodDetailSort: JSONArray
+    lateinit var complaintTypeSort: JSONArray
     lateinit var productinfodetailsviewmodel: ProductInfoDetailsViewModel
     lateinit var deliveryinformationViewModel: DeliveryInformationViewModel
     lateinit var productPriorityViewModel: ProductPriorityViewModel
@@ -307,6 +291,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
     private var ll_CustomerDetails    : LinearLayout? = null
     private var ll_ProductDetails     : LinearLayout? = null
     private var ll_ProductInformation : LinearLayout? = null
+    private var llsearch : LinearLayout? = null
     private var card_ProductDetails : CardView? = null
 
     private var card_PickDeliveryInformation : CardView? = null
@@ -661,6 +646,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                         )
                                         builder.setMessage(jObject.getString("EXMessage"))
                                         builder.setPositiveButton("Ok") { dialogInterface, which ->
+
+                                            onBackPressed()
                                         }
                                         val alertDialog: AlertDialog = builder.create()
                                         alertDialog.setCancelable(false)
@@ -1073,7 +1060,9 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 }
 
                 tie_PickDeliveryDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
-                PickDeliveryDate = tie_PickDeliveryDate.toString()
+                Log.e(TAG, "eewqqssffss   " + "" + strYear + "-" + strMonth + "-" + strDay)
+//                PickDeliveryDate = tie_PickDeliveryDate.toString()
+                PickDeliveryDate =  "" + strYear + "-" + strMonth + "-" + strDay
 
                 Log.e(TAG, "PickDeliveryDate   " + PickDeliveryDate)
 
@@ -1173,31 +1162,13 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                                 prodInformationArrayList.getJSONObject(i)
                                             val jObject = JSONObject()
 
-                                            jObject.put(
-                                                "ID_Product",
-                                                jsonObject.getString("ID_Product")
-                                            )
-                                            jObject.put(
-                                                "ProdName",
-                                                jsonObject.getString("ProdName")
-                                            )
-                                            jObject.put(
-                                                "ProvideStandBy",
-                                                jsonObject.getString("ProvideStandBy")
-                                            )
-                                            jObject.put(
-                                                "Quantity",
-                                                jsonObject.getString("Quantity")
-                                            )
+                                            jObject.put("ID_Product", jsonObject.getString("ID_Product"))
+                                            jObject.put("ProdName", jsonObject.getString("ProdName"))
+                                            jObject.put("ProvideStandBy", jsonObject.getString("ProvideStandBy"))
+                                            jObject.put("Quantity", jsonObject.getString("Quantity"))
                                             jObject.put("Product", jsonObject.getString("Product"))
-                                            jObject.put(
-                                                "SPQuantity",
-                                                jsonObject.getString("SPQuantity")
-                                            )
-                                            jObject.put(
-                                                "SPAmount",
-                                                jsonObject.getString("SPAmount")
-                                            )
+                                            jObject.put("SPQuantity", jsonObject.getString("SPQuantity"))
+                                            jObject.put("SPAmount", jsonObject.getString("SPAmount"))
                                             jObject.put("Remarks", jsonObject.getString("Remarks"))
                                             jObject.put("StandByProduct", (""))
                                             jObject.put("FK_StandByProduct", (""))
@@ -1213,23 +1184,13 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                         }
                                         Log.e(TAG, "hhhhhhhhhhhhhhh " + prodInformationArrayList2)
 
-                                        val lLayout = GridLayoutManager(
-                                            this@PickUpAndDeliveryUpdateActivity,
-                                            1
-                                        )
-                                        recyProdInformation!!.layoutManager =
-                                            lLayout as RecyclerView.LayoutManager?
-                                        val adapterHome = ProdInformationAdapter(
-                                            this@PickUpAndDeliveryUpdateActivity,
-                                            prodInformationArrayList2
-                                        )
+                                        val lLayout = GridLayoutManager(this@PickUpAndDeliveryUpdateActivity, 1)
+                                        recyProdInformation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                                        val adapterHome = ProdInformationAdapter(this@PickUpAndDeliveryUpdateActivity, prodInformationArrayList2)
                                         recyProdInformation!!.adapter = adapterHome
                                         adapterHome.setClickListener(this@PickUpAndDeliveryUpdateActivity)
 
-                                        Log.e(
-                                            TAG,
-                                            "dddddddddddddddddddd  " + prodInformationArrayList
-                                        )
+                                        Log.e(TAG, "dddddddddddddddddddd  " + prodInformationArrayList)
 
 
 //                                        if (prodInformationArrayList.length() > 0) {
@@ -1732,10 +1693,12 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             dialogProdPriority!! .setContentView(R.layout.product_priority_popup)
             dialogProdPriority!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdPriority = dialogProdPriority!! .findViewById(R.id.recyProdPriority) as RecyclerView
+            llsearch         = dialogProdPriority!! .findViewById(R.id.llsearch) as LinearLayout
 
 
             Log.e(TAG,"complaint pop 112244  "+prodPriorityArrayList)
 
+            llsearch!!.visibility = View.GONE
             val lLayout = GridLayoutManager(this@PickUpAndDeliveryUpdateActivity, 1)
             recyProdPriority!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
@@ -1823,6 +1786,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             dialogProdComplaint!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recylist = dialogProdComplaint!! .findViewById(R.id.recylist) as RecyclerView
             tvv_list_name = dialogProdComplaint!! .findViewById(R.id.tvv_list_name) as TextView
+            val etsearch = dialogProdComplaint!!.findViewById(R.id.etsearch) as EditText
 
             tvv_list_name!!.setText("Complaint Type")
 
@@ -1834,6 +1798,41 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             adapter.setClickListener(this@PickUpAndDeliveryUpdateActivity)
 
             Log.e(TAG,"complaint pop 889977  "+complaintTypeArrayList)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+
+                    val textlength = etsearch!!.text.length
+                    complaintTypeSort = JSONArray()
+
+                    for (k in 0 until complaintTypeArrayList.length()) {
+                        val jsonObject = complaintTypeArrayList.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("ComplaintName").length) {
+                            if (jsonObject.getString("ComplaintName")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                complaintTypeSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    Log.e(TAG, "complaintTypeSort               7103" + complaintTypeSort)
+                    val adapter = ComplaintTypeAdapter(
+                        this@PickUpAndDeliveryUpdateActivity,
+                        complaintTypeSort
+                    )
+                    recylist!!.adapter = adapter
+                    adapter.setClickListener(this@PickUpAndDeliveryUpdateActivity)
+                }
+            })
 
             dialogProdComplaint!!.show()
             dialogProdComplaint!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -1946,8 +1945,10 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 ll_paymentlist!!.visibility = View.GONE
                 recyPaymentList!!.adapter = null
                 txtPayBalAmount!!.setText("" + tv_Pop_StandByTotal!!.text.toString())
+                Balanacepayment = "" + tv_Pop_StandByTotal!!.text.toString()
 
                 Log.e(TAG, "txtPayBalAmount    115    " + txtPayBalAmount)
+                Log.e(TAG, "Balanacepayment    115    " + txtPayBalAmount)
             }
 
             edtPayMethod!!.setOnClickListener {
@@ -1966,6 +1967,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 edtPayMethod!!.setText("")
                 edtPayRefNo!!.setText("")
                 edtPayAmount!!.setText("")
+                ID_PaymentMethod = ""
 
                 if (arrPayment.length() > 0) {
                     var payAmnt = 0.00
@@ -1984,6 +1986,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                     txtPayBalAmount!!.setText("" + tv_Pop_StandByTotal!!.text.toString())
                     Log.e(TAG, "txtPayBalAmount    117    " + txtPayBalAmount)
                 }
+                validateAddPayment(it)
+
             }
 
             btnApply!!.setOnClickListener {
@@ -2070,15 +2074,14 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 val payAmnt = DecimelFormatters.set2DecimelPlace(balAmount - payAmount.toFloat())
                 // txtPayBalAmount!!.text = (balAmount- payAmount.toFloat()).toString()
                 txtPayBalAmount!!.text = payAmnt
+//                Balanacepayment = payAmnt
+                Log.e(TAG,"Balanacepayment   0="+Balanacepayment)
 
                 val jObject = JSONObject()
                 jObject.put("MethodID", ID_PaymentMethod)
                 jObject.put("Method", edtPayMethod!!.text.toString())
                 jObject.put("RefNo", edtPayRefNo!!.text.toString())
-                jObject.put(
-                    "Amount",
-                    DecimelFormatters.set2DecimelPlace((edtPayAmount!!.text.toString()).toFloat())
-                )
+                jObject.put("Amount", DecimelFormatters.set2DecimelPlace((edtPayAmount!!.text.toString()).toFloat()))
 
                 arrPayment!!.put(jObject)
             }
@@ -2087,6 +2090,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 val payAmnt = DecimelFormatters.set2DecimelPlace(balAmount - payAmount.toFloat())
                 // txtPayBalAmount!!.text = (balAmount- payAmount.toFloat()).toString()
                 txtPayBalAmount!!.text = payAmnt
+//                Balanacepayment = payAmnt
+                Log.e(TAG,"Balanacepayment   1="+Balanacepayment)
 
                 val jsonObject = arrPayment.getJSONObject(arrPosition!!)
                 jsonObject.put("MethodID", ID_PaymentMethod)
@@ -3015,8 +3020,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             jObject.put("SPQuantity", jsonObject2.getString("SPQuantity"))
             jObject.put("SPAmount", jsonObject2.getString("SPAmount"))
             jObject.put("Remarks", jsonObject2.getString("Remarks"))
-            jObject.put("StandByProduct", jsonObject2.getString("StandByProduct"))
-            jObject.put("FK_StandByProduct", jsonObject2.getString("FK_StandByProduct"))
+            jObject.put("StandByProduct", jsonObject3.getString("ProductName"))
+            jObject.put("FK_StandByProduct", jsonObject3.getString("ID_Product"))
             jObject.put("isSelected", ("1"))
             jObject.put("isEnable", ("0"))
             jObject.put("SubMode", SubMode)
@@ -3246,6 +3251,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
             if (prodInformationArrayList2.length() == 0) {
 
+                prodInformationArrayList2 = JSONArray()
+
                 jObject.put("ID_Product", jsonObject4.getString("ID_Product"))
                 jObject.put("ProdName", jsonObject4.getString("ProductName"))
 //                jObject.put("ProdName", jsonObject4.getString("ProdName"))
@@ -3267,15 +3274,17 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
             } else {
 
+//                prodInformationArrayList2 = JSONArray()
+
                 val jsonObject2 = prodInformationArrayList2.getJSONObject(pos)
 
-                jObject.put("ID_Product", jsonObject2.getString("ID_Product"))
+                jObject.put("ID_Product", jsonObject4.getString("ID_Product"))
                 jObject.put("ProdName", jsonObject4.getString("ProductName"))
 //                jObject.put("ProdName", jsonObject4.getString("ProdName"))
                 jObject.put("ProvideStandBy", ("0"))
-                jObject.put("Quantity", jsonObject2.getString("Quantity"))
+                jObject.put("Quantity", "1")
                 jObject.put("Product", "")
-                jObject.put("SPQuantity", jsonObject2.getString("SPQuantity"))
+                jObject.put("SPQuantity", "")
                 jObject.put("SPAmount", (""))
                 jObject.put("Remarks", (""))
                 jObject.put("isSelected", ("1"))
@@ -3341,16 +3350,16 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 val pay = DecimelFormatters.set2DecimelPlace(payAmnt.toFloat())
                 //  payAmnt = (DecimelFormatters.set2DecimelPlace(payAmnt.toFloat()))
                 Log.e(TAG, "payAmnt         475    " + payAmnt)
+                Log.e(TAG, "payAmnt             " + jsonObject!!.getString("Amount"))
                 Log.e(TAG, "tv_NetAmount    475    " + tv_Pop_StandByTotal!!.text.toString())
-                txtPayBalAmount!!.setText(
-                    "" + DecimelFormatters.set2DecimelPlace(
-                        (tv_Pop_StandByTotal!!.text.toString()
-                            .toFloat()) - pay.toFloat() + (jsonObject!!.getString("Amount")
-                            .toFloat())
-                    )
-                )
 
+//           ............................................. | ....................................... 24.2.2024
+//                Balanacepayment = "" + DecimelFormatters.set2DecimelPlace((tv_Pop_StandByTotal!!.text.toString().toFloat()) - pay.toFloat() + (jsonObject!!.getString("Amount").toFloat()))
+                txtPayBalAmount!!.setText("" + DecimelFormatters.set2DecimelPlace((tv_Pop_StandByTotal!!.text.toString().toFloat()) - pay.toFloat() + (jsonObject!!.getString("Amount").toFloat())))
+//           ............................................. | .......................................
                 Log.e(TAG, "txtPayBalAmount    117    " + txtPayBalAmount)
+                Log.e(TAG, "Balanacepayment    117    " + txtPayBalAmount)
+                Log.e(TAG, "arrPayment     " + arrPayment)
 
 //                Log.e(TAG,"605   "+txtPayBalAmount!!.text.toString().toFloat())
 //                var payAmnt = ((txtPayBalAmount!!.text.toString().toFloat()) + (jsonObject!!.getString("Amount").toFloat()))
@@ -3362,24 +3371,69 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
         }
 
         if (data.equals("deleteArrayList")) {
+            var balAmount = ""
+            checkDeleteLoopPayment(position)
 
 
-            val jsonObject = arrPayment.getJSONObject(position)
-            var balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
-            var Amount = (jsonObject!!.getString("Amount")).toFloat()
+//            Log.e(TAG,"bvbvbvbvbvvb "+arrPayment.length())
+//            val jsonObject = arrPayment.getJSONObject(position)
+//            var balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
+//            var Amount = (jsonObject!!.getString("Amount")).toFloat()
+//
+            ID_PaymentMethod = ""
+            edtPayMethod!!.setText("")
+            edtPayRefNo!!.setText("")
+            edtPayAmount!!.setText("")
+
+            arrAddUpdate = "0"
 
             arrPayment.remove(position)
             adapterPaymentList!!.notifyItemRemoved(position)
 
-            if (arrPayment.length() > 0) {
+            if (arrPayment.length() > 0){
                 ll_paymentlist!!.visibility = View.VISIBLE
-            } else {
-                ll_paymentlist!!.visibility = View.GONE
+            }else{
+                ll_paymentlist!!.visibility =View.GONE
             }
             applyMode = 0
-            txtPayBalAmount!!.text = (balAmount + Amount).toString()
+//            txtPayBalAmount!!.text = (balAmount + Amount).toString()
         }
 
+    }
+
+    private fun checkDeleteLoopPayment(position: Int) {
+
+        var total = 0.0
+
+
+//        balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
+        for (i in 0 until arrPayment.length()) {
+            //apply your logic
+
+            val jsonObject = arrPayment.getJSONObject(i)
+            var amounttt = jsonObject.getString("Amount")
+
+            Log.e(TAG,"bvbvbvbvbvvb 000000= "+total)
+
+            total = (total+amounttt.toFloat())
+        }
+
+
+        val jsonObject = arrPayment.getJSONObject(position)
+        var removedamount = jsonObject.getString("Amount").toFloat()
+
+        Log.e(TAG,"bvbvbvbvbvvb 2222= "+arrPayment.length())
+
+//        var Balance  = (balAmount!! - amounttt.toFloat() - total)
+//        Log.e(TAG,"bvbvbvbvbvvb 1111111= "+Balance)
+
+        Log.e(TAG,"removeee Balanacepayment= "+Balanacepayment)
+        Log.e(TAG,"removeee total= "+total)
+        Log.e(TAG,"removeee removedamount= "+removedamount)
+
+        txtPayBalAmount!!.text  = ((Balanacepayment.toFloat() - (total -  removedamount)).toString())
+
+        Log.e(TAG,"removeee 66666666= "+((Balanacepayment.toFloat() - (total -  removedamount)).toString()))
     }
 
     private fun passvalue() {
@@ -3390,8 +3444,10 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             val jObject = JSONObject()
 
             Log.e(TAG, "mnmnmmnmnn  " + Productdetails)
+            Log.e(TAG, "mnmnmmnmnn  " + prodInformationArrayList2)
             if (SubMode!!.equals("1")) {
 
+                if (jsonObject5.getString("isSelected").equals("1")){
                 if (TransMode!!.equals("INPDR")) {   //emirecovery save
 
                     jObject.put("ID_Product", ProdsuitApplication.encryptStart(jsonObject.getString("ID_Product")))
@@ -3402,7 +3458,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //                    )
                     jObject.put("ProdName", ProdsuitApplication.encryptStart(jsonObject.getString("ProdName")))
                     jObject.put("Quantity", ProdsuitApplication.encryptStart(jsonObject.getString("Quantity")))
-                    jObject.put("FK_StandByProduct", ProdsuitApplication.encryptStart(jsonObject.getString("ID_Product")))
+                    jObject.put("FK_StandByProduct", ProdsuitApplication.encryptStart(jsonObject.getString("FK_StandByProduct")))
                     jObject.put("StandByQuantity", ProdsuitApplication.encryptStart(jsonObject.getString("SPQuantity")))
                     jObject.put("StandByAmount", ProdsuitApplication.encryptStart(jsonObject.getString("SPAmount")))
                     for (i in 0 until prodDetailArrayList.length()) {
@@ -3429,51 +3485,65 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                     if (jsonObject5.getString("isSelected").equals("1")) {
 //                if (IsSelected.equals("1")){
-                    jObject.put("ID_Product", ProdsuitApplication.encryptStart(jsonObject.getString("ID_Product")))
-                    jObject.put("ProvideStandBy", ProdsuitApplication.encryptStart(jsonObject.getString("ProvideStandBy")))
+                        jObject.put("ID_Product", ProdsuitApplication.encryptStart(jsonObject.getString("ID_Product")))
+                        jObject.put("ProvideStandBy", ProdsuitApplication.encryptStart(jsonObject.getString("ProvideStandBy")))
 //                    jObject.put(
 //                        "ProdName",
 //                        ProdsuitApplication.encryptStart(jsonObject.getString("Product"))
 //                    )
-                    jObject.put("ProdName", ProdsuitApplication.encryptStart(jsonObject.getString("ProdName")))
-                    jObject.put("Quantity", ProdsuitApplication.encryptStart(jsonObject.getString("Quantity")))
-                    jObject.put("FK_StandByProduct", ProdsuitApplication.encryptStart(jsonObject.getString("ID_Product")))
-                    jObject.put("StandByQuantity", ProdsuitApplication.encryptStart(jsonObject.getString("SPQuantity")))
-                    jObject.put("StandByAmount", ProdsuitApplication.encryptStart(jsonObject.getString("SPAmount")))
-                    for (i in 0 until prodDetailArrayList.length()) {
-                        var jsonObject1 = prodDetailArrayList.getJSONObject(i)
+                        jObject.put("ProdName", ProdsuitApplication.encryptStart(jsonObject.getString("ProdName")))
+                        jObject.put("Quantity", ProdsuitApplication.encryptStart(jsonObject.getString("Quantity")))
+                        jObject.put("FK_StandByProduct", ProdsuitApplication.encryptStart(jsonObject.getString("FK_StandByProduct")))
+                        jObject.put("StandByQuantity", ProdsuitApplication.encryptStart(jsonObject.getString("SPQuantity")))
+                        jObject.put("StandByAmount", ProdsuitApplication.encryptStart(jsonObject.getString("SPAmount")))
+                        for (i in 0 until prodDetailArrayList.length()) {
+                            var jsonObject1 = prodDetailArrayList.getJSONObject(i)
 
 //                        Log.e(TAG, "vhevk1  " + jsonObject1.getString("ID_Product") + "  " + jsonObject.getString("ID_Product"))
 //                    Log.e(TAG, "vhevk2  " + )
 
-                        if (jsonObject.getString("ID_Product").equals(jsonObject1.getString("ID_Product"))) {
+                            if (jsonObject.getString("ID_Product").equals(jsonObject1.getString("ID_Product"))) {
 
-                            jObject.put("FK_EmployeeStock", ProdsuitApplication.encryptStart(jsonObject1.getString("ID_Product")))
+                                jObject.put("FK_EmployeeStock", ProdsuitApplication.encryptStart(jsonObject1.getString("ID_Product")))
 
-                        } else {
-                            jObject.put("FK_EmployeeStock", ("0"))
+                            } else {
+                                jObject.put("FK_EmployeeStock", ("0"))
+                            }
+
                         }
+                        Productdetails.put(jObject)
+
+                        Log.e(TAG, "1fffffffffffffffffffffffffffffff  " + Productdetails)
 
                     }
+
+                    for (i in 0 until arrPayment.length()) {
+                        var jsonObject = arrPayment.getJSONObject(i)
+                        val jObject = JSONObject()
+
+                        jObject.put("PaymentMethod", ProdsuitApplication.encryptStart(jsonObject.getString("MethodID")))
+                        jObject.put("PAmount", ProdsuitApplication.encryptStart(jsonObject.getString("Amount")))
+                        jObject.put("Refno", ProdsuitApplication.encryptStart(jsonObject.getString("RefNo")))
+
+                        arrayPaymentmethod.put(jObject)
+
+                        Log.e(TAG, "1234561 arrayPaymentmethod  " + arrayPaymentmethod)
+                    }
+                }
+            }else if (jsonObject5.getString("isSelected").equals("1") && jsonObject5.getString("ProvideStandBy").equals("0")){
+
+
+                    jObject.put("ID_Product", "")
+                    jObject.put("ProvideStandBy", "")
+                    jObject.put("ProdName", "")
+                    jObject.put("Quantity", ProdsuitApplication.encryptStart(jsonObject.getString("Quantity")))
+                    jObject.put("FK_StandByProduct", "")
+                    jObject.put("StandByQuantity","")
+                    jObject.put("StandByAmount", "")
                     Productdetails.put(jObject)
-
-                    Log.e(TAG, "1fffffffffffffffffffffffffffffff  " + Productdetails)
-
                 }
 
-                for (i in 0 until arrPayment.length()) {
-                    var jsonObject = arrPayment.getJSONObject(i)
-                    val jObject = JSONObject()
 
-                    jObject.put("PaymentMethod", ProdsuitApplication.encryptStart(jsonObject.getString("MethodID")))
-                    jObject.put("PAmount", ProdsuitApplication.encryptStart(jsonObject.getString("Amount")))
-                    jObject.put("Refno", ProdsuitApplication.encryptStart(jsonObject.getString("RefNo")))
-
-                    arrayPaymentmethod.put(jObject)
-
-                    Log.e(TAG, "1234561 arrayPaymentmethod  " + arrayPaymentmethod)
-                }
-            }
 
                 DeliveryComplaints = JSONArray()
                 updatepickupanddeliveryCount = 0
@@ -3502,7 +3572,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //                        )
                         jObject.put("ProdName",ProdsuitApplication.encryptStart(jsonObject.getString("ProdName")))
                         jObject.put("Quantity", ProdsuitApplication.encryptStart(jsonObject.getString("Quantity")))
-                        jObject.put("FK_StandByProduct", ProdsuitApplication.encryptStart(jsonObject.getString("ID_Product")))
+                        jObject.put("FK_StandByProduct", ProdsuitApplication.encryptStart(jsonObject.getString("FK_StandByProduct")))
                         jObject.put("StandByQuantity", ProdsuitApplication.encryptStart(jsonObject.getString("SPQuantity")))
                         jObject.put("StandByAmount", ProdsuitApplication.encryptStart(jsonObject.getString("SPAmount")))
 
@@ -4094,7 +4164,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //        if (edtPayAmount!!.text.toString().equals("")) { txt_pay_Amount!!.setTextColor(ContextCompat.getColorStateList(context, R.color.color_mandatory))
 //            Log.e(TAG, "110   Valid   : Enter Amount")
 //            Config.snackBarWarning(context, view, "Enter Amount")
-
+        arrPayment = JSONArray()
 
     }
 

@@ -149,6 +149,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
     var adapterPaymentList: PaymentListAdapter? = null
     var arrAddUpdate: String? = "0"
     var strSumPayMethode = "0"
+    var Balanacepayment = ""
 
     var paymentCount = 0
     lateinit var paymentMethodeViewModel: PaymentMethodViewModel
@@ -2718,10 +2719,10 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
 
         if (data.equals("deleteArrayList")){
 
-
-            val jsonObject = arrPayment.getJSONObject(position)
-            var balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
-            var Amount = (jsonObject!!.getString("Amount")).toFloat()
+            checkDeleteLoopPayment(position)
+//            val jsonObject = arrPayment.getJSONObject(position)
+//            var balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
+//            var Amount = (jsonObject!!.getString("Amount")).toFloat()
 
             ID_PaymentMethod = ""
             edtPayMethod!!.setText("")
@@ -2739,7 +2740,7 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                 ll_paymentlist!!.visibility =View.GONE
             }
             applyMode = 0
-            txtPayBalAmount!!.text = (balAmount + Amount).toString()
+//            txtPayBalAmount!!.text = (balAmount + Amount).toString()
         }
 
         if (data.equals("editArrayList")){
@@ -2790,6 +2791,40 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             edtPayMethod!!.setText(jsonObject.getString("PaymentName"))
         }
 
+    }
+
+    private fun checkDeleteLoopPayment(position: Int) {
+
+        var total = 0.0
+
+//        balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
+        for (i in 0 until arrPayment.length()) {
+            //apply your logic
+
+            val jsonObject = arrPayment.getJSONObject(i)
+            var amounttt = jsonObject.getString("Amount")
+
+            Log.e(TAG,"bvbvbvbvbvvb 000000= "+total)
+
+            total = (total+amounttt.toFloat())
+        }
+
+
+        val jsonObject = arrPayment.getJSONObject(position)
+        var removedamount = jsonObject.getString("Amount").toFloat()
+
+        Log.e(TAG,"bvbvbvbvbvvb 2222= "+arrPayment.length())
+
+//        var Balance  = (balAmount!! - amounttt.toFloat() - total)
+//        Log.e(TAG,"bvbvbvbvbvvb 1111111= "+Balance)
+
+        Log.e(TAG,"removeee Balanacepayment= "+Balanacepayment)
+        Log.e(TAG,"removeee total= "+total)
+        Log.e(TAG,"removeee removedamount= "+removedamount)
+
+        txtPayBalAmount!!.text  = ((Balanacepayment.toFloat() - (total -  removedamount)).toString())
+
+        Log.e(TAG,"removeee 66666666= "+((Balanacepayment.toFloat() - (total -  removedamount)).toString()))
     }
 
     private fun getpaymentInfo2(
