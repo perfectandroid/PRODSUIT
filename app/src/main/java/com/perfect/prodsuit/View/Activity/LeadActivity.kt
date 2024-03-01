@@ -99,11 +99,13 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
                 finish()
             }
             R.id.llquicklead->{
+                Config.disableClick(v)
                 val i = Intent(this@LeadActivity, LeadGenerationQuickActivity::class.java)
                 startActivity(i)
             }
 
             R.id.llleadgeneration->{
+                Config.disableClick(v)
                 val i = Intent(this@LeadActivity, LeadGenerationActivity::class.java)
                 startActivity(i)
 
@@ -111,11 +113,13 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
 //                startActivity(i)
             }
             R.id.llleadmanagement->{
+                Config.disableClick(v)
                 val i = Intent(this@LeadActivity, LeadManagemnetActivity::class.java)
                 startActivity(i)
             }
 
             R.id.llwalking->{
+                Config.disableClick(v)
                 val i = Intent(this@LeadActivity, WalkingCustomerActivity::class.java)
               //  i.putExtra("from", "lead")
                 startActivity(i)

@@ -1075,14 +1075,17 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
             dialogassignedTo!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyassignedTo = dialogassignedTo!!.findViewById(R.id.recyassignedTo) as RecyclerView
             val etsearch = dialogassignedTo!!.findViewById(R.id.etsearch) as EditText
-
+            val txt_nodata = dialogassignedTo!! .findViewById(R.id.txt_nodata) as TextView
             assignedToSortList = JSONArray()
             for (k in 0 until assignedToList.length()) {
                 val jsonObject = assignedToList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 assignedToSortList.put(jsonObject)
             }
-
+            if (assignedToSortList.length() <= 0){
+                recyassignedTo!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
+            }
 
             val lLayout = GridLayoutManager(this@WalkingCustomerActivity, 1)
             recyassignedTo!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -1115,7 +1118,13 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
 
                        // }
                     }
-
+                    if (assignedToSortList.length() <= 0){
+                        recyassignedTo!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyassignedTo!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
+                    }
                     Log.e(TAG, "assignedToSortList               7103    " + assignedToSortList)
                     val adapter =
                         AssignedToAdapter(this@WalkingCustomerActivity, assignedToSortList)

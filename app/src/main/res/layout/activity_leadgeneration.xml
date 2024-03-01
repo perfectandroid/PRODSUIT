@@ -1167,6 +1167,7 @@
                                                         android:drawableTint="@color/greydark"
                                                         android:fontFamily="@font/myfont"
                                                         android:hint="Pincode"
+                                                        android:maxLength="6"
                                                         android:inputType="number"
                                                         android:padding="7dp"
                                                         android:singleLine="true"
