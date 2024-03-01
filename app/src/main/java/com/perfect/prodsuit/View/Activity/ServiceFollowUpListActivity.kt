@@ -878,12 +878,12 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
 
 
-            if (edtTicket!!.text.toString().equals("")&&edt_fromDate!!.text.toString().equals("")&&edt_customer!!.text.toString().equals("")){
-
-                Toast.makeText(applicationContext,"Please enter any one field",Toast.LENGTH_LONG).show()
-            }
-            else
-            {
+//            if (edtTicket!!.text.toString().equals("")&&edt_fromDate!!.text.toString().equals("")&&edt_customer!!.text.toString().equals("")){
+//
+//                Toast.makeText(applicationContext,"Please enter any one field",Toast.LENGTH_LONG).show()
+//            }
+//            else
+//            {
 
 
             //    dialog.dismiss()
@@ -940,7 +940,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
 
                 val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                val dialog: AlertDialog = builder.setMessage("Please Enter a Valid Ticket")
+                val dialog: AlertDialog = builder.setMessage("Invalid Follow Up Data")
                     .setPositiveButton("OK") {
 
 
@@ -960,7 +960,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
 
      //           setServiceFollowRecycler(jsonArrayFilterd)
-            }
+          //  }
 
         }
         dialog!!.setContentView(view)

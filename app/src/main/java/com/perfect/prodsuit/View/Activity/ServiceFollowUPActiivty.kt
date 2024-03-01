@@ -2778,9 +2778,10 @@ Log.v("adasdasds","modeTab "+modeTab)
     }
  @SuppressLint("SuspiciousIndentation")
  private fun getSearch(idSearch: String) {
-        if (!id_search.equals("")) {
-            subMode = "0"
-        }
+     Log.e(TAG,"278111   "+id_search+"   :   "+subMode)
+//        if (!id_search.equals("")) {
+//            subMode = "0"
+//        }
         jsonArrayServiceType = JSONArray()
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -2916,7 +2917,10 @@ Log.v("adasdasds","modeTab "+modeTab)
                                             servDetadapter!!.setClickListener(this@ServiceFollowUPActiivty)
                                         }
                                         else{
-                                            Log.e(TAG,"size 2233 jsonArrayServiceType==  else"+jsonArrayServiceType.length())
+                                            Log.e(TAG,"size 22331 jsonArrayServiceType==  else"+jsonArrayServiceType.length())
+
+                                            modelServicesListDetails.clear()
+                                            rcyler_followup!!.adapter = null
 
                                             val builder = AlertDialog.Builder(
                                                 this@ServiceFollowUPActiivty, R.style.MyDialogTheme
@@ -2933,6 +2937,8 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
                                     } else {
+                                        modelServicesListDetails.clear()
+                                        rcyler_followup!!.adapter = null
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty, R.style.MyDialogTheme
                                         )
