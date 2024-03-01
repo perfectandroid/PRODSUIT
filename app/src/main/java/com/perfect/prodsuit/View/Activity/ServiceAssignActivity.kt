@@ -1606,14 +1606,18 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 val hr = time_Picker1!!.hour
                 val min = time_Picker1!!.minute
                 val input = ""+hr+":"+min
+                Log.e(TAG,"435345 TIME  196  "+input)
                 val inputDateFormat: DateFormat = SimpleDateFormat("HH:mm", Locale.US)
                 val outputDateFormat: DateFormat = SimpleDateFormat("hh:mm aa", Locale.US)
                 val date: Date = inputDateFormat.parse(input)
                 val output = outputDateFormat.format(date)
-
+                Log.e(TAG,"435345 TIME  196  "+date)
+                Log.e(TAG,"435345 TIME  196  "+output)
 //                tie_VisitTime!!.setText(output)
 //                val sdfTime2 = SimpleDateFormat("HH:mm",Locale.US)
 //                strVisitTime = inputDateFormat.format(date)
+
+
 
                 futureDateDisable(output,dialog,date)
 
@@ -1646,6 +1650,8 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
             val sdfTime2 = SimpleDateFormat("HH:mm",Locale.US)
 
             var curDate = tie_VisitDate!!.text.toString()
+            Log.e(TAG,"DATE 7657676  newDate  "+sdfDate1.format(newDate))
+            Log.e(TAG,"DATE 7657676  select date  "+curDate)
 
             if (sdfDate1.format(newDate).equals(curDate)){
                 Log.e(TAG,"Change date 2195   "+curDate+"  "+outTime)
@@ -1654,11 +1660,13 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 val format = SimpleDateFormat("hh:mm a", Locale.US)
                 val date1: Date = format.parse(outTime)
                 val date2: Date = format.parse(sdfTime1.format(newDate))
-
-                if (date1.compareTo(date2) > 0) {
+                Log.e(TAG,"DATE 7657676  selected time  "+date1)
+                Log.e(TAG,"DATE 7657676  current time  "+date2)
+                if (date1.compareTo(date2) < 0) {
                     // time1 is greater than or equal to time2
                     // Handle the logic for this case
                     Log.e(TAG,"Change date 2195 gdyretyreyre  ")
+                    txt_Warning!!.text="Time should be grater than or equal to current time"
                     txt_Warning!!.visibility = View.VISIBLE
                 } else {
                     // time1 is less than time2

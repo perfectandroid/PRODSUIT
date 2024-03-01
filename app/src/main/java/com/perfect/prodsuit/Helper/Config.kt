@@ -1358,13 +1358,15 @@ object Config {
 
         return result
     }
+   
 
     fun convertTimemills(date1: String , date2: String): Boolean {
 
         var result = false
         try {
             Log.e("TAG","13140    "+date1+"  :  "+date2)
-            val sdf = SimpleDateFormat("yyyy-MM-dd")
+         //   val sdf = SimpleDateFormat("yyyy-MM-dd")
+          val sdf = SimpleDateFormat("dd-MM-yyyy")
             val mDate1 = sdf.parse(date1)
             val timeInMilliseconds1 = mDate1.time
 

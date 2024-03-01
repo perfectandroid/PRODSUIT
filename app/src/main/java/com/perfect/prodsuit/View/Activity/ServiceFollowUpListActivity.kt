@@ -708,11 +708,12 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                 startActivity(mapIntent)
             }
             R.id.img_filter -> {
+                Config.disableClick(view)
                 showFilterAlert()
             }
             R.id.closedTicket -> {
 
-
+                Config.disableClick(view)
                 val intent = Intent(this@ServiceFollowUpListActivity, ClosedTicketActivity::class.java)
 
                 startActivity(intent)
@@ -945,7 +946,13 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
 
                             dialog, which ->
-
+                        edtTicket.text = null
+                        edtProduct.text = null
+                        edt_customer.text = null
+                        edt_fromDate.text = null
+                        edt_toDate.text = null
+                        strFromDate = ""
+                        strToDate = ""
                         dialog.dismiss()
                     }
 

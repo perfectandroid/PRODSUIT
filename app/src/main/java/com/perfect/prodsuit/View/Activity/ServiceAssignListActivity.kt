@@ -244,6 +244,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
             txtFilterReset = view.findViewById<TextView>(R.id.txtFilterReset)
             txtFilterSearch = view.findViewById<TextView>(R.id.txtFilterSearch)
 
+
             tie_TicketNumber!!.setText(""+filterTicketNumber)
             tie_Branch!!.setText(""+filterBranch)
             tie_Customer!!.setText(""+filterCustomer)
@@ -257,15 +258,15 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
             txtFilterSearch!!.setOnClickListener {
 
 
-                if (tie_TicketNumber!!.text.toString().equals("")&&tie_Branch!!.text.toString().equals("")&&tie_Customer!!.text.toString().equals("")&&
-                    tie_Mobile!!.text.toString().equals("")&&
-                    tie_Area!!.text.toString().equals("")&&
-                    tie_DueDays!!.text.toString().equals("")){
-
-                    Toast.makeText(applicationContext,"Please enter any one field",Toast.LENGTH_LONG).show()
-                }
-                else
-                {
+//                if (tie_TicketNumber!!.text.toString().equals("")&&tie_Branch!!.text.toString().equals("")&&tie_Customer!!.text.toString().equals("")&&
+//                    tie_Mobile!!.text.toString().equals("")&&
+//                    tie_Area!!.text.toString().equals("")&&
+//                    tie_DueDays!!.text.toString().equals("")){
+//
+//                  //  Toast.makeText(applicationContext,"Please enter any one field",Toast.LENGTH_LONG).show()
+//                }
+//                else
+//                {
                     filterTicketNumber = tie_TicketNumber!!.text!!.toString().toLowerCase().trim()
                     filterBranch       = tie_Branch!!.text!!.toString().toLowerCase().trim()
                     filterCustomer     = tie_Customer!!.text!!.toString().toLowerCase().trim()
@@ -306,6 +307,44 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                     }
                     Log.i("Length",serviceListArrayList.length().toString())
 
+
+
+                    if (serviceListSort.length() <= 0){
+                      //  dialog1.dismiss()
+                        val builder = AlertDialog.Builder(
+                            this@ServiceAssignListActivity,
+                            R.style.MyDialogTheme
+                        )
+                        builder.setMessage("Invalid Assigned List")
+                        builder.setPositiveButton("Ok") {
+                                dialogInterface, which ->
+                            tie_TicketNumber!!.setText("")
+                            tie_Branch!!.setText("")
+                            tie_Customer!!.setText("")
+                            tie_Mobile!!.setText("")
+                            tie_Area!!.setText("")
+                            tie_DueDays!!.setText("")
+
+
+                        }
+                        val alertDialog: AlertDialog = builder.create()
+                        alertDialog.setCancelable(false)
+                        alertDialog.show()
+                    }else{
+                        dialog1.dismiss()
+                        val adapter = ServiceListAdapter(
+                            this@ServiceAssignListActivity,
+                            serviceListSort,
+                            SubMode!!
+                        )
+                        recyServiceList!!.adapter = adapter
+                        adapter.setClickListener(this@ServiceAssignListActivity)
+
+                        tv_listCount!!.setText("" + serviceListSort.length())
+                    }
+
+                    /*
+
                     if (serviceListSort.length() > 0) {
                         dialog1.dismiss()
                         val adapter = ServiceListAdapter(
@@ -334,7 +373,9 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                         alertDialog.show()
                     }
 
-                }
+                    */
+
+           //     }
 
 
 
