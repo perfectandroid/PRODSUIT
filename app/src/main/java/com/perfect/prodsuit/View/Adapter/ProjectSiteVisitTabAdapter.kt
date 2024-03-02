@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
@@ -74,6 +75,7 @@ class ProjectSiteVisitTabAdapter (internal var context: Context, internal var js
 
                 holder.ll_tab!!.setTag(position)
                 holder.ll_tab!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     clickListener!!.onClick(position, "SiteVisitTabClick")
                 })
             }

@@ -827,24 +827,32 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 hideShowTab()
             }
             R.id.tie_VisitDate->{
+                Config.disableClick(v)
                 openBottomSheet()
             }
             R.id.img_EmpRefresh->{
                 updateedit = "0"
+
+                ID_Department = ""
+                ID_Employee = ""
+                ID_EmployeeType = ""
+
                 tie_Department!!.setText("")
                 tie_Employee!!.setText("")
                 tie_EmployeeType!!.setText("")
             }
             R.id.tie_VisitTime->{
+                Config.disableClick(v)
               openBottomTime()
             }
 
 
             R.id.tie_LeadNo->{
 
-
+                Config.disableClick(v)
                 leadcount = 0
                // getLeadNo()
+
                 getLeadDetails()
 //                showLead = 1
 //                showEmployee = 0
@@ -852,16 +860,21 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 //                expandTab()
             }
             R.id.tie_WorkType->{
+                Config.disableClick(v)
                 workcount = 0
                 getWorkType()
 
             }
+
             R.id.tie_MeasurementType->{
+
+                Config.disableClick(v)
                 measurecount = 0
                 getMeasurementDetails()
 
             }
             R.id.tie_Unit->{
+                Config.disableClick(v)
                 unitcount = 0
                 getUnit()
             }
@@ -956,9 +969,9 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 //                Config.disableClick(v)
 //                otherchargecount = 0
 //                getOtherCharges()
-
+                Config.disableClick(v)
                 if (modelOtherCharges.size == 0){
-                    Config.disableClick(v)
+
                     otherchargecount = 0
                     getOtherCharges()
                 }else{
@@ -1389,6 +1402,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
         modelProjectCheckList.clear()
         modelOtherCharges.clear()
+        modelOtherChargesTemp.clear()
 
 
         tie_Othercharges!!.setText("")
@@ -2157,12 +2171,20 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             dialogLeadNo!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyLeadNo = dialogLeadNo!! .findViewById(R.id.recyLeadNo) as RecyclerView
             val etsearch = dialogLeadNo!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogLeadNo!! .findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.text = "Invalid Lead Number"
 
             leadnoSort = JSONArray()
             for (k in 0 until leadnoArrayList.length()) {
                 val jsonObject = leadnoArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 leadnoSort.put(jsonObject)
+            }
+
+
+            if (leadnoSort.length() <= 0){
+                recyLeadNo!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
             val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
@@ -2195,6 +2217,16 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                             }
 
                         //}
+                    }
+
+
+
+                    if (leadnoSort.length() <= 0){
+                        recyLeadNo!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyLeadNo!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"leadnoSort               7103    "+leadnoSort)
@@ -2455,6 +2487,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                         val jobjt = jObject.getJSONObject("OtherChargeTaxCalculationDetails")
                                         otherChargeCalcArrayList = jobjt.getJSONArray("OtherChargeTaxCalculationDetailsList")
 
+                                        Log.e(TAG,"67333321   "+otherChargeCalcArrayList.length())
                                         if (otherChargeCalcArrayList.length() > 0){
                                             if (otherchargetaxMode == 0){
                                                 otherChargesCalcPopup(otherChargeCalcArrayList)
@@ -2691,12 +2724,20 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             dialogDepartment!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyDeaprtment = dialogDepartment!! .findViewById(R.id.recyDeaprtment) as RecyclerView
             val etsearch = dialogDepartment!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogDepartment!! .findViewById(R.id.txt_nodata) as TextView
+
+            txt_nodata.text = "Inavalid Department"
 
             departmentSort = JSONArray()
             for (k in 0 until departmentArrayList.length()) {
                 val jsonObject = departmentArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 departmentSort.put(jsonObject)
+            }
+
+            if (departmentSort.length() <= 0){
+                recyDeaprtment!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
             val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
@@ -2726,6 +2767,14 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                             }
 
                         }
+                    }
+
+                    if (departmentSort.length() <= 0){
+                        recyDeaprtment!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyDeaprtment!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"departmentSort               7103    "+departmentSort)
@@ -2822,12 +2871,19 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             dialogEmployee!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyEmployee = dialogEmployee!! .findViewById(R.id.recyEmployee) as RecyclerView
             val etsearch = dialogEmployee!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogEmployee!! .findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.text = "Invalid Employee"
 
             employeeSort = JSONArray()
             for (k in 0 until employeeArrayList.length()) {
                 val jsonObject = employeeArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 employeeSort.put(jsonObject)
+            }
+
+            if (employeeSort.length() <= 0){
+                recyEmployee!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
 
@@ -2860,6 +2916,14 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                             }
 
                         }
+                    }
+
+                    if (employeeSort.length() <= 0){
+                        recyEmployee!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyEmployee!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"employeeSort               7103    "+employeeSort)
@@ -3089,11 +3153,20 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             recyWorkType = dialogWorkType!! .findViewById(R.id.recyWorkType) as RecyclerView
             val etsearch = dialogWorkType!! .findViewById(R.id.etsearch) as EditText
 
+            val txt_nodata = dialogWorkType!! .findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.text = "Invalid Work Type"
+
+
             worktypeSort = JSONArray()
             for (k in 0 until worktypeArrayList.length()) {
                 val jsonObject = worktypeArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 worktypeSort.put(jsonObject)
+            }
+
+            if (worktypeSort.length() <= 0){
+                recyWorkType!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
             val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
@@ -3123,6 +3196,14 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                             }
 
                         }
+                    }
+
+                    if (worktypeSort.length() <= 0){
+                        recyWorkType!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyWorkType!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"worktypeSort               7103    "+worktypeSort)
@@ -3218,6 +3299,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             dialogMeasurement!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyMeasurementType = dialogMeasurement!! .findViewById(R.id.recyMeasurementType) as RecyclerView
             val etsearch = dialogMeasurement!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogWorkType!! .findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.text = "Invalid Measurement Type"
 
             measurementSort = JSONArray()
             for (k in 0 until worktypeArrayList.length()) {
@@ -3225,6 +3308,12 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 // reportNamesort.put(k,jsonObject)
                 measurementSort.put(jsonObject)
             }
+
+            if (measurementSort.length() <= 0){
+                recyMeasurementType!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
+            }
+
 
             val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
             recyMeasurementType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -3253,6 +3342,14 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                             }
 
                         }
+                    }
+
+                    if (measurementSort.length() <= 0){
+                        recyMeasurementType!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyMeasurementType!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"measurementSort               7103    "+measurementSort)

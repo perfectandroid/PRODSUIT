@@ -401,12 +401,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             }
 
             R.id.tie_OtherCharges->{
-
+                Config.disableClick(v)
                 Log.e(TAG,"3777   "+ID_TransactionType)
                 if (ID_TransactionType.equals("2") || ID_TransactionType.equals("4")){
 
                     if (modelOtherCharges.size == 0){
-                        Config.disableClick(v)
                         otherchargecount = 0
                         getOtherCharges()
                     }else{
@@ -493,6 +492,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
         tie_Stage!!.setText("")
         tie_Employee!!.setText("")
         tie_Bill_Type!!.setText("")
+        tie_NetAmount!!.setText("")
+        tie_RoundOff!!.setText("")
         tie_Petty_Cashier!!.setText("")
         tie_OtherCharges!!.setText("")
         tie_Remarks!!.setText("")
@@ -1427,6 +1428,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             tvv_list_name = dialogProjectWiseEmployee!! .findViewById(R.id.tvv_list_name) as TextView
             var llsearch = dialogProjectWiseEmployee!! .findViewById(R.id.llsearch) as LinearLayout
             val etsearch = dialogProjectWiseEmployee!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogProjectWiseEmployee!! .findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.text = "Invalid Employee"
 
           //  llsearch.visibility = View.GONE
             tvv_list_name!!.setText("Employee")
@@ -1436,6 +1439,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                 val jsonObject = projectWiseEmployeeArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 projectWiseEmployeeSort.put(jsonObject)
+            }
+
+            if (projectWiseEmployeeSort.length() <= 0){
+                recylist!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 //
             val lLayout = GridLayoutManager(this@ProjectTransactionActivity, 1)
@@ -1473,6 +1481,14 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                             || jsonObject.getString("Designation")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())){
                             projectWiseEmployeeSort.put(jsonObject)
                         }
+                    }
+
+                    if (projectWiseEmployeeSort.length() <= 0){
+                        recylist!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recylist!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"projectWiseEmployeeSort               1399    "+projectWiseEmployeeSort)
@@ -2234,6 +2250,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             recylist = dialogProject!! .findViewById(R.id.recylist) as RecyclerView
             tvv_list_name = dialogProject!! .findViewById(R.id.tvv_list_name) as TextView
             val etsearch = dialogProject!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogProject!! .findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.text = "Invalid Project"
             tvv_list_name!!.setText("PROJECT LIST")
 
             projectSort = JSONArray()
@@ -2241,6 +2259,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                 val jsonObject = projectArraylist.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 projectSort.put(jsonObject)
+            }
+
+            if (projectSort.length() <= 0){
+                recylist!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
             val lLayout = GridLayoutManager(this@ProjectTransactionActivity, 1)
@@ -2270,6 +2293,14 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                             }
 
                         }
+                    }
+
+                    if (projectSort.length() <= 0){
+                        recylist!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recylist!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"projectSort               7103    "+projectSort)
@@ -2367,6 +2398,8 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             recylist = dialogStage!! .findViewById(R.id.recylist) as RecyclerView
             tvv_list_name = dialogStage!! .findViewById(R.id.tvv_list_name) as TextView
             val etsearch = dialogStage!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogStage!! .findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.text = "Invalid Stage"
             tvv_list_name!!.setText("STAGE LIST")
 
             stageSort = JSONArray()
@@ -2374,6 +2407,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                 val jsonObject = stageArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 stageSort.put(jsonObject)
+            }
+
+            if (stageSort.length() <= 0){
+                recylist!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
             val lLayout = GridLayoutManager(this@ProjectTransactionActivity, 1)
@@ -2403,6 +2441,13 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                             }
 
                         }
+                    }
+                    if (stageSort.length() <= 0){
+                        recylist!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recylist!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"stageSort               7103    "+stageSort)
@@ -2508,20 +2553,49 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
             ID_Project = ""
             tie_Project!!.setText("")
 
+//            ID_Stage = ""
+//            tie_Stage!!.setText("")
+//
+//            ID_BillType = ""
+//            tie_Bill_Type!!.setText("")
+//
+//            ID_PettyCashier = ""
+//            tie_Petty_Cashier!!.setText("")
+//
+//            ID_Employee = ""
+//            tie_Employee!!.setText("")
+//
+//            tie_Remarks!!.setText("")
+//            tie_OtherCharges!!.setText("")
+//
+//            rrrrrrrrrrrr
+
+            ID_Project = ""
             ID_Stage = ""
-            tie_Stage!!.setText("")
-
-            ID_BillType = ""
-            tie_Bill_Type!!.setText("")
-
-            ID_PettyCashier = ""
-            tie_Petty_Cashier!!.setText("")
-
             ID_Employee = ""
-            tie_Employee!!.setText("")
+            ID_BillType  = ""
+            ID_PettyCashier  = ""
 
-            tie_Remarks!!.setText("")
+            tie_Project!!.setText("")
+            tie_Stage!!.setText("")
+            tie_Employee!!.setText("")
+            tie_Bill_Type!!.setText("")
+            tie_NetAmount!!.setText("")
+            tie_RoundOff!!.setText("")
+            tie_Petty_Cashier!!.setText("")
             tie_OtherCharges!!.setText("")
+            tie_Remarks!!.setText("")
+
+            modelOtherCharges.clear()
+            otherChargeAdapter = null
+
+            modelOtherChargesCalculation.clear()
+            taxDetailAdapter = null
+
+            arrPayment = JSONArray()
+            adapterPaymentList = null
+
+            getCurrentDate()
 
             hideShow(ID_TransactionType)
             setMandatoryField(ID_TransactionType)

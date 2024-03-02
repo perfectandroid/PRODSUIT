@@ -11,6 +11,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.LinearLayout
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 
@@ -69,16 +70,19 @@ class ProjectActivity : AppCompatActivity() , View.OnClickListener  {
 //                startActivity(i)
 //                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
+                Config.disableClick(v)
                 val i = Intent(this@ProjectActivity, ProjectSiteVisitTabActivity::class.java)
                 startActivity(i)
 
 
             }
             R.id.llMaterialUsage->{
+                Config.disableClick(v)
                 val i = Intent(this@ProjectActivity, MaterialUsageActivity::class.java)
                 startActivity(i)
             }
             R.id.llProjectFollowup->{
+                Config.disableClick(v)
 //                val i = Intent(this@ProjectActivity, ProjectFollowUpActivity::class.java)
 //                startActivity(i)
 //                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -87,10 +91,12 @@ class ProjectActivity : AppCompatActivity() , View.OnClickListener  {
                 startActivity(i)
             }
             R.id.llMaterialRequest->{
+                Config.disableClick(v)
                 val i = Intent(this@ProjectActivity, MaterialRequestActivity::class.java)
                 startActivity(i)
             }
             R.id.llProjectTransaction->{
+                Config.disableClick(v)
                 val i = Intent(this@ProjectActivity, ProjectTransactionActivity::class.java)
                 startActivity(i)
 

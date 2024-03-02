@@ -1387,12 +1387,13 @@
                                                 <LinearLayout
                                                     android:id="@+id/ll_Checklist_Details"
                                                     android:layout_width="match_parent"
-                                                    android:layout_height="match_parent"
+                                                    android:layout_height="250dp"
                                                     android:orientation="vertical"
                                                     android:background="@color/dropbg_color"
                                                     android:paddingBottom="10dp"
                                                     android:layout_margin="2dp"
                                                     android:visibility="gone">
+
 
                                                     <androidx.recyclerview.widget.RecyclerView
                                                         android:id="@+id/recy_checklist"
@@ -1404,7 +1405,8 @@
                                                         android:id="@+id/expandableListView"
                                                         android:layout_width="match_parent"
                                                         android:padding="3dp"
-                                                        android:layout_height="350dp" />
+                                                        android:scrollbars="vertical"
+                                                        android:layout_height="wrap_content" />
 
                                                 </LinearLayout>
 
@@ -1453,7 +1455,7 @@
                                                     android:background="@color/dropbg_color"
                                                     android:paddingBottom="10dp"
                                                     android:layout_margin="2dp"
-                                                    android:visibility="visible">
+                                                    android:visibility="gone">
 
 
                                                     <com.google.android.material.textfield.TextInputLayout
