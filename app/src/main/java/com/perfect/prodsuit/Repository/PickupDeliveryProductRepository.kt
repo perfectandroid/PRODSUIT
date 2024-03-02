@@ -71,7 +71,7 @@ object PickupDeliveryProductRepository {
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
-                Log.e(TAG,"requestObject1   80   "+requestObject1)
+                Log.e(TAG,"requestObject1   80121   "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()

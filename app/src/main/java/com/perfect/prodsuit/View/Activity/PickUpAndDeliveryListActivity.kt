@@ -180,6 +180,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
                 finish()
             }
             R.id.imgv_filter->{
+                Config.disableClick(v)
                 filterBottomData()
             }
 
@@ -374,7 +375,7 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                pickUpDeliveryViewModel.getPickDeliveryList(this,submode,ID_Employee!!,strCustomer!!,strFromDate!!,strToDate!!,strMobile!!,strProduct!!,strTicketNo!!,FK_Area!!,status_id!!)!!.observe(
+                pickUpDeliveryViewModel.getPickDeliveryList(this,submode,strCustomer!!,strFromDate!!,strToDate!!,strMobile!!,strProduct!!,strTicketNo!!,FK_Area!!,status_id!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {

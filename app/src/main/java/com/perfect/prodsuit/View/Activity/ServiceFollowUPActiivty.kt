@@ -323,6 +323,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 
     var PSValue: String? = ""
     private lateinit var networkChangeReceiver: NetworkChangeReceiver
+    var Balanacepayment = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -1755,6 +1756,8 @@ Log.v("adasdasds","modeTab "+modeTab)
                 ll_paymentlist!!.visibility = View.GONE
                 recyPaymentList!!.adapter = null
                 txtPayBalAmount!!.setText(""+edtnetAmount!!.text.toString())
+                Balanacepayment = ""+edtnetAmount!!.text.toString()
+
                 Log.e(TAG, "9456  ")
             }
 
@@ -1787,6 +1790,8 @@ Log.v("adasdasds","modeTab "+modeTab)
                 } else {
                     txtPayBalAmount!!.setText(""+edtnetAmount!!.text.toString())
                 }
+
+                validateAddPayment(it)
             }
 
             btnApply!!.setOnClickListener {
@@ -3937,10 +3942,11 @@ Log.v("adasdasds","modeTab "+modeTab)
         }
         if (data.equals("deleteArrayList")) {
 
+            checkDeleteLoopPayment(position)
 
-            val jsonObject = arrPayment.getJSONObject(position)
-            var balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
-            var Amount = (jsonObject!!.getString("Amount")).toFloat()
+//            val jsonObject = arrPayment.getJSONObject(position)
+//            var balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
+//            var Amount = (jsonObject!!.getString("Amount")).toFloat()
 
             ID_PaymentMethod = ""
             edtPayMethod!!.setText("")
@@ -3956,7 +3962,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                 ll_paymentlist!!.visibility = View.GONE
             }
             applyMode = 0
-            txtPayBalAmount!!.text = (balAmount + Amount).toString()
+//            txtPayBalAmount!!.text = (balAmount + Amount).toString()
         }
         if (data.equals("editArrayList")) {
             try {
@@ -4217,6 +4223,40 @@ Log.v("adasdasds","modeTab "+modeTab)
 
     }
 
+    private fun checkDeleteLoopPayment(position: Int) {
+
+        var total = 0.0
+
+
+//        balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
+        for (i in 0 until arrPayment.length()) {
+            //apply your logic
+
+            val jsonObject = arrPayment.getJSONObject(i)
+            var amounttt = jsonObject.getString("Amount")
+
+            Log.e(TAG,"bvbvbvbvbvvb 000000= "+total)
+
+            total = (total+amounttt.toFloat())
+        }
+
+
+        val jsonObject = arrPayment.getJSONObject(position)
+        var removedamount = jsonObject.getString("Amount").toFloat()
+
+        Log.e(TAG,"bvbvbvbvbvvb 2222= "+arrPayment.length())
+
+//        var Balance  = (balAmount!! - amounttt.toFloat() - total)
+//        Log.e(TAG,"bvbvbvbvbvvb 1111111= "+Balance)
+
+        Log.e(TAG,"removeee Balanacepayment= "+Balanacepayment)
+        Log.e(TAG,"removeee total= "+total)
+        Log.e(TAG,"removeee removedamount= "+removedamount)
+
+        txtPayBalAmount!!.text  = ((Balanacepayment.toFloat() - (total -  removedamount)).toString())
+
+        Log.e(TAG,"removeee 66666666= "+((Balanacepayment.toFloat() - (total -  removedamount)).toString()))
+    }
     private fun hasCheckDuplicate(modelServicesListDetails: ArrayList<ServiceDetailsFullListModel> , iD_Prod : String): Boolean {
 
         var isChecked = true

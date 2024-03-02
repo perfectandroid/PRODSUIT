@@ -154,7 +154,10 @@ class ClosedTicketActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                                             R.style.MyDialogTheme
                                         )
                                         builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        builder.setPositiveButton("Ok") {
+
+                                                dialogInterface, which ->
+                                            onBackPressed()
                                         }
                                         val alertDialog: AlertDialog = builder.create()
                                         alertDialog.setCancelable(false)
