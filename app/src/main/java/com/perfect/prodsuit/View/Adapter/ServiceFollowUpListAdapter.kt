@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListenerData
 import com.perfect.prodsuit.R
 import org.json.JSONArray
@@ -77,31 +78,37 @@ class ServiceFollowUpListAdapter(
                 holder.tv_dueDays.setText(jsonObject!!.getString("DueDays"))
                 holder.lin_follow!!.setTag(position)
                 holder.lin_follow.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     if (mItemClickListener != null) {
                         mItemClickListener!!.onClick(position, "followUp", jsonObject!!);
                     }
                 })
                 holder.img_call.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     if (mItemClickListener != null) {
                         mItemClickListener!!.onClick(position, "call", jsonObject!!);
                     }
                 })
                 holder.img_info.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     if (mItemClickListener != null) {
                         mItemClickListener!!.onClick(position, "info", jsonObject!!);
                     }
                 })
                 holder.img_location.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     if (mItemClickListener != null) {
                         mItemClickListener!!.onClick(position, "location", jsonObject!!);
                     }
                 })
                 holder.im_tracker.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     if (mItemClickListener != null) {
                         mItemClickListener!!.onClick(position, "tracking", jsonObject!!);
                     }
                 })
                 holder.lin_time.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                    // Toast.makeText(context, "ServiceFollowUpListAdapter ln100", Toast.LENGTH_SHORT).show()
 //                    if(jsonObject!!.getString("runningStatus")=="0")
 //                    {

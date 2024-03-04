@@ -82,8 +82,16 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
                     jsonObject!!.getString("ID_CustomerServiceRegisterProductDetails")
                 )
                 FK_idcustsrvceregistproductdetailEditer.commit()
-
-                holder.tv_Channel.text        = jsonObject!!.getString("Channel")
+                if (jsonObject!!.getString("Channel").equals(""))
+                {
+                    holder.tv_Channel.text        = "No Channel"
+                    holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.no_channel_one))
+                }
+                else
+                {
+                    holder.tv_Channel.text        = jsonObject!!.getString("Channel")
+                }
+           //     holder.tv_Channel.text        = jsonObject!!.getString("Channel")
                 if (jsonObject!!.getString("Channel").equals("Portal")){
                     holder.im_Channel.setImageDrawable(context.resources.getDrawable(R.drawable.svg_ch_portal1))
                 }
@@ -157,6 +165,7 @@ class ServiceListAdapter (internal var context: Context, internal var jsonArray:
 
                 holder.llServiceList!!.setTag(position)
                 holder.llServiceList!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     clickListener!!.onClick(
                         position,
                         "ServiceList"

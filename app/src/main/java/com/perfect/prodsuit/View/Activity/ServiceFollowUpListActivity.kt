@@ -708,11 +708,12 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                 startActivity(mapIntent)
             }
             R.id.img_filter -> {
+                Config.disableClick(view)
                 showFilterAlert()
             }
             R.id.closedTicket -> {
 
-
+                Config.disableClick(view)
                 val intent = Intent(this@ServiceFollowUpListActivity, ClosedTicketActivity::class.java)
 
                 startActivity(intent)
@@ -878,12 +879,12 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
 
 
-            if (edtTicket!!.text.toString().equals("")&&edt_fromDate!!.text.toString().equals("")&&edt_customer!!.text.toString().equals("")){
-
-                Toast.makeText(applicationContext,"Please enter any one field",Toast.LENGTH_LONG).show()
-            }
-            else
-            {
+//            if (edtTicket!!.text.toString().equals("")&&edt_fromDate!!.text.toString().equals("")&&edt_customer!!.text.toString().equals("")){
+//
+//                Toast.makeText(applicationContext,"Please enter any one field",Toast.LENGTH_LONG).show()
+//            }
+//            else
+//            {
 
 
             //    dialog.dismiss()
@@ -940,12 +941,18 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
 
                 val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                val dialog: AlertDialog = builder.setMessage("Please Enter a Valid Ticket")
+                val dialog: AlertDialog = builder.setMessage("Invalid Follow Up Data")
                     .setPositiveButton("OK") {
 
 
                             dialog, which ->
-
+                        edtTicket.text = null
+                        edtProduct.text = null
+                        edt_customer.text = null
+                        edt_fromDate.text = null
+                        edt_toDate.text = null
+                        strFromDate = ""
+                        strToDate = ""
                         dialog.dismiss()
                     }
 
@@ -960,7 +967,7 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
 
      //           setServiceFollowRecycler(jsonArrayFilterd)
-            }
+          //  }
 
         }
         dialog!!.setContentView(view)

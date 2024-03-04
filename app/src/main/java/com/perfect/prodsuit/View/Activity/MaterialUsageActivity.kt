@@ -110,6 +110,7 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
     var saveCount    = 0
 
     var ID_Project   = ""
+    var Project_Created_Date   = ""
     var ID_Stage   = ""
     var ID_Team   = ""
     var ID_Employee   = "0"
@@ -159,6 +160,7 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
         var jsonObject: String? = intent.getStringExtra("jsonObject")
         jsonObj = JSONObject(jsonObject)
         ID_Project = jsonObj!!.getString("ID_Project")
+        Project_Created_Date = jsonObj!!.getString("StartDate")
         tie_Project!!.setText(jsonObj!!.getString("ProjName"))
 
         usageMode = "1"
@@ -431,6 +433,11 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
         usageMode = "1"
         managementMode = "0"
 
+        til_Stage!!.isErrorEnabled = false
+        til_Team!!.isErrorEnabled = false
+        til_Product!!.isErrorEnabled = false
+        til_Mode!!.isErrorEnabled = false
+
         hideViews()
 
 
@@ -459,6 +466,7 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
 
             var hasId =  hasAll(modelUsageProduct!!,ID_Product!!,productQty!!,ID_Mode!!)
 
+            Log.e(TAG,"46999  "+editMode+"  :  "+editIndex+"  :   "+hasId)
             if (hasId){
 
                 if (editMode == 1){
@@ -530,7 +538,7 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
 
             for (i in 0 until modelUsageProduct.size) {
 
-                if (i != editIndex){
+               // if (i != editIndex){
                     if (modelUsageProduct.get(i).ID_Product == ID_Product && modelUsageProduct.get(i).ID_Mode == ID_Mode) {
 
                         validateMessage = "Product Already exits"
@@ -542,7 +550,7 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
                         validateMessage = "Quantity Cannot be Greater than Current Stock"
                         result = false
                     }
-                }
+               // }
             }
 //            if (productTotQty.toFloat() >= sumQty){
 //                result = true
@@ -672,9 +680,16 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
         val txtSubmit    = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
 
+        val format = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+        val date = format.parse(Project_Created_Date)
+        val millis = date.time?:0
+
+
+        Log.e(TAG,"68888   "+millis+"  :   "+System.currentTimeMillis())
+
 //        date_Picker1.setMinDate(System.currentTimeMillis())
         date_Picker1.maxDate = System.currentTimeMillis()
-//        date_Picker1.minDate = System.currentTimeMillis()
+        date_Picker1.minDate = millis
 
 
         txtCancel.setOnClickListener {
@@ -924,13 +939,21 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
             recylist = dialogStage!! .findViewById(R.id.recylist) as RecyclerView
             tvv_list_name = dialogStage!! .findViewById(R.id.tvv_list_name) as TextView
             val etsearch = dialogStage!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogStage!! .findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.text = "Invalid Stage"
             tvv_list_name!!.setText("STAGE LIST")
+
 
             stageSort = JSONArray()
             for (k in 0 until stageArrayList.length()) {
                 val jsonObject = stageArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 stageSort.put(jsonObject)
+            }
+
+            if (stageSort.length() <= 0){
+                recylist!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
             val lLayout = GridLayoutManager(this@MaterialUsageActivity, 1)
@@ -960,6 +983,14 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
                             }
 
                         }
+                    }
+
+                    if (stageSort.length() <= 0){
+                        recylist!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recylist!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"stageSort               7103    "+stageSort)
@@ -1057,6 +1088,8 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
             recylist = dialogTeam!! .findViewById(R.id.recylist) as RecyclerView
             tvv_list_name = dialogTeam!! .findViewById(R.id.tvv_list_name) as TextView
             val etsearch = dialogTeam!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogTeam!! .findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.text = "Invalid Team"
             tvv_list_name!!.setText("TEAM LIST")
 
             teamSort = JSONArray()
@@ -1064,6 +1097,11 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
                 val jsonObject = teamArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 teamSort.put(jsonObject)
+            }
+
+            if (teamSort.length() <= 0){
+                recylist!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
             val lLayout = GridLayoutManager(this@MaterialUsageActivity, 1)
@@ -1093,6 +1131,14 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
                             }
 
                         }
+                    }
+
+                    if (teamSort.length() <= 0){
+                        recylist!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recylist!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"teamSort               7103    "+teamSort)
@@ -1189,6 +1235,8 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
             recylist = dialogTeamEmp!! .findViewById(R.id.recylist) as RecyclerView
             tvv_list_name = dialogTeamEmp!! .findViewById(R.id.tvv_list_name) as TextView
             val etsearch = dialogTeamEmp!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogTeamEmp!! .findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.text = "Invalid Employee"
             tvv_list_name!!.setText("Employee")
 
             teamEmpSort = JSONArray()
@@ -1196,6 +1244,11 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
                 val jsonObject = teamEmployeeArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 teamEmpSort.put(jsonObject)
+            }
+
+            if (teamEmpSort.length() <= 0){
+                recylist!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
             val lLayout = GridLayoutManager(this@MaterialUsageActivity, 1)
@@ -1225,6 +1278,14 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
                             }
 
                         }
+                    }
+
+                    if (teamEmpSort.length() <= 0){
+                        recylist!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recylist!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"teamEmpSort               7103    "+teamEmpSort)
@@ -1322,6 +1383,9 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
             recylist = dialogProduct!! .findViewById(R.id.recylist) as RecyclerView
             tvv_list_name = dialogProduct!! .findViewById(R.id.tvv_list_name) as TextView
             val etsearch = dialogProduct!! .findViewById(R.id.etsearch) as EditText
+
+            val txt_nodata = dialogProduct!! .findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.text = "Invalid Product"
             tvv_list_name!!.setText("PRODUCT LIST")
 
             productSort = JSONArray()
@@ -1329,6 +1393,11 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
                 val jsonObject = productArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 productSort.put(jsonObject)
+            }
+
+            if (productSort.length() <= 0){
+                recylist!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
             val lLayout = GridLayoutManager(this@MaterialUsageActivity, 1)
@@ -1358,6 +1427,14 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
                             }
 
                         }
+                    }
+
+                    if (productSort.length() <= 0){
+                        recylist!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recylist!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"productSort               7103    "+productSort)
@@ -1454,6 +1531,9 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
             recylist = dialogMode!! .findViewById(R.id.recylist) as RecyclerView
             tvv_list_name = dialogMode!! .findViewById(R.id.tvv_list_name) as TextView
             val etsearch = dialogMode!! .findViewById(R.id.etsearch) as EditText
+
+            val txt_nodata = dialogMode!! .findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.text = "Invalid Mode"
             tvv_list_name!!.setText("Mode")
 
             modeSort = JSONArray()
@@ -1461,6 +1541,10 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
                 val jsonObject = modeArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 modeSort.put(jsonObject)
+            }
+            if (modeSort.length() <= 0){
+                recylist!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
             val lLayout = GridLayoutManager(this@MaterialUsageActivity, 1)
@@ -1490,6 +1574,13 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
                             }
 
                         }
+                    }
+                    if (modeSort.length() <= 0){
+                        recylist!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recylist!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"modeSort               7103    "+modeSort)

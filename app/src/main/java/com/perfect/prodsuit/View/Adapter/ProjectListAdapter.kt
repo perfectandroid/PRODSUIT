@@ -60,6 +60,7 @@ class ProjectListAdapter (internal var context: Context, internal var jsonArray:
 
                 holder.ll_material_usage!!.setTag(position)
                 holder.ll_material_usage!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     clickListener!!.onClick(
                         position,
                         "materialUsageClick"
@@ -68,6 +69,7 @@ class ProjectListAdapter (internal var context: Context, internal var jsonArray:
 
                 holder.ll_material_request!!.setTag(position)
                 holder.ll_material_request!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     clickListener!!.onClick(
                         position,
                         "materialRequestClick"
@@ -76,6 +78,7 @@ class ProjectListAdapter (internal var context: Context, internal var jsonArray:
 
                 holder.ll_project_followup!!.setTag(position)
                 holder.ll_project_followup!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     clickListener!!.onClick(
                         position,
                         "projectFollowupClick"
@@ -84,6 +87,7 @@ class ProjectListAdapter (internal var context: Context, internal var jsonArray:
 
                 holder.ll_project_transaction!!.setTag(position)
                 holder.ll_project_transaction!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     clickListener!!.onClick(
                         position,
                         "materialTransactionClick"

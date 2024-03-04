@@ -160,7 +160,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
             R.id.ll_pickup->{
                 val i = Intent(this@PickUpAndDeliveryActivity, PickUpAndDeliveryListActivity::class.java)
                 i.putExtra("SubMode","1")
-                i.putExtra("ID_Employee",ID_Employee)
+//                i.putExtra("ID_Employee",ID_Employee)
                 i.putExtra("FK_Area",FK_Area)
                 i.putExtra("strFromDate",strFromDate)
                 i.putExtra("strToDate",strToDate)
@@ -174,7 +174,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
             R.id.ll_delivery->{
                 val i = Intent(this@PickUpAndDeliveryActivity, PickUpAndDeliveryListActivity::class.java)
                 i.putExtra("SubMode","2")
-                i.putExtra("ID_Employee",ID_Employee)
+//                i.putExtra("ID_Employee",ID_Employee)
                 i.putExtra("FK_Area",FK_Area)
                 i.putExtra("strFromDate",strFromDate)
                 i.putExtra("strToDate",strToDate)
@@ -186,6 +186,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                 startActivity(i)
             }
             R.id.imgv_filter->{
+                Config.disableClick(v)
                 filterBottomData()
             }
         }
@@ -204,7 +205,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
 
-                pickupdeliverycounts.getPickupDeliveryCounts(this,ID_Employee,FK_Area,strFromDate,strToDate,strarea,strCustomer,strMobile,stProduct,strTicketNo,status_id)!!.observe(
+                pickupdeliverycounts.getPickupDeliveryCounts(this,FK_Area,strFromDate,strToDate,strarea,strCustomer,strMobile,stProduct,strTicketNo,status_id)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message

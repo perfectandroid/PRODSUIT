@@ -260,6 +260,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var compnantMode                                      = 0
     lateinit var servCompanantViewModel: ServCompanantViewModel
     var servCompanantArray = JSONArray()
+    var servCompanantSort = JSONArray()
     var servicePartsAdapter: ServiceParts_replacedAdapter? = null
 
     var followUpType                                      = 0
@@ -322,6 +323,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
 
     var PSValue: String? = ""
     private lateinit var networkChangeReceiver: NetworkChangeReceiver
+    var Balanacepayment = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -1754,6 +1756,8 @@ Log.v("adasdasds","modeTab "+modeTab)
                 ll_paymentlist!!.visibility = View.GONE
                 recyPaymentList!!.adapter = null
                 txtPayBalAmount!!.setText(""+edtnetAmount!!.text.toString())
+                Balanacepayment = ""+edtnetAmount!!.text.toString()
+
                 Log.e(TAG, "9456  ")
             }
 
@@ -1786,6 +1790,8 @@ Log.v("adasdasds","modeTab "+modeTab)
                 } else {
                     txtPayBalAmount!!.setText(""+edtnetAmount!!.text.toString())
                 }
+
+                validateAddPayment(it)
             }
 
             btnApply!!.setOnClickListener {
@@ -2778,9 +2784,10 @@ Log.v("adasdasds","modeTab "+modeTab)
     }
  @SuppressLint("SuspiciousIndentation")
  private fun getSearch(idSearch: String) {
-        if (!id_search.equals("")) {
-            subMode = "0"
-        }
+     Log.e(TAG,"278111   "+id_search+"   :   "+subMode)
+//        if (!id_search.equals("")) {
+//            subMode = "0"
+//        }
         jsonArrayServiceType = JSONArray()
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -2916,7 +2923,10 @@ Log.v("adasdasds","modeTab "+modeTab)
                                             servDetadapter!!.setClickListener(this@ServiceFollowUPActiivty)
                                         }
                                         else{
-                                            Log.e(TAG,"size 2233 jsonArrayServiceType==  else"+jsonArrayServiceType.length())
+                                            Log.e(TAG,"size 22331 jsonArrayServiceType==  else"+jsonArrayServiceType.length())
+
+                                            modelServicesListDetails.clear()
+                                            rcyler_followup!!.adapter = null
 
                                             val builder = AlertDialog.Builder(
                                                 this@ServiceFollowUPActiivty, R.style.MyDialogTheme
@@ -2933,6 +2943,8 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
                                     } else {
+                                        modelServicesListDetails.clear()
+                                        rcyler_followup!!.adapter = null
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty, R.style.MyDialogTheme
                                         )
@@ -3930,10 +3942,11 @@ Log.v("adasdasds","modeTab "+modeTab)
         }
         if (data.equals("deleteArrayList")) {
 
+            checkDeleteLoopPayment(position)
 
-            val jsonObject = arrPayment.getJSONObject(position)
-            var balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
-            var Amount = (jsonObject!!.getString("Amount")).toFloat()
+//            val jsonObject = arrPayment.getJSONObject(position)
+//            var balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
+//            var Amount = (jsonObject!!.getString("Amount")).toFloat()
 
             ID_PaymentMethod = ""
             edtPayMethod!!.setText("")
@@ -3949,7 +3962,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                 ll_paymentlist!!.visibility = View.GONE
             }
             applyMode = 0
-            txtPayBalAmount!!.text = (balAmount + Amount).toString()
+//            txtPayBalAmount!!.text = (balAmount + Amount).toString()
         }
         if (data.equals("editArrayList")) {
             try {
@@ -4099,7 +4112,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         if (data.equals("componantListClik")){
             dialogAddserviceSheet!!.dismiss()
 
-            val jsonObject = servCompanantArray.getJSONObject(position)
+            val jsonObject = servCompanantSort.getJSONObject(position)
             var empModel = servicepartsReplacedModel[modEditPosition]
 
             var posAdd = 0
@@ -4210,6 +4223,40 @@ Log.v("adasdasds","modeTab "+modeTab)
 
     }
 
+    private fun checkDeleteLoopPayment(position: Int) {
+
+        var total = 0.0
+
+
+//        balAmount = (txtPayBalAmount!!.text.toString()).toFloat()
+        for (i in 0 until arrPayment.length()) {
+            //apply your logic
+
+            val jsonObject = arrPayment.getJSONObject(i)
+            var amounttt = jsonObject.getString("Amount")
+
+            Log.e(TAG,"bvbvbvbvbvvb 000000= "+total)
+
+            total = (total+amounttt.toFloat())
+        }
+
+
+        val jsonObject = arrPayment.getJSONObject(position)
+        var removedamount = jsonObject.getString("Amount").toFloat()
+
+        Log.e(TAG,"bvbvbvbvbvvb 2222= "+arrPayment.length())
+
+//        var Balance  = (balAmount!! - amounttt.toFloat() - total)
+//        Log.e(TAG,"bvbvbvbvbvvb 1111111= "+Balance)
+
+        Log.e(TAG,"removeee Balanacepayment= "+Balanacepayment)
+        Log.e(TAG,"removeee total= "+total)
+        Log.e(TAG,"removeee removedamount= "+removedamount)
+
+        txtPayBalAmount!!.text  = ((Balanacepayment.toFloat() - (total -  removedamount)).toString())
+
+        Log.e(TAG,"removeee 66666666= "+((Balanacepayment.toFloat() - (total -  removedamount)).toString()))
+    }
     private fun hasCheckDuplicate(modelServicesListDetails: ArrayList<ServiceDetailsFullListModel> , iD_Prod : String): Boolean {
 
         var isChecked = true
@@ -4866,6 +4913,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                                         Log.e(TAG,"2495    "+servCompanantArray)
 
                                         if (servCompanantArray.length()>0){
+
                                             serviceCompnantListPop(servCompanantArray)
                                         }
                                     }
@@ -4906,15 +4954,36 @@ Log.v("adasdasds","modeTab "+modeTab)
             var tv_cancel = dialogAddserviceSheet!! .findViewById(R.id.tv_cancel) as TextView
             var tv_apply = dialogAddserviceSheet!! .findViewById(R.id.tv_apply) as TextView
             var tv_bar = dialogAddserviceSheet!! .findViewById(R.id.tv_bar) as TextView
+            var llsearch = dialogAddserviceSheet!! .findViewById(R.id.llsearch) as LinearLayout
+            var etsearch = dialogAddserviceSheet!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogAddserviceSheet!! .findViewById(R.id.txt_nodata) as TextView
+
+            txt_nodata.text = "Inavalid Product List"
+
+            llsearch!!.visibility = View.VISIBLE
 
             tv_productList.setText("Product List")
             tv_apply.visibility = View.GONE
             tv_bar.visibility = View.GONE
 
+
+            servCompanantSort = JSONArray()
+            for (k in 0 until servCompanantArray.length()) {
+                val jsonObject = servCompanantArray.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                servCompanantSort.put(jsonObject)
+            }
+
+            if (servCompanantSort.length() <= 0){
+                recycAdpService!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
+            }
+
+
             val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
             recycAdpService!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = ServiceCompanantAdapter(this@ServiceFollowUPActiivty, servCompanantArray)
+            val adapter = ServiceCompanantAdapter(this@ServiceFollowUPActiivty, servCompanantSort)
             recycAdpService!!.adapter = adapter
             adapter.setClickListener(this@ServiceFollowUPActiivty)
 
@@ -4923,6 +4992,46 @@ Log.v("adasdasds","modeTab "+modeTab)
 //            val adapter = ServiceDetailAdapter(this@ServiceFollowUPActiivty, addServiceDetailMode!!)
 //            recycAdpService!!.adapter = adapter
 //            adapter.setClickListener(this@ServiceFollowUPActiivty)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    servCompanantSort = JSONArray()
+
+                    for (k in 0 until servCompanantArray.length()) {
+                        val jsonObject = servCompanantArray.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("Name").length) {
+                            if (jsonObject.getString("Name")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                servCompanantSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    if (servCompanantSort.length() <= 0){
+                        recycAdpService!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recycAdpService!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
+                    }
+
+
+                    val adapter = ServiceCompanantAdapter(this@ServiceFollowUPActiivty, servCompanantSort)
+                    recycAdpService!!.adapter = adapter
+                    adapter.setClickListener(this@ServiceFollowUPActiivty)
+                }
+            })
 
             val window: Window? = dialogAddserviceSheet!!.getWindow()
             window!!.setBackgroundDrawableResource(android.R.color.white);
