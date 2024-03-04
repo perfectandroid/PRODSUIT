@@ -24,8 +24,6 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.execSQL("create table travel_location " + "(id integer primary key, date text,time text,battery text, address text)")
         db.execSQL("create table chat_all_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text)")
         db.execSQL("create table chat_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text,senderID text,userToken text)")  // ,userToken text
-        db.execSQL("create table lists " + "(id integer primary key, title text)")
-
 
 
         db.execSQL(
@@ -81,7 +79,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         else if (oldVersion < 4) {
             Log.e(TAG,"58888   "+oldVersion +   " : "+newVersion)
             db.execSQL("ALTER TABLE chat_user ADD COLUMN userToken text")
-           // db.execSQL("create table chat_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text,senderID text,userToken text)")
+            // db.execSQL("create table chat_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text,senderID text,userToken text)")
         }
         else if (oldVersion < 5) {
             Log.e(TAG," 22222221   ")
@@ -312,7 +310,6 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         }
     }
 
-
     fun insertServiceDetails(jsonArrayServiceType: JSONArray) {
         try {
             val dbRead = this.readableDatabase
@@ -340,6 +337,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
             Log.e(TAG, "ggggghjfgtyr  " + e)
         }
     }
+
     fun insertServiceDetailsdd(jsonArrayServiceType: JSONArray) {
         try {
             Log.e(TAG, "sdfsdfsdfsdfsdddd " + jsonArrayServiceType)
@@ -390,12 +388,12 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         try {
             val dbWrite = writableDatabase
             val dbRead = readableDatabase
-          //  dbWrite.execSQL("DELETE FROM Company")
+            //  dbWrite.execSQL("DELETE FROM Company")
 //            var BaseUrl = BaseUrl+"2"
             val cursor: Cursor = dbRead.rawQuery("select * from Company WHERE Base_Url= '$BaseUrl' AND Image_Url= '$ImageUrl' AND Bank_key= '$BankKey'", null)
             Log.e(TAG, "cursor 350001   " + cursor.count)
             if (cursor.count == 0) {
-            //    var writeSub = dbWrite.execSQL("INSERT INTO Company (Base_Url,Image_Url, Bank_key,Cert_Name,Company_Code,Company_Status,IP_Default) VALUES ('$BaseUrl','$ImageUrl','$BankKey','$CertName','$CompanyCode','$Status','$IpDefault')")
+                //    var writeSub = dbWrite.execSQL("INSERT INTO Company (Base_Url,Image_Url, Bank_key,Cert_Name,Company_Code,Company_Status,IP_Default) VALUES ('$BaseUrl','$ImageUrl','$BankKey','$CertName','$CompanyCode','$Status','$IpDefault')")
 
                 val db = writableDatabase
 
@@ -425,8 +423,8 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     }
 
     fun insertUpdateReseller(ID_PKey : String,ResellerName : String,AppIconImageCode : String,TechnologyPartnerImage : String,ProductName : String,PlayStoreLink : String,AppStoreLink : String,
-    ContactNumber : String,ContactEmail : String,ContactAddress : String,CertificateName : String,TestingURL : String,TestingMachineId : String,TestingImageURL : String,TestingMobileNo : String,
-    TestingBankKey : String,TestingBankHeader : String,AboutUs : String,AudioClipEnabled : String,IsLocationDistanceShowing : String,EditMRPLead : String){
+                             ContactNumber : String,ContactEmail : String,ContactAddress : String,CertificateName : String,TestingURL : String,TestingMachineId : String,TestingImageURL : String,TestingMobileNo : String,
+                             TestingBankKey : String,TestingBankHeader : String,AboutUs : String,AudioClipEnabled : String,IsLocationDistanceShowing : String,EditMRPLead : String){
         val primaryKey = ""
         try {
             Log.e(TAG, "cursor 350004   "+ID_PKey)
@@ -461,7 +459,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                 values.put("EditMRPLead", EditMRPLead)
 
                 // Insert data into the table and get the primary key
-               var primaryKey = db.insert("ResellerDetails", null, values)
+                var primaryKey = db.insert("ResellerDetails", null, values)
                 Log.e(TAG, "cursor 350006   " + cursor.count)
             }else{
                 Log.e(TAG, "cursor 350007   " + cursor.count)
@@ -564,7 +562,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         }catch (e: Exception){
 
         }
-       return primaryKey
+        return primaryKey
     }
 
     fun updateStatusDefaultIp(primaryKey : String,Status : Boolean,IpDefault : Boolean,mode : String) : String {
@@ -604,7 +602,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         val jsonArray = JSONArray()
         try {
             val dbRead = readableDatabase
-       //     val cursor: Cursor = dbRead.rawQuery("Select * from Company c join ResellerDetails r on c.ID_Company = r.ID_Company where c.Company_Status = '1' or c.Company_Status='true'", null)
+            //     val cursor: Cursor = dbRead.rawQuery("Select * from Company c join ResellerDetails r on c.ID_Company = r.ID_Company where c.Company_Status = '1' or c.Company_Status='true'", null)
             val cursor: Cursor = dbRead.rawQuery("Select * from Company c join ResellerDetails r join LoginUser l  on c.ID_Company = r.ID_Company and c.ID_Company = l.ID_Company where c.Company_Status = '1' or c.Company_Status='true'", null)
             if (cursor.count > 0) {
                 if (cursor.moveToFirst()) {
@@ -665,7 +663,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 //                        jsonObject.put("Department", cursor.getString(50))
 
 
-                    //    jsonObject.put("CompanyCategory", cursor.getString(51))
+                        //    jsonObject.put("CompanyCategory", cursor.getString(51))
 
 
                         jsonObject.put("ID_Company", cursor.getString(cursor.getColumnIndex("ID_Company")))
@@ -809,9 +807,9 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     }
 
     fun insertUpdateLoginUser(ID_Company: String, FK_Employee: String, UserName: String, Address: String, MobileNumber: String, Token: String,
-        Email: String, UserCode: String, FK_Branch: String, FK_BranchType: String, FK_Company: String, FK_BranchCodeUser: String,
-        FK_UserRole: String, UserRole: String, IsAdmin: String, IsManager: String, ID_User: String, BranchName: String,FK_Department: String,
-        Department: String, CompanyCategory: String) {
+                              Email: String, UserCode: String, FK_Branch: String, FK_BranchType: String, FK_Company: String, FK_BranchCodeUser: String,
+                              FK_UserRole: String, UserRole: String, IsAdmin: String, IsManager: String, ID_User: String, BranchName: String,FK_Department: String,
+                              Department: String, CompanyCategory: String) {
 
         try {
             Log.e(TAG, "cursor 6744    "+ID_Company)
