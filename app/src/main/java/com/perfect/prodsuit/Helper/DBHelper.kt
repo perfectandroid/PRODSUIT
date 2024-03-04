@@ -24,6 +24,8 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.execSQL("create table travel_location " + "(id integer primary key, date text,time text,battery text, address text)")
         db.execSQL("create table chat_all_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text)")
         db.execSQL("create table chat_user " + "(id integer primary key, name text, BranchName text, user_1 text,user_2 text,chatkey text,senderID text,userToken text)")  // ,userToken text
+        db.execSQL("create table lists " + "(id integer primary key, title text)")
+
 
 
         db.execSQL(
@@ -310,6 +312,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         }
     }
 
+
     fun insertServiceDetails(jsonArrayServiceType: JSONArray) {
         try {
             val dbRead = this.readableDatabase
@@ -337,7 +340,6 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
             Log.e(TAG, "ggggghjfgtyr  " + e)
         }
     }
-
     fun insertServiceDetailsdd(jsonArrayServiceType: JSONArray) {
         try {
             Log.e(TAG, "sdfsdfsdfsdfsdddd " + jsonArrayServiceType)

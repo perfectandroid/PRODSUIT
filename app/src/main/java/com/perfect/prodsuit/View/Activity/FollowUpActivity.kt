@@ -285,7 +285,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //        tabLayout!!.addTab(tabLayout!!.newTab().setText("Location"))
 //        tabLayout!!.addTab(tabLayout!!.newTab().setText("Images"))
 //        tabLayout!!.addTab(tabLayout!!.newTab().setText("Documents"))
-       // tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
+        // tabLayout!!.tabMode = TabLayout.MODE_SCROLLABLE
         card_followup!!.visibility = View.VISIBLE
         card_nextaction!!.visibility = View.GONE
         tabLayout!!.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -325,7 +325,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         tie_CallTime!!.setText(currentTime1)
 
         tie_Date!!.setText(currentDate1)
-     //   tie_NextFollowupDate!!.setText(currentDate1)
+        //   tie_NextFollowupDate!!.setText(currentDate1)
         tie_NextFollowupDate!!.setText("")
 
     }
@@ -416,7 +416,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         tie_NextEmployee!!.setOnClickListener(this)
 
 
-      //  tie_CallTime!!.setOnClickListener(this)
+        //  tie_CallTime!!.setOnClickListener(this)
 
         tie_CallStatus!!.setOnClickListener(this)
         tie_Latitude!!.setOnClickListener(this)
@@ -447,9 +447,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 getFollowupType()
             }
             R.id.tie_FollowupBy->{
-               // employee = 0
+                // employee = 0
                 Config.disableClick(v)
-               // getAllEmployee()
+                // getAllEmployee()
 
                 countLeadBy = 0
                 getLeadBy(v)
@@ -632,35 +632,35 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message
                             if (msg!!.length > 0) {
-                                    val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   228   "+msg.length)
-                                    Log.e(TAG,"msg   228   "+msg)
-                                    if (jObject.getString("StatusCode") == "0") {
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG,"msg   228   "+msg.length)
+                                Log.e(TAG,"msg   228   "+msg)
+                                if (jObject.getString("StatusCode") == "0") {
 
-                                        val jobjt = jObject.getJSONObject("StatusDetailsList")
-                                        callStatusArrayList = jobjt.getJSONArray("StatusList")
-                                        if (callStatusArrayList.length()>0){
-                                            if (countCallStatus == 0){
-                                                countCallStatus++
-                                             //   leadByPopup(leadByArrayList)
+                                    val jobjt = jObject.getJSONObject("StatusDetailsList")
+                                    callStatusArrayList = jobjt.getJSONArray("StatusList")
+                                    if (callStatusArrayList.length()>0){
+                                        if (countCallStatus == 0){
+                                            countCallStatus++
+                                            //   leadByPopup(leadByArrayList)
 
-                                                callStatusPopups(callStatusArrayList)
-                                            }
-
+                                            callStatusPopups(callStatusArrayList)
                                         }
 
-                                    } else {
-                                        val builder = AlertDialog.Builder(
-                                            this@FollowUpActivity,
-                                            R.style.MyDialogTheme
-                                        )
-                                        builder.setMessage(jObject.getString("EXMessage"))
-                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                        }
-                                        val alertDialog: AlertDialog = builder.create()
-                                        alertDialog.setCancelable(false)
-                                        alertDialog.show()
                                     }
+
+                                } else {
+                                    val builder = AlertDialog.Builder(
+                                        this@FollowUpActivity,
+                                        R.style.MyDialogTheme
+                                    )
+                                    builder.setMessage(jObject.getString("EXMessage"))
+                                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                    }
+                                    val alertDialog: AlertDialog = builder.create()
+                                    alertDialog.setCancelable(false)
+                                    alertDialog.show()
+                                }
 
 
 
@@ -726,7 +726,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             dialogCallStatus!! .setContentView(R.layout.status_popup)
             dialogCallStatus!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyCallStatus = dialogCallStatus!! .findViewById(R.id.recyCallStatus) as RecyclerView
-        //    val etsearch = dialogCallStatus!! .findViewById(R.id.etsearch) as EditText
+            //    val etsearch = dialogCallStatus!! .findViewById(R.id.etsearch) as EditText
 
 
 
@@ -1023,9 +1023,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //                            }
 //                        } else {
 
-                            val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
-                            val bytes = ByteArrayOutputStream()
-                            thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
+                        val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
+                        val bytes = ByteArrayOutputStream()
+                        thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
 //                    destination = File(
 //                        (Environment.getExternalStorageDirectory()).toString() + "/" +
 //                                getString(R.string.app_name),
@@ -1037,87 +1037,87 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //                    )
 //                    val fo: FileOutputStream
 
-                            try {
+                        try {
 //                        if (!destination!!.getParentFile().exists()) {
 //                            destination!!.getParentFile().mkdirs()
 //                        }
 //                        if (!destination!!.exists()) {
 //                            destination!!.createNewFile()
 //                        }
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                                    destination = File(
-                                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
-                                        ""
-                                    )
-                                    // destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)  +"/" +  getString(R.string.app_name));
-                                } else {
-                                    destination = File(
-                                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
-                                        ""
-                                    )
-                                }
-
-                                if (!destination!!.exists()) {
-                                    destination!!.createNewFile()
-                                }
-
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                                 destination = File(
-                                    (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
-                                            "",
-                                    "IMG_" + System.currentTimeMillis() + ".jpg"
+                                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
+                                    ""
                                 )
-                                val fo: FileOutputStream
-
-
-                                fo = FileOutputStream(destination)
-                                fo.write(bytes.toByteArray())
-                                fo.close()
-                            } catch (e: FileNotFoundException) {
-                                e.printStackTrace()
-                                Log.e(TAG, "FileNotFoundException   23671    " + e.toString())
-
-                            } catch (e: IOException) {
-                                e.printStackTrace()
-                                Log.e(TAG, "FileNotFoundException   23672    " + e.toString())
+                                // destination = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)  +"/" +  getString(R.string.app_name));
+                            } else {
+                                destination = File(
+                                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath,
+                                    ""
+                                )
                             }
 
-                            if (strImage.equals("1")) {
-                                image1 = destination!!.getAbsolutePath()
-                                Log.e(TAG, "image1  20522    " + image1)
-                                destination = File(image1)
+                            if (!destination!!.exists()) {
+                                destination!!.createNewFile()
+                            }
+
+                            destination = File(
+                                (Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)).absolutePath + "/" +
+                                        "",
+                                "IMG_" + System.currentTimeMillis() + ".jpg"
+                            )
+                            val fo: FileOutputStream
 
 
-                                val myBitmap = BitmapFactory.decodeFile(destination.toString())
-                                val converetdImage = getResizedBitmap(myBitmap, 500)
-                                //  val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
-                                if (imgv_upload1 != null) {
-                                    imgv_upload1!!.setImageBitmap(converetdImage)
-                                }
+                            fo = FileOutputStream(destination)
+                            fo.write(bytes.toByteArray())
+                            fo.close()
+                        } catch (e: FileNotFoundException) {
+                            e.printStackTrace()
+                            Log.e(TAG, "FileNotFoundException   23671    " + e.toString())
+
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                            Log.e(TAG, "FileNotFoundException   23672    " + e.toString())
+                        }
+
+                        if (strImage.equals("1")) {
+                            image1 = destination!!.getAbsolutePath()
+                            Log.e(TAG, "image1  20522    " + image1)
+                            destination = File(image1)
+
+
+                            val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                            val converetdImage = getResizedBitmap(myBitmap, 500)
+                            //  val img_image1 = findViewById(R.id.img_image1) as RoundedImageView
+                            if (imgv_upload1 != null) {
                                 imgv_upload1!!.setImageBitmap(converetdImage)
-
-                                if (image1 != null) {
-
-                                }
                             }
-                            if (strImage.equals("2")) {
-                                image2 = destination!!.getAbsolutePath()
-                                Log.e(TAG, "image2  20522    " + image2)
-                                destination = File(image2)
+                            imgv_upload1!!.setImageBitmap(converetdImage)
 
-                                val myBitmap = BitmapFactory.decodeFile(destination.toString())
-                                val converetdImage = getResizedBitmap(myBitmap, 500)
-                                //   val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
-                                if (imgv_upload2 != null) {
-                                    imgv_upload2!!.setImageBitmap(converetdImage)
-                                }
+                            if (image1 != null) {
+
+                            }
+                        }
+                        if (strImage.equals("2")) {
+                            image2 = destination!!.getAbsolutePath()
+                            Log.e(TAG, "image2  20522    " + image2)
+                            destination = File(image2)
+
+                            val myBitmap = BitmapFactory.decodeFile(destination.toString())
+                            val converetdImage = getResizedBitmap(myBitmap, 500)
+                            //   val img_image2 = findViewById(R.id.img_image2) as RoundedImageView
+                            if (imgv_upload2 != null) {
                                 imgv_upload2!!.setImageBitmap(converetdImage)
-
-                                if (image2 != null) {
-
-                                }
                             }
+                            imgv_upload2!!.setImageBitmap(converetdImage)
 
-                     //   }
+                            if (image2 != null) {
+
+                            }
+                        }
+
+                        //   }
                     } catch (e: IOException) {
                         e.printStackTrace()
                         Toast.makeText(this@FollowUpActivity, "Failed!", Toast.LENGTH_SHORT)
@@ -1741,7 +1741,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     }
 
     private fun getEmployee() {
-     //   var employee = 0
+        //   var employee = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1768,7 +1768,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                         employeeArrayList = jobjt.getJSONArray("EmployeeDetailsList")
                                         if (employeeArrayList.length()>0){
 
-                                                employeePopup(employeeArrayList)
+                                            employeePopup(employeeArrayList)
 
 
                                         }
@@ -1875,7 +1875,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     }
 
     private fun getStatus() {
-       // var prodstatus = 0
+        // var prodstatus = 0
         var ReqMode = "61"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -2280,7 +2280,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                         prodPriorityArrayList = jobjt.getJSONArray("PriorityList")
                                         if (prodPriorityArrayList.length()>0){
 
-                                                productPriorityPopup(prodPriorityArrayList)
+                                            productPriorityPopup(prodPriorityArrayList)
 
 
                                         }
@@ -2593,7 +2593,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //                imgv_upload1!!.setImageDrawable(resources.getDrawable(R.drawable.lead_uploads))
 //                imgv_upload2!!.setImageDrawable(resources.getDrawable(R.drawable.lead_uploads))
 
-          //      clearData("0")
+                //      clearData("0")
 
 
 
@@ -2729,7 +2729,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         if (!mode.equals("0")){
             tie_ActionType!!.setText("")
             ID_ActionType = ""
-
+            ID_Status=""
             til_CallStatus!!.visibility = View.GONE
 //            til_CallDuration!!.visibility = View.GONE
             ll_location!!.visibility = View.GONE
@@ -2862,7 +2862,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
 
 
-           val strCallDur = tie_CallDuration!!.text.toString()
+            val strCallDur = tie_CallDuration!!.text.toString()
 
             if (ActionMode.equals("1")){
 
@@ -2873,7 +2873,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //                    Config.snackBars(context,v,"Enter Call Duration")
 //                }
                 else{
-                  //  val millis: Long = 35555
+                    //  val millis: Long = 35555
 //                    val millis: Long = strCallDur.toLong()
 //                    strCallDuration = java.lang.String.format("%02d:%02d:%02d", TimeUnit.MILLISECONDS.toHours(millis),
 //                        TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)),
@@ -2904,61 +2904,61 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 }
 
             }
-/*
-            else if (ActionMode.equals("2")){
-                strCallDuration = "00:00:00"
-                strLongitude =tie_Longitude!!.text.toString();
-                strLatitude=tie_Latitude!!.text.toString();
+            /*
+                        else if (ActionMode.equals("2")){
+                            strCallDuration = "00:00:00"
+                            strLongitude =tie_Longitude!!.text.toString();
+                            strLatitude=tie_Latitude!!.text.toString();
 
-                if (strLatitude.equals("")){
-                    Config.snackBars(context,v,"Select Latitude")
-                }
-                else if (strLongitude.equals("")){
-                    Config.snackBars(context,v,"Select Longitude")
-                }
-                else{
+                            if (strLatitude.equals("")){
+                                Config.snackBars(context,v,"Select Latitude")
+                            }
+                            else if (strLongitude.equals("")){
+                                Config.snackBars(context,v,"Select Longitude")
+                            }
+                            else{
 
-                    if(image1.equals(""))
-                    {
-                        encode1 = ""
-                    }
-                    else
-                    {
-                        val bitmap = BitmapFactory.decodeFile(image1)
-                        val converetdImage = getResizedBitmap(bitmap, 500)
-                        val stream =  ByteArrayOutputStream()
-                        converetdImage.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            encode1 = Base64.getEncoder().encodeToString(stream.toByteArray());
-                        } else {
-                            encode1 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+                                if(image1.equals(""))
+                                {
+                                    encode1 = ""
+                                }
+                                else
+                                {
+                                    val bitmap = BitmapFactory.decodeFile(image1)
+                                    val converetdImage = getResizedBitmap(bitmap, 500)
+                                    val stream =  ByteArrayOutputStream()
+                                    converetdImage.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                        encode1 = Base64.getEncoder().encodeToString(stream.toByteArray());
+                                    } else {
+                                        encode1 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+                                    }
+                                }
+                                if(image2.equals(""))
+                                {
+                                    encode2 = ""
+                                }
+                                else
+                                {
+                                    val bitmap = BitmapFactory.decodeFile(image2)
+                                    val converetdImage = getResizedBitmap(bitmap, 500)
+                                    val stream =  ByteArrayOutputStream()
+                                    converetdImage.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                        encode2 = Base64.getEncoder().encodeToString(stream.toByteArray())
+                                    } else {
+                                        encode2 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
+                                    }
+                                }
+
+                                saveUpdate()
+
+            //                    saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
+            //                        strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
+            //                        strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
+                            }
                         }
-                    }
-                    if(image2.equals(""))
-                    {
-                        encode2 = ""
-                    }
-                    else
-                    {
-                        val bitmap = BitmapFactory.decodeFile(image2)
-                        val converetdImage = getResizedBitmap(bitmap, 500)
-                        val stream =  ByteArrayOutputStream()
-                        converetdImage.compress(Bitmap.CompressFormat.PNG, 100, stream)
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            encode2 = Base64.getEncoder().encodeToString(stream.toByteArray())
-                        } else {
-                            encode2 = android.util.Base64.encodeToString(stream.toByteArray(), android.util.Base64.DEFAULT)
-                        }
-                    }
-
-                    saveUpdate()
-
-//                    saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
-//                        strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
-//                        strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
-                }
-            }
-*/
+            */
             else{
 //                saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,
 //                    strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
@@ -3102,8 +3102,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     }
 
     private fun saveUpdateLeadManagement(ID_LeadGenerateProduct: String?, ID_LeadGenerate: String?, ID_ActionType: String?, ID_Employee: String?,
-        ID_Status: String?, strFollowUpDate: String,strFollowUpTime : String, strCustomerRemark: String, strEmployeeRemark: String, ID_NextAction: String?, ID_NextActionType: String?,
-        strNextFollowUpDate: String, ID_Priority: String?, ID_Department: String?, ID_NextEmployee: String?,
+                                         ID_Status: String?, strFollowUpDate: String,strFollowUpTime : String, strCustomerRemark: String, strEmployeeRemark: String, ID_NextAction: String?, ID_NextActionType: String?,
+                                         strNextFollowUpDate: String, ID_Priority: String?, ID_Department: String?, ID_NextEmployee: String?,
                                          strCallStatus: String?,strCallDuration: String?,strLatitude: String?,strLongitude: String?,encode1: String?,encode2: String?,ForAllProduct: String?) {
 
         when (Config.ConnectivityUtils.isConnected(this)) {
@@ -3121,60 +3121,60 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                     Observer { deleteleadSetterGetter ->
                         val msg = deleteleadSetterGetter.message
                         try {
-                                if (msg!!.length > 0) {
-                                    Log.e(TAG,"msg  1126     "+msg)
-                                    val jObject = JSONObject(msg)
-                                    if (saveFollowupDet == 0){
-                                        saveFollowupDet++
-                                        if (jObject.getString("StatusCode") == "0") {
+                            if (msg!!.length > 0) {
+                                Log.e(TAG,"msg  1126     "+msg)
+                                val jObject = JSONObject(msg)
+                                if (saveFollowupDet == 0){
+                                    saveFollowupDet++
+                                    if (jObject.getString("StatusCode") == "0") {
 
-                                            val jobjt = jObject.getJSONObject("UpdateLeadManagement")
-                                            try {
+                                        val jobjt = jObject.getJSONObject("UpdateLeadManagement")
+                                        try {
 
-                                                val suceessDialog = Dialog(this)
-                                                suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                                                suceessDialog!!.setCancelable(false)
-                                                suceessDialog!! .setContentView(R.layout.success_popup)
-                                                suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+                                            val suceessDialog = Dialog(this)
+                                            suceessDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                                            suceessDialog!!.setCancelable(false)
+                                            suceessDialog!! .setContentView(R.layout.success_popup)
+                                            suceessDialog!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
 
-                                                val tv_succesmsg = suceessDialog!! .findViewById(R.id.tv_succesmsg) as TextView
-                                                val tv_label = suceessDialog!! .findViewById(R.id.tv_label) as TextView
-                                                val tv_leadid = suceessDialog!! .findViewById(R.id.tv_leadid) as TextView
-                                                val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
-                                                //LeadNumber
-                                                tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
-                                                tv_label!!.setText("Lead No : ")
-                                                tv_leadid!!.setText(jobjt.getString("LeadNo"))
+                                            val tv_succesmsg = suceessDialog!! .findViewById(R.id.tv_succesmsg) as TextView
+                                            val tv_label = suceessDialog!! .findViewById(R.id.tv_label) as TextView
+                                            val tv_leadid = suceessDialog!! .findViewById(R.id.tv_leadid) as TextView
+                                            val tv_succesok = suceessDialog!! .findViewById(R.id.tv_succesok) as TextView
+                                            //LeadNumber
+                                            tv_succesmsg!!.setText(jobjt.getString("ResponseMessage"))
+                                            tv_label!!.setText("Lead No : ")
+                                            tv_leadid!!.setText(jobjt.getString("LeadNo"))
 
-                                                tv_succesok!!.setOnClickListener {
-                                                    suceessDialog!!.dismiss()
-                                                    val intent = Intent()
-                                                    intent.putExtra("MESSAGE", message)
-                                                    setResult(2, intent)
-                                                    onBackPressed()
+                                            tv_succesok!!.setOnClickListener {
+                                                suceessDialog!!.dismiss()
+                                                val intent = Intent()
+                                                intent.putExtra("MESSAGE", message)
+                                                setResult(2, intent)
+                                                onBackPressed()
 
-                                                }
-
-                                                suceessDialog!!.show()
-                                                suceessDialog!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                                            } catch (e: Exception) {
-                                                e.printStackTrace()
                                             }
-                                        } else {
-                                            val builder = AlertDialog.Builder(
-                                                this@FollowUpActivity,
-                                                R.style.MyDialogTheme
-                                            )
-                                            builder.setMessage(jObject.getString("EXMessage"))
-                                            builder.setPositiveButton("Ok") { dialogInterface, which ->
-                                            }
-                                            val alertDialog: AlertDialog = builder.create()
-                                            alertDialog.setCancelable(false)
-                                            alertDialog.show()
+
+                                            suceessDialog!!.show()
+                                            suceessDialog!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
                                         }
+                                    } else {
+                                        val builder = AlertDialog.Builder(
+                                            this@FollowUpActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
                                     }
-
                                 }
+
+                            }
 
                         }catch (e : Exception){
                             Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()

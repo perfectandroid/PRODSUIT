@@ -96,7 +96,7 @@
                         android:maxLines="1"
                         android:padding="7dp"
                         android:gravity="center"
-                        android:textColor="@color/white"
+                        android:textColor="@color/black"
                         android:textSize="20dp"
                         android:fontFamily="@font/myfont" />
                 </LinearLayout>

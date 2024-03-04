@@ -613,6 +613,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             } else {
                 llNeedTransfer!!.visibility = View.GONE
 //                edtbarnchtype!!.setText("")
+
 //                edtbranch!!.setText("")
 //                edtdepartment!!.setText("")
 //                edtEmployee!!.setText("")
@@ -2292,32 +2293,35 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             }
 
             R.id.add_product_btn -> {
-//                clickMode = "1"
-                //   checkProject="1"
-                var clickmode = multipleProductValidation(v)
 
-                Log.i("resperr778","clickMode="+clickMode)
-                if (clickMode!!.equals("1")) {
+                    var clickmode = multipleProductValidation(v)
 
-                    if (arrupdateedit!!.equals("0")) {
+                    Log.i("resperr778","clickMode="+clickMode)
+                    if (clickMode!!.equals("1")) {
 
-                        var hasId =
-                            hasMultipleProduct(editProdcutListarray, ID_Category!!, ID_Product!!)
-                        Log.e(TAG, "has id " + hasId)
-                        if (hasId) {
+                        if (arrupdateedit!!.equals("0")) {
+
+                            var hasId =
+                                hasMultipleProduct(editProdcutListarray, ID_Category!!, ID_Product!!)
+                            Log.e(TAG, "has id " + hasId)
+                            if (hasId) {
+                                addMultipleProduct()
+                            } else {
+                                Config.snackBars(context, v, "Duplicate Product")
+                            }
+                        }else{
                             addMultipleProduct()
-                        } else {
-                            Config.snackBars(context, v, "Duplicate Product")
                         }
-                    }else{
-                        addMultipleProduct()
+
+                    } else {
+                        multipleProductValidation(v)
                     }
 
-                } else {
-                    multipleProductValidation(v)
-                }
+                    Log.e("eee", "tteerrr" + clickmode)
 
-                Log.e("eee", "tteerrr" + clickmode)
+//                clickMode = "1"
+                //   checkProject="1"
+
 
             }
             R.id.refresh_btn -> {
@@ -7402,9 +7406,55 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             }
             btnYes.setOnClickListener {
 //                finish()
+
+
+
+
+
                 editProdcutListarray.remove(position)
                 Log.e(TAG, "1212122    " +editProdcutListarray)
-                viewList(editProdcutListarray)
+
+
+                edtProdcategory!!.setText("")
+                edtProdproduct!!.setText("")
+                edtProdpriority!!.setText("")
+                edtProjectName!!.setText("")
+                edtProdfeedback!!.setText("")
+                edtFollowaction!!.setText("")
+                edtFollowtype!!.setText("")
+                edtFollowdate!!.setText("")
+                edtAmount!!.setText("")
+                edtProdqty!!.setText("")
+
+
+
+
+                strQty=""
+                strFollowupdate=""
+                ID_Category=""
+                ID_Product=""
+
+                ID_Priority=""
+                ID_Employee=""
+                ID_Status=""
+
+                ID_NextAction=""
+
+                ID_ActionType=""
+                strExpecteddate=""
+
+                edtAmount!!.setText("")
+                tv_Mrp!!.setText("")
+
+                ID_CollectedBy=""
+                ID_ProductLocation=""
+                edtFloor!!.setText("")
+                ProductMRP=""
+
+                ID_Employee=""
+                edtEmployee!!.setText("")
+
+                viewList(editProdcutListarray,edtEmployee!!.text.toString())
                 dialog.dismiss()
 
             }
@@ -7418,7 +7468,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             if (editProdcutListarray.length() > 0) {
                 llrecyvisible!!.visibility = View.VISIBLE
-                viewList(editProdcutListarray)
+                viewList(editProdcutListarray, edtEmployee!!.text.toString())
             } else {
                 llrecyvisible!!.visibility = View.GONE
                 rcylisting!!.adapter = null
@@ -7506,7 +7556,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 if (editProdcutListarray.length() > 0) {
                     llrecyvisible!!.visibility = View.VISIBLE
                     addmore_btn!!.visibility = View.GONE
-                    viewList(editProdcutListarray)
+                    viewList(editProdcutListarray, edtEmployee!!.text.toString())
                 }else if (jsonObject.getString("ID_Status").equals("1")){
 
 
@@ -10591,7 +10641,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             llfollowup!!.visibility = View.GONE
 //            addmore_btn!!.visibility = View.VISIBLE
 
-            viewList(editProdcutListarray!!)
+            viewList(editProdcutListarray!!, edtEmployee!!.text.toString())
             modeView = "0"
             Log.e("a", "fsssagsagsag")
 
@@ -10725,7 +10775,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         }
     }
 
-    private fun viewList(editProdcutListarray: JSONArray) {
+    private fun viewList(editProdcutListarray: JSONArray, edtString: String) {
 
         val lLayout = GridLayoutManager(this@LeadGenerationActivity, 1)
         rcylisting!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -10734,11 +10784,20 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         rcylisting!!.adapter = adapter
         adapter.setClickListener(this@LeadGenerationActivity)
 
-        val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
-        val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
 
-        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
-        edtEmployee!!.setText(UserNameSP.getString("UserName", null))
+        if(edtString.equals(""))
+        {
+
+        }
+        else
+        {
+            val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+            val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+
+            ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+            edtEmployee!!.setText(UserNameSP.getString("UserName", null))
+        }
+
 
 
     }
