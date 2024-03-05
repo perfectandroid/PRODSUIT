@@ -174,7 +174,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
     var priorityMode = 0
     var department = 0
     var employee = 0
-   
+
 
     var ID_Priority : String?= ""
     var ID_Department : String?= ""
@@ -1596,6 +1596,31 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
 
         txtCancel.setOnClickListener {
+
+            val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
+            val currentDate = sdf.format(Date())
+
+            try {
+
+                Log.e(TAG,"DATE TIME  196  "+currentDate)
+                val newDate: Date = sdf.parse(currentDate)
+                Log.e(TAG,"newDate  196  "+newDate)
+                val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
+                val sdfDate2 = SimpleDateFormat("yyyy-MM-dd")
+                val sdfTime1 = SimpleDateFormat("hh:mm aa")
+                val sdfTime2 = SimpleDateFormat("HH:mm",Locale.US)
+
+
+                tie_VisitTime!!.setText(""+sdfTime1.format(newDate))
+                strVisitTime = sdfTime2.format(newDate)
+
+
+            }catch (e: Exception){
+
+                Log.e(TAG,"Exception 196  "+e.toString())
+            }
+
+
             dialog.dismiss()
         }
         txtSubmit.setOnClickListener {
@@ -1666,7 +1691,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                     // time1 is greater than or equal to time2
                     // Handle the logic for this case
                     Log.e(TAG,"Change date 2195 gdyretyreyre  ")
-                    txt_Warning!!.text="Time should be grater than or equal to current time"
+                    txt_Warning!!.text="Time should be greater than or equal to current time"
                     txt_Warning!!.visibility = View.VISIBLE
                 } else {
                     // time1 is less than time2
@@ -2270,7 +2295,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG,"msg   1224   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
-                                        
+
                                         val jobjt = jObject.getJSONObject("RoleDetails")
                                         serviceRoleArrayList = jobjt.getJSONArray("RoleDetailsList")
                                         if (serviceRoleArrayList.length()>0){
