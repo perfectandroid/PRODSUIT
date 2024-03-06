@@ -346,6 +346,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 ll_Todate!!.visibility = View.GONE
             }
             R.id.txtok1 -> {
+                Config.disableClick(v)
                 date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
                 val day: Int = date_Picker1!!.getDayOfMonth()
                 val mon: Int = date_Picker1!!.getMonth()
@@ -364,6 +365,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 ll_Todate!!.visibility = View.GONE
             }
             R.id.txtok -> {
+                Config.disableClick(v)
                 date_Picker!!.minDate = Calendar.getInstance().timeInMillis
                 val day: Int = date_Picker!!.getDayOfMonth()
                 val mon: Int = date_Picker!!.getMonth()
@@ -382,67 +384,78 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 ll_Fromdate!!.visibility = View.GONE
             }
             R.id.tie_Category->{
+                Config.disableClick(v)
                 prodcategory = 0
                 getCategory()
             }
 
             R.id.tie_ReportName -> {
-
+                Config.disableClick(v)
                 getReportName()
             }
 
             R.id.tie_Branch -> {
+                Config.disableClick(v)
                 getBranch()
             }
 
             R.id.tie_FromDate -> {
-
+                Config.disableClick(v)
                 openBottomSheet(tie_FromDate, tie_ToDate)
             }
 
             R.id.tie_ToDate -> {
+                Config.disableClick(v)
                 openBottomSheet(tie_FromDate, tie_ToDate)
             }
 
             R.id.tie_CollectedBy -> {
+                Config.disableClick(v)
                 getCollectedBy()
             }
 
             R.id.tie_EmployeeName -> {
+                Config.disableClick(v)
                 empUseBranch = 0
                 getEmpByBranch(0)
             }
             R.id.tie_AssignedTo -> {
+                Config.disableClick(v)
                 empUseBranch = 0
                 getEmpByBranch(1)
             }
             R.id.tie_Product -> {
+                Config.disableClick(v)
                 getProductDetail()
             }
 
             R.id.tie_FollowUpAction -> {
+                Config.disableClick(v)
                 getFollowupAction()
             }
 
             R.id.tie_FollowUpType -> {
+                Config.disableClick(v)
                 getFollowupType()
             }
             R.id.tie_Priority -> {
+                Config.disableClick(v)
                 getProductPriority()
             }
             R.id.tie_Status -> {
                 getProductStatus()
             }
             R.id.tie_Grouping -> {
-
+                Config.disableClick(v)
                 getGrouping()
             }
 
             R.id.btnSubmit -> {
+                Config.disableClick(v)
                 validateData(v)
             }
             R.id.btnReset -> {
-
+                Config.disableClick(v)
                 resetData()
 
             }
