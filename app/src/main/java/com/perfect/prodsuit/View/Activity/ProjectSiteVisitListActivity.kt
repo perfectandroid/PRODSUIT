@@ -39,6 +39,7 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
     private var progressDialog    : ProgressDialog?    = null
 
     var tv_header    : TextView?    = null
+    var txt_nodata    : TextView?    = null
     var edtSearch    : EditText?    = null
     var jsonObj: JSONObject? = null
 
@@ -69,6 +70,7 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
         SubMode = intent.getStringExtra("SubMode").toString()
         setRegViews()
         tv_header!!.setText(""+intent!!.getStringExtra("Type_Name"))
+        txt_nodata!!.setText("Invalid Lead")
 
         projectLeadNoCount = 0
         getLeadDetails()
@@ -97,6 +99,14 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
                         }
 
                    // }
+                }
+
+                if (projectLeadSortArrayList.length() <= 0){
+                    recycSiteVisit!!.visibility = View.GONE
+                    txt_nodata!!.visibility = View.VISIBLE
+                }else{
+                    recycSiteVisit!!.visibility = View.VISIBLE
+                    txt_nodata!!.visibility = View.GONE
                 }
 
                 if (projectLeadSortArrayList.length() > 0){
@@ -131,7 +141,8 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
                         val msg = serviceSetterGetter.message
                         try {
                             if (msg!!.length > 0) {
-
+                                recycSiteVisit!!.visibility = View.VISIBLE
+                                txt_nodata!!.visibility = View.GONE
                                 if (projectLeadNoCount == 0){
                                     projectLeadNoCount++
                                     val jObject = JSONObject(msg)
@@ -200,10 +211,13 @@ class ProjectSiteVisitListActivity : AppCompatActivity(), View.OnClickListener, 
     private fun setRegViews() {
         val imback = findViewById<ImageView>(R.id.imback)
         tv_header = findViewById<TextView>(R.id.tv_header)
+        txt_nodata = findViewById<TextView>(R.id.txt_nodata)
         recycSiteVisit = findViewById<RecyclerView>(R.id.recycSiteVisit)
         edtSearch = findViewById<EditText>(R.id.edtSearch)
 
         imback!!.setOnClickListener(this)
+
+        projectLeadArrayList = JSONArray()
 
 
     }

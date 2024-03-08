@@ -413,19 +413,23 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
             }
             R.id.tie_Project -> {
 //                Toast.makeText(applicationContext, "please 0", Toast.LENGTH_SHORT).show()
+                Config.disableClick(v)
                 projectcount = 0
                 getProject()
             }
             R.id.tie_Followupdate -> {
+                Config.disableClick(v)
                 datecheck = "0"
                 openBottomSheet()
 //                Toast.makeText(applicationContext, "please 1", Toast.LENGTH_SHORT).show()
             }
             R.id.tie_Stage -> {
+                Config.disableClick(v)
                 stagecount = 0
                 getStage()
             }
             R.id.tie_StatusDate -> {
+                Config.disableClick(v)
                 datecheck = "1"
                 openBottomSheet()
 
@@ -434,7 +438,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
 
             }
             R.id.tie_CurrentStatus -> {
-
+                Config.disableClick(v)
                 if (!ID_Stage.equals("")){
                     Critrea1 = ID_Stage
                     SubMode = "2"
@@ -461,7 +465,7 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                 getCurrentStatus()
             }
             R.id.btnSubmit -> {
-
+                Config.disableClick(v)
                 projectFollowupValidation(v)
             }
             R.id.btnReset -> {
@@ -761,6 +765,8 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
             recylist = dialogStage!! .findViewById(R.id.recylist) as RecyclerView
             tvv_list_name = dialogStage!! .findViewById(R.id.tvv_list_name) as TextView
             val etsearch = dialogStage!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogStage!! .findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.text = "Invalid Stage"
             tvv_list_name!!.setText("STAGE LIST")
 
             stageSort = JSONArray()
@@ -768,6 +774,11 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                 val jsonObject = stageArrayList.getJSONObject(k)
                 // reportNamesort.put(k,jsonObject)
                 stageSort.put(jsonObject)
+            }
+
+            if (stageSort.length() <= 0){
+                recylist!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
             }
 
             val lLayout = GridLayoutManager(this@ProjectFollowUpActivity, 1)
@@ -797,6 +808,14 @@ class ProjectFollowUpActivity : AppCompatActivity() ,  View.OnClickListener , It
                             }
 
                         }
+                    }
+
+                    if (stageSort.length() <= 0){
+                        recylist!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recylist!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"stageSort               7103    "+stageSort)

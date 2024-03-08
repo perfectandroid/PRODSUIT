@@ -155,6 +155,7 @@ class ProjectSiteVisitTabActivity : AppCompatActivity() , View.OnClickListener, 
         if (data.equals("SiteVisitTabClick")){
             val jsonObject = siteVisitArrayList.getJSONObject(position)
 
+
             if (jsonObject.getInt("Mode") == 0){
                 val i = Intent(this@ProjectSiteVisitTabActivity, ProjectSiteVisitActivity::class.java)
                 i.putExtra("ReqMode","1")

@@ -260,6 +260,7 @@ class ServiceFollowUPActiivty : AppCompatActivity(), View.OnClickListener,ItemCl
     var compnantMode                                      = 0
     lateinit var servCompanantViewModel: ServCompanantViewModel
     var servCompanantArray = JSONArray()
+    var servCompanantSort = JSONArray()
     var servicePartsAdapter: ServiceParts_replacedAdapter? = null
 
     var followUpType                                      = 0
@@ -4111,7 +4112,7 @@ Log.v("adasdasds","modeTab "+modeTab)
         if (data.equals("componantListClik")){
             dialogAddserviceSheet!!.dismiss()
 
-            val jsonObject = servCompanantArray.getJSONObject(position)
+            val jsonObject = servCompanantSort.getJSONObject(position)
             var empModel = servicepartsReplacedModel[modEditPosition]
 
             var posAdd = 0
@@ -4912,6 +4913,7 @@ Log.v("adasdasds","modeTab "+modeTab)
                                         Log.e(TAG,"2495    "+servCompanantArray)
 
                                         if (servCompanantArray.length()>0){
+
                                             serviceCompnantListPop(servCompanantArray)
                                         }
                                     }
@@ -4952,15 +4954,36 @@ Log.v("adasdasds","modeTab "+modeTab)
             var tv_cancel = dialogAddserviceSheet!! .findViewById(R.id.tv_cancel) as TextView
             var tv_apply = dialogAddserviceSheet!! .findViewById(R.id.tv_apply) as TextView
             var tv_bar = dialogAddserviceSheet!! .findViewById(R.id.tv_bar) as TextView
+            var llsearch = dialogAddserviceSheet!! .findViewById(R.id.llsearch) as LinearLayout
+            var etsearch = dialogAddserviceSheet!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogAddserviceSheet!! .findViewById(R.id.txt_nodata) as TextView
+
+            txt_nodata.text = "Inavalid Product List"
+
+            llsearch!!.visibility = View.VISIBLE
 
             tv_productList.setText("Product List")
             tv_apply.visibility = View.GONE
             tv_bar.visibility = View.GONE
 
+
+            servCompanantSort = JSONArray()
+            for (k in 0 until servCompanantArray.length()) {
+                val jsonObject = servCompanantArray.getJSONObject(k)
+                // reportNamesort.put(k,jsonObject)
+                servCompanantSort.put(jsonObject)
+            }
+
+            if (servCompanantSort.length() <= 0){
+                recycAdpService!!.visibility = View.GONE
+                txt_nodata!!.visibility = View.VISIBLE
+            }
+
+
             val lLayout = GridLayoutManager(this@ServiceFollowUPActiivty, 1)
             recycAdpService!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
-            val adapter = ServiceCompanantAdapter(this@ServiceFollowUPActiivty, servCompanantArray)
+            val adapter = ServiceCompanantAdapter(this@ServiceFollowUPActiivty, servCompanantSort)
             recycAdpService!!.adapter = adapter
             adapter.setClickListener(this@ServiceFollowUPActiivty)
 
@@ -4969,6 +4992,46 @@ Log.v("adasdasds","modeTab "+modeTab)
 //            val adapter = ServiceDetailAdapter(this@ServiceFollowUPActiivty, addServiceDetailMode!!)
 //            recycAdpService!!.adapter = adapter
 //            adapter.setClickListener(this@ServiceFollowUPActiivty)
+
+            etsearch!!.addTextChangedListener(object : TextWatcher {
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                    //  list_view!!.setVisibility(View.VISIBLE)
+                    val textlength = etsearch!!.text.length
+                    servCompanantSort = JSONArray()
+
+                    for (k in 0 until servCompanantArray.length()) {
+                        val jsonObject = servCompanantArray.getJSONObject(k)
+                        if (textlength <= jsonObject.getString("Name").length) {
+                            if (jsonObject.getString("Name")!!.toLowerCase().trim()
+                                    .contains(etsearch!!.text.toString().toLowerCase().trim())
+                            ) {
+                                servCompanantSort.put(jsonObject)
+                            }
+
+                        }
+                    }
+
+                    if (servCompanantSort.length() <= 0){
+                        recycAdpService!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recycAdpService!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
+                    }
+
+
+                    val adapter = ServiceCompanantAdapter(this@ServiceFollowUPActiivty, servCompanantSort)
+                    recycAdpService!!.adapter = adapter
+                    adapter.setClickListener(this@ServiceFollowUPActiivty)
+                }
+            })
 
             val window: Window? = dialogAddserviceSheet!!.getWindow()
             window!!.setBackgroundDrawableResource(android.R.color.white);

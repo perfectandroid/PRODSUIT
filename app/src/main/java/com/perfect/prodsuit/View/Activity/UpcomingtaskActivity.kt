@@ -79,6 +79,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     internal var etxt_date: EditText? = null
     internal var etxt_Name: EditText? = null
     internal var sortFilter:Int = 0
+    private var ID_Branch:String? = ""
     private var ID_Employee:String? = ""
     private var emp_name:String? = ""
 
@@ -97,7 +98,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     internal var ettime: EditText? = null
     internal var etdis: EditText? = null
 
-    private var ID_Branch = "";
+  //  private var ID_Branch = "";
 //    private var ID_Employee = "";
     private var ID_Lead_Details = "";
     private var strLeadValue = "";
@@ -154,6 +155,10 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             headerTitle = intent.getStringExtra("headerTitle")
             tv_header!!.setText(headerTitle)
         }
+        if (getIntent().hasExtra("ID_Branch")) {
+            ID_Branch = intent.getStringExtra("ID_Branch")
+            Log.e(TAG,"44444    "+ID_Branch)
+        }
         if (getIntent().hasExtra("ID_Employee")) {
             ID_Employee = intent.getStringExtra("ID_Employee")
             Log.e(TAG,"44444    "+ID_Employee)
@@ -176,7 +181,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
         val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
 
-        ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
+     //   ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
      //   tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
 //        ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
      //   tie_Employee!!.setText( UserNameSP.getString("UserName", null))
@@ -1306,9 +1311,9 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
             val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
 
-            ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
-            tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
-            ID_Employee
+//            ID_Branch  = FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null).toString()
+//            tie_Branch !!.setText( BranchNameSP.getString("BranchName", null))
+//            ID_Employee
             Log.v("ffffff",""+ID_Employee)
 //            ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
 //            tie_Employee!!.setText( UserNameSP.getString("UserName", null))
@@ -1562,7 +1567,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                empByBranchViewModel.getEmpByBranch(this, ID_Branch,SubMode)!!.observe(
+                empByBranchViewModel.getEmpByBranch(this, ID_Branch!!,SubMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {

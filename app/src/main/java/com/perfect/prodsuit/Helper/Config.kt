@@ -1245,13 +1245,13 @@ object Config {
 
             var obj = JSONObject()
             obj.put("ID_TransType", "1")
-            obj.put("TransType_Name", "Debit")
+            obj.put("TransType_Name", "Payment")
 
             array.put(obj)
 
             obj = JSONObject()
             obj.put("ID_TransType", "2")
-            obj.put("TransType_Name", "Credit")
+            obj.put("TransType_Name", "Receipt")
 
             array.put(obj)
 

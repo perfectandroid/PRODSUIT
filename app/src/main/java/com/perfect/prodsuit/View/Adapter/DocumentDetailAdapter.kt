@@ -9,10 +9,12 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.auth.data.model.User
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
 import org.json.JSONObject
+
 
 class DocumentDetailAdapter (internal var context: Context, internal var jsonArray: JSONArray):
     RecyclerView.Adapter<RecyclerView.ViewHolder>(){
@@ -20,7 +22,7 @@ class DocumentDetailAdapter (internal var context: Context, internal var jsonArr
     internal val TAG : String = "DocumentDetailAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
-
+    var clicked = false
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
@@ -46,6 +48,11 @@ class DocumentDetailAdapter (internal var context: Context, internal var jsonArr
                         position,
                         "Documents"
                     )
+                    holder.imgDownload!!.isEnabled = false
+                    holder.imgDownload!!.postDelayed({
+                        holder.imgDownload!!.isEnabled = true
+                    },3000)
+
                 })
 
                 holder.llViewDesc!!.setTag(position)
