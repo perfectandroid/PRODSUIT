@@ -1787,7 +1787,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             recylist = dialogProdComplaint!! .findViewById(R.id.recylist) as RecyclerView
             tvv_list_name = dialogProdComplaint!! .findViewById(R.id.tvv_list_name) as TextView
             val etsearch = dialogProdComplaint!!.findViewById(R.id.etsearch) as EditText
-
+            val txt_nodata = dialogProdComplaint!! .findViewById(R.id.txt_nodata) as TextView
             tvv_list_name!!.setText("Complaint Type")
 
             val lLayout = GridLayoutManager(this@PickUpAndDeliveryUpdateActivity, 1)
@@ -1822,6 +1822,15 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                             }
 
                         }
+                    }
+
+                    if (complaintTypeSort.length() <= 0){
+                        recylist!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                        txt_nodata!!.text = "Invalid Complaint Type"
+                    }else{
+                        recylist!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "complaintTypeSort               7103" + complaintTypeSort)
@@ -2436,6 +2445,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdDetail = dialogProdDet!!.findViewById(R.id.recyProdDetail) as RecyclerView
             val etsearch = dialogProdDet!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogProdDet!! .findViewById(R.id.txt_nodata) as TextView
 
 //            prodDetailSort = JSONArray()
 //            for (k in 0 until prodDetailArrayList.length()) {
@@ -2478,6 +2488,14 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                             }
 
                         }
+                    }
+
+                    if (prodDetailSort.length() <= 0){
+                        recyProdDetail!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyProdDetail!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "prodDetailSort               7103" + prodDetailSort)
@@ -2707,6 +2725,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdDetail = dialogProdDet!!.findViewById(R.id.recyProdDetail) as RecyclerView
             val etsearch = dialogProdDet!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogProdDet!! .findViewById(R.id.txt_nodata) as TextView
 
 //            prodDetailSort = JSONArray()
 //            for (k in 0 until prodDetailArrayList.length()) {
@@ -2749,6 +2768,14 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                             }
 
                         }
+                    }
+
+                    if (prodDetailSort.length() <= 0){
+                        recyProdDetail!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyProdDetail!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "prodDetailSort               7103" + prodDetailSort)
@@ -3029,7 +3056,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
 //            prodInformationArrayList.remove(pos)
             prodInformationArrayList2!!.put(pos, jObject)
-            Log.e(TAG, "prodInformationArrayList size3        " + prodInformationArrayList2.toString())
+            Log.e(TAG, "prodInformationArrayList size3789456        " + prodInformationArrayList2.toString())
 
             Log.e(TAG, "errrrrrrrrrrrr        " + position)
             Log.e(TAG, "eeeeeeeeeeeeeeeeeee   " + jObject)
@@ -3077,7 +3104,6 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 //            getProductDetail()
 
             if (SubMode!!.equals("1")){
-
                 getPickupDeliStandByProductDetails()
                 setAmount()
                 Log.v("SDfsdfsdfdd","5")
@@ -3239,6 +3265,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             Log.e(TAG, "idhssss " + position)
             dialogProdDet!!.dismiss()
             val jsonObject4 = addproductDetailArrayList.getJSONObject(position)
+//            val jsonObject6 = prodInformationArrayList2.getJSONObject(position)
 
 
             Log.e(TAG, "pppppppppppppppp   " + jsonObject4)
@@ -3257,20 +3284,22 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 jObject.put("ProdName", jsonObject4.getString("ProductName"))
 //                jObject.put("ProdName", jsonObject4.getString("ProdName"))
                 jObject.put("ProvideStandBy", ("0"))
-                jObject.put("Quantity", ("1.00"))
+                jObject.put("Quantity", "")
                 jObject.put("Product", "")
-                jObject.put("SPQuantity", (""))
-                jObject.put("SPAmount", (""))
-                jObject.put("Remarks", (""))
+                jObject.put("SPQuantity", "")
+                jObject.put("SPAmount","")
+                jObject.put("Remarks", "")
                 jObject.put("isSelected", ("1"))
                 jObject.put("isEnable", ("0"))
                 jObject.put("SubMode", SubMode)
                 jObject.put("TransMode", TransMode)
-                jObject.put("StandByProduct", (""))
-                jObject.put("FK_StandByProduct", (""))
+                jObject.put("StandByProduct", "")
+                jObject.put("FK_StandByProduct", "")
 //            jObject.put("Quantity", (""))
 
                 prodInformationArrayList2!!.put(jObject)
+
+                Log.e(TAG, "sssssssssssssddddddddddddd   1     " )
 
             } else {
 
@@ -3285,17 +3314,18 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 jObject.put("Quantity", "1")
                 jObject.put("Product", "")
                 jObject.put("SPQuantity", "")
-                jObject.put("SPAmount", (""))
-                jObject.put("Remarks", (""))
+                jObject.put("SPAmount", "")
+                jObject.put("Remarks", "")
                 jObject.put("isSelected", ("1"))
                 jObject.put("isEnable", ("0"))
                 jObject.put("SubMode", SubMode)
                 jObject.put("TransMode", TransMode)
-                jObject.put("StandByProduct", (""))
-                jObject.put("FK_StandByProduct", (""))
+                jObject.put("StandByProduct", "")
+                jObject.put("FK_StandByProduct", "")
 
                 prodInformationArrayList2!!.put(jObject)
 
+                Log.e(TAG, "sssssssssssssddddddddddddd   2     " )
             }
 
 
@@ -3321,6 +3351,7 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
             Log.v("SDfsdfsdfdd","6")
             setAmount()
 
+            Log.e(TAG, "prodInformationArrayList size4        " + prodInformationArrayList2.toString())
         }
 
         if (data.equals("paymentMethod")) {
@@ -4098,14 +4129,21 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
         var standbyTotal = "0.00"
         for (i in 0 until prodInformationArrayList2.length()) {
             val jsonObject = prodInformationArrayList2.getJSONObject(i)
+
+            Log.e(TAG, "42101 prodInformationArrayList2  " + prodInformationArrayList2)
             if (jsonObject.getString("ProvideStandBy").equals("1")) {
                 // Selected
                 Log.e(TAG, "42101 prodInformationArrayList  " + i)
                 StandByAmount = "0.00"
                 if (jsonObject.getString("SPAmount").equals(".")) {
                     StandByAmount = "0.00"
+
+                    Log.e(TAG,"vvvvvvvvvdddd   1= "+jsonObject.getString("SPAmount"))
+
                 } else if (!jsonObject.getString("SPAmount").equals("")) {
                     StandByAmount = jsonObject.getString("SPAmount")
+
+                    Log.e(TAG,"vvvvvvvvvdddd   2= "+jsonObject.getString("SPAmount"))
                 }
 
 //                if (StandByAmount.equals("0.00") || StandByAmount.equals("")) {
@@ -4122,8 +4160,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
 //                    Log.e(TAG,"standbyTotal  42102   "+standbyTotal+"   :   "+standbyAmount +"  :  "+jsonObject.getString("prodName"))
 //                    Log.e(TAG,"standbyTotal  42103   "+DecimelFormatters.set2DecimelPlace(standbyTotal.toFloat())+"   :   "+DecimelFormatters.set2DecimelPlace(standbyAmount.toFloat()))
-                standbyTotal =
-                    (DecimelFormatters.set2DecimelPlace(standbyTotal.toFloat() + StandByAmount!!.toFloat()))
+
+                standbyTotal = (DecimelFormatters.set2DecimelPlace(standbyTotal.toFloat() + StandByAmount!!.toFloat()))
 
                 standbytotal1 = standbyTotal
 
@@ -4152,6 +4190,8 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                 }
 
             }
+
+            Log.e(TAG,"vvvvvvvvvdddd   000= "+prodInformationArrayList2)
 
         }
         Log.e(TAG, "standbyTotal  4313 11  " + standbytotal1)

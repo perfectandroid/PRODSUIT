@@ -695,7 +695,7 @@ class ProdInformationAdapter (internal var context: Context, internal var jsonAr
                     holder.tie_Quantity.isEnabled = true
                     holder.tie_StandByProduct.isEnabled = true
                     holder.tie_StandByQuantity.isEnabled = true
-                    holder.tie_StandByAmount.setText("0.00")
+//                    holder.tie_StandByAmount.setText("0.00")
                     Log.e(TAG,"standByAmount  6812    "+jsonObject!!.getString("ProvideStandBy"))
                 }
 

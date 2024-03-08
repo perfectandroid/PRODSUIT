@@ -76,5 +76,5 @@
         android:fontFamily="@font/myfont"
         android:visibility="gone"
         android:padding="15dp"
-        android:text="Invalid Referred By"/>
+        android:text="Invalid Collected By"/>
 </LinearLayout>
