@@ -130,6 +130,7 @@
                             android:background="@color/grey"/>
 
                         <LinearLayout
+                            android:id="@+id/ll_Openings"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="#1f6096"
@@ -162,6 +163,7 @@
                             android:background="@color/grey"/>
 
                         <LinearLayout
+                            android:id="@+id/ll_New"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -195,6 +197,7 @@
                             android:background="@color/grey"/>
 
                         <LinearLayout
+                            android:id="@+id/ll_Closed"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -228,6 +231,7 @@
 
 
                         <LinearLayout
+                            android:id="@+id/ll_lost"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -262,6 +266,7 @@
 
 
                         <LinearLayout
+                            android:id="@+id/ll_balnce"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"

@@ -956,6 +956,8 @@ interface ApiInterface {
 
     @POST("UserValidations/AttendancePunchDetails")
     fun getPunchReport(@Body body: RequestBody): Call<String>
+    @POST("Report/LeadSummaryDetailsReport")
+    fun getLeadSummaryDetailReport(@Body body: RequestBody): Call<String>
 
 
 }

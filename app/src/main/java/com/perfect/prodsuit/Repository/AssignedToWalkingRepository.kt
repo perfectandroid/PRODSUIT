@@ -63,7 +63,7 @@ object AssignedToWalkingRepository {
                 requestObject1.put("ID_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch",null)))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
-                Log.e(TAG,"requestObject1   671   "+requestObject1)
+                Log.e(TAG,"requestObject1   assigned   "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()
