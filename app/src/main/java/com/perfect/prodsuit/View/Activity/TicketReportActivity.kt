@@ -128,6 +128,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     var recyFollowupType: RecyclerView? = null
 
     var empUseBranch = 0
+    var empUseMode = "0"
     lateinit var empByBranchViewModel: EmpByBranchViewModel
     lateinit var employeeAllArrayList: JSONArray
     lateinit var employeeAllSort: JSONArray
@@ -348,6 +349,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 ll_Todate!!.visibility = View.GONE
             }
             R.id.txtok1 -> {
+                Config.disableClick(v)
                 date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
                 val day: Int = date_Picker1!!.getDayOfMonth()
                 val mon: Int = date_Picker1!!.getMonth()
@@ -366,6 +368,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 ll_Todate!!.visibility = View.GONE
             }
             R.id.txtok -> {
+                Config.disableClick(v)
                 date_Picker!!.minDate = Calendar.getInstance().timeInMillis
                 val day: Int = date_Picker!!.getDayOfMonth()
                 val mon: Int = date_Picker!!.getMonth()
@@ -400,11 +403,12 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             }
 
             R.id.tie_FromDate -> {
-
+                Config.disableClick(v)
                 openBottomSheet(tie_FromDate, tie_ToDate)
             }
 
             R.id.tie_ToDate -> {
+                Config.disableClick(v)
                 openBottomSheet(tie_FromDate, tie_ToDate)
             }
 
@@ -414,10 +418,15 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             }
 
             R.id.tie_EmployeeName -> {
+                Config.disableClick(v)
+
+                empUseMode = "0"
                 empUseBranch = 0
                 getEmpByBranch(0)
             }
             R.id.tie_AssignedTo -> {
+                Config.disableClick(v)
+                empUseMode = "1"
                 empUseBranch = 0
                 getEmpByBranch(1)
             }
@@ -453,7 +462,6 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 validateData(v)
             }
             R.id.btnReset -> {
-
                 Config.disableClick(v)
                 resetData()
 
@@ -2083,7 +2091,11 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 employeeAllSort.put(jsonObject)
             }
 
-            if (i == 0) {
+            Log.e(TAG,"2087771  "+i)
+
+//            if (i == 0) {
+            if (empUseMode.equals("0")) {
+                Log.e(TAG,"2087772  "+i)
                 val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
                 recyEmployeeAll!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
@@ -2091,7 +2103,8 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 val adapter = EmployeeAllAdapter(this@TicketReportActivity, employeeAllSort)
                 recyEmployeeAll!!.adapter = adapter
                 adapter.setClickListener(this@TicketReportActivity)
-            } else {
+            } else if (empUseMode.equals("1")) {
+                Log.e(TAG,"2087773  "+i)
                 val lLayout = GridLayoutManager(this@TicketReportActivity, 1)
                 recyEmployeeAll!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
@@ -2126,10 +2139,18 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                         }
                     }
 
-                    Log.e(TAG, "employeeAllSort               7103    " + employeeAllSort)
-                    val adapter = EmployeeAllAdapter(this@TicketReportActivity, employeeAllSort)
-                    recyEmployeeAll!!.adapter = adapter
-                    adapter.setClickListener(this@TicketReportActivity)
+                    if (empUseMode.equals("0")) {
+                        Log.e(TAG, "employeeAllSort               7103    " + employeeAllSort)
+                        val adapter = EmployeeAllAdapter(this@TicketReportActivity, employeeAllSort)
+                        recyEmployeeAll!!.adapter = adapter
+                        adapter.setClickListener(this@TicketReportActivity)
+                    } else if (empUseMode.equals("1")) {
+                        Log.e(TAG, "employeeAllSort               7103    " + employeeAllSort)
+                        val adapter = AssignedListAdapter(this@TicketReportActivity, employeeAllSort)
+                        recyEmployeeAll!!.adapter = adapter
+                        adapter.setClickListener(this@TicketReportActivity)
+                    }
+
                 }
             })
 
@@ -2697,9 +2718,11 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         }
 
         if (data.equals("employeeAll")) {
+
             dialogEmployeeAll!!.dismiss()
 //            val jsonObject = employeeAllArrayList.getJSONObject(position)
             val jsonObject = employeeAllSort.getJSONObject(position)
+            Log.e(TAG,"2701110   "+jsonObject)
             Log.e(TAG, "ID_Employee   " + jsonObject.getString("ID_Employee"))
             ID_Employee = jsonObject.getString("ID_Employee")
             tie_EmployeeName!!.setText(jsonObject.getString("EmpName"))
@@ -2711,6 +2734,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             dialogEmployeeAll!!.dismiss()
 //            val jsonObject = employeeAllArrayList.getJSONObject(position)
             val jsonObject = employeeAllSort.getJSONObject(position)
+            Log.e(TAG,"2701111   "+jsonObject)
             Log.e(TAG, "ID_Employee   " + jsonObject.getString("ID_Employee"))
             ID_AssignedEmployee = jsonObject.getString("ID_Employee")
             tie_AssignedTo!!.setText(jsonObject.getString("EmpName"))
@@ -2784,9 +2808,12 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 Config.snackBars(context, v, "Select To Date")
             } else if (fromDa.after(toDa)) {
                 Config.snackBars(context, v, "Check Selected Date Range")
-            }else if (GroupId.equals("")) {
-                Config.snackBars(context, v, "Select Group")
-            }else {
+            }
+            else if (GroupId.equals("")) {
+                Config.snackBars(context, v, "Select Summary Type")
+              //  Config.snackBars(context, v, "Select Group")
+            }
+            else {
                 PassData()
             }
         } else {

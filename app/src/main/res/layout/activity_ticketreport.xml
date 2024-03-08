@@ -284,6 +284,8 @@
                             </LinearLayout>
 
 
+
+
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/til_AssignedTo"
                                 style="@style/Widget.App.TextInputLayout"
@@ -575,7 +577,7 @@
                                 android:layout_marginRight="15dp"
                                 android:drawableTint="@color/textColor"
                                 android:fontFamily="@font/myfont"
-                                android:hint="Grouping"
+                                android:hint="Summary Type"
                                 android:textColorHint="@color/greydarks"
                                 android:visibility="gone">
 

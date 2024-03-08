@@ -131,6 +131,8 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
 
     private fun getProject() {
         // var leadInfo = 0
+        recycProject!!.adapter = null
+        etsearch!!.setText("")
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
