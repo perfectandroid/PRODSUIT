@@ -27,7 +27,7 @@ object SheduleRepository {
 
     private var progressDialog: ProgressDialog? = null
     val branchSetterGetter = MutableLiveData<SheduleModel>()
-    val TAG: String = "BranchRepository"
+    val TAG: String = "SheduleRepository"
 
     fun getServicesApiCall(context: Context,ID_BranchType : String): MutableLiveData<SheduleModel> {
         getBranch(context,ID_BranchType)
@@ -75,7 +75,7 @@ object SheduleRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
-                Log.e(TAG,"78  getBranch  "+requestObject1)
+                Log.e(TAG,"78  getShedule  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

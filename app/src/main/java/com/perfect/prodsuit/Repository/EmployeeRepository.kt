@@ -82,7 +82,7 @@ object EmployeeRepository {
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
-                Log.e(TAG,"78"+requestObject1)
+                Log.e(TAG,"Emp req"+requestObject1)
 
 
             } catch (e: Exception) {
@@ -100,7 +100,7 @@ object EmployeeRepository {
                 ) {
                     try {
                         progressDialog!!.dismiss()
-                        Log.e(TAG,"101    "+response.body())
+                        Log.e(TAG,"Employeepopup    "+response.body())
                         val jObject = JSONObject(response.body())
                         val leads = ArrayList<EmployeeModel>()
                         leads.add(EmployeeModel(response.body()))

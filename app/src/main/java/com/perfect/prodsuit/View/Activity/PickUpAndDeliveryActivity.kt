@@ -250,8 +250,8 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
 
         }
@@ -326,18 +326,21 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
             })
 
             tie_Selectarea!!.setOnClickListener(View.OnClickListener {
+                Config.disableClick(it)
                 areaList = 0
                 getArea(view)
                 Log.e(TAG," 796   area"+areaList)
             })
 
             tie_Selectemployee!!.setOnClickListener(View.OnClickListener {
+                Config.disableClick(it)
                 employeeCount = 0
                 getEmpByBranch()
                 Log.e(TAG," 796   employee"+employeeCount)
             })
 
             tie_Selectproduct!!.setOnClickListener(View.OnClickListener {
+                Config.disableClick(it)
                 proddetail = 0
                 getProductDetail()
                 Log.e(TAG," 796   product"+proddetail)
@@ -650,8 +653,8 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -666,6 +669,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
             dialogareaList!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             val recycArea = dialogareaList!!.findViewById(R.id.recycArea) as RecyclerView
             val etsearch = dialogareaList!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogareaList!!.findViewById(R.id.txt_nodata) as TextView
 
             areaListSort = JSONArray()
             for (k in 0 until areaArrayList.length()) {
@@ -705,6 +709,14 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                             }
 
                         }
+                    }
+
+                    if (areaListSort.length() <= 0){
+                        recycArea!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recycArea!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "areaSort               7103    " + areaListSort)
@@ -790,8 +802,8 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -805,6 +817,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
             dialogEmployeeAll!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyEmployeeAll = dialogEmployeeAll!! .findViewById(R.id.recyEmployeeAll) as RecyclerView
             val etsearch = dialogEmployeeAll!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogEmployeeAll!! .findViewById(R.id.txt_nodata) as TextView
 
 
             employeeAllSort = JSONArray()
@@ -843,6 +856,14 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                             }
 
                         }
+                    }
+
+                    if (employeeAllSort.length() <= 0){
+                        recyEmployeeAll!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyEmployeeAll!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"employeeAllSort               7103    "+employeeAllSort)
@@ -925,8 +946,8 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
 
@@ -942,6 +963,7 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
             dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdDetail = dialogProdDet!!.findViewById(R.id.recyProdDetail) as RecyclerView
             val etsearch = dialogProdDet!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogProdDet!! .findViewById(R.id.txt_nodata) as TextView
 
             prodDetailSort = JSONArray()
             for (k in 0 until prodDetailArrayList.length()) {
@@ -981,6 +1003,14 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                             }
 
                         }
+                    }
+
+                    if (prodDetailSort.length() <= 0){
+                        recyProdDetail!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyProdDetail!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "prodDetailSort               7103" + prodDetailSort)
