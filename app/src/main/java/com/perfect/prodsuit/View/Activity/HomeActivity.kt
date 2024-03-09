@@ -931,6 +931,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                         LogoutBottomSheet()
                     }
                     R.id.pucnhing -> {
+                        val myView: View = findViewById(R.id.pucnhing)
+                        Config.disableClick(myView)
                         chipNavigationBar!!.setItemSelected(R.id.home, true)
                         val i = Intent(this@HomeActivity, AttendanceMarkingActivity::class.java)
                         startActivity(i)

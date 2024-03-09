@@ -119,6 +119,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                 holder.lToDoList!!.setTag(position)
                 holder.lToDoList!!.setOnClickListener(View.OnClickListener {
                  //   if (!SubMode.equals("4")){
+                    Config.disableClick(it)
                         clickListener!!.onClick(
                             position,
                             "todolist"
@@ -129,6 +130,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
 
                 holder.imcall!!.setTag(position)
                 holder.imcall!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                         clickListener!!.onClick(
                             position,
                             "todocall"
@@ -138,6 +140,7 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                 holder.immessage!!.setTag(position)
                 holder.immessage!!.setOnClickListener(View.OnClickListener {
 //                    if (SubMode.equals("4")) {
+                    Config.disableClick(it)
                         clickListener!!.onClick(
                             position,
                             "todoMessage"
