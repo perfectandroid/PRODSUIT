@@ -93,7 +93,7 @@ object CreateWalkingCustomerRepository {
 
                 Log.e("wewewe","sent length==   "+strVoiceData.length)
              //   Log.e(TAG,"requestObject1   671   "+requestObject1)
-                Log.i("response66666","walking body==   "+requestObject1)
+                Log.i(TAG,"walking request"+requestObject1)
                 Log.i("response66666","walking body11==   "+strVoiceData)
                 Log.e("ee","walking body11==   "+requestObject1)
 

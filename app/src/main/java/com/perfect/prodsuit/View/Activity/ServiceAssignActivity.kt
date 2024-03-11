@@ -1343,7 +1343,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                         ticketMode = "1"
                         serviceMode  = "1"
                         productMode = "1"
-                        listMode = "1"
+                        listMode = "0"
                         hideViews()
                     }else{
                         til_Employee!!.setError(" Employee already exists.");
@@ -2545,7 +2545,7 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 //            tie_Role!!.setText(""+jsonObject.getString("role"))
 
 
-              //  ID_Department = jsonObject.getString("DepartmentID")
+                ID_Department = jsonObject.getString("DepartmentID")
 
                 ID_Employee = jsonObject.getString("ID_Employee")
                 Log.i("Editemp",ID_Employee.toString())
@@ -2559,12 +2559,13 @@ class ServiceAssignActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
                 tie_Department!!.setText(""+jsonObject.getString("Department"))
                 tie_Employee!!.setText(""+jsonObject.getString("Employee"))
+//                ID_Department = jsonObject.getString("ID_Department")
 
 
                 ticketMode = "1"
                 serviceMode  = "1"
                 productMode = "0"
-                listMode = "0"
+                listMode = "1"
 
                 hideViews()
 

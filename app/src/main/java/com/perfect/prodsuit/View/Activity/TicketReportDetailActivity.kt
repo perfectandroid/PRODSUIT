@@ -27,7 +27,8 @@ import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
 
-class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
+class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener
+ {
 
     val TAG: String = "TicketReportDetailActivity"
     private var progressDialog: ProgressDialog? = null
@@ -156,7 +157,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
         ll_NewListTicket!!.visibility = View.GONE
         ll_StatusListTicket!!.visibility = View.GONE
 
-        Log.e(TAG, "ReportMode   107   " + ReportMode)
+        Log.e(TAG, "ReportMode   107   " + ReportMode+"\n"+ID_Category)
 
 //        if (ReportMode.equals("1")){
 ////            ActionListT
@@ -251,6 +252,8 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
         recyFollowUpTicketReport = findViewById(R.id.recyFollowUpTicketReport)
         recyNewListTicketReport = findViewById(R.id.recyNewListTicketReport)
         recyStatusListTicketReport = findViewById(R.id.recyStatusListTicketReport)
+
+
     }
 
     override fun onClick(v: View) {
@@ -451,9 +454,15 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                             recycleSummary!!.layoutManager =
                                                 lLayout as RecyclerView.LayoutManager?
                                             // recyLeadGenReport!!.setHasFixedSize(true)
+                                            Log.e(TAG,"PASSVALUE"+strFromdate+"\n"+strTodate+"\n"+ID_Category)
                                             val adapter = SummaryReportAdapter(
                                                 applicationContext,
-                                                actionListReportArrayList
+                                                actionListReportArrayList,strFromdate,
+                                                        strTodate,
+                                                        ID_Product,
+                                                        ID_Category,
+                                                        ID_Branch,
+                                                        ID_Employee,
                                             )
                                             recycleSummary!!.adapter = adapter
                                         } catch (e: Exception) {
@@ -869,6 +878,8 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
     }
 
+
+
     override fun onClick(position: Int, data: String) {
         Log.e(TAG, "newListClick   5091")
         if (data.equals("newListClick")) {
@@ -882,6 +893,8 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
             openBottomSheetReport(followUpTicketReportArrayList, position)
 
         }
+
+
     }
 
 

@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.AttendanceReportListActivity
@@ -186,6 +187,8 @@ class AttendanceReportAdapter(
 
                 holder.im_detail!!.setTag(position)
                 holder.im_detail!!.setOnClickListener(View.OnClickListener {
+
+                    Config.disableClick(it)
                     /*clickListener!!.onClick(
                         position,
                         "Service_timeLine"

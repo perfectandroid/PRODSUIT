@@ -475,7 +475,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                     openBottomTime()
                 }R.id.img_filter -> {
 
-
+                Config.disableClick(v)
                 filterBottomData()
                 }
 
@@ -1296,6 +1296,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
 
                 CusWiseListPopUp(Cust_Wise_ListArray) */
 
+                Config.disableClick(it)
                 addMulti=0
                 getLeadHistory()
             })
@@ -1540,6 +1541,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             dialogHist!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyLeadHist = dialogHist!!.findViewById(R.id.recyLeadHist) as RecyclerView
             val etsearch = dialogHist!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogHist!!.findViewById(R.id.txt_nodata) as TextView
 
             leadHistSort = JSONArray()
             for (k in 0 until leadHistArrayList.length()) {
@@ -1586,6 +1588,14 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                             }
 
                         }
+                    }
+
+                    if (leadHistSort.length() <= 0){
+                        recyLeadHist!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyLeadHist!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "employeeSort               7103    " + leadHistSort)
@@ -1730,6 +1740,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdDetail = dialogProdDet!!.findViewById(R.id.recyProdDetail) as RecyclerView
             val etsearch = dialogProdDet!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogProdDet!!.findViewById(R.id.txt_nodata) as TextView
 
             prodDetailSort = JSONArray()
             for (k in 0 until prodDetailArrayList.length()) {
@@ -1768,6 +1779,14 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                             }
 
                         }
+                    }
+
+                    if (prodDetailSort.length() <= 0){
+                        recyProdDetail!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyProdDetail!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "prodDetailSort               7103    " + prodDetailSort)
@@ -2045,6 +2064,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             dialogleadDetail!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyleadDetail1 = dialogleadDetail!! .findViewById(R.id.detail_recy) as RecyclerView
             val etsearch = dialogleadDetail!! .findViewById(R.id.etsearch1) as EditText
+            val txt_nodata = dialogleadDetail!!.findViewById(R.id.txt_nodata) as TextView
 
 
             leadDetailSort = JSONArray()
@@ -2086,6 +2106,14 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                             }
 
                         }
+                    }
+
+                    if (leadDetailSort.length() <= 0){
+                        recyleadDetail1!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyleadDetail1!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG,"leadDetailSort               7103    "+leadDetailSort)
@@ -2174,6 +2202,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             recyProdPriority =
                 dialogProdPriority!!.findViewById(R.id.recyProdPriority) as RecyclerView
             val etsearch = dialogProdPriority!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogProdPriority!!.findViewById(R.id.txt_nodata) as TextView
 
             prodPrioritySort = JSONArray()
             for (k in 0 until prodPriorityArrayList.length()) {
@@ -2214,6 +2243,14 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                             }
 
                         }
+                    }
+
+                    if (prodPrioritySort.length() <= 0){
+                        recyProdPriority!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyProdPriority!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "reportNamesort               7103    " + prodPrioritySort)
@@ -2473,6 +2510,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                 dialogFollowupAction!!.findViewById(R.id.recyFollowupAction) as RecyclerView
             val etsearch = dialogFollowupAction!!.findViewById(R.id.etsearch) as EditText
             val txt_follwAction = dialogFollowupAction!!.findViewById(R.id.txt_follwAction) as TextView
+            val txt_nodata = dialogFollowupAction!!.findViewById(R.id.txt_nodata) as TextView
             txt_follwAction.text="Follow Up Action"
 
             followUpActionSort = JSONArray()
@@ -2515,6 +2553,14 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                         }
                     }
 
+                    if (followUpActionSort.length() <= 0){
+                        recyFollowupAction!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                        txt_follwAction!!.setText("Invalid Action")
+                    }else{
+                        recyFollowupAction!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
+                    }
 
                     val adapter =
                         FollowupActionAdapter(this@Intimation, followUpActionSort)
@@ -2765,6 +2811,10 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             dialogLeadBy!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyLeadby = dialogLeadBy!!.findViewById(R.id.recyLeadby) as RecyclerView
             val etsearch = dialogLeadBy!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogLeadBy!!.findViewById(R.id.txt_nodata) as TextView
+            val txt_referedby = dialogLeadBy!!.findViewById(R.id.txt_referedby) as TextView
+            txt_referedby!!.text="Attended By"
+
 
             leadBySort = JSONArray()
             for (k in 0 until leadByArrayList.length()) {
@@ -2804,6 +2854,15 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                             }
 
                         }
+                    }
+
+                    if (leadBySort.length() <= 0){
+                        recyLeadby!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                        txt_nodata!!.text="Invalid Attended By"
+                    }else{
+                        recyLeadby!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "leadBySort               7103    " + leadBySort)
@@ -2903,6 +2962,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             val etsearch = dialogEmployee!!.findViewById(R.id.etsearch) as EditText
             recyEmployee!!.visibility=View.VISIBLE
             val txt_nodata = dialogEmployee!!.findViewById(R.id.txt_nodata) as TextView
+            val tvv_head = dialogEmployee!!.findViewById(R.id.tvv_head) as TextView
+            tvv_head.text="Assigned To"
 
             employeeSort = JSONArray()
             for (k in 0 until employeeArrayList.length()) {
@@ -2948,6 +3009,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                     {
                         txt_nodata.visibility=View.GONE
                         recyEmployee!!.visibility=View.VISIBLE
+                        txt_nodata!!.setText("Invalid Assigned To List")
                         Log.e(TAG, "employeeSort               7103    " + employeeSort)
                         val adapter = EmployeeAdapter(this@Intimation, employeeSort)
                         recyEmployee!!.adapter = adapter
@@ -3978,6 +4040,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             dialogBranch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyBranch = dialogBranch!!.findViewById(R.id.recyBranch) as RecyclerView
             val etsearch = dialogBranch!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogBranch!! .findViewById(R.id.txt_nodata) as TextView
             branchsort = JSONArray()
             for (k in 0 until branchArrayList.length()) {
                 val jsonObject = branchArrayList.getJSONObject(k)
@@ -4014,6 +4077,14 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                             }
 
                         }
+                    }
+
+                    if (branchsort.length() <= 0){
+                        recyBranch!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyBranch!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "branchsort               7103    " + branchsort)
@@ -4518,6 +4589,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             recyGrouping = dialogGrouping!!.findViewById(R.id.recyGrouping) as RecyclerView
             val etsearch = dialogGrouping!!.findViewById(R.id.etsearch) as EditText
             val heading = dialogGrouping!!.findViewById(R.id.heading) as TextView
+            val txt_nodata = dialogGrouping!! .findViewById(R.id.txt_nodata) as TextView
             heading.setText("Channel")
             shedulesort = JSONArray()
             for (k in 0 until sheduleArrayList.length()) {
@@ -4544,8 +4616,8 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                     val textlength = etsearch!!.text.length
                     shedulesort = JSONArray()
-                    for (k in 0 until intimationModuleArrayList.length()) {
-                        val jsonObject = intimationModuleArrayList.getJSONObject(k)
+                    for (k in 0 until sheduleArrayList.length()) {
+                        val jsonObject = sheduleArrayList.getJSONObject(k)
                         if (textlength <= jsonObject.getString("SheduledTypeName").length) {
                             if (jsonObject.getString("SheduledTypeName")!!.toLowerCase().trim()
                                     .contains(etsearch!!.text.toString().toLowerCase().trim())
@@ -4554,6 +4626,15 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                             }
 
                         }
+                    }
+
+                    if (shedulesort.length() <= 0){
+                        recyGrouping!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                        txt_nodata!!.setText("Inavlid Channel")
+                    }else{
+                        recyGrouping!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "groupingSort               7103    " + shedulesort)
@@ -4583,6 +4664,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             recyGrouping = dialogGrouping!!.findViewById(R.id.recyGrouping) as RecyclerView
             val etsearch = dialogGrouping!!.findViewById(R.id.etsearch) as EditText
             val heading = dialogGrouping!!.findViewById(R.id.heading) as TextView
+            val txt_nodata = dialogGrouping!! .findViewById(R.id.txt_nodata) as TextView
             heading.setText("Channel")
             channelSort = JSONArray()
             for (k in 0 until channelArrayList.length()) {
@@ -4621,6 +4703,15 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                         }
                     }
 
+                    if (channelSort.length() <= 0){
+                        recyGrouping!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                        txt_nodata!!.setText("Inavlid Channel")
+                    }else{
+                        recyGrouping!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
+                    }
+
                     Log.e(TAG, "groupingSort               7103    " + channelSort)
                     val adapter = IntimationChannelAdapter(this@Intimation, channelSort)
                     recyGrouping!!.adapter = adapter
@@ -4648,6 +4739,7 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
             recyGrouping = dialogGrouping!!.findViewById(R.id.recyGrouping) as RecyclerView
             val etsearch = dialogGrouping!!.findViewById(R.id.etsearch) as EditText
             val heading = dialogGrouping!!.findViewById(R.id.heading) as TextView
+            val txt_nodata = dialogGrouping!! .findViewById(R.id.txt_nodata) as TextView
             heading.setText("Module")
             moduleSort = JSONArray()
             for (k in 0 until intimationModuleArrayList.length()) {
@@ -4684,6 +4776,15 @@ class Intimation : AppCompatActivity(), View.OnClickListener, ItemClickListener 
                             }
 
                         }
+                    }
+
+                    if (moduleSort.length() <= 0){
+                        recyGrouping!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                        txt_nodata!!.setText("Invalid Module")
+                    }else{
+                        recyGrouping!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "groupingSort               7103    " + moduleSort)

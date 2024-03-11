@@ -338,4 +338,8 @@ class FavActivity : AppCompatActivity() , View.OnClickListener, ItemClickListene
 
 
     }
-}
+
+         override fun onClick(position: Int, data: String) {
+             TODO("Not yet implemented")
+         }
+     }

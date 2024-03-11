@@ -280,7 +280,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
             }
 
             R.id.imVoice -> {
-
+                Config.disableClick(v)
                 val intent =
                     Intent(this@WalkingCustomerActivity, VoiceRecordingActivity::class.java)
                 intent.putExtra("name11", "uuuuu")
@@ -310,11 +310,13 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
             }
 
             R.id.tie_AssignedDate -> {
+                Config.disableClick(v)
                 dateSelectMode = 0
                 openBottomSheet()
             }
 
             R.id.tie_Attachvoice -> {
+                Config.disableClick(v)
                 val intent =
                     Intent(this@WalkingCustomerActivity, VoiceRecordingActivity::class.java)
                 startActivityForResult(intent, RECORD_PLAY!!);
@@ -350,6 +352,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
             }
 
             R.id.imcontactlog -> {
+                Config.disableClick(v)
                 if (ActivityCompat.checkSelfPermission(
                         this,
                         android.Manifest.permission.READ_CALL_LOG
@@ -457,6 +460,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
             dialogProdCat!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdCategory = dialogProdCat!!.findViewById(R.id.recyProdCategory) as RecyclerView
             val etsearch = dialogProdCat!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogProdCat!! .findViewById(R.id.txt_nodata) as TextView
 
             prodCategorySort = JSONArray()
             for (k in 0 until prodCategoryArrayList.length()) {
@@ -494,6 +498,14 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
                             }
 
                         }
+                    }
+
+                    if (prodCategorySort.length() <= 0){
+                        recyProdCategory!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyProdCategory!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "prodCategorySort               7103    " + prodCategorySort)
@@ -598,6 +610,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
             dialogProdDet!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyProdDetail = dialogProdDet!!.findViewById(R.id.recyProdDetail) as RecyclerView
             val etsearch = dialogProdDet!!.findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogProdDet!! .findViewById(R.id.txt_nodata) as TextView
 
             prodDetailSort = JSONArray()
             for (k in 0 until prodDetailArrayList.length()) {
@@ -632,11 +645,20 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
                         //if (textlength <= jsonObject.getString("ProductName").length) {
                         if (textlength > 0) {
                             if (jsonObject.getString("ProductName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim()) ||
-                                jsonObject.getString("ProdBarcode")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())) {
+                                jsonObject.getString("ProdBarcode")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim()))
+                            {
                                 prodDetailSort.put(jsonObject)
                             }
 
                         }
+                    }
+
+                    if (prodDetailSort.length() <= 0){
+                        recyProdDetail!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recyProdDetail!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
                     }
 
                     Log.e(TAG, "prodDetailSort               7103    " + prodDetailSort)

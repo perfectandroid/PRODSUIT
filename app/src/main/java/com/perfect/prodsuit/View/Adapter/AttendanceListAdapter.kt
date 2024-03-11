@@ -78,6 +78,8 @@ class AttendanceListAdapter (internal var context: Context, internal var jsonArr
 
                 holder.im_mapview!!.setTag(position)
                 holder.im_mapview!!.setOnClickListener(View.OnClickListener {
+
+                    Config.disableClick(it)
                     /* Config.disableClick(it)
                      clickListener!!.onClick(
                          position,

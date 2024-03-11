@@ -188,6 +188,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                 finish()
             }
             R.id.lltodolist->{
+                Config.disableClick(v)
                 val i = Intent(this@LeadManagemnetActivity, TodoListActivity::class.java)
                 i.putExtra("SubMode","1")
                 i.putExtra("headerTitle",tv_today!!.text.toString())
@@ -201,6 +202,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                 startActivity(i)
             }
             R.id.lloverdue->{
+                Config.disableClick(v)
                 val i = Intent(this@LeadManagemnetActivity, OverDueActivity::class.java)
                 i.putExtra("SubMode","2")
                 i.putExtra("headerTitle",tv_pending!!.text.toString())
@@ -213,6 +215,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                 startActivity(i)
             }
             R.id.lloverUpcoming->{
+                Config.disableClick(v)
                 val i = Intent(this@LeadManagemnetActivity, UpcomingtaskActivity::class.java)
                 i.putExtra("SubMode","3")
                 i.putExtra("headerTitle",tv_upcoming!!.text.toString())
@@ -224,6 +227,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                 startActivity(i)
             }
             R.id.llmyLead->{
+                Config.disableClick(v)
                 val i = Intent(this@LeadManagemnetActivity, MyLeadActivity::class.java)
                 i.putExtra("SubMode","4")
                 i.putExtra("headerTitle",tv_mylead!!.text.toString())
@@ -235,6 +239,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                 startActivity(i)
             }
             R.id.imgv_filterManage->{
+                Config.disableClick(v)
                 filterBottomDataManagment()
 //                getEmployeeAllD()
             }
@@ -570,8 +575,8 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -925,8 +930,8 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
 
         }
@@ -987,8 +992,8 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1125,8 +1130,8 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }

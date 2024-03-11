@@ -130,6 +130,7 @@ object DetailedReportRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
+                        Log.e(TAG,"response lead sumreport"+response.body())
                         val leads = ArrayList<DetailedReportModel>()
                         leads.add(DetailedReportModel(response.body()))
                         val msg = leads[0].message

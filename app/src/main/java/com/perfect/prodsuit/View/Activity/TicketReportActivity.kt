@@ -332,9 +332,11 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     override fun onClick(v: View) {
         when (v.id) {
             R.id.imback -> {
+                Config.disableClick(v)
                 finish()
             }
             R.id.llfromdate -> {
+
                 ll_Fromdate!!.visibility = View.VISIBLE
             }
             R.id.im_close -> {
@@ -447,6 +449,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 getProductPriority()
             }
             R.id.tie_Status -> {
+                Config.disableClick(v)
                 getProductStatus()
             }
             R.id.tie_Grouping -> {

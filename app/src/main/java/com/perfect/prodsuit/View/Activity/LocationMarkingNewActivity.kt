@@ -273,6 +273,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                 hideViews()
             }
             R.id.lin_root_view -> {
+                Config.disableClick(v)
                 listMode = "0"
                 detailMode = "0"
                 rootMode = "1"
@@ -793,6 +794,8 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                 // reportNamesort.put(k,jsonObject)
                 designationtSort.put(jsonObject)
             }
+            val txt_nodata = dialogDesignation!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
 
             val lLayout = GridLayoutManager(this@LocationMarkingNewActivity, 1)
             recyDesignation!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -827,11 +830,28 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                         }
                     }
 
-                    Log.e(TAG, "designationtSort               7103    " + designationtSort)
-                    val adapter =
-                        DesignationAdapter(this@LocationMarkingNewActivity, designationtSort)
-                    recyDesignation!!.adapter = adapter
-                    adapter.setClickListener(this@LocationMarkingNewActivity)
+                    if (designationtSort!!.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recyDesignation!!.visibility=View.VISIBLE
+                        Log.e(TAG, "designationtSort               7103    " + designationtSort)
+                        val adapter =
+                            DesignationAdapter(this@LocationMarkingNewActivity, designationtSort)
+                        recyDesignation!!.adapter = adapter
+                        adapter.setClickListener(this@LocationMarkingNewActivity)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recyDesignation!!.visibility=View.GONE
+                    }
+
+
+//                    Log.e(TAG, "designationtSort               7103    " + designationtSort)
+//                    val adapter =
+//                        DesignationAdapter(this@LocationMarkingNewActivity, designationtSort)
+//                    recyDesignation!!.adapter = adapter
+//                    adapter.setClickListener(this@LocationMarkingNewActivity)
                 }
             })
 
@@ -929,7 +949,8 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                 val jsonObject = branchArrayList.getJSONObject(k)
                 branchsort.put(jsonObject)
             }
-
+            val txt_nodata = dialogBranch!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
 
             val lLayout = GridLayoutManager(this@LocationMarkingNewActivity, 1)
             recyBranch!!.layoutManager = lLayout as RecyclerView.LayoutManager?
@@ -964,10 +985,25 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                         }
                     }
 
-                    Log.e(TAG, "branchsort               7103    " + branchsort)
-                    val adapter = BranchAdapter(this@LocationMarkingNewActivity, branchsort)
-                    recyBranch!!.adapter = adapter
-                    adapter.setClickListener(this@LocationMarkingNewActivity)
+                    if (branchsort!!.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recyBranch!!.visibility=View.VISIBLE
+                        Log.e(TAG, "branchsort               7103    " + branchsort)
+                        val adapter = BranchAdapter(this@LocationMarkingNewActivity, branchsort)
+                        recyBranch!!.adapter = adapter
+                        adapter.setClickListener(this@LocationMarkingNewActivity)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recyBranch!!.visibility=View.GONE
+                    }
+
+//                    Log.e(TAG, "branchsort               7103    " + branchsort)
+//                    val adapter = BranchAdapter(this@LocationMarkingNewActivity, branchsort)
+//                    recyBranch!!.adapter = adapter
+//                    adapter.setClickListener(this@LocationMarkingNewActivity)
                 }
             })
 
@@ -1070,6 +1106,9 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                 departmentSort.put(jsonObject)
             }
 
+            val txt_nodata = dialogDepartment!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
+
             val lLayout = GridLayoutManager(this@LocationMarkingNewActivity, 1)
             recyDeaprtment!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
@@ -1102,11 +1141,27 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
 
                         }
                     }
+                    if (departmentSort!!.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recyDeaprtment!!.visibility=View.VISIBLE
+                        Log.e(TAG, "departmentSort               7103    " + departmentSort)
+                        val adapter = DepartmentAdapter(this@LocationMarkingNewActivity, departmentSort)
+                        recyDeaprtment!!.adapter = adapter
+                        adapter.setClickListener(this@LocationMarkingNewActivity)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recyDeaprtment!!.visibility=View.GONE
+                    }
 
-                    Log.e(TAG, "departmentSort               7103    " + departmentSort)
-                    val adapter = DepartmentAdapter(this@LocationMarkingNewActivity, departmentSort)
-                    recyDeaprtment!!.adapter = adapter
-                    adapter.setClickListener(this@LocationMarkingNewActivity)
+
+
+//                    Log.e(TAG, "departmentSort               7103    " + departmentSort)
+//                    val adapter = DepartmentAdapter(this@LocationMarkingNewActivity, departmentSort)
+//                    recyDeaprtment!!.adapter = adapter
+//                    adapter.setClickListener(this@LocationMarkingNewActivity)
                 }
             })
 
@@ -1210,7 +1265,8 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                 employeeSort.put(jsonObject)
             }
 
-
+            val txt_nodata = dialogEmployee!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
             val lLayout = GridLayoutManager(this@LocationMarkingNewActivity, 1)
             recyEmployee!!.layoutManager = lLayout as RecyclerView.LayoutManager?
 //            recyCustomer!!.setHasFixedSize(true)
@@ -1244,10 +1300,26 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                         }
                     }
 
-                    Log.e(TAG, "employeeSort               7103    " + employeeSort)
-                    val adapter = EmployeeAdapter(this@LocationMarkingNewActivity, employeeSort)
-                    recyEmployee!!.adapter = adapter
-                    adapter.setClickListener(this@LocationMarkingNewActivity)
+
+                    if (employeeSort!!.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recyEmployee!!.visibility=View.VISIBLE
+                        Log.e(TAG, "employeeSort               7103    " + employeeSort)
+                        val adapter = EmployeeAdapter(this@LocationMarkingNewActivity, employeeSort)
+                        recyEmployee!!.adapter = adapter
+                        adapter.setClickListener(this@LocationMarkingNewActivity)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recyEmployee!!.visibility=View.GONE
+                    }
+
+//                    Log.e(TAG, "employeeSort               7103    " + employeeSort)
+//                    val adapter = EmployeeAdapter(this@LocationMarkingNewActivity, employeeSort)
+//                    recyEmployee!!.adapter = adapter
+//                    adapter.setClickListener(this@LocationMarkingNewActivity)
                 }
             })
 

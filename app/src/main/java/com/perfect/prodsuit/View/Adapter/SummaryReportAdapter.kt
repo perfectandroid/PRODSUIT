@@ -1,25 +1,35 @@
 package com.perfect.prodsuit.View.Adapter
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.LeadSummaryDetailReportActivity
 import org.json.JSONArray
 import org.json.JSONObject
 
-class SummaryReportAdapter(internal var context: Context, internal var jsonArray: JSONArray):
+class SummaryReportAdapter(
+    internal var context: Context,
+    internal var jsonArray: JSONArray,
+    internal var strFromdate: String,
+    internal var strTodate: String,
+    internal var ID_Product: String?,
+    internal var ID_Category: String?,
+    internal var ID_Branch: String?,
+    internal var ID_Employee: String?
+):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    internal val TAG : String = "ActionListTicketReportAdapter"
+    internal val TAG : String = "SummaryReportAdapter"
     internal var jsonObject: JSONObject? = null
     private var clickListener: ItemClickListener? = null
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val vh: RecyclerView.ViewHolder
         val v = LayoutInflater.from(parent.context).inflate(
@@ -41,12 +51,93 @@ class SummaryReportAdapter(internal var context: Context, internal var jsonArray
                 holder.news.text     = jsonObject!!.getString("New")
                 holder.closed.text      = jsonObject!!.getString("Closed")
                 holder.losed.text       = jsonObject!!.getString("Lost")
-                holder.balance.text   = jsonObject!!.getString("Balance")
+                holder.balance.text   = jsonObject!!. getString("Balance")
+                ID_Employee=jsonObject!!. getString("ID")
 
-//                holder.llDistrict!!.setTag(position)
-//                holder.llDistrict!!.setOnClickListener(View.OnClickListener {
-//                    clickListener!!.onClick(position, "districtdetail")
-//                })
+
+
+
+
+                Log.e(TAG,"Details "+strFromdate+"\n"+ID_Employee +"\n"+ID_Category)
+
+                holder.opening!!.setTag(position)
+                holder.opening!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
+                    val intent = Intent(context, LeadSummaryDetailReportActivity::class.java)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.putExtra("SubMode","1")
+                    intent.putExtra("strFromdate",strFromdate)
+                    intent.putExtra("strTodate",strTodate)
+                    intent.putExtra("ID_Product",ID_Product)
+                    intent.putExtra("ID_Category",ID_Category)
+                    intent.putExtra("ID_Branch",ID_Branch)
+                    intent.putExtra("ID_Employee",ID_Employee)
+                    context.startActivity(intent)
+                })
+
+
+
+                holder.news!!.setTag(position)
+                holder.news!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
+                    val intent = Intent(context, LeadSummaryDetailReportActivity::class.java)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.putExtra("SubMode","2")
+                    intent.putExtra("strFromdate",strFromdate)
+                    intent.putExtra("strTodate",strTodate)
+                    intent.putExtra("ID_Product",ID_Product)
+                    intent.putExtra("ID_Category",ID_Category)
+                    intent.putExtra("ID_Branch",ID_Branch)
+                    intent.putExtra("ID_Employee",ID_Employee)
+                    context.startActivity(intent)
+
+                })
+                holder.closed!!.setTag(position)
+                holder.closed!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
+
+                    val intent = Intent(context, LeadSummaryDetailReportActivity::class.java)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.putExtra("SubMode","3")
+                    intent.putExtra("strFromdate",strFromdate)
+                    intent.putExtra("strTodate",strTodate)
+                    intent.putExtra("ID_Product",ID_Product)
+                    intent.putExtra("ID_Category",ID_Category)
+                    intent.putExtra("ID_Branch",ID_Branch)
+                    intent.putExtra("ID_Employee",ID_Employee)
+                    context.startActivity(intent)
+                })
+                holder.losed!!.setTag(position)
+                holder.losed!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
+                    val intent = Intent(context, LeadSummaryDetailReportActivity::class.java)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.putExtra("SubMode","4")
+                    intent.putExtra("strFromdate",strFromdate)
+                    intent.putExtra("strTodate",strTodate)
+                    intent.putExtra("ID_Product",ID_Product)
+                    intent.putExtra("ID_Category",ID_Category)
+                    intent.putExtra("ID_Branch",ID_Branch)
+                    intent.putExtra("ID_Employee",ID_Employee)
+
+                    context.startActivity(intent)
+                })
+                holder.balance!!.setTag(position)
+                holder.balance!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
+                    val intent = Intent(context, LeadSummaryDetailReportActivity::class.java)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.putExtra("SubMode","5")
+                    intent.putExtra("strFromdate",strFromdate)
+                    intent.putExtra("strTodate",strTodate)
+                    intent.putExtra("ID_Product",ID_Product)
+                    intent.putExtra("ID_Category",ID_Category)
+                    intent.putExtra("ID_Branch",ID_Branch)
+                    intent.putExtra("ID_Employee",ID_Employee)
+                    context.startActivity(intent)
+                })
+
+
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -82,8 +173,10 @@ class SummaryReportAdapter(internal var context: Context, internal var jsonArray
     text        = v.findViewById<View>(R.id.text) as TextView
         }
     }
-
-//    fun setClickListener(itemClickListener: ItemClickListener?) {
-//        clickListener = itemClickListener
-//    }
+   /* fun setClickListener(itemClickListener: ItemClickListener?) {
+        clickListener = itemClickListener
+    }*/
+    fun setClickListener(itemClickListener: ItemClickListener?) {
+        clickListener = itemClickListener
+    }
 }

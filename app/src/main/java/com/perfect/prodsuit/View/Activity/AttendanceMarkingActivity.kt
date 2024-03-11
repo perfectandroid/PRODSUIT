@@ -191,12 +191,14 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
                 onBackPressed()
             }
             R.id.tv_attndnce -> {
+                Config.disableClick(v)
                 val i = Intent(this@AttendanceMarkingActivity, AttendanceReportsActivity::class.java)
                 startActivity(i)
                 finish()
             }
 
             R.id.tv_Punch -> {
+                Config.disableClick(v)
                if (strLatitude.equals("") || strLongitue.equals("")){
                    runTimePermission()
                }else{
