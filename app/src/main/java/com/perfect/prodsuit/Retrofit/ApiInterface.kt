@@ -957,5 +957,18 @@ interface ApiInterface {
     @POST("UserValidations/AttendancePunchDetails")
     fun getPunchReport(@Body body: RequestBody): Call<String>
 
+    @POST("UserValidations/MyActivityCount")
+    fun getApiMyActivityCount(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/MyActivitysActionCountDetails")
+    fun getApiMyActivitysActionCountDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/MyActivitysActionDetails")
+    fun getApiMyActivitysActionDetails(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/MyActivitysFliters")
+    fun getApiMyActivitysFliters(@Body body: RequestBody): Call<String>
+
+
 
 }

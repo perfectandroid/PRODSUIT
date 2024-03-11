@@ -2689,6 +2689,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             if (grid_id.equals("1")){
                 val i = Intent(this@HomeActivity, AgendaActivity::class.java)
                 startActivity(i)
+
+//                val i = Intent(this@HomeActivity, MyActivity::class.java)
+//                startActivity(i)
             }
             if (grid_id.equals("2")){
                 val i = Intent(this@HomeActivity, DashboardNewActivity::class.java)

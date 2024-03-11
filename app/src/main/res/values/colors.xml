@@ -615,4 +615,12 @@
     <color name="color_head4">#4C5554</color>
 
     <color name="punch">#E6F1F2</color>
+
+    <color name="today_color">#d7af36</color>
+    <color name="pending_color">#fc9416</color>
+    <color name="upcoming_color">#10aee1</color>
+    <color name="completed_color">#58c427</color>
+
+    <color name="completed_color2">#70F675</color>
+
 </resources>
