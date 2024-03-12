@@ -137,6 +137,7 @@ object WalkExistRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
+                        Log.e(TAG,"walk mob search"+response.body())
                         val leads = ArrayList<WalkExistModel>()
                         leads.add(WalkExistModel(response.body()))
                         val msg = leads[0].message

@@ -109,6 +109,7 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
 
         }
         if (data.equals("materialRequestClick")){
+
             val jsonObject = projectArrayList.getJSONObject(position)
             val i = Intent(this@ProjectListActivity, MaterialRequestActivity::class.java)
             i.putExtra("jsonObject",jsonObject.toString())
@@ -143,6 +144,7 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
                 progressDialog!!.show()
                 materialusageProjectViewModel.getMaterialUsageProjectModel(this)!!.observe(
                     this,
+
                     Observer { serviceSetterGetter ->
 
                         try {

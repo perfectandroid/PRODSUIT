@@ -357,6 +357,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
 
             }
             R.id.tie_UsageDate -> {
+                Config.disableClick(v)
                 openBottomSheet()
             }
             R.id.tie_Product -> {
@@ -617,8 +618,15 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
                 if (strMonth.length == 1) {
                     strMonth = "0" + strMonth
                 }
+                val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
+                val currentDate = sdf.format(Date())
+                var setdate = "" + strDay + "-" + strMonth + "-" + strYear
+                val newDate: Date = sdf.parse(setdate)
+                val sdfDate1 = SimpleDateFormat("dd-MM-yyyy")
 
-                tie_UsageDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+
+              //  tie_UsageDate!!.setText("" + strDay + "-" + strMonth + "-" + strYear)
+                tie_UsageDate!!.setText("" + sdfDate1.format(newDate))
                 strUsagedate = strYear + "-" + strMonth + "-" + strDay
 
             } catch (e: Exception) {
@@ -711,6 +719,8 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
             recylist = dialogProject!! .findViewById(R.id.recylist) as RecyclerView
             tvv_list_name = dialogProject!! .findViewById(R.id.tvv_list_name) as TextView
             val etsearch = dialogProject!! .findViewById(R.id.etsearch) as EditText
+            val txt_nodata = dialogProject!! .findViewById(R.id.txt_nodata) as TextView
+
             tvv_list_name!!.setText("PROJECT LIST")
 
             projectSort = JSONArray()
@@ -748,7 +758,13 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
 
                         }
                     }
-
+                    if (projectSort.length() <= 0){
+                        recylist!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recylist!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
+                    }
                     Log.e(TAG,"projectSort               7103    "+projectSort)
                     val adapter = ProjectAdapter(this@MaterialRequestActivity, projectSort)
                     recylist!!.adapter = adapter
@@ -845,6 +861,7 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
             tvv_list_name = dialogStage!! .findViewById(R.id.tvv_list_name) as TextView
             val etsearch = dialogStage!! .findViewById(R.id.etsearch) as EditText
             tvv_list_name!!.setText("STAGE LIST")
+            val txt_nodata = dialogStage!! .findViewById(R.id.txt_nodata) as TextView
 
             stageSort = JSONArray()
             for (k in 0 until stageArrayList.length()) {
@@ -882,6 +899,13 @@ class MaterialRequestActivity : AppCompatActivity() ,  View.OnClickListener , It
                         }
                     }
 
+                    if (stageSort.length() <= 0){
+                        recylist!!.visibility = View.GONE
+                        txt_nodata!!.visibility = View.VISIBLE
+                    }else{
+                        recylist!!.visibility = View.VISIBLE
+                        txt_nodata!!.visibility = View.GONE
+                    }
                     Log.e(TAG,"stageSort               7103    "+stageSort)
                     val adapter = StageAdapter(this@MaterialRequestActivity, stageSort)
                     recylist!!.adapter = adapter

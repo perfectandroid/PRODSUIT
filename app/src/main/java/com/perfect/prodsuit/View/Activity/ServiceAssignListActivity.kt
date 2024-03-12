@@ -586,6 +586,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 
 
 
+
     }
 
     private fun checkAttendance() {
