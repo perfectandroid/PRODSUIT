@@ -967,11 +967,12 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
             }
 
             R.id.ll_call->{
-
+                Config.disableClick(v)
                 callFunction()
 
             }
             R.id.ll_meet->{
+                Config.disableClick(v)
                 val i = Intent(this@AccountDetailsActivity, FollowUpActivity::class.java)
                 i.putExtra("ID_LeadGenerateProduct",ID_LeadGenerateProduct)
                 i.putExtra("ID_LeadGenerate",ID_LeadGenerate)
@@ -983,6 +984,7 @@ class AccountDetailsActivity : AppCompatActivity()  , View.OnClickListener, Item
 
             }
             R.id.ll_msg->{
+                Config.disableClick(v)
                 messagePopup()
             }
         }

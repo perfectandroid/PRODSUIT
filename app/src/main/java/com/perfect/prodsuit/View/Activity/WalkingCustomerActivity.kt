@@ -280,7 +280,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
             }
 
             R.id.imVoice -> {
-
+                Config.disableClick(v)
                 val intent =
                     Intent(this@WalkingCustomerActivity, VoiceRecordingActivity::class.java)
                 intent.putExtra("name11", "uuuuu")
@@ -310,11 +310,13 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
             }
 
             R.id.tie_AssignedDate -> {
+                Config.disableClick(v)
                 dateSelectMode = 0
                 openBottomSheet()
             }
 
             R.id.tie_Attachvoice -> {
+                Config.disableClick(v)
                 val intent =
                     Intent(this@WalkingCustomerActivity, VoiceRecordingActivity::class.java)
                 startActivityForResult(intent, RECORD_PLAY!!);
@@ -350,6 +352,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
             }
 
             R.id.imcontactlog -> {
+                Config.disableClick(v)
                 if (ActivityCompat.checkSelfPermission(
                         this,
                         android.Manifest.permission.READ_CALL_LOG
@@ -642,7 +645,8 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
                         //if (textlength <= jsonObject.getString("ProductName").length) {
                         if (textlength > 0) {
                             if (jsonObject.getString("ProductName")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim()) ||
-                                jsonObject.getString("ProdBarcode")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim())) {
+                                jsonObject.getString("ProdBarcode")!!.toLowerCase().trim().contains(etsearch!!.text.toString().toLowerCase().trim()))
+                            {
                                 prodDetailSort.put(jsonObject)
                             }
 

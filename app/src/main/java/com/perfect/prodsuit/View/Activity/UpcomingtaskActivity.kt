@@ -303,13 +303,16 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 finish()
             }
             R.id.imgv_filter -> {
+                Config.disableClick(v)
               //  filterData()
                 filterBottomData()
             }
             R.id.imgv_sort -> {
+                Config.disableClick(v)
                 sortData()
             }
             R.id.fab_Reminder->{
+                Config.disableClick(v)
                 var strReminder: String=""
                 var ii: Int=0
                 val gson = Gson()
@@ -384,10 +387,12 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             min = Integer.parseInt(strmin)
             ettime!!.setOnClickListener(View.OnClickListener {
 //                timeSelector()
+                Config.disableClick(it)
                 openBottomSheetTime()
             })
             etdate!!.setOnClickListener(View.OnClickListener {
 //                dateSelector()
+                Config.disableClick(it)
                 sortFilter = 2
                 openBottomSheet()
             })
@@ -422,6 +427,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             dialog.dismiss()
         }
         txtSubmit.setOnClickListener {
+            Config.disableClick(it)
             dialog.dismiss()
             try {
 

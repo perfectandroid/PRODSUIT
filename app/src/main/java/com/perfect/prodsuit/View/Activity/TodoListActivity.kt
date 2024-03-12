@@ -320,13 +320,16 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                 finish()
             }
             R.id.imgv_filter -> {
+                Config.disableClick(v)
               //  filterData()
                 filterBottomData()
             }
             R.id.imgv_sort -> {
+                Config.disableClick(v)
                 sortData()
             }
             R.id.fab_Reminder->{
+                Config.disableClick(v)
                 var strReminder: String=""
                 var ii: Int=0
                 val gson = Gson()
@@ -401,10 +404,12 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
             hr = Integer.parseInt(strhr)
             min = Integer.parseInt(strmin)
             ettime!!.setOnClickListener(View.OnClickListener {
+                Config.disableClick(it)
 //                timeSelector()
                 openBottomSheetTime()
             })
             etdate!!.setOnClickListener(View.OnClickListener {
+                Config.disableClick(it)
 //                dateSelector()
                 sortFilter = 2
                 openBottomSheet()
