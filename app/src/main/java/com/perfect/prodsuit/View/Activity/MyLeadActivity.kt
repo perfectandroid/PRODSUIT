@@ -291,8 +291,8 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                        .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                        .show()
             }
         }
     }
@@ -303,13 +303,16 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 finish()
             }
             R.id.imgv_filter -> {
+                Config.disableClick(v)
               //  filterData()
                 filterBottomData()
             }
             R.id.imgv_sort -> {
+                Config.disableClick(v)
                 sortData()
             }
             R.id.fab_Reminder->{
+                Config.disableClick(v)
                 var strReminder: String=""
                 var ii: Int=0
                 val gson = Gson()
@@ -383,10 +386,12 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             hr = Integer.parseInt(strhr)
             min = Integer.parseInt(strmin)
             ettime!!.setOnClickListener(View.OnClickListener {
+                Config.disableClick(it)
 //                timeSelector()
                 openBottomSheetTime()
             })
             etdate!!.setOnClickListener(View.OnClickListener {
+                Config.disableClick(it)
 //                dateSelector()
                 sortFilter = 2
                 openBottomSheet()
@@ -422,6 +427,7 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             dialog.dismiss()
         }
         txtSubmit.setOnClickListener {
+            Config.disableClick(it)
             dialog.dismiss()
             try {
 
@@ -900,8 +906,8 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1497,8 +1503,8 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1630,8 +1636,8 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1762,8 +1768,8 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }

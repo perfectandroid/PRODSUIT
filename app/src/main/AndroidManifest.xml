@@ -78,11 +78,17 @@
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".View.Activity.MyActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
             android:name=".View.Activity.PickupAndDeliveryGraphActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden|adjustPan"/>
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".View.Activity.TimeFlowServiceActivity"
             android:exported="false"
@@ -828,7 +834,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-
         <activity
             android:name=".View.Activity.TileGraphActivity"
             android:screenOrientation="portrait"

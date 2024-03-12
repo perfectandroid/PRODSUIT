@@ -354,8 +354,8 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -497,8 +497,8 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
 
@@ -649,8 +649,8 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }

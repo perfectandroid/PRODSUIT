@@ -9,11 +9,9 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.ActivityListModel
 import com.perfect.prodsuit.Model.AddRemarkModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
-import com.perfect.prodsuit.View.Activity.AgendaActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject

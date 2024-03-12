@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
@@ -52,6 +53,7 @@ class LocationMarkingAdapter (internal var context: Context, internal var jsonAr
 
                 })
                 holder.im_mapview!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     clickListener!!.onClick(
                         position,
                         "LocList"
@@ -60,6 +62,7 @@ class LocationMarkingAdapter (internal var context: Context, internal var jsonAr
                 })
 
                 holder.im_detail!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     clickListener!!.onClick(
                         position,
                         "LocDetails"

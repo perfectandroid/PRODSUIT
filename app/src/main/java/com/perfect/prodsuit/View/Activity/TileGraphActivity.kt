@@ -509,8 +509,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -637,8 +637,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                   progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1154,8 +1154,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1293,8 +1293,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1425,8 +1425,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -2759,8 +2759,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
 
@@ -3047,8 +3047,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -3341,8 +3341,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -3470,8 +3470,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -3586,8 +3586,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 AreaListRepository.progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -3866,8 +3866,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 AreaListRepository.progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -3993,8 +3993,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -4139,8 +4139,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 AreaListRepository.progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -4257,8 +4257,8 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                 AreaListRepository.progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }

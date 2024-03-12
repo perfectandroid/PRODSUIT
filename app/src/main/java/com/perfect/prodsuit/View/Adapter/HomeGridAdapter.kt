@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
@@ -49,6 +50,7 @@ class HomeGridAdapter(internal var context: Context, internal var jsonArray: JSO
 
                 holder.ll_homeGrid!!.setTag(position)
                 holder.ll_homeGrid!!.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     clickListener!!.onClick(
                         position,
                         "homeGrid"

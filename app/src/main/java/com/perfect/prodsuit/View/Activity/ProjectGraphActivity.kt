@@ -600,8 +600,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -782,8 +782,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
             }
 
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -950,8 +950,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
             }
 
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1147,8 +1147,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                 progressDialog!!.dismiss()
             }
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1235,8 +1235,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
             }
 
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1455,8 +1455,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
             }
 
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -1773,8 +1773,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
             }
 
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
     }
@@ -2074,8 +2074,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
             }
 
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
 
@@ -2197,8 +2197,8 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
             }
 
             false -> {
-                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
-                    .show()
+//                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+//                    .show()
             }
         }
 
