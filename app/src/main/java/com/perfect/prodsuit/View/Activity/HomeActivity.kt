@@ -237,7 +237,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
      //   Log.i("HASPERM",hasPerm.toString())
        // getCalenderPermission()
         checkAndRequestPermissions()
-        getLocationTracker()
+       // getLocationTracker()
         dashboardcount = 0
         getDashBoardCount()
 //        getServiceNotification()
@@ -2374,26 +2374,34 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
     private fun checkAndRequestPermissions(): Boolean {
-        val locationPermission =
-            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-        val coarsePermision =
-            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-        val listPermissionsNeeded: MutableList<String> = ArrayList()
-        if (locationPermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION)
+
+        var result = false
+        try {
+            val locationPermission =
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            val coarsePermision =
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            val listPermissionsNeeded: MutableList<String> = ArrayList()
+            if (locationPermission != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION)
+            }
+            if (coarsePermision != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+            }
+            if (!listPermissionsNeeded.isEmpty()) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    listPermissionsNeeded.toTypedArray(),
+                    REQUEST_ID_MULTIPLE_PERMISSIONS
+                )
+                result =  false
+            }
+            result =  true
+        }catch (e : Exception){
+
         }
-        if (coarsePermision != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.ACCESS_COARSE_LOCATION)
-        }
-        if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(
-                this,
-                listPermissionsNeeded.toTypedArray(),
-                REQUEST_ID_MULTIPLE_PERMISSIONS
-            )
-            return false
-        }
-        return true
+        return result
+
     }
 
     @SuppressLint("MissingPermission")

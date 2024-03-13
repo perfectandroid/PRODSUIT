@@ -54,57 +54,59 @@ class LocationService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         var TIMER_INTERVAL = Config.getMilliSeconds(context).toLong()
+        try {
+            //        acquireWakeLock()
+            timer.scheduleAtFixedRate(object : TimerTask() {
+                override fun run() {
+                    // Perform the desired task here
 
-//        acquireWakeLock()
-        timer.scheduleAtFixedRate(object : TimerTask() {
-            override fun run() {
-                // Perform the desired task here
+                    var isFor = Config.isAppInForeground(context)
+                    Log.e(TAG,"600001    :   onStartCommand")
+                    val UtilityListSP = context.getSharedPreferences(Config.SHARED_PREF57, 0)
+                    if (!UtilityListSP.getString("UtilityList", "").equals("")){
+                        val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
+                        var bTracker = jsonObj!!.getString("LOCATION_TRACKING").toBoolean()
+                        Log.e(TAG,"600002    :   bTracker  "+bTracker)
+                        if (bTracker){
+                            Log.e(TAG,"600002441    :   bTracker"+checkPermissions())
+                            if (checkPermissions()) {
+                                Log.e(TAG,"600002442    :   bTracker")
+                                if (isLocationEnabled()) {
+                                    Log.e(TAG,"600003    :   bTracker isLocationEnabled")
+                                    val gpsStatusReceiver = GpsStatusReceiver()
+                                    val filter1 = IntentFilter(LocationManager.GPS_PROVIDER)
+                                    registerReceiver(gpsStatusReceiver, filter1)
+                                    gpsStatusReceiver.startGpsStatusCheck(context)
 
-                var isFor = Config.isAppInForeground(context)
-                Log.e(TAG,"600001    :   onStartCommand")
-                val UtilityListSP = context.getSharedPreferences(Config.SHARED_PREF57, 0)
-                if (!UtilityListSP.getString("UtilityList", "").equals("")){
-                    val jsonObj = JSONObject(UtilityListSP.getString("UtilityList", ""))
-                    var bTracker = jsonObj!!.getString("LOCATION_TRACKING").toBoolean()
-                    Log.e(TAG,"600002    :   bTracker  "+bTracker)
-                    if (bTracker){
-                        Log.e(TAG,"600002441    :   bTracker"+checkPermissions())
-                        if (checkPermissions()) {
-                            Log.e(TAG,"600002442    :   bTracker")
-                            if (isLocationEnabled()) {
-                                Log.e(TAG,"600003    :   bTracker isLocationEnabled")
-                                val gpsStatusReceiver = GpsStatusReceiver()
-                                val filter1 = IntentFilter(LocationManager.GPS_PROVIDER)
-                                registerReceiver(gpsStatusReceiver, filter1)
-                                gpsStatusReceiver.startGpsStatusCheck(context)
-
+                                }else{
+                                    Log.e(TAG,"600004    :   bTracker Disabled")
+                                    val gpsStatusReceiver = GpsStatusReceiver()
+                                    val filter1 = IntentFilter(LocationManager.GPS_PROVIDER)
+                                    registerReceiver(gpsStatusReceiver, filter1)
+                                    gpsStatusReceiver.startGpsStatusCheck(context)
+                                }
                             }else{
-                                Log.e(TAG,"600004    :   bTracker Disabled")
+                                Log.e(TAG,"600005    :   else")
+                                // openLocationSettings(context)
+                                // showNotification(context)
+
                                 val gpsStatusReceiver = GpsStatusReceiver()
                                 val filter1 = IntentFilter(LocationManager.GPS_PROVIDER)
                                 registerReceiver(gpsStatusReceiver, filter1)
                                 gpsStatusReceiver.startGpsStatusCheck(context)
                             }
                         }else{
-                            Log.e(TAG,"600005    :   else")
-                           // openLocationSettings(context)
-                           // showNotification(context)
-
-                            val gpsStatusReceiver = GpsStatusReceiver()
-                            val filter1 = IntentFilter(LocationManager.GPS_PROVIDER)
-                            registerReceiver(gpsStatusReceiver, filter1)
-                            gpsStatusReceiver.startGpsStatusCheck(context)
+                            Log.e(TAG,"600006    :   onStartCommand")
+                            stopForegroundLocationService(context)
                         }
-                    }else{
-                        Log.e(TAG,"600006    :   onStartCommand")
-                        stopForegroundLocationService(context)
                     }
+
+
                 }
+            }, 0,TIMER_INTERVAL)
+        }catch (e : Exception){
 
-
-            }
-        }, 0,TIMER_INTERVAL)
-
+        }
 
         return START_STICKY
     }
