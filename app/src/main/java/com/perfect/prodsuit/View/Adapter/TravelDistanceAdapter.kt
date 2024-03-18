@@ -15,6 +15,7 @@ import com.example.myapplication_demmo.MapData
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.gson.Gson
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.RootViewActivity
@@ -74,6 +75,7 @@ class TravelDistanceAdapter(internal var context: Context, internal var jsonArra
 
 
                 holder.llLocationMarking.setOnClickListener(View.OnClickListener {
+                    Config.disableClick(it)
                     val i = Intent(context, RootViewActivity::class.java)
                     i.putExtra("item_response", jsonObject!!.getString("JSonData"))
                     i.putExtra("StartingPoint", jsonObject!!.getString("StartingPoint"))
