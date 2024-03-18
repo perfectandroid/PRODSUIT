@@ -73,6 +73,7 @@ object InventoryMonthlySaleRepository {
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 
                 val sdf = SimpleDateFormat("yyyy-MM-dd")
@@ -94,6 +95,7 @@ object InventoryMonthlySaleRepository {
              //   requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-17"))
                 requestObject1.put("DashMode", ProdsuitApplication.encryptStart("23"))
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 
 

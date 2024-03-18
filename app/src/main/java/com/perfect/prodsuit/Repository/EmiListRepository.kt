@@ -66,6 +66,7 @@ object EmiListRepository {
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 //
 //                {"BankKey":"-500","Token":"1E018EC4-9978-4FCE-A763-455F59DF3540","ReqMode":"100","SubMode":"1",
 //                    "FK_Company":"1","FK_BranchCodeUser":"3","EntrBy":"VYSHAKH","FK_Branch":"3","FromDate":"2023-05-04","ToDate":"2023-05-04",
@@ -86,6 +87,7 @@ object EmiListRepository {
                 requestObject1.put("FK_Area", ProdsuitApplication.encryptStart(ID_Area))
                 requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 
                 Log.e(TAG,"requestObject1   82   "+requestObject1)

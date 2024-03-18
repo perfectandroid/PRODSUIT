@@ -70,6 +70,8 @@ object StockRequestRepository {
                         val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                         val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                         val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                        val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
+
 
                         requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                         requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
@@ -84,7 +86,7 @@ object StockRequestRepository {
                         requestObject1.put("FK_BranchTo", ProdsuitApplication.encryptStart(FK_BranchTo))
                         requestObject1.put("FK_EmployeeFrom", ProdsuitApplication.encryptStart(FK_EmployeeFrom))
                         requestObject1.put("FK_EmployeeTo", ProdsuitApplication.encryptStart(FK_EmployeeTo))
-
+                        requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                         Log.e(TAG,"8600  getStockRequestListInTransfer    "+requestObject1)
             } catch (e: Exception) {

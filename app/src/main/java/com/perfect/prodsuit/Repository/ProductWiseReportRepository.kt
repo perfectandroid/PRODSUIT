@@ -71,6 +71,7 @@ object ProductWiseReportRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("26"))
@@ -82,6 +83,7 @@ object ProductWiseReportRepository {
                 requestObject1.put("ID_ReportSettings", ProdsuitApplication.encryptStart(strDashboardTypeId))
                 requestObject1.put("Todate", ProdsuitApplication.encryptStart(strTodate))
                 requestObject1.put("FromDate", ProdsuitApplication.encryptStart(strFromdate))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 
                 Log.e(TAG,"requestObject1   85    "+requestObject1)

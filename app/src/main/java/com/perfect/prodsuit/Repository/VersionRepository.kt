@@ -39,6 +39,7 @@ object VersionRepository {
         try {
             leadEditSetterGetter.value = VersionModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
+            Log.e(TAG,"BASE_URL  123456  : "+BASE_URLSP.getString("BASE_URL", null))
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
             progressDialog!!.setCancelable(false)

@@ -82,6 +82,7 @@ object AgendaDetailRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("43"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -95,6 +96,7 @@ object AgendaDetailRepository {
                 requestObject1.put("Name", ProdsuitApplication.encryptStart(name))
                 requestObject1.put("Todate", ProdsuitApplication.encryptStart(date))
                 requestObject1.put("criteria", ProdsuitApplication.encryptStart(criteria))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"Id_Agenda   0971   "+Id_Agenda+"  ::::  "+SubMode+"  ::::  "+name+"  ::::  "+date+"  ::::  "+criteria)
                 Log.e(TAG,"requestObject1   0972   "+requestObject1)

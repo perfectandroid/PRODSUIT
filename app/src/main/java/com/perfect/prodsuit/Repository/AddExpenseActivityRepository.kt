@@ -65,6 +65,7 @@ object AddExpenseActivityRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("37"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -73,6 +74,7 @@ object AddExpenseActivityRepository {
                 requestObject1.put("ID_Expense", ProdsuitApplication.encryptStart(strExtypeid))
                 requestObject1.put("Amount", ProdsuitApplication.encryptStart(strExamount))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
             } catch (e: Exception) {
                 e.printStackTrace()

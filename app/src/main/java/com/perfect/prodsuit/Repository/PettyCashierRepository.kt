@@ -70,7 +70,7 @@ object PettyCashierRepository {
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
-
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 //            {"BankKey":"-500","Token":"F513239B-E6F7-4CB9-AFF9-58C54FEE3CE5","FK_Company":"1"}
 
@@ -82,6 +82,7 @@ object PettyCashierRepository {
 
                 requestObject1.put("FK_Project", ProdsuitApplication.encryptStart(ID_Project))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"85555   getPettyCashieDetails  "+requestObject1)
 

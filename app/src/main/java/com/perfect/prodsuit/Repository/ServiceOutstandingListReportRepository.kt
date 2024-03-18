@@ -70,6 +70,7 @@ object ServiceOutstandingListReportRepository {
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 //                {"Token":"02350582-6179-4097-93F6-17FEFB46CC83","FK_Company":"1","FK_BranchCodeUser":"3","Fk_Branch":"3","EntrBy":"SONAKM",
 //                    "FK_Employee":"0","FromDate":"2023-10-28","FK_Employee":"0","ToDate":"2023-11-28","FK_Area":"0","FK_Product":"0",
@@ -104,6 +105,7 @@ object ServiceOutstandingListReportRepository {
                 requestObject1.put("ReplacementType", "0")
                 requestObject1.put("TicketNo", "")
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 
 

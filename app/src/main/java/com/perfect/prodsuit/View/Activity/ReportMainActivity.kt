@@ -72,7 +72,7 @@ class ReportMainActivity : AppCompatActivity(), View.OnClickListener {
         val jsonObj = JSONObject(ModuleListSP.getString("ModuleList",""))
         var iLead = jsonObj!!.getString("LEAD")
         var iService = jsonObj!!.getString("SERVICE")
-        var iCollection = jsonObj!!.getString("ACCOUNTS")
+        var iCollection = jsonObj!!.getString("COLLECTION")
         var iPickUp = jsonObj!!.getString("DELIVERY")
         var iProject = jsonObj!!.getString("PROJECT")
 

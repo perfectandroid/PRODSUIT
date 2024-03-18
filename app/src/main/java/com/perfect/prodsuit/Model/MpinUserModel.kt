@@ -9,4 +9,4 @@ data class MpinUserModel(var ID_Company:String, var Base_Url:String, var Image_U
                          var UserName :String, var Address :String, var MobileNumber :String, var Token :String, var UserCode :String, var FK_Branch :String,
                          var BranchName :String, var FK_BranchType :String, var FK_Company :String, var FK_BranchCodeUser :String, var FK_UserRole :String,
                          var UserRole :String, var IsAdmin :String, var IsManager :String, var ID_User :String, var FK_Department :String, var Department :String,
-                         var userMpin :String)
+                         var userMpin :String,var ID_TokenUser :String)

@@ -68,6 +68,7 @@ object ApprovalDetailRepository {
                 val FK_UserRoleSP = context.getSharedPreferences(Config.SHARED_PREF41, 0)
                 val ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 //                {"BankKey":"-500","Token":"F5517387-B815-4DCC-B2CC-E0A2F3160E22","FK_Company":"1","FK_UserGroup":"13","FK_User":"67","Module":"LF","AuthID":"17"}
 
@@ -80,6 +81,8 @@ object ApprovalDetailRepository {
                 requestObject1.put("Module", ProdsuitApplication.encryptStart(Module))
                 requestObject1.put("AuthID", ProdsuitApplication.encryptStart(AuthID))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
+
 
 
 

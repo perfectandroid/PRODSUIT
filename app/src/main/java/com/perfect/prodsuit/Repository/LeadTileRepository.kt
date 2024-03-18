@@ -70,6 +70,7 @@ object LeadTileRepository {
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
              /*   requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("15"))*/
@@ -91,6 +92,7 @@ object LeadTileRepository {
                 requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
                 requestObject1.put("DashMode", ProdsuitApplication.encryptStart("1"))
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart("1"))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 
 

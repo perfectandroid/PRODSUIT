@@ -78,6 +78,7 @@ object ServiceEditUpadateRepository {
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 //                {"BankKey":"\/mXqmq3ZMvs=\n","Token":"0KjNuKHR16rDwHCS09BASBwyc4DHIeNqEVyN8kfrQtASybLeZjOwwA==\n","FK_Customerserviceregister":"1",
 //                    "Visitdate":"2023-02-08","FK_Priority":"2","FK_Company":"1","FK_BranchCodeUser":"3","EntrBy":"APP","FK_Branch":"3",FK_AttendedBy=2,Status=5}
@@ -95,6 +96,7 @@ object ServiceEditUpadateRepository {
                 requestObject1.put("FK_AttendedBy", ProdsuitApplication.encryptStart(ID_AttendedBy))
                 requestObject1.put("Status", ProdsuitApplication.encryptStart(ID_Status))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 
                 Log.e(TAG,"requestObject1   78   "+requestObject1)

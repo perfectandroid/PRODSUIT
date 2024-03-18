@@ -156,6 +156,9 @@ object SentIntimationRepository {
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
+
+
                 val sdf = SimpleDateFormat("dd-MM-yyyy")
                 val currentDate = sdf.format(Date())
 
@@ -219,6 +222,9 @@ object SentIntimationRepository {
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 requestObject1.put("LeadCusDetails", (LeadCusDetails))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
+
+
                 Log.e(TAG,"intimation 4545454  "+requestObject1)
                 Log.e(TAG,"intimation 66666  "+encodeDoc)
             } catch (e: Exception) {

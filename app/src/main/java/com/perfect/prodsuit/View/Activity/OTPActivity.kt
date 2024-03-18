@@ -503,6 +503,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                 if (jObject.getString("StatusCode") == "0") {
 
                                     try {
+                                        Log.e("TAG","5066661       "+jObject)
                                         var jobj = jObject.getJSONObject("UserLoginDetails")
 
                                         val FK_EmployeeSP = applicationContext.getSharedPreferences(
@@ -725,6 +726,11 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                         PnotificationIDEditer.putString("PnotificationID", "0")
                                         PnotificationIDEditer.commit()
 
+                                        val ID_TokenUserSP = applicationContext.getSharedPreferences(Config.SHARED_PREF85, 0)
+                                        val ID_TokenUserEditer = ID_TokenUserSP.edit()
+                                        ID_TokenUserEditer.putString("ID_TokenUser", jobj.getString("ID_TokenUser"))
+                                        ID_TokenUserEditer.commit()
+
                                         var ID_Company = db!!.getLastInsertCompanyID()
 
                                         var FK_Employee = jobj.getString("FK_Employee")
@@ -747,10 +753,11 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                         var FK_Department = jobj.getString("FK_Department")
                                         var Department = jobj.getString("Department")
                                         var CompanyCategory = jobj.getString("CompanyCategory")
+                                        var ID_TokenUser = jobj.getString("ID_TokenUser")
 
                                         db!!.insertUpdateLoginUser(ID_Company!!,FK_Employee,UserName,Address,MobileNumber,Token,Email, UserCode,FK_Branch,
                                             FK_BranchType,FK_Company,FK_BranchCodeUser,FK_UserRole,UserRole,IsAdmin, IsManager,ID_User,
-                                            BranchName,FK_Department,Department,CompanyCategory)
+                                            BranchName,FK_Department,Department,CompanyCategory,ID_TokenUser)
 
 
 
@@ -758,7 +765,7 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                         startActivity(i)
                                         finish()
                                     }catch (e: Exception){
-                                        Log.e("TAG","69000   "+e.toString())
+                                        Log.e("TAG","5066662   "+e.toString())
                                     }
 
 

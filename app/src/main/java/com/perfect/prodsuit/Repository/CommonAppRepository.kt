@@ -51,6 +51,7 @@ object CommonAppRepository {
 //                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
 //                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("1"))
 
+
                 Log.e(TAG,"requestObject1   53   "+requestObject1)
                 Log.e(TAG,"requestObject1   53111   "+BASE_URLSP.getString("BASE_URL", null))
                 Log.i("response44","body common   "+requestObject1)

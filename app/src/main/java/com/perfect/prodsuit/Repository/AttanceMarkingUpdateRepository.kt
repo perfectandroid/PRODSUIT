@@ -64,6 +64,7 @@ object AttanceMarkingUpdateRepository {
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 
 //
@@ -85,6 +86,7 @@ object AttanceMarkingUpdateRepository {
                 requestObject1.put("LocationEnteredDate", ProdsuitApplication.encryptStart(strDate))
                 requestObject1.put("LocationEnteredTime", ProdsuitApplication.encryptStart(strTime))
                 requestObject1.put("Status", ProdsuitApplication.encryptStart(strStatus))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"8700      "+requestObject1)
 

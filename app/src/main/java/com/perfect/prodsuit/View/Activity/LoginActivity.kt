@@ -517,6 +517,12 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
                                                 val PnotificationIDEditer = PnotificationIDSP.edit()
                                                 PnotificationIDEditer.putString("PnotificationID", "0")
                                                 PnotificationIDEditer.commit()
+
+                                                val ID_TokenUserSP = applicationContext.getSharedPreferences(Config.SHARED_PREF85, 0)
+                                                val ID_TokenUserEditer = ID_TokenUserSP.edit()
+                                                ID_TokenUserEditer.putString("ID_TokenUser", jobj.getString("ID_TokenUser"))
+                                                ID_TokenUserEditer.commit()
+
                                                 Log.e(TAG,"50077718    ")
 
                                                 val i = Intent(this@LoginActivity, OTPActivity::class.java)

@@ -74,6 +74,7 @@ object ViewDocumentRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("47"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -83,6 +84,7 @@ object ViewDocumentRepository {
                 requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
                 requestObject1.put("ID_LeadDocumentDetails", ProdsuitApplication.encryptStart(ID_LeadDocumentDetails))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"ID_LeadGenerate   84   "+ID_LeadGenerate+"  ::::  "+ID_LeadGenerateProduct+"  ::::  "+ID_LeadDocumentDetails)
                 Log.e(TAG,"requestObject1    84   "+requestObject1)

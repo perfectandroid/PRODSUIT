@@ -64,6 +64,7 @@ object ProductInfoDetailsRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("96"))
@@ -74,6 +75,7 @@ object ProductInfoDetailsRepository {
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
                 requestObject1.put("TransMode", ProdsuitApplication.encryptStart(TransMode))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"C  "+requestObject1)
                 Log.e(TAG,"ID_ProductDelivery   875625  "+ID_ProductDelivery)

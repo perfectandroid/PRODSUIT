@@ -69,6 +69,8 @@ object CatRepository {
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
+
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                requestObject1.put("ReqMode", "21")
@@ -79,6 +81,7 @@ object CatRepository {
                 requestObject1.put("EntrBy", UserCodeSP.getString("UserCode", null))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 //                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 Log.e(TAG,"LeadNo  78   "+requestObject1)

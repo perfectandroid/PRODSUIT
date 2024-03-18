@@ -64,6 +64,7 @@ object PickupDeliBillTypeRepository {
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val Entr_By = context.getSharedPreferences(Config.SHARED_PREF36,0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("102"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -71,6 +72,7 @@ object PickupDeliBillTypeRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(Entr_By.getString("UserCode", null)))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 
                 Log.e(TAG,"requestObject1   000111524   "+requestObject1)

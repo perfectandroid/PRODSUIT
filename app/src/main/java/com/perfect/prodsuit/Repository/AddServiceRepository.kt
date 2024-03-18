@@ -67,6 +67,8 @@ object AddServiceRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
+
 
 //                {"BankKey":"\/mXqmq3ZMvs=\n","Token":"02350582-6179-4097-93F6-17FEFB46CC83",ReqMode:"86",
 //                    "FK_Company":"1","EntrBy":"Sona","FK_Employee":"1","FK_BranchCodeUser":"1"}
@@ -79,6 +81,7 @@ object AddServiceRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"811111 www "+requestObject1)
 

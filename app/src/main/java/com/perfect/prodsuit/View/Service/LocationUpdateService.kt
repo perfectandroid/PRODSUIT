@@ -130,6 +130,7 @@ class LocationUpdateService : Service() {
                     val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                     val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39,0)
                     val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36,0)
+                    val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
                     val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
                     val currentDate = sdf.format(Date())
@@ -159,6 +160,7 @@ class LocationUpdateService : Service() {
                     requestObject1.put("LocationEnteredDate", ProdsuitApplication.encryptStart(curDate))
                     requestObject1.put("LocationEnteredTime", ProdsuitApplication.encryptStart(curTime))
                     requestObject1.put("ChargePercentage", ProdsuitApplication.encryptStart(batteryPercentage))
+                    requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                     Log.e(TAG,"122222008  requestObject1    "+requestObject1)
 

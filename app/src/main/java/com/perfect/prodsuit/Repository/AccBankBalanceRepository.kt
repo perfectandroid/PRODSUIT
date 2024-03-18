@@ -69,6 +69,7 @@ object AccBankBalanceRepository {
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 
 
@@ -88,6 +89,7 @@ object AccBankBalanceRepository {
                 requestObject1.put("TransDate", ProdsuitApplication.encryptStart(Config.convertDate(TransDate)))
                 requestObject1.put("DashMode", ProdsuitApplication.encryptStart(DashMode))
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart(DashType))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 
                 Log.e(TAG,"933331   getCRMTileDashBoardDetails  "+requestObject1)

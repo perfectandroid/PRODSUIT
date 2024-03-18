@@ -71,12 +71,14 @@ object CommonRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"requestObject1   78   "+requestObject1)
                 Log.e(TAG,"requestObject1   782   ReqMode  :  "+ReqMode+"   SubMode  :  "+SubMode)

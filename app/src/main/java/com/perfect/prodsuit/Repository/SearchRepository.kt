@@ -66,6 +66,7 @@ object SearchRepository {
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_Employee = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("114"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -74,6 +75,7 @@ object SearchRepository {
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 requestObject1.put("NameCriteria", ProdsuitApplication.encryptStart(id_search))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
                 //  requestObject1.put("Criteria3", ProdsuitApplication.encryptStart(""))
                 //  requestObject1.put("Criteria4", ProdsuitApplication.encryptStart(""))
                 Log.e(TAG,"requestObject1   Search   "+requestObject1)
