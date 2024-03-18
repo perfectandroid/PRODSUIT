@@ -25,7 +25,7 @@ object DetailedReportRepository {
 
     private var progressDialog: ProgressDialog? = null
     val actionListTicketReportSetterGetter = MutableLiveData<DetailedReportModel>()
-    val TAG: String = "DetailReportRepository"
+    val TAG: String = "DetailedReportRepository"
 
     fun getServicesApiCall(
         context: Context,
@@ -111,7 +111,7 @@ object DetailedReportRepository {
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 Log.e(TAG,"ReportMode   456745   "+ReportMode)
-                Log.e(TAG,"requestObject1   45674533   "+requestObject1)
+                Log.e(TAG,"requestObject1   detailedreport   "+requestObject1)
                 Log.v("sfsdfsdfdsfdd","requestObject1 "+requestObject1)
 
             } catch (e: Exception) {
