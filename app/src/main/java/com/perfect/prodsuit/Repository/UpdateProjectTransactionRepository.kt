@@ -76,6 +76,7 @@ object UpdateProjectTransactionRepository {
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36,0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 
 
@@ -105,6 +106,7 @@ object UpdateProjectTransactionRepository {
                 requestObject1.put("pssOtherChargeTax", pssOtherChargeTax)
                 requestObject1.put("PaymentDetail", PaymentDetails)
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"requestObject1   82   "+requestObject1)
 

@@ -66,6 +66,8 @@ object EmployeeInventoryRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
+
 
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -75,6 +77,7 @@ object EmployeeInventoryRepository {
                 requestObject1.put("Critrea1", ProdsuitApplication.encryptStart(Fk_Department))
                 requestObject1.put("Critrea2", ProdsuitApplication.encryptStart(Fk_Branch))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"78  StockRTEmployeeDetails    "+requestObject1)
             } catch (e: Exception) {

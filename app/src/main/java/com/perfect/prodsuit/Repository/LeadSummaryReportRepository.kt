@@ -96,6 +96,7 @@ object LeadSummaryReportRepository {
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 //                {"BankKey":"\/mXqmq3ZMvs=\n","Token":"0KjNuKHR16rDwHCS09BASBwyc4DHIeNqEVyN8kfrQtASybLeZjOwwA==\n","FK_Customerserviceregister":"1",
 //                    "FK_Employee":"1","Visitdate":"2023-02-01","Visittime":"02:05","FK_Priority":"2","Remark":"Test","FK_Company":"1","FK_BranchCodeUser":"3",
@@ -117,6 +118,7 @@ object LeadSummaryReportRepository {
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(Submode))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 
 

@@ -53,6 +53,8 @@ object QuotationRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
+
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("27"))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart("1"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -61,6 +63,8 @@ object QuotationRepository {
                 requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart("1"))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart("1"))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
+
                 Log.e(LeadHistoryRepository.TAG,"requestObject1   82   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()

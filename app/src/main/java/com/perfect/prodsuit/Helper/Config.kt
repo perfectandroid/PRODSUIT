@@ -161,6 +161,8 @@ object Config {
     const val SHARED_PREF83 = "attendance"
     const val SHARED_PREF84 = "ContDeleteMode" // Multiple Account Mode
 
+    const val SHARED_PREF85 = "ID_TokenUser" // UserToken
+
     var width = 0
     var height = 0
 
@@ -945,6 +947,11 @@ object Config {
             ContDeleteModeEditer.putString("ContDeleteMode", "")
             ContDeleteModeEditer.commit()
 
+            val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
+            val ID_TokenUserEditer = ID_TokenUserSP.edit()
+            ID_TokenUserEditer.putString("ID_TokenUser", "")
+            ID_TokenUserEditer.commit()
+
 
             if (logoutMode == 1){
 
@@ -1055,6 +1062,7 @@ object Config {
           //  Log.e("TAG","547    "+ModuleListSP.getString("ModuleList",""));
             val jsonObj = JSONObject(ModuleListSP.getString("ModuleList",""))
             Log.e("TAG","5471    "+jsonObj!!.getString("LEAD"));
+            Log.e("TAG","54713    "+jsonObj);
 
 //            var iLead = 1
 //            var iService = 1
@@ -1063,9 +1071,12 @@ object Config {
 
             var iLead = jsonObj!!.getString("LEAD")
             var iService = jsonObj!!.getString("SERVICE")
-            var iCollection = jsonObj!!.getString("ACCOUNTS")
+            var iCollection = jsonObj!!.getString("COLLECTION")
             var iPickUp = jsonObj!!.getString("DELIVERY")
             var iProject = jsonObj!!.getString("PROJECT")
+
+
+            Log.e("TAG","54712    "+jsonObj!!.getString("LEAD"));
 
             val jsonObject1 = JSONObject()
             val jsonObject = JSONObject()

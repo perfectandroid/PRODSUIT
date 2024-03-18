@@ -70,6 +70,7 @@ object CRMTileTicketStatusRepository {
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 
 //               {"FK_Employee":"10044","EntrBy":"SONAKM","FK_Department":"1","FK_Branch":"3","FK_Company":"1","FK_BranchCodeUser":"3",
@@ -88,6 +89,8 @@ object CRMTileTicketStatusRepository {
                 requestObject1.put("TransDate", ProdsuitApplication.encryptStart(Config.convertDate(TransDate)))
                 requestObject1.put("DashMode", ProdsuitApplication.encryptStart(DashMode))
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart(DashType))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
+
 
 
                 Log.e(TAG,"922222   getCRMTileDashBoardDetails  "+requestObject1)

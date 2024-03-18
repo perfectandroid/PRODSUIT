@@ -73,6 +73,7 @@ object AreaListRepository {
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39,0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36,0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
@@ -83,6 +84,7 @@ object AreaListRepository {
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart("5"))
                 requestObject1.put("FK_District", ProdsuitApplication.encryptStart("0"))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"requestObject1   010101   "+ID_Employee)
                 Log.e(TAG,"requestObject1   02020   "+requestObject1)

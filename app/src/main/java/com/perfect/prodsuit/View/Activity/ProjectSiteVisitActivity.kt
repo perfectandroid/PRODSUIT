@@ -92,6 +92,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private var tie_InspectionNotes2: TextInputEditText? = null
     private var tie_CustomerNotes: TextInputEditText? = null
     private var tie_InspectionCharge: TextInputEditText? = null
+    private var tie_InspectionType: TextInputEditText? = null
     private var tie_Value: TextInputEditText? = null
     private var tie_Remarks: TextInputEditText? = null
     private var tie_Othercharges: TextInputEditText? = null
@@ -114,6 +115,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private var til_Department: TextInputLayout? = null
     private var til_Employee: TextInputLayout? = null
     private var til_EmployeeType: TextInputLayout? = null
+    private var til_InspectionType: TextInputLayout? = null
     private var btnSubmit: Button? = null
     private var btnReset: Button? = null
     private var btnDocClose: Button? = null
@@ -170,6 +172,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     lateinit var leadnoArrayList : JSONArray
     lateinit var otherChargeArrayList : JSONArray
     lateinit var otherChargeCalcArrayList : JSONArray
+    lateinit var inspectionTypeArrayList : JSONArray
     lateinit var worktypeArrayList : JSONArray
     lateinit var measurementDetailsArrayList : JSONArray
     lateinit var departmentSort : JSONArray
@@ -181,6 +184,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     lateinit var imagemodeSort : JSONArray
     private var dialogDepartment : Dialog? = null
     private var dialogLeadNo : Dialog? = null
+    private var dialogInspectionType : Dialog? = null
     private var dialogOthercharge : Dialog? = null
     private var dialogWorkType : Dialog? = null
     private var dialogMeasurement : Dialog? = null
@@ -192,6 +196,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private val PERMISSION_REQUEST_CODE = 200
     var recyDeaprtment: RecyclerView? = null
     var recyLeadNo: RecyclerView? = null
+    var recyInspectionType: RecyclerView? = null
     var recyOtherCharge: RecyclerView? = null
     var recyWorkType: RecyclerView? = null
     var recyMeasurementType: RecyclerView? = null
@@ -299,6 +304,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     var strImageName   = ""
     var encodeDoc : String = ""
     var ID_SiteVisitAssignment : String = ""
+    var ID_InspectionType : String = ""
 
     var updateDocscount   = 0
     lateinit var siteVisitDocUploadViewModel  : SiteVisitDocUploadViewModel
@@ -308,6 +314,10 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
     private var ReqMode :  String? =  ""
     private var SubMode :  String? =  ""
     private lateinit var networkChangeReceiver: NetworkChangeReceiver
+
+
+    var inspectionTypecount   = 0
+    lateinit var inspectionTypeViewModel  : InspectionTypeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -329,6 +339,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         otherChargeTaxCalculationViewModel     = ViewModelProvider(this).get(OtherChargeTaxCalculationViewModel::class.java)
         upadateSiteVisitViewModel     = ViewModelProvider(this).get(UpadateSiteVisitViewModel::class.java)
         siteVisitDocUploadViewModel     = ViewModelProvider(this).get(SiteVisitDocUploadViewModel::class.java)
+        inspectionTypeViewModel     = ViewModelProvider(this).get(InspectionTypeViewModel::class.java)
 
         setRegViews()
 
@@ -408,6 +419,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         til_Department        = findViewById<TextInputLayout>(R.id.til_Department)
         til_Employee          = findViewById<TextInputLayout>(R.id.til_Employee)
         til_EmployeeType      = findViewById<TextInputLayout>(R.id.til_EmployeeType)
+        til_InspectionType      = findViewById<TextInputLayout>(R.id.til_InspectionType)
         til_Attachments = findViewById<TextInputLayout>(R.id.til_Attachments)
         tie_InspectionNotes1 = findViewById(R.id.tie_InspectionNotes1)
         tie_InspectionNotes2 = findViewById(R.id.tie_InspectionNotes2)
@@ -425,6 +437,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         btnDocUpload = findViewById(R.id.btnDocUpload)
         tie_CustomerNotes = findViewById(R.id.tie_CustomerNotes)
         tie_InspectionCharge = findViewById(R.id.tie_InspectionCharge)
+        tie_InspectionType = findViewById(R.id.tie_InspectionType)
 
         til_WorkType            = findViewById<TextInputLayout>(R.id.til_WorkType)
         til_MeasurementType            = findViewById<TextInputLayout>(R.id.til_MeasurementType)
@@ -447,6 +460,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         tie_VisitTime!!.setOnClickListener(this)
         tie_Department!!.setOnClickListener(this)
         tie_Employee!!.setOnClickListener(this)
+        tie_InspectionType!!.setOnClickListener(this)
         tie_EmployeeType!!.setOnClickListener(this)
         tie_WorkType!!.setOnClickListener(this)
         tie_MeasurementType!!.setOnClickListener(this)
@@ -472,6 +486,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         til_Department!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_Employee!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
         til_EmployeeType!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
+        til_InspectionType!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
 
 
         til_WorkType!!.defaultHintTextColor = ContextCompat.getColorStateList(this,R.color.color_mandatory)
@@ -498,6 +513,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         tie_LeadNo!!.addTextChangedListener(watcher)
         tie_VisitDate!!.addTextChangedListener(watcher)
         tie_InspectionNotes1!!.addTextChangedListener(watcher)
+        tie_InspectionType!!.addTextChangedListener(watcher)
 
         tie_Department!!.addTextChangedListener(watcher)
         tie_Employee!!.addTextChangedListener(watcher)
@@ -552,6 +568,14 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                     }else{
                         til_InspectionNotes1!!.isErrorEnabled = false
                         til_InspectionNotes1!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
+                    }
+                }
+                editable === tie_InspectionType!!.editableText -> {
+                    if (tie_InspectionType!!.text.toString().equals("")){
+                        til_InspectionType!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.color_mandatory)
+                    }else{
+                        til_InspectionType!!.isErrorEnabled = false
+                        til_InspectionType!!.defaultHintTextColor = ContextCompat.getColorStateList(context,R.color.grey_dark)
                     }
                 }
 
@@ -646,6 +670,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39,0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36,0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
                 val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:ss aa")
                 val currentDate = sdf.format(Date())
@@ -671,6 +696,7 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                 requestObject1.put("Phone", ProdsuitApplication.encryptStart("6282902294"))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart("1"))
                 requestObject1.put("RequestMode", ProdsuitApplication.encryptStart("0"))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"2488888  requestObject1    "+requestObject1)
 
@@ -858,6 +884,13 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 //                showEmployee = 0
 //                 showMeasurement = 0
 //                expandTab()
+            }
+            R.id.tie_InspectionType->{
+                Config.disableClick(v)
+
+                inspectionTypecount = 0
+                getInspectionType()
+
             }
             R.id.tie_WorkType->{
                 Config.disableClick(v)
@@ -1072,6 +1105,105 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
              //  docUploadSucces(v)
                 docUploadValidation(v)
             }
+        }
+    }
+
+    private fun getInspectionType() {
+        var ReqMode = "12"
+        when (Config.ConnectivityUtils.isConnected(this)) {
+            true -> {
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+                progressDialog!!.show()
+                inspectionTypeViewModel.getInspectionType(this,ReqMode)!!.observe(
+                    this,
+                    Observer { serviceSetterGetter ->
+
+                        try {
+                            val msg = serviceSetterGetter.message
+                            if (msg!!.length > 0) {
+
+                                if (inspectionTypecount == 0){
+                                    inspectionTypecount++
+                                    val jObject = JSONObject(msg)
+                                    Log.e(TAG,"msg   11277   "+msg)
+                                    if (jObject.getString("StatusCode") == "0") {
+                                        val jobjt = jObject.getJSONObject("InspectionTypeDetails")
+                                        inspectionTypeArrayList = jobjt.getJSONArray("InspectionTypeList")
+                                        if (inspectionTypeArrayList.length()>0){
+
+                                            inspectionTypePopup(inspectionTypeArrayList)
+
+                                        }
+                                    }
+                                    else {
+                                        val builder = AlertDialog.Builder(
+                                            this@ProjectSiteVisitActivity,
+                                            R.style.MyDialogTheme
+                                        )
+                                        builder.setMessage(jObject.getString("EXMessage"))
+                                        builder.setPositiveButton("Ok") { dialogInterface, which ->
+                                        }
+                                        val alertDialog: AlertDialog = builder.create()
+                                        alertDialog.setCancelable(false)
+                                        alertDialog.show()
+                                    }
+                                }
+
+                            } else {
+//                                Toast.makeText(
+//                                    applicationContext,
+//                                    "Some Technical Issues.",
+//                                    Toast.LENGTH_LONG
+//                                ).show()
+                            }
+                        }catch (e : Exception){
+                            Toast.makeText(
+                                applicationContext,
+                                ""+Config.SOME_TECHNICAL_ISSUES,
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    })
+                progressDialog!!.dismiss()
+            }
+            false -> {
+                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+    }
+
+    private fun inspectionTypePopup(inspectionTypeArrayList: JSONArray) {
+        try {
+
+            dialogInspectionType = Dialog(this)
+            dialogInspectionType!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogInspectionType!! .setContentView(R.layout.inspectiontype_popup)
+            dialogInspectionType!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
+            recyInspectionType = dialogInspectionType!! .findViewById(R.id.recyInspectionType) as RecyclerView
+
+//            val txt_nodata = dialogLeadNo!! .findViewById(R.id.txt_nodata) as TextView
+//            txt_nodata.text = "Invalid Lead Number"
+
+
+
+            val lLayout = GridLayoutManager(this@ProjectSiteVisitActivity, 1)
+            recyInspectionType!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            val adapter = InspectionTypeAdapter(this@ProjectSiteVisitActivity, inspectionTypeArrayList)
+            recyInspectionType!!.adapter = adapter
+            adapter.setClickListener(this@ProjectSiteVisitActivity)
+
+
+
+            dialogInspectionType!!.show()
+            dialogInspectionType!!.getWindow()!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
@@ -1364,6 +1496,8 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
         }else{
             tie_InspectionCharge!!.setText(strInspectCharge)
         }
+        ID_InspectionType = ""
+        tie_InspectionType!!.setText("")
         tie_InspectionNotes1!!.setText("")
         tie_InspectionNotes2!!.setText("")
         tie_CustomerNotes!!.setText("")
@@ -4171,6 +4305,16 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
             tie_InspectionCharge!!.setText(jsonObject.getString("ExpenseAmount"))
 
         }
+
+        if (data.equals("InspectionTypeClick")){
+            dialogInspectionType!!.dismiss()
+            val jsonObject = inspectionTypeArrayList.getJSONObject(position)
+            Log.e(TAG,"43099   "+jsonObject)
+            tie_InspectionType!!.setText(jsonObject.getString("InspectionType"))
+            ID_InspectionType = jsonObject.getString("ID_InspectionType")
+
+        }
+
 
         if (data.equals("WorkType")){
             dialogWorkType!!.dismiss()

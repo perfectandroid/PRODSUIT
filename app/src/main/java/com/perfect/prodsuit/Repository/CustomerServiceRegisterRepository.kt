@@ -122,6 +122,7 @@ object CustomerServiceRegisterRepository {
                 val FK_BranchSP = context.getSharedPreferences(Config.SHARED_PREF37, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
@@ -167,6 +168,8 @@ object CustomerServiceRegisterRepository {
                 requestObject1.put("FK_Post", ProdsuitApplication.encryptStart(FK_Post))
                 requestObject1.put("Address1", ProdsuitApplication.encryptStart(""))
                 requestObject1.put("Address2", ProdsuitApplication.encryptStart(FK_Place))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
+
 
                 if (Customer_Type.equals("0")){
                     Log.e(TAG,"642121   "+ID_Customer)

@@ -67,6 +67,7 @@ object SiteVisitDocUploadRepository {
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 //              {"TransMode":"PRSV","FK_Company":"1","FK_BranchCodeUser":"2","EntrBy":"sreej","FK_SiteVisit":"37","ProjImageName":"1.jpg","ProjImageType":".jpg",
 //              "ProjImageDescription":"Test",
@@ -86,6 +87,7 @@ object SiteVisitDocUploadRepository {
                 requestObject1.put("ProjImageName", ProdsuitApplication.encryptStart(ProjImageName))
                 requestObject1.put("ProjImageType", ProdsuitApplication.encryptStart(ProjImageType))
                 requestObject1.put("ProjImageDescription", ProdsuitApplication.encryptStart(ProjImageDescription))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
                 requestObject1.put("ProjImage", ProjImage)
 
 

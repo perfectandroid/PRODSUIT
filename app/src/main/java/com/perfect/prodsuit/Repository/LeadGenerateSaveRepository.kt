@@ -202,6 +202,8 @@ object LeadGenerateSaveRepository {
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val UserCodeSP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
+
 
 //                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
 //                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
@@ -353,6 +355,8 @@ object LeadGenerateSaveRepository {
                 }
                 requestObject1.put("ID_CustomerAssignment", ProdsuitApplication.encryptStart(ID_CustomerAssignment))
                 requestObject1.put("ProductDetails", (array_product_lead))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
+
 
                 Log.e(TAG,"FK_Area   1360   "+FK_Area+"   "+UserNameSP.getString("UserName", null))
                 Log.e(TAG,"array_product_lead    330022   "+array_product_lead)

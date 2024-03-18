@@ -69,6 +69,7 @@ object LeadStagesForecastRepository {
                 val EntrBySP = context.getSharedPreferences(Config.SHARED_PREF36, 0)
                 val Fkcompanysp = context.getSharedPreferences(Config.SHARED_PREF39, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 
                 val sdf = SimpleDateFormat("yyyy-MM-dd")
@@ -90,6 +91,7 @@ object LeadStagesForecastRepository {
                 // requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
                 requestObject1.put("DashMode", ProdsuitApplication.encryptStart("3"))
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(LeadDashRepository.TAG,"requestObject1   71   "+requestObject1)
 

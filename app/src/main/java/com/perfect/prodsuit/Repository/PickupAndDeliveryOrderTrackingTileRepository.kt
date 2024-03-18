@@ -68,6 +68,7 @@ object PickupAndDeliveryOrderTrackingTileRepository {
                 val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
                 val ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 //                {"FK_Employee":"40","EntrBy":"SONAKM","FK_Department":"1","FK_Branch":"3","FK_Company":"1","FK_BranchCodeUser":"3",
 //                    "TransDate":"2024-1-08","DashMode":"37","DashType":"2"}
@@ -85,6 +86,7 @@ object PickupAndDeliveryOrderTrackingTileRepository {
                 requestObject1.put("DashMode", ProdsuitApplication.encryptStart(DashMode))
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart(DashType))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 
 

@@ -36,6 +36,7 @@ object OTPActivityRepository {
         try {
             otpSetterGetter.value = OTPModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
+            Log.e(TAG,"BASE_URLSP   3999   :   "  +BASE_URLSP.getString("BASE_URL", null))
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
             progressDialog!!.setCancelable(false)
@@ -62,12 +63,14 @@ object OTPActivityRepository {
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("3"))
                 requestObject1.put("OTP", ProdsuitApplication.encryptStart(strMOTP))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"requestObject1  69   "+requestObject1)
             } catch (e: Exception) {

@@ -420,7 +420,7 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
         val jsonObj = JSONObject(DashBordMenu.getString("ModuleList", ""))
         iLead = jsonObj!!.getString("LEAD")
         iService = jsonObj!!.getString("SERVICE")
-        iCollection = jsonObj!!.getString("ACCOUNTS")
+        iCollection = jsonObj!!.getString("COLLECTION")
 
 
         val FK_BranchCodeUserSP = context.getSharedPreferences(Config.SHARED_PREF40, 0)
@@ -450,10 +450,10 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             Log.i("rtretr", "Service only=")
 
         }
-        if (iCollection.equals("true")) {
-
-            emithird!!.visibility = View.VISIBLE
-        }
+//        if (iCollection.equals("true")) {
+//
+//            emithird!!.visibility = View.VISIBLE
+//        }
 
         //........................
 

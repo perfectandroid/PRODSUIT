@@ -65,6 +65,7 @@ object SendMessageRepository {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val Id_UserSP = context.getSharedPreferences(Config.SHARED_PREF44,0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
@@ -75,6 +76,8 @@ object SendMessageRepository {
                 requestObject1.put("Title", ProdsuitApplication.encryptStart(messageTitle))
                 requestObject1.put("Message", ProdsuitApplication.encryptStart(messageDesc))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
+
 
 //                requestObject1.put("FK_Action", ProdsuitApplication.encryptStart(ID_NextAction))
 //                requestObject1.put("FK_ActionType", ProdsuitApplication.encryptStart(ID_ActionType))

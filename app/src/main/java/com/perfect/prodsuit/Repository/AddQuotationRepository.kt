@@ -71,6 +71,7 @@ object AddQuotationRepository {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("44"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
@@ -82,6 +83,8 @@ object AddQuotationRepository {
                 requestObject1.put("TrnsDate",  ProdsuitApplication.encryptStart(AddQuotationActivity.transdate))
                 requestObject1.put("QuotationImge", ProdsuitApplication.encryptStart(""))
                 requestObject1.put("Remark", ProdsuitApplication.encryptStart(AddQuotationActivity.remarks))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
+
                 Log.i("requestobject",requestObject1.toString())
             } catch (e: Exception) {
                 e.printStackTrace()

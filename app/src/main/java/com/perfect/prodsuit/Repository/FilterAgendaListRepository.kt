@@ -67,6 +67,7 @@ object FilterAgendaListRepository {
                 val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("43"))
@@ -77,6 +78,7 @@ object FilterAgendaListRepository {
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
                 requestObject1.put("Id_Agenda", ProdsuitApplication.encryptStart(Id_Agenda))
                 requestObject1.put("Name", ProdsuitApplication.encryptStart(AgendaActivity.name))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 val nxtactndate = ""
                 val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")

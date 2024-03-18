@@ -1153,28 +1153,33 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
     private fun gridList() {
-        var gridList = Config.getHomeGrid(this@HomeActivity)
-        Log.e(TAG,"ActionType   44  "+gridList)
-        val jObject = JSONObject(gridList)
-        val jobjt = jObject.getJSONObject("homeGridType")
-        homeArrayList = jobjt.getJSONArray("homeGridDetails")
+        try {
+            var gridList = Config.getHomeGrid(this@HomeActivity)
+            Log.e(TAG,"gridList   4444  "+gridList)
+            val jObject = JSONObject(gridList)
+            val jobjt = jObject.getJSONObject("homeGridType")
+            homeArrayList = jobjt.getJSONArray("homeGridDetails")
 
-        Log.e(TAG,"426  :  "+homeArrayList)
-        homeArraySort = JSONArray()
-        for (k in 0 until homeArrayList.length()) {
-            val jsonObject = homeArrayList.getJSONObject(k)
-            if (homeArraySort.length()!=9){
-                homeArraySort.put(jsonObject)
+            Log.e(TAG,"426  :  "+homeArrayList)
+            homeArraySort = JSONArray()
+            for (k in 0 until homeArrayList.length()) {
+                val jsonObject = homeArrayList.getJSONObject(k)
+                if (homeArraySort.length()!=9){
+                    homeArraySort.put(jsonObject)
+                }
             }
-        }
 
-        if (homeArraySort.length()>0){
-            val lLayout = GridLayoutManager(this@HomeActivity, 3)
+            if (homeArraySort.length()>0){
+                val lLayout = GridLayoutManager(this@HomeActivity, 3)
 //           val lLayout = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
-            recyHomegrid!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-            adapterHome = HomeGridAdapter(this@HomeActivity, homeArraySort,notificationCount!!)
-            recyHomegrid!!.adapter = adapterHome
-            adapterHome.setClickListener(this@HomeActivity)
+                recyHomegrid!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+                adapterHome = HomeGridAdapter(this@HomeActivity, homeArraySort,notificationCount!!)
+                recyHomegrid!!.adapter = adapterHome
+                adapterHome.setClickListener(this@HomeActivity)
+            }
+
+        }catch (e: Exception){
+            Log.e(TAG,"4444  Exception   :  "+e.toString())
         }
 
 
@@ -2374,26 +2379,34 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
     private fun checkAndRequestPermissions(): Boolean {
-        val locationPermission =
-            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-        val coarsePermision =
-            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-        val listPermissionsNeeded: MutableList<String> = ArrayList()
-        if (locationPermission != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION)
+
+        var result = false
+        try {
+            val locationPermission =
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            val coarsePermision =
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            val listPermissionsNeeded: MutableList<String> = ArrayList()
+            if (locationPermission != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION)
+            }
+            if (coarsePermision != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(Manifest.permission.ACCESS_COARSE_LOCATION)
+            }
+            if (!listPermissionsNeeded.isEmpty()) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    listPermissionsNeeded.toTypedArray(),
+                    REQUEST_ID_MULTIPLE_PERMISSIONS
+                )
+                result =  false
+            }
+            result =  true
+        }catch (e : Exception){
+
         }
-        if (coarsePermision != PackageManager.PERMISSION_GRANTED) {
-            listPermissionsNeeded.add(Manifest.permission.ACCESS_COARSE_LOCATION)
-        }
-        if (!listPermissionsNeeded.isEmpty()) {
-            ActivityCompat.requestPermissions(
-                this,
-                listPermissionsNeeded.toTypedArray(),
-                REQUEST_ID_MULTIPLE_PERMISSIONS
-            )
-            return false
-        }
-        return true
+        return result
+
     }
 
     @SuppressLint("MissingPermission")

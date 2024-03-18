@@ -54,7 +54,7 @@ object CompanyCodeRepository {
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("122"))
                 requestObject1.put("ConfigCode", ProdsuitApplication.encryptStart(companyCode))
 
-                Log.e(TAG,"requestObject1   53   "+requestObject1)
+                Log.e(TAG,"requestObject1   53888   "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -71,7 +71,7 @@ object CompanyCodeRepository {
                 ) {
                     try {
                         val jObject = JSONObject(response.body())
-                        Log.i("Splashresposne",response.body())
+                        Log.e("Splashresposne 7444   ",response.body())
                         val users = ArrayList<CompanyCodeModel>()
                         users.add(CompanyCodeModel(response.body()))
                         val msg = users[0].message

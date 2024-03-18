@@ -119,6 +119,7 @@ import java.io.IOException
                 val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
                 val FK_CompanySP = context.getSharedPreferences(Config.SHARED_PREF39, 0)
+                val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 //                {"BankKey":"","Token":"9C19C49E-B5DE-4E55-8F09-546CBEA324F8","ID_User":"1","User_Type":"1","Device_ID":"2",
 //                    "User_Token":"Test User Token2","FK_Company":"1"}
@@ -130,6 +131,8 @@ import java.io.IOException
                 requestObject1.put("Device_ID", ProdsuitApplication.encryptStart(deviceId1))
                 requestObject1.put("User_Token", ProdsuitApplication.encryptStart(userToken))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
+
 
 
                 Log.e(TAG,"78111  deviceId   "+deviceId1)

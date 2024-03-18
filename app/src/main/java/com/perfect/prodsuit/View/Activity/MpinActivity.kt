@@ -434,7 +434,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                             jsonObject.getString("FK_BranchType"),jsonObject.getString("FK_Company"),jsonObject.getString("FK_BranchCodeUser"),
                             jsonObject.getString("FK_UserRole"),jsonObject.getString("UserRole"),jsonObject.getString("IsAdmin"),
                             jsonObject.getString("IsManager"),jsonObject.getString("ID_User"),jsonObject.getString("FK_Department"),
-                            jsonObject.getString("Department"),jsonObject.getString("userMpin"))
+                            jsonObject.getString("Department"),jsonObject.getString("userMpin"),jsonObject.getString("ID_TokenUser"))
                         )
                     }
 
@@ -673,6 +673,13 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         val mpinEditer = mpinSP.edit()
         mpinEditer.putString("mpin", selectedItem.userMpin)
         mpinEditer.commit()
+
+        val ID_TokenUserSP = applicationContext.getSharedPreferences(Config.SHARED_PREF85, 0)
+        val ID_TokenUserEditer = ID_TokenUserSP.edit()
+        ID_TokenUserEditer.putString("ID_TokenUser", selectedItem.ID_TokenUser)
+        ID_TokenUserEditer.commit()
+
+
 
 
     }
@@ -1546,6 +1553,11 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                 PSValueEditer.putString("PSValue", jobj.getString("PSValue"))
                                 PSValueEditer.commit()
 
+                                val ID_TokenUserSP = applicationContext.getSharedPreferences(Config.SHARED_PREF85, 0)
+                                val ID_TokenUserEditer = ID_TokenUserSP.edit()
+                                ID_TokenUserEditer.putString("ID_TokenUser", jobj.getString("ID_TokenUser"))
+                                ID_TokenUserEditer.commit()
+
                                 var ID_Company = db!!.getDefaultCompanyID()
 
                                 var FK_Employee = jobj.getString("FK_Employee")
@@ -1568,10 +1580,11 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                 var FK_Department = jobj.getString("FK_Department")
                                 var Department = jobj.getString("Department")
                                 var CompanyCategory = jobj.getString("CompanyCategory")
+                                var ID_TokenUser = jobj.getString("ID_TokenUser")
 
                                 db!!.insertUpdateLoginUser(ID_Company!!,FK_Employee,UserName,Address,MobileNumber,Token,Email, UserCode,FK_Branch,
                                     FK_BranchType,FK_Company,FK_BranchCodeUser,FK_UserRole,UserRole,IsAdmin, IsManager,ID_User,
-                                    BranchName,FK_Department,Department,CompanyCategory)
+                                    BranchName,FK_Department,Department,CompanyCategory,ID_TokenUser)
 
 
                                 val i = Intent(this@MpinActivity, HomeActivity::class.java)
@@ -1596,7 +1609,12 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+
+                                LogoutTokenBottonSheet(jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@MpinActivity,
                                     R.style.MyDialogTheme
@@ -1626,6 +1644,8 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
     }
+
+
 
     private fun doLogout() {
         try {
@@ -1840,6 +1860,28 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
             logoutMode = 0
 
         }
+        btnYes.setOnClickListener {
+            dialog.dismiss()
+            // dologoutchanges()
+            Config.logOut(context,logoutMode)
+            startActivity(Intent(this@MpinActivity, SplashActivity::class.java))
+        }
+        dialog.setCancelable(false)
+        dialog!!.setContentView(view)
+
+        dialog.show()
+    }
+
+    private fun LogoutTokenBottonSheet(jObject: JSONObject) {
+
+        val dialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.logout_popup_token, null)
+
+
+        val btnYes = view.findViewById<Button>(R.id.btnYes1)
+        val tv_message = view.findViewById<TextView>(R.id.tv_message)
+        tv_message.text = jObject.getString("EXMessage")
+
         btnYes.setOnClickListener {
             dialog.dismiss()
             // dologoutchanges()
