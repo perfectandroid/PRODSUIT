@@ -213,7 +213,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         productStatusViewModel = ViewModelProvider(this).get(ProductStatusViewModel::class.java)
         groupingViewModel = ViewModelProvider(this).get(GroupingViewModel::class.java)
         productCategoryViewModel = ViewModelProvider(this).get(ProductCategoryViewModel::class.java)
-
+        Log.e("ghgfhgh","oncreate")
         setRegViews()
         bottombarnav()
         val sdf = SimpleDateFormat("dd-MM-yyyy")
@@ -235,6 +235,12 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.e("ghgfhgh","onresume")
+        resetData()
     }
 
     private fun loadLoginEmpDetails() {
@@ -327,6 +333,8 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         tie_Category!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
         btnReset!!.setOnClickListener(this)
+
+
     }
 
     override fun onClick(v: View) {
@@ -1069,6 +1077,9 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             dialogReportName!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyReportName = dialogReportName!!.findViewById(R.id.recyReportName) as RecyclerView
             val etsearch = dialogReportName!!.findViewById(R.id.etsearch) as EditText
+            recyReportName!!.visibility=View.VISIBLE
+            val txt_nodata = dialogReportName!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
 
             reportNamesort = JSONArray()
             for (k in 0 until reportNameArrayList.length()) {
@@ -1114,11 +1125,27 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                         }
                     }
 
-                    Log.e(TAG, "reportNamesort               7103    " + reportNamesort)
-                    val adapter =
-                        ReportNameAdapter(this@TicketReportActivity, reportNamesort, "Lead")
-                    recyReportName!!.adapter = adapter
-                    adapter.setClickListener(this@TicketReportActivity)
+                    if (reportNamesort!!.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recyReportName!!.visibility=View.VISIBLE
+                        Log.e(TAG, "reportNamesort               7103    " + reportNamesort)
+                        val adapter =
+                            ReportNameAdapter(this@TicketReportActivity, reportNamesort, "Lead")
+                        recyReportName!!.adapter = adapter
+                        adapter.setClickListener(this@TicketReportActivity)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recyReportName!!.visibility=View.GONE
+                    }
+
+//                    Log.e(TAG, "reportNamesort               7103    " + reportNamesort)
+//                    val adapter =
+//                        ReportNameAdapter(this@TicketReportActivity, reportNamesort, "Lead")
+//                    recyReportName!!.adapter = adapter
+//                    adapter.setClickListener(this@TicketReportActivity)
                 }
             })
 
@@ -1210,6 +1237,10 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             dialogBranch!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyBranch = dialogBranch!!.findViewById(R.id.recyBranch) as RecyclerView
             val etsearch = dialogBranch!!.findViewById(R.id.etsearch) as EditText
+            var previousText: CharSequence? = null
+            recyBranch!!.visibility=View.VISIBLE
+            val txt_nodata = dialogBranch!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
 
             branchsort = JSONArray()
             for (k in 0 until branchArrayList.length()) {
@@ -1226,6 +1257,8 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             recyBranch!!.adapter = adapter
             adapter.setClickListener(this@TicketReportActivity)
 
+
+
             etsearch!!.addTextChangedListener(object : TextWatcher {
                 override fun afterTextChanged(p0: Editable?) {
                 }
@@ -1239,6 +1272,14 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                     val textlength = etsearch!!.text.length
                     branchsort = JSONArray()
 
+//                    if (!p0.isNullOrEmpty() && p0.startsWith(" ")) {
+//                        // If the first character is a space, set error or handle validation
+//                        etsearch.error = "Cannot start with a space"
+//                    } else {
+//                        // Clear the error if the input is valid
+//                        etsearch.error = null
+//                    }
+
                     for (k in 0 until branchArrayList.length()) {
                         val jsonObject = branchArrayList.getJSONObject(k)
                         if (textlength <= jsonObject.getString("BranchName").length) {
@@ -1251,12 +1292,32 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                         }
                     }
 
-                    Log.e(TAG, "branchsort               7103    " + branchsort)
-                    val adapter = BranchAdapter(this@TicketReportActivity, branchsort)
-                    recyBranch!!.adapter = adapter
-                    adapter.setClickListener(this@TicketReportActivity)
+                    if (branchsort!!.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recyBranch!!.visibility=View.VISIBLE
+                        Log.e(TAG, "branchsort               7103    " + branchsort)
+                        val adapter = BranchAdapter(this@TicketReportActivity, branchsort)
+                        recyBranch!!.adapter = adapter
+                        adapter.setClickListener(this@TicketReportActivity)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recyBranch!!.visibility=View.GONE
+                    }
+
+//
+//                    Log.e(TAG, "branchsort               7103    " + branchsort)
+//                    val adapter = BranchAdapter(this@TicketReportActivity, branchsort)
+//                    recyBranch!!.adapter = adapter
+//                    adapter.setClickListener(this@TicketReportActivity)
                 }
             })
+
+
+
+
 
             dialogBranch!!.show()
             dialogBranch!!.getWindow()!!.setLayout(
@@ -1613,6 +1674,10 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             recyProdDetail = dialogProdDet!!.findViewById(R.id.recyProdDetail) as RecyclerView
             val etsearch = dialogProdDet!!.findViewById(R.id.etsearch) as EditText
 
+            recyProdDetail!!.visibility=View.VISIBLE
+            val txt_nodata = dialogProdDet!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
+
             prodDetailSort = JSONArray()
             for (k in 0 until prodDetailArrayList.length()) {
                 val jsonObject = prodDetailArrayList.getJSONObject(k)
@@ -1654,10 +1719,26 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                         }
                     }
 
-                    Log.e(TAG, "prodDetailSort               7103    " + prodDetailSort)
-                    val adapter = ProductDetailAdapter(this@TicketReportActivity, prodDetailSort)
-                    recyProdDetail!!.adapter = adapter
-                    adapter.setClickListener(this@TicketReportActivity)
+                    if (prodDetailSort!!.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recyProdDetail!!.visibility=View.VISIBLE
+
+                        Log.e(TAG, "prodDetailSort               7103    " + prodDetailSort)
+                        val adapter = ProductDetailAdapter(this@TicketReportActivity, prodDetailSort)
+                        recyProdDetail!!.adapter = adapter
+                        adapter.setClickListener(this@TicketReportActivity)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recyProdDetail!!.visibility=View.GONE
+                    }
+//
+//                    Log.e(TAG, "prodDetailSort               7103    " + prodDetailSort)
+//                    val adapter = ProductDetailAdapter(this@TicketReportActivity, prodDetailSort)
+//                    recyProdDetail!!.adapter = adapter
+//                    adapter.setClickListener(this@TicketReportActivity)
                 }
             })
 
@@ -2083,6 +2164,9 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             recyEmployeeAll = dialogEmployeeAll!!.findViewById(R.id.recyEmployeeAll) as RecyclerView
             val etsearch = dialogEmployeeAll!!.findViewById(R.id.etsearch) as EditText
 
+            recyEmployeeAll!!.visibility=View.VISIBLE
+            val txt_nodata = dialogEmployeeAll!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
 
             employeeAllSort = JSONArray()
             for (k in 0 until employeeAllArrayList.length()) {
@@ -2139,17 +2223,44 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                         }
                     }
 
-                    if (empUseMode.equals("0")) {
-                        Log.e(TAG, "employeeAllSort               7103    " + employeeAllSort)
-                        val adapter = EmployeeAllAdapter(this@TicketReportActivity, employeeAllSort)
-                        recyEmployeeAll!!.adapter = adapter
-                        adapter.setClickListener(this@TicketReportActivity)
-                    } else if (empUseMode.equals("1")) {
-                        Log.e(TAG, "employeeAllSort               7103    " + employeeAllSort)
-                        val adapter = AssignedListAdapter(this@TicketReportActivity, employeeAllSort)
-                        recyEmployeeAll!!.adapter = adapter
-                        adapter.setClickListener(this@TicketReportActivity)
+
+
+
+                    if (employeeAllSort!!.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recyEmployeeAll!!.visibility=View.VISIBLE
+                        if (empUseMode.equals("0")) {
+                            Log.e(TAG, "employeeAllSort               7103    " + employeeAllSort)
+                            val adapter = EmployeeAllAdapter(this@TicketReportActivity, employeeAllSort)
+                            recyEmployeeAll!!.adapter = adapter
+                            adapter.setClickListener(this@TicketReportActivity)
+                        } else if (empUseMode.equals("1")) {
+                            Log.e(TAG, "employeeAllSort               7103    " + employeeAllSort)
+                            val adapter = AssignedListAdapter(this@TicketReportActivity, employeeAllSort)
+                            recyEmployeeAll!!.adapter = adapter
+                            adapter.setClickListener(this@TicketReportActivity)
+                        }
                     }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recyEmployeeAll!!.visibility=View.GONE
+                    }
+
+
+
+//                    if (empUseMode.equals("0")) {
+//                        Log.e(TAG, "employeeAllSort               7103    " + employeeAllSort)
+//                        val adapter = EmployeeAllAdapter(this@TicketReportActivity, employeeAllSort)
+//                        recyEmployeeAll!!.adapter = adapter
+//                        adapter.setClickListener(this@TicketReportActivity)
+//                    } else if (empUseMode.equals("1")) {
+//                        Log.e(TAG, "employeeAllSort               7103    " + employeeAllSort)
+//                        val adapter = AssignedListAdapter(this@TicketReportActivity, employeeAllSort)
+//                        recyEmployeeAll!!.adapter = adapter
+//                        adapter.setClickListener(this@TicketReportActivity)
+//                    }
 
                 }
             })
@@ -2382,6 +2493,10 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             recyProdStatus = dialogProdStatus!!.findViewById(R.id.recyProdStatus) as RecyclerView
             val etsearch = dialogProdStatus!!.findViewById(R.id.etsearch) as EditText
 
+            recyProdStatus!!.visibility=View.VISIBLE
+            val txt_nodata = dialogProdStatus!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
+
             prodStatusSort = JSONArray()
             for (k in 0 until prodStatusArrayList.length()) {
                 val jsonObject = prodStatusArrayList.getJSONObject(k)
@@ -2422,10 +2537,25 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                         }
                     }
 
-                    Log.e(TAG, "prodStatusSort               7103    " + prodStatusSort)
-                    val adapter = ProductStatusAdapter(this@TicketReportActivity, prodStatusSort)
-                    recyProdStatus!!.adapter = adapter
-                    adapter.setClickListener(this@TicketReportActivity)
+                    if (prodStatusSort!!.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recyProdStatus!!.visibility=View.VISIBLE
+                        Log.e(TAG, "prodStatusSort               7103    " + prodStatusSort)
+                        val adapter = ProductStatusAdapter(this@TicketReportActivity, prodStatusSort)
+                        recyProdStatus!!.adapter = adapter
+                        adapter.setClickListener(this@TicketReportActivity)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recyProdStatus!!.visibility=View.GONE
+                    }
+
+//                    Log.e(TAG, "prodStatusSort               7103    " + prodStatusSort)
+//                    val adapter = ProductStatusAdapter(this@TicketReportActivity, prodStatusSort)
+//                    recyProdStatus!!.adapter = adapter
+//                    adapter.setClickListener(this@TicketReportActivity)
                 }
             })
 
@@ -2507,6 +2637,9 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             recyGrouping = dialogGrouping!!.findViewById(R.id.recyGrouping) as RecyclerView
             val etsearch = dialogGrouping!!.findViewById(R.id.etsearch) as EditText
 
+            recyGrouping!!.visibility=View.VISIBLE
+            val txt_nodata = dialogGrouping!!.findViewById(R.id.txt_nodata) as TextView
+            txt_nodata.visibility=View.GONE
             groupingSort = JSONArray()
             for (k in 0 until groupingArrayList.length()) {
                 val jsonObject = groupingArrayList.getJSONObject(k)
@@ -2547,10 +2680,28 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                         }
                     }
 
-                    Log.e(TAG, "groupingSort               7103    " + groupingSort)
-                    val adapter = GroupingAdapter(this@TicketReportActivity, groupingSort)
-                    recyGrouping!!.adapter = adapter
-                    adapter.setClickListener(this@TicketReportActivity)
+                    if (groupingSort!!.length()>0)
+                    {
+                        txt_nodata.visibility=View.GONE
+                        recyGrouping!!.visibility=View.VISIBLE
+                        Log.e(TAG, "groupingSort               7103    " + groupingSort)
+                        val adapter = GroupingAdapter(this@TicketReportActivity, groupingSort)
+                        recyGrouping!!.adapter = adapter
+                        adapter.setClickListener(this@TicketReportActivity)
+                    }
+                    else
+                    {
+                        txt_nodata.visibility=View.VISIBLE
+                        recyGrouping!!.visibility=View.GONE
+                    }
+
+
+
+
+//                    Log.e(TAG, "groupingSort               7103    " + groupingSort)
+//                    val adapter = GroupingAdapter(this@TicketReportActivity, groupingSort)
+//                    recyGrouping!!.adapter = adapter
+//                    adapter.setClickListener(this@TicketReportActivity)
                 }
             })
 
@@ -2905,6 +3056,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         intent.putExtra("ID_Category", ID_Category)
 
         startActivity(intent)
+
     }
 
     private fun datePicker(dateField: TextView) {
