@@ -113,12 +113,13 @@ object LeadSummaryReportRepository {
                 requestObject1.put("ToDate", ProdsuitApplication.encryptStart(strTodate))
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(ID_Branch))
                 requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
                 requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(Submode))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
+                requestObject1.put("ID", ProdsuitApplication.encryptStart(ID_Employee))
 
 
 
