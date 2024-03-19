@@ -19,10 +19,11 @@ class LeadSummaryDetailReportViewModel  : ViewModel() {
         ID_Product: String?,
         ID_Category: String?,
         ID_Branch: String?,
-        ID_Employee: String?
+        ID_Employee: String?,
+        ID_AsgndEmployee: String?
     ) : LiveData<LeadSummaryDetailsReportModel>? {
         summaryreportData = LeadSummaryReportRepository.getServicesApiCall(context,submode!!,
-            strFromdate!!, strTodate!!, ID_Product!!, ID_Category!!, ID_Branch!!, ID_Employee!!)
+            strFromdate!!, strTodate!!, ID_Product!!, ID_Category!!, ID_Branch!!, ID_Employee!!,ID_AsgndEmployee)
         return summaryreportData
     }
 }
