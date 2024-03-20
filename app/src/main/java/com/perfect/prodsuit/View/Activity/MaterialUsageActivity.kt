@@ -1712,7 +1712,7 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
                                     saveCount++
 
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   114455   "+msg)
+                                    Log.e(TAG,"msg   save   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         //val jobjt = jObject.getJSONObject("UpdateMaterialUsage")
                                         successBottomSheet(jObject)

@@ -1635,7 +1635,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                                                 val jsonObject = followUpActionArrayList.getJSONObject(0)
                                                 Log.e(TAG, "ID_NextAction   " + jsonObject.getString("ID_NextAction"))
                                                 ID_NextAction = jsonObject.getString("ID_NextAction")
-                                                edtFollowaction!!.setText(jsonObject.getString("NxtActnName"))
+                                              //  edtFollowaction!!.setText(jsonObject.getString("NxtActnName"))
 
                                                 ID_Status = jsonObject.getString("Status")
                                                 Log.e(TAG, "Status   " + jsonObject.getString("Status"))

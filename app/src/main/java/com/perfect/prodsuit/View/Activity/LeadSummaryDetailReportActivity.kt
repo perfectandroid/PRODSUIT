@@ -38,6 +38,7 @@ class LeadSummaryDetailReportActivity : AppCompatActivity() , View.OnClickListen
     var ID_Category : String? = ""
     var ID_Branch : String? = ""
     var ID_Employee : String? = ""
+    var ID_AsgndEmployee : String? = ""
 
 
 
@@ -66,7 +67,7 @@ class LeadSummaryDetailReportActivity : AppCompatActivity() , View.OnClickListen
         leadsumViewModel = ViewModelProvider(this).get(LeadSummaryDetailReportViewModel::class.java)
 
         setRegViews()
-
+        ID_AsgndEmployee = intent.getStringExtra("assigned")
         submode   = intent.getStringExtra("SubMode")
         strFromdate   = intent.getStringExtra("strFromdate")
         strTodate   = intent.getStringExtra("strTodate")
@@ -134,7 +135,7 @@ class LeadSummaryDetailReportActivity : AppCompatActivity() , View.OnClickListen
                             ID_Product,
                             ID_Category,
                             ID_Branch,
-                            ID_Employee)!!.observe(
+                            ID_Employee,ID_AsgndEmployee)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 

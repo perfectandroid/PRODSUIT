@@ -23,7 +23,8 @@ class SummaryReportAdapter(
     internal var ID_Product: String?,
     internal var ID_Category: String?,
     internal var ID_Branch: String?,
-    internal var ID_Employee: String?
+    internal var ID_Employee: String?,
+    internal var ID_AssignedEmployee: String?
 ):
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -72,6 +73,8 @@ class SummaryReportAdapter(
                     intent.putExtra("ID_Category",ID_Category)
                     intent.putExtra("ID_Branch",ID_Branch)
                     intent.putExtra("ID_Employee",ID_Employee)
+                    intent.putExtra("assigned",ID_AssignedEmployee)
+
                     context.startActivity(intent)
                 })
 
@@ -89,6 +92,7 @@ class SummaryReportAdapter(
                     intent.putExtra("ID_Category",ID_Category)
                     intent.putExtra("ID_Branch",ID_Branch)
                     intent.putExtra("ID_Employee",ID_Employee)
+                    intent.putExtra("assigned",ID_AssignedEmployee)
                     context.startActivity(intent)
 
                 })
@@ -105,6 +109,7 @@ class SummaryReportAdapter(
                     intent.putExtra("ID_Category",ID_Category)
                     intent.putExtra("ID_Branch",ID_Branch)
                     intent.putExtra("ID_Employee",ID_Employee)
+                    intent.putExtra("assigned",ID_AssignedEmployee)
                     context.startActivity(intent)
                 })
                 holder.losed!!.setTag(position)
@@ -119,7 +124,7 @@ class SummaryReportAdapter(
                     intent.putExtra("ID_Category",ID_Category)
                     intent.putExtra("ID_Branch",ID_Branch)
                     intent.putExtra("ID_Employee",ID_Employee)
-
+                    intent.putExtra("assigned",ID_AssignedEmployee)
                     context.startActivity(intent)
                 })
                 holder.balance!!.setTag(position)
@@ -134,6 +139,7 @@ class SummaryReportAdapter(
                     intent.putExtra("ID_Category",ID_Category)
                     intent.putExtra("ID_Branch",ID_Branch)
                     intent.putExtra("ID_Employee",ID_Employee)
+                    intent.putExtra("assigned",ID_AssignedEmployee)
                     context.startActivity(intent)
                 })
 

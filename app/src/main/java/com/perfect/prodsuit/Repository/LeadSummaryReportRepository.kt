@@ -34,7 +34,8 @@ object LeadSummaryReportRepository {
         ID_Product: String,
         ID_Category: String,
         ID_Branch: String,
-        ID_Employee: String
+        ID_Employee: String,
+        ID_AsgndEmployee: String?
 
 
     ): MutableLiveData<LeadSummaryDetailsReportModel> {
@@ -43,23 +44,26 @@ object LeadSummaryReportRepository {
                 ID_Product,
                 ID_Category,
                 ID_Branch,
-                ID_Employee)
+                ID_Employee,ID_AsgndEmployee)
         return leadsummaryreportSetterGetter
     }
 
-    private fun getLeadSummaryReportDetail(context: Context,Submode : String,strFromdate:String,
-                                           strTodate:String,
-                                           ID_Product:String,
-                                           ID_Category:String,
-                                           ID_Branch:String,
-                                           ID_Employee:String) {
+    private fun getLeadSummaryReportDetail(
+        context: Context, Submode: String, strFromdate: String,
+        strTodate: String,
+        ID_Product: String,
+        ID_Category: String,
+        ID_Branch: String,
+        ID_Employee: String,
+        ID_AsgndEmployee: String?
+    ) {
 
      /*   val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
         val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
 
         val dateFrom = inputFormat.parse(strVisitDate)
         val strFromDate = outputFormat.format(dateFrom)*/
-
+        Log.i("PASSDETails",strFromdate+"\n"+strTodate+"\n"+ID_Product+"\n"+ID_Category+"\n"+ID_Branch+"\n"+ID_Employee)
 
 
         try {
@@ -113,12 +117,13 @@ object LeadSummaryReportRepository {
                 requestObject1.put("ToDate", ProdsuitApplication.encryptStart(strTodate))
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(ID_Branch))
                 requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
-                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Product))
-                requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
+                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_AsgndEmployee))
+                requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(Submode))
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
+                requestObject1.put("ID", ProdsuitApplication.encryptStart(ID_Employee))
 
 
 

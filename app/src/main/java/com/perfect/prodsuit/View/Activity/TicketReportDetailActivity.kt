@@ -463,6 +463,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                                         ID_Category,
                                                         ID_Branch,
                                                         ID_Employee,
+                                                        ID_AssignedEmployee
                                             )
                                             recycleSummary!!.adapter = adapter
                                         } catch (e: Exception) {

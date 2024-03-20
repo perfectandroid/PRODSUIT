@@ -237,7 +237,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
      //   Log.i("HASPERM",hasPerm.toString())
        // getCalenderPermission()
         checkAndRequestPermissions()
-        getLocationTracker()
+       // getLocationTracker()
         dashboardcount = 0
         getDashBoardCount()
 //        getServiceNotification()
@@ -1153,33 +1153,28 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
     private fun gridList() {
-        try {
-            var gridList = Config.getHomeGrid(this@HomeActivity)
-            Log.e(TAG,"gridList   4444  "+gridList)
-            val jObject = JSONObject(gridList)
-            val jobjt = jObject.getJSONObject("homeGridType")
-            homeArrayList = jobjt.getJSONArray("homeGridDetails")
+        var gridList = Config.getHomeGrid(this@HomeActivity)
+        Log.e(TAG,"ActionType   44  "+gridList)
+        val jObject = JSONObject(gridList)
+        val jobjt = jObject.getJSONObject("homeGridType")
+        homeArrayList = jobjt.getJSONArray("homeGridDetails")
 
-            Log.e(TAG,"426  :  "+homeArrayList)
-            homeArraySort = JSONArray()
-            for (k in 0 until homeArrayList.length()) {
-                val jsonObject = homeArrayList.getJSONObject(k)
-                if (homeArraySort.length()!=9){
-                    homeArraySort.put(jsonObject)
-                }
+        Log.e(TAG,"426  :  "+homeArrayList)
+        homeArraySort = JSONArray()
+        for (k in 0 until homeArrayList.length()) {
+            val jsonObject = homeArrayList.getJSONObject(k)
+            if (homeArraySort.length()!=9){
+                homeArraySort.put(jsonObject)
             }
+        }
 
-            if (homeArraySort.length()>0){
-                val lLayout = GridLayoutManager(this@HomeActivity, 3)
+        if (homeArraySort.length()>0){
+            val lLayout = GridLayoutManager(this@HomeActivity, 3)
 //           val lLayout = LinearLayoutManager(this@HomeActivity, LinearLayoutManager.HORIZONTAL, false)
-                recyHomegrid!!.layoutManager = lLayout as RecyclerView.LayoutManager?
-                adapterHome = HomeGridAdapter(this@HomeActivity, homeArraySort,notificationCount!!)
-                recyHomegrid!!.adapter = adapterHome
-                adapterHome.setClickListener(this@HomeActivity)
-            }
-
-        }catch (e: Exception){
-            Log.e(TAG,"4444  Exception   :  "+e.toString())
+            recyHomegrid!!.layoutManager = lLayout as RecyclerView.LayoutManager?
+            adapterHome = HomeGridAdapter(this@HomeActivity, homeArraySort,notificationCount!!)
+            recyHomegrid!!.adapter = adapterHome
+            adapterHome.setClickListener(this@HomeActivity)
         }
 
 
