@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.FloorModel
 import com.perfect.prodsuit.Repository.FloorRepository
-import com.perfect.prodsuit.Repository.PickupDeliBillTypeRepository
+
 
 class FloorViewModel: ViewModel() {
 

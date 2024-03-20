@@ -694,7 +694,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
 
-                                        } else {
+                                        }
+                                        else if (jObject.getString("StatusCode") == "105"){
+                                            Config.logoutTokenMismatch(context,jObject)
+                                        }
+                                        else {
                                             val builder = AlertDialog.Builder(
                                                 this@ServiceFollowUPActiivty,
                                                 R.style.MyDialogTheme
@@ -861,7 +865,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty,
                                             R.style.MyDialogTheme
@@ -989,7 +997,11 @@ Log.v("adasdasds","modeTab "+modeTab)
                                             getServiceDetails(FK_Product!!,NameCriteria!!)
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
 
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty,
@@ -1216,7 +1228,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 //                                            }
 //                                        }
 
-                                    }else{
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else{
                                         Log.e(TAG,"1000fsdfds  ")
 //                                        val builder = AlertDialog.Builder(
 //                                            this@ServiceFollowUPActiivty, R.style.MyDialogTheme)
@@ -1359,7 +1375,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this,
                                             R.style.MyDialogTheme
@@ -1615,7 +1635,11 @@ Log.v("adasdasds","modeTab "+modeTab)
                                             payMethodPopup(paymentMethodeArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty,
                                             R.style.MyDialogTheme
@@ -2240,7 +2264,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 ////                                            adapter.setClickListener(this@ServiceFollowUPActiivty)
                                         }
 
-                                    }else{
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else{
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty, R.style.MyDialogTheme)
                                         builder.setMessage(jObject.getString("EXMessage"))
@@ -2308,7 +2336,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty, R.style.MyDialogTheme
                                         )
@@ -2372,7 +2404,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty, R.style.MyDialogTheme
                                         )
@@ -2436,7 +2472,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty, R.style.MyDialogTheme
                                         )
@@ -2527,6 +2567,9 @@ Log.v("adasdasds","modeTab "+modeTab)
                                         }
 
 
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
                                     }
                                 }
                             } else {
@@ -4301,7 +4344,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 
                                             allProductListPop(allProductArrayList)
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty,
                                             R.style.MyDialogTheme
@@ -4540,7 +4587,11 @@ Log.v("adasdasds","modeTab "+modeTab)
                                             rcyler_followup!!.adapter = servDetadapter
                                             servDetadapter!!.setClickListener(this@ServiceFollowUPActiivty)
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty,
                                             R.style.MyDialogTheme
@@ -4612,7 +4663,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 //                                             }
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty,
                                             R.style.MyDialogTheme
@@ -4767,7 +4822,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty,
                                             R.style.MyDialogTheme
@@ -4916,6 +4975,9 @@ Log.v("adasdasds","modeTab "+modeTab)
 
                                             serviceCompnantListPop(servCompanantArray)
                                         }
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
                                     }
                                 }
                             } else {
@@ -5136,6 +5198,9 @@ Log.v("adasdasds","modeTab "+modeTab)
                                             serviceTypePop(jsonArrayServiceType)
                                         }
                                     }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
                                 }
                             } else {
 
@@ -5225,7 +5290,11 @@ Log.v("adasdasds","modeTab "+modeTab)
                                             addServicePopup()
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
 
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty,
@@ -5867,6 +5936,9 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
                                     }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
                                     else
                                     {
                                         val builder = AlertDialog.Builder(
@@ -5948,6 +6020,9 @@ Log.v("adasdasds","modeTab "+modeTab)
                                             replaceModePopup(ReplaceArrayList)
                                         }
 
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
                                     }
                                     else
                                     {
@@ -6079,6 +6154,9 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
                                     }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
                                     else
                                     {
                                         val builder = AlertDialog.Builder(
@@ -6207,7 +6285,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty,
                                             R.style.MyDialogTheme
@@ -6365,7 +6447,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty,
                                             R.style.MyDialogTheme
@@ -6524,7 +6610,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty,
                                             R.style.MyDialogTheme
@@ -6679,7 +6769,11 @@ Log.v("adasdasds","modeTab "+modeTab)
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUPActiivty,
                                             R.style.MyDialogTheme

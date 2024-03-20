@@ -403,7 +403,11 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
                                             recyPickUpDelivery!!.adapter = adapter
                                             adapter.setClickListener(this@PickUpAndDeliveryListActivity)
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@PickUpAndDeliveryListActivity,
                                             R.style.MyDialogTheme
@@ -600,7 +604,11 @@ class PickUpAndDeliveryListActivity : AppCompatActivity(), View.OnClickListener,
 //
 //
 //                                        }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@PickUpAndDeliveryListActivity,
                                             R.style.MyDialogTheme

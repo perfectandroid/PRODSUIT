@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityManager
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -22,6 +23,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -32,6 +34,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.View.Activity.AttendanceMarkingActivity
+import com.perfect.prodsuit.View.Activity.SplashActivity
 import com.perfect.prodsuit.View.Service.NotificationLocationService
 import okhttp3.OkHttpClient
 import org.json.JSONArray
@@ -1538,6 +1542,36 @@ object Config {
         val random = Random()
         return random.nextInt(9999 - 1000) + 1000
     }
+
+
+    fun logoutTokenMismatch(context : Context,jObject: JSONObject) {
+        try {
+            val dialog = BottomSheetDialog(context)
+
+            val layoutInflater = LayoutInflater.from(context)
+            val view = layoutInflater.inflate(R.layout.logout_popup_token_common, null)
+            val btnYes = view.findViewById<Button>(R.id.btnYes1)
+            val tv_message = view.findViewById<TextView>(R.id.tv_message)
+            tv_message.text = jObject.getString("EXMessage")
+
+
+
+            btnYes.setOnClickListener {
+                dialog.dismiss()
+               var logoutMode = 0
+                logOut(context,logoutMode)
+                context.startActivity(Intent(context, SplashActivity::class.java))
+            }
+            dialog.setCancelable(true)
+            dialog!!.setContentView(view)
+
+            dialog.show()
+        }catch (e: Exception){
+
+        }
+    }
+
+
 
 
 

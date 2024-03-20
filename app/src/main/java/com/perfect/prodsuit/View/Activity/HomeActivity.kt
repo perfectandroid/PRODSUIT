@@ -1795,7 +1795,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                     val alertDialog: AlertDialog = builder.create()
                                     alertDialog.setCancelable(false)
                                     alertDialog.show()
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                             this@HomeActivity,
                                             R.style.MyDialogTheme
@@ -1919,7 +1923,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                     }
                                 }
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
 //                                    val builder = AlertDialog.Builder(
 //                                            this@HomeActivity,
 //                                            R.style.MyDialogTheme
@@ -2019,7 +2027,12 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
 
-                                } else {
+                                }
+
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
 
                                 }
                             } else {

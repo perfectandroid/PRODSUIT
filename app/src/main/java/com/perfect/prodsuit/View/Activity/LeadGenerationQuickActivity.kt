@@ -749,7 +749,11 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                                 FK_States = "0"
                                 FK_District = "0"
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@LeadGenerationQuickActivity,
                                     R.style.MyDialogTheme
@@ -813,7 +817,11 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@LeadGenerationQuickActivity,
                                             R.style.MyDialogTheme
@@ -1121,7 +1129,11 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 //                                             }
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@LeadGenerationQuickActivity,
                                             R.style.MyDialogTheme
@@ -1304,7 +1316,11 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@LeadGenerationQuickActivity,
                                             R.style.MyDialogTheme
@@ -1468,7 +1484,11 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
                                 }
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@LeadGenerationQuickActivity,
                                     R.style.MyDialogTheme
@@ -1648,7 +1668,11 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@LeadGenerationQuickActivity,
                                             R.style.MyDialogTheme
@@ -1813,7 +1837,11 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@LeadGenerationQuickActivity,
                                             R.style.MyDialogTheme
@@ -1966,7 +1994,11 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@LeadGenerationQuickActivity,
                                             R.style.MyDialogTheme
@@ -2428,7 +2460,11 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                                             Log.e(TAG, "msg   82223   " + e.toString())
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
 
                                         tv_Mrp!!.setText("")
                                         ProductMRP = ""
@@ -3373,7 +3409,11 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
                                             }
 
-                                        } else {
+                                        }
+                                        else if (jObject.getString("StatusCode") == "105"){
+                                            Config.logoutTokenMismatch(context,jObject)
+                                        }
+                                        else {
                                             val builder = AlertDialog.Builder(
                                                 this@LeadGenerationQuickActivity,
                                                 R.style.MyDialogTheme

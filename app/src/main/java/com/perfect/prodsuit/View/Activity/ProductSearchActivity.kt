@@ -21,8 +21,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
-import com.impulsive.zoomimageview.ZoomImageView
-import com.perfect.nbfcmscore.Helper.PicassoTrustAll
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
@@ -321,7 +319,11 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
                                             Log.e(TAG, "msg   82223   " + e.toString())
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProductSearchActivity,
                                             R.style.MyDialogTheme
@@ -463,7 +465,11 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
 
                                         val builder = AlertDialog.Builder(
                                             this@ProductSearchActivity,
@@ -615,7 +621,11 @@ class ProductSearchActivity : AppCompatActivity() , View.OnClickListener, ItemCl
 
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         ll_noproduct!!.visibility = View.VISIBLE
                                         val builder = AlertDialog.Builder(
                                             this@ProductSearchActivity,

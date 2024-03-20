@@ -301,7 +301,11 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                                             "overdueArrayList= " + serviceFollowUpArrayList.toString()
                                         )
                                         setServiceFollowRecycler(serviceFollowUpArrayList)
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
 //                                        swipeRefreshLayout.visibility = View.GONE
 //                                        swipeRefreshLayout.isRefreshing = false
                                         tv_nodata.visibility = View.VISIBLE
@@ -531,7 +535,11 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
                                             jObject.getJSONObject("EmployeeWiseTicketSelect")
                                         openAlertDialogForMoreInfo(jobjt)
                                        // setServiceFollowRecycler(overdueArrayList)
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
 //                                        swipeRefreshLayout.visibility = View.GONE
 //                                        swipeRefreshLayout.isRefreshing = false
                                         tv_nodata.visibility = View.VISIBLE
@@ -762,7 +770,11 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this,
                                             R.style.MyDialogTheme
@@ -1351,7 +1363,11 @@ class ServiceFollowUpListActivity : AppCompatActivity(), ItemClickListenerData,
 //
 //
 //                                        }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceFollowUpListActivity,
                                             R.style.MyDialogTheme

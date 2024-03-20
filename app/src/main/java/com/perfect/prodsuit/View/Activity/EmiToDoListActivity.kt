@@ -23,14 +23,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.EmiListAdapter
 import com.perfect.prodsuit.Viewmodel.EmiListViewModel
-import com.perfect.prodsuit.Viewmodel.ProductCategoryViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 

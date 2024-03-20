@@ -412,7 +412,11 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
                                             productCategoryPopup(prodCategoryArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@WalkingCustomerActivity,
                                             R.style.MyDialogTheme
@@ -560,7 +564,11 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@WalkingCustomerActivity,
                                             R.style.MyDialogTheme
@@ -1061,7 +1069,11 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
 
                                         assignedToPopup(assignedToList)
                                     }
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@WalkingCustomerActivity,
                                         R.style.MyDialogTheme
@@ -1294,7 +1306,11 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
                                 val jObject = JSONObject(msg)
                                 if (jObject.getString("StatusCode").equals("0")) {
                                     successPopup(jObject)
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@WalkingCustomerActivity,
                                         R.style.MyDialogTheme
@@ -1404,7 +1420,11 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
                                     i.putExtra("strPhone", strPhone)
                                     startActivity(i)
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@WalkingCustomerActivity,
                                         R.style.MyDialogTheme

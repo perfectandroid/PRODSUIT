@@ -298,7 +298,11 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
                                     }
 
                                 }
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@LeadNewActionActivity,
                                     R.style.MyDialogTheme
@@ -379,7 +383,11 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
 
                                 }
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@LeadNewActionActivity,
                                     R.style.MyDialogTheme
@@ -462,7 +470,11 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
                                     }
 
                                 }
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@LeadNewActionActivity,
                                     R.style.MyDialogTheme
@@ -543,7 +555,11 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
                                     }
 
                                 }
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@LeadNewActionActivity,
                                     R.style.MyDialogTheme
@@ -622,7 +638,11 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
                                     }
 
                                 }
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@LeadNewActionActivity,
                                     R.style.MyDialogTheme
@@ -787,7 +807,11 @@ class LeadNewActionActivity : AppCompatActivity()  , View.OnClickListener, ItemC
 //                                    }
 //
 //                                }
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@LeadNewActionActivity,
                                     R.style.MyDialogTheme

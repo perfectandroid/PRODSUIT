@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.ChangeMpinModel
 import com.perfect.prodsuit.Repository.ChangeMpinRepository
-import com.perfect.prodsuit.View.Activity.HomeActivity
 
 class ChangeMpinViewModel : ViewModel() {
 

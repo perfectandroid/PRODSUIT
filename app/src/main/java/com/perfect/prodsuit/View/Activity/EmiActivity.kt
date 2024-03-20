@@ -314,7 +314,11 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@EmiActivity,
                                             R.style.MyDialogTheme
@@ -450,7 +454,11 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
                                             productCategoryPopup(prodCategoryArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@EmiActivity,
                                             R.style.MyDialogTheme
@@ -591,7 +599,11 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@EmiActivity,
                                             R.style.MyDialogTheme
@@ -926,7 +938,11 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@EmiActivity,
                                             R.style.MyDialogTheme
@@ -1058,7 +1074,11 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
                                             emiTypePop(emiTypeArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@EmiActivity,
                                             R.style.MyDialogTheme
@@ -1160,7 +1180,11 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
 ////                                            Log.e(TAG,"EMI COUNT  464  "+emiCountArrayList)
 //
 //                                        }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         tv_ToDo_Count!!.setText("0")
                                         tv_OverDue_Count!!.setText("0")
                                         tv_Demand_Count!!.setText("0")
