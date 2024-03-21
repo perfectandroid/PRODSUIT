@@ -38,6 +38,8 @@
                 android:drawableTint="@color/white"
                 android:textStyle="bold" />
 
+
+
             <LinearLayout
                 android:id="@+id/ll_img"
                 android:layout_width="40dp"
@@ -46,14 +48,14 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txtBattery"
-                    android:layout_width="45dp"
-                    android:layout_height="25dp"
+                    android:id="@+id/txtv_Time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:text=""
                     android:singleLine="true"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:fontFamily="@font/myfont"
-                    android:gravity="center"
+                    android:gravity="bottom"
                     android:textSize="10dp"
                     android:textStyle="bold" />
 
@@ -61,9 +63,27 @@
             </LinearLayout>
 
 
+            <LinearLayout
+                android:id="@+id/ll_img1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtv_Time1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:fontFamily="@font/myfont"
+                    android:gravity="center"
+                    android:textSize="10dp"
+                    android:textStyle="bold" />
 
 
-
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -110,7 +130,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1.5"
-                        android:text="rr"
+                        android:text=""
                         android:layout_marginTop="7dp"
                         android:singleLine="true"
                         android:textColor="@color/black"
