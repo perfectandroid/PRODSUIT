@@ -51,8 +51,11 @@ object CompanyCodeRepository {
             val requestObject1 = JSONObject()
             try {
 
+                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("122"))
                 requestObject1.put("ConfigCode", ProdsuitApplication.encryptStart(companyCode))
+                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
 
                 Log.e(TAG,"requestObject1   53888   "+requestObject1)
 

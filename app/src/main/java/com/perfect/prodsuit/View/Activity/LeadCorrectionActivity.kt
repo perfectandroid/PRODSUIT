@@ -288,7 +288,11 @@ class LeadCorrectionActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
                                 }
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@LeadCorrectionActivity,
                                     R.style.MyDialogTheme
@@ -681,7 +685,11 @@ class LeadCorrectionActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //                                        alertDialog.show()
 
 
-                                        } else {
+                                        }
+                                        else if (jObject.getString("StatusCode") == "105"){
+                                            Config.logoutTokenMismatch(context,jObject)
+                                        }
+                                        else {
                                             val builder = AlertDialog.Builder(
                                                 this@LeadCorrectionActivity,
                                                 R.style.MyDialogTheme

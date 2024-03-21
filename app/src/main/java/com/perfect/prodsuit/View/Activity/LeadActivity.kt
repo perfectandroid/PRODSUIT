@@ -471,7 +471,11 @@ class LeadActivity : AppCompatActivity() , View.OnClickListener {
                                     view_height1!!.visibility = View.VISIBLE
                                 }
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
 
                             }
                         } else {

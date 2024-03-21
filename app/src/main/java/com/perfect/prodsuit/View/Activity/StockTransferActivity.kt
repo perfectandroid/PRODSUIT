@@ -941,7 +941,11 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                                     if (jObject.getString("StatusCode") == "0") {
                                         Log.e(TAG,"msg   81000   "+msg)
                                         successBottomSheet(jObject)
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@StockTransferActivity,
                                             R.style.MyDialogTheme
@@ -1189,7 +1193,11 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@StockTransferActivity,
                                             R.style.MyDialogTheme
@@ -1335,7 +1343,11 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@StockTransferActivity,
                                             R.style.MyDialogTheme
@@ -1483,7 +1495,11 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                                             }
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@StockTransferActivity,
                                             R.style.MyDialogTheme
@@ -1688,7 +1704,11 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                                             }
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@StockTransferActivity,
                                             R.style.MyDialogTheme
@@ -2034,7 +2054,11 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
                                             productPopup(productArrayList)
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@StockTransferActivity,
                                             R.style.MyDialogTheme
@@ -2469,7 +2493,11 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@StockTransferActivity,
                                             R.style.MyDialogTheme

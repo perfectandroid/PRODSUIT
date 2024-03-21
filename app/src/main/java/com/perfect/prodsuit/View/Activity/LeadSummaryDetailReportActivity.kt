@@ -171,7 +171,12 @@ class LeadSummaryDetailReportActivity : AppCompatActivity() , View.OnClickListen
                                             adapter.setClickListener(this@LeadSummaryDetailReportActivity)
 
                                         }
-                                    } else {
+                                    }
+                                   else if (jObject.getString("StatusCode") == "105"){
+                                       Config.logoutTokenMismatch(context,jObject)
+                                   }
+
+                                   else {
 
                                         Log.i("ExMessage",jObject.getString("EXMessage"))
                                         val builder = AlertDialog.Builder(

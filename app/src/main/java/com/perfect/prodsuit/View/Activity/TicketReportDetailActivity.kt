@@ -334,7 +334,11 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
                                 }
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@TicketReportDetailActivity,
                                     R.style.MyDialogTheme
@@ -471,7 +475,11 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                         }
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     ll_Summary!!.visibility = View.GONE
                                     val builder = AlertDialog.Builder(
                                         this@TicketReportDetailActivity,
@@ -594,7 +602,11 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     report_date!!.visibility = View.GONE
                                     val builder = AlertDialog.Builder(
                                         this@TicketReportDetailActivity,
@@ -720,7 +732,11 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         report_date!!.visibility = View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@TicketReportDetailActivity,
@@ -840,7 +856,11 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@TicketReportDetailActivity,
                                         R.style.MyDialogTheme

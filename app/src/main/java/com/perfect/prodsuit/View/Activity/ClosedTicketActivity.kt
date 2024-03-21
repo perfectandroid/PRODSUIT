@@ -148,7 +148,11 @@ class ClosedTicketActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                                             adapter.setClickListener(this@ClosedTicketActivity)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ClosedTicketActivity,
                                             R.style.MyDialogTheme

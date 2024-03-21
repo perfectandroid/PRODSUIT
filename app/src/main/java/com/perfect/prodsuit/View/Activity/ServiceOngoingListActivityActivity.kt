@@ -360,7 +360,11 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
                                             adapter.setClickListener(this@ServiceOngoingListActivityActivity)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceOngoingListActivityActivity,
                                             R.style.MyDialogTheme
@@ -549,7 +553,11 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
 //                                        ID_Priority = jobjt.getString("Priority")
 //                                        tie_Priority!!.setText(""+jobjt.getString("PriorityName"))
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceOngoingListActivityActivity,
                                             R.style.MyDialogTheme
@@ -743,7 +751,11 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
                                             alertDialog.setCancelable(false)
                                             alertDialog.show()
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceOngoingListActivityActivity,
                                             R.style.MyDialogTheme
@@ -820,7 +832,11 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceOngoingListActivityActivity,
                                             R.style.MyDialogTheme
@@ -954,7 +970,11 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceOngoingListActivityActivity,
                                             R.style.MyDialogTheme

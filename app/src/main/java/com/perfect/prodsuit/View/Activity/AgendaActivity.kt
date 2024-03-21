@@ -720,7 +720,11 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                     )
 
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@AgendaActivity,
                                         R.style.MyDialogTheme
@@ -841,7 +845,10 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                             setEmiAgendaRecycler(emiListArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }else {
                                         val builder = AlertDialog.Builder(
                                             this@AgendaActivity,
                                             R.style.MyDialogTheme
@@ -1771,7 +1778,11 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                 }
 
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
 
                                 val builder = AlertDialog.Builder(
                                     this@AgendaActivity,
@@ -2211,7 +2222,11 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 //                                    //............................
 
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     rv_todolist1!!.adapter = null
                                     val builder = AlertDialog.Builder(
                                         this@AgendaActivity,
@@ -2734,7 +2749,11 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
                                 }
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@AgendaActivity,
                                     R.style.MyDialogTheme
@@ -3825,7 +3844,11 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@AgendaActivity,
                                             R.style.MyDialogTheme
@@ -3996,7 +4019,11 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                             branchPopup(branchArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@AgendaActivity,
                                             R.style.MyDialogTheme
@@ -4135,7 +4162,11 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                             employeeAllPopup(employeeAllArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@AgendaActivity,
                                             R.style.MyDialogTheme
@@ -4276,7 +4307,11 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                             //   employeeAllPopup(leadDetailArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@AgendaActivity,
                                             R.style.MyDialogTheme
@@ -4836,7 +4871,11 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                             jObject.getJSONObject("EmployeeWiseTicketSelect")
                                         openAlertDialogForMoreInfo(jobjt)
                                         // setServiceFollowRecycler(overdueArrayList)
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
 //                                        swipeRefreshLayout.visibility = View.GONE
 //                                        swipeRefreshLayout.isRefreshing = false
                                         tv_nodata.visibility = View.VISIBLE
@@ -5156,7 +5195,11 @@ class AgendaActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 //                                        adapter1.setClickListener(this@AgendaActivity)
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         rv_todolist!!.adapter = null
                                         val builder = AlertDialog.Builder(
                                             this@AgendaActivity,

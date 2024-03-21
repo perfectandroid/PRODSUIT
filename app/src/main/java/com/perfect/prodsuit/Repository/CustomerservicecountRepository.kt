@@ -88,15 +88,15 @@ object CustomerservicecountRepository {
 //                requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart(fkOthercustomer))
 
                 if (Customer_Type.equals("0")){
-                    Log.e(CustomerServiceRegisterRepository.TAG,"642121   "+ID_Customer)
+                    Log.e(TAG,"642121   "+ID_Customer)
                     requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart(ID_Customer))
                     requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart("0"))
                 }else if (Customer_Type.equals("1")){
-                    Log.e(CustomerServiceRegisterRepository.TAG,"642122   "+ID_Customer)
+                    Log.e(TAG,"642122   "+ID_Customer)
                     requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("0"))
                     requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart(ID_Customer))
                 }else{
-                    Log.e(CustomerServiceRegisterRepository.TAG,"642123   "+ID_Customer)
+                    Log.e(TAG,"642123   "+ID_Customer)
                     requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("0"))
                     requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart("0"))
                 }

@@ -4,10 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.perfect.prodsuit.Model.SalesComparisonModel
 import com.perfect.prodsuit.Model.StockValueDataModel
-
-import com.perfect.prodsuit.Repository.SalesComparisonRepository
 import com.perfect.prodsuit.Repository.StockValueDataRepository
 
 

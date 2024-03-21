@@ -5,9 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.IntimationModuleModel
-import com.perfect.prodsuit.Model.ReportNameModel
 import com.perfect.prodsuit.Repository.IntimationModuleRepository
-import com.perfect.prodsuit.Repository.ReportNameRepository
 
 class IntimationModuleViewModel : ViewModel() {
 

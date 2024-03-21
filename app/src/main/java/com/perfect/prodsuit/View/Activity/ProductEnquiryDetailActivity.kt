@@ -3,10 +3,8 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.IntentFilter
-import android.graphics.Paint
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -28,7 +26,6 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ProductSimilarAdapter
-import com.perfect.prodsuit.View.Adapter.ProductViewPagerAdapter
 import com.perfect.prodsuit.Viewmodel.ProductDetailViewModel
 import com.perfect.prodsuit.Viewmodel.ProductEnquiryDetailViewModel
 import me.relex.circleindicator.CircleIndicator

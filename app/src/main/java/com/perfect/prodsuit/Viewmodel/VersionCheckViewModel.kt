@@ -4,9 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.perfect.prodsuit.Model.LeadEditListModel
 import com.perfect.prodsuit.Model.VersionModel
-import com.perfect.prodsuit.Repository.LeadEditListRepository
 import com.perfect.prodsuit.Repository.VersionRepository
 
 class VersionCheckViewModel : ViewModel() {

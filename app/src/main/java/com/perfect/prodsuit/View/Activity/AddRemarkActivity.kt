@@ -280,7 +280,9 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
 
 
                             }
-
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
                             else {
                                 val builder = AlertDialog.Builder(
                                     this@AddRemarkActivity,

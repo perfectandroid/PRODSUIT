@@ -136,7 +136,11 @@ DashboardNewActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLis
                                             recyclervw_dashboard!!.adapter = adapter
                                             adapter.setClickListener(this@DashboardNewActivity)
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@DashboardNewActivity,
                                             R.style.MyDialogTheme

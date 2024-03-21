@@ -106,7 +106,7 @@ object AttanceMarkingUpdateRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        Log.e(EmiAccountDetailsRepository.TAG,"7012  response  "+ response.body())
+                        Log.e(TAG,"7012  response  "+ response.body())
                         val users = ArrayList<AttanceMarkingUpdateModel>()
                         users.add(AttanceMarkingUpdateModel(response.body()))
                         val msg = users[0].message

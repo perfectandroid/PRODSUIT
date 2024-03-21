@@ -250,7 +250,11 @@ class EmiToDoListActivity : AppCompatActivity(), View.OnClickListener, ItemClick
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@EmiToDoListActivity,
                                             R.style.MyDialogTheme

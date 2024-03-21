@@ -7,9 +7,7 @@ import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.InfoModel
 import com.perfect.prodsuit.Model.QuotationModel
-import com.perfect.prodsuit.View.Activity.AccountDetailsActivity
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -65,7 +63,7 @@ object QuotationRepository {
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
-                Log.e(LeadHistoryRepository.TAG,"requestObject1   82   "+requestObject1)
+                Log.e(TAG,"requestObject1   82   "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }

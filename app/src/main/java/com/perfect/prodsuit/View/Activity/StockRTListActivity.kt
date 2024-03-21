@@ -174,7 +174,11 @@ class StockRTListActivity : AppCompatActivity(), View.OnClickListener , ItemClic
                                             //    adapter.setClickListener(this@ProductEnquiryDetailActivity)
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@StockRTListActivity,
                                             R.style.MyDialogTheme
@@ -459,7 +463,11 @@ class StockRTListActivity : AppCompatActivity(), View.OnClickListener , ItemClic
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@StockRTListActivity,
                                             R.style.MyDialogTheme
@@ -566,7 +574,11 @@ class StockRTListActivity : AppCompatActivity(), View.OnClickListener , ItemClic
                                         stockRTSort.remove(position);
                                         recycStockRT!!.adapter!!.notifyItemRemoved(position)
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@StockRTListActivity,
                                             R.style.MyDialogTheme

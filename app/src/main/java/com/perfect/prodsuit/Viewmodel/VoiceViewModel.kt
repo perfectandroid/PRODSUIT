@@ -4,9 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.perfect.prodsuit.Model.UnitModel
 import com.perfect.prodsuit.Model.VoiceModel
-import com.perfect.prodsuit.Repository.UnitRepository
 import com.perfect.prodsuit.Repository.VoiceRequestRepository
 
 class VoiceViewModel : ViewModel()  {

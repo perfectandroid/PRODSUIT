@@ -126,7 +126,11 @@ class CustomerBalanceActivity : AppCompatActivity(), View.OnClickListener,ItemCl
                                             adapter.setClickListener(this@CustomerBalanceActivity)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerBalanceActivity,
                                             R.style.MyDialogTheme

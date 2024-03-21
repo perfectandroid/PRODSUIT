@@ -198,6 +198,9 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
                                             Log.e(TAG,"msg   3444   "+e.toString())
                                         }
                                     }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
                                     else {
                                         report_date!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
@@ -378,6 +381,9 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
                                             Log.e(TAG,"msg   3444   "+e.toString())
                                         }
                                     }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
                                     else {
                                         report_date!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
@@ -556,6 +562,9 @@ class ServiceReportDetailActivity : AppCompatActivity() , View.OnClickListener, 
                                         }catch (e: Exception){
                                             Log.e(TAG,"msg   3444   "+e.toString())
                                         }
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
                                     }
                                     else {
                                         report_date!!.visibility=View.GONE

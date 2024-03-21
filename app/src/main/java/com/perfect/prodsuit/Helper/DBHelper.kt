@@ -764,9 +764,9 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     fun deleteCompanyDefaultIP() {
         val dbWrite = writableDatabase
 
-        dbWrite.execSQL("delete from LoginUser where ID_Company in (select ID_Company from Company where IP_Default != '1' and IP_Default != 'true' ) ")
-        dbWrite.execSQL("delete from ResellerDetails where ID_Company in (select ID_Company from Company where IP_Default != '1' and IP_Default != 'true' ) ")
-        dbWrite.execSQL("delete from Company where ID_Company in (select ID_Company from Company where IP_Default != '1' and IP_Default != 'true' ) ")
+        dbWrite.execSQL("delete from LoginUser where ID_Company in (select ID_Company from Company where IP_Default == '1' or IP_Default == 'true' ) ")
+        dbWrite.execSQL("delete from ResellerDetails where ID_Company in (select ID_Company from Company where IP_Default == '1' or IP_Default == 'true' ) ")
+        dbWrite.execSQL("delete from Company where ID_Company in (select ID_Company from Company where IP_Default == '1' or IP_Default == 'true' ) ")
     }
 
     fun deleteIPReseller() {

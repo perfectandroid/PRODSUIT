@@ -438,7 +438,11 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                                             recyRootview!!.adapter = adapter
                                             adapter.setClickListener(this@LocationMarkingNewActivity)
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
 
                                         ll_nodata!!.visibility = View.VISIBLE
                                         ll_data!!.visibility = View.GONE
@@ -739,7 +743,11 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                                             designationPopup(designationArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@LocationMarkingNewActivity,
                                             R.style.MyDialogTheme
@@ -894,7 +902,11 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                                             branchPopup(branchArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@LocationMarkingNewActivity,
                                             R.style.MyDialogTheme
@@ -1050,7 +1062,11 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                                             departmentPopup(departmentArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@LocationMarkingNewActivity,
                                             R.style.MyDialogTheme
@@ -1209,7 +1225,11 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
 
 
                                             }
-                                        } else {
+                                        }
+                                        else if (jObject.getString("StatusCode") == "105"){
+                                            Config.logoutTokenMismatch(context,jObject)
+                                        }
+                                        else {
                                             val builder = AlertDialog.Builder(
                                                 this@LocationMarkingNewActivity,
                                                 R.style.MyDialogTheme
@@ -1523,7 +1543,11 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
 
                                         ll_nodata!!.visibility = View.VISIBLE
                                         ll_data!!.visibility = View.GONE

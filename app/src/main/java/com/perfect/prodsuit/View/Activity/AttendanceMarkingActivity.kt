@@ -555,7 +555,11 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
 
                                         successPopup(jObject)
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@AttendanceMarkingActivity,
                                             R.style.MyDialogTheme

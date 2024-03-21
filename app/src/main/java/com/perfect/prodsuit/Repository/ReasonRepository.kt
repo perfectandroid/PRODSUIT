@@ -66,7 +66,7 @@ object ReasonRepository {
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
-                Log.e(LeadDeleteReasonRepository.TAG,"requestObject1   82   "+requestObject1)
+                Log.e(TAG,"requestObject1   82   "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()

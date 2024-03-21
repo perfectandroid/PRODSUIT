@@ -119,7 +119,7 @@ object EmployeeListRepository {
                         employeelistSetterGetter.value = EmployeeListModel(msg)
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        AreaListRepository.progressDialog!!.dismiss()
+                        progressDialog!!.dismiss()
                         Toast.makeText(context, Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
                     }
                 }

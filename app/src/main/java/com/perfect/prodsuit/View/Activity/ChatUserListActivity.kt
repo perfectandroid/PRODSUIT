@@ -29,12 +29,9 @@ import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.ChatAllUserList
 import com.perfect.prodsuit.Model.ChatMessageList
 import com.perfect.prodsuit.Model.ChatRegisterUsersModel
-import com.perfect.prodsuit.Model.ModelProjectCheckList
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ChatAllUserAdapter
 import com.perfect.prodsuit.View.Adapter.ChatUserAdapter
-import com.perfect.prodsuit.View.Adapter.EmployeeAdapter
-import com.perfect.prodsuit.Viewmodel.AttanceMarkingUpdateViewModel
 import com.perfect.prodsuit.Viewmodel.ChatRegisterUserListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -372,7 +369,11 @@ class ChatUserListActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                                             userListPopup(chatRegisterUsersModel)
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ChatUserListActivity,
                                             R.style.MyDialogTheme

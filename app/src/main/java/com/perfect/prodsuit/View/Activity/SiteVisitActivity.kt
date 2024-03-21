@@ -376,7 +376,11 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                                     }
 
                                 }
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@SiteVisitActivity,
                                     R.style.MyDialogTheme
@@ -492,7 +496,11 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                                         productStatusPopup(prodStatusArrayList)
                                     }
                                 }
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@SiteVisitActivity,
                                     R.style.MyDialogTheme
@@ -888,7 +896,11 @@ class SiteVisitActivity : AppCompatActivity(), View.OnClickListener , ItemClickL
                                 val alertDialog: AlertDialog = builder.create()
                                 alertDialog.setCancelable(false)
                                 alertDialog.show()
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@SiteVisitActivity,
                                     R.style.MyDialogTheme

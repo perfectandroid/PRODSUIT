@@ -107,7 +107,11 @@ private lateinit var networkChangeReceiver: NetworkChangeReceiver
 //                                            adapter.setClickListener(this@AuthorizationMiniDashboardActivity)
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@HomeDashBoardDetailPageActivity,
                                             R.style.MyDialogTheme

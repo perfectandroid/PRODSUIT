@@ -283,7 +283,11 @@ class ProjectReportDetailActivity : AppCompatActivity(), View.OnClickListener, I
 
 
                                 }
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@ProjectReportDetailActivity,
                                     R.style.MyDialogTheme
@@ -367,7 +371,11 @@ class ProjectReportDetailActivity : AppCompatActivity(), View.OnClickListener, I
                                     adapter1.setClickListener(this@ProjectReportDetailActivity)
 
                                 }
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@ProjectReportDetailActivity,
                                     R.style.MyDialogTheme

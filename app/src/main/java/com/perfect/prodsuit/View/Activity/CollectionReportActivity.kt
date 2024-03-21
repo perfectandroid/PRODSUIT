@@ -100,7 +100,11 @@ class   CollectionReportActivity : AppCompatActivity(), View.OnClickListener, It
                                     }
 
                                 }
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@CollectionReportActivity,
                                     R.style.MyDialogTheme

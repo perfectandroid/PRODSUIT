@@ -247,7 +247,11 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                                     }
 
                                 }
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@ProjectReportActivity,
                                     R.style.MyDialogTheme
@@ -376,7 +380,11 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                                     }
 
                                 }
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@ProjectReportActivity,
                                     R.style.MyDialogTheme
@@ -631,7 +639,11 @@ class ProjectReportActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                                             catPopup(catArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectReportActivity,
                                             R.style.MyDialogTheme

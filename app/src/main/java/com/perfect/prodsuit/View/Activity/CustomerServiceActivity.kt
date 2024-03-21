@@ -3451,7 +3451,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -4070,7 +4074,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -5628,7 +5636,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                     hideMoreViews()
 
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
 
                                 }
                             }

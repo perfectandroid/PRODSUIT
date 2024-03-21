@@ -145,7 +145,11 @@ class WarrantyAMCActivity : AppCompatActivity() , View.OnClickListener, ItemClic
                                             adapter.setClickListener(this@WarrantyAMCActivity)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@WarrantyAMCActivity,
                                             R.style.MyDialogTheme

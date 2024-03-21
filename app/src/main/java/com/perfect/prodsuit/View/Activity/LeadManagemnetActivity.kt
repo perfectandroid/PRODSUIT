@@ -544,7 +544,11 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                                         }
 
                                     }
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@LeadManagemnetActivity,
                                         R.style.MyDialogTheme
@@ -911,7 +915,11 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                                 tv_upcoming_count!!.setText(jobjt.getString("UpComingWorks"))
                                 tv_my_leadCount!!.setText(jobjt.getString("MyLeads"))
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@LeadManagemnetActivity,
                                     R.style.MyDialogTheme
@@ -968,7 +976,11 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                                         employeeAllPopup(employeeArrayList)
 //                                    customerSearchPopup(employeeArrayList)
                                     }
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@LeadManagemnetActivity,
                                         R.style.MyDialogTheme
@@ -1097,7 +1109,11 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
                                             employeeAllPopup(employeeAllArrayList, i)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@LeadManagemnetActivity,
                                             R.style.MyDialogTheme

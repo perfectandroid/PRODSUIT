@@ -12,19 +12,16 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.gms.maps.MapView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.MapRootDetailAdapter
-import com.perfect.prodsuit.View.Adapter.TrackerAdapter1
 import com.perfect.prodsuit.Viewmodel.EmployeeWiseLocationListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -132,7 +129,11 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
 
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@MapRootDetailActivity,
                                             R.style.MyDialogTheme

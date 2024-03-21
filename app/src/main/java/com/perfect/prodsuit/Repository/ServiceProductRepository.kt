@@ -85,15 +85,15 @@ object ServiceProductRepository {
                 requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                // requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("0"))
                 if (Customer_Type.equals("0")){
-                    Log.e(LeadGenerateSaveRepository.TAG,"642121   "+ID_Customer)
+                    Log.e(TAG,"642121   "+ID_Customer)
                     requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("0"))
                     requestObject1.put("FK_CustomerOthers", ProdsuitApplication.encryptStart(ID_Customer))
                 }else if (Customer_Type.equals("1")){
-                    Log.e(LeadGenerateSaveRepository.TAG,"642122   "+ID_Customer)
+                    Log.e(TAG,"642122   "+ID_Customer)
                     requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart(ID_Customer))
                     requestObject1.put("FK_CustomerOthers", ProdsuitApplication.encryptStart("0"))
                 }else{
-                    Log.e(LeadGenerateSaveRepository.TAG,"642123   "+ID_Customer)
+                    Log.e(TAG,"642123   "+ID_Customer)
                     requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("0"))
                     requestObject1.put("FK_CustomerOthers", ProdsuitApplication.encryptStart("0"))
                 }

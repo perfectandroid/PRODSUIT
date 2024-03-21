@@ -6,33 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.ServiceFollowUpSaveModel
-import com.perfect.prodsuit.Repository.LeadGenerateSaveRepository
+
 import com.perfect.prodsuit.Repository.ServiceFollowUpSaveRepository
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.CusNameTitle
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.Customer_Address1
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.Customer_Address2
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.Customer_Email
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.Customer_Mobile
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.Customer_Mode
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.Customer_Name
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.Customer_Type
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.FK_Area
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.FK_Country
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.FK_District
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.FK_Post
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.FK_States
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.ID_CollectedBy
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.ID_CustomerAssignment
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.ID_LeadFrom
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.ID_LeadThrough
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.ID_MediaSubMaster
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.strCompanyContact
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.strLeadThrough
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.strLongitue
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.strPincode
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.strWhatsAppNo
 import org.json.JSONArray
-import com.perfect.prodsuit.Model.LeadGenerateSaveModel as LeadGenerateSaveModel
 
 class ServiceFollowUpSaveViewModel : ViewModel()  {
 

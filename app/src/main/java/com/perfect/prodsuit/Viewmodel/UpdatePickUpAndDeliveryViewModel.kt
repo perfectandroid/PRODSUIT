@@ -4,9 +4,7 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.UpdatePickUpAndDeliveryModel
-import com.perfect.prodsuit.Model.ViewDocumentModel
 import com.perfect.prodsuit.Repository.UpdatePickUpAndDeliveryRespository
-import com.perfect.prodsuit.Repository.ViewDocumentRepository
 import org.json.JSONArray
 
 class UpdatePickUpAndDeliveryViewModel : ViewModel() {

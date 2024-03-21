@@ -350,7 +350,11 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
                                             adapter.setClickListener(this@AttendanceReportsActivity)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         // llback!!.visibility=View.GONE
                                         Log.i("ExMessage",exmessage.toString())
                                         val builder = AlertDialog.Builder(

@@ -1139,6 +1139,9 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
                                         }
                                     }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
                                     else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
@@ -1289,7 +1292,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                         }catch (e : Exception){
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
                                             R.style.MyDialogTheme
@@ -1438,7 +1445,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                             expandableListView.setGroupIndicator(resources.getDrawable(R.drawable.transparent_drawable))
                                             expandableListView.setDividerHeight(0)
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
                                             R.style.MyDialogTheme
@@ -1828,7 +1839,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                         }catch (e : Exception){
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
                                             R.style.MyDialogTheme
@@ -2190,7 +2205,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                             leadNoPopup(leadnoArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
                                             R.style.MyDialogTheme
@@ -2257,7 +2276,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                             leadNoPopup(leadnoArrayList)
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
                                             R.style.MyDialogTheme
@@ -2446,7 +2469,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                         }
 
                                         otherChargesPopup(modelOtherChargesTemp)
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
                                             R.style.MyDialogTheme
@@ -2648,7 +2675,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                             }
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
                                             R.style.MyDialogTheme
@@ -2810,7 +2841,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                             departmentPopup(departmentArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
                                             R.style.MyDialogTheme
@@ -2957,7 +2992,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
                                             R.style.MyDialogTheme
@@ -3105,7 +3144,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                             serviceRolePopup(serviceRoleArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
                                             R.style.MyDialogTheme
@@ -3238,7 +3281,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                             workTypePopup(worktypeArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
                                             R.style.MyDialogTheme
@@ -3385,7 +3432,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                             measurementTypePopup(measurementDetailsArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
                                             R.style.MyDialogTheme
@@ -3531,7 +3582,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                             unitPopup(unitArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
                                             R.style.MyDialogTheme
@@ -3856,7 +3911,11 @@ class ProjectSiteVisitActivity : AppCompatActivity(), View.OnClickListener, Item
                                             imageMode_Popup(imagemodeArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectSiteVisitActivity,
                                             R.style.MyDialogTheme

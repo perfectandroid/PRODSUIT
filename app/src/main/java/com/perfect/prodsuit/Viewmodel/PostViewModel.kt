@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.PostModel
 import com.perfect.prodsuit.Repository.PostRepository
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
 
 class PostViewModel : ViewModel() {
 

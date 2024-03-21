@@ -408,7 +408,11 @@ class AddQuotationActivity : AppCompatActivity(), View.OnClickListener{
                                     val alertDialog: AlertDialog = builder.create()
                                     alertDialog.setCancelable(false)
                                     alertDialog.show()
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                             this@AddQuotationActivity,
                                             R.style.MyDialogTheme

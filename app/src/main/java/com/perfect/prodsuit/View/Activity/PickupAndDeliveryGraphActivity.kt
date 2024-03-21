@@ -32,18 +32,12 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
-import com.perfect.prodsuit.Model.ProjectDelayBarModel
 import com.perfect.prodsuit.Model.VehicleDetailsBarModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.PickUpDeliveryOrderTrackTileAdapter
-import com.perfect.prodsuit.View.Adapter.ProductSimilarAdapter
-import com.perfect.prodsuit.View.Adapter.ProjectBillStatusAdapter
-import com.perfect.prodsuit.View.Adapter.ProjectDelayedAdapter
 import com.perfect.prodsuit.View.Adapter.VehicleDetailAdapter
-import com.perfect.prodsuit.Viewmodel.NotificationReadStatusViewModel
 import com.perfect.prodsuit.Viewmodel.PickupAndDeliveryOrderTrackingTileViewModel
 import com.perfect.prodsuit.Viewmodel.PickupAndDeliveryVehicleDetailsViewModel
-import com.perfect.prodsuit.Viewmodel.ProductEnquiryDetailViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.ArrayList
@@ -213,7 +207,11 @@ class PickupAndDeliveryGraphActivity : AppCompatActivity(), View.OnClickListener
                                     }
 
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
 
                                     val builder = AlertDialog.Builder(
                                         this@PickupAndDeliveryGraphActivity,
@@ -411,7 +409,11 @@ class PickupAndDeliveryGraphActivity : AppCompatActivity(), View.OnClickListener
 
                                 Log.e(TAG,"jObject  3699   "+jObject)
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
 
                                     val builder = AlertDialog.Builder(
                                         this@PickupAndDeliveryGraphActivity,

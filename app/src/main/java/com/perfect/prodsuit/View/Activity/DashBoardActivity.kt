@@ -509,7 +509,11 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
                                     //  adapter.setClickListener(this@DashBoardActivity)
 
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@DashBoardActivity,
                                         R.style.MyDialogTheme
@@ -595,7 +599,11 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
 //                                    }
 //
 //                                }
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@DashBoardActivity,
                                         R.style.MyDialogTheme
@@ -668,7 +676,11 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
                                     )
                                     recycPieChart!!.adapter = adapter
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@DashBoardActivity,
                                         R.style.MyDialogTheme
@@ -757,7 +769,11 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
                                     //  adapter.setClickListener(this@DashBoardActivity)
 
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@DashBoardActivity,
                                         R.style.MyDialogTheme
@@ -912,7 +928,11 @@ class DashBoardActivity : AppCompatActivity(), View.OnClickListener {
                                     )
                                     recycPieChartProject!!.adapter = adapter
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@DashBoardActivity,
                                         R.style.MyDialogTheme

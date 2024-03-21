@@ -451,7 +451,11 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                                             adapter.setClickListener(this@ServiceAssignListActivity)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
 
                                         Log.i("ExMessage",exmessage.toString())
                                         val builder = AlertDialog.Builder(
@@ -679,7 +683,11 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 //                                        ID_Priority = jobjt.getString("Priority")
 //                                        tie_Priority!!.setText(""+jobjt.getString("PriorityName"))
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceAssignListActivity,
                                             R.style.MyDialogTheme
@@ -874,7 +882,11 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
                                             alertDialog.setCancelable(false)
                                             alertDialog.show()
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceAssignListActivity,
                                             R.style.MyDialogTheme
@@ -951,7 +963,11 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceAssignListActivity,
                                             R.style.MyDialogTheme
@@ -1085,7 +1101,11 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceAssignListActivity,
                                             R.style.MyDialogTheme

@@ -632,7 +632,11 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@EmiCollectionActivity,
                                             R.style.MyDialogTheme
@@ -1296,7 +1300,11 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@EmiCollectionActivity,
                                             R.style.MyDialogTheme
@@ -1429,7 +1437,11 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                                             payMethodPopup(paymentMethodeArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@EmiCollectionActivity,
                                             R.style.MyDialogTheme
@@ -1800,7 +1812,11 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
                                             alertDialog.show()
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@EmiCollectionActivity,
                                             R.style.MyDialogTheme

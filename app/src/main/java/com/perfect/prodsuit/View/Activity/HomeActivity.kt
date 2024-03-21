@@ -237,7 +237,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
      //   Log.i("HASPERM",hasPerm.toString())
        // getCalenderPermission()
         checkAndRequestPermissions()
-       // getLocationTracker()
+        getLocationTracker()
         dashboardcount = 0
         getDashBoardCount()
 //        getServiceNotification()
@@ -758,7 +758,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //                                }
 
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 Log.e(TAG,"187777   "+jObject.getString("StatusCode"))
                                 txtv_notfcount!!.text="0"
 //                                if (adapterHome != null){
@@ -847,7 +851,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
                                 }
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
 //                                val builder = AlertDialog.Builder(
 //                                    this@HomeActivity,
 //                                    R.style.MyDialogTheme
