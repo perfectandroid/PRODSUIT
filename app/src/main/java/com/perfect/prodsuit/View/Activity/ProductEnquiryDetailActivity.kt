@@ -288,7 +288,11 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener, 
 
 
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     ll_main!!.visibility = View.GONE
                                     val builder = AlertDialog.Builder(
                                             this@ProductEnquiryDetailActivity,
@@ -466,7 +470,11 @@ class ProductEnquiryDetailActivity : AppCompatActivity(), View.OnClickListener, 
                                         //    adapter.setClickListener(this@ProductEnquiryDetailActivity)
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProductEnquiryDetailActivity,
                                             R.style.MyDialogTheme

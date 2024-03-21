@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.LeadSubMediaModel
 import com.perfect.prodsuit.Repository.LeadSubMediaRepository
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
+
 
 class LeadSubMediaViewModel : ViewModel()  {
 

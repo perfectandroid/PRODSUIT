@@ -238,7 +238,11 @@ class CustomerSearchActivity : AppCompatActivity()  , View.OnClickListener, Item
 
                                     customerSearchPopup(customerArrayList)
                                 }
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@CustomerSearchActivity,
                                     R.style.MyDialogTheme

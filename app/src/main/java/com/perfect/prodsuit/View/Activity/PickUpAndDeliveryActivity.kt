@@ -230,7 +230,11 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                                     pick_up_count!!.setText(jobjt.getString("PickUp"))
                                     delivery_count!!.setText(jobjt.getString("Delivery"))
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@PickUpAndDeliveryActivity,
                                         R.style.MyDialogTheme
@@ -624,7 +628,11 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@PickUpAndDeliveryActivity,
                                             R.style.MyDialogTheme
@@ -769,7 +777,11 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
                                             employeeAllPopup(employeeAllArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@PickUpAndDeliveryActivity,
                                             R.style.MyDialogTheme
@@ -913,7 +925,11 @@ class PickUpAndDeliveryActivity : AppCompatActivity() , View.OnClickListener, It
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@PickUpAndDeliveryActivity,
                                             R.style.MyDialogTheme

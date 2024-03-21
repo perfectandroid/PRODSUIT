@@ -2307,7 +2307,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                             e.printStackTrace()
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -2658,7 +2662,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -2832,7 +2840,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -2970,7 +2982,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -3104,7 +3120,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -3240,7 +3260,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -3568,7 +3592,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -3722,7 +3750,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -3879,7 +3911,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -4174,7 +4210,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -4317,7 +4357,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -4467,7 +4511,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -4617,7 +4665,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -4962,7 +5014,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
 
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
@@ -5825,7 +5881,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
 
                                     }
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@CustomerServiceActivity,
                                         R.style.MyDialogTheme
@@ -5917,7 +5977,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
 
 
                                     }
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                 val builder = AlertDialog.Builder(
                                     this@CustomerServiceActivity,
                                     R.style.MyDialogTheme
@@ -5997,7 +6061,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                         recyServiceCustomerdue!!.adapter = adapter
 
                                     }
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                 val builder = AlertDialog.Builder(
                                     this@CustomerServiceActivity,
                                     R.style.MyDialogTheme
@@ -6549,7 +6617,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                     }
 
                                 }
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
 //                                val builder = AlertDialog.Builder(
 //                                    this@CustomerServiceActivity,
 //                                    R.style.MyDialogTheme
@@ -6617,7 +6689,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                             tie_CN_District!!.setText(jobjt.getString("DistrictName"))
 
 
-                        } else {
+                        }
+                        else if (jObject.getString("StatusCode") == "105"){
+                            Config.logoutTokenMismatch(context,jObject)
+                        }
+                        else {
 //                            val builder = AlertDialog.Builder(
 //                                this@CustomerServiceActivity,
 //                                R.style.MyDialogTheme
@@ -6683,7 +6759,11 @@ class CustomerServiceActivity : AppCompatActivity()  , View.OnClickListener , It
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -6849,7 +6929,11 @@ Log.e(TAG,"country 34554=="+FK_Country)
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -7013,7 +7097,11 @@ Log.e(TAG,"country 34554=="+FK_Country)
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -7173,7 +7261,11 @@ Log.e(TAG,"country 34554=="+FK_Country)
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme
@@ -7333,7 +7425,11 @@ Log.e(TAG,"country 34554=="+FK_Country)
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CustomerServiceActivity,
                                             R.style.MyDialogTheme

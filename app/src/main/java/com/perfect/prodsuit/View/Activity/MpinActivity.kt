@@ -117,6 +117,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
             tvRegister!!.visibility = View.GONE
         }
 
+
         networkChangeReceiver = NetworkChangeReceiver()
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
@@ -1885,6 +1886,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         btnYes.setOnClickListener {
             dialog.dismiss()
             // dologoutchanges()
+            logoutMode = 0
             Config.logOut(context,logoutMode)
             startActivity(Intent(this@MpinActivity, SplashActivity::class.java))
         }

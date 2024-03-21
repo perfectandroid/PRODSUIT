@@ -639,7 +639,11 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                         }else{
                                             tv_addressMobilenumber!!.setText(MobileNumber)
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@PickUpAndDeliveryUpdateActivity,
                                             R.style.MyDialogTheme
@@ -1205,7 +1209,11 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
 //                                            prodInformationArrayList!!.put(pos,jobjt)
                                     }
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
 //                                        Log.e(TAG, "ProductInformationBottom               1125")
 //                                        val builder = AlertDialog.Builder(
 //                                            this@PickUpAndDeliveryUpdateActivity,
@@ -1322,7 +1330,11 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                                         Log.e(TAG, "dddddddddddddddddddd  " + prodInformationArrayList2)
                                     }
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
 
                                 }
                             }
@@ -1654,7 +1666,11 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                                 }
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@PickUpAndDeliveryUpdateActivity,
                                     R.style.MyDialogTheme
@@ -1746,7 +1762,11 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                                 }
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@PickUpAndDeliveryUpdateActivity,
                                     R.style.MyDialogTheme
@@ -2289,7 +2309,11 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                             payMethodPopup(paymentMethodeArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@PickUpAndDeliveryUpdateActivity,
                                             R.style.MyDialogTheme
@@ -2394,7 +2418,11 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@PickUpAndDeliveryUpdateActivity,
                                             R.style.MyDialogTheme
@@ -2553,7 +2581,11 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@PickUpAndDeliveryUpdateActivity,
                                             R.style.MyDialogTheme
@@ -2674,7 +2706,11 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@PickUpAndDeliveryUpdateActivity,
                                             R.style.MyDialogTheme
@@ -2860,7 +2896,11 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                         } catch (e: Exception) {
                                             e.printStackTrace()
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@PickUpAndDeliveryUpdateActivity,
                                             R.style.MyDialogTheme
@@ -2955,7 +2995,11 @@ class PickUpAndDeliveryUpdateActivity : AppCompatActivity(), View.OnClickListene
                                         } catch (e: Exception) {
                                             e.printStackTrace()
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@PickUpAndDeliveryUpdateActivity,
                                             R.style.MyDialogTheme
