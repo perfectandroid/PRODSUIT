@@ -72,7 +72,7 @@ class AttendanceListAdapter (internal var context: Context, internal var jsonArr
                     holder.ll_img.setBackgroundResource(R.drawable.punch_out);
                 }
 
-
+                holder.txtv_Time1.text        = jsonObject!!.getString("EnteredTime")
                 holder.tv_punchDate.text        = jsonObject!!.getString("EnteredDate")
                 holder.txtv_punchlocatn.text        = jsonObject!!.getString("LocationName")
 
@@ -245,12 +245,16 @@ class AttendanceListAdapter (internal var context: Context, internal var jsonArr
         internal var txtv_punchstatus          : TextView
         internal var tv_punchDate          : TextView
         internal var txtv_punchlocatn          : TextView
+        internal var txtv_Time1          : TextView
+        internal var txtv_Time          : TextView
 
         internal var im_mapview          : ImageView
         internal var ll_img          : LinearLayout
 
 
         init {
+            txtv_Time = v.findViewById<View>(R.id.txtv_Time) as TextView
+            txtv_Time1        = v.findViewById<View>(R.id.txtv_Time1) as TextView
             txtv_punchstatus        = v.findViewById<View>(R.id.txtv_Status) as TextView
             tv_punchDate        = v.findViewById<View>(R.id.txtv_Date) as TextView
             txtv_punchlocatn        = v.findViewById<View>(R.id.txtv_loctn) as TextView
