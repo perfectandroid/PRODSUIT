@@ -70,10 +70,14 @@ class AttendanceListAdapter (internal var context: Context, internal var jsonArr
                 {
                     holder.txtv_punchstatus.text        = "Punch Out"
                     holder.ll_img.setBackgroundResource(R.drawable.punch_out);
+                    holder.txtv_Duration.visibility=View.VISIBLE
+                    holder.txtv_Duration.setTextColor(context.getColor(R.color.bluecolr))
+
+                    holder.txtv_Duration.text        = "Duration : "+jsonObject!!.getString("TimeDuration")
                 }
 
                 holder.txtv_Time1.text        = jsonObject!!.getString("EnteredTime")
-                holder.tv_punchDate.text        = jsonObject!!.getString("EnteredDate")
+                holder.tv_punchDate.text        = "Date : "+jsonObject!!.getString("EnteredDate")
                 holder.txtv_punchlocatn.text        = jsonObject!!.getString("LocationName")
 
                 holder.im_mapview!!.setTag(position)
@@ -250,9 +254,11 @@ class AttendanceListAdapter (internal var context: Context, internal var jsonArr
 
         internal var im_mapview          : ImageView
         internal var ll_img          : LinearLayout
+        internal var txtv_Duration          : TextView
 
 
         init {
+            txtv_Duration = v.findViewById<View>(R.id.txtv_Duration) as TextView
             txtv_Time = v.findViewById<View>(R.id.txtv_Time) as TextView
             txtv_Time1        = v.findViewById<View>(R.id.txtv_Time1) as TextView
             txtv_punchstatus        = v.findViewById<View>(R.id.txtv_Status) as TextView

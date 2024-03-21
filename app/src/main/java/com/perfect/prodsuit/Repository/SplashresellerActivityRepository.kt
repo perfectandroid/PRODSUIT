@@ -21,6 +21,7 @@ import java.util.*
 object SplashresellerActivityRepository {
 
     val resellerSetterGetter = MutableLiveData<ResellerModel>()
+    val TAG: String = "SplashResellerActivityRepository"
 
     fun getServicesApiCall(context: Context): MutableLiveData<ResellerModel> {
         doReseller(context)
@@ -55,7 +56,7 @@ object SplashresellerActivityRepository {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            Log.i("SplashresellerActivityRepository","request   "+requestObject1)
+            Log.i(TAG,"request   "+requestObject1)
             val body = RequestBody.create(
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
