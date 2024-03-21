@@ -271,7 +271,11 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                                             val adapter = TodoListAdapter(applicationContext, todoArrayList,SubMode!!)
                                             rv_todolist!!.adapter = adapter
                                             adapter.setClickListener(this@TodoListActivity)
-                                        } else {
+                                        }
+                                        else if (jObject.getString("StatusCode") == "105"){
+                                            Config.logoutTokenMismatch(context,jObject)
+                                        }
+                                        else {
                                             tv_listCount!!.setText("0")
                                             val builder = AlertDialog.Builder(
                                                 this@TodoListActivity,
@@ -913,7 +917,11 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                                         } catch (e: Exception) {
                                             e.printStackTrace()
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@TodoListActivity,
                                             R.style.MyDialogTheme
@@ -1190,7 +1198,11 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                                             branchPopup(branchArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@TodoListActivity,
                                             R.style.MyDialogTheme
@@ -1323,7 +1335,11 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                                             employeeAllPopup(employeeAllArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@TodoListActivity,
                                             R.style.MyDialogTheme
@@ -1455,7 +1471,11 @@ class TodoListActivity : AppCompatActivity(), View.OnClickListener, ItemClickLis
                                          //   employeeAllPopup(leadDetailArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@TodoListActivity,
                                             R.style.MyDialogTheme

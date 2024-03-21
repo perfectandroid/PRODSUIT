@@ -168,7 +168,11 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
 
 
-                                        } else {
+                                        }
+                                        else if (jObject.getString("StatusCode") == "105"){
+                                            Config.logoutTokenMismatch(context,jObject)
+                                        }
+                                        else {
                                             txtv_notfcount!!.text="0"
                                             rv_notificationlist!!.adapter = null
                                             if (notificationCount > 0){
@@ -242,7 +246,11 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         txtv_notfcount!!.text="0"
                                         rv_notificationlist!!.adapter = null
                                         if (notificationCount > 0){
@@ -380,7 +388,11 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                                     //  startActivity(getIntent());
                                     notificationDet = 0
                                     getNotificationList()
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
 //                                Toast.makeText(applicationContext, ""+jObject.getString("EXMessage"), Toast.LENGTH_LONG)
 //                                    .show()
 //                                val builder = AlertDialog.Builder(

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.CRMChannelStatusModel
 import com.perfect.prodsuit.Repository.CRMChannelStatusRepository
-import com.perfect.prodsuit.Repository.CRMSLAStatusRepository
 
 class CRMChannelStatusViewModel : ViewModel(){
 

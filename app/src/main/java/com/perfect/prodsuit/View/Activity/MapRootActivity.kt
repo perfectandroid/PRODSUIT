@@ -114,7 +114,11 @@ class MapRootActivity : AppCompatActivity() , OnMapReadyCallback {
                                         if (locationList.length()>0){
                                             mapView!!.getMapAsync(this);
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@MapRootActivity,
                                             R.style.MyDialogTheme

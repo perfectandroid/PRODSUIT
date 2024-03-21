@@ -26,7 +26,6 @@ import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.ApproveAdapter
 import com.perfect.prodsuit.View.Adapter.AuthDsahboardAdapter
-import com.perfect.prodsuit.View.Adapter.HomeGrideCountAdapter
 import com.perfect.prodsuit.Viewmodel.ApprovalViewModel
 import com.perfect.prodsuit.Viewmodel.AuthDashViewModel
 import org.json.JSONArray
@@ -146,7 +145,11 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
 
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ApproveActivity,
                                             R.style.MyDialogTheme
@@ -234,7 +237,11 @@ class ApproveActivity : AppCompatActivity(), View.OnClickListener, ItemClickList
 //                                        }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ApproveActivity,
                                             R.style.MyDialogTheme

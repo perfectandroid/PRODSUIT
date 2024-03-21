@@ -164,7 +164,11 @@ class DocumentListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
 
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
 
                                     val builder = AlertDialog.Builder(
                                         this@DocumentListActivity,
@@ -352,7 +356,11 @@ class DocumentListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                                     Log.e(TAG,"Exception   1232    "+e.toString())
                                 }
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
 
                                 val builder = AlertDialog.Builder(
                                     this@DocumentListActivity,

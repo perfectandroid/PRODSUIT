@@ -4,9 +4,7 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.CompletedProductsModel
-import com.perfect.prodsuit.Model.CostMaterialUsageAllocatedUsedModel
 import com.perfect.prodsuit.Repository.CompletedProductsRespository
-import com.perfect.prodsuit.Repository.CostMaterialUsageAllocatedUsedRespository
 
 class CompletedProductsViewModel  : ViewModel()  {
 

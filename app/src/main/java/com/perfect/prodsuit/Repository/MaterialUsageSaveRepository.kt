@@ -122,7 +122,7 @@ object MaterialUsageSaveRepository {
                         Log.e(TAG,"78 jObject  "+response.body())
 
                         val jObject = JSONObject(response.body())
-                        Log.e(ApprovalRepository.TAG,"78 jObject  "+jObject)
+                        Log.e(TAG,"78 jObject  "+jObject)
                         val leads = ArrayList<MaterialUsageSaveModel>()
                         leads.add(MaterialUsageSaveModel(response.body()))
                         val msg = leads[0].message

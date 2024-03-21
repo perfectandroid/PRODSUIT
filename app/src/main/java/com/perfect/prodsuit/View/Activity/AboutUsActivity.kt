@@ -215,6 +215,9 @@ class AboutUsActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
 
 
                             }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
                         } else {
 //                            Toast.makeText(
 //                                applicationContext,

@@ -95,11 +95,11 @@ object ServiceProductHistoryRepository {
 
                     fk_cust=ID_Customer
                     fk_custother="0"
-                    Log.e(CustomerServiceRegisterRepository.TAG,"642121   "+ID_Customer)
+                    Log.e(TAG,"642121   "+ID_Customer)
                  /*   requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart(ID_Customer))
                     requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart("0"))*/
                 }else if (Customer_Type.equals("1")){
-                    Log.e(CustomerServiceRegisterRepository.TAG,"642122   "+ID_Customer)
+                    Log.e(TAG,"642122   "+ID_Customer)
                     fk_cust="0"
                     fk_custother=ID_Customer
                    /* requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("0"))
@@ -107,7 +107,7 @@ object ServiceProductHistoryRepository {
                 }else{
                     fk_cust="0"
                     fk_custother="0"
-                    Log.e(CustomerServiceRegisterRepository.TAG,"642123   "+ID_Customer)
+                    Log.e(TAG,"642123   "+ID_Customer)
                  /*   requestObject1.put("FK_Customer", ProdsuitApplication.encryptStart("0"))
                     requestObject1.put("FK_CustomerOther", ProdsuitApplication.encryptStart("0"))*/
                 }

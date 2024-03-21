@@ -30,7 +30,6 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Repository.AreaListRepository
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -386,7 +385,11 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@ProductionGraphActivity,
                                         R.style.MyDialogTheme
@@ -538,7 +541,11 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProductionGraphActivity,
                                             R.style.MyDialogTheme
@@ -844,7 +851,11 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProductionGraphActivity,
                                             R.style.MyDialogTheme
@@ -1147,7 +1158,11 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProductionGraphActivity,
                                             R.style.MyDialogTheme
@@ -1360,6 +1375,9 @@ class ProductionGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     }
 
 
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
                                 }
                                 else {
 

@@ -261,7 +261,11 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                             val adapter = TodoListAdapter(applicationContext, overdueArrayList,SubMode!!)
                                             rv_overduelist!!.adapter = adapter
                                             adapter.setClickListener(this@OverDueActivity)
-                                        } else {
+                                        }
+                                        else if (jObject.getString("StatusCode") == "105"){
+                                            Config.logoutTokenMismatch(context,jObject)
+                                        }
+                                        else {
                                             tv_listCount!!.setText("0")
                                             val builder = AlertDialog.Builder(
                                                 this@OverDueActivity,
@@ -1080,7 +1084,11 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                         } catch (e: Exception) {
                                             e.printStackTrace()
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@OverDueActivity,
                                             R.style.MyDialogTheme
@@ -1357,7 +1365,11 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                             branchPopup(branchArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@OverDueActivity,
                                             R.style.MyDialogTheme
@@ -1490,7 +1502,11 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                             employeeAllPopup(employeeAllArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@OverDueActivity,
                                             R.style.MyDialogTheme
@@ -1622,7 +1638,11 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                             //   employeeAllPopup(leadDetailArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@OverDueActivity,
                                             R.style.MyDialogTheme

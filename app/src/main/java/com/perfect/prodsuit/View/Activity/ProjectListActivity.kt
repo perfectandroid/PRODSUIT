@@ -224,7 +224,11 @@ class ProjectListActivity : AppCompatActivity() , View.OnClickListener, ItemClic
                                             })
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
 //                                        val builder = AlertDialog.Builder(
 //                                            this@ProjectListActivity,
 //                                            R.style.MyDialogTheme

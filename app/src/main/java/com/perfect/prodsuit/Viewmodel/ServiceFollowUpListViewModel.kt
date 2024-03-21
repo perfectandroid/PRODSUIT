@@ -5,9 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.perfect.prodsuit.Model.OverDueModel
 import com.perfect.prodsuit.Model.ServiceFollowUpModel
-import com.perfect.prodsuit.Repository.OverDueRepository
 import com.perfect.prodsuit.Repository.ServiceFollowUpRepository
 
 class ServiceFollowUpListViewModel : ViewModel() {

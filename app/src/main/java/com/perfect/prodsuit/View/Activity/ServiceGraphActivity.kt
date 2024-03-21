@@ -661,7 +661,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         alertDialog.show()
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@ServiceGraphActivity,
                                         R.style.MyDialogTheme
@@ -825,7 +829,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     }
 
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@ServiceGraphActivity,
                                         R.style.MyDialogTheme
@@ -902,7 +910,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     }
 
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@ServiceGraphActivity,
                                         R.style.MyDialogTheme
@@ -1064,7 +1076,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         recycServiceCountOfWPA!!.adapter = adapter
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@ServiceGraphActivity,
                                         R.style.MyDialogTheme
@@ -1137,7 +1153,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         recycComplaintWise!!.adapter = adapter
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@ServiceGraphActivity,
                                         R.style.MyDialogTheme
@@ -1213,7 +1233,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         recycServiceTop10Product!!.adapter = adapter
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@ServiceGraphActivity,
                                         R.style.MyDialogTheme
@@ -1287,7 +1311,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         recycServiceSlaStatus!!.adapter = adapter
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@ServiceGraphActivity,
                                         R.style.MyDialogTheme
@@ -1362,7 +1390,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         recycServiceChannelStatus!!.adapter = adapter
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@ServiceGraphActivity,
                                         R.style.MyDialogTheme
@@ -1456,7 +1488,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     }
 
 
-                                } else
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else
                                 {
                                     noDataTicketOutStanding=true
 
@@ -1558,6 +1594,10 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
                                 }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+
                                 else {
                                     noDataTicketStatus=true
 
@@ -1654,7 +1694,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     }
 
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     noDataTicketOutStandingCount=true
 
                                     if ( noDataTicketOutStanding && noDataTicketStatus && noDataTicketOutStandingCount && noDataAmcDue)
@@ -1754,7 +1798,11 @@ class ServiceGraphActivity : AppCompatActivity(), View.OnClickListener {
                                     }
 
 
-                                } else
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else
                                 {
                                     noDataAmcDue=true
 

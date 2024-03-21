@@ -2,6 +2,7 @@ package com.perfect.prodsuit.View.Activity
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
@@ -24,11 +25,12 @@ import com.perfect.prodsuit.Model.HistoryFollowUpModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.HistoryServiceFollowUpAdapter
 import com.perfect.prodsuit.Viewmodel.ServiceFollowHistoryViewModel
-import com.perfect.prodsuit.Viewmodel.ServiceFollowUpAttendanceListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
 class ServiceFollowUpHistory : AppCompatActivity(), View.OnClickListener {
+
+    lateinit var context: Context
     lateinit var recycleView_history: RecyclerView
     lateinit var jsonArrayHistory: JSONArray
     lateinit var imback: ImageView
@@ -53,6 +55,7 @@ class ServiceFollowUpHistory : AppCompatActivity(), View.OnClickListener {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         setContentView(R.layout.activity_service_follow_up_history)
+        context = this@ServiceFollowUpHistory
         customer_service_register = intent.getStringExtra("customer_service_register").toString()
         FK_Customer = intent.getStringExtra("FK_Customer").toString()
         FK_CustomerOthers = intent.getStringExtra("FK_CustomerOthers").toString()
@@ -146,7 +149,11 @@ class ServiceFollowUpHistory : AppCompatActivity(), View.OnClickListener {
                                         jsonArrayFollowUpHistory =
                                             jobjt.getJSONArray("ServiceHistoryDetailsList")
                                         SetDataToRecycler(jsonArrayFollowUpHistory)
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this,
                                             R.style.MyDialogTheme

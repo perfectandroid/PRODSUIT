@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.UpadateSiteVisitModel
-import com.perfect.prodsuit.Repository.OtherchargeRepository
 import com.perfect.prodsuit.Repository.UpadateSiteVisitRepository
 import org.json.JSONArray
 

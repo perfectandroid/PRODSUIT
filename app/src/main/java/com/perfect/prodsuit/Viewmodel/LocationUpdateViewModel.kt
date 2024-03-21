@@ -4,9 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.perfect.prodsuit.Model.CustomerSearchModel
 import com.perfect.prodsuit.Model.LocationUpdateModel
-import com.perfect.prodsuit.Repository.CustomerSearchRepository
 import com.perfect.prodsuit.Repository.LocationUpdateRepository
 
 class LocationUpdateViewModel  : ViewModel(){

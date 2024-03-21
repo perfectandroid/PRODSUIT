@@ -45,7 +45,6 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Repository.AreaListRepository
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -460,7 +459,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             alertDialog.setCancelable(false)
                                             alertDialog.show()*/
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
 
                                         noDataLeadOutStanding=true
 
@@ -589,7 +592,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             alertDialog.setCancelable(false)
                                             alertDialog.show()*/
                                         }
-                                    } else
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else
                                     {
                                         noDataLeadAvg=true
 
@@ -1101,7 +1108,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             alertDialog.setCancelable(false)
                                             alertDialog.show()*/
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         noDataLeadTile=true
 
                                         if ( noDataLeadTile && noDataLeadOutStanding && noDataLeadAvg && noDataLeadCount)
@@ -1247,7 +1258,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                              alertDialog.setCancelable(false)
                                              alertDialog.show()*/
                                         }
-                                    } else {
+                                    }
+                                   else if (jObject.getString("StatusCode") == "105"){
+                                       Config.logoutTokenMismatch(context,jObject)
+                                   }
+                                   else {
                                        noDataLeadCount=true
                                        if ( noDataLeadTile && noDataLeadOutStanding && noDataLeadAvg && noDataLeadCount)
                                        {
@@ -1396,7 +1411,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     // setPieChart()
 
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     rclv_barchart!!.visibility=View.GONE
                                     /*val builder = AlertDialog.Builder(
                                         this@TileGraphActivity,
@@ -2725,7 +2744,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     rclv_leadStagewiseforecast!!.adapter = adapter
 
 //
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     ll_labelAll!!.visibility=View.GONE
                                     txt_chartlabel!!.visibility=View.GONE
                                     txt_chartremark!!.visibility=View.GONE
@@ -3021,7 +3044,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                        alertDialog.show()
                                    }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@TileGraphActivity,
                                         R.style.MyDialogTheme
@@ -3313,7 +3340,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     // setPieChart()
 
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     ll_labelAll!!.visibility=View.GONE
                                     val builder = AlertDialog.Builder(
                                         this@TileGraphActivity,
@@ -3442,7 +3473,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                     // setPieChart()
 
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     ll_labelAll!!.visibility=View.GONE
                                     val builder = AlertDialog.Builder(
                                         this@TileGraphActivity,
@@ -3481,16 +3516,16 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         card_leadSourse!!.visibility = View.VISIBLE
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                AreaListRepository.progressDialog = ProgressDialog(context, R.style.Progress)
-                AreaListRepository.progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                AreaListRepository.progressDialog!!.setCancelable(false)
-                AreaListRepository.progressDialog!!.setIndeterminate(true)
-                AreaListRepository.progressDialog!!.setIndeterminateDrawable(
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(
                     context.resources.getDrawable(
                         R.drawable.progress
                     )
                 )
-                AreaListRepository.progressDialog!!.show()
+                progressDialog!!.show()
                 leadSourseViewModel.getLeadSourse(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -3551,7 +3586,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         } catch (e: Exception) {
                                             Log.e("exceptionStock344", "" + e.toString())
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
 
                                         ll_labelAll!!.visibility=View.GONE
                                         txt_chartlabel!!.visibility=View.GONE
@@ -3583,7 +3622,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                         }
 
                     })
-                AreaListRepository.progressDialog!!.dismiss()
+                progressDialog!!.dismiss()
             }
             false -> {
 //                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
@@ -3771,16 +3810,16 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         card_employeewiseAvg!!.visibility=View.VISIBLE
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                AreaListRepository.progressDialog = ProgressDialog(context, R.style.Progress)
-                AreaListRepository.progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                AreaListRepository.progressDialog!!.setCancelable(false)
-                AreaListRepository.progressDialog!!.setIndeterminate(true)
-                AreaListRepository.progressDialog!!.setIndeterminateDrawable(
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(
                     context.resources.getDrawable(
                         R.drawable.progress
                     )
                 )
-                AreaListRepository.progressDialog!!.show()
+                progressDialog!!.show()
                 employeewiseAvgViewModel.getEmpAvgConversion(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -3834,7 +3873,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         } catch (e: Exception) {
                                             Log.e("exceptionStock344", "" + e.toString())
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         ll_labelAll!!.visibility=View.GONE
                                         ll_empAVG_XY!!.visibility=View.GONE
                                         val builder = AlertDialog.Builder(
@@ -3863,7 +3906,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                         }
 
                     })
-                AreaListRepository.progressDialog!!.dismiss()
+                progressDialog!!.dismiss()
             }
             false -> {
 //                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
@@ -3958,7 +4001,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         } catch (e: Exception) {
                                             Log.e("exceptionStock344", "" + e.toString())
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         ll_labelAll!!.visibility=View.GONE
                                         txt_chartlabel!!.visibility=View.GONE
                                         txt_chartremark!!.visibility=View.GONE
@@ -4054,16 +4101,16 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         card_leadstagecountwise!!.visibility=View.VISIBLE
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                AreaListRepository.progressDialog = ProgressDialog(context, R.style.Progress)
-                AreaListRepository.progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                AreaListRepository.progressDialog!!.setCancelable(false)
-                AreaListRepository.progressDialog!!.setIndeterminate(true)
-                AreaListRepository.progressDialog!!.setIndeterminateDrawable(
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(
                     context.resources.getDrawable(
                         R.drawable.progress
                     )
                 )
-                AreaListRepository.progressDialog!!.show()
+                progressDialog!!.show()
                 leadstagecountwiseViewModel.getleadstagecountwise(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -4106,7 +4153,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                             }
                                         } catch (e: Exception) {
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         ll_labelAll!!.visibility=View.GONE
                                         txt_chartlabel!!.visibility=View.GONE
                                         txt_chartremark!!.visibility=View.GONE
@@ -4136,7 +4187,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                         }
 
                     })
-                AreaListRepository.progressDialog!!.dismiss()
+                progressDialog!!.dismiss()
             }
             false -> {
 //                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
@@ -4168,16 +4219,16 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
         card_leadActivity!!.visibility=View.VISIBLE
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
-                AreaListRepository.progressDialog = ProgressDialog(context, R.style.Progress)
-                AreaListRepository.progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
-                AreaListRepository.progressDialog!!.setCancelable(false)
-                AreaListRepository.progressDialog!!.setIndeterminate(true)
-                AreaListRepository.progressDialog!!.setIndeterminateDrawable(
+                progressDialog = ProgressDialog(context, R.style.Progress)
+                progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+                progressDialog!!.setCancelable(false)
+                progressDialog!!.setIndeterminate(true)
+                progressDialog!!.setIndeterminateDrawable(
                     context.resources.getDrawable(
                         R.drawable.progress
                     )
                 )
-                AreaListRepository.progressDialog!!.show()
+                progressDialog!!.show()
                 leadActivityViewModels.getleadActivity(this)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
@@ -4223,7 +4274,11 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         } catch (e: Exception) {
                                             Log.e("exceptionStock344", "" + e.toString())
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         ll_labelAll!!.visibility=View.GONE
                                         txt_chartlabel!!.text=""
                                         txt_chartremark!!.text=""
@@ -4254,7 +4309,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                         }
 
                     })
-                AreaListRepository.progressDialog!!.dismiss()
+                progressDialog!!.dismiss()
             }
             false -> {
 //                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)

@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.CRMCountOfWPAModel
 import com.perfect.prodsuit.Repository.CRMCountOfWPARepository
-import com.perfect.prodsuit.Repository.CRMTop10ProductRepository
 
 class CRMCountOfWPAViewModel : ViewModel(){
 

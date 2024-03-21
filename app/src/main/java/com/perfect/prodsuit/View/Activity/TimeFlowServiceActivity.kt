@@ -15,13 +15,9 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.MapRootDetailAdapter
-import com.perfect.prodsuit.Viewmodel.EmployeeWiseLocationListViewModel
 import com.perfect.prodsuit.Viewmodel.ServiceTimeLineViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -115,7 +111,11 @@ class TimeFlowServiceActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@TimeFlowServiceActivity,
                                             R.style.MyDialogTheme

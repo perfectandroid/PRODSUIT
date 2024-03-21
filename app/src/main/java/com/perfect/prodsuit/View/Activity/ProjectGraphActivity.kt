@@ -37,7 +37,6 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Repository.AreaListRepository
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -575,7 +574,11 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                         alertDialog.show()
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@ProjectGraphActivity,
                                         R.style.MyDialogTheme
@@ -747,7 +750,11 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectGraphActivity,
                                             R.style.MyDialogTheme
@@ -915,7 +922,11 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectGraphActivity,
                                             R.style.MyDialogTheme
@@ -1114,7 +1125,11 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                         recyclr_Upcoming_Stage_Due_Dates!!.adapter = adapter
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectGraphActivity,
                                             R.style.MyDialogTheme
@@ -1200,7 +1215,11 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectGraphActivity,
                                             R.style.MyDialogTheme
@@ -1420,7 +1439,11 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectGraphActivity,
                                             R.style.MyDialogTheme
@@ -1738,7 +1761,11 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectGraphActivity,
                                             R.style.MyDialogTheme
@@ -2011,7 +2038,11 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         noDataBill=true
 
 
@@ -2136,7 +2167,11 @@ class ProjectGraphActivity : AppCompatActivity(), View.OnClickListener  {
 
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         noDataProjrct=true
                                         noDataProjectStatus="1"
 

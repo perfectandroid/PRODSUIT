@@ -768,7 +768,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                         }catch (e : Exception){
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectTransactionActivity,
                                             R.style.MyDialogTheme
@@ -977,7 +981,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                             payMethodPopup(paymentMethodeArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectTransactionActivity,
                                             R.style.MyDialogTheme
@@ -1177,7 +1185,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                             billtypePopup(billtTypeArrayList)
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectTransactionActivity,
                                             R.style.MyDialogTheme
@@ -1279,7 +1291,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                             pettyCashierPopup(pettyCashierArrayList)
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectTransactionActivity,
                                             R.style.MyDialogTheme
@@ -1380,7 +1396,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                             projectWiseEmployeePopup(projectWiseEmployeeArrayList)
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectTransactionActivity,
                                             R.style.MyDialogTheme
@@ -1579,7 +1599,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                         Log.e(TAG,"149111   "+modelOtherCharges.size)
 //                                             otherChargesPopup(modelOtherCharges)
                                              otherChargesPopup(modelOtherChargesTemp)
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectTransactionActivity,
                                             R.style.MyDialogTheme
@@ -1825,7 +1849,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                             }
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectTransactionActivity,
                                             R.style.MyDialogTheme
@@ -2101,7 +2129,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                             projectTransTypePopup(transTypeArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectTransactionActivity,
                                             R.style.MyDialogTheme
@@ -2202,7 +2234,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                             projectPopup(projectArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectTransactionActivity,
                                             R.style.MyDialogTheme
@@ -2350,7 +2386,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                             stagePopup(stageArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectTransactionActivity,
                                             R.style.MyDialogTheme
@@ -2968,7 +3008,11 @@ class ProjectTransactionActivity : AppCompatActivity()  , View.OnClickListener, 
                                         catch (e : Exception){
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ProjectTransactionActivity,
                                             R.style.MyDialogTheme

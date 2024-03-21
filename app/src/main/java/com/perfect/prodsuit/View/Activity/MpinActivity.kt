@@ -27,7 +27,6 @@ import com.google.gson.Gson
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DBHelper
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
-import com.perfect.prodsuit.Model.ModelServiceAttendedTemp
 import com.perfect.prodsuit.Model.MpinUserModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.CustomSpinnerAdapter
@@ -1739,7 +1738,12 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                         alertDialog.show()
                                         clearAll()
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+
+                                        LogoutTokenBottonSheet(jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@MpinActivity,
                                             R.style.MyDialogTheme
@@ -1886,7 +1890,13 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         btnYes.setOnClickListener {
             dialog.dismiss()
             // dologoutchanges()
-            logoutMode = 0
+            var userList = db!!.getRegisteredUserList()
+            var tableCount = userList.length()
+            if (tableCount == 1){
+                logoutMode = 1
+            }else{
+                logoutMode = 0
+            }
             Config.logOut(context,logoutMode)
             startActivity(Intent(this@MpinActivity, SplashActivity::class.java))
         }

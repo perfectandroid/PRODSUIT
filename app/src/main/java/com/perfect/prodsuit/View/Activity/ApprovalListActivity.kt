@@ -6,12 +6,10 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Color
 import android.graphics.Typeface
 import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.util.Log
 import android.view.*
 import android.widget.*
@@ -22,17 +20,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.ApproveAdapter
-import com.perfect.prodsuit.View.Adapter.ApproveListAdapter
-import com.perfect.prodsuit.View.Adapter.LeadByAdapter
 import com.perfect.prodsuit.View.Adapter.ReasonAuthAdapter
 import com.perfect.prodsuit.Viewmodel.ApprovalListViewModel
-import com.perfect.prodsuit.Viewmodel.ApprovalViewModel
 import com.perfect.prodsuit.Viewmodel.ReasonViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -292,7 +285,11 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ApprovalListActivity,
                                             R.style.MyDialogTheme
@@ -419,7 +416,11 @@ class ApprovalListActivity : AppCompatActivity() , View.OnClickListener, ItemCli
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ApprovalListActivity,
                                             R.style.MyDialogTheme

@@ -4,9 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.perfect.prodsuit.Model.DashboardReportModel
 import com.perfect.prodsuit.Model.LeadAllDetailsModel
-import com.perfect.prodsuit.Repository.DashboardReportRepository
 import com.perfect.prodsuit.Repository.LeadAllDetailsRepository
 
 class LeadAllDetailsViewModel : ViewModel() {

@@ -924,7 +924,11 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
 //
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ApprovalListDetailActivity,
                                             R.style.MyDialogTheme
@@ -1480,7 +1484,11 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
 //                                        }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ApprovalListDetailActivity,
                                             R.style.MyDialogTheme
@@ -1562,7 +1570,11 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
 //                                        }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ApprovalListDetailActivity,
                                             R.style.MyDialogTheme
@@ -1708,7 +1720,11 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
 //                                        }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ApprovalListDetailActivity,
                                             R.style.MyDialogTheme
@@ -1832,7 +1848,11 @@ class ApprovalListDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ApprovalListDetailActivity,
                                             R.style.MyDialogTheme

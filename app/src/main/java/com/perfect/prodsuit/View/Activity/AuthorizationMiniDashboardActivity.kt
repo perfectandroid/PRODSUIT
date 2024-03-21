@@ -25,8 +25,6 @@ import com.perfect.prodsuit.Model.ChildDataModel
 import com.perfect.prodsuit.Model.ModuleWiseExpandModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.AuthorizationCountAdapter
-import com.perfect.prodsuit.View.Adapter.AuthorizationMixedAdapter
-import com.perfect.prodsuit.Viewmodel.ApprovalViewModel
 import com.perfect.prodsuit.Viewmodel.AuthorizationMixedViewModel
 import org.json.JSONArray
 import org.json.JSONObject
@@ -152,7 +150,11 @@ class AuthorizationMiniDashboardActivity : AppCompatActivity(), View.OnClickList
 //                                        }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@AuthorizationMiniDashboardActivity,
                                             R.style.MyDialogTheme

@@ -21,11 +21,8 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Adapter.AuthDsahboardAdapter
-import com.perfect.prodsuit.View.Adapter.AuthorizationMixedAdapter
 import com.perfect.prodsuit.View.Adapter.CommonSearchListAdapter
 import com.perfect.prodsuit.View.Adapter.SearchModuleAdapter
-import com.perfect.prodsuit.Viewmodel.AuthorizationMixedViewModel
 import com.perfect.prodsuit.Viewmodel.CommonSearchListViewModel
 import com.perfect.prodsuit.Viewmodel.SearchModuleViewModel
 import org.json.JSONArray
@@ -175,7 +172,11 @@ class CommonSearchActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                                            // commonSearchListAdapter.setClickListener(this@CommonSearchActivity)
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CommonSearchActivity,
                                             R.style.MyDialogTheme
@@ -249,7 +250,11 @@ class CommonSearchActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 //                                            // commonSearchListAdapter.setClickListener(this@CommonSearchActivity)
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CommonSearchActivity,
                                             R.style.MyDialogTheme

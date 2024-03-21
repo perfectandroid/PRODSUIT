@@ -148,7 +148,11 @@ class ServiceHistoryActivity : AppCompatActivity() , View.OnClickListener, ItemC
                                             adapter.setClickListener(this@ServiceHistoryActivity)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceHistoryActivity,
                                             R.style.MyDialogTheme

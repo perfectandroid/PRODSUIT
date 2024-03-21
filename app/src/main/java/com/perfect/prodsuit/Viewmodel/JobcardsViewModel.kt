@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.JobcardsModel
-import com.perfect.prodsuit.Repository.ItemSearchListRepository
 import com.perfect.prodsuit.Repository.JobcardsRespository
 
 class JobcardsViewModel : ViewModel() {

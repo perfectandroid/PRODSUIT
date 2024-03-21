@@ -12,9 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Viewmodel.NotificationReadStatusViewModel
 import org.json.JSONArray
-import org.json.JSONException
 import org.json.JSONObject
 
 
@@ -26,7 +24,6 @@ class NotificationAdapter (internal var context: Context, internal var jsonArray
     internal var id= ""
 
     private var clickListener: ItemClickListener? = null
-    lateinit var notifreadstatusmodel: NotificationReadStatusViewModel
 
 
 

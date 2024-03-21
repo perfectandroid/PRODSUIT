@@ -5,9 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.LeadManagmntFilterModel
-import com.perfect.prodsuit.Model.OverDueModel
 import com.perfect.prodsuit.Repository.LeadManagFilterRepository
-import com.perfect.prodsuit.Repository.OverDueRepository
 
 class LeadMangeFilterViewModel : ViewModel() {
 

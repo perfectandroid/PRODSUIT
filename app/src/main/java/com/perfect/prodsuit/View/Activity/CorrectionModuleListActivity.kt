@@ -21,11 +21,7 @@ import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.CorrectionModuleListAdapter
-import com.perfect.prodsuit.View.Adapter.ProductPriorityAdapter
-import com.perfect.prodsuit.View.Adapter.ServicePriorityAdapter
 import com.perfect.prodsuit.Viewmodel.CorrectionModuleListViewModel
-import com.perfect.prodsuit.Viewmodel.ReportNameViewModel
-import com.perfect.prodsuit.Viewmodel.ServicePriorityViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -108,7 +104,11 @@ class CorrectionModuleListActivity : AppCompatActivity(), View.OnClickListener, 
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@CorrectionModuleListActivity,
                                             R.style.MyDialogTheme

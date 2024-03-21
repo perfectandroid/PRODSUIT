@@ -12,29 +12,16 @@ import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
-import com.google.gson.GsonBuilder
 import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DBHelper
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
-import com.perfect.prodsuit.Helper.ProdsuitApplication
-import com.perfect.prodsuit.Model.AccBankBalanceModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Repository.AccBankBalanceRepository
 import com.perfect.prodsuit.View.Adapter.ChatAdapter1
-import com.perfect.prodsuit.fire.FcmMessage
 import com.perfect.prodsuit.fire.FcmMessageNew
-import com.perfect.prodsuit.fire.FcmMessageNew1
-import com.perfect.prodsuit.fire.NotificationPayload
-import okhttp3.MediaType
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.RequestBody
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Call
@@ -44,10 +31,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.sql.Date
 import java.text.SimpleDateFormat
 import retrofit2.Response
-import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.io.OutputStreamWriter
-import java.net.HttpURLConnection
-import java.net.URL
 import java.util.Locale
 
 

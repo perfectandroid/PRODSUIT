@@ -2985,7 +2985,10 @@ Log.v("adasdasds","modeTab "+modeTab)
 
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }else {
                                         modelServicesListDetails.clear()
                                         rcyler_followup!!.adapter = null
                                         val builder = AlertDialog.Builder(

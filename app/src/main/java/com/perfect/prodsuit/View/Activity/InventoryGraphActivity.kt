@@ -32,7 +32,6 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.*
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Repository.AreaListRepository.progressDialog
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -44,7 +43,7 @@ import java.util.*
 class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
     var noDataStockValue:Boolean=false
-
+    var progressDialog: ProgressDialog? = null
     var purchase_xaxis: TextView? = null
     var purchase_yaxis: TextView? = null
     var ll_purchase_XY: LinearLayout? = null
@@ -568,7 +567,11 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@InventoryGraphActivity,
                                         R.style.MyDialogTheme
@@ -782,7 +785,11 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                             Log.e(TAG,"exception 84488="+e)
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@InventoryGraphActivity,
                                             R.style.MyDialogTheme
@@ -880,7 +887,11 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                             Log.e(TAG,"exception 84488="+e)
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@InventoryGraphActivity,
                                             R.style.MyDialogTheme
@@ -1347,7 +1358,11 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@InventoryGraphActivity,
                                             R.style.MyDialogTheme
@@ -1449,7 +1464,11 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@InventoryGraphActivity,
                                             R.style.MyDialogTheme
@@ -1552,7 +1571,11 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@InventoryGraphActivity,
                                             R.style.MyDialogTheme
@@ -1626,7 +1649,11 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         recyclr_colom!!.adapter = adapter
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@InventoryGraphActivity,
                                             R.style.MyDialogTheme
@@ -1717,6 +1744,9 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         tv_stockNameChart!!.text=  jobjt.getString("ChartName")
 
 
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
                                     }
                                     else
                                     {
@@ -1834,7 +1864,11 @@ class InventoryGraphActivity : AppCompatActivity(), View.OnClickListener {
                                             Log.e("exceptionStock344",""+e.toString())
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@InventoryGraphActivity,
                                             R.style.MyDialogTheme

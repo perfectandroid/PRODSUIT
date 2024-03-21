@@ -351,7 +351,11 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
                                             recyclervw_serviceassign!!.adapter = adapter
                                             adapter.setClickListener(this@ServiceAssignTabActivity)
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceAssignTabActivity,
                                             R.style.MyDialogTheme
@@ -846,7 +850,11 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
                                         }
 
                                     }
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@ServiceAssignTabActivity,
                                         R.style.MyDialogTheme
@@ -983,7 +991,11 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
                                             employeeAllPopup(employeeAllArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceAssignTabActivity,
                                             R.style.MyDialogTheme
@@ -1186,7 +1198,11 @@ class ServiceAssignTabActivity : AppCompatActivity()  , View.OnClickListener, It
                                         }
 
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@ServiceAssignTabActivity,
                                             R.style.MyDialogTheme

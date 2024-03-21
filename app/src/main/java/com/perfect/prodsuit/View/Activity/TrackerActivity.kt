@@ -161,7 +161,11 @@ class TrackerActivity : AppCompatActivity() , View.OnClickListener{
 
                                         }
 
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@TrackerActivity,
                                             R.style.MyDialogTheme

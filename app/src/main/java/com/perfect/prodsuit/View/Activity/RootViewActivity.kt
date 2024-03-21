@@ -1,14 +1,11 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.Intent.getIntent
 import android.content.IntentFilter
 import android.graphics.Color
 import android.net.ConnectivityManager
-import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -17,30 +14,19 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.example.myapplication_demmo.Distance
 import com.example.myapplication_demmo.MapData
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
-import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.internal.it
 import com.google.gson.Gson
-import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.EmployeeWiseLocationListViewModel
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import org.json.JSONArray
-import org.json.JSONObject
 import java.text.DecimalFormat
 
 class RootViewActivity : AppCompatActivity(), OnMapReadyCallback {

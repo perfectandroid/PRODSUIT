@@ -34,7 +34,7 @@ object LeadEditDetailRepository {
 
     private fun getLeadEditDetail(context: Context,ID_LeadGenerate :String,ID_LeadGenerateProduct : String) {
 
-        Log.e(LeadEditListRepository.TAG,"getLeadEditDetails  ")
+        Log.e(TAG,"getLeadEditDetails  ")
         try {
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
             progressDialog = ProgressDialog(context, R.style.Progress)

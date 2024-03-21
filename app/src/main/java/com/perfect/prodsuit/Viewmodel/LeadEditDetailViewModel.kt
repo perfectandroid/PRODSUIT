@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.LeadEditDetailModel
 import com.perfect.prodsuit.Repository.LeadEditDetailRepository
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity
 
 class LeadEditDetailViewModel : ViewModel()  {
 

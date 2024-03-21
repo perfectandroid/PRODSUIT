@@ -375,7 +375,11 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
                                 var jobj = jObject.getJSONObject("UserLoginDetails")
 
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@ReportViewDetailsActivity,
                                     R.style.MyDialogTheme
@@ -591,7 +595,11 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
 
                                 }
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@ReportViewDetailsActivity,
                                     R.style.MyDialogTheme
@@ -663,7 +671,11 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
 
                                 }
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@ReportViewDetailsActivity,
                                     R.style.MyDialogTheme
@@ -740,7 +752,11 @@ class ReportViewDetailsActivity : AppCompatActivity() , View.OnClickListener {
                                 }
 
 
-                            } else {
+                            }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
+                            else {
                                 val builder = AlertDialog.Builder(
                                     this@ReportViewDetailsActivity,
                                     R.style.MyDialogTheme

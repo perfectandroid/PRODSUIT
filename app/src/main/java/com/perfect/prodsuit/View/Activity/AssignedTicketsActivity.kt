@@ -166,7 +166,11 @@ class AssignedTicketsActivity :AppCompatActivity() , View.OnClickListener, ItemC
                                         adapter.setClickListener(this@AssignedTicketsActivity)
 
                                     }
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@AssignedTicketsActivity,
                                         R.style.MyDialogTheme

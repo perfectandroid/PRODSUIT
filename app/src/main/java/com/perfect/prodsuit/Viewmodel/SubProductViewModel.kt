@@ -4,9 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.perfect.prodsuit.Model.ServiceAssignModel
 import com.perfect.prodsuit.Model.SubProductModel
-import com.perfect.prodsuit.Repository.ServiceAssignRepository
 import com.perfect.prodsuit.Repository.SubProductRepository
 import org.json.JSONArray
 

@@ -389,6 +389,9 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
 
 
                                     }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
                                     else {
                                         ll_tile_recy!!.visibility=View.GONE
                                         noDataP_L=true
@@ -527,7 +530,11 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
 
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@AccountsGraphActivity,
                                         R.style.MyDialogTheme
@@ -712,7 +719,11 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         recycCashBalance!!.adapter = adapter
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@AccountsGraphActivity,
                                         R.style.MyDialogTheme
@@ -781,7 +792,11 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         recycBankBalance!!.adapter = adapter
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@AccountsGraphActivity,
                                         R.style.MyDialogTheme
@@ -848,7 +863,11 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         recycExpense!!.adapter = adapter
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@AccountsGraphActivity,
                                         R.style.MyDialogTheme
@@ -914,7 +933,11 @@ class AccountsGraphActivity : AppCompatActivity(), View.OnClickListener {
                                         recycSupplier!!.adapter = adapter
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(
                                         this@AccountsGraphActivity,
                                         R.style.MyDialogTheme

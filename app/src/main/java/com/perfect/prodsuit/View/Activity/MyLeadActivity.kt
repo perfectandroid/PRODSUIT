@@ -254,7 +254,11 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                             rv_myLeadlist!!.adapter = adapter
                                             adapter.setClickListener(this@MyLeadActivity)
 
-                                        } else {
+                                        }
+                                        else if (jObject.getString("StatusCode") == "105"){
+                                            Config.logoutTokenMismatch(context,jObject)
+                                        }
+                                        else {
                                             tv_listCount!!.setText("0")
                                             val builder = AlertDialog.Builder(
                                                 this@MyLeadActivity,
@@ -875,7 +879,11 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                         } catch (e: Exception) {
                                             e.printStackTrace()
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@MyLeadActivity,
                                             R.style.MyDialogTheme
@@ -1470,7 +1478,11 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                             branchPopup(branchArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@MyLeadActivity,
                                             R.style.MyDialogTheme
@@ -1603,7 +1615,11 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                                             employeeAllPopup(employeeAllArrayList)
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@MyLeadActivity,
                                             R.style.MyDialogTheme
@@ -1735,7 +1751,11 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
 
 
                                         }
-                                    } else {
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
+                                    }
+                                    else {
                                         val builder = AlertDialog.Builder(
                                             this@MyLeadActivity,
                                             R.style.MyDialogTheme

@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.perfect.prodsuit.Model.LeadFromInfoModel
-import com.perfect.prodsuit.Repository.LeadEditDetailRepository
 import com.perfect.prodsuit.Repository.LeadFromInfoRepository
 
 class LeadFromInfoViewModel : ViewModel()  {

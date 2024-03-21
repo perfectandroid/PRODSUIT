@@ -9,9 +9,7 @@ import com.perfect.prodsuit.Api.ApiInterface
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.Model.DetailedReportModel
-import com.perfect.prodsuit.Model.DocumentListModel
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Repository.DocumentListRepository.documentlistSetterGetter
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
 import org.json.JSONObject

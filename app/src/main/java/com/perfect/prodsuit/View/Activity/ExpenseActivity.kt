@@ -331,6 +331,9 @@ class ExpenseActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                 rv_expenselist!!.adapter = adapter
                                     adapter.setClickListener(this@ExpenseActivity)
                             }
+                            else if (jObject.getString("StatusCode") == "105"){
+                                Config.logoutTokenMismatch(context,jObject)
+                            }
                         } else {
                             Toast.makeText(
                                 applicationContext,

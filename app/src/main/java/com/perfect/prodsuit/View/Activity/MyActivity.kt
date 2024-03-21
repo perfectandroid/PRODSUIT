@@ -188,7 +188,11 @@ class MyActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListene
 
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(this@MyActivity, R.style.MyDialogTheme)
                                     builder.setMessage(jObject.getString("EXMessage"))
                                     builder.setPositiveButton("Ok") { dialogInterface, which ->
@@ -260,7 +264,11 @@ class MyActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListene
                                         getMyActivityActionCount()
                                     }
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(this@MyActivity, R.style.MyDialogTheme)
                                     builder.setMessage(jObject.getString("EXMessage"))
                                     builder.setPositiveButton("Ok") { dialogInterface, which ->
@@ -335,7 +343,11 @@ class MyActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListene
 
 
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(this@MyActivity, R.style.MyDialogTheme)
                                     builder.setMessage(jObject.getString("EXMessage"))
                                     builder.setPositiveButton("Ok") { dialogInterface, which ->
@@ -458,7 +470,11 @@ class MyActivity : AppCompatActivity()  , View.OnClickListener, ItemClickListene
 
 
 
-                                } else {
+                                }
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     val builder = AlertDialog.Builder(this@MyActivity, R.style.MyDialogTheme)
                                     builder.setMessage(jObject.getString("EXMessage"))
                                     builder.setPositiveButton("Ok") { dialogInterface, which ->

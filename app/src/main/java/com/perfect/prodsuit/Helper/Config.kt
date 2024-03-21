@@ -1559,10 +1559,18 @@ object Config {
             btnYes.setOnClickListener {
                 dialog.dismiss()
                var logoutMode = 0
+                db = DBHelper(context, null)
+                var userList = db!!.getRegisteredUserList()
+                var tableCount = userList.length()
+                if (tableCount == 1){
+                    logoutMode = 1
+                }else{
+                    logoutMode = 0
+                }
                 logOut(context,logoutMode)
                 context.startActivity(Intent(context, SplashActivity::class.java))
             }
-            dialog.setCancelable(true)
+            dialog.setCancelable(false)
             dialog!!.setContentView(view)
 
             dialog.show()

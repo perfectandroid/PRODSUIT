@@ -8,29 +8,22 @@ import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.perfect.prodsuit.Helper.ClickListener
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
-import com.perfect.prodsuit.Helper.ProdsuitApplication
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.Repository.AreaListRepository.progressDialog
-import com.perfect.prodsuit.View.Adapter.ServiceFollowUpMainProductAdapter
-
-import com.perfect.prodsuit.Viewmodel.ServiceFollowUpInfoViewModel
 import com.perfect.prodsuit.Viewmodel.SubProductViewModel
 import org.json.JSONArray
 import org.json.JSONObject
 
 class ServiceFollowupGroupByActivity : AppCompatActivity(), ItemClickListener {
     var TAG = "ServiceFollowupGroupByActivity"
+    private var progressDialog: ProgressDialog? = null
     private var recy_main_product                       : RecyclerView?       = null
     lateinit var context                                : Context
     lateinit var subProductViewModel                    : SubProductViewModel
@@ -114,6 +107,9 @@ class ServiceFollowupGroupByActivity : AppCompatActivity(), ItemClickListener {
 //                                        val adapter = ServiceFollowUpMainProductAdapter(this@ServiceFollowupGroupByActivity, SubproductDetailsList!!)
 //                                        recy_main_product!!.adapter = adapter
 //                                        adapter.setClickListener(this@ServiceFollowupGroupByActivity)
+                                    }
+                                    else if (jObject.getString("StatusCode") == "105"){
+                                        Config.logoutTokenMismatch(context,jObject)
                                     }
                                     else
                                     {

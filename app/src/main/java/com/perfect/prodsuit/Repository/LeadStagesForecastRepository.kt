@@ -93,7 +93,7 @@ object LeadStagesForecastRepository {
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
-                Log.e(LeadDashRepository.TAG,"requestObject1   71   "+requestObject1)
+                Log.e(TAG,"requestObject1   71   "+requestObject1)
 
 
             } catch (e: Exception) {
