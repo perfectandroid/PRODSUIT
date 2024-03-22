@@ -1976,13 +1976,14 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                         this,
                         Observer { serviceSetterGetter ->
                             val msg = serviceSetterGetter.message
+                            Log.e(TAG,"19799991   "+msg)
                             if (msg!!.length > 0) {
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG, "msg   bytearray   " + msg)
                                 if (jObject.getString("StatusCode") == "0") {
                                     val jobjt = jObject.getJSONObject("CompanyLogDetails")
 
-
+                                    Log.e(TAG,"19799992   ")
                                     var count =jobjt.getString("CompanyLogo")
                                     var type =jobjt.getString("DisplayType")
                                     var companyname =jobjt.getString("CompanyName")
@@ -1991,10 +1992,11 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                     logo = jobjt!!.getString("CompanyLogo")
                                     Log.i("DIL", count)
                                     Log.i("logo1212","logo======"+logo);
-
+                                    Log.e(TAG,"19799993   ")
                                     Log.e(TAG,"1961 type   "+type)
                                     if(type.equals("0"))
                                     {
+                                        Log.e(TAG,"19799994   ")
                                         tv_Status!!.visibility=View.GONE;
                                         if(!logo.equals(""))
                                         {
@@ -2010,6 +2012,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                     }
                                     else
                                     {
+                                        Log.e(TAG,"19799995   ")
                                         if(!logo.equals(""))
                                         {
                                             Log.e(TAG,"19613 type   "+logo)
@@ -2036,7 +2039,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                                     Config.logoutTokenMismatch(context,jObject)
                                 }
                                 else {
-
+                                    Log.e(TAG,"19799996   ")
                                 }
                             } else {
 

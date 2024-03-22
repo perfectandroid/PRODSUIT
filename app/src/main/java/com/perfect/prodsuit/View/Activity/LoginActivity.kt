@@ -555,6 +555,7 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
 
                                                 btn_Gotit!!.setOnClickListener {
                                                     dialog1.dismiss()
+                                                    etxt_mob!!.setText("")
 
                                                 }
 
