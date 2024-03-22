@@ -449,10 +449,12 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
 
           Log.e(TAG,"org3   "+strDate)
   */
+        val sdf1 = SimpleDateFormat("dd-MM-yyyy")
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         val currentDate = sdf.format(Date())
+        val currentDate1 = sdf1.format(Date())
         System.out.println(" C DATE is  "+currentDate)
-        tie_Date!!.setText(currentDate)
+        tie_Date!!.setText(currentDate1)
         serviceList = 0
         strToDate=currentDate
 
