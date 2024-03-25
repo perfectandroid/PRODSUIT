@@ -108,7 +108,6 @@ object DetailedReportRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_AssignedEmployee))
                 requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"ReportMode   456745   "+ReportMode)

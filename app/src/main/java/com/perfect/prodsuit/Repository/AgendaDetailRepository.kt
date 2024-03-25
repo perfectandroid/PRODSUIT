@@ -91,7 +91,6 @@ object AgendaDetailRepository {
                 requestObject1.put("ID_ActionType", ProdsuitApplication.encryptStart(ID_ActionType))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
                 requestObject1.put("Id_Agenda", ProdsuitApplication.encryptStart(Id_Agenda))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 requestObject1.put("Name", ProdsuitApplication.encryptStart(name))
                 requestObject1.put("Todate", ProdsuitApplication.encryptStart(date))

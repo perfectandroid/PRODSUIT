@@ -90,7 +90,6 @@ object ServiceFollowUpHistoryRepository {
                 requestObject1.put("FK_Product",ProdsuitApplication.encryptStart(FK_Product))
                 requestObject1.put("FK_Customer",ProdsuitApplication.encryptStart(FK_Customer))
                 requestObject1.put("FK_CustomerOthers",ProdsuitApplication.encryptStart(FK_CustomerOther))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.v("asdasdad33fff","requestObject1 "+requestObject1)

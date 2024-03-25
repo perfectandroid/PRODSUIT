@@ -88,7 +88,6 @@ object ServiceWarrantyRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart("4"))  // Change Submode 1 to 4
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
                 requestObject1.put("ID_CustomerWiseProductDetails", ProdsuitApplication.encryptStart(ID_CustomerWiseProductDetails))

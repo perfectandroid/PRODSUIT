@@ -80,7 +80,6 @@ object StockRTListRepository {
                 requestObject1.put("TransMode", ProdsuitApplication.encryptStart(TransMode))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
                 requestObject1.put("Detailed", ProdsuitApplication.encryptStart(Detailed))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"requestObject1   8100   "+requestObject1)

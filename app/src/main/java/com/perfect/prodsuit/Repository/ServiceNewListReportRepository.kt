@@ -110,7 +110,6 @@ object ServiceNewListReportRepository {
                 requestObject1.put("ComplaintService", ID_CompService)
                 requestObject1.put("ReplacementType", "0")
                 requestObject1.put("TicketNo", "0")
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 

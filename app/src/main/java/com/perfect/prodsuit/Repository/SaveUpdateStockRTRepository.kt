@@ -139,7 +139,6 @@ object SaveUpdateStockRTRepository {
                 requestObject1.put("TransMode", ProdsuitApplication.encryptStart(TransMode))
                 requestObject1.put("FK_StockRequest", ProdsuitApplication.encryptStart(FK_StockRequest))
                 requestObject1.put("ID_StockTransfer", ProdsuitApplication.encryptStart(ID_StockTransfer))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 requestObject1.put("EmployeeStockTransferDetails", saveDetailArray)

@@ -273,7 +273,6 @@ object LeadGenerateSaveRepository {
                 requestObject1.put("UserName", ProdsuitApplication.encryptStart(UserNameSP.getString("UserName", null))) //New
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("UserAction", ProdsuitApplication.encryptStart(saveUpdateMode))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
 
                 requestObject1.put("TransMode", ProdsuitApplication.encryptStart("LFLG")) // HARD //New

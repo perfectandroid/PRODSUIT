@@ -80,7 +80,6 @@ object ApprovalDetailRepository {
                 requestObject1.put("FK_User", ProdsuitApplication.encryptStart(ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("Module", ProdsuitApplication.encryptStart(Module))
                 requestObject1.put("AuthID", ProdsuitApplication.encryptStart(AuthID))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 

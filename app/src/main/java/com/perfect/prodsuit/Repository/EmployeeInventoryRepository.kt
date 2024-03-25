@@ -76,7 +76,6 @@ object EmployeeInventoryRepository {
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("37"))
                 requestObject1.put("Critrea1", ProdsuitApplication.encryptStart(Fk_Department))
                 requestObject1.put("Critrea2", ProdsuitApplication.encryptStart(Fk_Branch))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"78  StockRTEmployeeDetails    "+requestObject1)

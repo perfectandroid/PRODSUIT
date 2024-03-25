@@ -75,7 +75,6 @@ object EmployeeWiseLocationListRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("LocationEnteredDate", ProdsuitApplication.encryptStart(strDate))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_Employee))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"78111     "+requestObject1)

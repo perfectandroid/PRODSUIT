@@ -90,7 +90,6 @@ object CreateWalkingCustomerRepository {
                 requestObject1.put("VoiceData", strVoiceData)
                 requestObject1.put("VoiceLabel", "Voice")
                 requestObject1.put("leadByMobileNo", leadByMobileNo)
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e("wewewe","sent length==   "+strVoiceData.length)

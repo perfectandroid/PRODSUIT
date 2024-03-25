@@ -82,7 +82,6 @@ object ServiceFollowUpMoreReplacedProductRepository {
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(ID_Branch))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(UserCodeSP.getString("UserCode", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.v(TAG,"requestObject1 "+requestObject1)

@@ -95,7 +95,6 @@ object UpadateSiteVisitRepository {
                 requestObject1.put("Inspectioncharge", ProdsuitApplication.encryptStart(strInspectionCharge))
                 requestObject1.put("Remarks", ProdsuitApplication.encryptStart(strCommonRemark))
                 requestObject1.put("FK_SiteVisitAssignment", ProdsuitApplication.encryptStart(ID_SiteVisitAssignment))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 requestObject1.put("EmployeeDetails", saveEmployeeDetails)
                 requestObject1.put("MeasurementDetails", saveMeasurementDetails)

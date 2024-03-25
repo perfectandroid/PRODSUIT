@@ -86,7 +86,6 @@ object EmiListRepository {
                 requestObject1.put("FK_FinancePlanType", ProdsuitApplication.encryptStart(ID_FinancePlanType))
                 requestObject1.put("FK_Area", ProdsuitApplication.encryptStart(ID_Area))
                 requestObject1.put("FK_Category", ProdsuitApplication.encryptStart(ID_Category))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 

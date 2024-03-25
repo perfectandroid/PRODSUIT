@@ -66,7 +66,6 @@ object ProductPriorityRepository {
                 val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("16"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))

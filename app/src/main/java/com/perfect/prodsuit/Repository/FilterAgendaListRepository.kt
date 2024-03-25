@@ -69,7 +69,6 @@ object FilterAgendaListRepository {
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
                 val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("43"))
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))

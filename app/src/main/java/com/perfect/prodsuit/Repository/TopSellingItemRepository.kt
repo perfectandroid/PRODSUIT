@@ -92,7 +92,6 @@ object TopSellingItemRepository {
          //       requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-08"))
                 requestObject1.put("DashMode", ProdsuitApplication.encryptStart("24"))
                 requestObject1.put("DashType", ProdsuitApplication.encryptStart("2"))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 

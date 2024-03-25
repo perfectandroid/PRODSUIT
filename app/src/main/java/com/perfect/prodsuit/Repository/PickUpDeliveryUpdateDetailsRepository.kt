@@ -74,7 +74,6 @@ object PickUpDeliveryUpdateDetailsRepository {
                 requestObject1.put("ID_ProductDelivery", ProdsuitApplication.encryptStart(ID_ProductDelivery))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(SubMode))
                 requestObject1.put("TransMode", ProdsuitApplication.encryptStart(TransMode))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 

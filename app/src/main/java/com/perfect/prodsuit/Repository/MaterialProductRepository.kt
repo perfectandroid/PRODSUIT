@@ -81,7 +81,6 @@ object MaterialProductRepository {
                 requestObject1.put("Critrea2", ProdsuitApplication.encryptStart(ID_Stage))
                 requestObject1.put("Critrea3", ProdsuitApplication.encryptStart(ID_Team))
                 requestObject1.put("Critrea4", ProdsuitApplication.encryptStart(ID_Employee))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"ProductList  78   "+requestObject1)

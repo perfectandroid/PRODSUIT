@@ -89,7 +89,6 @@ object ServiceProductHistoryRepository {
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart("2"))
 
                 requestObject1.put("FK_Product", ProdsuitApplication.encryptStart(ID_Product))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
 
                 if (Customer_Type.equals("0")){
 
