@@ -476,6 +476,10 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                     Log.e(TAG," SUM of new "+sum)
 
                                     txt_open!!.setText(""+sum)
+
+
+                                 //   txt_open!!.setText(String.format("%,.2f", sum ));
+
                                     txt_new!!.setText(""+sum1)
                                     txt_closed!!.setText(""+sum2)
                                     txt_losed!!.setText(""+sum3)
