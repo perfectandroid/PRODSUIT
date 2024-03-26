@@ -71,7 +71,6 @@ object SendEmailRepository {
                 requestObject1.put("Subject", ProdsuitApplication.encryptStart(messageSubject))
                 requestObject1.put("Body", ProdsuitApplication.encryptStart(messageBody))
                 requestObject1.put("ToEmail", ProdsuitApplication.encryptStart(mailid))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"requestObject1   4500   "+requestObject1)

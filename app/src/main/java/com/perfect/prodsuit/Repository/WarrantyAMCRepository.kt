@@ -85,7 +85,6 @@ object WarrantyAMCRepository {
                 requestObject1.put("Critrea3", ProdsuitApplication.encryptStart("10"))
                 requestObject1.put("Critrea2", ProdsuitApplication.encryptStart("1"))
                 requestObject1.put("Critrea1", ProdsuitApplication.encryptStart("0"))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 

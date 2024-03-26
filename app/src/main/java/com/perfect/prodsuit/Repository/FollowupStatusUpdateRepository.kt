@@ -88,7 +88,6 @@ object FollowupStatusUpdateRepository {
                 requestObject1.put("LocationEnteredDate", ProdsuitApplication.encryptStart(curDate))
                 requestObject1.put("LocationEnteredTime", ProdsuitApplication.encryptStart(curTime))
                 requestObject1.put("Status", ProdsuitApplication.encryptStart(journeyType))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 

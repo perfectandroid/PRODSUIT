@@ -84,7 +84,6 @@ object LeadFromInfoRepository {
                 requestObject1.put("FK_Machine", ProdsuitApplication.encryptStart("10"))
                 requestObject1.put("ID_LeadFrom", ProdsuitApplication.encryptStart(ID_LeadFrom))
                 requestObject1.put("TransMode", ProdsuitApplication.encryptStart(TransMode))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 

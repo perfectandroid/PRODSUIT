@@ -73,7 +73,6 @@ object AddExpenseActivityRepository {
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("ID_Expense", ProdsuitApplication.encryptStart(strExtypeid))
                 requestObject1.put("Amount", ProdsuitApplication.encryptStart(strExamount))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
             } catch (e: Exception) {

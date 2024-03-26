@@ -78,7 +78,6 @@ object ProjectWiseEmployeeRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("FK_Project", ProdsuitApplication.encryptStart(ID_Project))
                 requestObject1.put("FK_Stages", ProdsuitApplication.encryptStart(ID_Stage))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"requestObject1   80000    "+requestObject1)

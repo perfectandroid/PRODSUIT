@@ -98,7 +98,6 @@ object StatusListTicketReportRepository {
                 requestObject1.put("FK_Priority", ProdsuitApplication.encryptStart(ID_Priority))
                 requestObject1.put("ActStatus", ProdsuitApplication.encryptStart(ID_Status))
                 requestObject1.put("GroupId", ProdsuitApplication.encryptStart(GroupId))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG,"ReportMode   98   "+ReportMode)

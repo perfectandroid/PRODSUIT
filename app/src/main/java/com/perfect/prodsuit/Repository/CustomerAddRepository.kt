@@ -74,7 +74,6 @@ object CustomerAddRepository {
                 requestObject1.put("Address", ProdsuitApplication.encryptStart(CustomerSearchActivity.strAddress))
                 requestObject1.put("Email", ProdsuitApplication.encryptStart(CustomerSearchActivity.strEmail))
                 requestObject1.put("MobileNumber", ProdsuitApplication.encryptStart(CustomerSearchActivity.strPhone))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
                 Log.e(TAG,"requestObject1   86   "+requestObject1)
             } catch (e: Exception) {

@@ -95,7 +95,6 @@ object ServiceEditUpadateRepository {
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart( FK_BranchSP.getString("FK_Branch", null)))
                 requestObject1.put("FK_AttendedBy", ProdsuitApplication.encryptStart(ID_AttendedBy))
                 requestObject1.put("Status", ProdsuitApplication.encryptStart(ID_Status))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 

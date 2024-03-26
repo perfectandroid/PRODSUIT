@@ -73,7 +73,6 @@ object AddremarkRepository {
                 requestObject1.put("ID_LeadGenerateProduct", ProdsuitApplication.encryptStart(ID_LeadGenerateProduct))
                 requestObject1.put("CustomerNote", ProdsuitApplication.encryptStart(customernote))
                 requestObject1.put("EmployeeNote", ProdsuitApplication.encryptStart(agentnote))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e("TAG","739   "+ID_LeadGenerate+"  :  "+ID_LeadGenerateProduct+"  :  "+customernote+"  :  "+agentnote)

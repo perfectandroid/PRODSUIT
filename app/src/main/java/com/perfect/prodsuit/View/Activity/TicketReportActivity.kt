@@ -2680,6 +2680,9 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             dialogGrouping!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL;
             recyGrouping = dialogGrouping!!.findViewById(R.id.recyGrouping) as RecyclerView
             val etsearch = dialogGrouping!!.findViewById(R.id.etsearch) as EditText
+            val tv_header1 = dialogGrouping!!.findViewById(R.id.tv_header) as TextView
+
+            tv_header1!!.setText("Summary Type")
 
             recyGrouping!!.visibility=View.VISIBLE
             val txt_nodata = dialogGrouping!!.findViewById(R.id.txt_nodata) as TextView

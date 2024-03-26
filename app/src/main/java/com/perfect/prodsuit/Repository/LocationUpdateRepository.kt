@@ -96,7 +96,6 @@ object LocationUpdateRepository {
                 requestObject1.put("LocationEnteredTime", ProdsuitApplication.encryptStart("18:25:22"))
                 requestObject1.put("LocationLandMark1", ProdsuitApplication.encryptStart(""))
                 requestObject1.put("LocationLandMark2", ProdsuitApplication.encryptStart(""))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e("requestobject  9875  ","\n"+requestObject1)

@@ -76,7 +76,6 @@ object ProductWiseComplaintRepository {
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("Critrea5", ProdsuitApplication.encryptStart(ID_Category))
                 requestObject1.put("Critrea6", ProdsuitApplication.encryptStart(ID_Product))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 

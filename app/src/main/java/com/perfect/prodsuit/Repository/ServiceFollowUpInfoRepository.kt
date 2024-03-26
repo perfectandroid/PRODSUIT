@@ -96,7 +96,6 @@ object ServiceFollowUpInfoRepository {
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(ID_Employee))
                 requestObject1.put("FK_CustomerserviceregisterProductDetails", ProdsuitApplication.encryptStart(ID_CustomerserviceregisterProductDetails))
                 requestObject1.put("FK_Customerserviceregister", ProdsuitApplication.encryptStart(customerServiceRegister))
-                requestObject1.put("ID_User", ProdsuitApplication.encryptStart(FK_ID_UserSP.getString("ID_User", null)))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
                 Log.e(TAG, "requestObject1 555 " + requestObject1)
