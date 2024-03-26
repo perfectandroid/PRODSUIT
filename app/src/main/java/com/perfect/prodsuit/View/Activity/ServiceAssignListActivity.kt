@@ -196,6 +196,7 @@ class ServiceAssignListActivity : AppCompatActivity() , View.OnClickListener, It
     }
 
     override fun onClick(v: View) {
+
         when(v.id){
             R.id.imback->{
                 finish()

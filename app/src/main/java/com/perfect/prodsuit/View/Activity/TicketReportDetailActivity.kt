@@ -35,6 +35,11 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
     lateinit var context: Context
     private var imback: ImageView? = null
     private var tv_ReportName: TextView? = null
+     private var txt_open: TextView? = null
+     private var txt_new: TextView? = null
+     private var txt_closed: TextView? = null
+     private var txt_losed: TextView? = null
+     private var balance: TextView? = null
     private var Type: TextView? = null
     private var report_date: TextView? = null
     private var ReportMode: String? = ""
@@ -48,6 +53,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
     private var ID_Priority: String? = ""
     private var ID_Status: String? = ""
     private var GroupId: String? = ""
+     private var total: Int? = 0
     private var ID_CollectedBy: String? = ""
     private var ID_AssignedEmployee: String? = ""
     private var ID_Category: String? = ""
@@ -63,7 +69,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
     lateinit var actionListReportArrayList: JSONArray
     var recyActionListReport: RecyclerView? = null
     var recycleSummary: RecyclerView? = null
-
+     lateinit var actionSort: JSONArray
     lateinit var followUpTicketReportViewModel: FollowUpTicketReportViewModel
     lateinit var followUpTicketReportArrayList: JSONArray
     var recyFollowUpTicketReport: RecyclerView? = null
@@ -77,6 +83,12 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
     var recyStatusListTicketReport: RecyclerView? = null
 
     var followList = 0
+     var sum=0
+     var sum1=0
+     var sum2=0
+     var sum3=0
+     var sum4=0
+     var sum5=0
     var newList = 0
     private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
@@ -241,6 +253,12 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
         Type = findViewById(R.id.Type)
         tv_ReportName = findViewById(R.id.tv_ReportName)
+        txt_open= findViewById(R.id.txt_open)
+        txt_new= findViewById(R.id.txt_new)
+        txt_closed= findViewById(R.id.txt_closed)
+        txt_losed= findViewById(R.id.txt_losed)
+        balance= findViewById(R.id.balance)
+
         ll_ActionList = findViewById(R.id.ll_ActionList)
         ll_Summary = findViewById(R.id.ll_Summary)
         ll_FollowUpTicket = findViewById(R.id.ll_FollowUpTicket)
@@ -313,6 +331,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                             if (jObject.getString("StatusCode") == "0") {
                                 val jobjt = jObject.getJSONObject("ActionListDetailsReport")
                                 actionListReportArrayList = jobjt.getJSONArray("ActionList")
+
                                 if (actionListReportArrayList.length() > 0) {
 
                                     ll_ActionList!!.visibility = View.VISIBLE
@@ -425,6 +444,43 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                     val jobjt = jObject.getJSONObject("SummaryWiseReport")
                                     actionListReportArrayList =
                                         jobjt.getJSONArray("SummaryLeadList")
+
+                                    actionSort= JSONArray()
+
+                                    var open =""
+                                    var new=""
+                                    var closed =""
+                                    var lost=""
+                                    var bal=""
+
+                                    for (k in 0 until actionListReportArrayList.length()) {
+                                        val jsonObject = actionListReportArrayList.getJSONObject(k)
+                                        open =jsonObject.getString("Opening")
+                                        new =jsonObject.getString("New")
+                                        closed =jsonObject.getString("Closed")
+                                        lost =jsonObject.getString("Lost")
+                                        bal =jsonObject.getString("Balance")
+
+
+                                      //  actionSort.put(k,jsonObject)
+                                        sum += open.toInt()
+                                        sum1 += new.toInt()
+                                        sum2 += closed.toInt()
+                                        sum3 += lost.toInt()
+                                        sum4 += bal.toInt()
+
+                                      //  actionSort.put(jsonObject.getString("New"))
+
+
+                                    }
+                                    Log.e(TAG," SUM of new "+sum)
+
+                                    txt_open!!.setText(""+sum)
+                                    txt_new!!.setText(""+sum1)
+                                    txt_closed!!.setText(""+sum2)
+                                    txt_losed!!.setText(""+sum3)
+                                    balance!!.setText(""+sum4)
+
                                     if (actionListReportArrayList.length() > 0) {
 
                                         Log.e(TAG, "msg   1703   " + actionListReportArrayList)

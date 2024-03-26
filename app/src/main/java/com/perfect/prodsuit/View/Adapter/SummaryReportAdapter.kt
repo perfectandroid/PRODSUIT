@@ -22,6 +22,8 @@ class SummaryReportAdapter(
     internal var strTodate: String,
     internal var ID_Product: String?,
     internal var ID_Category: String?,
+
+
     internal var ID_Branch: String?,
     internal var ID_Employee: String?,
     internal var ID_AssignedEmployee: String?
