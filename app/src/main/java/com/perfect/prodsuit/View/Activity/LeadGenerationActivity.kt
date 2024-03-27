@@ -2159,42 +2159,42 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 // strProdName = edtProdproduct!!.text.toString()
                 Log.i("resp2323","id category="+ID_Category)
                 Config.disableClick(v)
-                proddetail = 0
-                getProductDetail(ID_Category!!)
+//                proddetail = 0
+//                getProductDetail(ID_Category!!)
 
                 //..................................
 
-//                if (ID_Category.equals("")) {
-////                    val snackbar: Snackbar = Snackbar.make(v, "Select Category", Snackbar.LENGTH_LONG)
-////                    snackbar.setActionTextColor(Color.WHITE)
-////                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
-////                    snackbar.show()
-//                    Config.snackBars(applicationContext, v, "Select Category")   //---314400
-//
-//                    llProdDetail!!.visibility = View.VISIBLE
-//                    // custProdlMode = "0"
-//
-//                    custDetailMode = "1"
-//                    companyNameMode = "1"
-//                    moreCommInfoMode = "1"
-//                    custProdlMode = "0"
-//                    locationMode = "1"
-//                    dateMode = "1"
-//                    leadRequestMode = "1"
-//                    leadfromMode = "1"
-//                    leadThroughMode = "1"
-//                    leadByMode = "1"
-//                    mediaTypeMode = "1"
-//                    uploadImageMode = "1"
-//
-//                    hideViews()
-//
-//
-//                } else {
-//                    Config.disableClick(v)
-//                    proddetail = 0
-//                    getProductDetail(ID_Category!!)
-//                }
+                if (ID_Category.equals("")) {
+//                    val snackbar: Snackbar = Snackbar.make(v, "Select Category", Snackbar.LENGTH_LONG)
+//                    snackbar.setActionTextColor(Color.WHITE)
+//                    snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
+//                    snackbar.show()
+                    Config.snackBars(applicationContext, v, "Select Category")   //---314400
+
+                    llProdDetail!!.visibility = View.VISIBLE
+                    // custProdlMode = "0"
+
+                    custDetailMode = "1"
+                    companyNameMode = "1"
+                    moreCommInfoMode = "1"
+                    custProdlMode = "0"
+                    locationMode = "1"
+                    dateMode = "1"
+                    leadRequestMode = "1"
+                    leadfromMode = "1"
+                    leadThroughMode = "1"
+                    leadByMode = "1"
+                    mediaTypeMode = "1"
+                    uploadImageMode = "1"
+
+                    hideViews()
+
+
+                } else {
+                    Config.disableClick(v)
+                    proddetail = 0
+                    getProductDetail(ID_Category!!)
+                }
                 //......................
             }
 
@@ -2309,11 +2309,13 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                 hasMultipleProduct(editProdcutListarray, ID_Category!!, ID_Product!!)
                             Log.e(TAG, "has id " + hasId)
                             if (hasId) {
+                                Log.e(TAG,"880002  ")
                                 addMultipleProduct()
                             } else {
                                 Config.snackBars(context, v, "Duplicate Product")
                             }
                         }else{
+                            Log.e(TAG,"880003  ")
                             addMultipleProduct()
                         }
 
@@ -6126,6 +6128,15 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             recyProdDetail = dialogProdDet!!.findViewById(R.id.recyProdDetail) as RecyclerView
             val etsearch = dialogProdDet!!.findViewById(R.id.etsearch) as EditText
             val txt_nodata = dialogProdDet!! .findViewById(R.id.txt_nodata) as TextView
+            val adp_header = dialogProdDet!! .findViewById(R.id.adp_header) as TextView
+
+            if (CompanyCategory.equals("0") || CompanyCategory.equals("1")) {
+                adp_header!!.setText("Product")
+                txt_nodata!!.setText("Invalid Product")
+            } else if (CompanyCategory.equals("2")) {
+                adp_header!!.setText("Designation")
+                txt_nodata!!.setText("Invalid Designation")
+            }
 
             prodDetailSort = JSONArray()
             for (k in 0 until prodDetailArrayList.length()) {
@@ -7327,7 +7338,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                employeeViewModel.getEmployee(this, ID_Department)!!.observe(
+              //  employeeViewModel.getEmployee(this, ID_Department)!!.observe(
+                employeeViewModel.getEmployee(this, "0")!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {
@@ -7520,7 +7532,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 
 
-
+                arrupdateedit = "0"
+                arrPosition = 0
                 editProdcutListarray.remove(position)
                 Log.e(TAG, "1212122    " +editProdcutListarray)
 
@@ -7556,13 +7569,24 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 edtAmount!!.setText("")
                 tv_Mrp!!.setText("")
 
-                ID_CollectedBy=""
+               // ID_CollectedBy=""
                 ID_ProductLocation=""
                 edtFloor!!.setText("")
                 ProductMRP=""
 
                 ID_Employee=""
                 edtEmployee!!.setText("")
+
+                llfollowup!!.visibility = View.GONE
+                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
+                val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+
+                ID_Employee = FK_EmployeeSP.getString("FK_Employee", null).toString()
+                edtEmployee!!.setText(UserNameSP.getString("UserName", null))
+
+                val sdf = SimpleDateFormat("dd-MM-yyyy")
+                val currentDate = sdf.format(Date())
+                edtFollowdate!!.setText(currentDate)
 
                 viewList(editProdcutListarray,edtEmployee!!.text.toString())
                 dialog.dismiss()
@@ -8796,6 +8820,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 Config.snackBars(context, v, "Add Product")
             } else {
 
+                Log.e(TAG,"88000  ")
                 addMultipleProduct()
                 LocationValidation(v)
             }
@@ -9250,6 +9275,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             val ll_cust_landline =
                 dialogConfirmPop!!.findViewById(R.id.ll_cust_landline) as LinearLayout
 
+            val tvp_category_prod = dialogConfirmPop!!.findViewById(R.id.category_prod) as TextView
+            val tvp_mrp_offerprice = dialogConfirmPop!!.findViewById(R.id.mrp_offerprice) as TextView
+
             val tvp_cust_coutry = dialogConfirmPop!!.findViewById(R.id.tvp_cust_coutry) as TextView
             val tvp_cust_state = dialogConfirmPop!!.findViewById(R.id.tvp_cust_state) as TextView
             val tvp_cust_district =
@@ -9259,6 +9287,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 dialogConfirmPop!!.findViewById(R.id.tvp_cust_pincode) as TextView
             val tvp_cust_landline =
                 dialogConfirmPop!!.findViewById(R.id.tvp_cust_landline) as TextView
+
+
+
 
 
             ////////////////////////
@@ -9365,6 +9396,22 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             val btnOk = dialogConfirmPop!!.findViewById(R.id.btnOk) as Button
 
             Log.e(TAG, "")
+
+            var CompanyCategorySP1 = applicationContext.getSharedPreferences(Config.SHARED_PREF46, 0)
+            CompanyCategory = CompanyCategorySP1.getString("CompanyCategory", "").toString()
+            Log.e(TAG, "CompanyCategory  1122   " + CompanyCategory)
+
+            Log.e(TAG, "CompanyCategory  857   " + CompanyCategory)
+
+            if (CompanyCategory.equals("0") || CompanyCategory.equals("1")) {
+                tvp_category_prod.setText("Product/CATEGORY")
+                tvp_mrp_offerprice.setText("MRP/Offer Price")
+            } else if (CompanyCategory.equals("2")) {
+                tvp_category_prod.setText("Destination/CATEGORY")
+                tvp_mrp_offerprice.setText("No.of Passengers")
+            }
+
+
 
 
             if (ID_LeadFrom.equals("")) {
@@ -10386,6 +10433,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         }
 
 
+
         strProduct = edtProdproduct!!.text.toString()
         strProject = edtProjectName!!.text.toString()
         strFeedback = edtProdfeedback!!.text.toString()
@@ -10642,7 +10690,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
     }
 
     private fun addMultipleProduct() {
-
+        Log.e(TAG,"880004  ")
         Log.v("sdfdsfdsdd", "in")
 
 //        strQty = edtProdqty!!.text.toString()
@@ -10650,8 +10698,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         Log.e("qqqqqqqqq", "9877777"  +  edtEmployee!!.text.toString())
 
 
-
-
+        strExpecteddate = edtExpecteddate!!.text.toString()
+        Log.e(TAG, "10659  arrupdateedit  "  +  arrupdateedit)
+        Log.e(TAG, "10659  strExpecteddate  "  +  strExpecteddate)
 
         if (arrupdateedit!!.equals("0")) {
 
@@ -10735,6 +10784,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         edtFollowaction!!.setText("")
         edtFollowtype!!.setText("")
         tv_Mrp!!.setText("")
+        edtExpecteddate!!.setText("")
         edtFollowdate!!.setText("")
         edtFloor!!.setText("")
 //        edtEmployee!!.setText("")
@@ -10846,7 +10896,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 jObject.put("FK_ProductLocation", (jsonObject.getString("FK_ProductLocation")))
                 jObject.put("NextActionDate", folloupdate)
 
-                jObject.put("LgpExpectDate", strExpecteddate)
+               // jObject.put("LgpExpectDate", strExpecteddate)
+                jObject.put("LgpExpectDate", Config.convertDate(jsonObject.getString("LgpExpectDate")))
                 jObject.put("LgpMRP", ("0"))
                 jObject.put("LgpSalesPrice", ("0"))
 //                jObject.put("FK_ProductLocation", ID_ProductLocation)
@@ -10878,7 +10929,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 jObject.put("FK_ProductLocation", (jsonObject.getString("FK_ProductLocation")))
                 jObject.put("NextActionDate", folloupdate)
 
-                jObject.put("LgpExpectDate", strExpecteddate)
+               // jObject.put("LgpExpectDate", strExpecteddate)
+                jObject.put("LgpExpectDate", Config.convertDate(jsonObject.getString("LgpExpectDate")))
                 jObject.put("LgpMRP", (jsonObject.getString("MRP")))
                 jObject.put("LgpSalesPrice", (jsonObject.getString("LgpSalesPrice")))
 

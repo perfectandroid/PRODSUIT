@@ -1974,7 +1974,8 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                employeeViewModel.getEmployee(this, ID_Department)!!.observe(
+           //     employeeViewModel.getEmployee(this, ID_Department)!!.observe(
+                employeeViewModel.getEmployee(this, "0")!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {

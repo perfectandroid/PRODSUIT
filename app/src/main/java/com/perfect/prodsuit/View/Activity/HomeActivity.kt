@@ -1649,30 +1649,30 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
             if (tie_old_mpin!!.text.toString() == null || tie_old_mpin!!.text.toString().isEmpty()) {
 //                tie_old_mpin!!.setError("Please Enter Your Old mPin.")
-                Config.snackBarWarning(context,it,"Please Enter Your Old mPin.")
+                Config.snackBarWarning(context,it,"Please Enter Your Old MPIN.")
             }
             else if (tie_old_mpin!!.text.toString().isNotEmpty() && tie_old_mpin!!.text.toString().length!=6) {
 //                tie_old_mpin.setError("Please Enter 6 digit mPin")
-                Config.snackBarWarning(context,it,"Please Enter 6 digit Old mPin")
+                Config.snackBarWarning(context,it,"Please Enter 6 digit Old MPIN")
             }
             else if (tie_new_mpin!!.text.toString() == null || tie_new_mpin!!.text.toString().isEmpty()) {
                // tie_new_mpin!!.setError("Please Enter Your New mPin.")
-                Config.snackBarWarning(context,it,"Please Enter Your New mPin.")
+                Config.snackBarWarning(context,it,"Please Enter Your New MPIN.")
             }
             else if (tie_new_mpin!!.text.toString().isNotEmpty() && tie_new_mpin!!.text.toString().length!=6) {
 //                tie_new_mpin.setError("Please Enter 6 digit mPin")
-                Config.snackBarWarning(context,it,"Please Enter 6 digit New mPin")
+                Config.snackBarWarning(context,it,"Please Enter 6 digit New MPIN")
             }
             else if (tie_confirm_mpin!!.text.toString() == null || tie_confirm_mpin!!.text.toString().isEmpty()) {
                // tie_confirm_mpin!!.setError("Please Confirm Your New mPin.")
-                Config.snackBarWarning(context,it,"Please Confirm Your New mPin.")
+                Config.snackBarWarning(context,it,"Please Confirm Your New MPIN.")
             }
             else if (tie_confirm_mpin!!.text.toString().isNotEmpty() && tie_confirm_mpin!!.text.toString().length!=6) {
                 //  tie_confirm_mpin.setError("Please Enter 6 digit mPin")
-                Config.snackBarWarning(context,it,"Please Enter 6 digit Confirm mPin")
+                Config.snackBarWarning(context,it,"Please Enter 6 digit Confirm MPIN")
             }
             else if (tie_new_mpin!!.text.toString() != tie_confirm_mpin!!.text.toString()) {
-                Config.snackBarWarning(context,it,"New & Confirm mPin doesn't match")
+                Config.snackBarWarning(context,it,"New & Confirm MPIN doesn't match")
 //                val dialog: AlertDialog.Builder = AlertDialog.Builder(this)
 //                dialog.setMessage("New & Confirm mPin doesn't match")
 //                dialog.setPositiveButton("Ok",

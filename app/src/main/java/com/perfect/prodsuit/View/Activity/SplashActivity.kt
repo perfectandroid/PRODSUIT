@@ -6,7 +6,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.graphics.Color
+import android.content.pm.ApplicationInfo
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
@@ -25,17 +25,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.R
-import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.Helper.DBHelper
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
-import com.perfect.prodsuit.Viewmodel.*
+import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Viewmodel.CommonAppViewModel
+import com.perfect.prodsuit.Viewmodel.CompanyCodeViewModel
+import com.perfect.prodsuit.Viewmodel.MaintanceMessageViewModel
+import com.perfect.prodsuit.Viewmodel.SplashresellerActivityViewModel
+import com.perfect.prodsuit.Viewmodel.VersionCheckViewModel
 import org.json.JSONArray
 import org.json.JSONObject
+
 
 class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
@@ -383,6 +387,13 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
         val ContDeleteModeSP = context.getSharedPreferences(Config.SHARED_PREF84, 0)
         var contDeleteMode =ContDeleteModeSP.getString("ContDeleteMode","")
         Log.e(TAG,"contDeleteMode   139   "+contDeleteMode)
+//
+//        if (Config.isDebuggable(context)){
+//            Toast.makeText(applicationContext," Device is in debug mode",Toast.LENGTH_SHORT).show()
+//        }else{
+//            Toast.makeText(applicationContext,"Device is not in debug mode",Toast.LENGTH_SHORT).show()
+//        }
+
 
 
 //        Config.logOut(context,1)
