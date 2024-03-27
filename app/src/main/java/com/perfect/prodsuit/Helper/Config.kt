@@ -4,17 +4,12 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityManager
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.ConnectivityManager
-import android.net.Network
-import android.net.NetworkCapabilities
-import android.net.NetworkRequest
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.provider.Settings
@@ -24,7 +19,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -36,7 +30,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
 import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.AttendanceMarkingActivity
 import com.perfect.prodsuit.View.Activity.SplashActivity
 import com.perfect.prodsuit.View.Service.NotificationLocationService
 import okhttp3.OkHttpClient
@@ -48,6 +41,7 @@ import java.security.*
 import java.security.cert.CertificateException
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -1544,6 +1538,15 @@ object Config {
     fun generateRandom(): Int {
         val random = Random()
         return random.nextInt(9999 - 1000) + 1000
+    }
+
+    fun getDecimelFormateForText(amount: Double): String? {
+        val fmt = DecimalFormat("#,##,##,##,###")
+        var amt: String = fmt.format(amount)
+        if (amt.substring(0, 1) == ".") {
+            amt = "0$amt"
+        }
+        return amt
     }
 
 

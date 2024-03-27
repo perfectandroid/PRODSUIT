@@ -22,6 +22,8 @@ class SummaryReportAdapter(
     internal var strTodate: String,
     internal var ID_Product: String?,
     internal var ID_Category: String?,
+
+
     internal var ID_Branch: String?,
     internal var ID_Employee: String?,
     internal var ID_AssignedEmployee: String?
@@ -48,11 +50,73 @@ class SummaryReportAdapter(
                 val pos = position+1
 //                holder.tv_SiNo.text         = pos.toString()
                 holder.text.text       = jsonObject!!.getString("GroupName")
-                holder.opening.text     = jsonObject!!.getString("Opening")
-                holder.news.text     = jsonObject!!.getString("New")
-                holder.closed.text      = jsonObject!!.getString("Closed")
-                holder.losed.text       = jsonObject!!.getString("Lost")
-                holder.balance.text   = jsonObject!!. getString("Balance")
+
+                var openings =jsonObject!!.getString("Opening")
+                var newses =jsonObject!!.getString("New")
+                var closes =jsonObject!!.getString("Closed")
+                var loses =jsonObject!!.getString("Lost")
+                var bal =jsonObject!!.getString("Balance")
+              //  var bal  ="125550"
+
+                var longval: Double
+                var longval1: Double
+                var longval2: Double
+                var longval3: Double
+                var longval4: Double
+
+                if (openings.contains(",")) {
+                    openings = openings.replace(",", "")
+                }
+                longval = openings.toDouble()
+                val formattedStringopen: String =
+                    Config.getDecimelFormateForText(longval).toString()
+
+
+                if (newses.contains(",")) {
+                    newses = openings.replace(",", "")
+                }
+                longval1 = newses.toDouble()
+                val formattedStringnews: String =
+                    Config.getDecimelFormateForText(longval1).toString()
+
+
+                if (closes.contains(",")) {
+                    closes = closes.replace(",", "")
+                }
+                longval2 = closes.toDouble()
+                val formattedStringcloses: String =
+                    Config.getDecimelFormateForText(longval2).toString()
+
+
+                if (loses.contains(",")) {
+                    loses = loses.replace(",", "")
+                }
+                longval3 = loses.toDouble()
+                val formattedStringloses: String =
+                    Config.getDecimelFormateForText(longval3).toString()
+
+                if (bal.contains(",")) {
+                    bal = bal.replace(",", "")
+                }
+                longval4 = bal.toDouble()
+                val formattedStringbal: String =
+                    Config.getDecimelFormateForText(longval4).toString()
+
+
+
+                //holder.opening.text     = jsonObject!!.getString("Opening")
+                holder.opening.text     =formattedStringopen
+            //    holder.news.text     = jsonObject!!.getString("New")
+                holder.news.text     = formattedStringnews
+
+              //  holder.closed.text      = jsonObject!!.getString("Closed")
+                holder.closed.text      = formattedStringcloses
+
+             //   holder.losed.text       = jsonObject!!.getString("Lost")
+                holder.losed.text       = formattedStringloses
+
+             //  holder.balance.text   = jsonObject!!. getString("Balance")
+                holder.balance.text   = formattedStringbal
                 ID_Employee=jsonObject!!. getString("ID")
 
 

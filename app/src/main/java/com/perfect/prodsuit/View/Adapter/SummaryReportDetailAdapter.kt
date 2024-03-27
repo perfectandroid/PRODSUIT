@@ -71,6 +71,7 @@ class SummaryReportDetailAdapter(
                     )
                 })*/
 
+
            /*     holder.im_edit!!.setTag(position)
                 holder.im_edit!!.setOnClickListener(View.OnClickListener {
                     Config.disableClick(it)
