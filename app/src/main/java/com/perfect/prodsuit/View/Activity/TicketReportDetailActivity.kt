@@ -169,7 +169,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
         ll_NewListTicket!!.visibility = View.GONE
         ll_StatusListTicket!!.visibility = View.GONE
 
-        Log.e(TAG, "ReportMode   107   " + ReportMode+"\n"+ID_Category)
+        Log.e(TAG, "ReportMode   107   " + ReportMode+"\n"+ID_Category+ID_Employee)
 
 //        if (ReportMode.equals("1")){
 ////            ActionListT

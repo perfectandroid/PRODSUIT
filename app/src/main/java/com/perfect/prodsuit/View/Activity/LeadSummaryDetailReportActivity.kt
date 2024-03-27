@@ -75,6 +75,7 @@ class LeadSummaryDetailReportActivity : AppCompatActivity() , View.OnClickListen
         ID_Category   = intent.getStringExtra("ID_Category")
         ID_Branch   = intent.getStringExtra("ID_Branch")
         ID_Employee   = intent.getStringExtra("ID_Employee")
+        Log.i(TAG,"IDEMP"+ID_Employee)
      //   txtv_headlabel!!.setText(label)
 
 
