@@ -6128,6 +6128,15 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             recyProdDetail = dialogProdDet!!.findViewById(R.id.recyProdDetail) as RecyclerView
             val etsearch = dialogProdDet!!.findViewById(R.id.etsearch) as EditText
             val txt_nodata = dialogProdDet!! .findViewById(R.id.txt_nodata) as TextView
+            val adp_header = dialogProdDet!! .findViewById(R.id.adp_header) as TextView
+
+            if (CompanyCategory.equals("0") || CompanyCategory.equals("1")) {
+                adp_header!!.setText("Product")
+                txt_nodata!!.setText("Invalid Product")
+            } else if (CompanyCategory.equals("2")) {
+                adp_header!!.setText("Designation")
+                txt_nodata!!.setText("Invalid Designation")
+            }
 
             prodDetailSort = JSONArray()
             for (k in 0 until prodDetailArrayList.length()) {
@@ -9266,6 +9275,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             val ll_cust_landline =
                 dialogConfirmPop!!.findViewById(R.id.ll_cust_landline) as LinearLayout
 
+            val tvp_category_prod = dialogConfirmPop!!.findViewById(R.id.category_prod) as TextView
+            val tvp_mrp_offerprice = dialogConfirmPop!!.findViewById(R.id.mrp_offerprice) as TextView
+
             val tvp_cust_coutry = dialogConfirmPop!!.findViewById(R.id.tvp_cust_coutry) as TextView
             val tvp_cust_state = dialogConfirmPop!!.findViewById(R.id.tvp_cust_state) as TextView
             val tvp_cust_district =
@@ -9275,6 +9287,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 dialogConfirmPop!!.findViewById(R.id.tvp_cust_pincode) as TextView
             val tvp_cust_landline =
                 dialogConfirmPop!!.findViewById(R.id.tvp_cust_landline) as TextView
+
+
+
 
 
             ////////////////////////
@@ -9381,6 +9396,22 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             val btnOk = dialogConfirmPop!!.findViewById(R.id.btnOk) as Button
 
             Log.e(TAG, "")
+
+            var CompanyCategorySP1 = applicationContext.getSharedPreferences(Config.SHARED_PREF46, 0)
+            CompanyCategory = CompanyCategorySP1.getString("CompanyCategory", "").toString()
+            Log.e(TAG, "CompanyCategory  1122   " + CompanyCategory)
+
+            Log.e(TAG, "CompanyCategory  857   " + CompanyCategory)
+
+            if (CompanyCategory.equals("0") || CompanyCategory.equals("1")) {
+                tvp_category_prod.setText("Product/CATEGORY")
+                tvp_mrp_offerprice.setText("MRP/Offer Price")
+            } else if (CompanyCategory.equals("2")) {
+                tvp_category_prod.setText("Destination/CATEGORY")
+                tvp_mrp_offerprice.setText("No.of Passengers")
+            }
+
+
 
 
             if (ID_LeadFrom.equals("")) {
@@ -10866,7 +10897,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 jObject.put("NextActionDate", folloupdate)
 
                // jObject.put("LgpExpectDate", strExpecteddate)
-                jObject.put("LgpExpectDate", jsonObject.getString("LgpExpectDate"))
+                jObject.put("LgpExpectDate", Config.convertDate(jsonObject.getString("LgpExpectDate")))
                 jObject.put("LgpMRP", ("0"))
                 jObject.put("LgpSalesPrice", ("0"))
 //                jObject.put("FK_ProductLocation", ID_ProductLocation)
@@ -10899,7 +10930,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 jObject.put("NextActionDate", folloupdate)
 
                // jObject.put("LgpExpectDate", strExpecteddate)
-                jObject.put("LgpExpectDate", jsonObject.getString("LgpExpectDate"))
+                jObject.put("LgpExpectDate", Config.convertDate(jsonObject.getString("LgpExpectDate")))
                 jObject.put("LgpMRP", (jsonObject.getString("MRP")))
                 jObject.put("LgpSalesPrice", (jsonObject.getString("LgpSalesPrice")))
 

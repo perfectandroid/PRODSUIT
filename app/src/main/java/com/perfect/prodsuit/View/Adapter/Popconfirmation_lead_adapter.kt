@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.R
 import org.json.JSONArray
@@ -45,7 +46,16 @@ class Popconfirmation_lead_adapter(internal var context: Context, internal var j
 //                holder.tvv_action_type.text = jsonObject!!.getString("ActionTypeName")
 //                holder.tvv_followup_date.text = jsonObject!!.getString("NextActionDate")
                // holder.tvv_amount.text = "₹ "+jsonObject!!.getString("LgpSalesPrice")
+
+                var CompanyCategorySP1 = context.getSharedPreferences(Config.SHARED_PREF46, 0)
+                var CompanyCategory = CompanyCategorySP1.getString("CompanyCategory", "").toString()
                 holder.tvv_amount.text = jsonObject!!.getString("MRP")+" / "+jsonObject!!.getString("LgpSalesPrice")
+                if (CompanyCategory.equals("0") || CompanyCategory.equals("1")) {
+                    holder.tvv_amount.text = jsonObject!!.getString("MRP")+" / "+jsonObject!!.getString("LgpSalesPrice")
+                } else if (CompanyCategory.equals("2")) {
+                    holder.tvv_amount.text = jsonObject!!.getString("LgpPQuantity")
+                }
+
 
                 if (jsonObject!!.getString("LgpSalesPrice").equals("")){
                     holder.tvv_amount.visibility = View.GONE

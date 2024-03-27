@@ -1785,6 +1785,7 @@
                                 android:fontFamily="@font/myfont"
                                 android:text="Priority"/>
                             <TextView
+                                android:id="@+id/mrp_offerprice"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
