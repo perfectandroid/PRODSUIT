@@ -17,6 +17,7 @@ import android.net.NetworkRequest
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -33,6 +34,7 @@ import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.messaging.FirebaseMessaging
+import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.AttendanceMarkingActivity
 import com.perfect.prodsuit.View.Activity.SplashActivity
@@ -179,6 +181,7 @@ object Config {
 
     lateinit var rootView: View
     var dialog : Dialog? = null
+    var dialogDebugg : Dialog? = null
     fun Context.runOnUiThread(action: () -> Unit) {
         Handler(Looper.getMainLooper()).post { action() }
     }
@@ -1579,6 +1582,54 @@ object Config {
         }
     }
 
+
+    fun isDebuggable(context : Context): Boolean {
+
+        var result = false
+        if (BuildConfig.DEBUG) {
+            // Device is in debug mode
+            result = true
+        } else {
+            // Device is not in debug mode
+            result = false
+        }
+
+        return result
+    }
+
+    fun isUsbDebuggingEnabled1(context: Context): Boolean {
+        return Settings.Global.getInt(context.contentResolver, Settings.Global.ADB_ENABLED, 0) == 1
+    }
+
+    fun isDeveloperOptionsEnabled(context: Context): Boolean {
+        return Settings.Secure.getInt(context.contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
+    }
+
+    fun isUsbDebuggingEnabled(context: Context) {
+        var isUsbDebugging = Settings.Global.getInt(context.contentResolver, Settings.Global.ADB_ENABLED, 0) == 1
+        if (isUsbDebugging){
+            try {
+//                Log.e("ee","checknetworkwwwwww ")
+//                dialogDebugg = BottomSheetDialog(context)
+//                val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+//                val layout = inflater.inflate(R.layout.network_failed_popup, null)
+//
+//                dialogDebugg!!.setCancelable(false)
+//                dialogDebugg!!.setContentView(layout)
+//                dialogDebugg!!.show()
+
+
+
+            }catch (e: Exception){
+                Log.e("ee","exeption "+e)
+                Log.e("ee","exeption "+e)
+            }
+        }else{
+            if (dialogDebugg != null && dialogDebugg!!.isShowing()) {
+                dialogDebugg!!.dismiss()
+            }
+        }
+    }
 
 
 

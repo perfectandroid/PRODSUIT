@@ -16,14 +16,14 @@ android {
     }
     signingConfigs {
         // HIDE
-//        release {
-//            storeFile file('D:\\Persuite Key Store\\persuite_employee_key.jks')
-//            storePassword 'PersuiteEmployee@2023'
-//            keyAlias 'key0'
-//            keyPassword 'PersuiteEmployee@2023'
-////            v1SigningEnabled true
-////            v2SigningEnabled true
-//        }
+        release {
+            storeFile file('D:\\Build\\release\\persuite_employee_key.jks')
+            storePassword 'PersuiteEmployee@2023'
+            keyAlias 'key0'
+            keyPassword 'PersuiteEmployee@2023'
+//            v1SigningEnabled true
+//            v2SigningEnabled true
+        }
 
     }
     aaptOptions {
@@ -65,6 +65,7 @@ android {
             minifyEnabled false
 //s            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         debug {
             testCoverageEnabled = true
