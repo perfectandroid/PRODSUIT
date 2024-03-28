@@ -26,6 +26,8 @@ import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
 import org.json.JSONObject
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener
  {
@@ -35,8 +37,28 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
     lateinit var context: Context
     private var imback: ImageView? = null
     private var tv_ReportName: TextView? = null
+
+     private var txtv_brnch: TextView? = null
+     private var txtv_empp: TextView? = null
+     private var txtv_Cat: TextView? = null
+     private var txtv_prd: TextView? = null
+     private var txtv_sumType: TextView? = null
+
+     private var repname: LinearLayout? = null
+     private var llbran: LinearLayout? = null
+     private var llempee: LinearLayout? = null
+     private var llcategr: LinearLayout? = null
+     private var llprod: LinearLayout? = null
+     private var llsumtype: LinearLayout? = null
+
+     private var lldate: LinearLayout? = null
+     private var ll_date1: LinearLayout? = null
+
+
      private var txt_open: TextView? = null
      private var txt_new: TextView? = null
+     private var FilterData: TextView? = null
+     private var cvFilterData: LinearLayout? = null
      private var txt_closed: TextView? = null
      private var txt_losed: TextView? = null
      private var balance: TextView? = null
@@ -73,6 +95,10 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
     lateinit var followUpTicketReportViewModel: FollowUpTicketReportViewModel
     lateinit var followUpTicketReportArrayList: JSONArray
     var recyFollowUpTicketReport: RecyclerView? = null
+     private var report_date1: TextView? = null
+     private var lldate1: LinearLayout? = null
+
+
 
     lateinit var newListTicketReportViewModel: NewListTicketReportViewModel
     lateinit var newListTicketReportArrayList: JSONArray
@@ -119,6 +145,10 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
         if (getIntent().hasExtra("ReportName")) {
             tv_ReportName!!.setText(intent.getStringExtra("ReportName"))
         }
+
+
+
+
         if (getIntent().hasExtra("ReportMode")) {
             ReportMode = intent.getStringExtra("ReportMode")
         }
@@ -252,12 +282,29 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
         imback!!.setOnClickListener(this)
 
         Type = findViewById(R.id.Type)
-        tv_ReportName = findViewById(R.id.tv_ReportName)
+        tv_ReportName = findViewById(R.id.txtv_repnme)
         txt_open= findViewById(R.id.txt_open)
         txt_new= findViewById(R.id.txt_new)
         txt_closed= findViewById(R.id.txt_closed)
         txt_losed= findViewById(R.id.txt_losed)
         balance= findViewById(R.id.balance)
+
+        lldate= findViewById(R.id.lldate)
+        lldate1= findViewById(R.id.ll_date1)
+
+        repname= findViewById(R.id.repname)
+        llbran= findViewById(R.id.llbran)
+        llempee= findViewById(R.id.llempee)
+        llcategr= findViewById(R.id.llcategr)
+        llprod= findViewById(R.id.llprod)
+        llsumtype= findViewById(R.id.llsumtype)
+
+
+
+        FilterData = findViewById(R.id.FilterData)
+        cvFilterData = findViewById(R.id.cvFilterData)
+
+        FilterData!!.setOnClickListener(this)
 
         ll_ActionList = findViewById(R.id.ll_ActionList)
         ll_Summary = findViewById(R.id.ll_Summary)
@@ -271,6 +318,17 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
         recyNewListTicketReport = findViewById(R.id.recyNewListTicketReport)
         recyStatusListTicketReport = findViewById(R.id.recyStatusListTicketReport)
 
+        txtv_brnch = findViewById(R.id.txtv_brnch)
+        txtv_empp = findViewById(R.id.txtv_empp)
+        txtv_Cat = findViewById(R.id.txtv_Cat)
+        txtv_prd = findViewById(R.id.txtv_prd)
+        txtv_sumType = findViewById(R.id.txtv_sumType)
+
+        report_date1 = findViewById(R.id.report_date1)
+
+
+
+
 
     }
 
@@ -278,6 +336,134 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
         when (v.id) {
             R.id.imback -> {
                 finish()
+            }
+            R.id.FilterData -> {
+                if (cvFilterData!!.visibility == View.GONE) {
+                    cvFilterData!!.visibility = View.VISIBLE
+
+                    if (getIntent().hasExtra("ReportName")) {
+                       var reprtnme = intent.getStringExtra("ReportName")
+                        if(reprtnme.equals(""))
+                        {
+                            repname!!.visibility=View.GONE
+                        }
+                        else
+                        {
+                            repname!!.visibility=View.VISIBLE
+                            tv_ReportName!!.setText(reprtnme)
+                        }
+
+                    }
+                    if (getIntent().hasExtra("Branch")) {
+                        var brn = intent.getStringExtra("Branch")
+                        if(brn.equals(""))
+                        {
+                            llbran!!.visibility=View.GONE
+                        }
+                        else
+                        {
+                            llbran!!.visibility=View.VISIBLE
+                            txtv_brnch!!.setText(brn)
+                        }
+
+                    }
+                    if (getIntent().hasExtra("Emp")) {
+                        var empl = intent.getStringExtra("Emp")
+                        if(empl.equals(""))
+                        {
+                            llempee!!.visibility=View.GONE
+                        }
+                        else
+                        {
+                            llempee!!.visibility=View.VISIBLE
+                            txtv_empp!!.setText(empl)
+                        }
+
+                    }
+
+                    if (getIntent().hasExtra("Product")) {
+                        var prd = intent.getStringExtra("Product")
+                        if(prd.equals(""))
+                        {
+                            llprod!!.visibility=View.GONE
+                        }
+                        else
+                        {
+                            llprod!!.visibility=View.VISIBLE
+                            txtv_prd!!.setText(prd)
+                        }
+
+                    }
+                    if (getIntent().hasExtra("Category")) {
+                        var pri = intent.getStringExtra("Category")
+                        if(pri.equals(""))
+                        {
+                            llcategr!!.visibility=View.GONE
+                        }
+                        else
+                        {
+                            llcategr!!.visibility=View.VISIBLE
+                            txtv_Cat!!.setText(pri)
+                        }
+
+                    }
+
+                    if (getIntent().hasExtra("SumType")) {
+                        var stat = intent.getStringExtra("SumType")
+                        Log.i(TAG,"STATT"+stat)
+                        if(stat.equals(""))
+                        {
+                            llsumtype!!.visibility=View.GONE
+                        }
+                        else
+                        {
+                            llsumtype!!.visibility=View.VISIBLE
+                            txtv_sumType!!.setText(stat)
+                        }
+
+                    }
+
+                    if (getIntent().hasExtra("Fromdate")) {
+                        var from = intent.getStringExtra("Fromdate")
+                        var dates = from
+                        Log.i(TAG,"FROM DATE "+from)
+
+
+                        if(from.equals(""))
+                        {
+                            lldate!!.visibility=View.GONE
+                        }
+                        else
+                        {
+
+
+
+
+                            lldate!!.visibility=View.VISIBLE
+                            report_date!!.setText(from)
+                        }
+
+                    }
+
+                    if (getIntent().hasExtra("Todate")) {
+                        var to = intent.getStringExtra("Todate")
+                        if(to.equals(""))
+                        {
+                            lldate1!!.visibility=View.GONE
+                        }
+                        else
+                        {
+
+
+                            lldate1!!.visibility=View.VISIBLE
+                            report_date1!!.setText(to)
+                        }
+
+                    }
+
+                } else {
+                    cvFilterData!!.visibility = View.GONE
+                }
             }
         }
     }
@@ -506,8 +692,8 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                         } else {
                                             Type?.setText("")
                                         }
-                                        report_date!!.text =
-                                            "Report between " + fromDate + " and " + toDate
+                                      /*  report_date!!.text =
+                                            "Report between " + fromDate + " and " + toDate*/
                                         ll_Summary!!.visibility = View.VISIBLE
                                         try {
                                             val lLayout =
@@ -628,7 +814,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                     if (followUpTicketReportArrayList.length() > 0) {
                                         Log.e(TAG, "msg   2703   " + followUpTicketReportArrayList)
                                         ll_FollowUpTicket!!.visibility = View.VISIBLE
-                                        report_date!!.visibility = View.VISIBLE
+                                     //   report_date!!.visibility = View.VISIBLE
                                         var arrayFrom = strFromdate!!.split("-")
                                         var arrayTo = strTodate!!.split("-")
 
@@ -639,8 +825,10 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                             arrayFrom[2] + "-" + arrayFrom[1] + "-" + arrayFrom[0]
                                         var toDate =
                                             arrayTo[2] + "-" + arrayTo[1] + "-" + arrayTo[0]
-                                        report_date!!.text =
-                                            "Report between " + fromDate + " and " + toDate
+                                     //   report_date!!.text =
+                                          //  "Report between " + fromDate + " and " + toDate
+
+
                                         try {
                                             val lLayout = GridLayoutManager(
                                                 this@TicketReportDetailActivity,
@@ -667,7 +855,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                     Config.logoutTokenMismatch(context,jObject)
                                 }
                                 else {
-                                    report_date!!.visibility = View.GONE
+                                  //  report_date!!.visibility = View.GONE
                                     val builder = AlertDialog.Builder(
                                         this@TicketReportDetailActivity,
                                         R.style.MyDialogTheme
@@ -683,7 +871,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
 
                         } else {
-                            report_date!!.visibility = View.GONE
+                         //   report_date!!.visibility = View.GONE
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
@@ -762,15 +950,15 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                                 "msg   3443   " + newListTicketReportArrayList
                                             )
                                             ll_NewListTicket!!.visibility = View.VISIBLE
-                                            report_date!!.visibility = View.VISIBLE
+                                          //  report_date!!.visibility = View.VISIBLE
                                             var arrayFrom = strFromdate!!.split("-")
                                             var arrayTo = strTodate!!.split("-")
                                             var fromDate =
                                                 arrayFrom[2] + "-" + arrayFrom[1] + "-" + arrayFrom[0]
                                             var toDate =
                                                 arrayTo[2] + "-" + arrayTo[1] + "-" + arrayTo[0]
-                                            report_date!!.text =
-                                                "Report between " + fromDate + " and " + toDate
+                                           /* report_date!!.text =
+                                                "Report between " + fromDate + " and " + toDate*/
                                             try {
                                                 val lLayout = GridLayoutManager(
                                                     this@TicketReportDetailActivity,
@@ -797,7 +985,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                         Config.logoutTokenMismatch(context,jObject)
                                     }
                                     else {
-                                        report_date!!.visibility = View.GONE
+                                     //   report_date!!.visibility = View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@TicketReportDetailActivity,
                                             R.style.MyDialogTheme
@@ -812,7 +1000,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                 }
 
                             } else {
-                                report_date!!.visibility = View.GONE
+                              //  report_date!!.visibility = View.GONE
 //                                Toast.makeText(
 //                                    applicationContext,
 //                                    "Some Technical Issues.",
@@ -820,7 +1008,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 //                                ).show()
                             }
                         } catch (e: Exception) {
-                            report_date!!.visibility = View.GONE
+                        //    report_date!!.visibility = View.GONE
                             Toast.makeText(
                                 applicationContext,
                                 "" + e.toString(),
