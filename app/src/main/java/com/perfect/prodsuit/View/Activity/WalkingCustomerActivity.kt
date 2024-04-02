@@ -1,5 +1,6 @@
 package com.perfect.prodsuit.View.Activity
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
@@ -1006,8 +1007,10 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
         val txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
         val date_Picker1 = view.findViewById<DatePicker>(R.id.date_Picker1)
 
-        date_Picker1.setMinDate(System.currentTimeMillis());
-        date_Picker1.minDate = System.currentTimeMillis()
+     //  date_Picker1.setMinDate(System.currentTimeMillis())
+        date_Picker1.maxDate = System.currentTimeMillis()
+
+     //   date_Picker1.minDate = System.currentTimeMillis()
 
 
         txtCancel.setOnClickListener {
@@ -1135,6 +1138,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
                 override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 }
 
+                @SuppressLint("SuspiciousIndentation")
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
                     //  list_view!!.setVisibility(View.VISIBLE)

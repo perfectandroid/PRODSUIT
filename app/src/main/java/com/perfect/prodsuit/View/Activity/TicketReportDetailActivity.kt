@@ -118,6 +118,11 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
     var newList = 0
     private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
+     var formattedStringopen: String? = ""
+     var formattedStringopen1: String? = ""
+     var formattedStringopen2: String? = ""
+     var formattedStringopen3: String? = ""
+     var formattedStringopen4: String? = ""
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -654,6 +659,32 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                         sum2 += closed.toInt()
                                         sum3 += lost.toInt()
                                         sum4 += bal.toInt()
+                                        var longval: Double
+                                        var longval1: Double
+                                        var longval2: Double
+                                        var longval3: Double
+                                        var longval4: Double
+
+                                        var test ="123455"
+                                        longval = sum.toDouble()
+                                        longval1 = sum1.toDouble()
+                                        longval2 = sum2.toDouble()
+                                        longval3 = sum3.toDouble()
+                                        longval4 = sum4.toDouble()
+
+                                         formattedStringopen =
+                                            Config.getDecimelFormateForText(longval).toString()
+
+                                        formattedStringopen1 =
+                                            Config.getDecimelFormateForText(longval1).toString()
+                                        formattedStringopen2 =
+                                            Config.getDecimelFormateForText(longval2).toString()
+
+                                        formattedStringopen3 =
+                                            Config.getDecimelFormateForText(longval3).toString()
+
+                                        formattedStringopen4 =
+                                            Config.getDecimelFormateForText(longval4).toString()
 
                                       //  actionSort.put(jsonObject.getString("New"))
 
@@ -661,15 +692,24 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                     }
                                     Log.e(TAG," SUM of new "+sum)
 
-                                    txt_open!!.setText(""+sum)
+                                 //   txt_open!!.setText(""+sum)
+                                    txt_open!!.setText(""+formattedStringopen)
 
 
                                  //   txt_open!!.setText(String.format("%,.2f", sum ));
 
-                                    txt_new!!.setText(""+sum1)
-                                    txt_closed!!.setText(""+sum2)
-                                    txt_losed!!.setText(""+sum3)
-                                    balance!!.setText(""+sum4)
+                                   // txt_new!!.setText(""+sum1)
+                                    txt_new!!.setText(""+formattedStringopen1)
+
+                                 //   txt_closed!!.setText(""+sum2)
+                                    txt_closed!!.setText(""+formattedStringopen2)
+
+                                   // txt_losed!!.setText(""+sum3)
+                                    txt_losed!!.setText(""+formattedStringopen3)
+
+                                //    balance!!.setText(""+sum4)
+
+                                    balance!!.setText(""+formattedStringopen4)
 
                                     if (actionListReportArrayList.length() > 0) {
 
