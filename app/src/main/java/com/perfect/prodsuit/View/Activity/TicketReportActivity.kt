@@ -3087,6 +3087,15 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
         intent = Intent(applicationContext, TicketReportDetailActivity::class.java)
         intent.putExtra("ReportName", tie_ReportName!!.text.toString())
+        intent.putExtra("Branch", tie_Branch!!.text.toString())
+        intent.putExtra("Emp", tie_EmployeeName!!.text.toString())
+        intent.putExtra("Product", tie_Product!!.text.toString())
+        intent.putExtra("Category", tie_Category!!.text.toString())
+        intent.putExtra("Priority", tie_Priority!!.text.toString())
+        intent.putExtra("Status", tie_Status!!.text.toString())
+        intent.putExtra("SumType", tie_Grouping!!.text.toString())
+
+
         intent.putExtra("ReportMode", ReportMode)
         intent.putExtra("ID_Branch", ID_Branch)
         intent.putExtra("ID_Employee", ID_Employee)

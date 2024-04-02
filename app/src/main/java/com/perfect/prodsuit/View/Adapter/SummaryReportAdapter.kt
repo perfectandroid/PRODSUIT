@@ -117,27 +117,33 @@ class SummaryReportAdapter(
 
              //  holder.balance.text   = jsonObject!!. getString("Balance")
                 holder.balance.text   = formattedStringbal
-                ID_Employee=jsonObject!!. getString("ID")
 
 
+               // ID_Employee=jsonObject!!. getString("ID")
 
 
+                val jsonObject1: JSONObject = jsonArray.getJSONObject(position)
+                var emp = jsonObject1.getString("ID")
 
-                Log.e(TAG,"Details "+strFromdate+"\n"+ID_Employee +"\n"+ID_Category)
+
+                Log.e(TAG,"Details "+strFromdate+"\n"+"EMP : "+emp +"\n"+ID_Category)
 
                 holder.opening!!.setTag(position)
                 holder.opening!!.setOnClickListener(View.OnClickListener {
                     Config.disableClick(it)
                     val intent = Intent(context, LeadSummaryDetailReportActivity::class.java)
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+
                     intent.putExtra("SubMode","1")
                     intent.putExtra("strFromdate",strFromdate)
                     intent.putExtra("strTodate",strTodate)
                     intent.putExtra("ID_Product",ID_Product)
                     intent.putExtra("ID_Category",ID_Category)
                     intent.putExtra("ID_Branch",ID_Branch)
-                    intent.putExtra("ID_Employee",ID_Employee)
+                    intent.putExtra("ID_Employee",emp)
                     intent.putExtra("assigned",ID_AssignedEmployee)
+
 
                     context.startActivity(intent)
                 })
@@ -155,7 +161,7 @@ class SummaryReportAdapter(
                     intent.putExtra("ID_Product",ID_Product)
                     intent.putExtra("ID_Category",ID_Category)
                     intent.putExtra("ID_Branch",ID_Branch)
-                    intent.putExtra("ID_Employee",ID_Employee)
+                    intent.putExtra("ID_Employee",emp)
                     intent.putExtra("assigned",ID_AssignedEmployee)
                     context.startActivity(intent)
 
@@ -172,7 +178,7 @@ class SummaryReportAdapter(
                     intent.putExtra("ID_Product",ID_Product)
                     intent.putExtra("ID_Category",ID_Category)
                     intent.putExtra("ID_Branch",ID_Branch)
-                    intent.putExtra("ID_Employee",ID_Employee)
+                    intent.putExtra("ID_Employee",emp)
                     intent.putExtra("assigned",ID_AssignedEmployee)
                     context.startActivity(intent)
                 })
@@ -187,7 +193,7 @@ class SummaryReportAdapter(
                     intent.putExtra("ID_Product",ID_Product)
                     intent.putExtra("ID_Category",ID_Category)
                     intent.putExtra("ID_Branch",ID_Branch)
-                    intent.putExtra("ID_Employee",ID_Employee)
+                    intent.putExtra("ID_Employee",emp)
                     intent.putExtra("assigned",ID_AssignedEmployee)
                     context.startActivity(intent)
                 })
@@ -202,7 +208,7 @@ class SummaryReportAdapter(
                     intent.putExtra("ID_Product",ID_Product)
                     intent.putExtra("ID_Category",ID_Category)
                     intent.putExtra("ID_Branch",ID_Branch)
-                    intent.putExtra("ID_Employee",ID_Employee)
+                    intent.putExtra("ID_Employee",emp)
                     intent.putExtra("assigned",ID_AssignedEmployee)
                     context.startActivity(intent)
                 })
