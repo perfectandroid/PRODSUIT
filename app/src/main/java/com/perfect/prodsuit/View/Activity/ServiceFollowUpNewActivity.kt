@@ -3575,7 +3575,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
     }
 
     private fun getPaymentList() {
-    
+        var ReqMode = "92"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -3584,7 +3584,7 @@ class ServiceFollowUpNewActivity : AppCompatActivity(), View.OnClickListener,
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                paymentMethodeViewModel.getPaymentMethod(this)!!.observe(
+                paymentMethodeViewModel.getPaymentMethod(this,ReqMode)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
                         try {

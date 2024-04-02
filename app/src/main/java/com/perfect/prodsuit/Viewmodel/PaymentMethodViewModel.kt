@@ -10,8 +10,8 @@ import com.perfect.prodsuit.Repository.PaymentMethodRepository
 class PaymentMethodViewModel : ViewModel()  {
 
     var payMethodData: MutableLiveData<PayMethodModel>? = null
-    fun getPaymentMethod(context: Context) : LiveData<PayMethodModel>? {
-        payMethodData = PaymentMethodRepository.getServicesApiCall(context)
+    fun getPaymentMethod(context: Context,ReqMode : String) : LiveData<PayMethodModel>? {
+        payMethodData = PaymentMethodRepository.getServicesApiCall(context,ReqMode)
         return payMethodData
     }
 }

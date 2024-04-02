@@ -27,12 +27,12 @@ object PaymentMethodRepository {
     val payMethodSetterGetter = MutableLiveData<PayMethodModel>()
     val TAG: String = "PaymentMethodRepository"
 
-    fun getServicesApiCall(context: Context): MutableLiveData<PayMethodModel> {
-       getPayMethod(context)
+    fun getServicesApiCall(context: Context,ReqMode : String): MutableLiveData<PayMethodModel> {
+       getPayMethod(context,ReqMode)
         return payMethodSetterGetter
     }
 
-    private fun getPayMethod(context: Context) {
+    private fun getPayMethod(context: Context,ReqMode : String) {
 
         try {
             payMethodSetterGetter.value = PayMethodModel("")
@@ -89,7 +89,7 @@ object PaymentMethodRepository {
 
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("92"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart(ReqMode))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
                 requestObject1.put("EntrBy", ProdsuitApplication.encryptStart(EntrBySP.getString("UserCode", null)))
