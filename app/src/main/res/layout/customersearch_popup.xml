@@ -89,7 +89,7 @@
             android:fontFamily="@font/myfont"
             android:visibility="gone"
             android:padding="15dp"
-            android:text="Invalid Customer"/>
+            android:text=""/>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

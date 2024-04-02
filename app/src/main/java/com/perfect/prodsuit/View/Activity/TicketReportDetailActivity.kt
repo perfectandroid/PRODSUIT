@@ -37,6 +37,10 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
     lateinit var context: Context
     private var imback: ImageView? = null
     private var tv_ReportName: TextView? = null
+     private var txtv_statusvalue: TextView? = null
+     private var llstatus: LinearLayout? = null
+     private var llpriority: LinearLayout? = null
+     private var txtv_priorty: TextView? = null
 
      private var txtv_brnch: TextView? = null
      private var txtv_empp: TextView? = null
@@ -55,6 +59,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
      private var ll_date1: LinearLayout? = null
 
 
+     private var tv_sumhd: TextView? = null
      private var txt_open: TextView? = null
      private var txt_new: TextView? = null
      private var FilterData: TextView? = null
@@ -67,6 +72,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
     private var ReportMode: String? = ""
     private var ID_Branch: String? = ""
     private var ID_Employee: String? = ""
+     private var mod: String? = ""
     private var strFromdate: String? = ""
     private var strTodate: String? = ""
     private var ID_Product: String? = ""
@@ -151,7 +157,9 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
             tv_ReportName!!.setText(intent.getStringExtra("ReportName"))
         }
 
-
+        if (getIntent().hasExtra("MOD")) {
+            mod = intent.getStringExtra("MOD")
+        }
 
 
         if (getIntent().hasExtra("ReportMode")) {
@@ -285,7 +293,11 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
     private fun setRegViews() {
         imback = findViewById(R.id.imback)
         imback!!.setOnClickListener(this)
-
+        tv_sumhd = findViewById(R.id.tv_sumhd)
+        txtv_priorty = findViewById(R.id.txtv_priorty)
+        txtv_statusvalue = findViewById(R.id.txtv_statusvalue)
+        llstatus = findViewById(R.id.llstatus)
+        llpriority = findViewById(R.id.llpriority)
         Type = findViewById(R.id.Type)
         tv_ReportName = findViewById(R.id.txtv_repnme)
         txt_open= findViewById(R.id.txt_open)
@@ -372,6 +384,20 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                         }
 
                     }
+                    if (getIntent().hasExtra("Branch")) {
+                        var brn = intent.getStringExtra("Branch")
+                        if(brn.equals(""))
+                        {
+                            llbran!!.visibility=View.GONE
+                        }
+                        else
+                        {
+                            llbran!!.visibility=View.VISIBLE
+                            txtv_brnch!!.setText(brn)
+                        }
+
+                    }
+
                     if (getIntent().hasExtra("Emp")) {
                         var empl = intent.getStringExtra("Emp")
                         if(empl.equals(""))
@@ -414,16 +440,20 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                     }
 
                     if (getIntent().hasExtra("SumType")) {
-                        var stat = intent.getStringExtra("SumType")
-                        Log.i(TAG,"STATT"+stat)
-                        if(stat.equals(""))
+                        var sumtype = intent.getStringExtra("SumType")
+                        Log.i(TAG,"STATT"+sumtype)
+                        if(sumtype.equals(""))
                         {
+
                             llsumtype!!.visibility=View.GONE
+
                         }
                         else
                         {
+
                             llsumtype!!.visibility=View.VISIBLE
-                            txtv_sumType!!.setText(stat)
+
+                            txtv_sumType!!.setText(sumtype)
                         }
 
                     }
@@ -465,6 +495,37 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                         }
 
                     }
+                    if (getIntent().hasExtra("Priority")) {
+                        var priorty = intent.getStringExtra("Priority")
+                        if(priorty.equals(""))
+                        {
+                            llpriority!!.visibility=View.GONE
+                        }
+                        else
+                        {
+
+
+                            llpriority!!.visibility=View.VISIBLE
+                            txtv_priorty!!.setText(priorty)
+                        }
+
+                    }
+                    if (getIntent().hasExtra("Status")) {
+                        var stat = intent.getStringExtra("Status")
+                        if(stat.equals(""))
+                        {
+                            llstatus!!.visibility=View.GONE
+                        }
+                        else
+                        {
+
+
+                            llstatus!!.visibility=View.VISIBLE
+                            txtv_statusvalue!!.setText(stat)
+                        }
+
+                    }
+
 
                 } else {
                     cvFilterData!!.visibility = View.GONE

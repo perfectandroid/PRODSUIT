@@ -3073,15 +3073,21 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     private fun PassData() {
 
-        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
-        val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyyy")
+        val outputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
 
-        val dateFrom = inputFormat.parse(tie_FromDate!!.text.toString())
+        /*val dateFrom = inputFormat.parse(tie_FromDate!!.text.toString())
         val strFromDate = outputFormat.format(dateFrom)
         val dateTo = inputFormat.parse(tie_ToDate!!.text.toString())
         val strToDate = outputFormat.format(dateTo)
+*/
 
-        Log.e(TAG, "strFromDate   " + strFromDate + "    " + strToDate)
+
+
+
+
+
+        Log.e(TAG, "strFromDate   " + tie_FromDate!!.text.toString() + "    " + tie_ToDate!!.text.toString())
         Log.e(TAG, "sadasdasdsads   " + ID_Category)
 
 
@@ -3092,15 +3098,23 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         intent.putExtra("Product", tie_Product!!.text.toString())
         intent.putExtra("Category", tie_Category!!.text.toString())
         intent.putExtra("Priority", tie_Priority!!.text.toString())
-        intent.putExtra("Status", tie_Status!!.text.toString())
-        intent.putExtra("SumType", tie_Grouping!!.text.toString())
+     //   intent.putExtra("Status", tie_Status!!.text.toString())
+
+        //    intent.putExtra("SumType", tie_Priority!!.text.toString())
+
+            intent.putExtra("SumType", tie_Grouping!!.text.toString())
+
+
+            intent.putExtra("Status", tie_Status!!.text.toString())
+
+
 
 
         intent.putExtra("ReportMode", ReportMode)
         intent.putExtra("ID_Branch", ID_Branch)
         intent.putExtra("ID_Employee", ID_Employee)
-        intent.putExtra("Fromdate", strFromDate)
-        intent.putExtra("Todate", strToDate)
+        intent.putExtra("Fromdate", tie_FromDate!!.text.toString())
+        intent.putExtra("Todate", tie_ToDate!!.text.toString())
         intent.putExtra("ID_Product", ID_Product)
         intent.putExtra("ID_NextAction", ID_NextAction)
         intent.putExtra("ID_ActionType", ID_ActionType)
