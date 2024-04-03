@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ActivityManager
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -176,6 +177,8 @@ object Config {
     lateinit var rootView: View
     var dialog : Dialog? = null
     var dialogDebugg : Dialog? = null
+    var dialogDeveloper : AlertDialog.Builder? = null
+    var dialogDeveloper1 : Dialog? = null
     fun Context.runOnUiThread(action: () -> Unit) {
         Handler(Looper.getMainLooper()).post { action() }
     }
@@ -1600,12 +1603,40 @@ object Config {
         return result
     }
 
-    fun isUsbDebuggingEnabled1(context: Context): Boolean {
-        return Settings.Global.getInt(context.contentResolver, Settings.Global.ADB_ENABLED, 0) == 1
+    fun isDeveloperOptionsEnabled1(context: Context): Boolean {
+        return Settings.Secure.getInt(context.contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
     }
 
-    fun isDeveloperOptionsEnabled(context: Context): Boolean {
-        return Settings.Secure.getInt(context.contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
+    fun isDeveloperOptionsEnabled(context: Context){
+
+        try {
+            var isDeveloper = Settings.Secure.getInt(context.contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
+            if (isDeveloper){
+                dialogDeveloper = AlertDialog.Builder(context)
+                //   dialogDeveloper!!.setTitle("title")
+                dialogDeveloper!!.setMessage("Application will not runif your device isenabled with developer option. Kindly disable to continue")
+                dialogDeveloper!!.setPositiveButton("Go To Settings") { dialog, _ ->
+                    // Handle positive button click
+                   // dialog.dismiss()
+                    context.startActivity(Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS));
+                }
+                dialogDeveloper1 = dialogDeveloper!!.create()
+
+                dialogDeveloper1!!.setCanceledOnTouchOutside(false)
+                dialogDeveloper1!!.setCancelable(false)
+
+                dialogDeveloper1!!.show()
+
+            }else{
+                if (dialogDeveloper1 != null && dialogDeveloper1!!.isShowing()) {
+                    dialogDeveloper1!!.dismiss()
+                }
+            }
+        }catch (e: Exception){
+
+        }
+
+
     }
 
     fun isUsbDebuggingEnabled(context: Context) {
