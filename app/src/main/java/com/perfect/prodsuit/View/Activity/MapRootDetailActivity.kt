@@ -1,6 +1,7 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.IntentFilter
@@ -8,39 +9,60 @@ import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import android.widget.Button
+import android.widget.CheckBox
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.DecimalToWordsConverter
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
+import com.perfect.prodsuit.Model.ModelOtherChargesTemp
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.MapRootDetailAdapter
+import com.perfect.prodsuit.View.Adapter.OtherChargeAdapter
 import com.perfect.prodsuit.Viewmodel.EmployeeWiseLocationListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
+import java.math.BigDecimal
+import java.math.RoundingMode
+import java.util.ArrayList
 
 class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
 
     var TAG = "MapRootDetailActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
-
+    private var dialogascdesc : Dialog? = null
     private var FK_Employee:String?=""
     private var strDate:String? = ""
 
     var EmployeeLocation = 0
     lateinit var employeeWiseLocationListViewModel: EmployeeWiseLocationListViewModel
     lateinit var locationList : JSONArray
+    private var checkbox_asc: CheckBox? = null
+    private var checkbox_dsc: CheckBox? = null
+    private var btnsubmit: Button? = null
+    private var txtSubmit: TextView? = null
+
 
     private var tv_employeee: TextView? = null
     private var tv_EnteredDate: TextView? = null
+    private var imgv_filter: ImageView? = null
+
     var recyMapRoot: RecyclerView? = null
     private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
@@ -76,7 +98,9 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
         tv_employeee = findViewById<TextView>(R.id.tv_employeee)
         tv_EnteredDate = findViewById<TextView>(R.id.tv_EnteredDate)
         recyMapRoot = findViewById<RecyclerView>(R.id.recyMapRoot)
+        imgv_filter= findViewById<ImageView>(R.id.imgv_filter)
         imback!!.setOnClickListener(this)
+        imgv_filter!!.setOnClickListener(this)
 
     }
 
@@ -85,7 +109,9 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
             R.id.imback->{
                 finish()
             }
-
+            R.id.imgv_filter->{
+                filterBottomSheet()
+            }
         }
     }
 
@@ -177,5 +203,71 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
         networkChangeReceiver = NetworkChangeReceiver()
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
+    }
+
+    private fun filterBottomSheet() {
+        try {
+
+
+            val dialog1 = BottomSheetDialog(this, R.style.BottomSheetDialog)
+            val view = layoutInflater.inflate(R.layout.ascdesc, null)
+            dialog1.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val window: Window? = dialog1.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+            dialog1!!.setCanceledOnTouchOutside(false)
+
+
+            checkbox_asc = view.findViewById<CheckBox>(R.id.checkbox_asc)
+            checkbox_dsc = view.findViewById<CheckBox>(R.id.checkbox_dsc)
+            txtSubmit = view.findViewById<TextView>(R.id.txtSubmit)
+
+
+            txtSubmit!!.setOnClickListener(this)
+            checkbox_asc!!.setOnClickListener(this)
+            checkbox_dsc!!.setOnClickListener(this)
+
+            checkbox_asc!!.setOnClickListener {
+                // loadLoginEmpDetails("1")
+                checkbox_asc!!.isChecked=true
+                checkbox_dsc!!.isChecked=false
+                checkbox_asc!!.setButtonDrawable(R.drawable.ic_radiosort)
+                checkbox_dsc!!.setButtonDrawable(R.drawable.ic_radio1)
+            }
+            checkbox_dsc!!.setOnClickListener {
+                // loadLoginEmpDetails("1")
+                checkbox_asc!!.isChecked=false
+                checkbox_dsc!!.isChecked=true
+                checkbox_dsc!!.setButtonDrawable(R.drawable.ic_radiosort)
+                checkbox_asc!!.setButtonDrawable(R.drawable.ic_radio1)
+            }
+            txtSubmit!!.setOnClickListener {
+                // loadLoginEmpDetails("1")
+
+            }
+//            onTextChangedValues()
+
+
+
+
+
+
+
+//            dialog1!!.setCancelable(false)
+            //   view.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
+
+
+            //      tabLayout = view.findViewById(R.id.tabLayout)
+
+
+            dialog1!!.setContentView(view)
+            dialog1.show()
+
+        } catch (e: Exception) {
+
+        }
     }
 }
