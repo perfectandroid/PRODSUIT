@@ -12,6 +12,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import java.util.*
@@ -339,5 +340,10 @@ class CallRemarkActivity : AppCompatActivity() , View.OnClickListener {
         networkChangeReceiver = NetworkChangeReceiver()
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
     }
 }

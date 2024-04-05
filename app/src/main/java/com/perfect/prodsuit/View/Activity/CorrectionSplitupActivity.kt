@@ -184,4 +184,9 @@ private lateinit var networkChangeReceiver: NetworkChangeReceiver
 //        correctionCount = 0
 //        getCorrectionSplitData(TransMode)
 //    }
+
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
 }

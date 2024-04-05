@@ -366,4 +366,9 @@ class ExpenseActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
 }

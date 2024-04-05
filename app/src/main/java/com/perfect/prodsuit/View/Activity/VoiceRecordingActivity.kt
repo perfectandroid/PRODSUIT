@@ -33,6 +33,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.airbnb.lottie.LottieAnimationView
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Helper.PlayerService
 import com.perfect.prodsuit.Helper.RecorderService
@@ -989,5 +990,10 @@ class VoiceRecordingActivity : AppCompatActivity(), View.OnClickListener {
         networkChangeReceiver = NetworkChangeReceiver()
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
     }
 }

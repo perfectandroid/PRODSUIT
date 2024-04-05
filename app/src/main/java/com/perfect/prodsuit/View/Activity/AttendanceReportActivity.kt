@@ -572,5 +572,10 @@ class AttendanceReportActivity : AppCompatActivity() , View.OnClickListener, Ite
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
 
 }

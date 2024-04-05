@@ -411,4 +411,9 @@ class ProjectReportDetailActivity : AppCompatActivity(), View.OnClickListener, I
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
 }

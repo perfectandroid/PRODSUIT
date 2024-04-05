@@ -217,4 +217,9 @@ class AuthorizationMiniDashboardActivity : AppCompatActivity(), View.OnClickList
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
 }

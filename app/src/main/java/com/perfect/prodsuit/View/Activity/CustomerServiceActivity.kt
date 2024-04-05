@@ -7857,4 +7857,9 @@ Log.e(TAG,"country 34554=="+FK_Country)
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
 }

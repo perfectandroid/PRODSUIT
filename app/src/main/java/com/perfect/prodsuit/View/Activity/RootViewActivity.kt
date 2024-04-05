@@ -23,6 +23,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.gson.Gson
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Viewmodel.EmployeeWiseLocationListViewModel
@@ -459,5 +460,10 @@ class RootViewActivity : AppCompatActivity(), OnMapReadyCallback {
         networkChangeReceiver = NetworkChangeReceiver()
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
     }
 }

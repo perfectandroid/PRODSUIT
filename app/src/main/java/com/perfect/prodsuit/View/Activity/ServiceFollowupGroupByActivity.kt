@@ -185,4 +185,9 @@ class ServiceFollowupGroupByActivity : AppCompatActivity(), ItemClickListener {
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
 }

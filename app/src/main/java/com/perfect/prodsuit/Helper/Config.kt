@@ -23,6 +23,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.google.android.gms.tasks.Task
@@ -1589,36 +1590,39 @@ object Config {
     }
 
 
-    fun isDebuggable(context : Context): Boolean {
-
-        var result = false
-        if (BuildConfig.DEBUG) {
-            // Device is in debug mode
-            result = true
-        } else {
-            // Device is not in debug mode
-            result = false
-        }
-
-        return result
-    }
+    // Developer option enable - Code Starting
 
     fun isDeveloperOptionsEnabled1(context: Context): Boolean {
+      //  return false
+
+       //To make the developer option work, uncomment the code below the line and comment the code above the line.
+
         return Settings.Secure.getInt(context.contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
+
     }
 
     fun isDeveloperOptionsEnabled(context: Context){
+
+      //  To enable the developer option, uncomment the code below the line, or comment the code
 
         try {
             var isDeveloper = Settings.Secure.getInt(context.contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
             if (isDeveloper){
                 dialogDeveloper = AlertDialog.Builder(context)
                 //   dialogDeveloper!!.setTitle("title")
-                dialogDeveloper!!.setMessage("Application will not runif your device isenabled with developer option. Kindly disable to continue")
+                dialogDeveloper!!.setMessage("Application will not run if your device is enabled with developer option. Kindly disable to continue.")
                 dialogDeveloper!!.setPositiveButton("Go To Settings") { dialog, _ ->
                     // Handle positive button click
                    // dialog.dismiss()
                     context.startActivity(Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS));
+                }
+
+                dialogDeveloper!!.setNegativeButton("Exit") { dialog, _ ->
+                    // Handle positive button click
+                    // dialog.dismiss()
+                    val activity = context as Activity
+                    finishAffinity(activity)
+
                 }
                 dialogDeveloper1 = dialogDeveloper!!.create()
 
@@ -1639,33 +1643,8 @@ object Config {
 
     }
 
-    fun isUsbDebuggingEnabled(context: Context) {
-        var isUsbDebugging = Settings.Global.getInt(context.contentResolver, Settings.Global.ADB_ENABLED, 0) == 1
-        if (isUsbDebugging){
-            try {
-//                Log.e("ee","checknetworkwwwwww ")
-//                dialogDebugg = BottomSheetDialog(context)
-//                val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-//                val layout = inflater.inflate(R.layout.network_failed_popup, null)
-//
-//                dialogDebugg!!.setCancelable(false)
-//                dialogDebugg!!.setContentView(layout)
-//                dialogDebugg!!.show()
 
-
-
-            }catch (e: Exception){
-                Log.e("ee","exeption "+e)
-                Log.e("ee","exeption "+e)
-            }
-        }else{
-            if (dialogDebugg != null && dialogDebugg!!.isShowing()) {
-                dialogDebugg!!.dismiss()
-            }
-        }
-    }
-
-
+    // Developer option enable - Code End
 
 
 }

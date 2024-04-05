@@ -650,4 +650,9 @@ class AttendanceReportListActivity : AppCompatActivity() , View.OnClickListener,
             Log.e(TAG,"Exception 196  "+e.toString())
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
 }

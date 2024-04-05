@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.perfect.favourites.DataBaseHelper
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListenerValue
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Model.FavlistModel
@@ -342,4 +343,11 @@ class FavActivity : AppCompatActivity() , View.OnClickListener, ItemClickListene
          override fun onClick(position: Int, data: String) {
              TODO("Not yet implemented")
          }
+
+         override fun onResume() {
+             super.onResume()
+             Config.isDeveloperOptionsEnabled(this)
+         }
+
      }
+

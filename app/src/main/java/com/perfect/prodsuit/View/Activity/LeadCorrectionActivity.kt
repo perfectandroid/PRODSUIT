@@ -755,4 +755,10 @@ class LeadCorrectionActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
 }

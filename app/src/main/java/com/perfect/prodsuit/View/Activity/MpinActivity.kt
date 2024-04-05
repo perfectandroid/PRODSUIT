@@ -99,7 +99,12 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         db = DBHelper(this, null)
 
         if(checkBiometricFeatureAvailability(context)) {
-            loadBiometric()
+           // loadBiometric()
+            if (Config.isDeveloperOptionsEnabled1(context)){
+
+            }else{
+                loadBiometric()
+            }
         }
         else
         {
@@ -744,7 +749,13 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
             R.id.finger_print->
             {
                 if(checkBiometricFeatureAvailability(context)) {
-                    loadBiometric()
+                  //  loadBiometric()
+                    if (Config.isDeveloperOptionsEnabled1(context)){
+
+                    }else{
+                        loadBiometric()
+                    }
+
                 }
             }
             R.id.tvLogout->{
@@ -1912,6 +1923,11 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         networkChangeReceiver = NetworkChangeReceiver()
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
     }
 
 }

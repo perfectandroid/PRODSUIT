@@ -331,4 +331,9 @@ class CommonSearchActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
 }

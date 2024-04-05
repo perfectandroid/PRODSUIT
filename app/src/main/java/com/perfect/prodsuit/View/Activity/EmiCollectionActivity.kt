@@ -2058,6 +2058,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
 //    Location S
 
     override fun onResume() {
+        Config.isDeveloperOptionsEnabled(this)
         handler.postDelayed(Runnable {
             handler.postDelayed(runnable!!, delay!!.toLong())
 //            Toast.makeText(
@@ -2080,5 +2081,7 @@ class EmiCollectionActivity : AppCompatActivity(), View.OnClickListener , ItemCl
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
+
+
 
 }

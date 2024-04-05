@@ -548,4 +548,9 @@ class AboutUsActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
             e.printStackTrace()
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
 }

@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 
@@ -152,6 +153,7 @@ class LocationMarkingActivity : AppCompatActivity(), View.OnClickListener, OnMap
     override fun onResume() {
         super.onResume()
         mapView!!.onResume()
+        Config.isDeveloperOptionsEnabled(this)
     }
 
     override fun onRestart() {
@@ -175,5 +177,7 @@ class LocationMarkingActivity : AppCompatActivity(), View.OnClickListener, OnMap
         super.onLowMemory()
         mapView!!.onLowMemory()
     }
+
+
 
 }

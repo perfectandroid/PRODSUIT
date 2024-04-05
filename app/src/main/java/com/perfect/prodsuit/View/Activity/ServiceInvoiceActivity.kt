@@ -622,4 +622,9 @@ class ServiceInvoiceActivity : AppCompatActivity(), View.OnClickListener {
 //        getClosedTicketList()
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
 }

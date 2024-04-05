@@ -1242,4 +1242,10 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
+
 }

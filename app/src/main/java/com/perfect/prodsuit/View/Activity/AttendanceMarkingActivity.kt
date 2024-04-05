@@ -415,6 +415,7 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
     override fun onResume() {
+        Config.isDeveloperOptionsEnabled(this)
         handler.postDelayed(Runnable {
             handler.postDelayed(runnable!!, delay!!.toLong())
             getLastLocation()
@@ -625,6 +626,7 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
 
         }
     }
+
 
 }
 

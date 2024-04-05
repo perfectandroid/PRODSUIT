@@ -398,4 +398,9 @@ class AboutUs3Activity : AppCompatActivity() , View.OnClickListener {
         alert.show()
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
 }

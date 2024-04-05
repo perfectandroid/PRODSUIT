@@ -222,5 +222,9 @@ class WarrantyAMCActivity : AppCompatActivity() , View.OnClickListener, ItemClic
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
 
 }

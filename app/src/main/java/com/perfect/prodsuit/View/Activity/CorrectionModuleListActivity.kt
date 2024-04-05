@@ -196,4 +196,9 @@ class CorrectionModuleListActivity : AppCompatActivity(), View.OnClickListener, 
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 //        Config.setRedirection(context,"")
     }
+
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
 }
