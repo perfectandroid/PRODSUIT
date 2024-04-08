@@ -9,8 +9,13 @@ import com.perfect.prodsuit.Repository.EmployeeWiseLocationListRepository
 
 class EmployeeWiseLocationListViewModel: ViewModel()  {
     var employeeWiseLocationListData: MutableLiveData<EmployeeWiseLocationListModel>? = null
-    fun getEmployeeWiseLocationList(context: Context, FK_Employee: String, strDate : String) : LiveData<EmployeeWiseLocationListModel>? {
-        employeeWiseLocationListData = EmployeeWiseLocationListRepository.getServicesApiCall(context,FK_Employee,strDate)
+    fun getEmployeeWiseLocationList(
+        context: Context,
+        FK_Employee: String,
+        strDate: String?,
+        submode: String
+    ) : LiveData<EmployeeWiseLocationListModel>? {
+        employeeWiseLocationListData = EmployeeWiseLocationListRepository.getServicesApiCall(context,FK_Employee,strDate,submode)
         return employeeWiseLocationListData
     }
 }

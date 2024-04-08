@@ -58,6 +58,7 @@ class AddDocumentActivity : AppCompatActivity(), View.OnClickListener {
     var txtFromDate: TextView? = null
 
     var edtSubject: EditText? = null
+
     var edtDescription: EditText? = null
 
     var llFromdate: LinearLayout? = null
