@@ -23,6 +23,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
 import java.util.*
@@ -256,4 +257,11 @@ class LocationEnableActivity : AppCompatActivity() {
         super.onTopResumedActivityChanged(isTopResumedActivity)
         Log.e(TAG,"940000552    onTopResumedActivityChanged  ")
     }
+
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
+
 }

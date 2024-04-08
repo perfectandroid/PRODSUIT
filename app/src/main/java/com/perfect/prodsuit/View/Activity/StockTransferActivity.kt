@@ -2767,5 +2767,10 @@ class StockTransferActivity : AppCompatActivity(), View.OnClickListener, ItemCli
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
 
 }

@@ -371,14 +371,29 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
         im_app_logo.startAnimation(animBlink);
 
 
-//        checkno = 0
-//        if (checkno == 0){
+        val commonAppSP = applicationContext.getSharedPreferences(Config.SHARED_PREF18, 0)
+        var chkstatus =commonAppSP.getString("commonApp","")
+        val mpinStatusSP = context.getSharedPreferences(Config.SHARED_PREF23, 0)
+        var mpinStatus =mpinStatusSP.getString("mpinStatus","")
+        Log.e(TAG,"chkstatus   139   "+chkstatus)
+        val ContDeleteModeSP = context.getSharedPreferences(Config.SHARED_PREF84, 0)
+        var contDeleteMode =ContDeleteModeSP.getString("ContDeleteMode","")
+        Log.e(TAG,"contDeleteMode   139   "+contDeleteMode)
 
-//            Config.RegisterNetworkCallback(context,this,checkno)
-//        Config.checkNetworkConnection(context,this)
-//            checkno++
-//        }
 
+//        Config.logOut(context,1)
+//        db!!.deleteIPReseller()
+
+        if (Config.isDeveloperOptionsEnabled1(context)){
+            Config.isDeveloperOptionsEnabled(context)
+        }else{
+            getStarting()
+        }
+
+    }
+
+
+    private fun getStarting() {
         val commonAppSP = applicationContext.getSharedPreferences(Config.SHARED_PREF18, 0)
         var chkstatus =commonAppSP.getString("commonApp","")
         val mpinStatusSP = context.getSharedPreferences(Config.SHARED_PREF23, 0)
@@ -398,6 +413,8 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
 //        Config.logOut(context,1)
 //        db!!.deleteIPReseller()
+
+
         db!!.deleteCompanyData()
         if(chkstatus.equals("") || mpinStatus.equals("") || contDeleteMode.equals("0"))
         {
@@ -457,6 +474,10 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
         networkChangeReceiver = NetworkChangeReceiver()
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
+
+
+
+
 
     private fun versionCheck() {
         var editLeadGenDet = 0
@@ -1496,4 +1517,8 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(context)
+    }
 }

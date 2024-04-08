@@ -3317,5 +3317,11 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         super.onBackPressed()
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
+
 
 }

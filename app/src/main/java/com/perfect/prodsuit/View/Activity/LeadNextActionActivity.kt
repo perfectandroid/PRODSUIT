@@ -827,5 +827,11 @@ class LeadNextActionActivity : AppCompatActivity() , View.OnClickListener, ItemC
         dialog.show()
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
+
 }
 

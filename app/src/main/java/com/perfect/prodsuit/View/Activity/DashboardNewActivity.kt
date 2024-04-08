@@ -201,5 +201,12 @@ DashboardNewActivity : AppCompatActivity()  , View.OnClickListener, ItemClickLis
         TODO("Not yet implemented")
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
+
+
 
 }

@@ -10696,6 +10696,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //        strQty = edtProdqty!!.text.toString()
         Log.e("qqqqqqqqq", "in"  +  strQty)
         Log.e("qqqqqqqqq", "9877777"  +  edtEmployee!!.text.toString())
+        if (strQty.equals("") || strQty == null){
+            strQty = "0"
+        }
 
 
         strExpecteddate = edtExpecteddate!!.text.toString()
@@ -11150,4 +11153,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
 }

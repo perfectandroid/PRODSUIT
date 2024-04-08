@@ -3754,4 +3754,10 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
+
 }

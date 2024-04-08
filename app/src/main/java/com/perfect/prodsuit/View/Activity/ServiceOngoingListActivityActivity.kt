@@ -1118,4 +1118,11 @@ class ServiceOngoingListActivityActivity : AppCompatActivity()  , View.OnClickLi
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
+
+
 }

@@ -240,6 +240,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     override fun onResume() {
         super.onResume()
         Log.e("ghgfhgh","onresume")
+        Config.isDeveloperOptionsEnabled(this)
         resetData()
     }
 
@@ -3186,5 +3187,6 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
+
 
 }

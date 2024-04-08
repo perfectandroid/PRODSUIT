@@ -2058,4 +2058,9 @@ class MaterialUsageActivity : AppCompatActivity(),  View.OnClickListener, ItemCl
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
 }

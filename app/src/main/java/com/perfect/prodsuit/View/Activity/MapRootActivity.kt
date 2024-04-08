@@ -287,6 +287,7 @@ class MapRootActivity : AppCompatActivity() , OnMapReadyCallback {
     override fun onResume() {
         super.onResume()
         mapView!!.onResume()
+        Config.isDeveloperOptionsEnabled(this)
     }
 
     override fun onPause() {
@@ -321,5 +322,7 @@ class MapRootActivity : AppCompatActivity() , OnMapReadyCallback {
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
+
+
 
 }

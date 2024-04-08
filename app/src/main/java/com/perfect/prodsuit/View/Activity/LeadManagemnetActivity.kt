@@ -1281,6 +1281,12 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
     }
 
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
+
 
 
 }

@@ -618,6 +618,10 @@ class AttendanceReportsActivity : AppCompatActivity() , View.OnClickListener, It
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
 
 
 }

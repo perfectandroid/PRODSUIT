@@ -1902,6 +1902,11 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         networkChangeReceiver = NetworkChangeReceiver()
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
     }
+
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
 //
 //    override fun onBackPressed() {
 //        super.onBackPressed()

@@ -429,6 +429,9 @@ class AddRemarkActivity : AppCompatActivity() , View.OnClickListener{
         dialog.show()
     }
 
-
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
 
 }

@@ -1463,6 +1463,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
     override fun onResume() {
         super.onResume()
         mapView!!.onResume()
+        Config.isDeveloperOptionsEnabled(this)
     }
 
     override fun onPause() {
@@ -1680,5 +1681,6 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
+
 
 }

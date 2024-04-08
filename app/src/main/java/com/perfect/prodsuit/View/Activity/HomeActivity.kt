@@ -652,7 +652,9 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     override fun onResume() {
         super.onResume()
         //getCalendarId(context)
+        Config.isDeveloperOptionsEnabled(this)
         Config.setRedirection(context,"")
+
        /* val pm = context.packageManager
         val hasPerm = pm.checkPermission(
             Manifest.permission.READ_CALENDAR,
@@ -2939,6 +2941,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 //        quit.isVisible = false
 //        return true
 //    }
+
 
 
 }

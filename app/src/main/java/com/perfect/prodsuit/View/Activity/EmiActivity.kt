@@ -1282,4 +1282,9 @@ class EmiActivity : AppCompatActivity(), View.OnClickListener , ItemClickListene
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
+
 }

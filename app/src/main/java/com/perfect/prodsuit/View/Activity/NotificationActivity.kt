@@ -98,6 +98,7 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     override fun onResume() {
         super.onResume()
         updateWidgetHandler.postDelayed(updateWidgetRunnable, UPDATE_INTERVAL)
+        Config.isDeveloperOptionsEnabled(this)
     }
 
 
@@ -462,4 +463,6 @@ class NotificationActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
 
     }
+
+
 }
