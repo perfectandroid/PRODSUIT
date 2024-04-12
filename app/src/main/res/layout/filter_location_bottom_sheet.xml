@@ -55,7 +55,7 @@
                         android:gravity="center"
                         android:text="Filter"
                         android:textAllCaps="true"
-                        android:textColor="@color/black"
+                        android:textColor="@color/white"
                         android:textSize="18dp"
                         android:textStyle="bold"
                         android:tint="@color/white" />

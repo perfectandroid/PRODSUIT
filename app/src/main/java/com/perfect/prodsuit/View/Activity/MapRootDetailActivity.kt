@@ -41,7 +41,7 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
     private var strDate:String? = ""
 
     var EmployeeLocation = 0
-    var submode = "1"
+    var submode = ""
     lateinit var employeeWiseLocationListViewModel: EmployeeWiseLocationListViewModel
     lateinit var locationList : JSONArray
     private var checkbox_asc: CheckBox? = null
@@ -78,6 +78,7 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
         if (!FK_Employee.equals("") && !strDate.equals("")){
             Log.e(TAG,"620   "+FK_Employee+" : "+strDate)
             EmployeeLocation = 0
+            submode="1"
             getEmployeeWiseList(submode)
         }
 
@@ -109,6 +110,9 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
     }
 
     private fun getEmployeeWiseList(submode: String) {
+       // recyMapRoot!!.adapter = null
+
+        Log.e(TAG,"SUB2"+submode)
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -232,6 +236,8 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
                 // loadLoginEmpDetails("1")
                 checkbox_asc!!.isChecked=true
                 checkbox_dsc!!.isChecked=false
+                submode="1"
+                EmployeeLocation = 0
                 checkbox_asc!!.setButtonDrawable(R.drawable.ic_radiosort)
                 checkbox_dsc!!.setButtonDrawable(R.drawable.ic_radio1)
             }
@@ -241,19 +247,25 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
                 checkbox_dsc!!.isChecked=true
                 checkbox_dsc!!.setButtonDrawable(R.drawable.ic_radiosort)
                 checkbox_asc!!.setButtonDrawable(R.drawable.ic_radio1)
+                submode="2"
+                EmployeeLocation = 0
             }
             txtSubmit!!.setOnClickListener {
                 // loadLoginEmpDetails("1")
                 if(checkbox_asc!!.isChecked)
                 {
                     submode="1"
+                 //   getEmployeeWiseList(submode)
                 }
                 if(checkbox_dsc!!.isChecked)
                 {
                     submode="2"
+                  //  getEmployeeWiseList(submode)
                 }
                 Log.e(TAG,"SUBMODE"+submode)
+                EmployeeLocation = 0
                 getEmployeeWiseList(submode)
+              //  Toast.makeText(applicationContext,submode,Toast.LENGTH_LONG).show()
                 dialog1.dismiss()
             }
 //            onTextChangedValues()
