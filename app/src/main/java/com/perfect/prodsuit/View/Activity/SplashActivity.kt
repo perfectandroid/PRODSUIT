@@ -67,6 +67,12 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://202.164.150.65:14271/PersuiteLeadAPI"
 //    val BANK_KEY  = "-500"
 
+    // 08-04-2024
+//    val CERT_NAME = "development.pem"
+//    val BASE_URL  = "https://20.204.174.142:14003/PersuiteLeadAPI/api/"
+//    val IMAGE_URL = "https://20.204.174.142:14003/PersuiteLeadAPI"
+//    val BANK_KEY  = "-519"
+
 
 
     // DEV LICENSE API 14-03-2024
@@ -315,6 +321,8 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BASE_URL  = "https://45.118.163.44:14008/PerSuiteAPICOMMONAPP/api/"
 //    val IMAGE_URL = "https://45.118.163.44:14008/PerSuiteAPICOMMONAPP"
 //    val BANK_KEY  = "-528"
+
+
 
 
     var TAG = "SplashActivity"

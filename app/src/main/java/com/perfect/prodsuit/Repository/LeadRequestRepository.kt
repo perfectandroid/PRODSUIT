@@ -19,6 +19,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.ArrayList
+import java.util.concurrent.TimeUnit
 
 object LeadRequestRepository {
 
@@ -44,6 +45,9 @@ object LeadRequestRepository {
                 R.drawable.progress))
             progressDialog!!.show()
             val client = OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS) // Change the timeout duration here
+                .readTimeout(30, TimeUnit.SECONDS) // Change the timeout duration here
+                .writeTimeout(30, TimeUnit.SECONDS)
                 .sslSocketFactory(Config.getSSLSocketFactory(context))
                 .hostnameVerifier(Config.getHostnameVerifier())
                 .build()
@@ -112,6 +116,7 @@ object LeadRequestRepository {
                 override fun onFailure(call: retrofit2.Call<String>, t: Throwable) {
                     progressDialog!!.dismiss()
                     Toast.makeText(context,""+ Config.SOME_TECHNICAL_ISSUES, Toast.LENGTH_SHORT).show()
+                    Log.e(TAG,"115555   "+t.message)
                 }
             })
         }catch (e : Exception){

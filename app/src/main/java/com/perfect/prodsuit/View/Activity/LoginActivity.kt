@@ -586,6 +586,7 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
 //                                                dialog1.show()
                                             } catch (e: Exception) {
                                                 e.printStackTrace()
+                                                Log.e(TAG,"58999  "+e.toString())
                                             }
 
 

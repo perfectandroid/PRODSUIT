@@ -761,9 +761,13 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             player1 = null
             stopPlayerService()
         }
-
+        edt_customer!!.isEnabled = true
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
+
+        edtCustname!!.isEnabled = true
+        edtCustphone!!.isEnabled = true
+
         strLeadFromHint = "Lead From"
         checkProject="1"
         Customer_Mode = "0"
@@ -910,6 +914,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
         llfollowup!!.visibility = View.GONE
         llNeedTransfer!!.visibility = View.GONE
+
+
 
         custDetailMode = "1"
         companyNameMode = "1"
@@ -1176,6 +1182,12 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         date_Picker2!!.minDate = Calendar.getInstance().timeInMillis
 
         setLabelbyCompany()
+
+        edtCustphone!!.setOnFocusChangeListener { view, hasFocus ->
+            if (!hasFocus) {
+                Log.e(TAG,"1182   Focus changed")
+            }
+        }
     }
 
     private fun setLabelbyCompany() {
@@ -2906,63 +2918,67 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                         val msg = serviceSetterGetter.message
                         if (msg!!.length > 0) {
 
-                            val jObject = JSONObject(msg)
-                            Log.e(TAG, "msg   19871   " + msg.length)
-                            Log.e(TAG, "msg   19872   " + msg)
-                            if (jObject.getString("StatusCode") == "0")
-                            {
-                                val jobjt = jObject.getJSONObject("WalkingCustomerDetailsList")
-                                leadRequestArrayList = jobjt.getJSONArray("WalkingCustomerDetails")
-                                if (leadRequestArrayList.length() > 0)
+
+                            if (countRequestCount1 == 0) {
+
+                                countRequestCount1++
+                                val jObject = JSONObject(msg)
+                                Log.e(TAG, "msg   19871   " + msg.length)
+                                Log.e(TAG, "msg   19872   " + msg)
+                                if (jObject.getString("StatusCode") == "0")
                                 {
-                                    cardLeadRequest!!.visibility = View.VISIBLE
+                                    val jobjt = jObject.getJSONObject("WalkingCustomerDetailsList")
+                                    leadRequestArrayList = jobjt.getJSONArray("WalkingCustomerDetails")
+                                    if (leadRequestArrayList.length() > 0)
+                                    {
+                                        cardLeadRequest!!.visibility = View.VISIBLE
 
-                                    llLeadRequest!!.visibility=View.VISIBLE
-                                    recyRequest!!.visibility=View.VISIBLE
-                                    if (countRequestCount1 == 0) {
-                                        countRequestCount1++
-                                        Log.e(TAG, "msg   19873   ")
+                                        llLeadRequest!!.visibility=View.VISIBLE
+                                        recyRequest!!.visibility=View.VISIBLE
+                                        if (countRequestCount1 == 0) {
+                                            countRequestCount1++
+                                            Log.e(TAG, "msg   19873   ")
 
-                                        if (leadRequestArrayList.length() > 4) {
-                                            val params: ViewGroup.LayoutParams =
-                                                recyRequest!!.getLayoutParams()
-                                            params.height = 500
-                                            recyRequest!!.setLayoutParams(params)
-                                        }
+                                            if (leadRequestArrayList.length() > 4) {
+                                                val params: ViewGroup.LayoutParams =
+                                                    recyRequest!!.getLayoutParams()
+                                                params.height = 500
+                                                recyRequest!!.setLayoutParams(params)
+                                            }
 
 //314400
-                                        val lLayout =
-                                            GridLayoutManager(this@LeadGenerationActivity, 1)
-                                        recyRequest!!.layoutManager =
-                                            lLayout as RecyclerView.LayoutManager?
-                                        val adapter = LeadRequestAdapter(
-                                            this@LeadGenerationActivity,
-                                            leadRequestArrayList
-                                        )
-                                        recyRequest!!.adapter = adapter
-                                        adapter.setClickListener(this@LeadGenerationActivity)
-                                        adapter.setClickListener1(this@LeadGenerationActivity)
+                                            val lLayout =
+                                                GridLayoutManager(this@LeadGenerationActivity, 1)
+                                            recyRequest!!.layoutManager =
+                                                lLayout as RecyclerView.LayoutManager?
+                                            val adapter = LeadRequestAdapter(
+                                                this@LeadGenerationActivity,
+                                                leadRequestArrayList
+                                            )
+                                            recyRequest!!.adapter = adapter
+                                            adapter.setClickListener(this@LeadGenerationActivity)
+                                            adapter.setClickListener1(this@LeadGenerationActivity)
 
-                                        //  leadByPopup(leadByArrayList)
+                                            //  leadByPopup(leadByArrayList)
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        cardLeadRequest!!.visibility = View.GONE
+                                        recyRequest!!.visibility=View.GONE
+                                        llLeadRequest!!.visibility=View.GONE
+
                                     }
 
                                 }
-                                else
-                                {
+                                else if (jObject.getString("StatusCode") == "105"){
+                                    Config.logoutTokenMismatch(context,jObject)
+                                }
+                                else {
                                     cardLeadRequest!!.visibility = View.GONE
                                     recyRequest!!.visibility=View.GONE
                                     llLeadRequest!!.visibility=View.GONE
-
-                                }
-
-                            }
-                            else if (jObject.getString("StatusCode") == "105"){
-                                Config.logoutTokenMismatch(context,jObject)
-                            }
-                            else {
-                                cardLeadRequest!!.visibility = View.GONE
-                                recyRequest!!.visibility=View.GONE
-                                llLeadRequest!!.visibility=View.GONE
 //
 //                                val builder = AlertDialog.Builder(
 //                                    this@LeadGenerationActivity,
@@ -2974,7 +2990,10 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //                                val alertDialog: AlertDialog = builder.create()
 //                                alertDialog.setCancelable(false)
 //                                alertDialog.show()
+                                }
                             }
+
+
                         } else {
 //                            Toast.makeText(
 //                                applicationContext,
@@ -7777,6 +7796,14 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                 edt_customer!!.setText(jsonObject!!.getString("CusPhnNo"))
             }
 
+//            Customer_Name.is
+//            Customer_Mobile = edtCustphone!!.text.toString()
+
+
+
+            edtCustname!!.isEnabled = false
+            edtCustphone!!.isEnabled = false
+
             // custDetailMode = "1"
             ID_CustomerAssignment = ""
             Customer_Mode = "1"  // SEARCH
@@ -8277,6 +8304,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             llCustomerDetail!!.visibility = View.VISIBLE
             ID_Customer = ""
             edt_customer!!.setText("")
+            edt_customer!!.isEnabled = false
             ID_CustomerAssignment = jsonObject.getString("ID_CustomerAssignment")
             edtCustname!!.setText(jsonObject.getString("Customer"))
             edtCustphone!!.setText(jsonObject.getString("Mobile"))
@@ -9848,6 +9876,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                                                     suceessDialog!!.dismiss()
 //                                                    val i = Intent(this@LeadGenerationActivity, LeadActivity::class.java)
 //                                                    startActivity(i)
+                                                    edt_customer!!.isEnabled = true
                                                     finish()
 
                                                 }

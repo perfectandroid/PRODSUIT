@@ -1593,11 +1593,11 @@ object Config {
     // Developer option enable - Code Starting
 
     fun isDeveloperOptionsEnabled1(context: Context): Boolean {
-      //  return false
+        return false
 
        //To make the developer option work, uncomment the code below the line and comment the code above the line.
 
-        return Settings.Secure.getInt(context.contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
+      //  return Settings.Secure.getInt(context.contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
 
     }
 
@@ -1605,40 +1605,40 @@ object Config {
 
       //  To enable the developer option, uncomment the code below the line, or comment the code
 
-        try {
-            var isDeveloper = Settings.Secure.getInt(context.contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
-            if (isDeveloper){
-                dialogDeveloper = AlertDialog.Builder(context)
-                //   dialogDeveloper!!.setTitle("title")
-                dialogDeveloper!!.setMessage("Application will not run if your device is enabled with developer option. Kindly disable to continue.")
-                dialogDeveloper!!.setPositiveButton("Go To Settings") { dialog, _ ->
-                    // Handle positive button click
-                   // dialog.dismiss()
-                    context.startActivity(Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS));
-                }
-
-                dialogDeveloper!!.setNegativeButton("Exit") { dialog, _ ->
-                    // Handle positive button click
-                    // dialog.dismiss()
-                    val activity = context as Activity
-                    finishAffinity(activity)
-
-                }
-                dialogDeveloper1 = dialogDeveloper!!.create()
-
-                dialogDeveloper1!!.setCanceledOnTouchOutside(false)
-                dialogDeveloper1!!.setCancelable(false)
-
-                dialogDeveloper1!!.show()
-
-            }else{
-                if (dialogDeveloper1 != null && dialogDeveloper1!!.isShowing()) {
-                    dialogDeveloper1!!.dismiss()
-                }
-            }
-        }catch (e: Exception){
-
-        }
+//        try {
+//            var isDeveloper = Settings.Secure.getInt(context.contentResolver, Settings.Global.DEVELOPMENT_SETTINGS_ENABLED, 0) == 1
+//            if (isDeveloper){
+//                dialogDeveloper = AlertDialog.Builder(context)
+//                //   dialogDeveloper!!.setTitle("title")
+//                dialogDeveloper!!.setMessage("Application will not run if your device is enabled with developer option. Kindly disable to continue.")
+//                dialogDeveloper!!.setPositiveButton("Go To Settings") { dialog, _ ->
+//                    // Handle positive button click
+//                   // dialog.dismiss()
+//                    context.startActivity(Intent(Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS));
+//                }
+//
+//                dialogDeveloper!!.setNegativeButton("Exit") { dialog, _ ->
+//                    // Handle positive button click
+//                    // dialog.dismiss()
+//                    val activity = context as Activity
+//                    finishAffinity(activity)
+//
+//                }
+//                dialogDeveloper1 = dialogDeveloper!!.create()
+//
+//                dialogDeveloper1!!.setCanceledOnTouchOutside(false)
+//                dialogDeveloper1!!.setCancelable(false)
+//
+//                dialogDeveloper1!!.show()
+//
+//            }else{
+//                if (dialogDeveloper1 != null && dialogDeveloper1!!.isShowing()) {
+//                    dialogDeveloper1!!.dismiss()
+//                }
+//            }
+//        }catch (e: Exception){
+//
+//        }
 
 
     }

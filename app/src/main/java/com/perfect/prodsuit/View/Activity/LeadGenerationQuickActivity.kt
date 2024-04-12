@@ -2671,6 +2671,9 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                 edt_customer!!.setText(jsonObject!!.getString("CusPhnNo"))
             }
 
+            edtCustname!!.isEnabled = false
+            edtCustphone!!.isEnabled = false
+
             // custDetailMode = "1"
             ID_CustomerAssignment = ""
             Customer_Mode = "1"  // SEARCH
@@ -2998,6 +3001,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 //            Config.snackBars(context, v, "Select Category")
 //
 //        }
+        Log.e(TAG,"3001  ID_Product   :   "+ID_Product)
         if (ID_Product.equals("")) {
 
 
@@ -3473,6 +3477,8 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = sdf.format(Date())
 
+        edtCustname!!.isEnabled = true
+        edtCustphone!!.isEnabled = true
 
         Customer_Mode = "0"
         ID_Customer = "0"
@@ -3556,6 +3562,10 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         searchNameTitle = arrayOf("Mr. ", "Mrs. ", "Miss. ", "M/s. ", "Dr. ", "Ms. ", "Fr. ", "Sr. ")
         detailsShowing()
         setLabelbyCompany()
+
+        proddetailMode = 0
+        proddetail = 0
+        getProductDetail("0")
 
         getDefaultValueSettings()
         checkAttendance()
