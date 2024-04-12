@@ -26,7 +26,7 @@ object LeadActionRepository {
 
     private var progressDialog: ProgressDialog? = null
     val productWiseComplaintSetterGetter = MutableLiveData<LeadActionActionModel>()
-    val TAG: String = "ProductWiseComplaintRepository"
+    val TAG: String = "LeadActionRepository"
 
     fun getServicesApiCall(context: Context): MutableLiveData<LeadActionActionModel> {
         getAction(context)
