@@ -31,12 +31,7 @@ object EmployeeWiseLocationListRepository {
         return employeeWiseLocationSetterGetter
     }
 
-    private fun getEmployeeWiseLocation(
-        context: Context,
-        FK_Employee: String,
-        strDate: String?,
-        submode: String
-    ) {
+    private fun getEmployeeWiseLocation(context: Context, FK_Employee: String, strDate: String?, submode: String) {
         try {
             employeeWiseLocationSetterGetter.value= EmployeeWiseLocationListModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
