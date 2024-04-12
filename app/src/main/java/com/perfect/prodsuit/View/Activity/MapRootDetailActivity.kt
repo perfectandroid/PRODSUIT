@@ -9,7 +9,6 @@ import android.net.ConnectivityManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
@@ -17,7 +16,6 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -25,21 +23,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.perfect.prodsuit.Helper.Config
-import com.perfect.prodsuit.Helper.DecimalToWordsConverter
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
-import com.perfect.prodsuit.Model.ModelOtherChargesTemp
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Adapter.MapRootDetailAdapter
-import com.perfect.prodsuit.View.Adapter.OtherChargeAdapter
 import com.perfect.prodsuit.Viewmodel.EmployeeWiseLocationListViewModel
 import org.json.JSONArray
 import org.json.JSONObject
-import java.math.BigDecimal
-import java.math.RoundingMode
-import java.util.ArrayList
 
 class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
 
@@ -51,6 +41,7 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
     private var strDate:String? = ""
 
     var EmployeeLocation = 0
+    var submode = "1"
     lateinit var employeeWiseLocationListViewModel: EmployeeWiseLocationListViewModel
     lateinit var locationList : JSONArray
     private var checkbox_asc: CheckBox? = null
@@ -71,10 +62,12 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_map_root_detail)
+
         context = this@MapRootDetailActivity
         employeeWiseLocationListViewModel = ViewModelProvider(this).get(EmployeeWiseLocationListViewModel::class.java)
 
         setRegViews()
+
         if (getIntent().hasExtra("FK_Employee")) {
             FK_Employee = intent.getStringExtra("FK_Employee")
         }
@@ -85,7 +78,7 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
         if (!FK_Employee.equals("") && !strDate.equals("")){
             Log.e(TAG,"620   "+FK_Employee+" : "+strDate)
             EmployeeLocation = 0
-            getEmployeeWiseList()
+            getEmployeeWiseList(submode)
         }
 
         networkChangeReceiver = NetworkChangeReceiver()
@@ -115,7 +108,7 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
         }
     }
 
-    private fun getEmployeeWiseList() {
+    private fun getEmployeeWiseList(submode: String) {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -124,7 +117,7 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                employeeWiseLocationListViewModel.getEmployeeWiseLocationList(this, FK_Employee!!,strDate!!)!!.observe(
+                employeeWiseLocationListViewModel.getEmployeeWiseLocationList(this, FK_Employee!!,strDate,submode!!)!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
@@ -251,7 +244,17 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
             }
             txtSubmit!!.setOnClickListener {
                 // loadLoginEmpDetails("1")
-
+                if(checkbox_asc!!.isChecked)
+                {
+                    submode="1"
+                }
+                if(checkbox_dsc!!.isChecked)
+                {
+                    submode="2"
+                }
+                Log.e(TAG,"SUBMODE"+submode)
+                getEmployeeWiseList(submode)
+                dialog1.dismiss()
             }
 //            onTextChangedValues()
 

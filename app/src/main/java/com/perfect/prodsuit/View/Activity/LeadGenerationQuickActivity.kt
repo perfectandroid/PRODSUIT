@@ -23,7 +23,6 @@ import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.InputFilter
-import android.text.InputFilter.LengthFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
@@ -811,9 +810,10 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                                         customerArrayList = jobjt.getJSONArray("CustomerDetails")
 
                                         if (customerArrayList.length() > 0) {
-                                            Log.e(TAG, "msg   1052   " + msg)
 
-                                            customerSearchPopup(customerArrayList)
+                                           var cusval = actv_nammob!!.text.toString()
+                                            Log.e(TAG, "msg   1052   " + msg+" \n"+cusval)
+                                            customerSearchPopup(customerArrayList,cusval)
 
 
                                         }
@@ -855,9 +855,9 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         }
     }
 
-    private fun customerSearchPopup(customerArrayList: JSONArray) {
+    private fun customerSearchPopup(customerArrayList: JSONArray, cusval: String) {
         try {
-
+            Log.e(TAG,"CUSVAL "+cusval)
             dialogCustSearch = Dialog(this)
             dialogCustSearch!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
             dialogCustSearch!!.setContentView(R.layout.customersearch_popup)
@@ -868,6 +868,16 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             recyCustomer.visibility=View.VISIBLE
             val etsearch = dialogCustSearch!!.findViewById(R.id.etsearch) as EditText
             val txt_nodata = dialogCustSearch!!.findViewById(R.id.txt_nodata) as TextView
+
+            if(cusval.equals("Name"))
+            {
+                txt_nodata.text="Invalid Customer Name"
+            }
+            else if(cusval.equals("Mobile"))
+            {
+                txt_nodata.text="Invalid Mobile Number"
+            }
+
             cusNameSort = JSONArray()
             for (k in 0 until customerArrayList.length()) {
                 val jsonObject = customerArrayList.getJSONObject(k)

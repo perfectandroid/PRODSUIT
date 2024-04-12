@@ -26,12 +26,17 @@ object EmployeeWiseLocationListRepository {
     val employeeWiseLocationSetterGetter = MutableLiveData<EmployeeWiseLocationListModel>()
     val TAG: String = "EmployeeWiseLocationListRepository"
 
-    fun getServicesApiCall(context: Context, FK_Employee: String, strDate: String): MutableLiveData<EmployeeWiseLocationListModel> {
-        getEmployeeWiseLocation(context, FK_Employee, strDate)
+    fun getServicesApiCall(context: Context, FK_Employee: String, strDate: String?, submode: String): MutableLiveData<EmployeeWiseLocationListModel> {
+        getEmployeeWiseLocation(context, FK_Employee, strDate,submode)
         return employeeWiseLocationSetterGetter
     }
 
-    private fun getEmployeeWiseLocation(context: Context, FK_Employee: String, strDate: String) {
+    private fun getEmployeeWiseLocation(
+        context: Context,
+        FK_Employee: String,
+        strDate: String?,
+        submode: String
+    ) {
         try {
             employeeWiseLocationSetterGetter.value= EmployeeWiseLocationListModel("")
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
@@ -76,6 +81,7 @@ object EmployeeWiseLocationListRepository {
                 requestObject1.put("LocationEnteredDate", ProdsuitApplication.encryptStart(strDate))
                 requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_Employee))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(submode))
 
                 Log.e(TAG,"78111     "+requestObject1)
 

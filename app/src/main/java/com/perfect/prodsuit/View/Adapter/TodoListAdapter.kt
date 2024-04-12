@@ -150,13 +150,17 @@ class TodoListAdapter(internal var context: Context, internal var jsonArray: JSO
                 })
 
                 holder.cb_Meeting.setTag(position)
-                    holder.cb_Meeting.setOnCheckedChangeListener { buttonView, isChecked ->
+                    holder.cb_Meeting.setOnCheckedChangeListener {
+
+                                                            buttonView, isChecked ->
                         if (isChecked)
                         {
 
                             val jsonObject1 = jsonArray.getJSONObject(position)
 
-//                        val ActionTypeName1 = jsonObject1!!.getString("ActionTypeName")
+//                        val ActionTypeName1 = jsonObj
+//
+//                        ect1!!.getString("ActionTypeName")
 //                        val EnquiryAbout1 = jsonObject1!!.getString("EnquiryAbout")
 //                        val NextActionDate = jsonObject1!!.getString("NextActionDate")
 //                        val ID_LeadGenerate1 = jsonObject1!!.getString("ID_LeadGenerateProduct")

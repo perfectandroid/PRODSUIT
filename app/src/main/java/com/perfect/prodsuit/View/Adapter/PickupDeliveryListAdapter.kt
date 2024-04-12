@@ -174,6 +174,8 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
         internal var tv_ProductName         : TextView
         internal var tv_module         : TextView
         init {
+
+
             tv_TicketNo          = v.findViewById<View>(R.id.tv_TicketNo) as TextView
             tv_Customer          = v.findViewById<View>(R.id.tv_Customer) as TextView
             tv_Mobile            = v.findViewById<View>(R.id.tv_Mobile) as TextView
@@ -190,6 +192,8 @@ class PickupDeliveryListAdapter (internal var context: Context, internal var jso
             tv_Area              = v.findViewById<View>(R.id.tv_Area) as TextView
             tv_ProductName       = v.findViewById<View>(R.id.tv_ProductName) as TextView
             tv_module       = v.findViewById<View>(R.id.tv_module) as TextView
+
+
         }
     }
 

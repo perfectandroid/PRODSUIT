@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
-import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -42,7 +41,7 @@ class MapRootActivity : AppCompatActivity() , OnMapReadyCallback {
 
     private var FK_Employee:String?=""
     private var strDate:String? = ""
-
+    private var submode:String? = ""
     var EmployeeLocation = 0
     lateinit var employeeWiseLocationListViewModel: EmployeeWiseLocationListViewModel
     private lateinit var networkChangeReceiver: NetworkChangeReceiver
@@ -95,7 +94,12 @@ class MapRootActivity : AppCompatActivity() , OnMapReadyCallback {
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                employeeWiseLocationListViewModel.getEmployeeWiseLocationList(this, FK_Employee!!,strDate!!)!!.observe(
+                employeeWiseLocationListViewModel.getEmployeeWiseLocationList(
+                    this,
+                    FK_Employee!!,
+                    strDate!!,
+                    submode!!
+                )!!.observe(
                     this,
                     Observer { serviceSetterGetter ->
 
