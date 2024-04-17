@@ -945,7 +945,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
         }
     }
 
-    private fun getEmployeeAllD() {
+   /* private fun getEmployeeAllD() {
         var countAgenda = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -1008,7 +1008,7 @@ class LeadManagemnetActivity : AppCompatActivity() , View.OnClickListener, ItemC
 //                    .show()
             }
         }
-    }
+    }*/
 
     private fun employeeAllPopup(employeeAllArrayList: JSONArray) {
         try {

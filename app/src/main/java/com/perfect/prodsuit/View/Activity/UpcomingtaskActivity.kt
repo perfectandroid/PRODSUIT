@@ -1,10 +1,13 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
+import android.app.AlarmManager
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.app.PendingIntent
 import android.app.ProgressDialog
+import android.app.TimePickerDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -13,6 +16,7 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.CalendarContract
 import android.text.Editable
@@ -37,6 +41,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Receivers.MyAlarmReceiver
 import com.perfect.prodsuit.View.Adapter.BranchAdapter
 import com.perfect.prodsuit.View.Adapter.EmployeeAllAdapter
 import com.perfect.prodsuit.View.Adapter.LeadDetailAdapter
@@ -60,10 +65,12 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     lateinit var upcomingtaskslistViewModel: UpcomingtasksListViewModel
     private var rv_upcmngtasklist: RecyclerView?=null
     lateinit var upcmngtaskArrayList : JSONArray
+    private lateinit var alarmManager: AlarmManager
     private var SubMode:String?=""
     private var headerTitle:String?=""
     private var UserName:String? = ""
     var SendMailCount = 0
+    private lateinit var pendingIntent: PendingIntent
     internal var yr: Int =0
     internal var month:Int = 0
     internal var day:Int = 0
@@ -355,7 +362,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     private fun setReminder(ActionTypeName1 : String,EnquiryAbout1: String,descriptn: String) {
         try
         {
-            val builder = android.app.AlertDialog.Builder(this)
+        /*    val builder = android.app.AlertDialog.Builder(this)
             val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val layout = inflater1.inflate(R.layout.reminder_agenda_popup, null)
             val btncancel = layout.findViewById(R.id.btncancel) as Button
@@ -408,6 +415,59 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 addEvent(yr, month, day, hr, min, etdis!!.text.toString(), " Reminder")
                 alertDialog.dismiss()
             }
+            alertDialog.show()*/
+            val builder = android.app.AlertDialog.Builder(this)
+            val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout = inflater1.inflate(R.layout.reminder_setter_popup, null)
+            val btncancel = layout.findViewById(R.id.btncancel) as Button
+            val btnsubmit = layout.findViewById(R.id.btnsubmit) as Button
+            etdate = layout.findViewById(R.id.etdate) as EditText
+            ettime = layout.findViewById(R.id.ettime) as EditText
+            etdis = layout.findViewById(R.id.etdis) as EditText
+            etdis!!.setText(descriptn)
+            /* val ll_ok = layout.findViewById(R.id.ll_ok) as LinearLayout
+             val ll_cancel = layout.findViewById(R.id.ll_cancel) as LinearLayout
+             etdate = layout.findViewById(R.id.etdate) as TextView
+             ettime = layout.findViewById(R.id.ettime) as TextView
+             val etdis = layout.findViewById(R.id.etdis) as EditText*/
+            etdate!!.setKeyListener(null)
+            ettime!!.setKeyListener(null)
+            builder.setView(layout)
+            val alertDialog = builder.create()
+            val c = Calendar.getInstance()
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            val sdf1 = SimpleDateFormat("hh:mm a",Locale.getDefault())
+            val sdf2 = SimpleDateFormat("hh:mm")
+            yr = c.get(Calendar.YEAR)
+            month = c.get(Calendar.MONTH)
+            day = c.get(Calendar.DAY_OF_MONTH)
+            etdate!!.setText(sdf.format(c.time))
+            ettime!!.setText(sdf1.format(c.time))
+            val s = sdf2.format(c.time)
+            val split = s.split((":").toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val strhr = split[0]
+            val strmin = split[1]
+
+
+            var dateShow = etdate!!.text.toString()
+            var timeShow = ettime!!.text.toString()
+
+            hr = Integer.parseInt(strhr)
+            min = Integer.parseInt(strmin)
+
+            ettime!!.setOnClickListener(View.OnClickListener { timeSelector() })
+            etdate!!.setOnClickListener(View.OnClickListener { dateSelectorreminder() })
+            btncancel.setOnClickListener {
+                Config.Utils.hideSoftKeyBoard(this, it)
+                //     chipNavigationBar!!.setItemSelected(R.id.home, true)
+                alertDialog.dismiss() }
+            btnsubmit.setOnClickListener {
+                Config.Utils.hideSoftKeyBoard(this, it)
+                addEvent(yr, month, day, hr, min, etdis!!.text.toString(), " Reminder",dateShow,timeShow)
+                alertDialog.dismiss()
+                //     chipNavigationBar!!.setItemSelected(R.id.home, true)
+            }
+            alertDialog.setCancelable(false)
             alertDialog.show()
         }
         catch (e: Exception) {
@@ -460,7 +520,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         dialog.show()
     }
 
-    fun addEvent(iyr: Int, imnth: Int, iday: Int, ihour: Int, imin: Int, descriptn: String, Title: String) {
+  /*  fun addEvent(iyr: Int, imnth: Int, iday: Int, ihour: Int, imin: Int, descriptn: String, Title: String) {
         if (ActivityCompat.checkSelfPermission(
                 applicationContext,
                 Manifest.permission.WRITE_CALENDAR
@@ -523,7 +583,7 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         val alert = builder.create()
         alert.show()
 
-    }
+    }*/
 
     private fun getCalendarId(context: Context): kotlin.Long? {
 
@@ -2005,5 +2065,121 @@ class UpcomingtaskActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         super.onResume()
         Config.isDeveloperOptionsEnabled(this)
     }
+    fun timeSelector() {
+        val c = Calendar.getInstance()
+        mHour = c.get(Calendar.HOUR_OF_DAY)
+        mMinute = c.get(Calendar.MINUTE)
+        // Launch Time Picker Dialog
+        val timePickerDialog = TimePickerDialog(this,
+            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                val strDate = String.format(
+                    "%02d:%02d %s", if (hourOfDay == 0) 12 else hourOfDay,
+                    minute, if (hourOfDay < 12) "am" else "pm"
+                )
+                ettime!!.setText(strDate)
+                hr = hourOfDay
+                min = minute
+            }, mHour, mMinute, false
+        )
+        timePickerDialog.show()
+    }
+    fun dateSelectorreminder() {
+        try {
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            val c = Calendar.getInstance()
+            mYear = c.get(Calendar.YEAR)
+            mMonth = c.get(Calendar.MONTH)
+            mDay = c.get(Calendar.DAY_OF_MONTH)
+            val datePickerDialog = DatePickerDialog(this,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    yr = year
+                    month = monthOfYear
+                    day = dayOfMonth
+                    etdate!!.setText(dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
+                }, mYear, mMonth, mDay
+            )
+            datePickerDialog.datePicker.minDate = c.timeInMillis
+            datePickerDialog.show()
+
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+    }
+    fun addEvent(iyr: Int, imnth: Int, iday: Int, ihour: Int, imin: Int, descriptn: String, Title: String,dateShow: String ,timeShow: String ) {
+
+
+
+
+        try {
+
+            var random1 = (0..1000000).shuffled().last()
+            val requestCode = random1++
+            alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            val intent = Intent(this, MyAlarmReceiver::class.java)
+            intent.putExtra("REQUEST_CODE", requestCode)
+            intent.putExtra("title", Title)
+            intent.putExtra("message", descriptn)
+            intent.putExtra("dateShow", dateShow)
+            intent.putExtra("timeShow", timeShow)
+            intent.putExtra("date", ""+iday+"-"+imnth+"-"+iyr)
+            intent.putExtra("time", ""+ihour+":"+imin)
+            pendingIntent = PendingIntent.getBroadcast(this, requestCode, intent, PendingIntent.FLAG_MUTABLE)
+            val calendar: Calendar = Calendar.getInstance()
+//            calendar.set(
+//                calendar.get(iyr),
+//                calendar.get(imnth),
+//                calendar.get(iday),
+//                ihour,
+//                imin,
+//                0
+//            )
+
+            Log.e("TAG","888888   "+calendar.get(Calendar.YEAR)+":"+calendar.get(Calendar.MONTH)+":"+calendar.get(Calendar.DAY_OF_MONTH))
+            Log.e("TAG","8888882   "+ihour+"  :  "+imin)
+
+            if (Build.VERSION.SDK_INT >= 23) {
+                calendar.set(
+                    iyr,
+                    imnth,
+                    iday,
+                    ihour,
+                    imin,
+                    0
+                )
+                // Log.e("TAG","8888881   "+timePicker.hour+":"+timePicker!!.minute)
+            } else {
+                calendar.set(
+                    iyr,
+                    imnth,
+                    iday,
+                    ihour,
+                    imin, 0
+                )
+                // Log.e("TAG","8888881   "+timePicker.currentHour+":"+timePicker!!.currentMinute)
+            }
+
+
+            alarmManager.set(AlarmManager.RTC_WAKEUP,calendar.timeInMillis, pendingIntent);
+            Log.e("TAG","1999      Alarm Set  "+descriptn+"  :   "+requestCode)
+
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage("Reminder set successfully.")
+                .setCancelable(false)
+                .setPositiveButton(
+                    "OK"
+                ) { dialog, id -> dialog.dismiss()
+                }
+            val alert = builder.create()
+            alert.show()
+
+        }
+        catch (e : Exception){
+
+            Log.e(TAG,"1620     "+e.toString())
+        }
+
+
+    }
+
 
 }
