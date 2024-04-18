@@ -6,6 +6,7 @@ import android.database.Cursor
 import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.perfect.prodsuit.Model.InsertFavModel
 
 
@@ -224,6 +225,20 @@ class DataBaseHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.delete(TABLE_NAME, "title=?", arrayOf(title))
         db.close()
     }
+    fun deleteallitem() {
+
+        // on below line we are creating
+        // a variable to write our database.
+        val db = this.writableDatabase
+
+        // on below line we are calling a method to delete our
+        // course and we are comparing it with our course name.
+        db.delete(TABLE_NAME,null,null);
+        db.close()
+    }
+
+
+
     fun insert(
         title: String?
 
