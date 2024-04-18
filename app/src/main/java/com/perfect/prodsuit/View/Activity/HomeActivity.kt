@@ -53,6 +53,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
+import com.perfect.favourites.DataBaseHelper
 import com.perfect.nbfcmscore.Helper.PicassoTrustAll
 import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.Helper.*
@@ -1515,6 +1516,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             dialog.dismiss()
            // dologoutchanges()
             Config.logOut(context,logoutMode)
+            val db1 = DataBaseHelper(this, null)
+            db1.deleteallitem()
             startActivity(Intent(this@HomeActivity, SplashActivity::class.java))
         }
         dialog.setCancelable(false)

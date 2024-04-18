@@ -18,6 +18,7 @@ import com.perfect.prodsuit.Helper.ItemClickListenerValue
 import com.perfect.prodsuit.Model.InsertFavModel
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.View.Activity.DashBoardActivity
+import com.perfect.prodsuit.View.Activity.DashboardNewActivity
 import com.perfect.prodsuit.View.Activity.FavActivity
 import com.perfect.prodsuit.View.Activity.LeadActivity
 import com.perfect.prodsuit.View.Activity.LeadGenerationQuickActivity
@@ -99,7 +100,7 @@ class FavListAdapter1(
                     Toast.makeText(context, "Deleted successfully", Toast.LENGTH_SHORT).show();
                     val myIntent = Intent(context, FavActivity::class.java)
                     context.startActivity(myIntent)
-                    (context as Activity).finish()
+                    //(context as Activity).finish()
                    // Log.e(TAG,"deleted   ")
                 })
 
@@ -111,15 +112,15 @@ class FavListAdapter1(
 
                         val intent = Intent(context, LeadGenerationQuickActivity::class.java)
                         context.startActivity(intent)
-                        (context as Activity).finish()
+                      //  (context as Activity).finish()
 
                     }
                     else if(title.equals("Dashboard"))
                     {
 
-                        val intent = Intent(context, DashBoardActivity::class.java)
+                        val intent = Intent(context, DashboardNewActivity::class.java)
                         context.startActivity(intent)
-                        (context as Activity).finish()
+                      //  (context as Activity).finish()
 
                     }
                     else if(title.equals("Lead"))
@@ -127,7 +128,7 @@ class FavListAdapter1(
 
                         val intent = Intent(context, LeadActivity::class.java)
                         context.startActivity(intent)
-                        (context as Activity).finish()
+                     //   (context as Activity).finish()
 
                     }
                     else if(title.equals("Service"))
@@ -135,7 +136,7 @@ class FavListAdapter1(
 
                         val intent = Intent(context, ServiceActivity::class.java)
                         context.startActivity(intent)
-                        (context as Activity).finish()
+                      //  (context as Activity).finish()
 
                     }
                     else if(title.equals("Project"))
@@ -143,7 +144,7 @@ class FavListAdapter1(
 
                         val intent = Intent(context, ProjectActivity::class.java)
                         context.startActivity(intent)
-                        (context as Activity).finish()
+                    //    (context as Activity).finish()
 
                     }
                     else if(title.equals("Report"))
@@ -151,7 +152,7 @@ class FavListAdapter1(
 
                         val intent = Intent(context, ReportMainActivity::class.java)
                         context.startActivity(intent)
-                        (context as Activity).finish()
+                      //  (context as Activity).finish()
 
                     }
                 })
