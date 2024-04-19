@@ -47,7 +47,7 @@ android {
 //        applicationId "com.perfect.prodsuite_employee"
 
 
-        minSdkVersion 25
+        minSdkVersion 26
         targetSdkVersion 33
         versionCode 6
         versionName "2.0.1"
