@@ -379,12 +379,13 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                           1
                       )
                   } else {
-                      startActivity(
+                      setPermission()
+                    /*  startActivity(
                           Intent(
                               Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                               Uri.parse("package:" + BuildConfig.APPLICATION_ID)
                           )
-                      )
+                      )*/
                   }
 
 

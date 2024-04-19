@@ -47,9 +47,9 @@ android {
 //        applicationId "com.perfect.prodsuite_employee"
 
 
-        minSdkVersion 26
+        minSdkVersion 25
         targetSdkVersion 33
-        versionCode 3
+        versionCode 6
         versionName "2.0.1"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
