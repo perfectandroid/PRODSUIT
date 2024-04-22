@@ -77,6 +77,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PRODSUIT"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".View.Activity.MyActivity"
             android:exported="false"
@@ -802,13 +803,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-
         <activity
             android:name=".View.Activity.LeadSummaryDetailReportActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
-
         <activity
             android:name=".View.Activity.AddNoteActivity"
             android:screenOrientation="portrait"
@@ -881,6 +880,10 @@
             <!-- <action android:name="android.intent.action.NEW_OUTGOING_CALL" /> -->
             <!-- </intent-filter> -->
         </receiver>
+
+        <activity
+            android:name=".View.Activity.HeaderTestActivity"
+            android:exported="false" />
 
         <activity
             android:name=".View.Activity.SplashActivity"

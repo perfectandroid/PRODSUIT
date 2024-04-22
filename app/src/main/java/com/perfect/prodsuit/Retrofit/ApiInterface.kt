@@ -1,13 +1,12 @@
 package com.perfect.prodsuit.Api
 
-import com.perfect.prodsuit.fire.FcmMessage
 import com.perfect.prodsuit.fire.FcmMessageNew
-import com.perfect.prodsuit.fire.FcmMessageNew1
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.*
+
 
 interface ApiInterface {
 
@@ -652,6 +651,10 @@ interface ApiInterface {
     @POST("ServiceFollowUp/FollowUpActionDetails")
     fun getActionTakenAction(@Body body: RequestBody): Call<String>
 
+
+    @POST("ServiceFollowUp/FollowUpActionDetails")
+    fun getActionTakeSnAction(@Body body: RequestBody): Call<String>
+
     @POST("ServiceFollowUp/ServiceInvoiceDetails")
     fun getClosedTicketList(@Body body: RequestBody): Call<String>
 
@@ -970,6 +973,14 @@ interface ApiInterface {
 
     @POST("UserValidations/MyActivitysFliters")
     fun getApiMyActivitysFliters(@Body body: RequestBody): Call<String>
+
+    @POST("UserValidations/UserDetailswithHeaderchecking")
+    open fun getUserDetailswithHeaderchecking(
+        @Header("auth_key") auth_key: String,
+        @Body body: RequestBody
+    ): Call<String?>
+
+
 
 
 
