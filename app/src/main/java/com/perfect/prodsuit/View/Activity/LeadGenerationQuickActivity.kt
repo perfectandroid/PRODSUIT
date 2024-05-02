@@ -1645,7 +1645,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                                                 val jsonObject = followUpActionArrayList.getJSONObject(0)
                                                 Log.e(TAG, "ID_NextAction   " + jsonObject.getString("ID_NextAction"))
                                                 ID_NextAction = jsonObject.getString("ID_NextAction")
-                                              //  edtFollowaction!!.setText(jsonObject.getString("NxtActnName"))
+                                                edtFollowaction!!.setText(jsonObject.getString("NxtActnName"))
 
                                                 ID_Status = jsonObject.getString("Status")
                                                 Log.e(TAG, "Status   " + jsonObject.getString("Status"))
@@ -3011,7 +3011,12 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 //            Config.snackBars(context, v, "Select Category")
 //
 //        }
-        Log.e(TAG,"3001  ID_Product   :   "+ID_Product)
+        Log.e(TAG,"2222   ID_Status   "+ID_Status)
+        Log.e(TAG,"2222   ID_NextAction   "+ID_NextAction)
+        Log.e(TAG,"2222   ID_ActionType   "+ID_ActionType)
+        Log.e(TAG,"2222   strFollowupdate   "+strFollowupdate)
+        Log.e(TAG,"2222   ID_Employee   "+ID_Employee)
+        Log.e(TAG,"2222   ID_Product   :   "+ID_Product)
         if (ID_Product.equals("")) {
 
 
@@ -3045,6 +3050,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 //
 //
 //        }
+
         else if (ID_Status.equals("")) {
             Config.snackBars(context, v, "Select Action")
 

@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.perfect.prodsuit">
 
-    <uses-sdk
-        android:minSdkVersion="26"
-        android:targetSdkVersion="33" />
+<!--    <uses-sdk-->
+<!--        android:minSdkVersion="26"-->
+<!--        android:targetSdkVersion="33" />-->
 
     <queries>
         <package android:name="com.google.android.apps.maps" />
@@ -21,8 +21,8 @@
     <uses-permission
         android:name="android.permission.ACCESS_FINE_LOCATION"
         tools:remove="android:maxSdkVersion" />
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+<!--    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />-->
+<!--    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />-->
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -47,6 +47,8 @@
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- <uses-permission android:name="android.permission.RECEIVE_SMS" /> -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <permission android:name="com.example.mapsact.permission.MAPS_RECEIVE" android:protectionLevel="signature" />
+    <uses-permission android:name="com.example.mapsact.permission.MAPS_RECEIVE" />
     <uses-permission
         android:name="android.permission.READ_MEDIA_IMAGES"
         android:minSdkVersion="33" />
@@ -502,10 +504,10 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.PRODSUIT.NoActionBar" />
-        <activity
-            android:name=".View.Activity.ServiceFollowUpActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
+<!--        <activity-->
+<!--            android:name=".View.Activity.ServiceFollowUpActivity"-->
+<!--            android:exported="true"-->
+<!--            android:screenOrientation="portrait" />-->
         <activity
             android:name=".View.Activity.ServiceFollowUpAmcActivity"
             android:exported="false"
@@ -570,6 +572,8 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -899,7 +903,7 @@
         </activity> <!-- commonapp -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.perfect.prodsuit.fileprovider"
+            android:authorities="com.perfect.prodsuite.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

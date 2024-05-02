@@ -62,4 +62,14 @@
     <string name="title_activity_service_assign_ongoing_list">ServiceAssignOngoingListActivity
     </string>
 
+
+    <string name="Disclaimer">We collect location data such as information about your device\'s location,which can be either precise or imprecise.
+        How much information we collect depends on the type and settings of the device you use to access the Services.
+        You can opt out of allowing us to collect this information either by refusing access to the information or by disabling your Location setting on your device.
+        However, if you choose to opt out,you may not be able to use certain aspects of the Services.
+        “This app collects location data to enable <b>employee travel locaion access</b>, <b>Latitude and longitude collected</b>
+        even when the app is closed or not in use.””The Data is processed at the Owner\'s operating offices and in any other places where the parties involved in the processing are located.
+        Depending on the User\'s location, data transfers may involve transferring the User\'s Data to a country other than their own. To find out more about the place of processing of such transferred Data,
+        Users can check the section containing details about the processing of Personal Data.</string>
+
 </resources>

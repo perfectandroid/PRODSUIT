@@ -207,9 +207,10 @@
                             android:layout_toRightOf="@+id/imgAttendance"
                             android:fontFamily="@font/myfont"
                             android:gravity="center"
+                            android:maxLines="2"
                             android:text=""
                             android:textColor="@color/black"
-                            android:textSize="17dp"
+                            android:textSize="15dp"
                             android:textStyle="normal"
                             android:visibility="visible" />
                     </LinearLayout>

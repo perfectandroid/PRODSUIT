@@ -74,7 +74,9 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
         img_logo = findViewById(R.id.img_logo)
         img_technology = findViewById(R.id.img_technology)
         setTechnologyPartner()
-        checkLocationPermission()
+//        checkLocationPermission()
+        setDisclaimer()
+       // rrrrrrrrrrrrrrrrrr
         db = DBHelper(this, null)
 
         deleteChatData()
@@ -696,6 +698,36 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
 
 
     }
+
+    private fun setDisclaimer() {
+        try
+        {
+            val dialog = Dialog(this)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setContentView(R.layout.disclaimer_popup)
+            dialog.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
+            val btnsubmit = dialog.findViewById(R.id.btnsubmit) as Button
+
+            val window: Window? = dialog.getWindow()
+            window!!.setBackgroundDrawableResource(android.R.color.transparent);
+            window!!.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+
+            btnsubmit.setOnClickListener {
+                dialog.dismiss()
+
+                checkLocationPermission()
+            }
+            dialog.setCancelable(false)
+            dialog.show()
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
 
     override fun onRestart() {
         super.onRestart()
