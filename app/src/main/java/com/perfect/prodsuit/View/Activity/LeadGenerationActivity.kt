@@ -2049,10 +2049,17 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             R.id.img_search -> {
                 try {
+                    var warningMessage = ""
+                    if (SubModeSearch.equals("1")){
+                        warningMessage = "Enter Customer Name"
+                    }
+                    if (SubModeSearch.equals("2")){
+                        warningMessage = "Enter Customer Mobile"
+                    }
                     strCustomer = edt_customer!!.text.toString()
                     if (strCustomer.equals("")) {
                         val snackbar: Snackbar =
-                            Snackbar.make(v, "Enter Customer", Snackbar.LENGTH_LONG)
+                            Snackbar.make(v, ""+warningMessage, Snackbar.LENGTH_LONG)
                         snackbar.setActionTextColor(Color.WHITE)
                         snackbar.setBackgroundTint(resources.getColor(R.color.colorPrimary))
                         snackbar.show()
@@ -2628,6 +2635,9 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             dialogContact!!.window!!.attributes.gravity = Gravity.CENTER_VERTICAL
             listview = dialogContact!!.findViewById(R.id.ListView) as ListView
 
+            val ll_conatct_message = dialogContact!!.findViewById(R.id.ll_conatct_message) as LinearLayout
+            val tv_conatct_message = dialogContact!!.findViewById(R.id.tv_conatct_message) as TextView
+
             idsearch_contact = dialogContact!!.findViewById(R.id.idsearch_contact) as SearchView
             val window: Window? = dialogContact!!.getWindow()
             window!!.setBackgroundDrawableResource(android.R.color.transparent)
@@ -2707,11 +2717,28 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
                 override fun onQueryTextChange(newText: String?): Boolean {
 
-                    cursor = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                        dataContact,"${ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME} LIKE ?",
-                        Array(1){"%$newText%"},
+                    cursor = contentResolver.query(
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        dataContact,"${ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME} LIKE ? OR ${ContactsContract.CommonDataKinds.Phone.NUMBER} LIKE ? ",
+                        arrayOf("%$newText%", "%$newText%"),
                         ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
                     adapter.changeCursor(cursor)
+                    if (cursor != null && cursor!!.count > 0){
+                        listview!!.visibility = View.VISIBLE
+
+                        ll_conatct_message!!.visibility = View.GONE
+                        tv_conatct_message!!.visibility = View.GONE
+
+
+                    }else{
+                        //  Toast.makeText(applicationContext,"Contact ",Toast.LENGTH_SHORT).show()
+                        listview!!.visibility = View.GONE
+
+                        ll_conatct_message!!.visibility = View.VISIBLE
+                        tv_conatct_message!!.visibility = View.VISIBLE
+                        tv_conatct_message.text = "No Result for "+" ' "+newText+" ' "+""
+
+                    }
                     return false
                 }
             })

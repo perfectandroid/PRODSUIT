@@ -67,7 +67,35 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:fontFamily="@font/myfont"
-        android:layout_below="@+id/llsearch" />
+        android:layout_below="@+id/llsearch"
+        android:visibility="visible"/>
+
+    <LinearLayout
+        android:id="@+id/ll_conatct_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/search_24"/>
+
+        <TextView
+            android:id="@+id/tv_conatct_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:textSize="17dp"
+            android:justificationMode="inter_word"
+            android:text=""/>
+
+
+
+    </LinearLayout>
 
     <View
         android:layout_width="match_parent"

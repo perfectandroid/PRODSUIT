@@ -17,10 +17,28 @@ android {
     signingConfigs {
         // HIDE
         release {
-            storeFile file('D:\\Build\\release\\persuite_employee_key.jks')
-            storePassword 'PersuiteEmployee@2023'
-            keyAlias 'key0'
-            keyPassword 'PersuiteEmployee@2023'
+
+            // Common
+//            storeFile file('D:\\Build\\Details\\PersuiteCommon\\persuitecommon.jks')
+//            storePassword 'Persuitecommon#2356'
+//            keyAlias 'Persuitecommon'
+//            keyPassword 'Persuitecommon#2356'
+
+            storeFile file('D:\\Build\\Details\\persuitecustomer\\Persuite.jks')
+            storePassword 'Per@T$$#&^%suite*&^%'
+            keyAlias 'Persuitecustomer'
+            keyPassword 'Per@T$$#&^%suite*&^%'
+
+//            storeFile file('D:\\Build\\Details\\scalies\\persuitescaleious.jks')
+//            storePassword 'scaleious@23sdeeq2'
+//            keyAlias 'persuitescaleious'
+//            keyPassword 'scaleious@23sdeeq2'
+
+
+//            storeFile file('D:\\Build\\release\\persuite_employee_key.jks')
+//            storePassword 'PersuiteEmployee@2023'
+//            keyAlias 'key0'
+//            keyPassword 'PersuiteEmployee@2023'
 //            v1SigningEnabled true
 //            v2SigningEnabled true
         }
@@ -35,7 +53,7 @@ android {
     defaultConfig {
 //        applicationId "com.perfect.prodsuit"
 //        applicationId "com.mscore.calicuttownbank"
-        applicationId "com.perfect.prodsuite"  // Sunitha
+//        applicationId "com.perfect.prodsuite"  // Sunitha
 //        applicationId "com.perfect.sheetal"
 //        applicationId "com.perfect.prodsuite_demo"
 //        applicationId "com.perfect.prodsuite"  // upload
@@ -45,12 +63,14 @@ android {
 //        applicationId "com.perfect.supportdemo"
 //        applicationId "com.perfect.marketing_demo"
 //        applicationId "com.perfect.prodsuite_employee"
+//        applicationId "com.persuite.scalieous"  // scalieous
+        applicationId "com.perfect.prodsuite_customer"  // common
 
 
         minSdkVersion 26
         targetSdkVersion 33
-        versionCode 6
-        versionName "2.0.1"
+        versionCode 7
+        versionName "2.0.2"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -63,9 +83,9 @@ android {
                 abortOnError false
             }
             minifyEnabled false
-//s            signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            signingConfig signingConfigs.release
         }
         debug {
             testCoverageEnabled = true
