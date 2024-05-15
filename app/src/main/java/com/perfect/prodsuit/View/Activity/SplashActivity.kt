@@ -57,6 +57,10 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
     val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
     val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
     val BANK_KEY  = "-500"
+//        val CERT_NAME = "development.pem"
+//    val BASE_URL  = "https://202.164.150.222:14091/PersuiteMigrationAPI/api/"
+//    val IMAGE_URL = "https://202.164.150.222:14091/PersuiteMigrationAPI/"
+//    val BANK_KEY  = "200"
 
     //QA IP DEVLOPMENT COPY
   /*  val CERT_NAME = "qadevelop.pem"
