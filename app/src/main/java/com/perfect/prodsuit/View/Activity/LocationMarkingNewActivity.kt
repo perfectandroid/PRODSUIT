@@ -525,8 +525,15 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
             if (!temp_Designation.equals("")) {
                 tie_Designation!!.setText(temp_Designation)
             }
+
+            val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
+
             if (!temp_Employee.equals("")) {
                 tie_Employee!!.setText(temp_Employee)
+            }
+            else if(temp_Employee.equals("")){
+
+                tie_Employee!!.setText((UserNameSP.getString("UserName", null)))
             }
             if (!temp_Date.equals("")) {
                 tie_Date!!.setText(temp_Date)
@@ -538,18 +545,49 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
             val IsAdminSP = applicationContext.getSharedPreferences(Config.SHARED_PREF43, 0)
             var isAdmin = IsAdminSP.getString("IsAdmin", null)
             Log.e(TAG, "isAdmin 796  " + isAdmin)
-            if (isAdmin.equals("1")) {
+
+            val IsManagerSP = applicationContext.getSharedPreferences(Config.SHARED_PREF75, 0)
+            var IsManager = IsManagerSP.getString("IsManager", null)
+
+            Log.e(TAG, "isAdmin 796  " + isAdmin)
+
+            if (isAdmin.equals("1") && IsManager.equals("0")) {
+                ll_StafAdmin!!.visibility = View.VISIBLE
+                //  tie_Designation!!.isEnabled  = true
+                tie_Employee!!.isEnabled = true
+            }
+            else if (isAdmin.equals("0") && IsManager.equals("1")){
+                ll_StafAdmin!!.visibility = View.VISIBLE
+                tie_Branch!!.isEnabled = false
+//                tie_Employee!!.isEnabled = true
+            }else{
+                til_Department!!.visibility=View.GONE
+                til_Designation!!.visibility=View.GONE
+                tie_Employee!!.isEnabled = false
+                tie_Branch!!.isEnabled = false
+//                tie_Branch!!.isEnabled = false
+//                tie_Employee!!.isEnabled = false
+            }
+
+
+
+
+
+
+        /*    if (isAdmin.equals("1")) {
                 ll_StafAdmin!!.visibility = View.VISIBLE
                 //  tie_Designation!!.isEnabled  = true
                 tie_Employee!!.isEnabled = true
             } else {
-                ll_StafAdmin!!.visibility = View.GONE
+                ll_StafAdmin!!.visibility = View.VISIBLE
                 //  tie_Employee!!.isEnabled  = false
-                tie_Employee!!.isEnabled = false
-            }
+                tie_Branch!!.isEnabled = false
+            }*/
             if (tie_Date!!.text.toString().equals("")) {
                 getCurrentdate("1")
+
             }
+
 
 
 //            if (ID_Branch.equals("")){
@@ -875,7 +913,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
 
     private fun getBranch() {
         var branch = 0
-        var SubMode = "0"
+        var SubMode = "1"
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
                 progressDialog = ProgressDialog(context, R.style.Progress)
@@ -1192,6 +1230,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
     }
 
     private fun getEmployee() {
+        var SubMode = "1"
         //   var employee = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -1201,7 +1240,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                employeeDetailsViewModel.getEmployee(this, ID_Department!!, ID_Designation!!)!!
+                employeeDetailsViewModel.getEmployee(this, ID_Department!!, ID_Designation!!,SubMode)!!
                     .observe(
                         this,
                         Observer { serviceSetterGetter ->

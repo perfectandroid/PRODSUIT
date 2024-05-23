@@ -140,7 +140,7 @@
                                 android:paddingRight="15dp"
                                 android:text="List"
                                 android:textColor="@color/black"
-                                android:textSize="18dp"
+                                android:textSize="17dp"
                                 android:textStyle="bold"
                                 android:visibility="visible" />
 
@@ -182,7 +182,7 @@
                                 android:paddingRight="15dp"
                                 android:text="Map"
                                 android:textColor="@color/black"
-                                android:textSize="18dp"
+                                android:textSize="17dp"
                                 android:textStyle="bold"
                                 android:visibility="visible" />
 
@@ -223,9 +223,9 @@
                                 android:fontFamily="@font/myfont"
                                 android:paddingLeft="15dp"
                                 android:paddingRight="15dp"
-                                android:text="Root"
+                                android:text="Route"
                                 android:textColor="@color/black"
-                                android:textSize="18dp"
+                                android:textSize="17dp"
                                 android:textStyle="bold"
                                 android:visibility="visible" />
 

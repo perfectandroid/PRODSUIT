@@ -26,12 +26,22 @@ object EmployeeDetailsRepository {
     val employeeSetterGetter = MutableLiveData<EmployeeDetailsModel>()
     val TAG: String = "EmployeeDetailsRepository"
 
-    fun getServicesApiCall(context: Context, ID_Department: String,ID_Designation: String): MutableLiveData<EmployeeDetailsModel> {
-        getEmployeeDetails(context, ID_Department,ID_Designation)
+    fun getServicesApiCall(
+        context: Context,
+        ID_Department: String,
+        ID_Designation: String,
+        Submode: String
+    ): MutableLiveData<EmployeeDetailsModel> {
+        getEmployeeDetails(context, ID_Department,ID_Designation,Submode)
         return employeeSetterGetter
     }
 
-    private fun getEmployeeDetails(context: Context, ID_Department: String, ID_Designation: String) {
+    private fun getEmployeeDetails(
+        context: Context,
+        ID_Department: String,
+        ID_Designation: String,
+        Submode: String
+    ) {
 
         try {
             employeeSetterGetter.value= EmployeeDetailsModel("")
@@ -74,9 +84,10 @@ object EmployeeDetailsRepository {
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(FK_CompanySP.getString("FK_Company", null)))
-                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("109"))
+                requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("23"))
                 requestObject1.put("ID_Department", ProdsuitApplication.encryptStart(ID_Department))
                 requestObject1.put("FK_Designation", ProdsuitApplication.encryptStart(ID_Designation))
+                requestObject1.put("SubMode", ProdsuitApplication.encryptStart(Submode))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 
@@ -90,7 +101,7 @@ object EmployeeDetailsRepository {
                 okhttp3.MediaType.parse("application/json; charset=utf-8"),
                 requestObject1.toString()
             )
-            val call = apiService.getEmployeeDetails(body)
+            val call = apiService.getEmpUsingBranch(body)
             call.enqueue(object : retrofit2.Callback<String> {
                 override fun onResponse(
                     call: retrofit2.Call<String>, response:
