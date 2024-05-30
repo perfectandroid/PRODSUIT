@@ -95,10 +95,12 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY  = ""
 
     //QA IP DEVLOPMENT COPY
-  /*  val CERT_NAME = "qadevelop.pem"
+/*
+    val CERT_NAME = "qadevelop.pem"
     val BASE_URL  = "https://112.133.227.123:14020/PersuiteMobileAppTeamAPI/api/"
     val IMAGE_URL = "https://112.133.227.123:14020/PersuiteMobileAppTeamAPI"
-    val BANK_KEY  = "-500"*/
+    val BANK_KEY  = "-500"
+*/
 
 
     ////    DEMO 15.02.2023
@@ -126,10 +128,10 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY  = "-500"
 
 //  qa temp 30.11.2023 Single Company
-//    val CERT_NAME = "persuitqa.pem"
-//    val BASE_URL  = "https://112.133.227.123:14020/PersuiteAPI/api/"
-//    val IMAGE_URL = "https://112.133.227.123:14020/PersuiteAPI/"
-//    val BANK_KEY  = "-500"
+ /*   val CERT_NAME = "persuitqa.pem"
+    val BASE_URL  = "https://112.133.227.123:14020/PersuiteAPI/api/"
+    val IMAGE_URL = "https://112.133.227.123:14020/PersuiteAPI/"
+    val BANK_KEY  = "-500"*/
 
 
     // Development NEW IP
