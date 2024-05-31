@@ -30,9 +30,10 @@ object EmployeeDetailsRepository {
         context: Context,
         ID_Department: String,
         ID_Designation: String,
-        Submode: String
+        Submode: String,
+        ID_Branch: String?
     ): MutableLiveData<EmployeeDetailsModel> {
-        getEmployeeDetails(context, ID_Department,ID_Designation,Submode)
+        getEmployeeDetails(context, ID_Department,ID_Designation,Submode,ID_Branch)
         return employeeSetterGetter
     }
 
@@ -40,7 +41,8 @@ object EmployeeDetailsRepository {
         context: Context,
         ID_Department: String,
         ID_Designation: String,
-        Submode: String
+        Submode: String,
+        ID_Branch: String?
     ) {
 
         try {
@@ -87,6 +89,7 @@ object EmployeeDetailsRepository {
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("23"))
                 requestObject1.put("ID_Department", ProdsuitApplication.encryptStart(ID_Department))
                 requestObject1.put("FK_Designation", ProdsuitApplication.encryptStart(ID_Designation))
+                requestObject1.put("ID_Branch", ProdsuitApplication.encryptStart(ID_Branch))
                 requestObject1.put("SubMode", ProdsuitApplication.encryptStart(Submode))
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 

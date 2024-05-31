@@ -308,7 +308,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                 } else {
                     Config.disableClick(v)
                     employee = 0
-                    getEmployee()
+                    getEmployee(0)
                 }
             }
             R.id.tie_Date -> {
@@ -995,10 +995,12 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
             val etsearch = dialogBranch!!.findViewById(R.id.etsearch) as EditText
 
             branchsort = JSONArray()
+
             for (k in 0 until branchArrayList.length()) {
                 val jsonObject = branchArrayList.getJSONObject(k)
                 branchsort.put(jsonObject)
             }
+            Log.e(TAG,"Branch "+branchsort)
             val txt_nodata = dialogBranch!!.findViewById(R.id.txt_nodata) as TextView
             txt_nodata.visibility=View.GONE
 
@@ -1229,8 +1231,9 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
         }
     }
 
-    private fun getEmployee() {
+    private fun getEmployee(i: Int) {
         var SubMode = "1"
+        Log.v("sfsdfsdfdf", "branch" + ID_Branch)
         //   var employee = 0
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
@@ -1240,7 +1243,7 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-                employeeDetailsViewModel.getEmployee(this, ID_Department!!, ID_Designation!!,SubMode)!!
+                employeeDetailsViewModel.getEmployee(this, ID_Department!!, ID_Designation!!,SubMode!!,ID_Branch)!!
                     .observe(
                         this,
                         Observer { serviceSetterGetter ->

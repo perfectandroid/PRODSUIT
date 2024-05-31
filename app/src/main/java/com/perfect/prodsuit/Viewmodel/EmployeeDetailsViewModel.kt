@@ -10,8 +10,14 @@ import com.perfect.prodsuit.Repository.EmployeeDetailsRepository
 
 class EmployeeDetailsViewModel: ViewModel()  {
     var employeeData: MutableLiveData<EmployeeDetailsModel>? = null
-    fun getEmployee(context: Context, ID_Department: String,ID_Designation : String,Submode :String) : LiveData<EmployeeDetailsModel>? {
-        employeeData = EmployeeDetailsRepository.getServicesApiCall(context,ID_Department,ID_Designation,Submode)
+    fun getEmployee(
+        context: Context,
+        ID_Department: String,
+        ID_Designation: String,
+        Submode: String,
+        ID_Branch: String?
+    ) : LiveData<EmployeeDetailsModel>? {
+        employeeData = EmployeeDetailsRepository.getServicesApiCall(context,ID_Department,ID_Designation,Submode,ID_Branch)
         return employeeData
     }
 
