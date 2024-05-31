@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.CancellationSignal
@@ -92,6 +93,7 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_mpin)
         setRegViews()
         context = this@MpinActivity
+        loadPrivacyPolicy()
         mpinActivityViewModel = ViewModelProvider(this).get(MpinActivityViewModel::class.java)
         forgotMpinViewModel = ViewModelProvider(this).get(ForgotMpinViewModel::class.java)
 
@@ -127,6 +129,25 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+
+    private fun loadPrivacyPolicy() {
+
+        val PrivacypolicySP = applicationContext.getSharedPreferences(Config.SHARED_PREF86, 0)
+        var Privacypolicy = PrivacypolicySP.getString("PRIVACY_POLICY_URL","")
+
+
+        val txt_policy = findViewById<TextView>(R.id.txt_policy)
+        txt_policy.setOnClickListener {
+
+            Log.v("sfsdfsdf", "clicked")
+            Log.e(TAG,"fbghasfgashbhvk "+PrivacypolicySP)
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.setData(Uri.parse(Privacypolicy))
+            val chooser = Intent.createChooser(intent, "Open with")
+            startActivity(chooser)
+
+        }
+    }
 
 
     private fun setLogoHeight() {

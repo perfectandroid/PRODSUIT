@@ -66,6 +66,7 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         context = this@LoginActivity
+        loadPrivacyPolicy()
         loginActivityViewModel = ViewModelProvider(this).get(LoginActivityViewModel::class.java)
         var tvdata = findViewById<TextView>(R.id.tvdata)
         var btlogin = findViewById<Button>(R.id.btlogin)
@@ -115,6 +116,25 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
 
         networkChangeReceiver = NetworkChangeReceiver()
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+    }
+
+    private fun loadPrivacyPolicy() {
+
+        val PrivacypolicySP = applicationContext.getSharedPreferences(Config.SHARED_PREF86, 0)
+        var Privacypolicy = PrivacypolicySP.getString("PRIVACY_POLICY_URL","")
+
+
+        val txt_policy = findViewById<TextView>(R.id.txt_policy)
+        txt_policy.setOnClickListener {
+
+            Log.v("sfsdfsdf", "clicked")
+            Log.e(TAG,"fbghasfgashbhvk "+PrivacypolicySP)
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.setData(Uri.parse(Privacypolicy))
+            val chooser = Intent.createChooser(intent, "Open with")
+            startActivity(chooser)
+
+        }
     }
 
     private fun deleteChatData() {

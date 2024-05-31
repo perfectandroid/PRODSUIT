@@ -164,6 +164,7 @@ object Config {
     const val SHARED_PREF84 = "ContDeleteMode" // Multiple Account Mode
 
     const val SHARED_PREF85 = "ID_TokenUser" // UserToken
+    const val SHARED_PREF86 = "PRIVACY_POLICY_URL" // privacypolicy
 
     var width = 0
     var height = 0

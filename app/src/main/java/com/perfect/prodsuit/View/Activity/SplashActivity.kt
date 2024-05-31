@@ -57,10 +57,19 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY  = "-500"
 
 
-    val CERT_NAME = "development.pem"
-    val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
-    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
-    val BANK_KEY  = "-500"
+//    val CERT_NAME = "development.pem"
+//    val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
+//    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
+//    val BANK_KEY  = "-500"
+//    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
+
+
+    //    Commonapp  16-05-2024
+//    val CERT_NAME = "commonapp_persuite.pem"
+//    val BASE_URL  = "https://commonapp.persuiteerp.com/api/"
+//    val IMAGE_URL = "https://commonapp.persuiteerp.com"
+//    val BANK_KEY  = ""
+//    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
 
 //    Scalie  24-04-2024
 
@@ -89,18 +98,17 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY  = "-500"
 
     // Common APP Sub Domain 12-03-2024
-//    val CERT_NAME = "development.pem"
-//    val BASE_URL  = "https://persuitemobapp.perfectlimited.com:14012/api/"
-//    val IMAGE_URL = "https://persuitemobapp.perfectlimited.com:14012/"
-//    val BANK_KEY  = ""
+    val CERT_NAME = "development.pem"
+    val BASE_URL  = "https://persuitemobapp.perfectlimited.com:14012/api/"
+    val IMAGE_URL = "https://persuitemobapp.perfectlimited.com:14012/"
+    val BANK_KEY  = ""
+    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
 
     //QA IP DEVLOPMENT COPY
-/*
-    val CERT_NAME = "qadevelop.pem"
+  /*  val CERT_NAME = "qadevelop.pem"
     val BASE_URL  = "https://112.133.227.123:14020/PersuiteMobileAppTeamAPI/api/"
     val IMAGE_URL = "https://112.133.227.123:14020/PersuiteMobileAppTeamAPI"
-    val BANK_KEY  = "-500"
-*/
+    val BANK_KEY  = "-500"*/
 
 
     ////    DEMO 15.02.2023
@@ -128,10 +136,10 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY  = "-500"
 
 //  qa temp 30.11.2023 Single Company
- /*   val CERT_NAME = "persuitqa.pem"
-    val BASE_URL  = "https://112.133.227.123:14020/PersuiteAPI/api/"
-    val IMAGE_URL = "https://112.133.227.123:14020/PersuiteAPI/"
-    val BANK_KEY  = "-500"*/
+//    val CERT_NAME = "persuitqa.pem"
+//    val BASE_URL  = "https://112.133.227.123:14020/PersuiteAPI/api/"
+//    val IMAGE_URL = "https://112.133.227.123:14020/PersuiteAPI/"
+//    val BANK_KEY  = "-500"
 
 
     // Development NEW IP
@@ -657,6 +665,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
             BANK_KEYEditer.putString("BANK_KEY", BANK_KEY)
             BANK_KEYEditer.commit()
 
+            val PRIVACY_POLICYSP = applicationContext.getSharedPreferences(Config.SHARED_PREF86, 0)
+            val PRIVACY_POLICYEditer = PRIVACY_POLICYSP.edit()
+            PRIVACY_POLICYEditer.putString("PRIVACY_POLICY_URL", PRIVACY_POLICY_URL)
+            PRIVACY_POLICYEditer.commit()
+
             when(Config.ConnectivityUtils.isConnected(this)) {
                 true -> {
                     commonAppViewModel.getCommonApp(this)!!.observe(
@@ -703,6 +716,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                                                 val commonAppEditer = commonAppSP.edit()
                                                 commonAppEditer.putString("commonApp", jObject.getString("Mode"))
                                                 commonAppEditer.commit()
+
+                                                val PRIVACY_POLICYSP = applicationContext.getSharedPreferences(Config.SHARED_PREF86, 0)
+                                                val PRIVACY_POLICYEditer = PRIVACY_POLICYSP.edit()
+                                                PRIVACY_POLICYEditer.putString("PRIVACY_POLICY_URL", PRIVACY_POLICY_URL)
+                                                PRIVACY_POLICYEditer.commit()
 
 //                                                showMaintanace()
                                                 versionCheck()
