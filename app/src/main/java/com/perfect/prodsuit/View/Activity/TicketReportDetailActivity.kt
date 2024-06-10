@@ -29,50 +29,49 @@ import org.json.JSONObject
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 
-class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener
- {
+class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
 
     val TAG: String = "TicketReportDetailActivity"
     private var progressDialog: ProgressDialog? = null
     lateinit var context: Context
     private var imback: ImageView? = null
     private var tv_ReportName: TextView? = null
-     private var txtv_statusvalue: TextView? = null
-     private var llstatus: LinearLayout? = null
-     private var llpriority: LinearLayout? = null
-     private var txtv_priorty: TextView? = null
+    private var txtv_statusvalue: TextView? = null
+    private var llstatus: LinearLayout? = null
+    private var llpriority: LinearLayout? = null
+    private var txtv_priorty: TextView? = null
 
-     private var txtv_brnch: TextView? = null
-     private var txtv_empp: TextView? = null
-     private var txtv_Cat: TextView? = null
-     private var txtv_prd: TextView? = null
-     private var txtv_sumType: TextView? = null
+    private var txtv_brnch: TextView? = null
+    private var txtv_empp: TextView? = null
+    private var txtv_Cat: TextView? = null
+    private var txtv_prd: TextView? = null
+    private var txtv_sumType: TextView? = null
 
-     private var repname: LinearLayout? = null
-     private var llbran: LinearLayout? = null
-     private var llempee: LinearLayout? = null
-     private var llcategr: LinearLayout? = null
-     private var llprod: LinearLayout? = null
-     private var llsumtype: LinearLayout? = null
+    private var repname: LinearLayout? = null
+    private var llbran: LinearLayout? = null
+    private var llempee: LinearLayout? = null
+    private var llcategr: LinearLayout? = null
+    private var llprod: LinearLayout? = null
+    private var llsumtype: LinearLayout? = null
 
-     private var lldate: LinearLayout? = null
-     private var ll_date1: LinearLayout? = null
+    private var lldate: LinearLayout? = null
+    private var ll_date1: LinearLayout? = null
 
 
-     private var tv_sumhd: TextView? = null
-     private var txt_open: TextView? = null
-     private var txt_new: TextView? = null
-     private var FilterData: TextView? = null
-     private var cvFilterData: LinearLayout? = null
-     private var txt_closed: TextView? = null
-     private var txt_losed: TextView? = null
-     private var balance: TextView? = null
+    private var tv_sumhd: TextView? = null
+    private var txt_open: TextView? = null
+    private var txt_new: TextView? = null
+    private var FilterData: TextView? = null
+    private var cvFilterData: LinearLayout? = null
+    private var txt_closed: TextView? = null
+    private var txt_losed: TextView? = null
+    private var balance: TextView? = null
     private var Type: TextView? = null
     private var report_date: TextView? = null
     private var ReportMode: String? = ""
     private var ID_Branch: String? = ""
     private var ID_Employee: String? = ""
-     private var mod: String? = ""
+    private var mod: String? = ""
     private var strFromdate: String? = ""
     private var strTodate: String? = ""
     private var ID_Product: String? = ""
@@ -81,7 +80,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
     private var ID_Priority: String? = ""
     private var ID_Status: String? = ""
     private var GroupId: String? = ""
-     private var total: Int? = 0
+    private var total: Int? = 0
     private var ID_CollectedBy: String? = ""
     private var ID_AssignedEmployee: String? = ""
     private var ID_Category: String? = ""
@@ -97,13 +96,12 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
     lateinit var actionListReportArrayList: JSONArray
     var recyActionListReport: RecyclerView? = null
     var recycleSummary: RecyclerView? = null
-     lateinit var actionSort: JSONArray
+    lateinit var actionSort: JSONArray
     lateinit var followUpTicketReportViewModel: FollowUpTicketReportViewModel
     lateinit var followUpTicketReportArrayList: JSONArray
     var recyFollowUpTicketReport: RecyclerView? = null
-     private var report_date1: TextView? = null
-     private var lldate1: LinearLayout? = null
-
+    private var report_date1: TextView? = null
+    private var lldate1: LinearLayout? = null
 
 
     lateinit var newListTicketReportViewModel: NewListTicketReportViewModel
@@ -115,20 +113,20 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
     var recyStatusListTicketReport: RecyclerView? = null
 
     var followList = 0
-     var sum=0
-     var sum1=0
-     var sum2=0
-     var sum3=0
-     var sum4=0
-     var sum5=0
+    var sum = 0
+    var sum1 = 0
+    var sum2 = 0
+    var sum3 = 0
+    var sum4 = 0
+    var sum5 = 0
     var newList = 0
     private lateinit var networkChangeReceiver: NetworkChangeReceiver
 
-     var formattedStringopen: String? = ""
-     var formattedStringopen1: String? = ""
-     var formattedStringopen2: String? = ""
-     var formattedStringopen3: String? = ""
-     var formattedStringopen4: String? = ""
+    var formattedStringopen: String? = ""
+    var formattedStringopen1: String? = ""
+    var formattedStringopen2: String? = ""
+    var formattedStringopen3: String? = ""
+    var formattedStringopen4: String? = ""
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -212,12 +210,19 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
         ll_NewListTicket!!.visibility = View.GONE
         ll_StatusListTicket!!.visibility = View.GONE
 
-        Log.e(TAG, "ReportMode   107   " + ReportMode+"\n"+ID_Category+ID_Employee)
+        Log.e(TAG, "ReportMode   107   " + ReportMode + "\n" + ID_Category + ID_Employee)
 
 //        if (ReportMode.equals("1")){
 ////            ActionListT
 //            getActionListTicketReport(ReportMode,ID_Branch,strFromdate,strTodate,ID_Product,ID_NextAction,ID_ActionType,ID_Priority,ID_Status,GroupId)
 //        }
+        val inputFormat: DateFormat = SimpleDateFormat("dd-MM-yyyy")
+        val outputFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val currentDateFormateFrom = inputFormat.parse(strFromdate)
+        val strDateFrom = outputFormat.format(currentDateFormateFrom)
+
+        val currentDateFormateTo = inputFormat.parse(strTodate)
+        val strDateTo = outputFormat.format(currentDateFormateTo)
         if (ReportMode.equals("2")) {
 //            FollowUpTicket
             followList = 0
@@ -225,8 +230,8 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                 ReportMode,
                 ID_Branch,
                 ID_Employee,
-                strFromdate,
-                strTodate,
+                strDateFrom,
+                strDateTo,
                 ID_Product,
                 ID_NextAction,
                 ID_ActionType,
@@ -243,8 +248,8 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                 ReportMode,
                 ID_Branch,
                 ID_Employee,
-                strFromdate,
-                strTodate,
+                strDateFrom,
+                strDateTo,
                 ID_Product,
                 ID_NextAction,
                 ID_ActionType,
@@ -259,8 +264,8 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                 ReportMode,
                 ID_Branch,
                 ID_Employee,
-                strFromdate,
-                strTodate,
+                strDateFrom,
+                strDateTo,
                 ID_Product,
                 ID_NextAction,
                 ID_ActionType,
@@ -286,7 +291,10 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
         //
 
         networkChangeReceiver = NetworkChangeReceiver()
-        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+        registerReceiver(
+            networkChangeReceiver,
+            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        )
     }
 
 
@@ -300,21 +308,21 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
         llpriority = findViewById(R.id.llpriority)
         Type = findViewById(R.id.Type)
         tv_ReportName = findViewById(R.id.txtv_repnme)
-        txt_open= findViewById(R.id.txt_open)
-        txt_new= findViewById(R.id.txt_new)
-        txt_closed= findViewById(R.id.txt_closed)
-        txt_losed= findViewById(R.id.txt_losed)
-        balance= findViewById(R.id.balance)
+        txt_open = findViewById(R.id.txt_open)
+        txt_new = findViewById(R.id.txt_new)
+        txt_closed = findViewById(R.id.txt_closed)
+        txt_losed = findViewById(R.id.txt_losed)
+        balance = findViewById(R.id.balance)
 
-        lldate= findViewById(R.id.lldate)
-        lldate1= findViewById(R.id.ll_date1)
+        lldate = findViewById(R.id.lldate)
+        lldate1 = findViewById(R.id.ll_date1)
 
-        repname= findViewById(R.id.repname)
-        llbran= findViewById(R.id.llbran)
-        llempee= findViewById(R.id.llempee)
-        llcategr= findViewById(R.id.llcategr)
-        llprod= findViewById(R.id.llprod)
-        llsumtype= findViewById(R.id.llsumtype)
+        repname = findViewById(R.id.repname)
+        llbran = findViewById(R.id.llbran)
+        llempee = findViewById(R.id.llempee)
+        llcategr = findViewById(R.id.llcategr)
+        llprod = findViewById(R.id.llprod)
+        llsumtype = findViewById(R.id.llsumtype)
 
 
 
@@ -344,9 +352,6 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
         report_date1 = findViewById(R.id.report_date1)
 
 
-
-
-
     }
 
     override fun onClick(v: View) {
@@ -354,45 +359,37 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
             R.id.imback -> {
                 finish()
             }
+
             R.id.FilterData -> {
                 if (cvFilterData!!.visibility == View.GONE) {
                     cvFilterData!!.visibility = View.VISIBLE
 
                     if (getIntent().hasExtra("ReportName")) {
-                       var reprtnme = intent.getStringExtra("ReportName")
-                        if(reprtnme.equals(""))
-                        {
-                            repname!!.visibility=View.GONE
-                        }
-                        else
-                        {
-                            repname!!.visibility=View.VISIBLE
+                        var reprtnme = intent.getStringExtra("ReportName")
+                        if (reprtnme.equals("")) {
+                            repname!!.visibility = View.GONE
+                        } else {
+                            repname!!.visibility = View.VISIBLE
                             tv_ReportName!!.setText(reprtnme)
                         }
 
                     }
                     if (getIntent().hasExtra("Branch")) {
                         var brn = intent.getStringExtra("Branch")
-                        if(brn.equals(""))
-                        {
-                            llbran!!.visibility=View.GONE
-                        }
-                        else
-                        {
-                            llbran!!.visibility=View.VISIBLE
+                        if (brn.equals("")) {
+                            llbran!!.visibility = View.GONE
+                        } else {
+                            llbran!!.visibility = View.VISIBLE
                             txtv_brnch!!.setText(brn)
                         }
 
                     }
                     if (getIntent().hasExtra("Branch")) {
                         var brn = intent.getStringExtra("Branch")
-                        if(brn.equals(""))
-                        {
-                            llbran!!.visibility=View.GONE
-                        }
-                        else
-                        {
-                            llbran!!.visibility=View.VISIBLE
+                        if (brn.equals("")) {
+                            llbran!!.visibility = View.GONE
+                        } else {
+                            llbran!!.visibility = View.VISIBLE
                             txtv_brnch!!.setText(brn)
                         }
 
@@ -400,13 +397,10 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
                     if (getIntent().hasExtra("Emp")) {
                         var empl = intent.getStringExtra("Emp")
-                        if(empl.equals(""))
-                        {
-                            llempee!!.visibility=View.GONE
-                        }
-                        else
-                        {
-                            llempee!!.visibility=View.VISIBLE
+                        if (empl.equals("")) {
+                            llempee!!.visibility = View.GONE
+                        } else {
+                            llempee!!.visibility = View.VISIBLE
                             txtv_empp!!.setText(empl)
                         }
 
@@ -414,26 +408,20 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
                     if (getIntent().hasExtra("Product")) {
                         var prd = intent.getStringExtra("Product")
-                        if(prd.equals(""))
-                        {
-                            llprod!!.visibility=View.GONE
-                        }
-                        else
-                        {
-                            llprod!!.visibility=View.VISIBLE
+                        if (prd.equals("")) {
+                            llprod!!.visibility = View.GONE
+                        } else {
+                            llprod!!.visibility = View.VISIBLE
                             txtv_prd!!.setText(prd)
                         }
 
                     }
                     if (getIntent().hasExtra("Category")) {
                         var pri = intent.getStringExtra("Category")
-                        if(pri.equals(""))
-                        {
-                            llcategr!!.visibility=View.GONE
-                        }
-                        else
-                        {
-                            llcategr!!.visibility=View.VISIBLE
+                        if (pri.equals("")) {
+                            llcategr!!.visibility = View.GONE
+                        } else {
+                            llcategr!!.visibility = View.VISIBLE
                             txtv_Cat!!.setText(pri)
                         }
 
@@ -441,17 +429,14 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
                     if (getIntent().hasExtra("SumType")) {
                         var sumtype = intent.getStringExtra("SumType")
-                        Log.i(TAG,"STATT"+sumtype)
-                        if(sumtype.equals(""))
-                        {
+                        Log.i(TAG, "STATT" + sumtype)
+                        if (sumtype.equals("")) {
 
-                            llsumtype!!.visibility=View.GONE
+                            llsumtype!!.visibility = View.GONE
 
-                        }
-                        else
-                        {
+                        } else {
 
-                            llsumtype!!.visibility=View.VISIBLE
+                            llsumtype!!.visibility = View.VISIBLE
 
                             txtv_sumType!!.setText(sumtype)
                         }
@@ -461,20 +446,15 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                     if (getIntent().hasExtra("Fromdate")) {
                         var from = intent.getStringExtra("Fromdate")
                         var dates = from
-                        Log.i(TAG,"FROM DATE "+from)
+                        Log.i(TAG, "FROM DATE " + from)
 
 
-                        if(from.equals(""))
-                        {
-                            lldate!!.visibility=View.GONE
-                        }
-                        else
-                        {
+                        if (from.equals("")) {
+                            lldate!!.visibility = View.GONE
+                        } else {
 
 
-
-
-                            lldate!!.visibility=View.VISIBLE
+                            lldate!!.visibility = View.VISIBLE
                             report_date!!.setText(from)
                         }
 
@@ -482,45 +462,36 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
                     if (getIntent().hasExtra("Todate")) {
                         var to = intent.getStringExtra("Todate")
-                        if(to.equals(""))
-                        {
-                            lldate1!!.visibility=View.GONE
-                        }
-                        else
-                        {
+                        if (to.equals("")) {
+                            lldate1!!.visibility = View.GONE
+                        } else {
 
 
-                            lldate1!!.visibility=View.VISIBLE
+                            lldate1!!.visibility = View.VISIBLE
                             report_date1!!.setText(to)
                         }
 
                     }
                     if (getIntent().hasExtra("Priority")) {
                         var priorty = intent.getStringExtra("Priority")
-                        if(priorty.equals(""))
-                        {
-                            llpriority!!.visibility=View.GONE
-                        }
-                        else
-                        {
+                        if (priorty.equals("")) {
+                            llpriority!!.visibility = View.GONE
+                        } else {
 
 
-                            llpriority!!.visibility=View.VISIBLE
+                            llpriority!!.visibility = View.VISIBLE
                             txtv_priorty!!.setText(priorty)
                         }
 
                     }
                     if (getIntent().hasExtra("Status")) {
                         var stat = intent.getStringExtra("Status")
-                        if(stat.equals(""))
-                        {
-                            llstatus!!.visibility=View.GONE
-                        }
-                        else
-                        {
+                        if (stat.equals("")) {
+                            llstatus!!.visibility = View.GONE
+                        } else {
 
 
-                            llstatus!!.visibility=View.VISIBLE
+                            llstatus!!.visibility = View.VISIBLE
                             txtv_statusvalue!!.setText(stat)
                         }
 
@@ -605,11 +576,9 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
                                 }
 
-                            }
-                            else if (jObject.getString("StatusCode") == "105"){
-                                Config.logoutTokenMismatch(context,jObject)
-                            }
-                            else {
+                            } else if (jObject.getString("StatusCode") == "105") {
+                                Config.logoutTokenMismatch(context, jObject)
+                            } else {
                                 val builder = AlertDialog.Builder(
                                     this@TicketReportDetailActivity,
                                     R.style.MyDialogTheme
@@ -631,6 +600,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                     })
                 progressDialog!!.dismiss()
             }
+
             false -> {
 //                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
 //                    .show()
@@ -667,7 +637,8 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                 progressDialog!!.setIndeterminate(true)
                 progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
                 progressDialog!!.show()
-
+                Log.v("v", "fromDate " + strFromdate)
+                Log.v("sfsdfsdfdsd", "toDate " + strTodate)
                 detailedReportViewModel.getDetailedReport(
                     this,
                     ReportMode,
@@ -691,30 +662,30 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                 val jObject = JSONObject(msg)
                                 Log.e(TAG, "msg   1701   " + msg.length)
                                 Log.e(TAG, "msg   1702   " + msg)
-                                Log.v("sfsdfsdfdsfdd","msg "+msg)
+                                Log.v("sfsdfsdfdsfdd", "msg " + msg)
                                 if (jObject.getString("StatusCode") == "0") {
                                     val jobjt = jObject.getJSONObject("SummaryWiseReport")
                                     actionListReportArrayList =
                                         jobjt.getJSONArray("SummaryLeadList")
 
-                                    actionSort= JSONArray()
+                                    actionSort = JSONArray()
 
-                                    var open =""
-                                    var new=""
-                                    var closed =""
-                                    var lost=""
-                                    var bal=""
+                                    var open = ""
+                                    var new = ""
+                                    var closed = ""
+                                    var lost = ""
+                                    var bal = ""
 
                                     for (k in 0 until actionListReportArrayList.length()) {
                                         val jsonObject = actionListReportArrayList.getJSONObject(k)
-                                        open =jsonObject.getString("Opening")
-                                        new =jsonObject.getString("New")
-                                        closed =jsonObject.getString("Closed")
-                                        lost =jsonObject.getString("Lost")
-                                        bal =jsonObject.getString("Balance")
+                                        open = jsonObject.getString("Opening")
+                                        new = jsonObject.getString("New")
+                                        closed = jsonObject.getString("Closed")
+                                        lost = jsonObject.getString("Lost")
+                                        bal = jsonObject.getString("Balance")
 
 
-                                      //  actionSort.put(k,jsonObject)
+                                        //  actionSort.put(k,jsonObject)
                                         sum += open.toInt()
                                         sum1 += new.toInt()
                                         sum2 += closed.toInt()
@@ -726,14 +697,14 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                         var longval3: Double
                                         var longval4: Double
 
-                                        var test ="123455"
+                                        var test = "123455"
                                         longval = sum.toDouble()
                                         longval1 = sum1.toDouble()
                                         longval2 = sum2.toDouble()
                                         longval3 = sum3.toDouble()
                                         longval4 = sum4.toDouble()
 
-                                         formattedStringopen =
+                                        formattedStringopen =
                                             Config.getDecimelFormateForText(longval).toString()
 
                                         formattedStringopen1 =
@@ -747,30 +718,30 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                         formattedStringopen4 =
                                             Config.getDecimelFormateForText(longval4).toString()
 
-                                      //  actionSort.put(jsonObject.getString("New"))
+                                        //  actionSort.put(jsonObject.getString("New"))
 
 
                                     }
-                                    Log.e(TAG," SUM of new "+sum)
+                                    Log.e(TAG, " SUM of new " + sum)
 
-                                 //   txt_open!!.setText(""+sum)
-                                    txt_open!!.setText(""+formattedStringopen)
+                                    //   txt_open!!.setText(""+sum)
+                                    txt_open!!.setText("" + formattedStringopen)
 
 
-                                 //   txt_open!!.setText(String.format("%,.2f", sum ));
+                                    //   txt_open!!.setText(String.format("%,.2f", sum ));
 
-                                   // txt_new!!.setText(""+sum1)
-                                    txt_new!!.setText(""+formattedStringopen1)
+                                    // txt_new!!.setText(""+sum1)
+                                    txt_new!!.setText("" + formattedStringopen1)
 
-                                 //   txt_closed!!.setText(""+sum2)
-                                    txt_closed!!.setText(""+formattedStringopen2)
+                                    //   txt_closed!!.setText(""+sum2)
+                                    txt_closed!!.setText("" + formattedStringopen2)
 
-                                   // txt_losed!!.setText(""+sum3)
-                                    txt_losed!!.setText(""+formattedStringopen3)
+                                    // txt_losed!!.setText(""+sum3)
+                                    txt_losed!!.setText("" + formattedStringopen3)
 
-                                //    balance!!.setText(""+sum4)
+                                    //    balance!!.setText(""+sum4)
 
-                                    balance!!.setText(""+formattedStringopen4)
+                                    balance!!.setText("" + formattedStringopen4)
 
                                     if (actionListReportArrayList.length() > 0) {
 
@@ -781,6 +752,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                             arrayFrom[2] + "-" + arrayFrom[1] + "-" + arrayFrom[0]
                                         var toDate =
                                             arrayTo[2] + "-" + arrayTo[1] + "-" + arrayTo[0]
+                                        Log.e(TAG, "msg   1703   " + actionListReportArrayList)
                                         Log.e(TAG, "msg   1703   " + actionListReportArrayList)
                                         if (GroupId.equals("5")) {
                                             Type?.setText("Employee")
@@ -793,8 +765,8 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                         } else {
                                             Type?.setText("")
                                         }
-                                      /*  report_date!!.text =
-                                            "Report between " + fromDate + " and " + toDate*/
+                                        /*  report_date!!.text =
+                                              "Report between " + fromDate + " and " + toDate*/
                                         ll_Summary!!.visibility = View.VISIBLE
                                         try {
                                             val lLayout =
@@ -805,16 +777,19 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                             recycleSummary!!.layoutManager =
                                                 lLayout as RecyclerView.LayoutManager?
                                             // recyLeadGenReport!!.setHasFixedSize(true)
-                                            Log.e(TAG,"PASSVALUE"+strFromdate+"\n"+strTodate+"\n"+ID_Category)
+                                            Log.e(
+                                                TAG,
+                                                "PASSVALUE" + strFromdate + "\n" + strTodate + "\n" + ID_Category
+                                            )
                                             val adapter = SummaryReportAdapter(
                                                 applicationContext,
-                                                actionListReportArrayList,strFromdate,
-                                                        strTodate,
-                                                        ID_Product,
-                                                        ID_Category,
-                                                        ID_Branch,
-                                                        ID_Employee,
-                                                        ID_AssignedEmployee
+                                                actionListReportArrayList, strFromdate,
+                                                strTodate,
+                                                ID_Product,
+                                                ID_Category,
+                                                ID_Branch,
+                                                ID_Employee,
+                                                ID_AssignedEmployee
                                             )
                                             recycleSummary!!.adapter = adapter
                                         } catch (e: Exception) {
@@ -822,11 +797,9 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                         }
                                     }
 
-                                }
-                                else if (jObject.getString("StatusCode") == "105"){
-                                    Config.logoutTokenMismatch(context,jObject)
-                                }
-                                else {
+                                } else if (jObject.getString("StatusCode") == "105") {
+                                    Config.logoutTokenMismatch(context, jObject)
+                                } else {
                                     ll_Summary!!.visibility = View.GONE
                                     val builder = AlertDialog.Builder(
                                         this@TicketReportDetailActivity,
@@ -850,6 +823,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                     })
                 progressDialog!!.dismiss()
             }
+
             false -> {
 //                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
 //                    .show()
@@ -915,7 +889,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                     if (followUpTicketReportArrayList.length() > 0) {
                                         Log.e(TAG, "msg   2703   " + followUpTicketReportArrayList)
                                         ll_FollowUpTicket!!.visibility = View.VISIBLE
-                                     //   report_date!!.visibility = View.VISIBLE
+                                        //   report_date!!.visibility = View.VISIBLE
                                         var arrayFrom = strFromdate!!.split("-")
                                         var arrayTo = strTodate!!.split("-")
 
@@ -926,8 +900,8 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                             arrayFrom[2] + "-" + arrayFrom[1] + "-" + arrayFrom[0]
                                         var toDate =
                                             arrayTo[2] + "-" + arrayTo[1] + "-" + arrayTo[0]
-                                     //   report_date!!.text =
-                                          //  "Report between " + fromDate + " and " + toDate
+                                        //   report_date!!.text =
+                                        //  "Report between " + fromDate + " and " + toDate
 
 
                                         try {
@@ -951,12 +925,10 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
                                     }
 
-                                }
-                                else if (jObject.getString("StatusCode") == "105"){
-                                    Config.logoutTokenMismatch(context,jObject)
-                                }
-                                else {
-                                  //  report_date!!.visibility = View.GONE
+                                } else if (jObject.getString("StatusCode") == "105") {
+                                    Config.logoutTokenMismatch(context, jObject)
+                                } else {
+                                    //  report_date!!.visibility = View.GONE
                                     val builder = AlertDialog.Builder(
                                         this@TicketReportDetailActivity,
                                         R.style.MyDialogTheme
@@ -972,7 +944,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
 
                         } else {
-                         //   report_date!!.visibility = View.GONE
+                            //   report_date!!.visibility = View.GONE
 //                            Toast.makeText(
 //                                applicationContext,
 //                                "Some Technical Issues.",
@@ -982,6 +954,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                     })
                 progressDialog!!.dismiss()
             }
+
             false -> {
 //                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
 //                    .show()
@@ -1051,15 +1024,15 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                                 "msg   3443   " + newListTicketReportArrayList
                                             )
                                             ll_NewListTicket!!.visibility = View.VISIBLE
-                                          //  report_date!!.visibility = View.VISIBLE
+                                            //  report_date!!.visibility = View.VISIBLE
                                             var arrayFrom = strFromdate!!.split("-")
                                             var arrayTo = strTodate!!.split("-")
                                             var fromDate =
                                                 arrayFrom[2] + "-" + arrayFrom[1] + "-" + arrayFrom[0]
                                             var toDate =
                                                 arrayTo[2] + "-" + arrayTo[1] + "-" + arrayTo[0]
-                                           /* report_date!!.text =
-                                                "Report between " + fromDate + " and " + toDate*/
+                                            /* report_date!!.text =
+                                                 "Report between " + fromDate + " and " + toDate*/
                                             try {
                                                 val lLayout = GridLayoutManager(
                                                     this@TicketReportDetailActivity,
@@ -1081,12 +1054,10 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
                                         }
 
-                                    }
-                                    else if (jObject.getString("StatusCode") == "105"){
-                                        Config.logoutTokenMismatch(context,jObject)
-                                    }
-                                    else {
-                                     //   report_date!!.visibility = View.GONE
+                                    } else if (jObject.getString("StatusCode") == "105") {
+                                        Config.logoutTokenMismatch(context, jObject)
+                                    } else {
+                                        //   report_date!!.visibility = View.GONE
                                         val builder = AlertDialog.Builder(
                                             this@TicketReportDetailActivity,
                                             R.style.MyDialogTheme
@@ -1101,7 +1072,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                                 }
 
                             } else {
-                              //  report_date!!.visibility = View.GONE
+                                //  report_date!!.visibility = View.GONE
 //                                Toast.makeText(
 //                                    applicationContext,
 //                                    "Some Technical Issues.",
@@ -1109,7 +1080,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 //                                ).show()
                             }
                         } catch (e: Exception) {
-                        //    report_date!!.visibility = View.GONE
+                            //    report_date!!.visibility = View.GONE
                             Toast.makeText(
                                 applicationContext,
                                 "" + e.toString(),
@@ -1120,6 +1091,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                     })
                 progressDialog!!.dismiss()
             }
+
             false -> {
 //                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
 //                    .show()
@@ -1205,11 +1177,9 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
 
                                     }
 
-                                }
-                                else if (jObject.getString("StatusCode") == "105"){
-                                    Config.logoutTokenMismatch(context,jObject)
-                                }
-                                else {
+                                } else if (jObject.getString("StatusCode") == "105") {
+                                    Config.logoutTokenMismatch(context, jObject)
+                                } else {
                                     val builder = AlertDialog.Builder(
                                         this@TicketReportDetailActivity,
                                         R.style.MyDialogTheme
@@ -1239,6 +1209,7 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
                     })
                 progressDialog!!.dismiss()
             }
+
             false -> {
 //                Toast.makeText(applicationContext, "No Internet Connection.", Toast.LENGTH_LONG)
 //                    .show()
@@ -1247,7 +1218,6 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
         }
 
     }
-
 
 
     override fun onClick(position: Int, data: String) {
@@ -1344,13 +1314,16 @@ class TicketReportDetailActivity : AppCompatActivity(), View.OnClickListener, It
     override fun onRestart() {
         super.onRestart()
         networkChangeReceiver = NetworkChangeReceiver()
-        registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+        registerReceiver(
+            networkChangeReceiver,
+            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        )
 
     }
 
-     override fun onResume() {
-         super.onResume()
-         Config.isDeveloperOptionsEnabled(this)
-     }
+    override fun onResume() {
+        super.onResume()
+        Config.isDeveloperOptionsEnabled(this)
+    }
 
 }

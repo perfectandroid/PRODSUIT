@@ -26,7 +26,7 @@ object VersionRepository {
 
     private var progressDialog: ProgressDialog? = null
     val leadEditSetterGetter = MutableLiveData<VersionModel>()
-    val TAG: String = "LeadEditRepository"
+    val TAG: String = "VersionRepository"
 
     fun getServicesApiCall(context: Context): MutableLiveData<VersionModel> {
         getLeadEditList(context)
@@ -86,6 +86,7 @@ object VersionRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
+                        Log.e(TAG,"response"+response.body())
                         val country = ArrayList<LeadEditListModel>()
                         country.add(LeadEditListModel(response.body()))
                         val msg = country[0].message

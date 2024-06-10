@@ -73,7 +73,7 @@ object ProfileRepository {
                 requestObject1.put("ID_TokenUser", ProdsuitApplication.encryptStart(ID_TokenUserSP.getString("ID_TokenUser", null)))
 
 
-                Log.e(TAG,"requestObject1   69  "+requestObject1)
+                Log.e(TAG,"requestObject1   profile  "+requestObject1)
 
             } catch (e: Exception) {
                 e.printStackTrace()

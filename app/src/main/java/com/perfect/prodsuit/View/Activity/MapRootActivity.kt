@@ -169,16 +169,23 @@ class MapRootActivity : AppCompatActivity() , OnMapReadyCallback {
 
         var j = 0
 
-        for (i in 0 until locationList.length()) {
-            val json = locationList.getJSONObject(i)
-            j = i+1
-            addMarkerWithIconAndTitle(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble()),""+j+". "+ json.getString("LocLocationName"), R.drawable.person_location,i)
-            if (i==0){
-                googleMap!!.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
-                googleMap!!.moveCamera(CameraUpdateFactory.newLatLng(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble())))
-            }
+        try {
+      /*      progressDialog = ProgressDialog(context, R.style.Progress)
+            progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
+            progressDialog!!.setCancelable(false)
+            progressDialog!!.setIndeterminate(true)
+            progressDialog!!.setIndeterminateDrawable(context.resources.getDrawable(R.drawable.progress))
+            progressDialog!!.show()*/
+            for (i in 0 until locationList.length()) {
+                val json = locationList.getJSONObject(i)
+                j = i+1
+                addMarkerWithIconAndTitle(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble()),""+j+". "+ json.getString("LocLocationName"), R.drawable.person_location,i)
+                if (i==0){
+                    googleMap!!.animateCamera(CameraUpdateFactory.zoomTo(18.0f))
+                    googleMap!!.moveCamera(CameraUpdateFactory.newLatLng(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble())))
+                }
 
-            coordinatesList.add(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble()))
+                coordinatesList.add(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble()))
 
 
 //            HardCoded
@@ -190,24 +197,32 @@ class MapRootActivity : AppCompatActivity() , OnMapReadyCallback {
 //
 //            coordinatesList.add(LatLng(json.getString("LocLattitude").toDouble(), json.getString("LocLongitude").toDouble()))
 
+            }
+
+            val polylineOptions = PolylineOptions()
+                .addAll(coordinatesList)
+                .width(5f)
+                .color(Color.RED)
+
+            googleMap.addPolyline(polylineOptions)
+
+            googleMap!!.setOnMarkerClickListener(GoogleMap.OnMarkerClickListener { marker -> // on marker click we are getting the title of our marker
+                // which is clicked and displaying it in a toast message.
+                marker.hideInfoWindow()
+                var pos = marker.snippet!!.toInt()
+
+                //  Toast.makeText(this@LocationMarkingNewActivity, "Clicked location is $markerName", Toast.LENGTH_SHORT).show()
+                showDetailDialog(pos)
+                true
+            })
+         //   progressDialog!!.dismiss()
+
+        }catch (e  : Exception){
+            Log.e(TAG,"  1452  "+e.toString())
+          //  progressDialog!!.dismiss()
         }
 
-        val polylineOptions = PolylineOptions()
-            .addAll(coordinatesList)
-            .width(5f)
-            .color(Color.RED)
 
-        googleMap.addPolyline(polylineOptions)
-
-        googleMap!!.setOnMarkerClickListener(GoogleMap.OnMarkerClickListener { marker -> // on marker click we are getting the title of our marker
-            // which is clicked and displaying it in a toast message.
-            marker.hideInfoWindow()
-            var pos = marker.snippet!!.toInt()
-
-            //  Toast.makeText(this@LocationMarkingNewActivity, "Clicked location is $markerName", Toast.LENGTH_SHORT).show()
-            showDetailDialog(pos)
-            true
-        })
 
         // Adjust camera to fit the polyline
 //        val bounds = LatLngBounds.Builder().apply {

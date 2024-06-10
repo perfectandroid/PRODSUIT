@@ -69,6 +69,7 @@ object LoginActivityRepository {
             val requestObject1 = JSONObject()
             try {
                 val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
+
                 requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
                 requestObject1.put("ReqMode", ProdsuitApplication.encryptStart("2"))
                 requestObject1.put("MobileNumber", ProdsuitApplication.encryptStart(strEPhone))

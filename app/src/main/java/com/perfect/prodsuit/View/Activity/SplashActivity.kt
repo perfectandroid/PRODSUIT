@@ -24,9 +24,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.github.mikephil.charting.BuildConfig
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
-import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DBHelper
@@ -57,11 +57,13 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY  = "-500"
 
 
-//    val CERT_NAME = "development.pem"
-//    val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
-//    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
-//    val BANK_KEY  = "-500"
-//    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
+
+  /* val CERT_NAME = "development.pem"
+    val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
+    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
+    val BANK_KEY  = "-500"
+    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"*/
+
 
 
     //    Commonapp  16-05-2024
@@ -98,11 +100,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY  = "-500"
 
     // Common APP Sub Domain 12-03-2024
-    val CERT_NAME = "development.pem"
+   /* val CERT_NAME = "development.pem"
     val BASE_URL  = "https://persuitemobapp.perfectlimited.com:14012/api/"
     val IMAGE_URL = "https://persuitemobapp.perfectlimited.com:14012/"
     val BANK_KEY  = ""
-    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
+    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"*/
 
     //QA IP DEVLOPMENT COPY
   /*  val CERT_NAME = "qadevelop.pem"
@@ -136,11 +138,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY  = "-500"
 
 //  qa temp 30.11.2023 Single Company
-//    val CERT_NAME = "persuitqa.pem"
-//    val BASE_URL  = "https://112.133.227.123:14020/PersuiteAPI/api/"
-//    val IMAGE_URL = "https://112.133.227.123:14020/PersuiteAPI/"
-//    val BANK_KEY  = "-500"
-
+    val CERT_NAME = "persuitqa.pem"
+    val BASE_URL  = "https://112.133.227.123:14020/PersuiteAPI/api/"
+    val IMAGE_URL = "https://112.133.227.123:14020/PersuiteAPI/"
+    val BANK_KEY  = "-500"
+    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
 
     // Development NEW IP
 //    val CERT_NAME = "persuitqa.pem"
