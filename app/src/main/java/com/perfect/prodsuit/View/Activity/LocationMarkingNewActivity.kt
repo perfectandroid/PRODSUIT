@@ -349,6 +349,8 @@ class LocationMarkingNewActivity : AppCompatActivity(), OnMapReadyCallback, View
             imgList!!.setColorFilter(colorUnSelect, PorterDuff.Mode.SRC_IN)
             imgMap!!.setColorFilter(colorSelect, PorterDuff.Mode.SRC_IN)
             imgRoot!!.setColorFilter(colorUnSelect, PorterDuff.Mode.SRC_IN)
+            EmployeeLocation = 0
+            getEmployeeLocationList()
         }
         if (rootMode.equals("1")) {
             ll_rootView!!.visibility = View.VISIBLE

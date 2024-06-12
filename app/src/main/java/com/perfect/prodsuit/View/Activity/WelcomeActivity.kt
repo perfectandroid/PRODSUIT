@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Repository.LoginActivityRepository
 
 class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -26,6 +28,8 @@ class WelcomeActivity : AppCompatActivity(), View.OnClickListener {
         setRegViews()
         context = this@WelcomeActivity
         checkno = 0
+        val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
+        Log.e(LoginActivityRepository.TAG,"BASE_URLSP check   "+BASE_URLSP.getString("BASE_URL", null))
 
 
 //            Config.RegisterNetworkCallback(context,this,checkno)

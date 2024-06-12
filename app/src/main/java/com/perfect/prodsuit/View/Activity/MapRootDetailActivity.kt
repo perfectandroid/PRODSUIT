@@ -133,7 +133,7 @@ class MapRootDetailActivity : AppCompatActivity() , View.OnClickListener{
                                     EmployeeLocation++
 
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   1224   "+msg)
+                                    Log.e(TAG,"msg   maprootdetail   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("EmployeeWiseLocationList")
                                         locationList = jobjt.getJSONArray("EmployeeWiseLocationListData")

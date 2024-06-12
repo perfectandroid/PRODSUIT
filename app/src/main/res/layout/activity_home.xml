@@ -152,6 +152,7 @@
                             <ImageView
                                 android:id="@+id/imgv_fav"
                                 android:layout_width="50dp"
+                                android:visibility="gone"
                                 android:layout_height="60dp"
                                 android:layout_alignParentTop="true"
                                 android:layout_alignParentRight="true"

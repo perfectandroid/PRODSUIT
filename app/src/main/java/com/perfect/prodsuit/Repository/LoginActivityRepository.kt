@@ -26,7 +26,7 @@ object LoginActivityRepository {
 
     private var progressDialog: ProgressDialog? = null
     val loginSetterGetter = MutableLiveData<LoginModel>()
-
+    var TAG ="LoginActivityRepository"
     fun getServicesApiCall(context: Context,strEPhone : String): MutableLiveData<LoginModel> {
         doLogin(context, strEPhone)
         return loginSetterGetter
@@ -35,7 +35,7 @@ object LoginActivityRepository {
     private fun doLogin(context: Context,strEPhone : String) {
         try {
             loginSetterGetter.value = LoginModel("")
-
+         //   val BASE_URLSP = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
             val BASE_URLSP = context.getSharedPreferences(Config.SHARED_PREF7, 0)
 //            val CERT_NAMESP = context.getSharedPreferences(Config.SHARED_PREF8, 0)
 //            val BANK_KEYSP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
@@ -44,8 +44,8 @@ object LoginActivityRepository {
 //            val TestingBankKeypref = context.getSharedPreferences(Config.SHARED_PREF12, 0)
 //            val Testingsslcertificatepref = context.getSharedPreferences(Config.SHARED_PREF13, 0)
 //            val Loginmobilenumberpref = context.getSharedPreferences(Config.SHARED_PREF14, 0)
-            Log.e("TAG","BASE_URLSP  74747474   "+BASE_URLSP.getString("BASE_URL", null))
-
+            Log.e(TAG,"BASE_URLSP  74747474   "+BASE_URLSP.getString("BASE_URL", null))
+         //   Log.e("TAG","BASE_URLSP  74747474   "+BASE_URLSP)
             progressDialog = ProgressDialog(context, R.style.Progress)
             progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
             progressDialog!!.setCancelable(false)
@@ -61,6 +61,7 @@ object LoginActivityRepository {
                 .create()
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URLSP.getString("BASE_URL", null))
+             //   .baseUrl(BASE_URLSP)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
@@ -92,6 +93,7 @@ object LoginActivityRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
+                        Log.e(TAG,"resp_login"+response.body())
                         val users = ArrayList<LoginModel>()
                         users.add(LoginModel(response.body()))
                         val msg = users[0].message
@@ -121,7 +123,7 @@ object LoginActivityRepository {
             progressDialog!!.dismiss()
             Toast.makeText(
                 context,
-                ""+Config.SOME_TECHNICAL_ISSUES,
+                "Config"+Config.SOME_TECHNICAL_ISSUES,
                 Toast.LENGTH_LONG
             ).show()
         }

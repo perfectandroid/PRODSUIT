@@ -35,6 +35,7 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DBHelper
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
+import com.perfect.prodsuit.Repository.LoginActivityRepository
 import com.perfect.prodsuit.Viewmodel.LoginActivityViewModel
 import org.json.JSONObject
 
@@ -203,6 +204,8 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
             BASE_URLEditer.putString("BASE_URL", TestingURLpref.getString("TestingURL", null))
             BASE_URLEditer.commit()
 
+            Log.e(LoginActivityRepository.TAG,"BASE_URLSP check testing  "+BASE_URLSP.getString("BASE_URL", null))
+
             val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
             val IMAGE_URLEditer = IMAGE_URLSP.edit()
             IMAGE_URLEditer.putString("IMAGE_URL", TestingImageURLSP.getString("TestingImageURL", null))
@@ -300,7 +303,7 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
                                                     Config.SHARED_PREF2,
                                                     0
                                                 )
-                                                val UserNameEditer = UserNameSP.edit()
+                                             val UserNameEditer = UserNameSP.edit()
                                                 UserNameEditer.putString(
                                                     "UserName",
                                                     jobj.getString("UserName")

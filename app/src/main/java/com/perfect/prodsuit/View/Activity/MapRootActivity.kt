@@ -88,6 +88,7 @@ class MapRootActivity : AppCompatActivity() , OnMapReadyCallback {
     private fun getEmployeeWiseList() {
         when (Config.ConnectivityUtils.isConnected(this)) {
             true -> {
+                submode="2"
                 progressDialog = ProgressDialog(context, R.style.Progress)
                 progressDialog!!.setProgressStyle(android.R.style.Widget_ProgressBar)
                 progressDialog!!.setCancelable(false)
@@ -111,7 +112,7 @@ class MapRootActivity : AppCompatActivity() , OnMapReadyCallback {
                                     EmployeeLocation++
 
                                     val jObject = JSONObject(msg)
-                                    Log.e(TAG,"msg   1224   "+msg)
+                                    Log.e(TAG,"msg   maproot   "+msg)
                                     if (jObject.getString("StatusCode") == "0") {
                                         val jobjt = jObject.getJSONObject("EmployeeWiseLocationList")
                                         locationList = jobjt.getJSONArray("EmployeeWiseLocationListData")
