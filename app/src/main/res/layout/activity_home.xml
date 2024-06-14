@@ -973,6 +973,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-1dp"
         android:background="@drawable/top_rounded_chip"
         app:cnb_iconColor="@color/white"
         app:cnb_menuResource="@menu/navbottom_item"
