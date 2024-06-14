@@ -22,7 +22,7 @@
         <item>Need To Visit</item>
         <item>Site Visited</item>
     </string-array>
-
+   <string name="erp_solutions"></string>
 
     <string-array name="risk_type">
         <item>High</item>

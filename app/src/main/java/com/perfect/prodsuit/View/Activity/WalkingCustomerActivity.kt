@@ -240,7 +240,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
 
         btnReset = findViewById<Button>(R.id.btnReset)
         btnSubmit = findViewById<Button>(R.id.btnSubmit)
-        imcontactlog = findViewById<ImageView>(R.id.imcontactlog)
+     //   imcontactlog = findViewById<ImageView>(R.id.imcontactlog)
 
 
 
@@ -251,7 +251,7 @@ class WalkingCustomerActivity : AppCompatActivity(), View.OnClickListener, ItemC
         tie_AssignedTo!!.setOnClickListener(this)
         btnReset!!.setOnClickListener(this)
         btnSubmit!!.setOnClickListener(this)
-        imcontactlog!!.setOnClickListener(this)
+     //   imcontactlog!!.setOnClickListener(this)
 
         tie_Category!!.setOnClickListener(this)
         tie_Product!!.setOnClickListener(this)
