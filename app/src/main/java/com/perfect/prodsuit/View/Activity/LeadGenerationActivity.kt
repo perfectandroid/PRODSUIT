@@ -8921,7 +8921,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             Log.i("resp2323","check="+check)
             Log.i("resp2323","product validation")
             if (check!!.equals("0")) {
-                Config.snackBars(context, v, "Add Product")
+                Config.snackBars(context, v, "Please complete all required fields.")
             } else {
 
                 Log.e(TAG,"88000  ")

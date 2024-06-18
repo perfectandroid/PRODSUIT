@@ -175,7 +175,8 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
             val TechnologyPartnerImage  = IMAGEURL + TechnologyPartnerImageSP.getString("TechnologyPartnerImage", "")
             PicassoTrustAll.getInstance(this@LoginActivity)!!.load(TechnologyPartnerImage).error(R.drawable.svg_trans).into(img_technology)
 
-            val AppIconImageCode  = IMAGEURL + AppIconImageCodeSP.getString("AppIconImageCode", "")
+           val AppIconImageCode  = IMAGEURL + AppIconImageCodeSP.getString("AppIconImageCode", "")
+            Log.e("APPicon",AppIconImageCode)
             PicassoTrustAll.getInstance(this@LoginActivity)!!.load(AppIconImageCode).error(R.drawable.svg_trans).into(img_logo)
         }catch (e : Exception){
 
@@ -346,6 +347,15 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
                                                 val EmailEditer = EmailSP.edit()
                                                 EmailEditer.putString("Email", jobj.getString("Email"))
                                                 EmailEditer.commit()
+
+
+
+
+                                              /*  val isAdminSP = applicationContext.getSharedPreferences(Config.SHARED_PREF87, 0)
+                                                val isAdminSPEditer = isAdminSP.edit()
+                                                isAdminSPEditer.putString("IsAdmin", jobj.getString("IsAdmin"))
+                                                isAdminSPEditer.commit()
+*/
 
 
                                                 val UserCodeSP = applicationContext.getSharedPreferences(

@@ -57,11 +57,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY  = "-500"
 
 
-    val CERT_NAME = "development.pem"
+   /* val CERT_NAME = "development.pem"
     val BASE_URL  = "https:///202.164.150.65:14271/ProdsuiteAPI/api/"
     val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
     val BANK_KEY  = "-500"
-    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
+    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"*/
 
 
 
@@ -140,11 +140,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY  = "-500"
 
 //  qa temp 30.11.2023 Single Company
-   /* val CERT_NAME = "persuitqa.pem"
+    val CERT_NAME = "persuitqa.pem"
     val BASE_URL  = "https://112.133.227.123:14020/PersuiteAPI/api/"
     val IMAGE_URL = "https://112.133.227.123:14020/PersuiteAPI/"
     val BANK_KEY  = "-500"
-    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"*/
+    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
 
 
     // stable version for erp
@@ -1087,6 +1087,8 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                                     val PlayStoreLinkEditer = PlayStoreLinkSP.edit()
                                     PlayStoreLinkEditer.putString("PlayStoreLink", jobj.getString("PlayStoreLink"))
                                     PlayStoreLinkEditer.commit()
+
+
 
 
 

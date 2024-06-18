@@ -165,6 +165,7 @@ object Config {
 
     const val SHARED_PREF85 = "ID_TokenUser" // UserToken
     const val SHARED_PREF86 = "PRIVACY_POLICY_URL" // privacypolicy
+    //const val SHARED_PREF87 = "IsAdmin"
 
     var width = 0
     var height = 0

@@ -3207,6 +3207,11 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                 )
             }
         }
+        Log.e(TAG,"321000   "+encode1)
+        Log.e(TAG,"321000   "+encode2)
+
+        Log.e(TAG,"321000   "+encode1)
+        Log.e(TAG,"321000   "+encode2)
 
         LeadConfirmationPopup()
 
