@@ -599,6 +599,8 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
         EditMRPLeadEditer.putString("EditMRPLead", selectedItem.EditMRPLead)
         EditMRPLeadEditer.commit()
 
+        Log.e(TAG,"EditMRPLead   "+selectedItem.EditMRPLead)
+
         // Login User
 
         val FK_EmployeeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF1, 0)

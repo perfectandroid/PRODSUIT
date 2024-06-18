@@ -312,6 +312,9 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         val EditMRPLeadSP = context.getSharedPreferences(Config.SHARED_PREF78, 0)
         editableMrp = EditMRPLeadSP.getString("EditMRPLead","0")
 
+
+        Log.e(TAG,"EditMRPLead   "+editableMrp)
+
         setRegViews()
         getDefaultValueSettings()
         checkAttendance()
@@ -1053,10 +1056,26 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                         )
                     )
 
+                    edtCustAddres2!!.isEnabled = true
                     Customer_Mode = "0"
                     Customer_Type = ""
                     edt_customer!!.setText("")
                     ID_Customer = ""
+
+
+                    // custDetailMode = "1"
+                    ID_CustomerAssignment = ""
+                    Customer_Name =  ""
+                    Customer_Mobile =  ""
+                    Customer_Email =  ""
+                    Customer_Address1 =  ""
+                    Customer_Address2 =  ""
+
+                    // llCustomerDetail!!.visibility = View.GONE
+                    actv_namTitle!!.setText( "")
+                    edtCustname!!.setText( "")
+                    edtCustphone!!.setText( "")
+                    edtCustAddres2!!.setText( "")
 
                     edtCustname!!.setText(
                         cursor!!.getString(
@@ -2714,6 +2733,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
             edtCustname!!.isEnabled = false
             edtCustphone!!.isEnabled = false
+            edtCustAddres2!!.isEnabled = false
 
             // custDetailMode = "1"
             ID_CustomerAssignment = ""
@@ -2726,11 +2746,14 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             Customer_Address1 = jsonObject.getString("CusAddress1")
             Customer_Address2 = jsonObject.getString("CusAddress2")
 
+            Log.e(TAG,"Customer_Address1 12345 "
+                    +Customer_Address1)
+
             // llCustomerDetail!!.visibility = View.GONE
             actv_namTitle!!.setText(jsonObject.getString("CusNameTitle"))
             edtCustname!!.setText(jsonObject.getString("CusName"))
             edtCustphone!!.setText(jsonObject.getString("CusPhnNo"))
-            edtCustAddres2!!.setText(jsonObject.getString("CusAddress2"))
+            edtCustAddres2!!.setText(jsonObject.getString("CusAddress1"))
 
 
 //            edtCustemail!!.setText(jsonObject.getString("CusEmail"))
@@ -2952,7 +2975,10 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         CusNameTitle = actv_namTitle!!.text.toString()
         Customer_Name = edtCustname!!.text.toString()
         Customer_Mobile = edtCustphone!!.text.toString()
-        Customer_Address2 = edtCustAddres2!!.text.toString()
+        Customer_Address1 = edtCustAddres2!!.text.toString()
+
+        Log.e(TAG,"Customer_Address1 123451 "
+                +Customer_Address1)
 
         val MobilePattern = "[0-9]{10}"
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
@@ -3526,6 +3552,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 
         edtCustname!!.isEnabled = true
         edtCustphone!!.isEnabled = true
+        edtCustAddres2!!.isEnabled = true
 
         Customer_Mode = "0"
         ID_Customer = "0"

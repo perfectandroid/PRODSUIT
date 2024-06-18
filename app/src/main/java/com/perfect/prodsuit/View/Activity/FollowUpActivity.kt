@@ -2769,6 +2769,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             tie_Status!!.setText(jsonObject.getString("StatusName"))
             til_Date!!.hint = (jsonObject.getString("StatusName")+" Date")
 
+
+
             if (ID_Status.equals("2")){
                 isFuture = 1
             }
@@ -2781,6 +2783,18 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             }else{
                 (tabLayout!!.getChildAt(0) as ViewGroup).getChildAt(1).isEnabled = true
             }
+
+            tie_NextAction!!.setText("")
+            tie_NextActionType!!.setText("")
+            tie_Priority!!.setText("")
+
+            tie_NextFollowupDate!!.setText("")
+
+            ID_NextAction = ""
+            ID_NextActionType = ""
+            ID_Priority = ""
+
+            getDefaultValueSettings();
         }
 
         if (data.equals("followupaction")){
@@ -3102,13 +3116,58 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 }else if (ID_NextEmployee.equals("")){
                     Config.snackBars(context,v,"Select Employee")
                 }else{
-                    saveUpdate()
+                   // saveUpdate()
+                    LocationValidation();
                 }
             }
         }else{
-            saveUpdate()
+            LocationValidation();
+            //saveUpdate()
         }
     }
+
+    private fun LocationValidation() {
+
+
+//        if (image1.equals("")) {
+//            encode1 = ""
+//        } else {
+//            val bitmap = BitmapFactory.decodeFile(image1)
+//            val converetdImage = getResizedBitmap(bitmap, 500)
+//            val stream = ByteArrayOutputStream()
+//            converetdImage.compress(Bitmap.CompressFormat.PNG, 100, stream)
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                encode1 = Base64.getEncoder().encodeToString(stream.toByteArray());
+//            } else {
+//                encode1 = android.util.Base64.encodeToString(
+//                    stream.toByteArray(),
+//                    android.util.Base64.DEFAULT
+//                )
+//            }
+//        }
+//        if (image2.equals("")) {
+//            encode2 = ""
+//        } else {
+//            val bitmap = BitmapFactory.decodeFile(image2)
+//            val converetdImage = getResizedBitmap(bitmap, 500)
+//            val stream = ByteArrayOutputStream()
+//            converetdImage.compress(Bitmap.CompressFormat.PNG, 100, stream)
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//                encode2 = Base64.getEncoder().encodeToString(stream.toByteArray())
+//            } else {
+//                encode2 = android.util.Base64.encodeToString(
+//                    stream.toByteArray(),
+//                    android.util.Base64.DEFAULT
+//                )
+//            }
+//        }
+
+        Log.e(TAG, "LocationValidation  encode1  373241   " + encode1)
+        Log.e(TAG, "LocationValidation  encode2  373241   " + encode2)
+        saveUpdate()
+
+    }
+
 
     private fun bottomWithoutNextAction() {
         // BottomSheet
@@ -3176,6 +3235,9 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
     private fun saveUpdate() {
 
+        strLatitude = tie_Latitude!!.text.toString();
+        strLongitude = tie_Longitude!!.text.toString();
+
         Log.e(TAG,"FOLLOWUP  25981 "
                 +"\n ID_LeadGenerateProduct :  "+ID_LeadGenerateProduct
                 +"\n ID_LeadGenerate        :  "+ID_LeadGenerate
@@ -3201,10 +3263,37 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         Log.e(TAG,"2786   "+encode1)
 
 
+   /*     if(card_nextaction!!.visibility==View.GONE)
+        {
+            if (ID_Status.equals("4"))
+            {
+                ID_NextAction=""
+                ID_NextActionType=""
+                strNextFollowUpDate=""
+                ID_Priority=""
+                ID_Department=""
+                ID_NextEmployee=""
 
-        saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,strFollowUpTime,
-            strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
-            strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2,ForAllProduct)
+
+                saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,strFollowUpTime,
+                    strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
+                    strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2,ForAllProduct)
+            }
+            else
+            {
+                saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,strFollowUpTime,
+                    strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
+                    strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2,ForAllProduct)
+
+            }
+        }
+        else if(card_nextaction!!.visibility==View.VISIBLE)
+        {*/
+            saveUpdateLeadManagement(ID_LeadGenerateProduct,ID_LeadGenerate,ID_ActionType,ID_Employee,ID_Status,strFollowUpDate,strFollowUpTime,
+                strCustomerRemark,strEmployeeRemark,ID_NextAction,ID_NextActionType,strNextFollowUpDate,ID_Priority,ID_Department,ID_NextEmployee,
+                strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2,ForAllProduct)
+
+     //   }
 
 
 

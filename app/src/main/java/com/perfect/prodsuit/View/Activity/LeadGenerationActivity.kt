@@ -587,6 +587,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
         val EditMRPLeadSP = context.getSharedPreferences(Config.SHARED_PREF78, 0)
         editableMrp = EditMRPLeadSP.getString("EditMRPLead","0")
+        Log.e(TAG,"EditMRPLead   "+editableMrp)
+
         setRegViews()
 
         searchType = resources.getStringArray(R.array.array_spinner)
@@ -2686,6 +2688,51 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                         )
                     )
 
+                    edtCustname!!.isEnabled = false
+                    edtCustphone!!.isEnabled = false
+                    edtCustaddress1!!.isEnabled = false
+                    edtCustaddress2!!.isEnabled = false
+
+                    // custDetailMode = "1"
+                    ID_CustomerAssignment = ""
+                    Customer_Mode = "0"  // SEARCH
+                    ID_Customer = ""
+                    Customer_Type = ""
+                    Customer_Name = ""
+                    Customer_Mobile = ""
+                    Customer_Mobile2 = ""
+
+
+                    Customer_Email = ""
+                    Customer_Address1 =""
+                    Customer_Address2 = ""
+
+                    // llCustomerDetail!!.visibility = View.GONE
+                    actv_namTitle!!.setText("")
+                    edtCustname!!.setText("")
+                    edtCustphone!!.setText("")
+                    edtMobileNumber!!.setText("")
+                    edtCustemail!!.setText("")
+                    edtCustaddress1!!.setText("")
+                    edtCustaddress2!!.setText("")
+                    edtWhatsApp!!.setText("")
+
+
+
+                    FK_Country = ""
+                    FK_States = ""
+                    FK_District = ""
+                    FK_Post = ""
+                    FK_Area = ""
+
+                    edtPincode!!.setText("")
+                    edtCountry!!.setText("")
+                    edtState!!.setText("")
+                    edtDistrict!!.setText("")
+                    Log.e(TAG, "123455   ")
+                    edtArea!!.setText("")
+                    edtPost!!.setText("")
+                    edtPincode!!.setText("")
                     edt_customer!!.setText("")
 
                     edtCustname!!.setText(
@@ -2702,6 +2749,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                             )
                         )
                     )
+
+                    getDefaultValueSettings();
                     Log.e("eedd", "weqweefdfdsa")
 //                    Log.e("ffgg","ffffeeeeeeeeeee11222 "+cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)))
                     dialogContact!!.dismiss()
