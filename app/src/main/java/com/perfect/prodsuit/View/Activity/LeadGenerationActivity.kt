@@ -8747,7 +8747,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
             } else if (Customer_Name.equals(""))
             {
-                Config.snackBars(context, v, "Enter Customer Name")
+                Config.snackBars(context, v, "Please complete all required fields in Customer details")
 
                 llCustomerDetail!!.visibility = View.VISIBLE
                 //custDetailMode = "0"
@@ -8921,7 +8921,25 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             Log.i("resp2323","check="+check)
             Log.i("resp2323","product validation")
             if (check!!.equals("0")) {
-                Config.snackBars(context, v, "Please complete all required fields.")
+                Config.snackBars(context, v, "Please complete all required fields in Project/ Product details")
+
+                llProdDetail!!.visibility = View.VISIBLE
+
+                custDetailMode = "1"
+                moreCommInfoMode = "1"
+                companyNameMode = "1"
+                custProdlMode = "0"
+                locationMode = "1"
+                dateMode = "1"
+                leadRequestMode = "1"
+                leadfromMode = "1"
+                leadThroughMode = "1"
+                leadByMode = "1"
+                mediaTypeMode = "1"
+                uploadImageMode = "1"
+
+                hideViews()
+
             } else {
 
                 Log.e(TAG,"88000  ")
