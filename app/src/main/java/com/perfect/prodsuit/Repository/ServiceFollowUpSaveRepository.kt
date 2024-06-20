@@ -134,9 +134,10 @@ object ServiceFollowUpSaveRepository {
             val requestObject1 = JSONObject()
             try {
 
+
 //
 
-//                val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
+               val TokenSP = context.getSharedPreferences(Config.SHARED_PREF5, 0)
 //                val FK_EmployeeSP = context.getSharedPreferences(Config.SHARED_PREF1, 0)
 //                val UserNameSP = context.getSharedPreferences(Config.SHARED_PREF2, 0)
 //                val BankKeySP = context.getSharedPreferences(Config.SHARED_PREF9, 0)
@@ -147,14 +148,14 @@ object ServiceFollowUpSaveRepository {
 //                requestObject1.put("BankKey", ProdsuitApplication.encryptStart(BankKeySP.getString("BANK_KEY", null)))
 //                requestObject1.put("FK_Employee", ProdsuitApplication.encryptStart(FK_EmployeeSP.getString("FK_Employee", null)))
 //                requestObject1.put("UserName", ProdsuitApplication.encryptStart(UserNameSP.getString("UserName", null))) //New
-//                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
+
 //                requestObject1.put("UserAction", ProdsuitApplication.encryptStart(saveUpdateMode))//
 
                 val FK_ID_UserSP = context.getSharedPreferences(Config.SHARED_PREF44, 0)
                 val ID_TokenUserSP = context.getSharedPreferences(Config.SHARED_PREF85, 0)
 
 
-
+                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("UserAction", ProdsuitApplication.encryptStart(UserAction))
                 requestObject1.put("FK_Customerserviceregister", ProdsuitApplication.encryptStart(FK_Customerserviceregister))
                 requestObject1.put("ID_CustomerServiceRegisterProductDetails", ProdsuitApplication.encryptStart(ID_CustomerServiceRegisterProductDetails))
