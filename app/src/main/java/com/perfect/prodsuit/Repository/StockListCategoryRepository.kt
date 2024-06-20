@@ -86,6 +86,7 @@ object StockListCategoryRepository {
                 requestObject1.put("FK_Branch", ProdsuitApplication.encryptStart(FK_BranchSP.getString("FK_Branch", null)))
                 requestObject1.put("FK_Company", ProdsuitApplication.encryptStart(Fkcompanysp.getString("FK_Company", null)))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
+                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                requestObject1.put("TransDate", ProdsuitApplication.encryptStart(currentDate))
              //   requestObject1.put("TransDate", ProdsuitApplication.encryptStart("2023-11-17"))
                 requestObject1.put("DashMode", ProdsuitApplication.encryptStart("26"))
@@ -94,7 +95,7 @@ object StockListCategoryRepository {
 
 
 
-                Log.e(TAG,"7856  stocklist  "+requestObject1)
+                Log.e(TAG,"7856  stocklist ====ooohi  "+requestObject1)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -113,7 +114,7 @@ object StockListCategoryRepository {
                     try {
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
-                        Log.e(TAG,"  stocklistcategory "+response.body())
+                        Log.e(TAG,"  stocklistcategory oohai "+response.body())
                         val stocklistcategory = ArrayList<StockListCategoryModel>()
                         stocklistcategory.add(StockListCategoryModel(response.body()))
                         val msg = stocklistcategory[0].message

@@ -24,10 +24,25 @@ android {
 //            keyAlias 'Persuitecommon'
 //            keyPassword 'Persuitecommon#2356'
 
-            storeFile file('D:\\Build\\Details\\persuitecustomer\\Persuite.jks')
-            storePassword 'Per@T$$#&^%suite*&^%'
-            keyAlias 'Persuitecustomer'
-            keyPassword 'Per@T$$#&^%suite*&^%'
+//            storeFile file('D:\\Build\\Details\\persuitecustomer\\Persuite.jks')
+//            storePassword 'Per@T$$#&^%suite*&^%'
+//            keyAlias 'Persuitecustomer'
+//            keyPassword 'Per@T$$#&^%suite*&^%'
+
+//            storeFile file('D:\\june 2024\\persuite erp\\persuite_erp.jks')
+//            storePassword 'persuite_erp@2024'
+//            keyAlias 'Persuite ERP'
+//            keyPassword 'persuite_erp@2024'
+
+//            storeFile file('D:\\june 2024\\Secondary launch persuite 19.06.2024\\persuite_erp_launch.jks')
+//            storePassword 'Persuite#erp%launch'
+//            keyAlias 'Persuite ERP Launch'
+//            keyPassword 'Persuite#erp%launch'
+
+            storeFile file('D:\\May 2024\\persuite_launch\\persuitelanch.jks')
+            storePassword 'Persuite#Launch@100524'
+            keyAlias 'PersuiteLaunch'
+            keyPassword 'Persuite#Launch@100524'
 
 //            storeFile file('D:\\Build\\Details\\scalies\\persuitescaleious.jks')
 //            storePassword 'scaleious@23sdeeq2'
@@ -64,13 +79,17 @@ android {
 //        applicationId "com.perfect.marketing_demo"
 //        applicationId "com.perfect.prodsuite_employee"
 //        applicationId "com.persuite.scalieous"  // scalieous
-        applicationId "com.perfect.prodsuite_customer"  // common
+//        applicationId "com.perfect.prodsuite_customer"  // common
+//        applicationId "com.persuite.persuite_erp"  // latest_launch
+        applicationId "com.persuite.launching"
+//        applicationId "com.persuite.erp_launching"
+//        applicationId "com.perfect.persuite_crm"
 
 
         minSdkVersion 26
         targetSdkVersion 33
-        versionCode 9
-        versionName "2.0.2"
+        versionCode 12
+        versionName "2.0.5"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -176,7 +195,7 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.4.0'
     implementation 'com.google.zxing:core:3.4.1'
     implementation 'com.journeyapps:zxing-android-embedded:4.1.0'
-   // implementation 'com.google.android.recaptcha:recaptcha:18.4.0'
+
 
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'com.github.sheetalkumar105:ZoomImageView-android:1.02'
