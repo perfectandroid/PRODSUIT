@@ -57,10 +57,11 @@
                 android:layout_margin="5dp"
                 android:textSize="15dp"
                 android:padding="2dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:textAllCaps="false"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/btn_bggrey"
+                android:textColor="@color/white"
+                android:background="@drawable/btn_bgcolour"
                 android:text="Yes" />
             <Button
                 android:id="@+id/btn_online_No"
@@ -69,13 +70,12 @@
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:textSize="15dp"
-                android:textColor="@color/white"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/btn_bgcolour"
+                android:background="@drawable/btn_bggrey"
                 android:padding="2dp"
                 android:layout_weight="1"
                 android:textAllCaps="false"
-                android:text="No, cancel please." />
+                android:text="No" />
         </LinearLayout>
 
 
