@@ -67,7 +67,7 @@ object StandByRepository {
                 requestObject1.put("Remark", ProdsuitApplication.encryptStart(remark))
                 requestObject1.put("FK_BranchCodeUser", ProdsuitApplication.encryptStart(FK_BranchCodeUserSP.getString("FK_BranchCodeUser", null)))
                 requestObject1.put("Status", (Status))
-
+                requestObject1.put("Token", ProdsuitApplication.encryptStart(TokenSP.getString("Token", null)))
                 requestObject1.put("LocLatitude", (strLatitude))
                 requestObject1.put("LocLongitude", (strLongitue))
                 requestObject1.put("Address", (locAddress))
