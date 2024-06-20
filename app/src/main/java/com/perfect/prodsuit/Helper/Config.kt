@@ -1376,7 +1376,29 @@ object Config {
 
         return result
     }
-   
+
+    fun compareDate(date1: String , date2: String): Boolean {
+
+        var result = false
+        try {
+            val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+            Log.e("TAG","13140    "+date1+"  :  "+date2)
+            //   val sdf = SimpleDateFormat("yyyy-MM-dd")
+            val date1: Date = dateFormat.parse(date1) ?: throw IllegalArgumentException("Invalid date format")
+            val date2: Date = dateFormat.parse(date2) ?: throw IllegalArgumentException("Invalid date format")
+            Log.e("TAG","131408    "+date1+"  :  "+date2)
+            if((date1.before(date2) || date1 == date2)){
+                result = true
+            }else{
+                result = false
+            }
+        //    result = !date1.after(date2)
+
+        }catch (e:Exception){
+            Log.e("TAG","13143   "+e)
+        }
+        return  result
+    }
 
     fun convertTimemills(date1: String , date2: String): Boolean {
 
@@ -1410,6 +1432,7 @@ object Config {
     fun checkTimemills(time1: String , time2: String): Boolean {
         var result = false
         try {
+
 
             Log.e(TAG,"137771  "+time1+"  :   "+time2)
             val inputPattern = "h:mm a"

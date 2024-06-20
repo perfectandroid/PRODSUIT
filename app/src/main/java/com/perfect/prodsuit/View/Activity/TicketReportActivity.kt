@@ -30,7 +30,6 @@ import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.R
-import com.perfect.prodsuit.View.Activity.LeadGenerationActivity.Companion.checkProject
 import com.perfect.prodsuit.View.Adapter.*
 import com.perfect.prodsuit.Viewmodel.*
 import org.json.JSONArray
@@ -38,6 +37,9 @@ import org.json.JSONObject
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.*
 
 class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClickListener {
@@ -1493,6 +1495,14 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             dialog.dismiss()
         }
         txtSubmit.setOnClickListener {
+
+
+//            if (validateDates(FromDate, ToDate)) {
+//                println("To date is greater than or equal to From date")
+//            } else {
+//                println("To date is before From date or date format is invalid")
+//            }
+
             if (edt_fromDate.text.toString() == "" && edt_toDate.text.toString() != "") {
                 val builder = AlertDialog.Builder(
                     this@TicketReportActivity,
@@ -1516,10 +1526,37 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 alertDialog.setCancelable(false)
                 alertDialog.show()
             } else {
-                dialog.dismiss()
-                dateField1!!.setText(FromDate)
-                dateField2!!.setText(ToDate)
+
+                var isValid3 = true
+                if (!FromDate.equals("")){
+                    isValid3 = Config.compareDate(FromDate!!,ToDate!!)
+                    Log.e(TAG,"456546431    "+isValid3)
+                }
+
+                if (isValid3){
+                    dialog.dismiss()
+                    dateField1!!.setText(FromDate)
+                    dateField2!!.setText(ToDate)
+                }else{
+                 //   Config.snackBars(context,view,"To date should be greaterthan or equal to From date")
+
+                    val builder = AlertDialog.Builder(
+                        this@TicketReportActivity,
+                        R.style.MyDialogTheme
+                    )
+                    builder.setMessage("To date is greater than or equal to From date")
+                    builder.setPositiveButton("Ok") { dialogInterface, which ->
+                    }
+                    val alertDialog: AlertDialog = builder.create()
+                    alertDialog.setCancelable(false)
+                    alertDialog.show()
+
+                }
+
+
             }
+
+
 
 //                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
 //                val day: Int = date_Picker1!!.getDayOfMonth()
@@ -1547,6 +1584,43 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         dialog!!.setContentView(view)
 
         dialog.show()
+    }
+
+    private fun validateDates(fromDate: String, toDate: String): Boolean {
+        val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd") // Adjust the pattern to match your date format
+
+        return try {
+            val fromDate = LocalDate.parse(fromDate, dateFormatter)
+            val toDate = LocalDate.parse(toDate, dateFormatter)
+
+            !toDate.isBefore(fromDate) // Check if toDate is not before fromDate
+        } catch (e: DateTimeParseException) {
+            false // If date parsing fails, return false
+        }
+
+    }
+
+    private fun validateDate(view: View, FromDate: String, ToDate: String) {
+        Log.e(TAG,"..456546343...........inside.....FromDate.....rtyrtytr"+FromDate)
+        Log.e(TAG,"..45654643.........inside......ToDate......rtyrtytr"+ToDate)
+
+        var isValid3 = true
+        if (!FromDate.equals("")){
+            isValid3 = Config.compareDate(FromDate!!,ToDate!!)
+            Log.e(TAG,"456546431    "+isValid3)
+        }
+
+        if (isValid3){
+
+        }else{
+            Config.snackBars(context,view,"To date should be greaterthan or equal to From date")
+        }
+
+//        else{
+//            Log.e(TAG,"456546432    "+isValid3)
+//
+//        }
+
     }
 
     private fun getCollectedBy() {
