@@ -23,7 +23,10 @@
 <!--    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCqbreiFgaObzj3717oHMlhvL9Wf9UZxAQ</string>-->
 <!--    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCGk5m5ERd70cCdGSC4H9se5VnVOcXGV5s</string>-->
 <!--    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBe-DkJsc6CSOBUZ9dA1SDZ3I5GTs8ZPMg</string>-->
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAcZEUnYdA9LiBcrOfmLSz7E8xGH_UKQGY</string>
+<!--    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAcZEUnYdA9LiBcrOfmLSz7E8xGH_UKQGY</string>-->
+<!--    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAIkfyQiUq7WvKkT74URsmpoh2A22oZKv8</string>-->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDlzXPE_3oDDW0fHGhKN_7x8YuuzqeDs6w</string>
+<!--    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBzPd3DhMXvSdKyGsWbuBeZWW1KBa9JMDI</string>-->
 
     
     <!--nihal-->

@@ -57,11 +57,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY  = "-500"
 
 
-    val CERT_NAME = "development.pem"
-    val BASE_URL  = "https:///202.164.150.65:14271/ProdsuiteAPI/api/"
-    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
-    val BANK_KEY  = "-500"
-    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
+//    val CERT_NAME = "development.pem"
+//    val BASE_URL  = "https:///202.164.150.65:14271/ProdsuiteAPI/api/"
+//    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
+//    val BANK_KEY  = "-500"
+//    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
 
 
 
@@ -93,11 +93,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
 
     // DEV LICENSE API 14-03-2024
-  /*  val CERT_NAME = "development.pem"
+    val CERT_NAME = "development.pem"
     val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
     val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI  "
     val BANK_KEY  = "-500"
-    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"*/
+    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
 
 
 
@@ -356,6 +356,12 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val IMAGE_URL = "https://45.118.163.44:14008/PerSuiteAPICOMMONAPP"
 //    val BANK_KEY  = "-528"
 
+    //Crm release 12.06.2024
+//    val CERT_NAME = "crm-persuiteerp.pem"
+//    val BASE_URL  = "https://crm.persuiteerp.com/CRMPerSuiteAPI/api/"
+//    val IMAGE_URL = "https://crm.persuiteerp.com/CRMPerSuiteAPI"
+//    val BANK_KEY  = ""
+//    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
 
 
 
@@ -1059,7 +1065,17 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                             val jObject = JSONObject(msg)
                             if (jObject.getString("StatusCode") == "0") {
 
-                                Log.e(TAG,"493   "+jObject)
+                                Log.e(TAG,"" +
+                                        "" +
+                                        "" +
+                                        "" +
+                                        "" +
+                                        "" +
+                                        "" +
+                                        "" +
+                                        "" +
+                                        "" +
+                                        "   "+jObject)
                                 try {
                                     var jobj = jObject.getJSONObject("ResellerDetails")
 

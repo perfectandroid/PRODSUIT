@@ -1,95 +1,26 @@
 {
   "project_info": {
-    "project_number": "558763594032",
-    "firebase_url": "https://prodsuite-3aff0-default-rtdb.firebaseio.com",
-    "project_id": "prodsuite-3aff0",
-    "storage_bucket": "prodsuite-3aff0.appspot.com"
+    "project_number": "637320205644",
+    "project_id": "persuitelaunching",
+    "storage_bucket": "persuitelaunching.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:558763594032:android:df4be99088e838874cb8f5",
+        "mobilesdk_app_id": "1:637320205644:android:3b55d0ec3aabd032f1abe9",
         "android_client_info": {
-          "package_name": "com.perfect.prodsuit"
+          "package_name": "com.persuite.launching"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "558763594032-p4uerdlblqrcie3u8cfgq9dgda1ftcll.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCcwc6LaOgMt1daHtujF1_tU-GlBjKlky0"
+          "current_key": "AIzaSyCuGzTU4AcnEIs6Px6TptAwzXsfbi0QWzg"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "558763594032-p4uerdlblqrcie3u8cfgq9dgda1ftcll.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:558763594032:android:d61d4c72bc9c144d4cb8f5",
-        "android_client_info": {
-          "package_name": "com.perfect.prodsuite_customer"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "558763594032-p4uerdlblqrcie3u8cfgq9dgda1ftcll.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCcwc6LaOgMt1daHtujF1_tU-GlBjKlky0"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "558763594032-p4uerdlblqrcie3u8cfgq9dgda1ftcll.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:558763594032:android:84fadd98b2552b7e4cb8f5",
-        "android_client_info": {
-          "package_name": "com.perfect.prodsuite_employee"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "558763594032-p4uerdlblqrcie3u8cfgq9dgda1ftcll.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCcwc6LaOgMt1daHtujF1_tU-GlBjKlky0"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "558763594032-p4uerdlblqrcie3u8cfgq9dgda1ftcll.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
