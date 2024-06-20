@@ -30,6 +30,7 @@ object DashBoardCountRepository {
         getDashBoardCount(context)
         return dashboardSetterGetter
     }
+
     private fun getDashBoardCount(context: Context) {
         try {
             dashboardSetterGetter.value = DashBoardCountModel("")

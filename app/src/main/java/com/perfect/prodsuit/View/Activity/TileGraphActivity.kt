@@ -3530,7 +3530,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        Log.e(TAG, "msg stock==   " + msg)
+                        Log.e(TAG, "msg stock== 2  " + msg)
                         try {
                             if (msg!!.length > 0) {
 
@@ -3824,7 +3824,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        Log.e(TAG, "msg stock==   " + msg)
+                        Log.e(TAG, "msg stock==  3 " + msg)
                         try {
                             if (msg!!.length > 0) {
 
@@ -4115,7 +4115,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        Log.e(TAG, "msg stock==   " + msg)
+                        Log.e(TAG, "msg stock== 4  " + msg)
                         try {
                             if (msg!!.length > 0) {
 
@@ -4155,9 +4155,21 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                                         }
                                     }
                                     else if (jObject.getString("StatusCode") == "105"){
-                                        Config.logoutTokenMismatch(context,jObject)
+
+                                        try {
+                                            Log.e(TAG, "inside try------"+jObject)
+                                            Config.logoutTokenMismatch(context,jObject)
+                                        }
+                                        catch (e: Exception)
+                                        {
+                                            Log.e(TAG, "Catch 105------"+e)
+                                        }
+
+//                                        Log.e(TAG, "inside status code 105------"+jObject)
+//                                        Config.logoutTokenMismatch(context,jObject)
                                     }
                                     else {
+                                        Log.e(TAG, "inside ex msg")
                                         ll_labelAll!!.visibility=View.GONE
                                         txt_chartlabel!!.visibility=View.GONE
                                         txt_chartremark!!.visibility=View.GONE
@@ -4233,7 +4245,7 @@ class TileGraphActivity : AppCompatActivity() , View.OnClickListener,
                     this,
                     Observer { serviceSetterGetter ->
                         val msg = serviceSetterGetter.message
-                        Log.e(TAG, "msg stock==   " + msg)
+                        Log.e(TAG, "msg stock== 1   " + msg)
                         try {
                             if (msg!!.length > 0) {
 
