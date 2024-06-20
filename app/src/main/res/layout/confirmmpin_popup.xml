@@ -61,13 +61,12 @@
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:textSize="15dp"
-                android:textColor="@color/white"
+                android:background="@drawable/btn_bggrey"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/btn_bgcolour"
                 android:padding="2dp"
                 android:layout_weight="1"
                 android:textAllCaps="false"
-                android:text="Yes" />
+                android:text="No" />
             <Button
                 android:id="@+id/btn_Yes"
                 android:layout_width="match_parent"
@@ -76,11 +75,12 @@
                 android:layout_margin="5dp"
                 android:textSize="15dp"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/btn_bggrey"
+                android:textColor="@color/white"
+                android:background="@drawable/btn_bgcolour"
                 android:padding="2dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:textAllCaps="false"
-                android:text="No" />
+                android:text="Yes" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

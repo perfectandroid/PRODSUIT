@@ -65,8 +65,8 @@
                 android:textSize="15dp"
                 android:padding="2dp"
                 android:layout_weight="1"
-                android:textColor="@color/white"
                 android:textAllCaps="false"
+                android:textColor="@color/white"
                 android:fontFamily="@font/myfont"
                 android:background="@drawable/btn_bgcolour"
                 android:text="Yes"/>
@@ -77,7 +77,6 @@
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:textSize="15dp"
-
                     android:fontFamily="@font/myfont"
                     android:background="@drawable/btn_resetbg"
                     android:padding="2dp"
