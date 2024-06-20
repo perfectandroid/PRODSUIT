@@ -1,7 +1,11 @@
 package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
-import android.app.*
+import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.Dialog
+import android.app.ProgressDialog
+import android.app.TimePickerDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -16,8 +20,15 @@ import android.provider.CalendarContract
 import android.text.method.ScrollingMovementMethod
 import android.util.Base64
 import android.util.Log
-import android.view.*
-import android.widget.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.Window
+import android.webkit.WebView
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
@@ -40,7 +51,9 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.TimeZone
+
 
 class AboutUsActivity : AppCompatActivity(), View.OnClickListener,ItemClickListener{
     var TAG = "AboutUsActivity"
@@ -95,6 +108,7 @@ class AboutUsActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         val tvAboutus = findViewById<TextView>(R.id.tvAboutus)
         val tvVersionid = findViewById<TextView>(R.id.tvVersionid)
         val imback = findViewById<ImageView>(R.id.imback)
+        val webView = findViewById<WebView>(R.id.webview)
          img_technology = findViewById<ImageView>(R.id.img_technology)
         imgAttendance= findViewById<ImageView>(R.id.imgAttendance)
         imback!!.setOnClickListener(this)
@@ -103,6 +117,13 @@ class AboutUsActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         val ABOUTUSSP = applicationContext.getSharedPreferences(Config.SHARED_PREF31, 0)
         tvAboutus.text =  ABOUTUSSP.getString("ABOUTUS", "")
         tvAboutus.setMovementMethod(ScrollingMovementMethod())
+        //val view = WebView(this)
+
+        var text: String
+        text = "<html><body><p align=\"justify\">"
+        text += ""+ ABOUTUSSP.getString("ABOUTUS", "")
+        text += "</p></body></html>"
+        webView.loadData( text, "text/html", "utf-8")
     }
 
     private fun setTechnologyPartner() {
