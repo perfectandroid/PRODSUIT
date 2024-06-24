@@ -33,7 +33,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:textStyle="bold"
-                    android:text="ERP SOLUTIONS FOR MANUFACTURING INDUSTRY"
+                    android:text="ERP SOLUTIONS FOR ALL INDUSTRIES"
                     app:fontFamily="@font/myfont"
                     android:textColor="@color/p_green"/>
                 <TextView

@@ -903,7 +903,7 @@
         </activity> <!-- commonapp -->
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.persuite.launching.fileprovider"
+            android:authorities="com.persuite.persuite_erp.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

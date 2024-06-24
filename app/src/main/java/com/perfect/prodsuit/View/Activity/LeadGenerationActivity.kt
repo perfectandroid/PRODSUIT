@@ -8912,7 +8912,19 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 
 //        ProductValidations(v)
 
-        if (array_product_lead.length() == 0) {
+        if(!Customer_Mobile.equals("") && Customer_Mobile!!.length < 10){
+
+            Config.snackBars(context, v, "Please enter valid contact number")
+        }
+        else if(!Customer_Mobile2.equals("") && Customer_Mobile2!!.length < 10){
+
+            Config.snackBars(context, v, "Please enter valid phone number")
+        }
+        else if(!strWhatsAppNo.equals("") && strWhatsAppNo!!.length < 10){
+
+            Config.snackBars(context, v, "Please enter Valid whats app number")
+        }
+        else if (array_product_lead.length() == 0) {
 
 
 

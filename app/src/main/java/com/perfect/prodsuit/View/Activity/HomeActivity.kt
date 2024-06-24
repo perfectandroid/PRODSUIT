@@ -2329,7 +2329,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             Log.e("TAG","1999      Alarm Set  "+descriptn+"  :   "+requestCode)
 
             val builder = AlertDialog.Builder(this)
-            builder.setMessage("The reminder has been successfully added to your device's default calendar application.")
+            builder.setMessage("The reminder has been successfully added to your device.")
                 .setCancelable(false)
                 .setPositiveButton(
                     "OK"
@@ -2659,7 +2659,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         name_employee!!.text = UserNameSP.getString("UserName", "")
         Log.e(TAG,"weewec   "+UserNameSP.getString("UserName", ""))
       //  tv_DateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
-        tv_navDateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
+        tv_navDateTime!!.text = "Last Login : "+LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
 
 //        var addAttendan = 0
 //        when (Config.ConnectivityUtils.isConnected(this)) {

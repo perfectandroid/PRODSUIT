@@ -19,5 +19,11 @@
 <!--    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBCKTWQEWxgIohfofcWRSvJpsN8Oycl7vA</string>-->
 
 <!--    Common app-->
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDBThJ2_AHSs77-xhul-JzEoKdQlEOsK20</string>
+<!--    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDBThJ2_AHSs77-xhul-JzEoKdQlEOsK20</string>-->
+<!--    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDlzXPE_3oDDW0fHGhKN_7x8YuuzqeDs6w</string>-->
+<!--    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyD1-rxa1RrOSVYsaHjLNFEhmUi3oM9nUNM</string>-->
+<!--    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBzPd3DhMXvSdKyGsWbuBeZWW1KBa9JMDI</string>-->
+<!--    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDlzXPE_3oDDW0fHGhKN_7x8YuuzqeDs6w</string>-->
+<!--    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBzPd3DhMXvSdKyGsWbuBeZWW1KBa9JMDI</string>-->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCbx4KF9w_zuY5n-Q4qZdMIxT0J6Cj_HXA</string>
 </resources>

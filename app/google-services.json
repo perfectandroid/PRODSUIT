@@ -1,21 +1,59 @@
 {
   "project_info": {
-    "project_number": "637320205644",
-    "project_id": "persuitelaunching",
-    "storage_bucket": "persuitelaunching.appspot.com"
+    "project_number": "450051461682",
+    "project_id": "persuitecrm",
+    "storage_bucket": "persuitecrm.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:637320205644:android:3b55d0ec3aabd032f1abe9",
+        "mobilesdk_app_id": "1:450051461682:android:04e17b47f7ee15237aa22b",
         "android_client_info": {
-          "package_name": "com.persuite.launching"
+          "package_name": "com.perfect.crm_prod"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCuGzTU4AcnEIs6Px6TptAwzXsfbi0QWzg"
+          "current_key": "AIzaSyDSLcf798WOSzydW19VRnBrpQwW-qWa-dE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:450051461682:android:29628378abff17bf7aa22b",
+        "android_client_info": {
+          "package_name": "com.perfect.persuite_crm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSLcf798WOSzydW19VRnBrpQwW-qWa-dE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:450051461682:android:8d572d5ac7eb16097aa22b",
+        "android_client_info": {
+          "package_name": "com.persuite.persuite_erp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSLcf798WOSzydW19VRnBrpQwW-qWa-dE"
         }
       ],
       "services": {

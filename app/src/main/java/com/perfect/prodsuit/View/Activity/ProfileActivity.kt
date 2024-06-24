@@ -197,7 +197,7 @@ class ProfileActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
                                 Log.e("ss","rrrrrrrr     "+name)
                                 Log.e("ss","rrrrrrrr     "+LoginMode)
 
-                                tv_DateTime!!.setText(dateTime)
+                                tv_DateTime!!.setText("Last Login : "+dateTime)
                                 if(name!=null||name!="")
                                 {
                                     tv_name1!!.visibility=View.VISIBLE

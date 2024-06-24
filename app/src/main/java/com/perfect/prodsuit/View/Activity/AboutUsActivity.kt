@@ -113,7 +113,7 @@ class AboutUsActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
         imgAttendance= findViewById<ImageView>(R.id.imgAttendance)
         imback!!.setOnClickListener(this)
 
-        tvVersionid.text="Version : "+ BuildConfig.VERSION_NAME
+        tvVersionid.text="App Version : "+ BuildConfig.VERSION_NAME
         val ABOUTUSSP = applicationContext.getSharedPreferences(Config.SHARED_PREF31, 0)
         tvAboutus.text =  ABOUTUSSP.getString("ABOUTUS", "")
         tvAboutus.setMovementMethod(ScrollingMovementMethod())

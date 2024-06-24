@@ -415,12 +415,12 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
             R.id.tie_FromDate -> {
                 Config.disableClick(v)
-                openBottomSheet(tie_FromDate, tie_ToDate)
+                openBottomSheet(tie_FromDate, tie_ToDate, tie_FromDate!!.text.toString(),tie_ToDate!!.text.toString())
             }
 
             R.id.tie_ToDate -> {
                 Config.disableClick(v)
-                openBottomSheet(tie_FromDate, tie_ToDate)
+                openBottomSheet(tie_FromDate, tie_ToDate, tie_FromDate!!.text.toString(),tie_ToDate!!.text.toString() )
             }
 
             R.id.tie_CollectedBy -> {
@@ -1350,7 +1350,7 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
     }
 
 
-    private fun openBottomSheet(dateField1: TextInputEditText?, dateField2: TextInputEditText?) {
+    private fun openBottomSheet(dateField1: TextInputEditText?, dateField2: TextInputEditText?,first :String,sec :String) {
         // BottomSheet
         val sdf = SimpleDateFormat("dd-MM-yyyy")
         val dialog = BottomSheetDialog(this)
@@ -1364,6 +1364,17 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
         val rad_last_3_month = view.findViewById<RadioButton>(R.id.rad_last_3_month)
         val rad_last_6_month = view.findViewById<RadioButton>(R.id.rad_last_6_month)
         val rad_last_12_month = view.findViewById<RadioButton>(R.id.rad_last_12_month)
+
+
+
+        val currentDate = sdf.format(Date())
+
+        edt_fromDate!!.setText(currentDate)
+        edt_toDate!!.setText(currentDate)
+
+        FromDate = edt_fromDate.text.toString()
+        ToDate = edt_toDate.text.toString()
+
         rad_this_month.setOnClickListener(View.OnClickListener {
             FromDate = ""
             ToDate = ""
@@ -1483,15 +1494,30 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
             Log.v("sdfsfdfdddd", "ToDate " + ToDate)
         })
         edt_fromDate.setOnClickListener(View.OnClickListener {
+            rad_this_month!!.isChecked = false
+            rad_last_month!!.isChecked = false
+            rad_last_3_month!!.isChecked = false
+            rad_last_6_month!!.isChecked = false
+            rad_last_12_month!!.isChecked = false
             fromToDate = 0
             datePicker(edt_fromDate)
         })
         edt_toDate.setOnClickListener(View.OnClickListener {
+            rad_this_month!!.isChecked = false
+            rad_last_month!!.isChecked = false
+            rad_last_3_month!!.isChecked = false
+            rad_last_6_month!!.isChecked = false
+            rad_last_12_month!!.isChecked = false
             fromToDate = 1
             datePicker(edt_toDate)
         })
 
         txtCancel.setOnClickListener {
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            val currentDate = sdf.format(Date())
+            tie_FromDate!!.setText(first)
+            tie_ToDate!!.setText(sec)
+
             dialog.dismiss()
         }
         txtSubmit.setOnClickListener {
@@ -1501,6 +1527,18 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 //                println("To date is greater than or equal to From date")
 //            } else {
 //                println("To date is before From date or date format is invalid")
+//            }
+//            if (edt_fromDate.text.toString() == "" && edt_toDate.text.toString() == "") {
+//                val builder = AlertDialog.Builder(
+//                    this@TicketReportActivity,
+//                    R.style.MyDialogTheme
+//                )
+//                builder.setMessage("Please Fill Both Fields")
+//                builder.setPositiveButton("Ok") { dialogInterface, which ->
+//                }
+//                val alertDialog: AlertDialog = builder.create()
+//                alertDialog.setCancelable(false)
+//                alertDialog.show()
 //            }
 
             if (edt_fromDate.text.toString() == "" && edt_toDate.text.toString() != "") {
@@ -1527,19 +1565,29 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
                 alertDialog.show()
             } else {
 
+
+
+
+
+                Log.e(TAG,"else  444")
+                Log.e(TAG,"else  4445111100    "+FromDate!!+"   :   "+ToDate!!)
                 var isValid3 = true
-                if (!FromDate.equals("")){
-                    isValid3 = Config.compareDate(FromDate!!,ToDate!!)
-                    Log.e(TAG,"456546431    "+isValid3)
-                }
+                isValid3 = Config.compareDate(FromDate!!,ToDate!!)
+
+//                if (!FromDate.equals("")){
+//                    Log.e(TAG,"else  4445111111")
+//                    isValid3 = Config.compareDate(FromDate!!,ToDate!!)
+//                    Log.e(TAG,"456546431    "+isValid3)
+//                }
 
                 if (isValid3){
+                    Log.e(TAG,"else  44457")
                     dialog.dismiss()
                     dateField1!!.setText(FromDate)
                     dateField2!!.setText(ToDate)
                 }else{
                  //   Config.snackBars(context,view,"To date should be greaterthan or equal to From date")
-
+                    Log.e(TAG,"else  4445788")
                     val builder = AlertDialog.Builder(
                         this@TicketReportActivity,
                         R.style.MyDialogTheme
@@ -1556,6 +1604,8 @@ class TicketReportActivity : AppCompatActivity(), View.OnClickListener, ItemClic
 
             }
 
+//            tie_FromDate!!.setText(FromDate)
+//            tie_ToDate!!.setText(ToDate)
 
 
 //                //   date_Picker1!!.minDate = Calendar.getInstance().timeInMillis
