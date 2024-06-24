@@ -2994,6 +2994,9 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
         else if (Customer_Name.equals("")){
             Config.snackBars(context, v, "Enter Customer Name")
         }
+        else if (!Customer_Mobile.equals("") && Customer_Mobile!!.length < 10){
+            Config.snackBars(context, v, "Enter Valid Contact Number")
+        }
         else{
             Log.e(TAG,"17555   ")
             MoreValidations(v)

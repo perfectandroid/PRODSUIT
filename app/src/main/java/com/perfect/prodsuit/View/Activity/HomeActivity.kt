@@ -75,6 +75,9 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.*
 
 
@@ -2108,8 +2111,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             val strmin = split[1]
 
 
-            var dateShow = etdate!!.text.toString()
-            var timeShow = ettime!!.text.toString()
+//            var dateShow = etdate!!.text.toString()
+//            var timeShow = ettime!!.text.toString()
 
             hr = Integer.parseInt(strhr)
             min = Integer.parseInt(strmin)
@@ -2121,10 +2124,36 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 chipNavigationBar!!.setItemSelected(R.id.home, true)
                 alertDialog.dismiss() }
             btnsubmit.setOnClickListener {
+                var dateShow = etdate!!.text.toString()
+                var timeShow = ettime!!.text.toString()
                 Config.Utils.hideSoftKeyBoard(this, it)
-                addEvent(yr, month, day, hr, min, etdis!!.text.toString(), " Reminder",dateShow,timeShow)
-                alertDialog.dismiss()
-                chipNavigationBar!!.setItemSelected(R.id.home, true)
+                if (isPreviousTime(dateShow, hr, min)) {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setMessage("Please Choose Time Greater Than Current Time.")
+                        .setCancelable(false)
+                        .setPositiveButton(
+                            "OK"
+                        ) { dialog, id ->
+                            dialog.dismiss()
+                        }
+                    val alert = builder.create()
+                    alert.show()
+                } else {
+                    Log.v("sdasdsdsdsd333", "Correct Time")
+                    addEvent(
+                        yr,
+                        month,
+                        day,
+                        hr,
+                        min,
+                        etdis!!.text.toString(),
+                        " Reminder",
+                        dateShow,
+                        timeShow
+                    )
+                    alertDialog.dismiss()
+                    chipNavigationBar!!.setItemSelected(R.id.home, true)
+                }
             }
             alertDialog.setCancelable(false)
             alertDialog.show()
@@ -2135,7 +2164,57 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
     }
 
+    fun isPreviousTime(dateString: String, selectedHour: Int, selectedMinute: Int): Boolean {
+        if (isToday(dateString)) {
+            if (isCurrentTimeBefore(selectedHour, selectedMinute)) {
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return false;
+        }
+    }
+
+    fun isCurrentTimeBefore(selectedHour: Int, selectedMinute: Int): Boolean {
+        val calendar = Calendar.getInstance()
+        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val currentMinute = calendar.get(Calendar.MINUTE)
+
+        // Compare selected time with current time
+        if (selectedHour > currentHour) {
+            return true
+        } else if (selectedHour == currentHour && selectedMinute > currentMinute) {
+            return true
+        }
+        return false
+    }
+
+    fun isToday(dateString: String): Boolean {
+        val formatter = DateTimeFormatter.ofPattern("d-M-yyyy")
+        return try {
+            val selectedDate = LocalDate.parse(dateString, formatter)
+            val today = LocalDate.now()
+            selectedDate == today
+        } catch (e: DateTimeParseException) {
+            // Handle the error if the date string is not in the expected format
+            e.printStackTrace()
+            Log.v("fsfsdfdddd", "e " + e.printStackTrace())
+            false
+        }
+    }
+
     fun addEvent(iyr: Int, imnth: Int, iday: Int, ihour: Int, imin: Int, descriptn: String, Title: String,dateShow: String ,timeShow: String ) {
+
+        Log.v("fsdfdsfdsdddddd","iyr "+iyr)
+        Log.v("fsdfdsfdsdddddd","imnth "+imnth)
+        Log.v("fsdfdsfdsdddddd","iday "+iday)
+        Log.v("fsdfdsfdsdddddd","ihour "+ihour)
+        Log.v("fsdfdsfdsdddddd","imin "+imin)
+        Log.v("fsdfdsfdsdddddd","descriptn "+descriptn)
+        Log.v("fsdfdsfdsdddddd","Title "+Title)
+        Log.v("fsdfdsfdsdddddd","dateShow "+dateShow)
+        Log.v("fsdfdsfdsdddddd","timeShow "+timeShow)
 
 
 //        if (ActivityCompat.checkSelfPermission(
@@ -2250,7 +2329,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             Log.e("TAG","1999      Alarm Set  "+descriptn+"  :   "+requestCode)
 
             val builder = AlertDialog.Builder(this)
-            builder.setMessage("Reminder set successfully.")
+            builder.setMessage("The reminder has been successfully added to your device.")
                 .setCancelable(false)
                 .setPositiveButton(
                     "OK"
@@ -2580,7 +2659,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         name_employee!!.text = UserNameSP.getString("UserName", "")
         Log.e(TAG,"weewec   "+UserNameSP.getString("UserName", ""))
       //  tv_DateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
-        tv_navDateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
+        tv_navDateTime!!.text = "Last Login : "+LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
 
 //        var addAttendan = 0
 //        when (Config.ConnectivityUtils.isConnected(this)) {

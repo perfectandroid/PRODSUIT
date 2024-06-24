@@ -16,7 +16,7 @@
 
     <item
         android:id="@+id/reminder"
-        android:icon="@drawable/clock_reminder"
+        android:icon="@drawable/reminder_home2"
         android:title="Reminder"
         app:cnb_backgroundColor="@color/white"
         app:iconTint="@color/white"

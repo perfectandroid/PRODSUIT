@@ -29,20 +29,21 @@ android {
 //            keyAlias 'Persuitecustomer'
 //            keyPassword 'Per@T$$#&^%suite*&^%'
 
-//            storeFile file('D:\\june 2024\\persuite erp\\persuite_erp.jks')
-//            storePassword 'persuite_erp@2024'
-//            keyAlias 'Persuite ERP'
-//            keyPassword 'persuite_erp@2024'
 
 //            storeFile file('D:\\june 2024\\Secondary launch persuite 19.06.2024\\persuite_erp_launch.jks')
 //            storePassword 'Persuite#erp%launch'
 //            keyAlias 'Persuite ERP Launch'
 //            keyPassword 'Persuite#erp%launch'
 
-            storeFile file('D:\\May 2024\\persuite_launch\\persuitelanch.jks')
-            storePassword 'Persuite#Launch@100524'
-            keyAlias 'PersuiteLaunch'
-            keyPassword 'Persuite#Launch@100524'
+            storeFile file('D:\\june 2024\\persuite erp\\persuite_erp.jks')
+            storePassword 'persuite_erp@2024'
+            keyAlias 'Persuite ERP'
+            keyPassword 'persuite_erp@2024'
+
+//            storeFile file('D:\\May 2024\\persuite_launch\\persuitelanch.jks')
+//            storePassword 'Persuite#Launch@100524'
+//            keyAlias 'PersuiteLaunch'
+//            keyPassword 'Persuite#Launch@100524'
 
 //            storeFile file('D:\\Build\\Details\\scalies\\persuitescaleious.jks')
 //            storePassword 'scaleious@23sdeeq2'
@@ -50,7 +51,7 @@ android {
 //            keyPassword 'scaleious@23sdeeq2'
 
 
-//            storeFile file('D:\\Build\\release\\persuite_employee_key.jks')
+//            storeFile file('D:\\persuite apk 20.06.2024\\persuite_employee_key.jks')
 //            storePassword 'PersuiteEmployee@2023'
 //            keyAlias 'key0'
 //            keyPassword 'PersuiteEmployee@2023'
@@ -81,15 +82,17 @@ android {
 //        applicationId "com.persuite.scalieous"  // scalieous
 //        applicationId "com.perfect.prodsuite_customer"  // common
 //        applicationId "com.persuite.persuite_erp"  // latest_launch
-        applicationId "com.persuite.launching"
+//        applicationId "com.persuite.launching"
 //        applicationId "com.persuite.erp_launching"
 //        applicationId "com.perfect.persuite_crm"
+        applicationId "com.persuite.persuite_erp"
+
 
 
         minSdkVersion 26
         targetSdkVersion 33
         versionCode 13
-        versionName "2.0.5"
+        versionName "2.0.6"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

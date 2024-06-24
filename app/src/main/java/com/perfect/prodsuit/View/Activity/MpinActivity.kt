@@ -1592,6 +1592,11 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                 ID_TokenUserEditer.putString("ID_TokenUser", jobj.getString("ID_TokenUser"))
                                 ID_TokenUserEditer.commit()
 
+                                val EditMRPLeadSP = applicationContext.getSharedPreferences(Config.SHARED_PREF78, 0)
+                                val EditMRPLeadEditer = EditMRPLeadSP.edit()
+                                EditMRPLeadEditer.putString("EditMRPLead", jobj.getString("EditMRPLead"))
+                                EditMRPLeadEditer.commit()
+
                                 var ID_Company = db!!.getDefaultCompanyID()
 
                                 var FK_Employee = jobj.getString("FK_Employee")

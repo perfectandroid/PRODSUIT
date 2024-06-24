@@ -81,7 +81,7 @@
                         android:gravity="left"
                         android:fontFamily="@font/myfont"
                         android:justificationMode="inter_word"
-                        android:text="Version : "
+                        android:text="Persuite Version : "
                         android:textColor="@color/white"
                         android:textSize="20dp" />
 
@@ -166,7 +166,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:fontFamily="@font/myfont"
-                        android:text="Technology Partner"
+                        android:text="Powered By"
                         android:textColor="@color/black"
                         android:textSize="18dp"
                         android:textStyle="bold" />
