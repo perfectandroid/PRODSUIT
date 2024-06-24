@@ -225,6 +225,8 @@ object Config {
     fun getSSLSocketFactory(context: Context): SSLSocketFactory {
         val cf = CertificateFactory.getInstance("X.509")
         val CERT_NAMESP = context.getSharedPreferences(SHARED_PREF8, 0)
+        Log.e(TAG,"CERT  2345  "+CERT_NAMESP.getString("CERT_NAME", null))
+        Log.e(TAG,"CERT  2345  "+CERT_NAMESP.getString("CERT_NAME", null))
         val caInput = context!!.assets.open(CERT_NAMESP.getString("CERT_NAME", null)!!)
         val ca = cf.generateCertificate(caInput)
         caInput.close()
@@ -983,10 +985,24 @@ object Config {
 
             }
             else{
-                Log.e(TAG,"938882  logoutMode  :  "+logoutMode)
-                db!!.deleteCompanyDefaultIP()
-                var ID_Company = db!!.getLastInsertCompanyID()
-                db!!.updateStatusDefaultIp(ID_Company,true,true,"0")
+
+
+                try {
+                    Log.e(TAG,"938882  logoutMode  :  "+logoutMode)
+                    db!!.deleteCompanyDefaultIP()
+                    var ID_Company = db!!.getLastInsertCompanyID()
+                    db!!.updateStatusDefaultIp(ID_Company,true,true,"0")
+                    Log.e(TAG,"938883  ID_Company  :  "+ID_Company)
+
+                    removeLoginData(context)
+                }catch (e : Exception){
+                    Log.e(TAG,"pK   938884   "+e.toString())
+                }finally {
+
+                    removeLoginData(context)
+
+                }
+
 
             }
 
@@ -1002,6 +1018,30 @@ object Config {
 
 
 
+    }
+
+    private fun removeLoginData(context: Context) {
+        var companyrray = JSONArray()
+        companyrray = db!!.getDefaultIP()
+        Log.e(TAG,"pK   938885   "+companyrray)
+        if (companyrray.length() == 0){
+            val loginSP = context.getSharedPreferences(SHARED_PREF, 0)
+            val loginEditer = loginSP.edit()
+            loginEditer.putString("loginsession", "No")
+            loginEditer.commit()
+
+            val commonAppSP = context.getSharedPreferences(SHARED_PREF18, 0)
+            val commonAppEditer = commonAppSP.edit()
+            commonAppEditer.putString("commonApp", "")
+            commonAppEditer.commit()
+
+            val mpinStatusSP = context.getSharedPreferences(SHARED_PREF23, 0)
+            val mpinStatusEditer = mpinStatusSP.edit()
+            mpinStatusEditer.putString("mpinStatus", "")
+            mpinStatusEditer.commit()
+
+            db!!.deleteIPReseller()
+        }
     }
 
     fun deleteFcmToken(context : Context) {

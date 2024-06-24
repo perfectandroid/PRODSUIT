@@ -93,13 +93,18 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
 
     // DEV LICENSE API 14-03-2024
-    val CERT_NAME = "development.pem"
-    val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
-    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI  "
-    val BANK_KEY  = "-500"
+//    val CERT_NAME = "development.pem"
+//    val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
+//    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI  "
+//    val BANK_KEY  = "-500"
+//    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
+
+
+    val CERT_NAME = "persuiteerprelease.pem"
+    val BASE_URL  = "https://crm.persuiteerp.com/CRMPerSuiteAPI/api/"
+    val IMAGE_URL = "https://crm.persuiteerp.com/CRMPerSuiteAPI"
+    val BANK_KEY  = ""
     val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
-
-
 
     // Common APP Sub Domain 12-03-2024
  /*   val CERT_NAME = "development.pem"
@@ -513,6 +518,36 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
                 Log.e(TAG,"37552  "+IMAGE_URLSP.getString("IMAGE_URL", null))
                 Log.e(TAG,"37553  "+CERT_NAMESP.getString("CERT_NAME", null))
                 Log.e(TAG,"37554  "+BANK_KEYESP.getString("BANK_KEY", null))
+            }
+            else{
+                val BASE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF7, 0)
+                val BASE_URLEditer = BASE_URLSP.edit()
+                BASE_URLEditer.putString("BASE_URL", BASE_URL)
+                BASE_URLEditer.commit()
+
+                Log.e(TAG,"base_URL"+BASE_URL)
+
+                val IMAGE_URLSP = applicationContext.getSharedPreferences(Config.SHARED_PREF29, 0)
+                val IMAGE_URLEditer = IMAGE_URLSP.edit()
+                IMAGE_URLEditer.putString("IMAGE_URL", IMAGE_URL)
+                IMAGE_URLEditer.commit()
+
+
+                val CERT_NAMESP = applicationContext.getSharedPreferences(Config.SHARED_PREF8, 0)
+                val CERT_NAMEEditer = CERT_NAMESP.edit()
+                CERT_NAMEEditer.putString("CERT_NAME", CERT_NAME)
+                CERT_NAMEEditer.commit()
+
+                val BANK_KEYESP = applicationContext.getSharedPreferences(Config.SHARED_PREF9, 0)
+                val BANK_KEYEditer = BANK_KEYESP.edit()
+                BANK_KEYEditer.putString("BANK_KEY", BANK_KEY)
+                BANK_KEYEditer.commit()
+
+
+                val PRIVACY_POLICYSP = applicationContext.getSharedPreferences(Config.SHARED_PREF86, 0)
+                val PRIVACY_POLICYEditer = PRIVACY_POLICYSP.edit()
+                PRIVACY_POLICYEditer.putString("PRIVACY_POLICY_URL", PRIVACY_POLICY_URL)
+                PRIVACY_POLICYEditer.commit()
             }
 
             versionCheck()
