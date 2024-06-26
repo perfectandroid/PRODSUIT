@@ -61,7 +61,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     lateinit var context: Context
     val PERMISSION_ID = 42
     lateinit var mFusedLocationClient: FusedLocationProviderClient
-
+    lateinit var view:View
 
     var til_Date: TextInputLayout? = null
     var til_NextFollowupDate: TextInputLayout? = null
@@ -527,6 +527,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
             }
 
             R.id.imgv_upload1->{
+                view=v
                 try
                 {
                     Config.Utils.hideSoftKeyBoard(this@FollowUpActivity,v)
@@ -541,6 +542,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 }
             }
             R.id.imgv_upload2->{
+                view=v
                 try {
                     Config.Utils.hideSoftKeyBoard(this@FollowUpActivity,v)
                     strImage="2"
@@ -972,6 +974,24 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
         return path
     }
 
+    fun getImageSize(uri: Uri): Number {
+        val inputStream = contentResolver.openInputStream(uri)
+        val fileSize = inputStream?.available()?.toLong()
+
+        Log.e("sdasdasdasdddd","onActivityResult  fileSize   "+fileSize)
+        val imageSizeInMB = fileSize!! / (1000.0 * 1000.0)
+        inputStream?.close()
+        return imageSizeInMB ?: 0.0
+    }
+
+    private fun getImageSizeBitmap(bitmap: Bitmap): Double {
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+        val imageSizeInMB = byteArrayOutputStream.size().toLong() / (1000.0 * 1000.0)
+        Log.e("sdasdasdasdddd","onActivityResult  fileSize   "+imageSizeInMB)
+        return imageSizeInMB
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Log.e("TAG","onActivityResult  256   "+requestCode+ "   "+resultCode+ "  "+data)
@@ -980,6 +1000,12 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                 val contentURI = data!!.data
                 try {
                     var selectedImageUri: Uri = data.getData()!!
+                    val imageSize = getImageSize(selectedImageUri).toDouble()
+                    if(imageSize>2.0)
+                    {
+                        Config.snackBars(context,view,"Please select a file smaller than 2 MB")
+                    }
+                    else {
                     data.getData()
                     if(strImage.equals("1")) {
                         imgv_upload1!!.setImageURI(contentURI)
@@ -992,6 +1018,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                         image2 = getRealPathFromURI(selectedImageUri)
                         if (image2 != null) {
                         }
+                    }
                     }
                 } catch (e: IOException) {
                     e.printStackTrace()
@@ -1028,6 +1055,14 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //                        } else {
 
                         val thumbnail = data!!.getExtras()!!.get("data") as Bitmap
+                        val imageSizeInBytes = getImageSizeBitmap(thumbnail)
+                        if (imageSizeInBytes > 2.0) {
+                            Config.snackBars(
+                                context,
+                                view,
+                                "Please select a file smaller than 2 MB"
+                            )
+                        } else {
                         val bytes = ByteArrayOutputStream()
                         thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
 //                    destination = File(
@@ -1120,6 +1155,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 
                             }
                         }
+                    }
 
                         //   }
                     } catch (e: IOException) {
@@ -1210,6 +1246,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //                    Toast.makeText(this@FollowUpActivity, "Failed!", Toast.LENGTH_SHORT).show()
 //                }
 //            }
+//        }
         }
     }
 
@@ -3025,6 +3062,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
 //                        strCallStatus,strCallDuration,strLatitude,strLongitude,encode1,encode2)
 
                     validateNextAction(v)
+//                    LocationValidation();
                 }
 
             }
@@ -3102,7 +3140,8 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     private fun validateNextAction(v :  View) {
         if (IsEnable.equals("1")){
             if (ID_NextAction.equals("")){
-                bottomWithoutNextAction()
+//              bottomWithoutNextAction()      //commented to avoid next action verification pop up
+                LocationValidation();
             }else{
 
                 if (ID_NextActionType.equals("")){

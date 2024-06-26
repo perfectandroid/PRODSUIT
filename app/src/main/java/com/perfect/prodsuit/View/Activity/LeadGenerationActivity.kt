@@ -8922,7 +8922,23 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
         }
         else if(!strWhatsAppNo.equals("") && strWhatsAppNo!!.length < 10){
 
-            Config.snackBars(context, v, "Please enter Valid whats app number")
+            Config.snackBars(context, v, "Please enter valid whats app number")
+        }
+        else if(!strWhatsAppNo.equals("") && strWhatsAppNo!!.length < 10){
+
+            Config.snackBars(context, v, "Please enter valid whats app number")
+        }
+        else if(!isValidInput(strCompanyContact)){
+
+            Config.snackBars(context, v, "Please enter valid company/contact person name")
+        }
+        else if(!isValidInput(Customer_Address1)){
+
+            Config.snackBars(context, v, "Please enter valid house name in more communication info.")
+        }
+        else if(!isValidInput(Customer_Address2)){
+
+            Config.snackBars(context, v, "Please enter valid place name in more communication info.")
         }
         else if (array_product_lead.length() == 0) {
 
@@ -9219,6 +9235,14 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //            LocationValidation(v)
 //        }
 //    }
+
+    fun isValidInput(input: String?): Boolean {
+        // Define the regex pattern
+        val pattern = "^[a-zA-Z0-9(),./\\\\+\\-]*$".toRegex()
+
+        // Check if the input is not null and matches the pattern
+        return input != null && input.matches(pattern)
+    }
 
     private fun LocationValidation(v: View) {
         Log.e(
