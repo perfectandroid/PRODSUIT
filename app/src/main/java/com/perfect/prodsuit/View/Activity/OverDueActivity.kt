@@ -55,6 +55,9 @@ import org.json.JSONObject
 import java.lang.reflect.Type
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import java.util.*
 
 class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListener,
@@ -456,8 +459,8 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
             val strmin = split[1]
 
 
-            var dateShow = etdate!!.text.toString()
-            var timeShow = ettime!!.text.toString()
+//            var dateShow = etdate!!.text.toString()
+//            var timeShow = ettime!!.text.toString()
 
             hr = Integer.parseInt(strhr)
             min = Integer.parseInt(strmin)
@@ -466,13 +469,39 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
             etdate!!.setOnClickListener(View.OnClickListener { dateSelectorreminder() })
             btncancel.setOnClickListener {
                 Config.Utils.hideSoftKeyBoard(this, it)
-           //     chipNavigationBar!!.setItemSelected(R.id.home, true)
+//                chipNavigationBar!!.setItemSelected(R.id.home, true)
                 alertDialog.dismiss() }
             btnsubmit.setOnClickListener {
+                var dateShow = etdate!!.text.toString()
+                var timeShow = ettime!!.text.toString()
                 Config.Utils.hideSoftKeyBoard(this, it)
-                addEvent(yr, month, day, hr, min, etdis!!.text.toString(), " Reminder",dateShow,timeShow)
-                alertDialog.dismiss()
-           //     chipNavigationBar!!.setItemSelected(R.id.home, true)
+                if (isPreviousTime(dateShow, hr, min)) {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setMessage("Please Choose Time Greater Than Current Time.")
+                        .setCancelable(false)
+                        .setPositiveButton(
+                            "OK"
+                        ) { dialog, id ->
+                            dialog.dismiss()
+                        }
+                    val alert = builder.create()
+                    alert.show()
+                } else {
+                    Log.v("sdasdsdsdsd333", "Correct Time")
+                    addEvent(
+                        yr,
+                        month,
+                        day,
+                        hr,
+                        min,
+                        etdis!!.text.toString(),
+                        " Reminder",
+                        dateShow,
+                        timeShow
+                    )
+                    alertDialog.dismiss()
+//                    chipNavigationBar!!.setItemSelected(R.id.home, true)
+                }
             }
             alertDialog.setCancelable(false)
             alertDialog.show()
@@ -481,6 +510,46 @@ class OverDueActivity : AppCompatActivity(), View.OnClickListener,ItemClickListe
             e.printStackTrace()
         }
 
+    }
+
+    fun isPreviousTime(dateString: String, selectedHour: Int, selectedMinute: Int): Boolean {
+        if (isToday(dateString)) {
+            if (isCurrentTimeBefore(selectedHour, selectedMinute)) {
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return false;
+        }
+    }
+
+    fun isCurrentTimeBefore(selectedHour: Int, selectedMinute: Int): Boolean {
+        val calendar = Calendar.getInstance()
+        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+        val currentMinute = calendar.get(Calendar.MINUTE)
+
+        // Compare selected time with current time
+        if (selectedHour > currentHour) {
+            return true
+        } else if (selectedHour == currentHour && selectedMinute > currentMinute) {
+            return true
+        }
+        return false
+    }
+
+    fun isToday(dateString: String): Boolean {
+        val formatter = DateTimeFormatter.ofPattern("d-M-yyyy")
+        return try {
+            val selectedDate = LocalDate.parse(dateString, formatter)
+            val today = LocalDate.now()
+            selectedDate == today
+        } catch (e: DateTimeParseException) {
+            // Handle the error if the date string is not in the expected format
+            e.printStackTrace()
+            Log.v("fsfsdfdddd", "e " + e.printStackTrace())
+            false
+        }
     }
 
     private fun openBottomSheetTime() {
