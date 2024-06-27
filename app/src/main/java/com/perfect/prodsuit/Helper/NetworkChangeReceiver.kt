@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.perfect.prodsuit.R
@@ -26,13 +27,18 @@ class NetworkChangeReceiver : BroadcastReceiver(){
         val networkInfo = connectivityManager.activeNetworkInfo
         if (networkInfo == null || !networkInfo.isConnected) {
 
-            Log.e("rrrrr","33wwe     1")
+
+            Log.v("sdfsdfsdf","onReceive")
 //            Toast.makeText(context,"Offline",Toast.LENGTH_LONG).show()
             ConnectionfailedBottomSheet(context)
         } else {
 
 
             if (dialog != null && dialog!!.isShowing()) {
+                Log.v("sdfsdfsdf","dismiss")
+                val localIntent = Intent("com.example.UPDATE_UI")
+                localIntent.putExtra("data", "Dummy Data")
+                LocalBroadcastManager.getInstance(context).sendBroadcast(localIntent)
                 dialog!!.dismiss()
             }
 //            dialog!!.dismiss()
@@ -44,7 +50,7 @@ class NetworkChangeReceiver : BroadcastReceiver(){
 
 
     private fun ConnectionfailedBottomSheet(context: Context) {
-
+        Log.v("sdfsdfsdf","ConnectionfailedBottomSheet")
         try {
             Log.e("ee","checknetworkwwwwww ")
             dialog = BottomSheetDialog(context)

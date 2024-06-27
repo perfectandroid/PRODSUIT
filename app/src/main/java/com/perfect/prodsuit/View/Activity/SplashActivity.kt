@@ -3,10 +3,10 @@ package com.perfect.prodsuit.View.Activity
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ActivityNotFoundException
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.pm.ApplicationInfo
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
@@ -24,9 +24,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.github.mikephil.charting.BuildConfig
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.messaging.Constants.MessageNotificationKeys.IMAGE_URL
 import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DBHelper
@@ -95,7 +97,7 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
     // DEV LICENSE API 14-03-2024
 //    val CERT_NAME = "development.pem"
 //    val BASE_URL  = "https://202.164.150.65:14271/ProdsuiteAPI/api/"
-//    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
+//    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI  "
 //    val BANK_KEY  = "-500"
 //    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
 
@@ -380,8 +382,10 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
     var checkno = 0
     var ID_PKey: String? = ""
     var db : DBHelper? = null
+    var networkFlag:Boolean =true
 
     private lateinit var networkChangeReceiver: NetworkChangeReceiver
+    private lateinit var localBroadcastReceiver: LocalBroadcastReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -550,6 +554,9 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
         networkChangeReceiver = NetworkChangeReceiver()
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+        localBroadcastReceiver = LocalBroadcastReceiver()
+        val localFilter = IntentFilter("com.example.UPDATE_UI")
+        LocalBroadcastManager.getInstance(this).registerReceiver(localBroadcastReceiver, localFilter)
     }
 
 
@@ -1612,5 +1619,23 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
     override fun onResume() {
         super.onResume()
         Config.isDeveloperOptionsEnabled(context)
+    }
+
+    inner class LocalBroadcastReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            Log.v("sdfsdfsdf","onReceive")
+            // Update UI or perform other actions
+            val data = intent.getStringExtra("data")
+            if(networkFlag) {
+                Log.v("sdfsdfsdf","networkFlagin")
+                networkFlag=false
+                if (Config.isDeveloperOptionsEnabled1(context)) {
+                    Config.isDeveloperOptionsEnabled(context)
+                } else {
+                    getStarting()
+                }
+            }
+
+        }
     }
 }
