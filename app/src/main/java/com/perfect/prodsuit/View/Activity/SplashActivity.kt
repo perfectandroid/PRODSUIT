@@ -57,11 +57,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 //    val BANK_KEY  = "-500"
 
 
-//    val CERT_NAME = "development.pem"
-//    val BASE_URL  = "https:///202.164.150.65:14271/ProdsuiteAPI/api/"
-//    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
-//    val BANK_KEY  = "-500"
-//    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
+    val CERT_NAME = "development.pem"
+    val BASE_URL  = "https:///202.164.150.65:14271/ProdsuiteAPI/api/"
+    val IMAGE_URL = "https://202.164.150.65:14271/ProdsuiteAPI"
+    val BANK_KEY  = "-500"
+    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
 
 
 
@@ -356,11 +356,11 @@ class SplashActivity : AppCompatActivity() ,Animation.AnimationListener{
 
 
     //Crm release 12.06.2024
-    val CERT_NAME = "crm-persuiteerp.pem"
-    val BASE_URL  = "https://crm.persuiteerp.com/CRMPerSuiteAPI/api/"
-    val IMAGE_URL = "https://crm.persuiteerp.com/CRMPerSuiteAPI"
-    val BANK_KEY  = ""
-    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
+//    val CERT_NAME = "crm-persuiteerp.pem"
+//    val BASE_URL  = "https://crm.persuiteerp.com/CRMPerSuiteAPI/api/"
+//    val IMAGE_URL = "https://crm.persuiteerp.com/CRMPerSuiteAPI"
+//    val BANK_KEY  = ""
+//    val PRIVACY_POLICY_URL = "https://perfectlimited.com/Privacy-policy/PERSUITE/privacy-policy.html"
 
 
 
