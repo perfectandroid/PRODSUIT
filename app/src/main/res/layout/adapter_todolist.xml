@@ -240,22 +240,22 @@
                         android:layout_marginRight="13dp"
                         android:fontFamily="@font/myfont"
                         android:gravity="center"
-                        android:padding="4dp"
+                        android:padding="2dp"
                         android:src="@drawable/call_svg"
                         app:tint="@color/colorPrimary" />
 
                     <ImageView
                         android:id="@+id/immessage"
                         android:layout_width="30dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="13dp"
                         android:backgroundTint="@color/grey"
                         android:fontFamily="@font/myfont"
                         android:gravity="center"
-                        android:padding="0dp"
-                        android:src="@drawable/ic_svg_messages"
+                        android:padding="3dp"
+                        android:src="@drawable/email_outline_svg"
                         app:tint="@color/colorPrimary" />
 
                     <CheckBox
