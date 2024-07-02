@@ -58,19 +58,6 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/btnYes"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:textSize="15dp"
-                android:padding="2dp"
-                android:layout_weight="2"
-                android:textAllCaps="false"
-                android:fontFamily="@font/myfont"
-                android:background="@drawable/btn_resetbg"
-                android:text="Yes"/>
-            <Button
                 android:id="@+id/btnNo"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -81,9 +68,24 @@
                 android:fontFamily="@font/myfont"
                 android:background="@drawable/btn_bgcolour"
                 android:padding="2dp"
+                android:layout_weight="1.5"
+                android:textAllCaps="false"
+                android:text="No" />
+
+            <Button
+                android:id="@+id/btnYes"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:textSize="15dp"
+                android:padding="2dp"
                 android:layout_weight="1"
                 android:textAllCaps="false"
-                android:text="No, cancel" />
+                android:fontFamily="@font/myfont"
+                android:background="@drawable/btn_resetbg"
+                android:text="Yes"/>
+
         </LinearLayout>
 
 
