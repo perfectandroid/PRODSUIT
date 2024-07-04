@@ -2659,7 +2659,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         name_employee!!.text = UserNameSP.getString("UserName", "")
         Log.e(TAG,"weewec   "+UserNameSP.getString("UserName", ""))
       //  tv_DateTime!!.text = LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
-        tv_navDateTime!!.text = "Last Login : "+LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
+       tv_navDateTime!!.text = "Last Login : "+LOGIN_DATETIMESP.getString("LOGIN_DATETIME", "")
 
 //        var addAttendan = 0
 //        when (Config.ConnectivityUtils.isConnected(this)) {

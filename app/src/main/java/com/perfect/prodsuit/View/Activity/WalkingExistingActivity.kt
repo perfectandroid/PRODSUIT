@@ -660,6 +660,10 @@ class WalkingExistingActivity : AppCompatActivity() , View.OnClickListener, Item
             else if(assignDate.equals("")){
                 Config.snackBars(context,v,"Select Assigned Date")
             }
+            else if (!strPhone.equals("")&& strPhone!!.length < 10) {
+                Config.snackBars(context, v, "Enter Minimum 10 digit Phone Number")
+
+            }
 //            else if(voicedataByte!!.equals("")){
 //                Config.snackBars(context,v,"Select Voice Data")
 //            }
