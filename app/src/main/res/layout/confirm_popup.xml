@@ -66,11 +66,12 @@
                 android:textSize="15dp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/myfont"
-                android:background="@drawable/btn_bgcolour"
                 android:padding="2dp"
                 android:layout_weight="1.5"
                 android:textAllCaps="false"
-                android:text="No" />
+                android:text="No"
+                android:background="@drawable/btn_resetbg"
+                android:backgroundTint="@color/todolist_round"/>
 
             <TextView
                 android:id="@+id/btnYes"
@@ -82,7 +83,7 @@
                 android:textColor="@color/white"
                 android:textSize="15dp"
                 android:padding="2dp"
-                android:backgroundTint="@color/todolist_round"
+                android:backgroundTint="@color/colorPrimary"
                 android:layout_weight="1"
                 android:textAllCaps="false"
                 android:fontFamily="@font/myfont"

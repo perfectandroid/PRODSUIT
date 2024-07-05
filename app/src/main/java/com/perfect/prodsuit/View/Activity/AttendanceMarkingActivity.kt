@@ -159,6 +159,9 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
         tv_user!!.setText(""+UserNameSP.getString("UserName",""))
         tv_userrole!!.setText(""+UserRoleSP.getString("UserRole",""))
 
+        var date =EnteredDateSP.getString("EnteredDate","")
+        Log.e(TAG,"Datecheck : "+date)
+
         tv_date!!.setText(""+EnteredDateSP.getString("EnteredDate",""))
         tv_time!!.setText(""+EnteredTimeSP.getString("EnteredTime",""))
         tv_locaddress!!.setText(""+LocLocationNameSP.getString("LocLocationName",""))
@@ -519,7 +522,7 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
                                     val jObject = JSONObject(msg)
                                     Log.e(TAG, "msg   1224   " + msg)
                                     if (jObject.getString("StatusCode") == "0") {
-
+                                        var jobj = jObject.getJSONObject("UpdateAttanceMarkingDetails")
 
                                         val LocLongitudeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF58, 0)
                                         val LocLongitudeEditer = LocLongitudeSP.edit()
@@ -539,12 +542,14 @@ class AttendanceMarkingActivity : AppCompatActivity(), View.OnClickListener {
 
                                         val EnteredDateSP = applicationContext.getSharedPreferences(Config.SHARED_PREF61, 0)
                                         val EnteredDateEditer = EnteredDateSP.edit()
-                                        EnteredDateEditer.putString("EnteredDate", strDate)
+                                       // EnteredDateEditer.putString("EnteredDate", strDate)
+                                        EnteredDateEditer.putString("EnteredDate",jobj.getString("EnteredDate"))
                                         EnteredDateEditer.commit()
 
                                         val EnteredTimeSP = applicationContext.getSharedPreferences(Config.SHARED_PREF62, 0)
                                         val EnteredTimeEditer = EnteredTimeSP.edit()
-                                        EnteredTimeEditer.putString("EnteredTime", strTime)
+                                        EnteredTimeEditer.putString("EnteredTime",jobj.getString("EnteredTime"))
+                                      //  EnteredTimeEditer.putString("EnteredTime", strTime)
                                         EnteredTimeEditer.commit()
 
                                         val StatusSP = applicationContext.getSharedPreferences(Config.SHARED_PREF63, 0)

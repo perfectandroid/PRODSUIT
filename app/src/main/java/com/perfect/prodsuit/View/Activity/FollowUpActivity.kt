@@ -436,8 +436,10 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
     override fun onClick(v: View) {
         when(v.id){
             R.id.imback->{
-                setResult(2)
-                finish()
+
+              //  setResult(2)
+              //  finish()
+                onBackPressed()
             }
 
             R.id.tie_ActionType->{
@@ -3417,6 +3419,7 @@ class FollowUpActivity : AppCompatActivity() , View.OnClickListener, ItemClickLi
                                 }
 
                             }
+
 
                         }catch (e : Exception){
                             Toast.makeText(applicationContext, ""+e.toString(), Toast.LENGTH_SHORT).show()
