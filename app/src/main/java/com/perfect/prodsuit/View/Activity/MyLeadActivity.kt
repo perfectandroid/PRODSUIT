@@ -14,6 +14,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
@@ -40,6 +41,7 @@ import com.google.gson.reflect.TypeToken
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
+import com.perfect.prodsuit.Helper.PermissionUtils
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Receivers.MyAlarmReceiver
 import com.perfect.prodsuit.View.Adapter.BranchAdapter
@@ -348,10 +350,10 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
                 }
 
                 if (!lstChkArray.isEmpty()){
-                    //setReminder("You have set reminder for following defaulters accounts "+lstChkArray.toString())
-                    Log.e(TAG,"strReminder   3411    "+strReminder)
-
-                    setReminder("","",strReminder)
+//                    setReminder("","",strReminder)
+                    if (PermissionUtils.checkAndRequestPermissions(this)) {
+                        addEvent("", "", strReminder)
+                    }
                 }else{
                     Log.e(TAG,"strReminder   3412    Select")
                     Config.snackBars(context,v,"Select Atlest One Reminder")
@@ -503,6 +505,165 @@ class MyLeadActivity : AppCompatActivity(), View.OnClickListener, ItemClickListe
             e.printStackTrace()
         }
 
+    }
+    private fun addEvent(ActionTypeName1 : String,EnquiryAbout1: String,descriptn: String) {
+        try
+        {
+            val builder = android.app.AlertDialog.Builder(this)
+            val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout = inflater1.inflate(R.layout.reminder_setter_popup, null)
+            val btncancel = layout.findViewById(R.id.btncancel) as Button
+            val btnsubmit = layout.findViewById(R.id.btnsubmit) as Button
+            etdate = layout.findViewById(R.id.etdate) as EditText
+            ettime = layout.findViewById(R.id.ettime) as EditText
+            etdis = layout.findViewById(R.id.etdis) as EditText
+            etdis!!.setText(descriptn)
+            etdate!!.setKeyListener(null)
+            ettime!!.setKeyListener(null)
+            builder.setView(layout)
+            val alertDialog = builder.create()
+            val c = Calendar.getInstance()
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            val sdf1 = SimpleDateFormat("hh:mm a",Locale.getDefault())
+            val sdf2 = SimpleDateFormat("HH:mm")
+            yr = c.get(Calendar.YEAR)
+            month = c.get(Calendar.MONTH)
+            day = c.get(Calendar.DAY_OF_MONTH)
+            etdate!!.setText(sdf.format(c.time))
+            ettime!!.setText(sdf1.format(c.time))
+            val s = sdf2.format(c.time)
+            val split = s.split((":").toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val strhr = split[0]
+            val strmin = split[1]
+
+
+            var dateShow = etdate!!.text.toString()
+            var timeShow = ettime!!.text.toString()
+
+            hr = Integer.parseInt(strhr)
+            min = Integer.parseInt(strmin)
+
+            ettime!!.setOnClickListener(View.OnClickListener { timeSelector() })
+            etdate!!.setOnClickListener(View.OnClickListener { dateSelectorreminder() })
+
+            btncancel.setOnClickListener {
+                Config.Utils.hideSoftKeyBoard(this, it)
+//                chipNavigationBar!!.setItemSelected(R.id.home, true)
+                alertDialog.dismiss() }
+            btnsubmit.setOnClickListener {
+                var dateShow = etdate!!.text.toString()
+                var timeShow = ettime!!.text.toString()
+                Config.Utils.hideSoftKeyBoard(this, it)
+                if (isPreviousTime(dateShow, hr, min)) {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setMessage("Please Choose Time Greater Than Current Time.")
+                        .setCancelable(false)
+                        .setPositiveButton(
+                            "OK"
+                        ) { dialog, id ->
+                            dialog.dismiss()
+                        }
+                    val alert = builder.create()
+                    alert.show()
+                } else {
+                    val title1= "Reminder"
+                    val description = etdis!!.text.toString()
+                    val location = ""
+                    val startTime: Long = getTimeInMillis(yr, month, day, hr, min)
+                    val endTime: Long = getTimeInMillis(yr, month, day, hr, min)
+                    val eventID: Long =
+                        addEventToCalendar(context, title1, description, location, startTime, endTime)
+                    addReminderToEvent(context, eventID, 15)
+//                    addEvent(
+//                        yr,
+//                        month,
+//                        day,
+//                        hr,
+//                        min,
+//                        etdis!!.text.toString(),
+//                        " Reminder",
+//                        dateShow,
+//                        timeShow
+//                    )
+                    alertDialog.dismiss()
+//                    chipNavigationBar!!.setItemSelected(R.id.home, true)
+                }
+            }
+            alertDialog.setCancelable(false)
+            alertDialog.show()
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun addEventToCalendar(context: Context, title: String, description: String, location: String, startTime: Long, endTime: Long): Long {
+        val calendarID = getPrimaryCalendarId(context)
+        Log.v("adfasdasd", "calendarID $calendarID")
+        val values = ContentValues().apply {
+            put(CalendarContract.Events.DTSTART, startTime)
+            put(CalendarContract.Events.DTEND, endTime)
+            put(CalendarContract.Events.TITLE, title)
+            put(CalendarContract.Events.DESCRIPTION, description)
+            put(CalendarContract.Events.EVENT_LOCATION, location)
+            put(CalendarContract.Events.CALENDAR_ID, calendarID)
+            put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().id)
+        }
+
+        val uri = context.contentResolver.insert(CalendarContract.Events.CONTENT_URI, values)
+        val eventID = uri?.lastPathSegment?.toLong() ?: -1
+        Log.v("adfasdasd", "eventID $eventID")
+        return eventID
+    }
+
+    fun getPrimaryCalendarId(context: Context): Long {
+        val uri: Uri = CalendarContract.Calendars.CONTENT_URI
+        val projection = arrayOf(CalendarContract.Calendars._ID)
+        val selection = "${CalendarContract.Calendars.IS_PRIMARY} = 1"
+
+        var cursor: Cursor? = context.contentResolver.query(uri, projection, selection, null, null)
+
+        cursor?.use {
+            if (it.moveToFirst()) {
+                return it.getLong(it.getColumnIndexOrThrow(CalendarContract.Calendars._ID))
+            }
+        }
+
+        // If no primary calendar found, fetch the first available calendar
+        cursor = context.contentResolver.query(uri, projection, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                return it.getLong(it.getColumnIndexOrThrow(CalendarContract.Calendars._ID))
+            }
+        }
+
+        return -1 // No calendar found
+    }
+
+    private fun addReminderToEvent(context: Context, eventID: Long, minutesBefore: Int) {
+        val values = ContentValues().apply {
+            put(CalendarContract.Reminders.MINUTES, minutesBefore)
+            put(CalendarContract.Reminders.EVENT_ID, eventID)
+            put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT)
+        }
+        context.contentResolver.insert(CalendarContract.Reminders.CONTENT_URI, values)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("The reminder has been successfully added to your device.")
+            .setCancelable(false)
+            .setPositiveButton(
+                "OK"
+            ) { dialog, id -> dialog.dismiss()
+            }
+        val alert = builder.create()
+        alert.show()
+    }
+
+    private fun getTimeInMillis(year: Int, month: Int, day: Int, hour: Int, minute: Int): Long {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, day, hour, minute)
+        return calendar.timeInMillis
     }
 
     fun isPreviousTime(dateString: String, selectedHour: Int, selectedMinute: Int): Boolean {

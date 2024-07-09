@@ -2,9 +2,20 @@ package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.*
-import android.content.*
+import android.app.AlarmManager
+import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.Dialog
+import android.app.PendingIntent
+import android.app.ProgressDialog
+import android.app.TimePickerDialog
+import android.content.ContentValues
+import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -24,8 +35,21 @@ import android.provider.Settings
 import android.util.Base64
 import android.util.Log
 import android.util.TypedValue
-import android.view.*
-import android.widget.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -40,7 +64,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
-import com.google.android.gms.location.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputEditText
@@ -55,9 +83,13 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.favourites.DataBaseHelper
 import com.perfect.nbfcmscore.Helper.PicassoTrustAll
-import com.perfect.prodsuit.BuildConfig
-import com.perfect.prodsuit.Helper.*
+import com.perfect.prodsuit.Helper.Common
+import com.perfect.prodsuit.Helper.Config
+import com.perfect.prodsuit.Helper.DBHelper
+import com.perfect.prodsuit.Helper.ItemClickListener
 import com.perfect.prodsuit.Helper.LocationUtils.calculateDistance
+import com.perfect.prodsuit.Helper.NetworkChangeReceiver
+import com.perfect.prodsuit.Helper.PermissionUtils
 import com.perfect.prodsuit.R
 import com.perfect.prodsuit.Receivers.MyAlarmReceiver
 import com.perfect.prodsuit.View.Adapter.BannerAdapter
@@ -65,7 +97,12 @@ import com.perfect.prodsuit.View.Adapter.HomeGridAdapter
 import com.perfect.prodsuit.View.Adapter.HomeGrideCountAdapter
 import com.perfect.prodsuit.View.Adapter.NotificationAdapter
 import com.perfect.prodsuit.View.Service.NotificationLocationService
-import com.perfect.prodsuit.Viewmodel.*
+import com.perfect.prodsuit.Viewmodel.AttendanceAddViewModel
+import com.perfect.prodsuit.Viewmodel.BannerListViewModel
+import com.perfect.prodsuit.Viewmodel.ChangeMpinViewModel
+import com.perfect.prodsuit.Viewmodel.CompanyLogoViewModel
+import com.perfect.prodsuit.Viewmodel.DashBoardCountViewModel
+import com.perfect.prodsuit.Viewmodel.NotificationViewModel
 import com.perfect.prodsuit.fire.FireBaseConfig
 import com.perfect.prodsuit.interfaces.MyCallback
 import me.relex.circleindicator.CircleIndicator
@@ -78,7 +115,11 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
+import java.util.TimeZone
+import java.util.Timer
+import java.util.TimerTask
 
 
 class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener, View.OnClickListener,
@@ -292,7 +333,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
         networkChangeReceiver = NetworkChangeReceiver()
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
-        
+
     }
 
     private fun firebaseNotificationCount() {
@@ -383,6 +424,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                           1
                       )
                   } else {
+                      Log.v("sdfsdfds","1")
                       setPermission()
                     /*  startActivity(
                           Intent(
@@ -923,16 +965,16 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                             ) == PackageManager.PERMISSION_GRANTED
                         ) {
 
-                            ActivityCompat.requestPermissions(
-                                this@HomeActivity,
-                                arrayOf(Manifest.permission.READ_CALENDAR),
-                                1
-                            )
+                            if (PermissionUtils.checkAndRequestPermissions(this@HomeActivity)) {
+                                // Permissions are already granted, proceed with accessing the calendar
+                                addEvent()
+                                // Use the calendarId as needed
+                            }
 
-                            setReminder()
                         }
                         else
                         {
+                            Log.v("sdfsdfds","2")
                             setPermission()
                         }
 
@@ -2072,6 +2114,178 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     }
 
 
+
+
+    private fun addEventToCalendar(context: Context, title: String, description: String, location: String, startTime: Long, endTime: Long): Long {
+        val calendarID = getPrimaryCalendarId(context)
+        Log.v("adfasdasd", "calendarID $calendarID")
+        val values = ContentValues().apply {
+            put(CalendarContract.Events.DTSTART, startTime)
+            put(CalendarContract.Events.DTEND, endTime)
+            put(CalendarContract.Events.TITLE, title)
+            put(CalendarContract.Events.DESCRIPTION, description)
+            put(CalendarContract.Events.EVENT_LOCATION, location)
+            put(CalendarContract.Events.CALENDAR_ID, calendarID)
+            put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().id)
+        }
+
+        val uri = context.contentResolver.insert(CalendarContract.Events.CONTENT_URI, values)
+        val eventID = uri?.lastPathSegment?.toLong() ?: -1
+        Log.v("adfasdasd", "eventID $eventID")
+        return eventID
+    }
+
+    fun getPrimaryCalendarId(context: Context): Long {
+        val uri: Uri = CalendarContract.Calendars.CONTENT_URI
+        val projection = arrayOf(CalendarContract.Calendars._ID)
+        val selection = "${CalendarContract.Calendars.IS_PRIMARY} = 1"
+
+        var cursor: Cursor? = context.contentResolver.query(uri, projection, selection, null, null)
+
+        cursor?.use {
+            if (it.moveToFirst()) {
+                return it.getLong(it.getColumnIndexOrThrow(CalendarContract.Calendars._ID))
+            }
+        }
+
+        // If no primary calendar found, fetch the first available calendar
+        cursor = context.contentResolver.query(uri, projection, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                return it.getLong(it.getColumnIndexOrThrow(CalendarContract.Calendars._ID))
+            }
+        }
+
+        return -1 // No calendar found
+    }
+
+    private fun addReminderToEvent(context: Context, eventID: Long, minutesBefore: Int) {
+        val values = ContentValues().apply {
+            put(CalendarContract.Reminders.MINUTES, minutesBefore)
+            put(CalendarContract.Reminders.EVENT_ID, eventID)
+            put(CalendarContract.Reminders.METHOD, CalendarContract.Reminders.METHOD_ALERT)
+        }
+        context.contentResolver.insert(CalendarContract.Reminders.CONTENT_URI, values)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("The reminder has been successfully added to your device.")
+            .setCancelable(false)
+            .setPositiveButton(
+                "OK"
+            ) { dialog, id -> dialog.dismiss()
+            }
+        val alert = builder.create()
+        alert.show()
+    }
+
+    private fun getTimeInMillis(year: Int, month: Int, day: Int, hour: Int, minute: Int): Long {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month, day, hour, minute)
+        return calendar.timeInMillis
+    }
+
+
+    private fun addEvent() {
+        // getCalendarId(this,callbackId)
+        try
+        {
+
+
+
+            val builder = android.app.AlertDialog.Builder(this)
+            val inflater1 = this.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val layout = inflater1.inflate(R.layout.reminder_setter_popup, null)
+            val btncancel = layout.findViewById(R.id.btncancel) as Button
+            val btnsubmit = layout.findViewById(R.id.btnsubmit) as Button
+            etdate = layout.findViewById(R.id.etdate) as EditText
+            ettime = layout.findViewById(R.id.ettime) as EditText
+            etdis = layout.findViewById(R.id.etdis) as EditText
+            etdate!!.setKeyListener(null)
+            ettime!!.setKeyListener(null)
+            builder.setView(layout)
+            val alertDialog = builder.create()
+            val c = Calendar.getInstance()
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            val sdf1 = SimpleDateFormat("hh:mm a",Locale.getDefault())
+            val sdf2 = SimpleDateFormat("HH:mm")
+            yr = c.get(Calendar.YEAR)
+            month = c.get(Calendar.MONTH)
+            day = c.get(Calendar.DAY_OF_MONTH)
+            etdate!!.setText(sdf.format(c.time))
+            ettime!!.setText(sdf1.format(c.time))
+            val s = sdf2.format(c.time)
+            Log.v("sdasdsdsdsd333", "c.time "+c.time)
+            val split = s.split((":").toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val strhr = split[0]
+            val strmin = split[1]
+            hr = Integer.parseInt(strhr)
+            min = Integer.parseInt(strmin)
+            ettime!!.setOnClickListener(View.OnClickListener { timeSelector() })
+            etdate!!.setOnClickListener(View.OnClickListener { dateSelector() })
+            btncancel.setOnClickListener {
+                Config.Utils.hideSoftKeyBoard(this, it)
+                chipNavigationBar!!.setItemSelected(R.id.home, true)
+                alertDialog.dismiss() }
+            btnsubmit.setOnClickListener {
+                var dateShow = etdate!!.text.toString()
+                var timeShow = ettime!!.text.toString()
+                Config.Utils.hideSoftKeyBoard(this, it)
+                if (isPreviousTime(dateShow, hr, min)) {
+                    val builder = AlertDialog.Builder(this)
+                    builder.setMessage("Please Choose Time Greater Than Current Time.")
+                        .setCancelable(false)
+                        .setPositiveButton(
+                            "OK"
+                        ) { dialog, id ->
+                            dialog.dismiss()
+                        }
+                    val alert = builder.create()
+                    alert.show()
+                } else {
+                    Log.v("sdasdsdsdsd333", "Correct Time")
+                    val title1= "Reminder"
+                    val description = etdis!!.text.toString()
+                    val location = ""
+                    Log.v("sdasdsdsdsd333", "hr "+hr)
+                    Log.v("sdasdsdsdsd333", "min "+min)
+                    Log.v("sdasdsdsdsd333", "Correct Time")
+                    val startTime: Long = getTimeInMillis(yr, month, day, hr, min)
+                    val endTime: Long = getTimeInMillis(yr, month, day, hr, min)
+
+                    // Add event to calendar and get event ID
+
+                    // Add event to calendar and get event ID
+                    val eventID: Long =
+                        addEventToCalendar(context, title1, description, location, startTime, endTime)
+
+                    // Add reminder to the event
+
+                    // Add reminder to the event
+                    addReminderToEvent(context, eventID, 15) // 15 minutes before the event
+//                    addEvent(
+//                        yr,
+//                        month,
+//                        day,
+//                        hr,
+//                        min,
+//                        etdis!!.text.toString(),
+//                        " Reminder",
+//                        dateShow,
+//                        timeShow
+//                    )
+                    alertDialog.dismiss()
+                    chipNavigationBar!!.setItemSelected(R.id.home, true)
+                }
+            }
+            alertDialog.setCancelable(false)
+            alertDialog.show()
+        }
+        catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
     private fun setReminder() {
        // getCalendarId(this,callbackId)
        try
@@ -2881,10 +3095,15 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                             1
                         )
 
-                    setReminder()
+                    if (PermissionUtils.checkAndRequestPermissions(this@HomeActivity)) {
+                        // Permissions are already granted, proceed with accessing the calendar
+                        addEvent()
+                        // Use the calendarId as needed
+                    }
                 }
                 else
                 {
+                    Log.v("sdfsdfds","3")
                     setPermission()
                 }
 
