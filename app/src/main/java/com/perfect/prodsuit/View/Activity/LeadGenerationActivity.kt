@@ -2664,6 +2664,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             dialogContact!!.show()
 
             Log.e("eerr", "eeeeeeeeeeeeeeee    " )
+            val adapter1 = ArrayAdapter(this, R.layout.simple_spinner_dropdown_item, searchNameTitle)
 //            cursor!!.moveToPosition(0)
 //            cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
 //            Log.e("ffgg","ffffeeeeeeeeeee "+adapter.cursor.count)
@@ -2708,7 +2709,8 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
                     Customer_Address2 = ""
 
                     // llCustomerDetail!!.visibility = View.GONE
-                    actv_namTitle!!.setText("")
+                  //  actv_namTitle!!.setText("")
+                    actv_namTitle!!.setAdapter( adapter1)
                     edtCustname!!.setText("")
                     edtCustphone!!.setText("")
                     edtMobileNumber!!.setText("")
@@ -7893,9 +7895,17 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
             Customer_Email = jsonObject.getString("CusEmail")
             Customer_Address1 = jsonObject.getString("CusAddress1")
             Customer_Address2 = jsonObject.getString("CusAddress2")
-
+            val adapter1 = ArrayAdapter(this, R.layout.simple_spinner_dropdown_item, searchNameTitle)
             // llCustomerDetail!!.visibility = View.GONE
-            actv_namTitle!!.setText(jsonObject.getString("CusNameTitle"))
+            if(jsonObject.getString("CusNameTitle").equals(""))
+            {
+                actv_namTitle!!.setAdapter(adapter1)
+            }
+            else{
+                actv_namTitle!!.setAdapter(adapter1)
+                //  actv_namTitle!!.setText(jsonObject.getString("CusNameTitle"))
+            }
+          //  actv_namTitle!!.setText(jsonObject.getString("CusNameTitle"))
             edtCustname!!.setText(jsonObject.getString("CusName"))
             edtCustphone!!.setText(jsonObject.getString("CusPhnNo"))
             edtMobileNumber!!.setText(jsonObject.getString("LandNumber"))
@@ -8770,6 +8780,7 @@ class LeadGenerationActivity : AppCompatActivity(), View.OnClickListener, ItemCl
 //            else if (Customer_Mobile.equals("")){
 //                Config.snackBars(context,v,"Enter Customer Mobile")
 //            }
+
             else if (!isValidEmail("" + Customer_Email)) {
                 Config.snackBars(context, v, "Check Customer Email")
             }

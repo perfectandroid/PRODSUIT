@@ -1036,7 +1036,7 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
 //            cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
 //            Log.e("ffgg","ffffeeeeeeeeeee "+adapter.cursor.count)
 //            Log.e("ffgg","ffffeeeeeeeeeee11222 "+cursor!!.getString(cursor!!.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)))
-
+            val adapter1 = ArrayAdapter(this, R.layout.simple_spinner_dropdown_item, searchNameTitle)
 
             listview!!.setOnItemClickListener(object : AdapterView.OnItemClickListener {
                 override fun onItemClick(
@@ -1072,7 +1072,9 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
                     Customer_Address2 =  ""
 
                     // llCustomerDetail!!.visibility = View.GONE
-                    actv_namTitle!!.setText( "")
+                   // actv_namTitle!!.setText( "")
+
+                    actv_namTitle!!.setAdapter( adapter1)
                     edtCustname!!.setText( "")
                     edtCustphone!!.setText( "")
                     edtCustAddres2!!.setText( "")
@@ -2745,12 +2747,19 @@ class LeadGenerationQuickActivity : AppCompatActivity(), View.OnClickListener, I
             Customer_Email = jsonObject.getString("CusEmail")
             Customer_Address1 = jsonObject.getString("CusAddress1")
             Customer_Address2 = jsonObject.getString("CusAddress2")
-
+            val adapter1 = ArrayAdapter(this, R.layout.simple_spinner_dropdown_item, searchNameTitle)
             Log.e(TAG,"Customer_Address1 12345 "
-                    +Customer_Address1)
-
+                    +Customer_Address1+"\n"+ (jsonObject.getString("CusNameTitle")))
+            if(jsonObject.getString("CusNameTitle").equals(""))
+            {
+                actv_namTitle!!.setAdapter(adapter1)
+            }
+            else{
+                actv_namTitle!!.setAdapter(adapter1)
+              //  actv_namTitle!!.setText(jsonObject.getString("CusNameTitle"))
+            }
             // llCustomerDetail!!.visibility = View.GONE
-            actv_namTitle!!.setText(jsonObject.getString("CusNameTitle"))
+
             edtCustname!!.setText(jsonObject.getString("CusName"))
             edtCustphone!!.setText(jsonObject.getString("CusPhnNo"))
             edtCustAddres2!!.setText(jsonObject.getString("CusAddress1"))
