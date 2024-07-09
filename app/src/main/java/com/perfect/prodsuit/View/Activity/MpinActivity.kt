@@ -1503,6 +1503,15 @@ class MpinActivity : AppCompatActivity(), View.OnClickListener {
                                 IsManagerEditer.putString("IsManager",jobj.getString("IsManager"))
                                 IsManagerEditer.commit()
 
+                                //Intimation
+                                val IntimationSP = applicationContext.getSharedPreferences(
+                                    Config.SHARED_PREF88,
+                                    0
+                                )
+                                val IntimationEditer = IntimationSP.edit()
+                                IntimationEditer.putString("Intimation", jobj.getString("Intimation"))
+                                IntimationEditer.commit()
+
 
                                 val ID_UserSP =
                                     applicationContext.getSharedPreferences(Config.SHARED_PREF44, 0)

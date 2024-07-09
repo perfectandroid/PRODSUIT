@@ -348,14 +348,25 @@ class LoginActivity : AppCompatActivity() , GoogleApiClient.OnConnectionFailedLi
                                                 EmailEditer.putString("Email", jobj.getString("Email"))
                                                 EmailEditer.commit()
 
+                                                //Intimation
+                                                val IntimationSP = applicationContext.getSharedPreferences(
+                                                    Config.SHARED_PREF88,
+                                                    0
+                                                )
+                                                val IntimationEditer = IntimationSP.edit()
+                                                IntimationEditer.putString("Intimation", jobj.getString("Intimation"))
+                                                IntimationEditer.commit()
 
 
 
-                                              /*  val isAdminSP = applicationContext.getSharedPreferences(Config.SHARED_PREF87, 0)
-                                                val isAdminSPEditer = isAdminSP.edit()
-                                                isAdminSPEditer.putString("IsAdmin", jobj.getString("IsAdmin"))
-                                                isAdminSPEditer.commit()
-*/
+
+
+
+                                                /*  val isAdminSP = applicationContext.getSharedPreferences(Config.SHARED_PREF87, 0)
+                                                  val isAdminSPEditer = isAdminSP.edit()
+                                                  isAdminSPEditer.putString("IsAdmin", jobj.getString("IsAdmin"))
+                                                  isAdminSPEditer.commit()
+  */
 
 
                                                 val UserCodeSP = applicationContext.getSharedPreferences(

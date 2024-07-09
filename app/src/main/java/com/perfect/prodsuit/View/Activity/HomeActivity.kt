@@ -55,7 +55,6 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.perfect.favourites.DataBaseHelper
 import com.perfect.nbfcmscore.Helper.PicassoTrustAll
-import com.perfect.prodsuit.BuildConfig
 import com.perfect.prodsuit.Helper.*
 import com.perfect.prodsuit.Helper.LocationUtils.calculateDistance
 import com.perfect.prodsuit.R
@@ -152,6 +151,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     var strLatitude : String = ""
     var IsOnline : String = "2"
     var SubMode : String = ""
+    var Intimation : String = ""
+    var ProductEnquiry : String = ""
     private var imgv_fav: ImageView? = null
     lateinit var attendanceAddViewModel: AttendanceAddViewModel
     lateinit var dashboardcountViewModel: DashBoardCountViewModel
@@ -263,6 +264,28 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         checkAttendance()
         setTechnologyPartner()
 
+        val IntimationSP = context.getSharedPreferences(Config.SHARED_PREF88, 0)
+       Intimation = IntimationSP.getString("Intimation", null).toString()
+
+
+        Log.e(TAG,"Intim"+Intimation)
+        val navMenu: Menu = nav_view!!.getMenu()
+        if(Intimation.equals("1"))
+        {
+            navMenu.findItem(R.id.nav_intimation).setVisible(true)
+        }
+        else if(Intimation.equals("0"))
+        {
+            navMenu.findItem(R.id.nav_intimation).setVisible(false)
+        }
+
+
+
+
+
+
+
+
 //        startService(Intent(this, MyFirebaseMessagingService::class.java))
 //        FirebaseApp.initializeApp(this)
         // Log.e(TAG,"Token  99991    "+  FirebaseMessaging.getInstance().token)
@@ -294,6 +317,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
         
     }
+
+
 
     private fun firebaseNotificationCount() {
         dataChatRef.addValueEventListener(object : ValueEventListener {
@@ -1415,6 +1440,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+
         when (item.itemId) {
 
             R.id.nav_profile -> {
@@ -1439,6 +1466,10 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 startActivity(i)
             }
             R.id.nav_intimation -> {
+                if(Intimation.equals("0"))
+                {
+
+                }
                 val i = Intent(this@HomeActivity, Intimation::class.java)
                 startActivity(i)
             }
