@@ -264,20 +264,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         checkAttendance()
         setTechnologyPartner()
 
-        val IntimationSP = context.getSharedPreferences(Config.SHARED_PREF88, 0)
-       Intimation = IntimationSP.getString("Intimation", null).toString()
-
-
-        Log.e(TAG,"Intim"+Intimation)
-        val navMenu: Menu = nav_view!!.getMenu()
-        if(Intimation.equals("1"))
-        {
-            navMenu.findItem(R.id.nav_intimation).setVisible(true)
-        }
-        else if(Intimation.equals("0"))
-        {
-            navMenu.findItem(R.id.nav_intimation).setVisible(false)
-        }
 
 
 
@@ -467,6 +453,7 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
             val ModuleListSP = context.getSharedPreferences(Config.SHARED_PREF54, 0)
             val jsonObj = JSONObject(ModuleListSP.getString("ModuleList",""))
             var prodenq = jsonObj!!.getString("PRODUCTENQUIRY")
+
             Log.e(TAG,"Prodenq "+ prodenq)
 
             if (prodenq.equals("true")){
@@ -477,6 +464,21 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 menuproduct.setVisible(false);
             }
 
+            val IntimationSP = context.getSharedPreferences(Config.SHARED_PREF88, 0)
+            Intimation = IntimationSP.getString("Intimation", null).toString()
+
+
+
+            Log.e(TAG,"Intim"+Intimation)
+            val navMenu: Menu = nav_view!!.getMenu()
+            if(Intimation.equals("1"))
+            {
+                navMenu.findItem(R.id.nav_intimation).setVisible(true)
+            }
+            else if(Intimation.equals("0"))
+            {
+                navMenu.findItem(R.id.nav_intimation).setVisible(false)
+            }
 
         }catch (e : Exception){
 
