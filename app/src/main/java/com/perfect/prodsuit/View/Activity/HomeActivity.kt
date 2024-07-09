@@ -466,11 +466,17 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
             val ModuleListSP = context.getSharedPreferences(Config.SHARED_PREF54, 0)
             val jsonObj = JSONObject(ModuleListSP.getString("ModuleList",""))
-            var iInventory = jsonObj!!.getString("INVENTORY")
+            var prodenq = jsonObj!!.getString("PRODUCTENQUIRY")
+            Log.e(TAG,"Prodenq "+ prodenq)
 
-            if (!iInventory.equals("true")){
+            if (prodenq.equals("true")){
+                menuproduct.setVisible(true);
+            }
+            else if(prodenq.equals("false"))
+            {
                 menuproduct.setVisible(false);
             }
+
 
         }catch (e : Exception){
 
