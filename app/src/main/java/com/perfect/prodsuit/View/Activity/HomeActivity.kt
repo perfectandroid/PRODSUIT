@@ -3096,13 +3096,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                         Manifest.permission.READ_CALENDAR
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
-
-                    ActivityCompat.requestPermissions(
-                            this,
-                            arrayOf(Manifest.permission.READ_CALENDAR),
-                            1
-                        )
-
                     if (PermissionUtils.checkAndRequestPermissions(this@HomeActivity)) {
                         // Permissions are already granted, proceed with accessing the calendar
                         addEvent()
