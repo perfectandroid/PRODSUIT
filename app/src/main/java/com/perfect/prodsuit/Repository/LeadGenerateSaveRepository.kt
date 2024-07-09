@@ -116,6 +116,9 @@ object LeadGenerateSaveRepository {
 //                +"\n"+"Attended by        : "+ ID_CollectedBy
                 +"\n"+"Lead Source        : "+ ID_LeadFrom
                 +"\n"+"Lead From          : "+ ID_LeadThrough
+
+                +"\n"+"latitude           : "+ strLatitude
+                +"\n"+"longitude           : "+ strLongitue
                 +"\n"+"ID_MediaSubMaster  : "+ ID_MediaSubMaster
                 +"\n"+"strLeadThrough     : "+ strLeadThrough
                 +"\n"

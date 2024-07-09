@@ -42,10 +42,10 @@
             android:title="Contact us"/>
         <item
             android:id="@+id/nav_intimation"
-            android:visible="false"
             android:icon="@drawable/ic_svg_messages"
             android:fontFamily="@font/myfont"
             app:iconTint="@color/red"
+            android:visible="false"
             android:title="Intimation"/>
         <item
             android:id="@+id/nav_share"

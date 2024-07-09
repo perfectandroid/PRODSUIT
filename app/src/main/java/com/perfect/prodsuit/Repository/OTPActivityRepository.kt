@@ -87,7 +87,7 @@ object OTPActivityRepository {
                     Response<String>
                 ) {
                     try {
-                        Log.e(TAG,"requestObject1  69   "+response.body())
+                        Log.e(TAG,"resp_otp   "+response.body())
                         progressDialog!!.dismiss()
                         val jObject = JSONObject(response.body())
                         val users = ArrayList<OTPModel>()

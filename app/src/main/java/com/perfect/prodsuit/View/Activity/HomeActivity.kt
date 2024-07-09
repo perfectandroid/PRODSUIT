@@ -2,18 +2,8 @@ package com.perfect.prodsuit.View.Activity
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.AlarmManager
-import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.app.Dialog
-import android.app.PendingIntent
-import android.app.ProgressDialog
-import android.app.TimePickerDialog
-import android.content.ContentValues
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
-import android.content.IntentFilter
+import android.app.*
+import android.content.*
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
@@ -35,21 +25,8 @@ import android.provider.Settings
 import android.util.Base64
 import android.util.Log
 import android.util.TypedValue
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.view.*
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -64,11 +41,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputEditText
@@ -87,6 +60,7 @@ import com.perfect.prodsuit.Helper.Common
 import com.perfect.prodsuit.Helper.Config
 import com.perfect.prodsuit.Helper.DBHelper
 import com.perfect.prodsuit.Helper.ItemClickListener
+import com.perfect.prodsuit.Helper.*
 import com.perfect.prodsuit.Helper.LocationUtils.calculateDistance
 import com.perfect.prodsuit.Helper.NetworkChangeReceiver
 import com.perfect.prodsuit.Helper.PermissionUtils
@@ -97,12 +71,7 @@ import com.perfect.prodsuit.View.Adapter.HomeGridAdapter
 import com.perfect.prodsuit.View.Adapter.HomeGrideCountAdapter
 import com.perfect.prodsuit.View.Adapter.NotificationAdapter
 import com.perfect.prodsuit.View.Service.NotificationLocationService
-import com.perfect.prodsuit.Viewmodel.AttendanceAddViewModel
-import com.perfect.prodsuit.Viewmodel.BannerListViewModel
-import com.perfect.prodsuit.Viewmodel.ChangeMpinViewModel
-import com.perfect.prodsuit.Viewmodel.CompanyLogoViewModel
-import com.perfect.prodsuit.Viewmodel.DashBoardCountViewModel
-import com.perfect.prodsuit.Viewmodel.NotificationViewModel
+import com.perfect.prodsuit.Viewmodel.*
 import com.perfect.prodsuit.fire.FireBaseConfig
 import com.perfect.prodsuit.interfaces.MyCallback
 import me.relex.circleindicator.CircleIndicator
@@ -193,6 +162,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
     var strLatitude : String = ""
     var IsOnline : String = "2"
     var SubMode : String = ""
+    var Intimation : String = ""
+    var ProductEnquiry : String = ""
     private var imgv_fav: ImageView? = null
     lateinit var attendanceAddViewModel: AttendanceAddViewModel
     lateinit var dashboardcountViewModel: DashBoardCountViewModel
@@ -304,6 +275,28 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
         checkAttendance()
         setTechnologyPartner()
 
+        val IntimationSP = context.getSharedPreferences(Config.SHARED_PREF88, 0)
+       Intimation = IntimationSP.getString("Intimation", null).toString()
+
+
+        Log.e(TAG,"Intim"+Intimation)
+        val navMenu: Menu = nav_view!!.getMenu()
+        if(Intimation.equals("1"))
+        {
+            navMenu.findItem(R.id.nav_intimation).setVisible(true)
+        }
+        else if(Intimation.equals("0"))
+        {
+            navMenu.findItem(R.id.nav_intimation).setVisible(false)
+        }
+
+
+
+
+
+
+
+
 //        startService(Intent(this, MyFirebaseMessagingService::class.java))
 //        FirebaseApp.initializeApp(this)
         // Log.e(TAG,"Token  99991    "+  FirebaseMessaging.getInstance().token)
@@ -333,8 +326,10 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
         networkChangeReceiver = NetworkChangeReceiver()
         registerReceiver(networkChangeReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
-
+        
     }
+
+
 
     private fun firebaseNotificationCount() {
         dataChatRef.addValueEventListener(object : ValueEventListener {
@@ -424,7 +419,6 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                           1
                       )
                   } else {
-                      Log.v("sdfsdfds","1")
                       setPermission()
                     /*  startActivity(
                           Intent(
@@ -1457,6 +1451,8 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+
         when (item.itemId) {
 
             R.id.nav_profile -> {
@@ -1481,6 +1477,10 @@ class HomeActivity : AppCompatActivity() , NavigationView.OnNavigationItemSelect
                 startActivity(i)
             }
             R.id.nav_intimation -> {
+                if(Intimation.equals("0"))
+                {
+
+                }
                 val i = Intent(this@HomeActivity, Intimation::class.java)
                 startActivity(i)
             }

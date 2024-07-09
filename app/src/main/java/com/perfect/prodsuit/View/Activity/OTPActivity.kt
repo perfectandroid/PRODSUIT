@@ -665,6 +665,17 @@ class OTPActivity : AppCompatActivity(), View.OnClickListener {
                                         FK_DepartmentEditer.putString("FK_Department", jobj.getString("FK_Department"))
                                         FK_DepartmentEditer.commit()
 
+
+                                        //Intimation
+                                        val IntimationSP = applicationContext.getSharedPreferences(
+                                            Config.SHARED_PREF88,
+                                            0
+                                        )
+                                        val IntimationEditer = IntimationSP.edit()
+                                        IntimationEditer.putString("Intimation", jobj.getString("Intimation"))
+                                        IntimationEditer.commit()
+
+
                                         val DepartmentSP = applicationContext.getSharedPreferences(Config.SHARED_PREF56, 0)
                                         val DepartmentEditer = DepartmentSP.edit()
                                         DepartmentEditer.putString("Department", jobj.getString("Department"))
